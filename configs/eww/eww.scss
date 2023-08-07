@@ -1,0 +1,362 @@
+$surface-bg: #291D46;
+$surface-bg-variant: #18112A;
+$surface-fg: #C8CCD4;
+$accent: #30C9EB;
+
+// Others
+$surface-darkgrey: #20252b;
+$surface-lightgrey: #3d464e;
+$surface-grey: #2b3238;
+$surface-red: #f87070;
+
+* {
+  all: unset;
+}
+
+.bar {
+  background-color: $surface-bg;
+  color: $surface-fg;
+}
+
+.sidestuff {
+  color: #ffd5cd;
+  font-family: "Font Awesome 5 Free Solid";
+  padding-right: 15;
+  padding-left: 15;
+  padding-top: 4;
+  padding-bottom: 4;
+  margin-top: 4;
+  margin-bottom: 4;
+  background: #4C3D75;
+  color: $surface-fg;
+  border-radius: 20;
+}
+
+.sidestuff slider {
+  all: unset;
+  color: #ffd5cd;
+  font-family: "Font Awesome 5 Free Solid";
+}
+
+.metric {
+  margin-left: 10;
+  margin-right: 10;
+}
+
+.label {
+  margin-left: 5;
+}
+
+.metric scale trough highlight {
+  all: unset;
+  background-color: #61AFEF;
+  color: #000000;
+  border-radius: 10px;
+}
+
+.metric scale trough {
+  all: unset;
+  background-color: $surface-bg-variant;
+  border-radius: 50px;
+  min-height: 3px;
+  min-width: 50px;
+  margin-left: 20px;
+  margin-right: 10px;
+}
+
+.metric scale trough highlight {
+  all: unset;
+  background-color: #61AFEF;
+  color: #000000;
+  border-radius: 10px;
+}
+
+.metric scale trough {
+  all: unset;
+  background-color: $surface-bg-variant;
+  border-radius: 15px;
+  min-height: 10px;
+  min-width: 50px;
+}
+
+.label-ram {
+  font-size: medium;
+}
+
+.workspaces button:hover {
+  color: #61AFEF;
+}
+
+.workspaces {
+  padding-right: 15;
+  padding-left: 15;
+  padding-top: 4;
+  padding-bottom: 4;
+  margin-top: 4;
+  margin-bottom: 4;
+  margin-right: 12;
+  margin-left: 12;
+  background: $surface-bg-variant;
+  border-radius: 20;
+}
+
+.systray {
+  padding-right: 15;
+  padding-left: 15;
+  padding-top: 4;
+  padding-bottom: 4;
+  margin-top: 4;
+  margin-bottom: 4;
+  background: $surface-bg-variant;
+  border-radius: 20;
+
+}
+
+.systray menu {
+  background-color: $surface-bg;
+  color: $surface-fg;
+  padding: 10;
+  border-radius: 8;
+}
+
+.systray menuitem {
+  margin-left: 4;
+  margin-right: 4;
+}
+
+.systray menu menuitem {
+  background-color: $surface-bg-variant;
+  color: $surface-fg;
+  padding: 15;
+  margin: 2;
+  border-radius: 8;
+}
+
+.systray menu menuitem:disabled {
+  background-color: #32324b;
+  color: #C7C7C7;
+  padding: 15;
+  margin: 2;
+  border-radius: 8;
+}
+
+.systray menu menuitem:hover {
+  color: $surface-fg;
+  background-color: #3C80D0;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.layout-box {
+  font-family: "Font Awesome 5 Free Solid";
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: 4em;
+  color: rgba($surface-fg, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.net-box,
+.bat-box,
+.tm-box {
+  label {
+    font-size: 2em;
+  }
+}
+
+.close-btn {
+  font-size: 2em;
+
+  &:hover {
+    color: $surface-red;
+  }
+}
+
+.btns-box {
+  font-size: 2.5em;
+
+  button {
+    padding: 0.4em;
+    border-radius: 0.1em;
+    background-color: rgba($surface-darkgrey, 0.3);
+
+    &:hover {
+      transition: 200ms linear background-color, border-radius;
+      background-color: rgba($surface-lightgrey, 0.6);
+    }
+
+    &:first-child {
+      color: rgba($surface-red, 0.8);
+    }
+  }
+}
+
+.sep {
+  font-size: 1.5em;
+  padding-top: 0.15em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  color: $surface-lightgrey;
+}
+
+.sundial-lbl {
+  font-size: 1.5em;
+  font-weight: bold;
+  border-radius: 0.2em;
+  padding: 0.4em;
+  padding-bottom: 0.5em;
+  font-family: "Font Awesome 5 Free Solid";
+}
+
+// ----------------------------------------
+// ----------------- Mine -----------------
+// ----------------------------------------
+.left_menu {
+  background-color: rgba($surface-bg, 0.9);
+  border-radius: 10;
+  border: 2px solid $accent;
+}
+
+.power {
+  padding-left: 10;
+  padding-right: 10;
+
+  &:hover {
+    transition: 300ms linear background-color, border-radius;
+    background-color: rgba($surface-bg-variant, 0.6);
+  }
+}
+
+.profile {
+  background: linear-gradient(to right, #ff4bde, #0cdfff);
+  // margin-left: 2px;
+  // margin-right: 2px;
+  // margin-top: 2px;
+  border-top-left-radius: 10;
+  border-top-right-radius: 10;
+  border: 2px solid $accent;
+  border-bottom: #00000000;
+}
+
+.profile_inside {
+  background-color: rgba(#18112A, 0.95);
+  border-radius: 10px;
+  margin-top: -250;
+  min-width: 300px;
+  min-height: 100px;
+}
+
+.title_class {
+  color: #e8faff;
+  font-size: 35px;
+  margin-top: -30;
+  font-family: "VIP Rawy Regular";
+}
+
+.text_class {
+  color: #3C80D0;
+  font-size: 18px;
+  margin-top: -5;
+  font-family: "VIP Rawy Regular";
+}
+
+.second-row-title {
+  color: #827996;
+  font-size: small;
+}
+
+.second-row-text {
+  color: #c0a8ff;
+  font-size: medium;
+}
+
+.profile-image {
+  margin-top: -50px;
+  border-radius: 50%;
+}
+
+.time-icon {
+  padding-right: 8;
+  padding-left: 8;
+  padding-top: 5;
+  padding-bottom: 4;
+  font-family: "Font Awesome 5 Free Solid";
+  background: linear-gradient(to left, #2fbacf, #2fbacf);
+  color: #352558;
+  border-top-right-radius: 5;
+  border-bottom-right-radius: 5;
+}
+
+.time-text {
+  padding-left: 10;
+  padding-top: 4;
+  padding-right: 5;
+  padding-bottom: 4;
+  background: linear-gradient(to right, #ff4bde, #0cdfff);
+  color: #352558;
+  border-top-left-radius: 5;
+  border-bottom-left-radius: 5;
+}
+
+.keyboard-layout {
+  padding-left: 10;
+  padding-top: 4;
+  padding-right: 5;
+  padding-bottom: 4;
+  background: linear-gradient(to right, #ff4bde, #0cdfff);
+  color: #352558;
+  border-radius: 12;
+}
+
+.netspeed-box {
+  background: linear-gradient(to right, #ff4bde, #0cdfff);
+  color: #352558;
+  border-radius: 5;
+}
+
+.netspeed-icon {
+  padding-right: 8;
+  padding-left: 8;
+  // padding-top: 5;
+  // padding-bottom: 4;
+  font-family: "Font Awesome 5 Free Solid";
+  background: linear-gradient(to left, #2fbacf, #2fbacf);
+  color: #352558;
+  border-top-right-radius: 5;
+  border-bottom-right-radius: 5;
+}
+
+.netspeed-download {
+  padding-left: 0;
+  padding-right: 12;
+  min-width: 75px;
+  min-height: 24px;
+}
+
+.netspeed-upload {
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 75px;
+}
+
+.battery-icon {
+  padding-right: 8;
+  padding-left: 8;
+  padding-top: 5;
+  padding-bottom: 4;
+  font-family: "Font Awesome 5 Free Solid";
+  background: linear-gradient(to left, #2fbacf, #2fbacf);
+  color: #352558;
+  border-top-right-radius: 5;
+  border-bottom-right-radius: 5;
+}
+
+.battery-text {
+  padding-left: 10;
+  padding-top: 4;
+  padding-right: 5;
+  padding-bottom: 4;
+  background: linear-gradient(to right, #54FCF0, #00B9BB);
+  color: #352558;
+  border-top-left-radius: 5;
+  border-bottom-left-radius: 5;
+}

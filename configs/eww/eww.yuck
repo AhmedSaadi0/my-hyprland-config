@@ -1,0 +1,519 @@
+(defwidget bar []
+  (centerbox
+    :orientation "h"
+    (workspaces)
+    (title_text
+      :title ""
+      :spacing 0
+      :text my_time
+      :valign "center"
+      :halign "center"
+      :title_class "time-icon"
+      :text_class "time-text"
+      :orientation "horizontally"
+      :title_onclick "sh ~/.config/eww/scripts/open_menu.sh"
+      :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
+    )
+    (sidestuff)
+  )
+)
+
+(defwidget sidestuff []
+  (box
+    :orientation "h"
+    :space-evenly false
+    :halign "end"
+    :spacing 10
+    (box
+      :class "sidestuff"
+      :orientation "h"
+      :space-evenly false
+      :halign "end"
+      (metric
+        :label ""
+        :value {EWW_RAM.used_mem_perc}
+        :onchange ""
+      )
+      (metric
+        :label ""
+        :value {EWW_CPU.avg}
+        :onchange ""
+      )
+      (metric
+        :label ""
+        :value {EWW_BATTERY.BAT0.capacity}
+        :onchange ""
+      )
+      (metric
+        :label "Disk"
+        :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+        :onchange ""
+      )
+    )
+    (title_text
+      :title {battery["icon"]}
+      :spacing 0
+      :text {battery["percentage"]}
+      :valign "center"
+      :halign "center"
+      :title_class "battery-icon"
+      :text_class "battery-text"
+      :orientation "horizontally"
+      ; :title_onclick "sh ~/.config/eww/scripts/open_menu.sh"
+      ; :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
+    )
+    (netspeed_box)
+    (tray)
+    (left_menu_button)
+  )
+)
+
+(defwidget workspaces []
+  (box
+    :class "workspaces"
+    :orientation "h"
+    :space-evenly true
+    :halign "start"
+    :spacing 20
+    (button :onclick "hyprctl dispatch workspace 1" "")
+    (button :onclick "hyprctl dispatch workspace 2" "")
+    (button :onclick "hyprctl dispatch workspace 3" "")
+    (button :onclick "hyprctl dispatch workspace 4" "")
+    (button :onclick "hyprctl dispatch workspace 5" "")
+    (button :onclick "hyprctl dispatch workspace 6" "")
+    (button :onclick "hyprctl dispatch workspace 7" "")
+    (button :onclick "hyprctl dispatch workspace 8" "")
+  )
+)
+
+(defwidget tray []
+  (systray
+    :class "systray"
+    :active-only false
+    :pack-direction "rtl"
+  )
+)
+
+(defwidget metric [label value onchange]
+  (box
+    :orientation "h"
+    :class "metric"
+    :space-evenly false
+    (box
+      :class "label"
+      label
+    )
+    (scale
+      :min 0
+      :max 101
+      :active {onchange != ""}
+      :value value
+      :onchange onchange
+    )
+  )
+)
+
+(deflisten music
+  :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true"
+)
+
+(defpoll volume
+  :interval "1s"
+  "scripts/getvol"
+)
+
+
+(defpoll my_time
+  :interval "10s"
+  ; "date '+(%I:%M) %A, %d %B'"
+  "date '+(%I:%M) %A, %d %B'"
+)
+
+; ---------- Net speed ----------
+(defpoll netspeed_poll
+  :interval "0.5s"
+  "sh ~/.config/eww/scripts/netspeed.sh"
+)
+
+(defwidget netspeed_box []
+  (box
+    :class "netspeed-box"
+    :orientation "h"
+    :space-evenly false
+    :halign "center"
+    :valign "center"
+    :spacing 0
+    (label
+      :limit-width 1
+      :class "netspeed-icon"
+      :text ""
+    )
+    (title_text
+      :spacing 5
+      :title ""
+      :text {netspeed_poll["download"]}
+      :box_class "netspeed-download"
+      :orientation "horizontally"
+    )
+    (title_text
+      :title ""
+      :spacing 5
+      :text {netspeed_poll["upload"]}
+      :box_class "netspeed-upload"
+      :orientation "horizontally"
+    )
+  )
+)
+
+(defpoll battery
+  :interval "5s"
+  "sh ~/.config/eww/scripts/battery_percentage.sh"
+)
+
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (
+    geometry
+    :x "0%"
+    :y "0%"
+    :width "100%"
+    :height "3%"
+    :anchor "top center"
+  )
+  :reserve (
+    struts
+    :side "top"
+    :distance "0%"
+  )
+  :stacking "fg"
+  :exclusive true
+  (bar)
+)
+
+; -------------------------------------------------------
+; ---------------------- left menu ----------------------
+; -------------------------------------------------------
+(defvar left_menu_visible false)
+
+(defwidget left_menu_button []
+  (button
+    :class "power"
+    :onclick "sh ~/.config/eww/scripts/open_menu.sh" ""
+  )
+)
+
+(defwindow left_menu
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore true
+  :class "left_menu"
+  :geometry (
+    geometry
+    :width "18%"
+    :height "50%"
+    :x "10"
+    :y "10"
+  )
+  (profile_header)
+)
+
+(defwidget profile_header []
+  (box
+    :orientation "vertical"
+    (box :class "profile")
+    (profile)
+  )
+)
+
+(defpoll processes
+  :interval "100s"
+  "ps aux | wc -l"
+)
+
+(defpoll up_time
+  :interval "360s"
+  ; "awk '{print int($1 / 3600)}' /proc/uptime "
+  "sh ~/.config/eww/scripts/uptime.sh"
+)
+
+(defpoll installed_packages
+  :interval "360s"
+  "pacman -Qq | wc -l"
+)
+
+(defwidget profile []
+  (box
+    :orientation "vertical"
+    :class "profile_inside"
+    :space-evenly false
+    :spacing 45
+    :valign "center"
+    :halign "center"
+    (image
+      :path "/home/ahmed/.config/eww/images/profile-modified.png"
+      :image-width "100"
+      :image-height "100"
+      :class "profile-image"
+    )
+    (title_text
+      :title "احمد الصعدي"
+      :text "الوَحْدَةُ خير من جليس السوء."
+      :title_class "title_class"
+      :text_class "text_class"
+      :orientation "vertical"
+    )
+    (box
+      :orientation "horizontally"
+      :spacing 10
+      :valign "center"
+      :halign "center"
+      (title_text
+        :title "العمليات"
+        :text processes
+        :title_class "second-row-title"
+        :text_class "second-row-text"
+        :orientation "vertical"
+        :spacing 10
+      )
+      (title_text
+        :title "ساعات التشغيل"
+        :text up_time
+        :title_class "second-row-title"
+        :text_class "second-row-text"
+        :orientation "vertical"
+        :spacing 10
+      )
+      (title_text
+        :title "الحزم"
+        :text installed_packages
+        :title_class "second-row-title"
+        :text_class "second-row-text"
+        :orientation "vertical"
+        :spacing 10
+      )
+    )
+  )
+)
+
+
+; -----------------------------------------------------
+; ---------------------- Helpers ----------------------
+; -----------------------------------------------------
+(defwidget title_text [
+  title
+  text
+  ?box_class
+  ?title_class
+  ?text_class
+  orientation
+  ?spacing
+  ?title_onclick
+  ?text_onclick
+  ?valign
+  ?halign
+  ]
+  (box
+    :orientation orientation
+    :space-evenly false
+    :spacing spacing
+    :valign valign
+    :halign halign
+    :class box_class
+    (button
+      :class title_class
+      :onclick title_onclick
+      title
+    )
+    (button
+      :class text_class
+      :onclick text_onclick
+      text
+    )
+    ; (label
+      ;   :class title_class
+      ;   :valign "center"
+      ;   :halign "center"
+      ;   :wrap "true"
+      ;   :limit-width 100
+      ;   :text title
+    ; )
+    ; (label
+      ;   :class text_class
+      ;   :valign "center"
+      ;   :halign "center"
+      ;   :wrap "true"
+      ;   :limit-width 100
+      ;   :text text
+    ; )
+  )
+)
+
+; ---------------------- New eww ----------------------
+(defwindow powermenu
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore true
+  :geometry (
+    geometry
+    :width "100%"
+    :height "100%"
+  )
+  (powermenu_layout)
+)
+
+(defpoll time
+  :interval "5s"
+  :initial `date +'{"hour":"%H","min":"%M"}'`
+  `date +'{"hour":"%H","min":"%M"}'`
+)
+
+; Variables
+(defpoll net
+  :interval "100s"
+  :initial `N/A`
+  `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print$1}'`
+)
+
+(defwidget _buttons [shutdown shutdown_icon reboot reboot_icon logout logout_icon]
+  (box
+    :class "btns-box"
+    :spacing 5
+    :vexpand true
+    :hexpand true
+    :valign "end"
+    :halign "end"
+    :space-evenly false
+    (button :onclick shutdown shutdown_icon)
+    (button :onclick reboot reboot_icon)
+    (button :onclick logout logout_icon)
+  )
+)
+
+(defwidget _network [strength offline excellent good okay slow]
+  (box
+    :class "net-box"
+    :space-evenly false
+    :spacing 8
+    (label
+      :text {
+      strength == "" ? offline :
+      strength < 26 ? slow :
+      strength < 51 ? okay :
+      strength < 76 ? good : excellent
+      }
+    )
+  )
+)
+
+(defwidget _battery [battery status one two three four five six seven charge]
+  (box
+    :class "bat-box"
+    :space-evenly false
+    :spacing 8
+    (label
+      :text {
+      status == 'Charging' ? charge :
+      battery < 15 ? seven :
+      battery < 30 ? six :
+      battery < 45 ? five :
+      battery < 60 ? four :
+      battery < 75 ? three :
+      battery < 95 ? two : one
+      }
+    )
+  )
+)
+
+(defwidget _sundial []
+  (label
+    :class "sundial-lbl"
+    :halign "end"
+    :hexpand true
+    :text {
+    time.hour >= 2 && time.hour <= 4 ? "Early Morning" :
+    time.hour <= 5 ? "Dawn" :
+    time.hour >= 6 && (time.hour <= 8 && time.min <= 59) ? "Morning" :
+    time.hour >= 9 && (time.hour <= 11 && time.min <= 59) ? "Late Morning" :
+    time.hour == 12 && time.min <= 29 ? "Midday" :
+    time.hour >= 12 && time.hour <= 16 ? "Afternoon" :
+    time.hour > 16 && time.hour <= 17 ? "Late Afternoon" :
+    (time.hour >= 17 && time.min <= 1) || (time.hour <= 18 && time.min <= 20) ? "Early Evening" :
+    time.hour >= 18 && time.hour <= 19 ? "Dusk" :
+    time.hour > 19 && time.hour <= 21 ? "Late Evening" :
+    time.hour > 21 ? "Night" : "Midnight"
+    }
+  )
+)
+
+(defwidget powermenu_layout []
+  (box
+    :class "layout-box"
+    :space-evenly false
+    :orientation "vertical"
+    ; :style "background-image: url('./wallpaper')"
+    (box
+      :valign "start"
+      :space-evenly false
+      :spacing 25
+      (_sundial)
+      (_battery
+        :status {EWW_BATTERY.BAT0.status}
+        :battery {EWW_BATTERY.BAT0.capacity}
+        :charge ""
+        :one ""
+        :two ""
+        :three ""
+        :four ""
+        :five ""
+        :six ""
+        :seven ""
+      )
+      (_network
+        :strength net
+        :offline "o"
+        :excellent ""
+        :good ""
+        :okay ""
+        :slow ""
+      )
+      (label
+        :text "|"
+        :class "sep"
+      )
+      (button
+        :onclick "eww close powermenu"
+        :class "close-btn" ""
+      )
+    )
+    (box
+      :space-evenly false
+      :hexpand true
+      :vexpand true
+      (box
+        :spacing 15
+        :class "tm-box"
+        :space-evenly false
+        :valign "end"
+        :halign "start"
+        (label
+          :text ""
+        )
+        (label
+          :text "${time.hour}  ${time.min}"
+        )
+      )
+      (_buttons
+        :shutdown "poweroff"
+        :reboot "reboot"
+        :logout "loginctl kill-session self"
+        :shutdown_icon ""
+        :reboot_icon ""
+        :logout_icon ""
+      )
+    )
+  )
+)

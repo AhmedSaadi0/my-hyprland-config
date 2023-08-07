@@ -1,0 +1,85 @@
+[global]
+title = Dunst
+class = Dunst
+monitor = 0
+follow = mouse
+; geometry = "350x6-24+56"
+; indicate_hidden = yes
+shrink = no
+
+width = "350"
+hight = "20"
+offset = "56x56"
+origin="bottom-left"
+
+progress_bar= true
+
+transparency = 30
+separator_height = 1
+padding = 8
+horizontal_padding = 8
+text_icon_padding = 8
+frame_width = 1
+frame_color = "#2DCAE6"
+separator_color = "#2DCAE6"
+
+font = JF Flat 11
+
+line_height = 0
+markup = full
+format = "<span size='x-large' font_desc='JF Flat 10' weight='bold' foreground='#FA4EDF'>%s</span>\n<span >%b</span>"
+alignment = center
+
+idle_threshold = 120
+show_age_threshold = 60
+sort = no
+word_wrap = yes
+ignore_newline = no
+stack_duplicates = false
+hide_duplicate_count = no
+show_indicators = yes
+sticky_history = yes
+history_length = 20
+always_run_script = true
+corner_radius = 12
+icon_position = right
+max_icon_size = 80
+
+icon_path = /usr/share/icons/Papirus-Dark/48x48/actions/:/usr/share/icons/Papirus-Dark/48x48/apps/:/usr/share/icons/Papirus-Dark/48x48/devices/:/usr/share/icons/Papirus-Dark/48x48/emblems/:/usr/share/icons/Papirus-Dark/48x48/emotes/:/usr/share/icons/Papirus-Dark/48x48/mimetypes/:/usr/share/icons/Papirus-Dark/48x48/places/:/usr/share/icons/Papirus-Dark/48x48/status/
+
+browser = firefox
+
+mouse_left_click = close_current
+mouse_middle_click = do_action
+mouse_right_click = close_all
+
+[shortcuts]
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    history = ctrl+1
+    context = ctrl+shift+period
+
+[urgency_low]
+    timeout = 3
+    background = "#291D46"
+    foreground = "#61AFEF"
+
+[urgency_normal]
+    timeout = 6
+    background = "#291D46"
+    foreground = "#61AFEF"
+    ; background = "#3b4252"
+    ; foreground = "#f9f9f9"
+
+[urgency_critical]
+    timeout = 0
+    background = "#291D46"
+    foreground = "#f9f9f9"
+
+[play_sound]
+    appname = "qtile"
+    script = ~/.config/qtile/sh/notification_sound.sh
+; [urgency_low]
+;     script /path/to/sound1.sh
+; [urgency_critical]
+;     script /path/to/sound2.sh
