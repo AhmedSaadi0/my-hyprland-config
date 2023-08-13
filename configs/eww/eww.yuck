@@ -8,9 +8,9 @@
       :text my_time
       :valign "center"
       :halign "center"
-      :title_class "time-icon"
-      :text_class "time-text"
-      :orientation "horizontally"
+      :title_class "time-icon unset"
+      :text_class "time-text unset"
+      :orientation "h"
       :title_onclick "sh ~/.config/eww/scripts/open_menu.sh"
       :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
     )
@@ -24,41 +24,53 @@
     :space-evenly false
     :halign "end"
     :spacing 10
-    (box
-      :class "sidestuff"
-      :orientation "h"
-      :space-evenly false
-      :halign "end"
-      (metric
-        :label ""
-        :value {EWW_RAM.used_mem_perc}
-        :onchange ""
-      )
-      (metric
-        :label ""
-        :value {EWW_CPU.avg}
-        :onchange ""
-      )
-      (metric
-        :label ""
-        :value {EWW_BATTERY.BAT0.capacity}
-        :onchange ""
-      )
-      (metric
-        :label "Disk"
-        :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-        :onchange ""
-      )
-    )
+    ; (box
+      ;   :class "sidestuff"
+      ;   :orientation "h"
+      ;   :space-evenly false
+      ;   :halign "end"
+      ;   (metric
+        ;     :label ""
+        ;     :value {EWW_RAM.used_mem_perc}
+        ;     :onchange ""
+      ;   )
+      ;   (metric
+        ;     :label ""
+        ;     :value {EWW_CPU.avg}
+        ;     :onchange ""
+      ;   )
+      ;   (metric
+        ;     :label ""
+        ;     :value {EWW_BATTERY.BAT0.capacity}
+        ;     :onchange ""
+      ;   )
+      ;   (metric
+        ;     :label "Disk"
+        ;     :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+        ;     :onchange ""
+      ;   )
+    ; )
     (title_text
       :title {battery["icon"]}
       :spacing 0
       :text {battery["percentage"]}
       :valign "center"
       :halign "center"
-      :title_class "battery-icon"
-      :text_class "battery-text"
-      :orientation "horizontally"
+      :title_class "unset battery-icon"
+      :text_class "unset battery-text"
+      :orientation "h"
+      ; :title_onclick "sh ~/.config/eww/scripts/open_menu.sh"
+      ; :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
+    )
+    (title_text
+      :title ""
+      :spacing 0
+      :text volume
+      :valign "center"
+      :halign "center"
+      :title_class "unset battery-icon"
+      :text_class "unset battery-text"
+      :orientation "h"
       ; :title_onclick "sh ~/.config/eww/scripts/open_menu.sh"
       ; :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
     )
@@ -70,34 +82,35 @@
 
 (defwidget workspaces []
   (box
-    :class "workspaces"
+    :class "unset workspaces"
     :orientation "h"
     :space-evenly true
     :halign "start"
     :spacing 20
-    (button :onclick "hyprctl dispatch workspace 1" "")
-    (button :onclick "hyprctl dispatch workspace 2" "")
-    (button :onclick "hyprctl dispatch workspace 3" "")
-    (button :onclick "hyprctl dispatch workspace 4" "")
-    (button :onclick "hyprctl dispatch workspace 5" "")
-    (button :onclick "hyprctl dispatch workspace 6" "")
-    (button :onclick "hyprctl dispatch workspace 7" "")
-    (button :onclick "hyprctl dispatch workspace 8" "")
+    (button :class "unset" :onclick "hyprctl dispatch workspace 1" "")
+    (button :class "unset" :onclick "hyprctl dispatch workspace 2" "")
+    (button :class "unset" :onclick "hyprctl dispatch workspace 3" "")
+    (button :class "unset" :onclick "hyprctl dispatch workspace 4" "")
+    (button :class "unset" :onclick "hyprctl dispatch workspace 5" "")
+    (button :class "unset" :onclick "hyprctl dispatch workspace 6" "")
+    (button :class "unset" :onclick "hyprctl dispatch workspace 7" "")
+    (button :class "unset" :onclick "hyprctl dispatch workspace 8" "")
   )
 )
 
 (defwidget tray []
   (systray
-    :class "systray"
+    :class "systray unset"
     :active-only false
-    :pack-direction "rtl"
+    ; :pack-direction "rtl"
+    :interval "1s"
   )
 )
 
 (defwidget metric [label value onchange]
   (box
     :orientation "h"
-    :class "metric"
+    ; :class "metric"
     :space-evenly false
     (box
       :class "label"
@@ -120,7 +133,7 @@
 
 (defpoll volume
   :interval "1s"
-  "scripts/getvol"
+  "sh ~/.config/eww/scripts/getvol"
 )
 
 
@@ -138,30 +151,39 @@
 
 (defwidget netspeed_box []
   (box
-    :class "netspeed-box"
+    :class "unset netspeed-box"
     :orientation "h"
     :space-evenly false
     :halign "center"
     :valign "center"
     :spacing 0
-    (label
+    (button
       :limit-width 1
-      :class "netspeed-icon"
-      :text ""
+      :class "unset netspeed-icon"
+      :onclick "sh ~/.config/eww/scripts/open_internet_settings.sh"
+      ""
     )
     (title_text
       :spacing 5
       :title ""
       :text {netspeed_poll["download"]}
       :box_class "netspeed-download"
-      :orientation "horizontally"
+      :orientation "h"
+      :title_class "unset"
+      :text_class "unset"
+      :title_onclick "sh ~/.config/eww/scripts/open_internet_settings.sh"
+      :text_onclick "sh ~/.config/eww/scripts/open_internet_settings.sh"
     )
     (title_text
       :title ""
       :spacing 5
       :text {netspeed_poll["upload"]}
       :box_class "netspeed-upload"
-      :orientation "horizontally"
+      :title_class "unset"
+      :text_class "unset"
+      :orientation "h"
+      :title_onclick "sh ~/.config/eww/scripts/open_internet_settings.sh"
+      :text_onclick "sh ~/.config/eww/scripts/open_internet_settings.sh"
     )
   )
 )
@@ -199,7 +221,7 @@
 
 (defwidget left_menu_button []
   (button
-    :class "power"
+    :class "unset power"
     :onclick "sh ~/.config/eww/scripts/open_menu.sh" ""
   )
 )
@@ -209,21 +231,31 @@
   :stacking "fg"
   :windowtype "normal"
   :wm-ignore true
-  :class "left_menu"
+  :class "unset left_menu"
   :geometry (
     geometry
     :width "18%"
-    :height "50%"
-    :x "10"
-    :y "10"
+    :height "10%"
+    :x "8"
+    :y "8"
   )
-  (profile_header)
+  (box
+    :orientation "v"
+    :valign "top"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly "false"
+    (profile_header)
+    (music_player)
+    (power_buttons)
+  )
 )
 
+; -------- profile header --------
 (defwidget profile_header []
   (box
-    :orientation "vertical"
-    (box :class "profile")
+    :orientation "v"
+    (box :class "unset profile")
     (profile)
   )
 )
@@ -244,58 +276,188 @@
   "pacman -Qq | wc -l"
 )
 
+(defwindow left_menu_profile
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore true
+  :geometry (
+    geometry
+    :width "18%"
+    :height "50%"
+    :x "8"
+    :y "8"
+  )
+  (box
+    :class "left_menu_profile"
+    (profile)
+  )
+)
+
 (defwidget profile []
   (box
-    :orientation "vertical"
-    :class "profile_inside"
+    :orientation "v"
+    :class "unset profile_inside"
     :space-evenly false
     :spacing 45
     :valign "center"
     :halign "center"
+    :vexpand "false"
+    :hexpand "false"
     (image
       :path "/home/ahmed/.config/eww/images/profile-modified.png"
-      :image-width "100"
-      :image-height "100"
-      :class "profile-image"
+      :image-width "80"
+      :image-height "80"
+      :class "unset profile-image"
     )
     (title_text
       :title "احمد الصعدي"
       :text "الوَحْدَةُ خير من جليس السوء."
-      :title_class "title_class"
-      :text_class "text_class"
-      :orientation "vertical"
+      :title_class "title_class unset"
+      :text_class "text_class unset"
+      :orientation "v"
     )
     (box
-      :orientation "horizontally"
+      :orientation "h"
       :spacing 10
       :valign "center"
       :halign "center"
+      :class "second-row-box unset"
+      :vexpand "false"
+      :hexpand "false"
       (title_text
         :title "العمليات"
         :text processes
-        :title_class "second-row-title"
-        :text_class "second-row-text"
-        :orientation "vertical"
+        :title_class "second-row-title unset"
+        :text_class "second-row-text unset"
+        :orientation "v"
         :spacing 10
       )
       (title_text
         :title "ساعات التشغيل"
         :text up_time
-        :title_class "second-row-title"
-        :text_class "second-row-text"
-        :orientation "vertical"
+        :title_class "second-row-title unset"
+        :text_class "second-row-text unset"
+        :orientation "v"
         :spacing 10
       )
       (title_text
         :title "الحزم"
         :text installed_packages
-        :title_class "second-row-title"
-        :text_class "second-row-text"
-        :orientation "vertical"
+        :title_class "second-row-title unset"
+        :text_class "second-row-text unset"
+        :orientation "v"
         :spacing 10
       )
     )
   )
+)
+
+; -------- Power buttons --------
+(defwidget power_buttons[]
+  (box
+    :orientation "h"
+    :spacing 4
+    :valign "start"
+    :halign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly "false"
+    (button
+      :class "power-button"
+      :onclick "poweroff"
+      ""
+    )
+    (button
+      :class "power-button"
+      :onclick "reboot"
+      ""
+    )
+    (button
+      :class "power-button"
+      :onclick "loginctl kill-session self"
+      ""
+    )
+  )
+)
+
+; -------- Music player --------
+; (defvar music_playing false)
+(defpoll music_playing
+  :interval "1s"
+  "playerctl status"
+)
+
+(defpoll music_progress
+  :interval "5s"
+  "sh ~/.config/eww/scripts/music_progress.sh"
+)
+
+(defwidget music_player []
+  (box
+    :orientation "h"
+    :spacing 0
+    :valign "start"
+    :halign "center"
+    :class "music-box unset"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly "false"
+    (image
+      :path "/home/ahmed/.config/eww/images/profile-modified.png"
+      :image-width "100"
+      :image-height "100"
+    )
+    (box
+      :orientation "v"
+      ; :spacing 10
+      :space-evenly "false"
+      :valign "start"
+      :halign "left"
+      :vexpand "false"
+      :hexpand "false"
+      :class "music-box-inside"
+      (title_text
+        :title "Linking parck"
+        :text "Waiting for the end"
+        :title_class "unset music-title"
+        :text_class "unset music-text"
+        :orientation "v"
+        ; :spacing 7
+      )
+      (progress
+        :class "prog-bar"
+        :valign "start"
+        :width 5
+        :value {music_progress}
+        :orientation "h"
+        :flipped true
+      )
+      (box
+        :vexpand "false"
+        :hexpand "false"
+        :space-evenly false
+        :vexpand false
+        :hexpand false
+        (button
+          :class "music-btn"
+          :onclick "playerctl previous"
+          ""
+        )
+        (button
+          :class "music-btn"
+          :onclick "playerctl play-pause"
+          {music_playing == "Playing" ? "⏸": ""}
+        )
+        (button
+          :class "music-btn"
+          :onclick "playerctl next"
+          ""
+        )
+      )
+    )
+  )
+  
 )
 
 
@@ -332,22 +494,6 @@
       :onclick text_onclick
       text
     )
-    ; (label
-      ;   :class title_class
-      ;   :valign "center"
-      ;   :halign "center"
-      ;   :wrap "true"
-      ;   :limit-width 100
-      ;   :text title
-    ; )
-    ; (label
-      ;   :class text_class
-      ;   :valign "center"
-      ;   :halign "center"
-      ;   :wrap "true"
-      ;   :limit-width 100
-      ;   :text text
-    ; )
   )
 )
 
@@ -453,7 +599,7 @@
   (box
     :class "layout-box"
     :space-evenly false
-    :orientation "vertical"
+    :orientation "v"
     ; :style "background-image: url('./wallpaper')"
     (box
       :valign "start"

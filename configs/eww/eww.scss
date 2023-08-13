@@ -9,7 +9,11 @@ $surface-lightgrey: #3d464e;
 $surface-grey: #2b3238;
 $surface-red: #f87070;
 
-* {
+// * {
+//   all: unset;
+// }
+
+.unset {
   all: unset;
 }
 
@@ -101,10 +105,10 @@ $surface-red: #f87070;
 }
 
 .systray {
-  padding-right: 15;
-  padding-left: 15;
-  padding-top: 4;
-  padding-bottom: 4;
+  padding-right: 8;
+  padding-left: 8;
+  padding-top: 0;
+  padding-bottom: 0;
   margin-top: 4;
   margin-bottom: 4;
   background: $surface-bg-variant;
@@ -112,39 +116,39 @@ $surface-red: #f87070;
 
 }
 
-.systray menu {
-  background-color: $surface-bg;
-  color: $surface-fg;
-  padding: 10;
-  border-radius: 8;
-}
+// .systray menu {
+//   background-color: $surface-bg;
+//   color: $surface-fg;
+//   padding: 10;
+//   border-radius: 8;
+// }
 
-.systray menuitem {
-  margin-left: 4;
-  margin-right: 4;
-}
+// .systray menuitem {
+//   margin-left: 4;
+//   margin-right: 4;
+// }
 
-.systray menu menuitem {
-  background-color: $surface-bg-variant;
-  color: $surface-fg;
-  padding: 15;
-  margin: 2;
-  border-radius: 8;
-}
+// .systray menu menuitem {
+//   background-color: $surface-bg-variant;
+//   color: $surface-fg;
+//   padding: 15;
+//   margin: 2;
+//   border-radius: 8;
+// }
 
-.systray menu menuitem:disabled {
-  background-color: #32324b;
-  color: #C7C7C7;
-  padding: 15;
-  margin: 2;
-  border-radius: 8;
-}
+// .systray menu menuitem:disabled {
+//   background-color: #32324b;
+//   color: #C7C7C7;
+//   padding: 15;
+//   margin: 2;
+//   border-radius: 8;
+// }
 
-.systray menu menuitem:hover {
-  color: $surface-fg;
-  background-color: #3C80D0;
-  transition: background-color 0.3s ease-in-out;
-}
+// .systray menu menuitem:hover {
+//   color: $surface-fg;
+//   background-color: #3C80D0;
+//   transition: background-color 0.3s ease-in-out;
+// }
 
 .layout-box {
   font-family: "Font Awesome 5 Free Solid";
@@ -214,6 +218,7 @@ $surface-red: #f87070;
   background-color: rgba($surface-bg, 0.9);
   border-radius: 10;
   border: 2px solid $accent;
+
 }
 
 .power {
@@ -227,50 +232,61 @@ $surface-red: #f87070;
 }
 
 .profile {
-  background: linear-gradient(to right, #ff4bde, #0cdfff);
+  // background: linear-gradient(to right, #ff4bde, #0cdfff);
+  background-size: cover;
+  background-position: center;
+  background-image: url("images/minimal.png");
   // margin-left: 2px;
   // margin-right: 2px;
   // margin-top: 2px;
+  min-height: 180px;
   border-top-left-radius: 10;
   border-top-right-radius: 10;
   border: 2px solid $accent;
   border-bottom: #00000000;
+
 }
 
 .profile_inside {
-  background-color: rgba(#18112A, 0.95);
+  background-color: rgba(#aad0ff, 0.6);
   border-radius: 10px;
-  margin-top: -250;
-  min-width: 300px;
-  min-height: 100px;
+  margin-top: -65;
+  min-width: 315px;
+  min-height: 5px;
+  // box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.5),
 }
 
 .title_class {
-  color: #e8faff;
+  color: #18112A;
   font-size: 35px;
-  margin-top: -30;
+  margin-top: -40;
   font-family: "VIP Rawy Regular";
 }
 
 .text_class {
-  color: #3C80D0;
+  color: #18112A;
   font-size: 18px;
   margin-top: -5;
   font-family: "VIP Rawy Regular";
 }
 
+.second-row-box {
+  margin-bottom: 32px;
+  margin-top: -20px;
+}
+
 .second-row-title {
-  color: #827996;
+  color: #18112A;
   font-size: small;
 }
 
 .second-row-text {
-  color: #c0a8ff;
+  color: #2a2044;
   font-size: medium;
 }
 
 .profile-image {
-  margin-top: -50px;
+  margin-top: -40px;
   border-radius: 50%;
 }
 
@@ -359,4 +375,88 @@ $surface-red: #f87070;
   color: #352558;
   border-top-left-radius: 5;
   border-bottom-left-radius: 5;
+}
+
+.power-button {
+  // display: inline-block;
+  // font-family: "Font Awesome 5 Free Solid";
+  padding: 20px 30px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  // text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  // cursor: pointer;
+  background-color: #18112b;
+  color: #C8CCD4;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.power-button:hover {
+  background-color: #09060f;
+  color: #ffffff;
+}
+
+.test {
+  background-color: #00B9BB;
+}
+
+.music-box {
+  // margin-top: 0px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 8px;
+  padding-right: 28px;
+  background-color: #18112A;
+  border-radius: 10;
+  min-height: 1px;
+}
+
+.music-title {
+  margin-top: 5px;
+  color: #e8faff;
+  font-size: 17px;
+  font-family: "VIP Rawy Regular";
+  font-weight: bold;
+}
+
+.music-text {
+  color: #e8faff;
+  font-size: 12px;
+  font-family: "VIP Rawy Regular";
+}
+
+.music-box-inside {
+  // background-color: #00B9BB;
+}
+
+.prog-bar {
+  min-width: 2px;
+  margin-top: 15px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.music-btn {
+  background-color: #2FBACF;
+  border-radius: 20px;
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: 16px;
+  color: #1a122b;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: #008183;
+    color: #000000;
+  }
+}
+
+.left_menu_profile {
+  background-color: rgba(#99C7FF, 0.0);
 }
