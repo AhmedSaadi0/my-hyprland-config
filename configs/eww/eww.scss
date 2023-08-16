@@ -1,15 +1,9 @@
-$surface-bg: #213A62;
-$surface-bg-variant: #162842;
+$surface-bg: #15233E;
+$surface-bg-variant: #1B3A66;
 $surface-fg: #99C7FF;
 $accent: #FA9399;
 
-// /* Define a CSS variable for border-radius */
-// :root {
-//   --border-radius: 10px;
-// }
-
 // Others
-$surface-darkgrey: #20252b;
 $surface-lightgrey: #3d464e;
 $surface-grey: #2b3238;
 $surface-red: #f87070;
@@ -18,21 +12,16 @@ $surface-red: #f87070;
   all: unset;
 }
 
-.sidestuff {
-  color: #ffd5cd;
-  font-family: "Font Awesome 5 Free Solid";
-  padding-right: 15;
-  padding-left: 15;
+.left_bar {
+  padding-right: 5;
+  padding-left: 5;
   // padding-top: 4;
   // padding-bottom: 4;
-  // margin-top: 4;
-  // margin-bottom: 4;
-  background: #4C3D75;
-  color: $surface-fg;
-  border-radius: 20;
+  margin-top: 4;
+  margin-bottom: 4;
 }
 
-.sidestuff slider {
+.left_bar slider {
   all: unset;
   color: #ffd5cd;
   font-family: "Font Awesome 5 Free Solid";
@@ -159,12 +148,12 @@ $surface-red: #f87070;
   padding-left: 5;
   // padding-top: 4;
   // padding-bottom: 4;
-  margin-top: 2;
-  margin-bottom: 2;
-  margin-right: 12;
-  margin-left: 12;
+  margin-top: 4;
+  margin-bottom: 4;
+  margin-right: 7;
+  // margin-left: 12;
   background: $surface-bg-variant;
-  border-radius: 20;
+  border-radius: 15px;
 }
 
 .workspaces-box button:hover {
@@ -199,7 +188,7 @@ $surface-red: #f87070;
 
 .left_menu {
   background-color: rgba($surface-bg, 0.9);
-  border-radius: 10;
+  border-radius: 15px;
   border: 2px solid $accent;
 
 }
@@ -223,8 +212,8 @@ $surface-red: #f87070;
   // margin-right: 2px;
   // margin-top: 2px;
   min-height: 180px;
-  border-top-left-radius: 10;
-  border-top-right-radius: 10;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   border: 2px solid $accent;
   border-bottom: #00000000;
 
@@ -282,8 +271,8 @@ $surface-red: #f87070;
   font-family: "Font Awesome 5 Free Solid";
   background: linear-gradient(to left, #3C7EC0, #3C7EC0);
   color: #352558;
-  border-top-right-radius: 5;
-  border-bottom-right-radius: 5;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 
@@ -297,8 +286,8 @@ $surface-red: #f87070;
   font-size: medium;
   background: linear-gradient(to right, #FE9398, #397EC1);
   color: #352558;
-  border-top-left-radius: 5;
-  border-bottom-left-radius: 5;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -310,13 +299,13 @@ $surface-red: #f87070;
   padding-bottom: 4;
   background: linear-gradient(to right, #FE9398, #397EC1);
   color: #352558;
-  border-radius: 12;
+  border-radius: 15px;
 }
 
 .netspeed-box {
   background: linear-gradient(to right, #FE9398, #397EC1);
   color: #352558;
-  border-radius: 5;
+  border-radius: 15px;
 }
 
 .netspeed-icon {
@@ -327,8 +316,8 @@ $surface-red: #f87070;
   font-family: "Font Awesome 5 Free Solid";
   background: linear-gradient(to left, #6082B9, #6082B9);
   color: #352558;
-  border-top-right-radius: 5;
-  border-bottom-right-radius: 5;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -354,8 +343,8 @@ $surface-red: #f87070;
   font-family: "Font Awesome 5 Free Solid";
   background: linear-gradient(to left, #7C77A3, #7C77A3);
   color: #352558;
-  border-top-right-radius: 5;
-  border-bottom-right-radius: 5;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 
@@ -368,8 +357,8 @@ $surface-red: #f87070;
   padding-bottom: 4;
   background: linear-gradient(to right, #F8A0B6, #7C77A3);
   color: #352558;
-  border-top-left-radius: 5;
-  border-bottom-left-radius: 5;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 
@@ -388,7 +377,7 @@ $surface-red: #f87070;
   // text-align: center;
   text-decoration: none;
   border: none;
-  border-radius: 10px;
+  border-radius: 15px;
   // cursor: pointer;
   background-color: $surface-bg-variant;
   color: $surface-fg;
@@ -411,7 +400,7 @@ $surface-red: #f87070;
   padding-left: 8px;
   padding-right: 18px;
   background-color: $surface-bg-variant;
-  border-radius: 10;
+  border-radius: 15px;
   min-height: 1px;
 }
 
@@ -459,17 +448,40 @@ $surface-red: #f87070;
   background-color: rgba(#99C7FF, 0.0);
 }
 
+
 .iconmem {
   font-family: "Font Awesome 5 Free Solid";
   font-size: 19;
-  color: #FDE7D9;
+  color: $surface-bg-variant;
+}
+
+.mem_box {
+  min-height: 2px;
+  color: #FD9398;
+}
+
+.iconcpu {
+  font-family: "Font Awesome 5 Free Solid";
+  font-size: 19;
+  color: $surface-bg-variant;
   // background: linear-gradient(to right, #FE9398, #397EC1);
   // margin: 10px;
   // padding-right: 13px;
 }
 
-.mem_box {
+.cpu_box {
   // margin-top: 8px;
   // margin-bottom: 8px;
   min-height: 2px;
+}
+
+.hw-util {
+  background-color: $surface-bg-variant;
+  border-radius: 15px;
+  padding-left: 8px;
+  padding-right: 8px;
+  // padding-top: 2px;
+  // padding-bottom: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }

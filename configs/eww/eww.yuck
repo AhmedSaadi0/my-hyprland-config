@@ -1,8 +1,35 @@
+; --------------------------------------------
+; ---------------- BAR WINDOW ----------------
+; --------------------------------------------
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (
+    geometry
+    :x "0%"
+    :y "0%"
+    :width "100%"
+    :height "1%"
+    :anchor "top center"
+  )
+  :reserve (
+    struts
+    :side "top"
+    :distance "0%"
+  )
+  :stacking "fg"
+  :exclusive true
+  (bar)
+)
+
+; --------------------------------------------
+; ---------------- BAR WIDGET ----------------
+; --------------------------------------------
 (defwidget bar []
   (centerbox
     :orientation "h"
     :class "bar"
-    (workspaces)
+    (right_bar)
     (title_text
       :title ""
       :spacing 0
@@ -15,43 +42,17 @@
       :title_onclick "sh ~/.config/eww/scripts/open_menu.sh"
       :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
     )
-    (sidestuff)
+    (left_bar)
   )
 )
 
-(defwidget sidestuff []
+(defwidget left_bar []
   (box
     :orientation "h"
     :space-evenly false
     :halign "end"
     :spacing 7
-    (cpu_widget)
-    ; (box
-      ;   :class "sidestuff"
-      ;   :orientation "h"
-      ;   :space-evenly false
-      ;   :halign "end"
-      ;   (metric
-        ;     :label ""
-        ;     :value {EWW_RAM.used_mem_perc}
-        ;     :onchange ""
-      ;   )
-      ;   (metric
-        ;     :label ""
-        ;     :value {EWW_CPU.avg}
-        ;     :onchange ""
-      ;   )
-      ;   (metric
-        ;     :label ""
-        ;     :value {EWW_BATTERY.BAT0.capacity}
-        ;     :onchange ""
-      ;   )
-      ;   (metric
-        ;     :label "Disk"
-        ;     :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-        ;     :onchange ""
-      ;   )
-    ; )
+    (netspeed_box)
     (title_text
       :title {battery["icon"]}
       :spacing 0
@@ -76,12 +77,74 @@
       ; :title_onclick "sh ~/.config/eww/scripts/open_menu.sh"
       ; :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
     )
-    (netspeed_box)
     (tray)
     (left_menu_button)
   )
 )
 
+(defwidget right_bar []
+  (box
+    :orientation "h"
+    :space-evenly false
+    :halign "start"
+    :spacing 7
+    (workspaces)
+    (box
+      :class "hw-util"
+      :orientation "h"
+      :space-evenly false
+      :spacing 20
+      (ram_widget)
+      (cpu_widget)
+    )
+  )
+)
+
+; -------------------------------------
+; ---------------- CPU ----------------
+; -------------------------------------
+(defpoll cpu_script
+  :interval "1s"
+  "sh ~/.config/eww/scripts/cpu.sh"
+)
+
+(defwidget cpu_widget []
+  (circle_widget
+    :value {cpu_script["cpu_usage"]}
+    :thickness 7
+    :progress_class "unset cpu_box"
+    :icon_class "unset iconcpu"
+    :limit_width 1
+    :tooltip "يتم استخدام ${cpu_script["cpu_usage"]}% من المعالج"
+    ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+    :lable ""
+  )
+)
+
+; -------------------------------------
+; ---------------- RAM ----------------
+; -------------------------------------
+(defpoll ram_script
+  :interval "10s"
+  "sh ~/.config/eww/scripts/ram.sh"
+)
+
+(defwidget ram_widget []
+  (circle_widget
+    :value ram_script
+    :thickness 7
+    :progress_class "unset mem_box"
+    :icon_class "unset iconmem"
+    :limit_width 1
+    :tooltip "تم استخدام ${ram_script}% من الرام"
+    ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+    :lable ""
+  )
+)
+
+; --------------------------------------------
+; ---------------- WORKSPACES ----------------
+; --------------------------------------------
 (deflisten get_workspaces
   :initial "[]"
   "sh ~/.config/eww/scripts/get-workspaces.sh"
@@ -150,96 +213,16 @@
     (button
       :class {
       current_workspace == 8 ? "active-workspace unset" :
-      get_workspaces["workspace_8"] > 0 ? "unset has-windows" : "unset inactive-workspace" 
+      get_workspaces["workspace_8"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
       :onclick "hyprctl dispatch workspace 8" ""
     )
   )
 )
 
-; (defwidget workspaces []
-  ;   (eventbox
-    ;     :onscroll "bash ~/.config/eww/scripts/change-active-workspace.sh {} ${current_workspace}"
-    ;     :class "workspaces"
-    ;     :halign "start"
-    ;     :width 300
-    ;     (box
-      ;       :space-evenly true
-      ;       (eventbox
-        ;         :onclick "hyprctl dispatch workspace 1"
-        ;         (box
-          ;           :class {current_workspace == 1 ? "active-workspace" : "inactive-workspace"}
-          ;           (label
-          ;           :text "")
-        ;         )
-      ;       )
-      ;       (eventbox
-        ;         :onclick "hyprctl dispatch workspace 2"
-        ;         (box
-          ;           :class {current_workspace == 2 ? "active-workspace" : "inactive-workspace"}
-          ;           (label
-            ;             :text ""
-          ;           )
-        ;         )
-      ;       )
-      ;       (eventbox
-        ;         :onclick "hyprctl dispatch workspace 3"
-        ;         (box
-          ;           :class {current_workspace == 3 ? "active-workspace" : "inactive-workspace"}
-          ;           (label
-            ;             :text ""
-          ;           )
-        ;         )
-      ;       )
-      ;       (eventbox
-        ;         :onclick "hyprctl dispatch workspace 4"
-        ;         (box
-          ;           :class {current_workspace == 4 ? "active-workspace" : "inactive-workspace"}
-          ;           (label
-            ;             :text ""
-          ;           )
-        ;         )
-      ;       )
-      ;       (eventbox
-        ;         :onclick "hyprctl dispatch workspace 5"
-        ;         (box
-          ;           :class {current_workspace == 5 ? "active-workspace" : "inactive-workspace"}
-          ;           (label
-            ;             :text ""
-          ;           )
-        ;         )
-      ;       )
-      ;       (eventbox
-        ;         :onclick "hyprctl dispatch workspace 6"
-        ;         (box
-          ;           :class {current_workspace == 6 ? "active-workspace" : "inactive-workspace"}
-          ;           (label
-            ;             :text ""
-          ;           )
-        ;         )
-      ;       )
-      ;       (eventbox
-        ;         :onclick "hyprctl dispatch workspace 7"
-        ;         (box
-          ;           :class {current_workspace == 7 ? "active-workspace" : "inactive-workspace"}
-          ;           (label
-            ;             :text ""
-          ;           )
-        ;         )
-      ;       )
-      ;       (eventbox
-        ;         :onclick "hyprctl dispatch workspace 8"
-        ;         (box
-          ;           :class {current_workspace == 8 ? "active-workspace" : "inactive-workspace"}
-          ;           (label
-            ;             :text ""
-          ;           )
-        ;         )
-      ;       )
-    ;     )
-  ;   )
-; )
-
+; -----------------------------------------
+; ---------------- SYSTRAY ----------------
+; -----------------------------------------
 (defwidget tray []
   (systray
     :class "unset"
@@ -280,7 +263,9 @@
   "date '+(%I:%M) %A, %d %B'"
 )
 
-; ---------- Net speed ----------
+; ------------------------------------------
+; ---------------- NETSPEED ----------------
+; ------------------------------------------
 (defpoll netspeed_poll
   :interval "0.5s"
   "sh ~/.config/eww/scripts/netspeed.sh"
@@ -325,35 +310,17 @@
   )
 )
 
+; -----------------------------------------
+; ---------------- BATTERY ----------------
+; -----------------------------------------
 (defpoll battery
   :interval "5s"
   "sh ~/.config/eww/scripts/battery_percentage.sh"
 )
 
-(defwindow bar
-  :monitor 0
-  :windowtype "dock"
-  :geometry (
-    geometry
-    :x "0%"
-    :y "0%"
-    :width "100%"
-    :height "1%"
-    :anchor "top center"
-  )
-  :reserve (
-    struts
-    :side "top"
-    :distance "0%"
-  )
-  :stacking "fg"
-  :exclusive true
-  (bar)
-)
-
-; -------------------------------------------------------
-; ---------------------- left menu ----------------------
-; -------------------------------------------------------
+; -------------------------------------------
+; ---------------- left menu ----------------
+; -------------------------------------------
 (defvar left_menu_visible false)
 
 (defwidget left_menu_button []
@@ -490,34 +457,6 @@
   )
 )
 
-; -------- Power buttons --------
-(defwidget power_buttons[]
-  (box
-    :orientation "h"
-    :spacing 4
-    :valign "start"
-    :halign "center"
-    :vexpand "false"
-    :hexpand "false"
-    :space-evenly "false"
-    (button
-      :class "power-button"
-      :onclick "poweroff"
-      ""
-    )
-    (button
-      :class "power-button"
-      :onclick "reboot"
-      ""
-    )
-    (button
-      :class "power-button"
-      :onclick "loginctl kill-session self"
-      ""
-    )
-  )
-)
-
 ; -------- Music player --------
 ; (defvar music_playing false)
 (deflisten music
@@ -600,27 +539,33 @@
     )
   )
 )
-; -------- CPU --------
-(defpoll cpu_script
-  :interval "1s"
-  "sh ~/.config/eww/scripts/cpu.sh"
-)
 
-(defwidget cpu_widget []
-  (circular-progress
-    :value {cpu_script["cpu_usage"]}
-    ; :value 100
-    :thickness 7
-    :class "unset mem_box"
-    :height 4
+; ----------------------------------------------
+; ---------------- POWER BUTTON ----------------
+; ----------------------------------------------
+(defwidget power_buttons[]
+  (box
+    :orientation "h"
+    :spacing 4
+    :valign "start"
+    :halign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly "false"
     (button
-      :class "unset iconmem"
-      :limit-width 1
-      :tooltip "استخدام ${cpu_script["cpu_usage"]}% من الرام"
-      ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
-      :show_truncated false
-      :wrap false
-      ""
+      :class "power-button"
+      :onclick "poweroff"
+      ""
+    )
+    (button
+      :class "power-button"
+      :onclick "reboot"
+      ""
+    )
+    (button
+      :class "power-button"
+      :onclick "loginctl kill-session self"
+      ""
     )
   )
 )
@@ -664,169 +609,30 @@
   )
 )
 
-; ---------------------- New eww ----------------------
-(defwindow powermenu
-  :monitor 0
-  :stacking "fg"
-  :windowtype "normal"
-  :wm-ignore true
-  :geometry (
-    geometry
-    :width "100%"
-    :height "100%"
-  )
-  (powermenu_layout)
-)
 
-(defpoll time
-  :interval "5s"
-  :initial `date +'{"hour":"%H","min":"%M"}'`
-  `date +'{"hour":"%H","min":"%M"}'`
-)
-
-; Variables
-(defpoll net
-  :interval "100s"
-  :initial `N/A`
-  `nmcli -t -f SIGNAL,ACTIVE device wifi | awk -F':' '{if($2=="yes")print$1}'`
-)
-
-(defwidget _buttons [shutdown shutdown_icon reboot reboot_icon logout logout_icon]
-  (box
-    :class "btns-box"
-    :spacing 5
-    :vexpand true
-    :hexpand true
-    :valign "end"
-    :halign "end"
-    :space-evenly false
-    (button :onclick shutdown shutdown_icon)
-    (button :onclick reboot reboot_icon)
-    (button :onclick logout logout_icon)
-  )
-)
-
-(defwidget _network [strength offline excellent good okay slow]
-  (box
-    :class "net-box"
-    :space-evenly false
-    :spacing 8
-    (label
-      :text {
-      strength == "" ? offline :
-      strength < 26 ? slow :
-      strength < 51 ? okay :
-      strength < 76 ? good : excellent
-      }
-    )
-  )
-)
-
-(defwidget _battery [battery status one two three four five six seven charge]
-  (box
-    :class "bat-box"
-    :space-evenly false
-    :spacing 8
-    (label
-      :text {
-      status == 'Charging' ? charge :
-      battery < 15 ? seven :
-      battery < 30 ? six :
-      battery < 45 ? five :
-      battery < 60 ? four :
-      battery < 75 ? three :
-      battery < 95 ? two : one
-      }
-    )
-  )
-)
-
-(defwidget _sundial []
-  (label
-    :class "sundial-lbl"
-    :halign "end"
-    :hexpand true
-    :text {
-    time.hour >= 2 && time.hour <= 4 ? "Early Morning" :
-    time.hour <= 5 ? "Dawn" :
-    time.hour >= 6 && (time.hour <= 8 && time.min <= 59) ? "Morning" :
-    time.hour >= 9 && (time.hour <= 11 && time.min <= 59) ? "Late Morning" :
-    time.hour == 12 && time.min <= 29 ? "Midday" :
-    time.hour >= 12 && time.hour <= 16 ? "Afternoon" :
-    time.hour > 16 && time.hour <= 17 ? "Late Afternoon" :
-    (time.hour >= 17 && time.min <= 1) || (time.hour <= 18 && time.min <= 20) ? "Early Evening" :
-    time.hour >= 18 && time.hour <= 19 ? "Dusk" :
-    time.hour > 19 && time.hour <= 21 ? "Late Evening" :
-    time.hour > 21 ? "Night" : "Midnight"
-    }
-  )
-)
-
-(defwidget powermenu_layout []
-  (box
-    :class "layout-box"
-    :space-evenly false
-    :orientation "v"
-    ; :style "background-image: url('./wallpaper')"
-    (box
-      :valign "start"
-      :space-evenly false
-      :spacing 25
-      (_sundial)
-      (_battery
-        :status {EWW_BATTERY.BAT0.status}
-        :battery {EWW_BATTERY.BAT0.capacity}
-        :charge ""
-        :one ""
-        :two ""
-        :three ""
-        :four ""
-        :five ""
-        :six ""
-        :seven ""
-      )
-      (_network
-        :strength net
-        :offline "o"
-        :excellent ""
-        :good ""
-        :okay ""
-        :slow ""
-      )
-      (label
-        :text "|"
-        :class "sep"
-      )
-      (button
-        :onclick "eww close powermenu"
-        :class "close-btn" ""
-      )
-    )
-    (box
-      :space-evenly false
-      :hexpand true
-      :vexpand true
-      (box
-        :spacing 15
-        :class "tm-box"
-        :space-evenly false
-        :valign "end"
-        :halign "start"
-        (label
-          :text ""
-        )
-        (label
-          :text "${time.hour}  ${time.min}"
-        )
-      )
-      (_buttons
-        :shutdown "poweroff"
-        :reboot "reboot"
-        :logout "loginctl kill-session self"
-        :shutdown_icon ""
-        :reboot_icon ""
-        :logout_icon ""
-      )
+(defwidget circle_widget [
+  value
+  ?thickness
+  ?progress_class
+  ?icon_class
+  ?limit_width
+  ?tooltip
+  ?onclick
+  ?lable
+  ]
+  (circular-progress
+    :value value
+    ; :value 100
+    :thickness thickness
+    :class progress_class
+    (button
+      :class icon_class
+      :limit-width limit_width
+      :tooltip tooltip
+      :onclick onclick
+      :show_truncated false
+      :wrap false
+      lable
     )
   )
 )
