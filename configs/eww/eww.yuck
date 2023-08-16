@@ -1,6 +1,7 @@
 (defwidget bar []
   (centerbox
     :orientation "h"
+    :class "bar"
     (workspaces)
     (title_text
       :title ""
@@ -8,8 +9,8 @@
       :text my_time
       :valign "center"
       :halign "center"
-      :title_class "time-icon unset"
-      :text_class "time-text unset"
+      :title_class "unset time-icon"
+      :text_class "unset time-text"
       :orientation "h"
       :title_onclick "sh ~/.config/eww/scripts/open_menu.sh"
       :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
@@ -23,7 +24,8 @@
     :orientation "h"
     :space-evenly false
     :halign "end"
-    :spacing 10
+    :spacing 7
+    (cpu_widget)
     ; (box
       ;   :class "sidestuff"
       ;   :orientation "h"
@@ -80,30 +82,170 @@
   )
 )
 
+(deflisten get_workspaces
+  :initial "[]"
+  "sh ~/.config/eww/scripts/get-workspaces.sh"
+)
+(deflisten current_workspace
+  :initial "1"
+  "sh ~/.config/eww/scripts/get-active-workspace.sh"
+)
+
 (defwidget workspaces []
   (box
-    :class "unset workspaces"
+    :class "unset workspaces-box"
     :orientation "h"
     :space-evenly true
     :halign "start"
-    :spacing 20
-    (button :class "unset" :onclick "hyprctl dispatch workspace 1" "")
-    (button :class "unset" :onclick "hyprctl dispatch workspace 2" "")
-    (button :class "unset" :onclick "hyprctl dispatch workspace 3" "")
-    (button :class "unset" :onclick "hyprctl dispatch workspace 4" "")
-    (button :class "unset" :onclick "hyprctl dispatch workspace 5" "")
-    (button :class "unset" :onclick "hyprctl dispatch workspace 6" "")
-    (button :class "unset" :onclick "hyprctl dispatch workspace 7" "")
-    (button :class "unset" :onclick "hyprctl dispatch workspace 8" "")
+    :spacing 0
+    (button
+      :class {
+      current_workspace == 1 ? "active-workspace unset" :
+      get_workspaces["workspace_1"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 1" ""
+    )
+    (button
+      :class {
+      current_workspace == 2 ? "active-workspace unset" :
+      get_workspaces["workspace_2"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 2" ""
+    )
+    (button
+      :class {
+      current_workspace == 3 ? "active-workspace unset" :
+      get_workspaces["workspace_3"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 3" ""
+    )
+    (button
+      :class {
+      current_workspace == 4 ? "active-workspace unset" :
+      get_workspaces["workspace_4"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 4" ""
+    )
+    (button
+      :class {
+      current_workspace == 5 ? "active-workspace unset" :
+      get_workspaces["workspace_6"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 5" ""
+    )
+    (button
+      :class {
+      current_workspace == 6 ? "active-workspace unset" :
+      get_workspaces["workspace_6"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 6" ""
+    )
+    (button
+      :class {
+      current_workspace == 7 ? "active-workspace unset" :
+      get_workspaces["workspace_7"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 7" ""
+    )
+    (button
+      :class {
+      current_workspace == 8 ? "active-workspace unset" :
+      get_workspaces["workspace_8"] > 0 ? "unset has-windows" : "unset inactive-workspace" 
+      }
+      :onclick "hyprctl dispatch workspace 8" ""
+    )
   )
 )
 
+; (defwidget workspaces []
+  ;   (eventbox
+    ;     :onscroll "bash ~/.config/eww/scripts/change-active-workspace.sh {} ${current_workspace}"
+    ;     :class "workspaces"
+    ;     :halign "start"
+    ;     :width 300
+    ;     (box
+      ;       :space-evenly true
+      ;       (eventbox
+        ;         :onclick "hyprctl dispatch workspace 1"
+        ;         (box
+          ;           :class {current_workspace == 1 ? "active-workspace" : "inactive-workspace"}
+          ;           (label
+          ;           :text "")
+        ;         )
+      ;       )
+      ;       (eventbox
+        ;         :onclick "hyprctl dispatch workspace 2"
+        ;         (box
+          ;           :class {current_workspace == 2 ? "active-workspace" : "inactive-workspace"}
+          ;           (label
+            ;             :text ""
+          ;           )
+        ;         )
+      ;       )
+      ;       (eventbox
+        ;         :onclick "hyprctl dispatch workspace 3"
+        ;         (box
+          ;           :class {current_workspace == 3 ? "active-workspace" : "inactive-workspace"}
+          ;           (label
+            ;             :text ""
+          ;           )
+        ;         )
+      ;       )
+      ;       (eventbox
+        ;         :onclick "hyprctl dispatch workspace 4"
+        ;         (box
+          ;           :class {current_workspace == 4 ? "active-workspace" : "inactive-workspace"}
+          ;           (label
+            ;             :text ""
+          ;           )
+        ;         )
+      ;       )
+      ;       (eventbox
+        ;         :onclick "hyprctl dispatch workspace 5"
+        ;         (box
+          ;           :class {current_workspace == 5 ? "active-workspace" : "inactive-workspace"}
+          ;           (label
+            ;             :text ""
+          ;           )
+        ;         )
+      ;       )
+      ;       (eventbox
+        ;         :onclick "hyprctl dispatch workspace 6"
+        ;         (box
+          ;           :class {current_workspace == 6 ? "active-workspace" : "inactive-workspace"}
+          ;           (label
+            ;             :text ""
+          ;           )
+        ;         )
+      ;       )
+      ;       (eventbox
+        ;         :onclick "hyprctl dispatch workspace 7"
+        ;         (box
+          ;           :class {current_workspace == 7 ? "active-workspace" : "inactive-workspace"}
+          ;           (label
+            ;             :text ""
+          ;           )
+        ;         )
+      ;       )
+      ;       (eventbox
+        ;         :onclick "hyprctl dispatch workspace 8"
+        ;         (box
+          ;           :class {current_workspace == 8 ? "active-workspace" : "inactive-workspace"}
+          ;           (label
+            ;             :text ""
+          ;           )
+        ;         )
+      ;       )
+    ;     )
+  ;   )
+; )
+
 (defwidget tray []
   (systray
-    :class "systray unset"
+    :class "unset"
     :active-only false
     ; :pack-direction "rtl"
-    :interval "1s"
+    ; :interval "1s"
   )
 )
 
@@ -126,11 +268,6 @@
   )
 )
 
-(deflisten music
-  :initial ""
-  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true"
-)
-
 (defpoll volume
   :interval "1s"
   "sh ~/.config/eww/scripts/getvol"
@@ -151,7 +288,7 @@
 
 (defwidget netspeed_box []
   (box
-    :class "unset netspeed-box"
+    :class "netspeed-box"
     :orientation "h"
     :space-evenly false
     :halign "center"
@@ -201,7 +338,7 @@
     :x "0%"
     :y "0%"
     :width "100%"
-    :height "3%"
+    :height "1%"
     :anchor "top center"
   )
   :reserve (
@@ -266,13 +403,13 @@
 )
 
 (defpoll up_time
-  :interval "360s"
+  :interval "3600s"
   ; "awk '{print int($1 / 3600)}' /proc/uptime "
   "sh ~/.config/eww/scripts/uptime.sh"
 )
 
 (defpoll installed_packages
-  :interval "360s"
+  :interval "3600s"
   "pacman -Qq | wc -l"
 )
 
@@ -305,14 +442,14 @@
     :vexpand "false"
     :hexpand "false"
     (image
-      :path "/home/ahmed/.config/eww/images/profile-modified.png"
+      :path "/home/ahmed/.config/eww/images/image.png"
       :image-width "80"
       :image-height "80"
       :class "unset profile-image"
     )
     (title_text
       :title "احمد الصعدي"
-      :text "الوَحْدَةُ خير من جليس السوء."
+      :text "بيثون بيثون بيثون"
       :title_class "title_class unset"
       :text_class "text_class unset"
       :orientation "v"
@@ -383,6 +520,11 @@
 
 ; -------- Music player --------
 ; (defvar music_playing false)
+(deflisten music
+  :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true"
+)
+
 (defpoll music_playing
   :interval "1s"
   "playerctl status"
@@ -396,7 +538,7 @@
 (defwidget music_player []
   (box
     :orientation "h"
-    :spacing 0
+    :spacing 20
     :valign "start"
     :halign "center"
     :class "music-box unset"
@@ -404,9 +546,9 @@
     :hexpand "false"
     :space-evenly "false"
     (image
-      :path "/home/ahmed/.config/eww/images/profile-modified.png"
-      :image-width "100"
-      :image-height "100"
+      :path "/home/ahmed/.config/eww/images/no_music.png"
+      :image-width "90"
+      :image-height "90"
     )
     (box
       :orientation "v"
@@ -418,8 +560,8 @@
       :hexpand "false"
       :class "music-box-inside"
       (title_text
-        :title "Linking parck"
-        :text "Waiting for the end"
+        :title {music_progress["currently_playing"]}
+        :text {music_progress["artist"]}
         :title_class "unset music-title"
         :text_class "unset music-text"
         :orientation "v"
@@ -429,7 +571,7 @@
         :class "prog-bar"
         :valign "start"
         :width 5
-        :value {music_progress}
+        :value {music_progress["position_percentage"]}
         :orientation "h"
         :flipped true
       )
@@ -457,7 +599,30 @@
       )
     )
   )
-  
+)
+; -------- CPU --------
+(defpoll cpu_script
+  :interval "1s"
+  "sh ~/.config/eww/scripts/cpu.sh"
+)
+
+(defwidget cpu_widget []
+  (circular-progress
+    :value {cpu_script["cpu_usage"]}
+    ; :value 100
+    :thickness 7
+    :class "unset mem_box"
+    :height 4
+    (button
+      :class "unset iconmem"
+      :limit-width 1
+      :tooltip "استخدام ${cpu_script["cpu_usage"]}% من الرام"
+      ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+      :show_truncated false
+      :wrap false
+      ""
+    )
+  )
 )
 
 
@@ -476,6 +641,7 @@
   ?text_onclick
   ?valign
   ?halign
+  ?tooltip
   ]
   (box
     :orientation orientation
@@ -484,6 +650,7 @@
     :valign valign
     :halign halign
     :class box_class
+    :tooltip tooltip
     (button
       :class title_class
       :onclick title_onclick
