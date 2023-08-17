@@ -1,2 +1,3 @@
-#!/bin/sh
-amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%' | head -1
+#!/bin/bash
+volume=$(pactl list sinks | grep 'Volume:' | head -n 1 | awk '{print $5}' | tr -d '%')
+echo "$volume"

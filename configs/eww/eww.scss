@@ -1,7 +1,36 @@
-$surface-bg: #15233E;
-$surface-bg-variant: #1B3A66;
-$surface-fg: #99C7FF;
-$accent: #FA9399;
+// Pixel Values
+$padding-small: 5px;
+$margin-small: 4px;
+$font-size-small: 19px;
+$border-radius-medium: 15px;
+
+$padding-medium: 8px;
+$margin-medium: 10px;
+$font-size-medium: 16px;
+$border-radius-large: 20px;
+
+// Material 3 colors 
+$primary: #ffb3b5;
+$on-primary: #18255E;
+$primary-container: #7d2932;
+$on-primary-container: #ffdada;
+
+$secondary: #9fcaff;
+$on-secondary: #003258;
+$secondary-container: #00497d;
+$on-secondary-container: #d1e4ff;
+
+
+$tertiary: #e6c18d;
+$on-tertiary: #422c05;
+$tertiary-container: #5c421a;
+$on-tertiary-container: #ffddb1;
+
+$background: #001b3d;
+$on-background: #d6e3ff;
+$surface: #001b3d;
+$on-surface: #d6e3ff;
+
 
 // Others
 $surface-lightgrey: #3d464e;
@@ -13,12 +42,10 @@ $surface-red: #f87070;
 }
 
 .left_bar {
-  padding-right: 5;
-  padding-left: 5;
-  // padding-top: 4;
-  // padding-bottom: 4;
-  margin-top: 4;
-  margin-bottom: 4;
+  padding-right: $padding-small;
+  padding-left: $padding-small;
+  margin-top: $margin-small;
+  margin-bottom: $margin-small;
 }
 
 .left_bar slider {
@@ -36,34 +63,34 @@ $surface-red: #f87070;
   margin-left: 5;
 }
 
+// .metric scale trough highlight {
+//   all: unset;
+//   background-color: #61AFEF;
+//   color: #000000;
+//   border-radius: 10px;
+// }
+
+// .metric scale trough {
+//   all: unset;
+//   background-color: $primary-container;
+//   border-radius: 50px;
+//   min-height: 3px;
+//   min-width: 50px;
+//   margin-left: 20px;
+//   margin-right: 10px;
+// }
+
 .metric scale trough highlight {
   all: unset;
-  background-color: #61AFEF;
-  color: #000000;
+  background-color: rgba($primary, $alpha: 0.9);
+  color: $secondary;
   border-radius: 10px;
 }
 
 .metric scale trough {
   all: unset;
-  background-color: $surface-bg-variant;
-  border-radius: 50px;
-  min-height: 3px;
-  min-width: 50px;
-  margin-left: 20px;
-  margin-right: 10px;
-}
-
-.metric scale trough highlight {
-  all: unset;
-  background-color: #61AFEF;
-  color: #000000;
-  border-radius: 10px;
-}
-
-.metric scale trough {
-  all: unset;
-  background-color: $surface-bg-variant;
-  border-radius: 15px;
+  background-color: rgba($primary-container, 0.3);
+  border-radius: $border-radius-medium;
   min-height: 10px;
   min-width: 50px;
 }
@@ -77,7 +104,7 @@ $surface-red: #f87070;
   background-repeat: no-repeat;
   background-size: contain;
   padding: 4em;
-  color: rgba($surface-fg, 0.8);
+  color: rgba($on-background, 0.8);
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -103,7 +130,6 @@ $surface-red: #f87070;
   button {
     padding: 0.4em;
     border-radius: 0.1em;
-    // background-color: rgba($surface-darkgrey, 0.3);
 
     &:hover {
       transition: 200ms linear background-color, border-radius;
@@ -137,59 +163,55 @@ $surface-red: #f87070;
 // ----------------- Mine -----------------
 // ----------------------------------------
 .bar {
-  background-color: $surface-bg;
-  color: $surface-fg;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  background-color: $background;
+  color: $on-background;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
 .workspaces-box {
-  padding-right: 5;
-  padding-left: 5;
-  // padding-top: 4;
-  // padding-bottom: 4;
-  margin-top: 4;
-  margin-bottom: 4;
-  margin-right: 7;
-  // margin-left: 12;
-  background: $surface-bg-variant;
-  border-radius: 15px;
+  padding-right: $padding-small;
+  padding-left: $padding-small;
+  margin-top: $margin-small;
+  margin-bottom: $margin-small;
+  margin-right: $margin-small;
+  background: $secondary-container;
+  border-radius: $border-radius-medium;
 }
 
 .workspaces-box button:hover {
-  color: #4091C9;
+  color: $secondary;
 }
 
 .active-workspace {
-  // padding-right: 5px;
-  // margin-right: 15px;
-  // margin-left: 15px;
-  color: $accent;
+  color: $primary;
   font-family: "Font Awesome 5 Free Solid";
-  border-bottom: 2px solid $accent;
+  border-bottom: 1px solid $primary;
   padding-right: 10px;
   padding-left: 10px;
+  font-size: large;
 }
 
 .inactive-workspace {
-  color: #3C7EC0;
+  font-size: large;
+  color: $secondary;
   padding-right: 10px;
   padding-left: 10px;
   font-family: "Font Awesome 5 Free Solid";
 }
 
 .has-windows {
-  color: #9C89AC;
+  font-size: large;
+  color: $primary;
   padding-right: 10px;
   padding-left: 10px;
   font-family: "Font Awesome 5 Free Solid";
-
 }
 
 .left_menu {
-  background-color: rgba($surface-bg, 0.9);
-  border-radius: 15px;
-  border: 2px solid $accent;
+  background-color: rgba($background, 0.9);
+  border-radius: $border-radius-medium;
+  border: 2px solid $primary;
 
 }
 
@@ -199,28 +221,24 @@ $surface-red: #f87070;
 
   &:hover {
     transition: 300ms linear background-color, border-radius;
-    background-color: rgba($surface-bg-variant, 0.6);
+    background-color: rgba($surface, 0.6);
   }
 }
 
 .profile {
-  // background: linear-gradient(to right, #FE9398, #397EC1);
   background-size: cover;
   background-position: center;
   background-image: url("images/pj8sesvdmgeb1.jpg");
-  // margin-left: 2px;
-  // margin-right: 2px;
-  // margin-top: 2px;
   min-height: 180px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border: 2px solid $accent;
+  border-top-left-radius: $border-radius-medium;
+  border-top-right-radius: $border-radius-medium;
+  border: 2px solid $primary;
   border-bottom: #00000000;
 
 }
 
 .profile_inside {
-  background-color: rgba(#aad0ff, 0.6);
+  background-color: rgba($on-background, 0.6);
   border-radius: 10px;
   margin-top: -65;
   min-width: 315px;
@@ -269,10 +287,10 @@ $surface-red: #f87070;
   padding-bottom: 4;
   font-size: medium;
   font-family: "Font Awesome 5 Free Solid";
-  background: linear-gradient(to left, #3C7EC0, #3C7EC0);
-  color: #352558;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  background: linear-gradient(to left, $secondary, $secondary);
+  color: $on-primary;
+  border-top-right-radius: $border-radius-medium;
+  border-bottom-right-radius: $border-radius-medium;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 
@@ -284,10 +302,10 @@ $surface-red: #f87070;
   padding-bottom: 4;
   padding-right: 5;
   font-size: medium;
-  background: linear-gradient(to right, #FE9398, #397EC1);
-  color: #352558;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+  background: linear-gradient(to right, $primary, $secondary);
+  color: $on-primary;
+  border-top-left-radius: $border-radius-medium;
+  border-bottom-left-radius: $border-radius-medium;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -297,15 +315,15 @@ $surface-red: #f87070;
   padding-top: 4;
   padding-right: 5;
   padding-bottom: 4;
-  background: linear-gradient(to right, #FE9398, #397EC1);
-  color: #352558;
-  border-radius: 15px;
+  background: linear-gradient(to right, $primary, $secondary);
+  color: $on-primary;
+  border-radius: $border-radius-medium;
 }
 
 .netspeed-box {
-  background: linear-gradient(to right, #FE9398, #397EC1);
-  color: #352558;
-  border-radius: 15px;
+  background: linear-gradient(to right, $primary, $secondary);
+  color: $on-primary;
+  border-radius: $border-radius-medium;
 }
 
 .netspeed-icon {
@@ -314,10 +332,10 @@ $surface-red: #f87070;
   padding-top: 5;
   padding-bottom: 4;
   font-family: "Font Awesome 5 Free Solid";
-  background: linear-gradient(to left, #6082B9, #6082B9);
-  color: #352558;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  // background: linear-gradient(to left, #6082B9, #6082B9);
+  color: $on-primary;
+  border-top-right-radius: $border-radius-medium;
+  border-bottom-right-radius: $border-radius-medium;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -342,9 +360,9 @@ $surface-red: #f87070;
   padding-bottom: 4;
   font-family: "Font Awesome 5 Free Solid";
   background: linear-gradient(to left, #7C77A3, #7C77A3);
-  color: #352558;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  color: $on-primary;
+  border-top-right-radius: $border-radius-medium;
+  border-bottom-right-radius: $border-radius-medium;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 
@@ -355,18 +373,16 @@ $surface-red: #f87070;
   padding-top: 4;
   padding-right: 5;
   padding-bottom: 4;
-  background: linear-gradient(to right, #F8A0B6, #7C77A3);
-  color: #352558;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+  background: linear-gradient(to right, $primary, #7C77A3);
+  color: $on-primary;
+  border-top-left-radius: $border-radius-medium;
+  border-bottom-left-radius: $border-radius-medium;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 
 }
 
 .power-button {
-  // display: inline-block;
-  // font-family: "Font Awesome 5 Free Solid";
   padding: 20px 30px;
   margin-top: 16px;
   margin-bottom: 16px;
@@ -374,52 +390,41 @@ $surface-red: #f87070;
   margin-right: 20px;
   font-size: 16px;
   font-weight: bold;
-  // text-align: center;
   text-decoration: none;
   border: none;
-  border-radius: 15px;
-  // cursor: pointer;
-  background-color: $surface-bg-variant;
-  color: $surface-fg;
+  border-radius: $border-radius-medium;
+  background-color: $secondary-container;
+  color: $on-secondary-container;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .power-button:hover {
-  background-color: #09060f;
-  color: $surface-fg;
-}
-
-.test {
-  background-color: #00B9BB;
+  background-color: $background;
+  color: $on-background;
 }
 
 .music-box {
-  // margin-top: 0px;
   padding-top: 18px;
   padding-bottom: 18px;
   padding-left: 8px;
   padding-right: 18px;
-  background-color: $surface-bg-variant;
-  border-radius: 15px;
+  background-color: $secondary-container;
+  border-radius: $border-radius-medium;
   min-height: 1px;
 }
 
 .music-title {
   margin-top: 5px;
-  color: $surface-fg;
+  color: $on-background;
   font-size: 17px;
   font-family: "VIP Rawy Regular";
   font-weight: bold;
 }
 
 .music-text {
-  color: $surface-fg;
+  color: $on-background;
   font-size: 12px;
   font-family: "VIP Rawy Regular";
-}
-
-.music-box-inside {
-  // background-color: #00B9BB;
 }
 
 .prog-bar {
@@ -448,40 +453,94 @@ $surface-red: #f87070;
   background-color: rgba(#99C7FF, 0.0);
 }
 
-
+// RAM
 .iconmem {
   font-family: "Font Awesome 5 Free Solid";
-  font-size: 19;
-  color: $surface-bg-variant;
+  font-size: 6;
+  color: $secondary-container;
+  color: $primary;
+  margin: 7px;
 }
 
 .mem_box {
   min-height: 2px;
-  color: #FD9398;
+  color: $primary;
 }
 
+// CPU
 .iconcpu {
   font-family: "Font Awesome 5 Free Solid";
-  font-size: 19;
-  color: $surface-bg-variant;
-  // background: linear-gradient(to right, #FE9398, #397EC1);
-  // margin: 10px;
-  // padding-right: 13px;
+  font-size: 6;
+  // color: $secondary-container;
+  color: $secondary;
+  margin: 7px;
 }
 
 .cpu_box {
-  // margin-top: 8px;
-  // margin-bottom: 8px;
   min-height: 2px;
+  color: $secondary;
 }
 
+// HW
 .hw-util {
-  background-color: $surface-bg-variant;
-  border-radius: 15px;
+  background-color: $secondary-container;
+  border-radius: $border-radius-medium;
   padding-left: 8px;
   padding-right: 8px;
-  // padding-top: 2px;
-  // padding-bottom: 2px;
   margin-top: 4px;
   margin-bottom: 4px;
 }
+
+.sound-osd {
+  color: $on-surface;
+  background: $surface;
+  font-family: "Font Awesome 5 Free Solid";
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 15px;
+  padding-left: 20px;
+  border-radius: $border-radius-medium;
+  border: 2px solid $primary;
+}
+
+window {
+  border-radius: $border-radius-medium;
+}
+
+/* Custom GTK3 Scale Styles */
+
+/* Styling the trough */
+// scale trough {
+//   background-color: #EAEAEA;
+//   border-radius: 5px;
+//   min-height: 8px;
+//   padding: 1px;
+// }
+
+// /* Styling the trough when highlighted */
+// scale trough trough:active {
+//   background-color: #C0C0C0;
+// }
+
+// /* Styling the slider handle */
+// .scale slider {
+//   background-color: #FF5733;
+//   border-radius: 50%;
+//   width: 14px;
+//   height: 14px;
+//   border: none;
+//   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+// }
+
+// // /* Styling the slider handle when hovered */
+// scale slider:hover {
+//   border-radius: 15px;
+//   background-color: #FF7F50;
+//   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.5);
+// }
+
+// // /* Styling the slider handle when active (pressed) */
+// scale slider:active {
+//   background-color: #FF4500;
+//   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.6);
+// }

@@ -7,7 +7,7 @@ spaces () {
     json_data=""
     data=""
     # Example loop and data
-    for i in {1..8}; do
+    for i in {1..10}; do
         extracted_value=$(echo "$WORKSPACE_WINDOWS" | grep -o "\"$i\": *\"[^\"]*\"" | cut -d'"' -f4)
         if [ -z "$extracted_value" ]; then
             extracted_value=0

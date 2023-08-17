@@ -111,13 +111,14 @@
 (defwidget cpu_widget []
   (circle_widget
     :value {cpu_script["cpu_usage"]}
-    :thickness 7
+    ; :value 100
+    :thickness 3
     :progress_class "unset cpu_box"
     :icon_class "unset iconcpu"
     :limit_width 1
     :tooltip "يتم استخدام ${cpu_script["cpu_usage"]}% من المعالج"
     ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
-    :lable ""
+    :lable ""
   )
 )
 
@@ -132,13 +133,13 @@
 (defwidget ram_widget []
   (circle_widget
     :value ram_script
-    :thickness 7
+    :thickness 3
     :progress_class "unset mem_box"
     :icon_class "unset iconmem"
     :limit_width 1
     :tooltip "تم استخدام ${ram_script}% من الرام"
     ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
-    :lable ""
+    :lable ""
   )
 )
 
@@ -166,56 +167,87 @@
       current_workspace == 1 ? "active-workspace unset" :
       get_workspaces["workspace_1"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
-      :onclick "hyprctl dispatch workspace 1" ""
+      :onclick "hyprctl dispatch workspace 1"
+      {current_workspace == 1 ? "" : ""}
     )
     (button
       :class {
       current_workspace == 2 ? "active-workspace unset" :
       get_workspaces["workspace_2"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
-      :onclick "hyprctl dispatch workspace 2" ""
+      :onclick "hyprctl dispatch workspace 2"
+      {current_workspace == 2 ? "󰿣" : "󰿤"}
+      ; {current_workspace == 2 ? "󰿣" : "󰿤"}
     )
     (button
       :class {
       current_workspace == 3 ? "active-workspace unset" :
       get_workspaces["workspace_3"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
-      :onclick "hyprctl dispatch workspace 3" ""
+      :onclick "hyprctl dispatch workspace 3"
+      ; {current_workspace == 3 ? "󰥮" : "󰥭"}
+      ; {current_workspace == 3 ? "󰅨" : "󰅪"}
+      {current_workspace == 3 ? "󰂔" : "󰂕"}
     )
     (button
       :class {
       current_workspace == 4 ? "active-workspace unset" :
       get_workspaces["workspace_4"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
-      :onclick "hyprctl dispatch workspace 4" ""
+      :onclick "hyprctl dispatch workspace 4"
+      {current_workspace == 4 ? "" : ""}
+      ; {current_workspace == 4 ? "" : ""}
+      ; {current_workspace == 4 ? "󰉋" : "󰉖"}
     )
     (button
       :class {
       current_workspace == 5 ? "active-workspace unset" :
       get_workspaces["workspace_6"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
-      :onclick "hyprctl dispatch workspace 5" ""
+      :onclick "hyprctl dispatch workspace 5"
+      {current_workspace == 5 ? "󱙋" : "󱙌"}
     )
     (button
       :class {
       current_workspace == 6 ? "active-workspace unset" :
       get_workspaces["workspace_6"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
-      :onclick "hyprctl dispatch workspace 6" ""
+      :onclick "hyprctl dispatch workspace 6"
+      {current_workspace == 6 ? "󱗟" : "󱗠"}
+      ; {current_workspace == 6 ? "" : ""}
+      ; {current_workspace == 6 ? "" : ""}
     )
     (button
       :class {
       current_workspace == 7 ? "active-workspace unset" :
       get_workspaces["workspace_7"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
-      :onclick "hyprctl dispatch workspace 7" ""
+      :onclick "hyprctl dispatch workspace 7"
+      {current_workspace == 7 ? "" : ""}
     )
     (button
       :class {
       current_workspace == 8 ? "active-workspace unset" :
       get_workspaces["workspace_8"] > 0 ? "unset has-windows" : "unset inactive-workspace"
       }
-      :onclick "hyprctl dispatch workspace 8" ""
+      :onclick "hyprctl dispatch workspace 8"
+      {current_workspace == 8 ? "󰺵" : "󰺶"}
+    )
+    (button
+      :class {
+      current_workspace == 9 ? "active-workspace unset" :
+      get_workspaces["workspace_9"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 9"
+      {current_workspace == 9 ? "󱋡" : "󱋢"}
+    )
+    (button
+      :class {
+      current_workspace == 10 ? "active-workspace unset" :
+      get_workspaces["workspace_10"] > 0 ? "unset has-windows" : "unset inactive-workspace"
+      }
+      :onclick "hyprctl dispatch workspace 10"
+      {current_workspace == 10 ? "" : ""}
     )
   )
 )
@@ -224,38 +256,13 @@
 ; ---------------- SYSTRAY ----------------
 ; -----------------------------------------
 (defwidget tray []
-  (systray
-    :class "unset"
-    :active-only false
-    ; :pack-direction "rtl"
-    ; :interval "1s"
-  )
-)
-
-(defwidget metric [label value onchange]
-  (box
-    :orientation "h"
-    ; :class "metric"
-    :space-evenly false
-    (box
-      :class "label"
-      label
+    (systray
+        :class "unset"
+        :active-only false
+        ; :pack-direction "rtl"
+        ; :interval "1s"
     )
-    (scale
-      :min 0
-      :max 101
-      :active {onchange != ""}
-      :value value
-      :onchange onchange
-    )
-  )
 )
-
-(defpoll volume
-  :interval "1s"
-  "sh ~/.config/eww/scripts/getvol"
-)
-
 
 (defpoll my_time
   :interval "10s"
@@ -335,7 +342,6 @@
   :stacking "fg"
   :windowtype "normal"
   :wm-ignore true
-  :class "unset left_menu"
   :geometry (
     geometry
     :width "18%"
@@ -570,6 +576,91 @@
   )
 )
 
+; --------------------------------------------
+; ---------------- volume OSD ----------------
+; --------------------------------------------
+(defvar volume_is_visible false)
+
+; (deflisten volume
+;   :initial "0"
+;   "sh ~/.config/eww/scripts/getvol.sh"
+; )
+
+(defpoll volume
+  :interval 1
+  "sh ~/.config/eww/scripts/getvol"
+)
+
+(defwindow vol_osd
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore false
+  :geometry (
+      geometry
+      :x "830"
+      :y "850"
+  )
+  (box
+    :orientation "v"
+    :valign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly "false"
+    (metric
+      :label ""
+      :value volume
+      :onchange "amixer -D pulse sset Master {}%"
+      :width 150
+      :box_class "unset sound-osd"
+      :spacing 15
+    )
+  )
+)
+
+; -----------------------------------------------
+; ---------------- Brightnes OSD ----------------
+; -----------------------------------------------
+(defvar brightnes_is_visible false)
+
+; (deflisten brightnes
+;   :initial "0"
+;   "sh ~/.config/eww/scripts/get_brightness.sh"
+; )
+
+(defpoll brightness_script
+  :interval 1
+  "sh ~/.config/eww/scripts/get_brightness.sh"
+)
+
+(defwindow brightness_osd
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore false
+  :geometry (
+      geometry
+      :x "830"
+      :y "850"
+  )
+  (box
+    :orientation "v"
+    :valign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly "false"
+    (metric
+      :label ""
+      :value brightness_script
+      :onchange "brightnessctl set {}%"
+      :width 150
+      :box_class "unset sound-osd"
+      :scale_class "scale"
+      :spacing 15
+    )
+  )
+)
+
 
 ; -----------------------------------------------------
 ; ---------------------- Helpers ----------------------
@@ -633,6 +724,43 @@
       :show_truncated false
       :wrap false
       lable
+    )
+  )
+)
+
+
+(defwidget metric [
+  label
+  value
+  onchange
+  ?width
+  ?lable_class
+  ?scale_class
+  ?box_class
+  ?spacing
+  ]
+  (box
+    :orientation "h"
+    :space-evenly false
+    ; :class "metric"
+    :class box_class
+    :valign "start"
+    :halign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :spacing spacing
+    (box
+      :class lable_class
+      label
+    )
+    (scale
+      :class scale_class
+      :min 0
+      :max 101
+      :width width
+      :active {onchange != ""}
+      :value value
+      :onchange onchange
     )
   )
 )
