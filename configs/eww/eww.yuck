@@ -96,27 +96,44 @@
       :spacing 20
       (ram_widget)
       (cpu_widget)
+      (temp_circle_widget)
     )
   )
 )
 
 ; -------------------------------------
+; ---------------- TEMP ---------------
+; -------------------------------------
+(defwidget temp_circle_widget []
+  (circle_widget
+    :value {EWW_TEMPS["PCH_CANNONLAKE_TEMP1"]}
+    ; :value 100
+    :thickness 3
+    :progress_class "unset temp-box"
+    :icon_class "unset temp-icon"
+    :limit_width 1
+    :tooltip "درجة حرارة الجهاز ${EWW_TEMPS["PCH_CANNONLAKE_TEMP1"]} درجة مئوية"
+    ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+    :lable ""
+  )
+)
+; -------------------------------------
 ; ---------------- CPU ----------------
 ; -------------------------------------
-(defpoll cpu_script
-  :interval "1s"
-  "sh ~/.config/eww/scripts/cpu.sh"
-)
+; (defpoll cpu_script
+  ;   :interval "1s"
+  ;   "sh ~/.config/eww/scripts/cpu.sh"
+; )
 
 (defwidget cpu_widget []
   (circle_widget
-    :value {cpu_script["cpu_usage"]}
+    :value {EWW_CPU["avg"]}
     ; :value 100
     :thickness 3
     :progress_class "unset cpu_box"
     :icon_class "unset iconcpu"
     :limit_width 1
-    :tooltip "يتم استخدام ${cpu_script["cpu_usage"]}% من المعالج"
+    :tooltip "يتم استخدام ${EWW_CPU["avg"]}% من المعالج"
     ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
     :lable ""
   )
@@ -125,19 +142,19 @@
 ; -------------------------------------
 ; ---------------- RAM ----------------
 ; -------------------------------------
-(defpoll ram_script
-  :interval "10s"
-  "sh ~/.config/eww/scripts/ram.sh"
-)
+; (defpoll ram_script
+  ;   :interval "10s"
+  ;   "sh ~/.config/eww/scripts/ram.sh"
+; )
 
 (defwidget ram_widget []
   (circle_widget
-    :value ram_script
+    :value {EWW_RAM.used_mem_perc}
     :thickness 3
     :progress_class "unset mem_box"
     :icon_class "unset iconmem"
     :limit_width 1
-    :tooltip "تم استخدام ${ram_script}% من الرام"
+    :tooltip "تم استخدام ${EWW_RAM.used_mem_perc}% من الرام"
     ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
     :lable ""
   )
@@ -256,12 +273,12 @@
 ; ---------------- SYSTRAY ----------------
 ; -----------------------------------------
 (defwidget tray []
-    (systray
-        :class "unset"
-        :active-only false
-        ; :pack-direction "rtl"
-        ; :interval "1s"
-    )
+  (systray
+    :class "unset"
+    :active-only false
+    ; :pack-direction "rtl"
+    ; :interval "1s"
+  )
 )
 
 (defpoll my_time
@@ -582,8 +599,8 @@
 (defvar volume_is_visible false)
 
 ; (deflisten volume
-;   :initial "0"
-;   "sh ~/.config/eww/scripts/getvol.sh"
+  ;   :initial "0"
+  ;   "sh ~/.config/eww/scripts/getvol.sh"
 ; )
 
 (defpoll volume
@@ -597,9 +614,9 @@
   :windowtype "normal"
   :wm-ignore false
   :geometry (
-      geometry
-      :x "830"
-      :y "850"
+    geometry
+    :x "830"
+    :y "850"
   )
   (box
     :orientation "v"
@@ -612,7 +629,8 @@
       :value volume
       :onchange "amixer -D pulse sset Master {}%"
       :width 150
-      :box_class "unset sound-osd"
+      :box_class "unset osd"
+      :scale_class "scale"
       :spacing 15
     )
   )
@@ -624,8 +642,8 @@
 (defvar brightnes_is_visible false)
 
 ; (deflisten brightnes
-;   :initial "0"
-;   "sh ~/.config/eww/scripts/get_brightness.sh"
+  ;   :initial "0"
+  ;   "sh ~/.config/eww/scripts/get_brightness.sh"
 ; )
 
 (defpoll brightness_script
@@ -639,9 +657,9 @@
   :windowtype "normal"
   :wm-ignore false
   :geometry (
-      geometry
-      :x "830"
-      :y "850"
+    geometry
+    :x "830"
+    :y "850"
   )
   (box
     :orientation "v"
@@ -653,10 +671,84 @@
       :label ""
       :value brightness_script
       :onchange "brightnessctl set {}%"
-      :width 150
-      :box_class "unset sound-osd"
+      :width 152
+      :box_class "unset osd"
       :scale_class "scale"
       :spacing 15
+    )
+  )
+)
+
+
+; ----------------------------------------------------
+; ---------------- Hardware Dashboard ----------------
+; ----------------------------------------------------
+(defvar hardware_dashboard_visible false)
+
+(defwindow hardware_dashboard
+  :monitor 0
+  :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore true
+  :geometry (
+    geometry
+    :x "1290"
+    :y "8"
+  )
+  (box
+    :orientation "v"
+    :valign "start"
+    :halign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly "false"
+    :class "hardware-dashboard-box"
+    (hardware_monitors)
+  )
+)
+
+(defwidget hardware_monitors []
+  (box
+    :orientation "h"
+    :valign "start"
+    :halign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly "false"
+    :class "hardware-dashboard-monitors-box"
+    :spacing 20
+    (circle_widget
+      :value {EWW_RAM.used_mem_perc}
+      ; :value 100
+      :thickness 10
+      :progress_class "unset dashboard-mem-box"
+      :icon_class "unset dashboard-mem-icon"
+      :limit_width 1
+      :tooltip "تم استخدام ${EWW_RAM.used_mem_perc}% من الرام"
+      ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+      :lable ""
+    )
+    (circle_widget
+      :value {EWW_CPU["avg"]}
+      ; :value 100
+      :thickness 10
+      :progress_class "unset dashboard-cpu-box"
+      :icon_class "unset dashboard-cpu-icon"
+      :limit_width 1
+      :tooltip "يتم استخدام ${EWW_CPU["avg"]}% من المعالج"
+      ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+      :lable ""
+    )
+    (circle_widget
+      :value {EWW_TEMPS["PCH_CANNONLAKE_TEMP1"]}
+      ; :value 100
+      :thickness 10
+      :progress_class "unset dashboard-temp-box"
+      :icon_class "unset dashboard-temp-icon"
+      :limit_width 1
+      :tooltip "درجة حرارة الجهاز ${EWW_TEMPS["PCH_CANNONLAKE_TEMP1"]} درجة مئوية"
+      ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+      :lable ""
     )
   )
 )

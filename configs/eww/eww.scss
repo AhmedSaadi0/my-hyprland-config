@@ -80,20 +80,20 @@ $surface-red: #f87070;
 //   margin-right: 10px;
 // }
 
-.metric scale trough highlight {
-  all: unset;
-  background-color: rgba($primary, $alpha: 0.9);
-  color: $secondary;
-  border-radius: 10px;
-}
+// .metric scale trough highlight {
+//   all: unset;
+//   background-color: rgba($primary, $alpha: 0.9);
+//   color: $secondary;
+//   border-radius: 10px;
+// }
 
-.metric scale trough {
-  all: unset;
-  background-color: rgba($primary-container, 0.3);
-  border-radius: $border-radius-medium;
-  min-height: 10px;
-  min-width: 50px;
-}
+// .metric scale trough {
+//   all: unset;
+//   background-color: rgba($primary-container, 0.3);
+//   border-radius: $border-radius-medium;
+//   min-height: 10px;
+//   min-width: 50px;
+// }
 
 .label-ram {
   font-size: medium;
@@ -373,6 +373,7 @@ $surface-red: #f87070;
   padding-top: 4;
   padding-right: 5;
   padding-bottom: 4;
+  // font-size: xx-small;
   background: linear-gradient(to right, $primary, #7C77A3);
   color: $on-primary;
   border-top-left-radius: $border-radius-medium;
@@ -453,25 +454,27 @@ $surface-red: #f87070;
   background-color: rgba(#99C7FF, 0.0);
 }
 
-// RAM
+// -------------------------
+// ---------- RAM ----------
+// -------------------------
 .iconmem {
   font-family: "Font Awesome 5 Free Solid";
   font-size: 6;
-  color: $secondary-container;
-  color: $primary;
+  color: $tertiary;
   margin: 7px;
 }
 
 .mem_box {
   min-height: 2px;
-  color: $primary;
+  color: $tertiary;
 }
 
-// CPU
+// -------------------------
+// ---------- CPU ----------
+// -------------------------
 .iconcpu {
   font-family: "Font Awesome 5 Free Solid";
   font-size: 6;
-  // color: $secondary-container;
   color: $secondary;
   margin: 7px;
 }
@@ -481,7 +484,24 @@ $surface-red: #f87070;
   color: $secondary;
 }
 
-// HW
+// --------------------------
+// ---------- TEMP ----------
+// --------------------------
+.temp-icon {
+  font-family: "Font Awesome 5 Free Solid";
+  font-size: 6;
+  color: $primary;
+  margin: 7px;
+}
+
+.temp-box {
+  min-height: 2px;
+  color: $primary;
+}
+
+// ----------------------------------
+// ---------- HW Panel BOX ----------
+// ----------------------------------
 .hw-util {
   background-color: $secondary-container;
   border-radius: $border-radius-medium;
@@ -491,7 +511,10 @@ $surface-red: #f87070;
   margin-bottom: 4px;
 }
 
-.sound-osd {
+// -------------------------
+// ---------- OSD ----------
+// -------------------------
+.osd {
   color: $on-surface;
   background: $surface;
   font-family: "Font Awesome 5 Free Solid";
@@ -507,32 +530,6 @@ window {
   border-radius: $border-radius-medium;
 }
 
-/* Custom GTK3 Scale Styles */
-
-/* Styling the trough */
-// scale trough {
-//   background-color: #EAEAEA;
-//   border-radius: 5px;
-//   min-height: 8px;
-//   padding: 1px;
-// }
-
-// /* Styling the trough when highlighted */
-// scale trough trough:active {
-//   background-color: #C0C0C0;
-// }
-
-// /* Styling the slider handle */
-// .scale slider {
-//   background-color: #FF5733;
-//   border-radius: 50%;
-//   width: 14px;
-//   height: 14px;
-//   border: none;
-//   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
-// }
-
-// // /* Styling the slider handle when hovered */
 // scale slider:hover {
 //   border-radius: 15px;
 //   background-color: #FF7F50;
@@ -544,3 +541,99 @@ window {
 //   background-color: #FF4500;
 //   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.6);
 // }
+
+scale trough highlight {
+  all: unset;
+  background-color: #61AFEF;
+  // color: $primary;
+  border-radius: 10px;
+}
+
+scale trough trough:active {
+  background-color: #C0C0C0;
+}
+
+scale trough {
+  all: unset;
+  background-color: $primary-container;
+  border-radius: 50px;
+  min-height: 3px;
+  min-width: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+scale trough highlight {
+  all: unset;
+  background-color: rgba($primary, $alpha: 0.9);
+  color: $secondary;
+  border-radius: 10px;
+}
+
+
+scale slider {
+  background-color: $primary-container;
+  border-radius: 50%;
+  // border: none;
+  // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+}
+
+// ----------------------------------
+// ---------- HW Dashboard ----------
+// ----------------------------------
+.hardware-dashboard-box {
+  background-color: $surface;
+  border-radius: $border-radius-medium;
+  padding: $padding-medium;
+  min-width: 300px;
+  min-height: 100px;
+  border: 2px solid $primary;
+}
+
+.hardware-dashboard-monitors-box {
+  // background-color: $secondary-container;
+  border-radius: $border-radius-medium;
+  padding: $padding-medium;
+}
+
+// ----- MEM -----
+.dashboard-mem-box {
+  // min-height: 10px;
+  color: $tertiary;
+}
+
+.dashboard-mem-icon {
+  font-family: "Font Awesome 5 Free Solid";
+  font-size: 30;
+  color: $tertiary;
+  // margin: 10px;
+  padding: 30px;
+}
+
+// ----- CPU -----
+.dashboard-cpu-box {
+  min-height: 20px;
+  color: $secondary;
+}
+
+.dashboard-cpu-icon {
+  font-family: "Font Awesome 5 Free Solid";
+  font-size: 30;
+  color: $secondary;
+  // margin: 10px;
+  padding: 30px;
+}
+
+// ----- TEMP -----
+.dashboard-temp-box {
+  min-height: 20px;
+  color: $primary;
+}
+
+.dashboard-temp-icon {
+  font-family: "Font Awesome 5 Free Solid";
+  font-size: 30;
+  color: $primary;
+  // margin: 10px;
+  padding: 30px;
+}
