@@ -66,9 +66,10 @@
       ; :text_onclick "sh ~/.config/eww/scripts/open_menu.sh"
     )
     (title_text
-      :title ""
+      ; :title ""
+      :title {volume["icon"]}
       :spacing 0
-      :text volume
+      :text {volume["volume"]}
       :valign "center"
       :halign "center"
       :title_class "unset battery-icon"
@@ -113,7 +114,7 @@
     :icon_class "unset temp-icon"
     :limit_width 1
     :tooltip "درجة حرارة الجهاز ${EWW_TEMPS["PCH_CANNONLAKE_TEMP1"]} درجة مئوية"
-    ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+    :onclick "sh ~/.config/eww/scripts/open_hw_dashboard.sh"
     :lable ""
   )
 )
@@ -134,7 +135,7 @@
     :icon_class "unset iconcpu"
     :limit_width 1
     :tooltip "يتم استخدام ${EWW_CPU["avg"]}% من المعالج"
-    ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+    :onclick "sh ~/.config/eww/scripts/open_hw_dashboard.sh"
     :lable ""
   )
 )
@@ -142,11 +143,6 @@
 ; -------------------------------------
 ; ---------------- RAM ----------------
 ; -------------------------------------
-; (defpoll ram_script
-  ;   :interval "10s"
-  ;   "sh ~/.config/eww/scripts/ram.sh"
-; )
-
 (defwidget ram_widget []
   (circle_widget
     :value {EWW_RAM.used_mem_perc}
@@ -155,7 +151,7 @@
     :icon_class "unset iconmem"
     :limit_width 1
     :tooltip "تم استخدام ${EWW_RAM.used_mem_perc}% من الرام"
-    ; :onclick "$HOME/.config/eww/bar/scripts/pop system"
+    :onclick "sh ~/.config/eww/scripts/open_hw_dashboard.sh"
     :lable ""
   )
 )
@@ -313,6 +309,7 @@
       :spacing 5
       :title ""
       :text {netspeed_poll["download"]}
+      ; :text {EWW_NET["wlp0s20f3"]["NET_DOWN"] / 1024 }
       :box_class "netspeed-download"
       :orientation "h"
       :title_class "unset"
@@ -324,6 +321,7 @@
       :title ""
       :spacing 5
       :text {netspeed_poll["upload"]}
+      ; :text {EWW_NET["wlp0s20f3"]["NET_DOWN"] / 1024}
       :box_class "netspeed-upload"
       :title_class "unset"
       :text_class "unset"
@@ -599,18 +597,17 @@
 (defvar volume_is_visible false)
 
 ; (deflisten volume
-  ;   :initial "0"
-  ;   "sh ~/.config/eww/scripts/getvol.sh"
+;     :initial "0"
+;     "sh ~/.config/eww/scripts/getvol.sh"
 ; )
-
-(defpoll volume
-  :interval 1
-  "sh ~/.config/eww/scripts/getvol"
+(deflisten volume
+    :initial "0"
+    "sh ~/.config/eww/scripts/getvol_e.sh"
 )
 
 (defwindow vol_osd
   :monitor 0
-  :stacking "fg"
+  :stacking "overlay"
   :windowtype "normal"
   :wm-ignore false
   :geometry (
@@ -625,8 +622,8 @@
     :hexpand "false"
     :space-evenly "false"
     (metric
-      :label ""
-      :value volume
+      :label {volume["icon"]}
+      :value {volume["volume"]}
       :onchange "amixer -D pulse sset Master {}%"
       :width 150
       :box_class "unset osd"
@@ -653,7 +650,7 @@
 
 (defwindow brightness_osd
   :monitor 0
-  :stacking "fg"
+  :stacking "overlay"
   :windowtype "normal"
   :wm-ignore false
   :geometry (
@@ -692,6 +689,7 @@
   :wm-ignore true
   :geometry (
     geometry
+    ; :x "1290"
     :x "1290"
     :y "8"
   )
@@ -704,6 +702,7 @@
     :space-evenly "false"
     :class "hardware-dashboard-box"
     (hardware_monitors)
+    (hardware_table)
   )
 )
 
@@ -716,7 +715,7 @@
     :hexpand "false"
     :space-evenly "false"
     :class "hardware-dashboard-monitors-box"
-    :spacing 20
+    :spacing 15
     (circle_widget
       :value {EWW_RAM.used_mem_perc}
       ; :value 100
@@ -752,6 +751,131 @@
     )
   )
 )
+
+(defwidget hardware_table []
+  (box
+    :orientation "h"
+    :valign "start"
+    :halign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly false
+    :class "hardware-dashboard-table-box"
+    ; :spacing 0
+    (cpu_table)
+    (ram_table)
+  )
+)
+
+(defpoll cpu_script
+  :interval "5s"
+  "sh ~/.config/eww/scripts/cpu.sh"
+)
+
+(defwidget cpu_table []
+  (box
+    :orientation "v"
+    :valign "start"
+    :halign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly false
+    :class "cpu-usage-table-box"
+    ; :spacing 5
+    :width 150
+    (table_row
+      :pid "CPU"
+      :percentage "%"
+      :box_class "cpu-table-header"
+      :pid_class "process-name-class"
+      :percentage_xalign 0.5
+      :pid_xalign 0.5
+      :percentage_class "percentage-class"
+    )
+    (for row in cpu_script
+      (table_row
+        :pid "${row["command"]}"
+        :percentage "${row["cpu"]}"
+      )
+    )
+  )
+)
+
+
+(defpoll ram_script
+  :interval "5s"
+  "sh ~/.config/eww/scripts/ram.sh"
+)
+
+(defwidget ram_table []
+  (box
+    :orientation "v"
+    :valign "start"
+    :halign "center"
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly false
+    :class "ram-usage-table-box"
+    ; :spacing 5
+    :width 150
+    (table_row
+      :pid "RAM"
+      :percentage "%"
+      :box_class "ram-table-header"
+      :pid_class "process-name-class"
+      :percentage_xalign 0.5
+      :pid_xalign 0.5
+      :percentage_class "percentage-class"
+    )
+    (for row in ram_script
+      (table_row
+        :pid "${row["command"]}"
+        :percentage "${row["%"]}"
+      )
+    )
+  )
+)
+(defwidget table_row [
+  pid
+  percentage
+  ?orientation
+  ?valign
+  ?halign
+  ?space-evenly
+  ?spacing
+  ?box_class
+  ?pid_class
+  ?percentage_class
+  ?percentage_xalign
+  ?pid_xalign
+  ]
+  (box
+    :orientation {orientation != "" ? orientation : "h"}
+    :valign {valign != "" ? valign : "start"}
+    :halign {halign != "" ? halign : "start"}
+    :vexpand "false"
+    :hexpand "false"
+    :space-evenly {space-evenly != "" ? space-evenly : false}
+    :spacing spacing
+    :class box_class
+    (label
+      :text percentage
+      ; :wrap true
+      ; :xalign 0.5
+      :xalign {percentage_xalign != "" ? percentage_xalign : 0.5}
+      :limit-width 5
+      :class {percentage_class != "" ? percentage_class : "percentage"}
+    )
+    (label
+      :text pid
+      :xalign {pid_xalign != "" ? pid_xalign : 1}
+      :limit-width 10
+      ; :wrap true
+      :class {pid_class != "" ? pid_class : "process-name"}
+    )
+  )
+)
+
 
 
 ; -----------------------------------------------------

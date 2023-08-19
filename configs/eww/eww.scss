@@ -1,13 +1,18 @@
 // Pixel Values
-$padding-small: 5px;
-$margin-small: 4px;
-$font-size-small: 19px;
-$border-radius-medium: 15px;
-
-$padding-medium: 8px;
-$margin-medium: 10px;
 $font-size-medium: 16px;
+$font-size-small: 19px;
+
+$padding-large: 16px;
+$padding-medium: 8px;
+$padding-small: 4px;
+
+$margin-medium: 16px;
+$margin-medium: 8px;
+$margin-small: 4px;
+
 $border-radius-large: 20px;
+$border-radius-medium: 15px;
+$border-radius-small: 10px;
 
 // Material 3 colors 
 $primary: #ffb3b5;
@@ -636,4 +641,109 @@ scale slider {
   color: $primary;
   // margin: 10px;
   padding: 30px;
+}
+
+// ------------------
+// ----- tables -----
+// ------------------
+.hardware-dashboard-table-box {
+  background-color: rgba($secondary-container, 0.7);
+  border-radius: $border-radius-medium;
+  // padding: $padding-medium;
+  // min-width: 300px;
+  // min-height: 200px;
+  margin-top: $margin-medium;
+  // padding: $margin-medium;
+}
+
+
+// CPU table header 
+.cpu-table-header {
+  // background-color: $tertiary;
+  background-color: rgba($tertiary, 0.7);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  // padding: 10px;
+  border-top-left-radius: $border-radius-medium;
+  border-top-right-radius: $border-radius-medium;
+  min-width: 145px;
+  color: $on-tertiary;
+  // margin-bottom: 5px;
+}
+
+// CPU table data 
+.cpu-usage-table-box {
+  // background-color: $secondary;
+  background-color: rgba($tertiary, 0.8);
+  color: $on-tertiary;
+  margin-top: $margin-medium;
+  margin-bottom: $margin-medium;
+  margin-right: $margin-medium;
+  padding-bottom: $padding-small;
+  padding-bottom: $padding-medium;
+  border-radius: $border-radius-medium;
+  box-shadow: 0px 0px 4px rgba($on-secondary, 1.0);
+}
+
+// RAM table header 
+.ram-table-header {
+  // background-color: $tertiary;
+  background-color: rgba($secondary, 0.7);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  // padding: 10px;
+  border-top-left-radius: $border-radius-medium;
+  border-top-right-radius: $border-radius-medium;
+  min-width: 145px;
+  color: $on-secondary;
+  // margin-bottom: 5px;
+}
+
+// RAM table data 
+.ram-usage-table-box {
+  // background-color: $secondary;
+  background-color: rgba($secondary, 0.8);
+  color: $on-secondary;
+  margin-top: $margin-medium;
+  margin-bottom: $margin-medium;
+  margin-left: $margin-medium;
+  margin-right: $margin-medium + 2;
+  padding-bottom: $padding-small;
+  padding-bottom: $padding-medium;
+  border-radius: $border-radius-medium;
+  box-shadow: 0px 0px 4px rgba($on-secondary, 1.0);
+}
+
+.process-name-class {
+  min-width: 75px;
+  // background-color: #000000;
+}
+
+.percentage-class {
+  min-width: 27px;
+  padding-left: $padding-medium;
+  padding-right: $padding-medium;
+  // background-color: #000000;
+}
+
+.process-name {
+  min-width: 88px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  margin: 2px;
+  // border-radius: $border-radius-medium;
+  // margin-bottom: 5px;
+  // border-radius: 10px;
+  // background-color: $on-primary-container;
+}
+
+.percentage {
+  min-width: 27px;
+  padding-left: $padding-medium;
+  padding-right: $padding-medium;
+  margin-right: $margin-small;
+  margin-top: $margin-small;
+  border-radius: $border-radius-small;
+  background-color: $secondary-container;
+  color: $on-secondary-container;
 }
