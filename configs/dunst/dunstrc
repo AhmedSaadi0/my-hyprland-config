@@ -14,20 +14,20 @@ origin="bottom-left"
 
 progress_bar= true
 
-transparency = 30
+transparency = 40
 separator_height = 1
 padding = 8
 horizontal_padding = 8
 text_icon_padding = 8
-frame_width = 1
-frame_color = "#2DCAE6"
-separator_color = "#2DCAE6"
+frame_width = 2
+frame_color = "#ffb3b5"
+separator_color = "#ffb3b5"
 
 font = JF Flat 11
 
 line_height = 0
 markup = full
-format = "<span size='x-large' font_desc='JF Flat 10' weight='bold' foreground='#FA4EDF'>%s</span>\n<span >%b</span>"
+format = "<span size='x-large' font_desc='JF Flat 10' weight='bold' foreground='#ffdada'>%s</span>\n<span >%b</span>"
 alignment = center
 
 idle_threshold = 120
@@ -61,20 +61,18 @@ mouse_right_click = close_all
 
 [urgency_low]
     timeout = 3
-    background = "#291D46"
-    foreground = "#61AFEF"
+    background = "#001B3D"
+    foreground = "#ffb3b5"
 
 [urgency_normal]
     timeout = 6
-    background = "#291D46"
-    foreground = "#61AFEF"
-    ; background = "#3b4252"
-    ; foreground = "#f9f9f9"
+    background = "#001B3D"
+    foreground = "#ffb3b5"
 
 [urgency_critical]
     timeout = 0
-    background = "#291D46"
-    foreground = "#f9f9f9"
+    background = "#5c421a"
+    foreground = "#ffddb1"
 
 [play_sound]
     appname = "qtile"
