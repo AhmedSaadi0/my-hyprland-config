@@ -1,0 +1,301 @@
+.unset {
+    all: unset;
+}
+
+/* --------------------------------------- */
+/* -------------- Workspace -------------- */
+/* --------------------------------------- */
+.workspaces button:active {
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    color: #FFEDAE;
+    border-radius: 0px;
+}
+
+.workspaces {
+    padding-right: 4px;
+    padding-left: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-right: 4px;
+    margin-left: 8px;
+    background: #0C0023;
+    border-radius: 15px;
+    min-height: 3px;
+}
+
+.workspaces button {
+    background-color: transparent;
+    color: #C68DF1;
+}
+
+.workspaces button.focused {
+    border-bottom: 1px solid #FFEDAE;
+    color: #FFEDAE;
+    font-size: large;
+    font-family: "FontAwesome";
+    border-radius: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 10px;
+    padding-left: 10px;
+    min-width: 1em;
+}
+
+.workspaces button.unfocused {
+    font-size: large;
+    font-family: "FontAwesome";
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 10px;
+    padding-left: 10px;
+    min-width: 1em;
+}
+
+.workspaces button.has-windows {
+    color: #FFEDAE;
+}
+
+
+.workspaces button:hover {
+    color: #9e999b;
+}
+
+
+.clock {
+    font-size: 1em;
+    /* font-family: "VEXA light R"; */
+    background: linear-gradient(to right, #FFEDAE, #C68DF1);
+    color: #0C0023;
+    border-radius: 2em;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.bar {
+    background-color: #20004A;
+    color: #d6e3ff;
+    min-height: 8px;
+}
+
+.internet-box {
+    background: linear-gradient(to right, #FFEDAE, #C68DF1);
+    color: #0C0023;
+    /* min-width: 100px; */
+    border-radius: 2em;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    margin-left: 0.1em;
+}
+
+.wifi-name-label {
+    padding-left: 0.5em;
+    padding-right: 1em;
+    /* margin-left: 0.7em; */
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-right: 0.2em;
+    background-color: #0C0023;
+    color: #B6C5ED;
+    font-weight: bold;
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+}
+
+.wifi-icon-strength {
+    font-family: "FontAwesome";
+    margin-left: 0.7em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    padding-right: 0.5em;
+    padding-left: 0.6em;
+    background-color: #0C0023;
+    color: #B6C5ED;
+    border-top-left-radius: 2em;
+    border-bottom-left-radius: 2em;
+}
+
+.systray button {
+    background-color: #20004A;
+    border-radius: 0em;
+}
+
+.tray-btn {
+    border: 0;
+}
+
+/* ------------------------------------- */
+/* -------------- Battery -------------- */
+/* ------------------------------------- */
+.battery {
+    background-color: #20004A;
+    color: #FF8580;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 3px;
+}
+
+@keyframes colorChange {
+    0% {
+        color: #431d61;
+    }
+
+    50% {
+        color: #FF8580;
+    }
+
+    100% {
+        color: #431d61;
+    }
+}
+
+.battery-inner {
+    color: #FF8580;
+    margin-top: 0.2em;
+    margin-right: 0.3em;
+    margin-bottom: 0.2em;
+    min-width: 2px;
+    font-size: 2.0em;
+}
+
+.battery-inner-charging {
+    color: #FF8580;
+    margin-top: 0.2em;
+    margin-right: 0.2em;
+    margin-bottom: 0.2em;
+    min-width: 2px;
+    font-size: 2.0em;
+    animation: colorChange 2s infinite;
+}
+
+/* --------------------------------- */
+/* -------------- CPU -------------- */
+/* --------------------------------- */
+.cpu {
+    background-color: #20004A;
+    color: #FDC227;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 3px;
+}
+
+.cpu-inner {
+    color: #FDC227;
+    margin-top: 0.2em;
+    margin-right: 0.3em;
+    margin-bottom: 0.2em;
+    min-width: 2px;
+    font-size: 2.0em;
+}
+
+/* ---------------------------------- */
+/* -------------- TEMP -------------- */
+/* ---------------------------------- */
+.temp {
+    background-color: #20004A;
+    color: #C78DF2;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 3px;
+}
+
+.temp-inner {
+    color: #C78DF2;
+    margin-top: 0.2em;
+    margin-right: 0.3em;
+    margin-bottom: 0.2em;
+    min-width: 2px;
+    font-size: 2.0em;
+}
+
+/* --------------------------------- */
+/* -------------- RAM -------------- */
+/* --------------------------------- */
+.ram {
+    background-color: #20004A;
+    color: #B8E8FF;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 3px;
+}
+
+.ram-inner {
+    color: #B8E8FF;
+    margin-top: 0.2em;
+    margin-right: 0.3em;
+    margin-bottom: 0.2em;
+    min-width: 2px;
+    font-size: 2.0em;
+}
+
+/* ------------------------------------------ */
+/* -------------- Hardware box -------------- */
+/* ------------------------------------------ */
+.hardware-box {
+    background-color: #0C0023;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+    border-radius: 1em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    margin-right: 0em;
+}
+
+
+/* ------------------------------------ */
+/* -------------- Volume -------------- */
+/* ------------------------------------ */
+.volume {
+    border-radius: 2em;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.vol-stack {
+    margin-left: 1em;
+}
+
+.vol-osd {
+    background-color: #20004A;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    border-radius: 1rem;
+    border: 2px solid #F3ACAF;
+}
+
+scale trough highlight {
+    border-radius: 2em;
+    color: #FDEAB0;
+    background-color: #FDEAB0;
+}
+
+scale slider {
+    background-color: #FDEAB0;
+}
+
+/* ------------------------------------------- */
+/* -------------- Notifications -------------- */
+/* ------------------------------------------- */
+.notification-popups{
+    border: 2px solid #F3ACAF;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+
+.notifications-popup-list {
+    background-color: #20004A;
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+}
+
+
+window {
+    border-radius: 2em;
+    background-color: rgba(0, 0, 0, 0.0);
+}

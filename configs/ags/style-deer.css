@@ -100,9 +100,13 @@ highlight {
     min-width: 1em;
 }
 
+.workspaces button.has-windows {
+    color: #ffb3b5;
+}
+
 
 .workspaces button:hover {
-    color: #d1e4ff;
+    color: #9e999b;
 }
 
 /* ------------------------------------ */
@@ -127,9 +131,9 @@ highlight {
     font-size: 1em;
     background: linear-gradient(to right, #ffb3b5, #9fcaff);
     color: #18255E;
-    border-radius: 15px;
-    margin-top: 6px;
-    margin-bottom: 6px;
+    border-radius: 2em;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
     padding-left: 1em;
     padding-right: 1em;
 }
@@ -143,14 +147,15 @@ highlight {
 .internet-box {
     background: linear-gradient(to right, #ffb3b5, #9fcaff);
     color: #18255E;
+    /* min-width: 100px; */
     border-radius: 2em;
     margin-top: 0.4em;
     margin-bottom: 0.4em;
     margin-left: 0.1em;
 }
 
-.internet-wifi-name-label {
-    padding-left: 1em;
+.wifi-name-label {
+    padding-left: 0.5em;
     padding-right: 1em;
     /* margin-left: 0.7em; */
     margin-top: 0.2em;
@@ -162,13 +167,13 @@ highlight {
     border-bottom-right-radius: 2em;
 }
 
-.internet-strength-icon {
+.wifi-icon-strength {
     font-family: "Font Awesome 5 Free Solid";
     margin-left: 0.7em;
     margin-top: 0.2em;
     margin-bottom: 0.2em;
     padding-right: 0.5em;
-    padding-left: 0.5em;
+    padding-left: 0.6em;
     background-color: #18255E;
     color: #B6C5ED;
     border-top-left-radius: 2em;
