@@ -1,12 +1,17 @@
-import App from 'resource:///com/github/Aylur/ags/app.js';
 import { Bar } from "./modules/topbar.js";
 import { VolumeOSD } from "./modules/on-screen/volume.js";
-import { NotificationOSD } from "./modules/on-screen/notification.js";
 import Notifications from './modules/notifications/Notifications.js';
 
-// exporting the config so ags can manage the windows
+
+// in config.js
+const scss = ags.App.configDir + '/scss/main.scss';
+const css = ags.App.configDir + '/style.css';
+
+ags.Utils.exec(`sassc ${scss} ${css}`);
+
 export default {
-    style: App.configDir + '/style.scss',
+    style: css,
+    cacheNotificationActions: true,
     windows: [
         Bar(),
         VolumeOSD(),

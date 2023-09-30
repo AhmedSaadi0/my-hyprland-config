@@ -17,7 +17,7 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
                 min-width: 78px;
                 min-height: 78px;
                 margin-left: 1rem;
-                border-radius: 2rem;
+                border-radius: 1rem;
             `,
         });
     }
@@ -48,6 +48,22 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
 export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
     const hovered = ags.Variable(false);
 
+    const bodyLabel = Label({
+        style: `margin-top: 1rem;`,
+        className: 'notification-description',
+        hexpand: true,
+        useMarkup: true,
+        xalign: 0,
+        justification: 'left',
+        wrap: true,
+    })
+
+    try {
+        bodyLabel.label = body;
+    } catch (error) {
+        bodyLabel.label = "...";
+    }
+
     const hover = () => {
         hovered.value = true;
         hovered._block = true;
@@ -65,7 +81,7 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
     });
 
     const content = Box({
-        style:`min-width: 400px;`,
+        style: `min-width: 400px;`,
         children: [
             NotificationIcon(icon),
             Box({
@@ -74,9 +90,10 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
                 children: [
                     Box({
                         children: [
+                            // Notification Title
                             Label({
                                 className: 'notification-title',
-                                style:`margin-left: 1rem;`,
+                                style: `margin-left: 1rem;`,
                                 xalign: 0,
                                 justification: 'left',
                                 hexpand: true,
@@ -86,37 +103,30 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
                                 label: summary,
                                 useMarkup: summary.startsWith('<'),
                             }),
+                            // Notification Body
                             Label({
                                 className: 'notification-time',
-                                style:`margin-left: 1rem; margin-top: 0.5rem;`,
+                                style: `margin-left: 1rem; margin-top: 0.5rem;`,
                                 valign: 'start',
                                 label: GLib.DateTime.new_from_unix_local(time).format('%H:%M'),
                             }),
+                            // Notification Close Button
                             Button({
                                 onHover: hover,
                                 className: 'notification-close-button',
-                                style:`border-radius: 2rem;`,
                                 valign: 'start',
                                 child: Icon('window-close-symbolic'),
                                 onClicked: () => Notifications.close(id),
                             }),
                         ],
                     }),
-                    Label({
-                        style:`margin-top: 1rem;`,
-                        className: 'notification-description',
-                        hexpand: true,
-                        useMarkup: true,
-                        xalign: 0,
-                        justification: 'left',
-                        label: body,
-                        wrap: true,
-                    }),
+                    bodyLabel,
                 ],
             }),
         ],
     });
 
+    // Notification Action Button
     const actionsbox = Revealer({
         transition: 'slide_up',
         binds: [['revealChild', hovered]],
@@ -126,7 +136,7 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
                 className: 'notification-actions',
                 children: actions.map(action => Button({
                     onHover: hover,
-                    style:`border-radius: 2rem; margin-top: 1rem;`,
+                    style: `margin-top: 1rem;`,
                     className: 'action-button',
                     onClicked: () => Notifications.invoke(id, action.id),
                     hexpand: true,

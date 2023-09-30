@@ -3,8 +3,10 @@ import { Workspaces } from "./workspace.js";
 import { Volume } from "./volume.js";
 import { HardwareBox } from "./hardware/all.js";
 import { SysTrayBox } from "./systray.js";
-const { Window, CenterBox, Box, Label } = ags.Widget
-const { execAsync } = ags.Utils
+import NotificationIndicator from "./notifications/NotificationIndicator.js";
+
+const { Window, CenterBox, Box, Label } = ags.Widget;
+const { execAsync } = ags.Utils;
 
 
 const Clock = () => Label({
@@ -41,6 +43,7 @@ const Center = () => Box({
 const Left = () => Box({
     halign: 'end',
     children: [
+        NotificationIndicator(),
         NetworkInformation(),
         Volume(),
         SysTrayBox(),

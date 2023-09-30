@@ -50,7 +50,7 @@ const Popups = () => Box({
     ],
 });
 
-const PopupList = ({ transition = 'slide_up' } = {}) => Box({
+const PopupList = ({ transition = 'slide_down' } = {}) => Box({
     className: 'notifications-popup-list',
     children: [
         Revealer({
@@ -63,6 +63,6 @@ const PopupList = ({ transition = 'slide_up' } = {}) => Box({
 export default monitor => Window({
     monitor,
     name: `notifications${monitor}`,
-    anchor: ['bottom', "left"],
+    anchor: ['top', "left"],
     child: PopupList(),
 });

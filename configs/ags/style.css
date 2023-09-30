@@ -1,0 +1,286 @@
+.unset {
+  all: unset; }
+
+/* --------------------------------------- */
+/* -------------- Workspace -------------- */
+/* --------------------------------------- */
+.workspaces button:active {
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  color: #FFEDAE;
+  border-radius: 0px; }
+
+.workspaces {
+  padding-right: 4px;
+  padding-left: 4px;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  margin-right: 4px;
+  margin-left: 8px;
+  background-color: #0C0023;
+  border-radius: 15px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1.1rem; }
+
+.workspaces button {
+  background-color: #0C0023;
+  color: #C68DF1;
+  border: 0rem; }
+
+.workspaces button.focused {
+  border-bottom: 1px solid #FFEDAE;
+  color: #FFEDAE;
+  font-family: "FontAwesome";
+  border-radius: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 10px;
+  padding-left: 10px; }
+
+.workspaces button.unfocused {
+  font-family: "FontAwesome";
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 0px; }
+
+.workspaces button.has-windows {
+  color: #FFEDAE; }
+
+.workspaces button:hover {
+  background-color: rgba(255, 237, 174, 0.9);
+  color: rgba(32, 0, 74, 0.9); }
+
+.clock {
+  font-size: 1em;
+  background: linear-gradient(to right, #ffe070, #ba60ff);
+  color: #0C0023;
+  border-radius: 2em;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  padding-left: 1em;
+  padding-right: 1em; }
+
+.bar {
+  background-color: #20004A;
+  color: #B8E8FF;
+  min-height: 8px;
+  border-radius: 0rem; }
+
+.internet-box {
+  background: linear-gradient(to right, #FFEDAE, #C68DF1);
+  color: #20004A;
+  /* min-width: 100px; */
+  border-radius: 2em;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  margin-left: 0.1em; }
+
+.wifi-name-label {
+  padding-left: 0.5em;
+  padding-right: 1em;
+  /* margin-left: 0.7em; */
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  margin-right: 0.2em;
+  background-color: #20004A;
+  color: #B8E8FF;
+  font-weight: bold;
+  border-top-right-radius: 2em;
+  border-bottom-right-radius: 2em; }
+
+.wifi-icon-strength {
+  font-family: "FontAwesome";
+  margin-left: 0.7em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  padding-right: 0.5em;
+  padding-left: 0.6em;
+  background-color: #20004A;
+  color: #B8E8FF;
+  border-top-left-radius: 2em;
+  border-bottom-left-radius: 2em; }
+
+.systray {
+  background-color: #3B2163;
+  border-radius: 2rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  margin-left: 0.4rem;
+  min-height: 0.1rem; }
+
+.systray button {
+  background-color: #3B2163;
+  border-radius: 2rem;
+  padding-right: 0.5rem;
+  min-height: 0.1rem; }
+
+.systray button:hover {
+  background-color: #FFEDAE; }
+
+.tray-btn {
+  border: 0; }
+
+/* ------------------------------------- */
+/* -------------- Battery -------------- */
+/* ------------------------------------- */
+.battery {
+  background-color: #0C0023;
+  color: #FF8580;
+  min-width: 20px;
+  min-height: 20px;
+  font-size: 3px; }
+
+@keyframes colorChange {
+  0% {
+    color: #FF8580; }
+  50% {
+    color: #0C0023; }
+  100% {
+    color: #FF8580; } }
+
+.battery-inner {
+  color: #FF8580;
+  margin-top: 0.2em;
+  margin-right: 0.3em;
+  margin-bottom: 0.2em;
+  font-family: "FontAwesome";
+  min-width: 2px;
+  font-size: 2.0em; }
+
+.battery-inner-charging {
+  color: #FF8580;
+  margin-top: 0.2em;
+  margin-right: 0.2em;
+  margin-bottom: 0.2em;
+  font-family: "FontAwesome";
+  min-width: 2px;
+  font-size: 2.0em;
+  animation: colorChange 2.0s infinite; }
+
+/* --------------------------------- */
+/* -------------- CPU -------------- */
+/* --------------------------------- */
+.cpu {
+  background-color: #0C0023;
+  color: #FDC227;
+  min-width: 20px;
+  min-height: 20px;
+  font-size: 3px; }
+
+.cpu-inner {
+  color: #FDC227;
+  margin-top: 0.2em;
+  margin-right: 0.3em;
+  margin-bottom: 0.2em;
+  font-family: "FontAwesome";
+  min-width: 2px;
+  font-size: 2.0em; }
+
+/* ---------------------------------- */
+/* -------------- TEMP -------------- */
+/* ---------------------------------- */
+.temp {
+  background-color: #0C0023;
+  color: #C68DF1;
+  min-width: 20px;
+  min-height: 20px;
+  font-size: 3px; }
+
+.temp-inner {
+  color: #C68DF1;
+  margin-top: 0.2em;
+  font-family: "FontAwesome";
+  margin-right: 0.3em;
+  margin-bottom: 0.2em;
+  min-width: 2px;
+  font-size: 2.0em; }
+
+/* --------------------------------- */
+/* -------------- RAM -------------- */
+/* --------------------------------- */
+.ram {
+  background-color: #0C0023;
+  color: #B8E8FF;
+  min-width: 20px;
+  min-height: 20px;
+  font-size: 3px; }
+
+.ram-inner {
+  color: #B8E8FF;
+  font-family: "FontAwesome";
+  margin-top: 0.2em;
+  margin-right: 0.3em;
+  margin-bottom: 0.2em;
+  min-width: 2px;
+  font-size: 2.0em; }
+
+/* ------------------------------------------ */
+/* -------------- Hardware box -------------- */
+/* ------------------------------------------ */
+.hardware-box {
+  background-color: #0C0023;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left: 0.7em;
+  padding-right: 0.7em;
+  border-radius: 1em;
+  margin-top: 0.3rem;
+  margin-bottom: 0.4rem;
+  margin-right: 0em; }
+
+/* ------------------------------------ */
+/* -------------- Volume -------------- */
+/* ------------------------------------ */
+.volume {
+  border-radius: 2em;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 1em;
+  padding-right: 1em; }
+
+.vol-stack {
+  margin-left: 1em; }
+
+.vol-osd {
+  background-color: #20004A;
+  padding: 1rem;
+  padding-left: 1.5rem;
+  border-radius: 1rem;
+  border: 0.1rem solid #FDEAB0; }
+
+scale trough highlight {
+  border-radius: 2em;
+  background-color: #FFEDAE; }
+
+scale slider {
+  background-color: #FFEDAE; }
+
+/* ------------------------------------------- */
+/* -------------- Notifications -------------- */
+/* ------------------------------------------- */
+.notifications-revealer-box {
+  background-color: #0C0023;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  border-radius: 2rem;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem; }
+
+.notification-popups {
+  border: 0.1rem solid #FDEAB0;
+  border-radius: 1rem;
+  padding: 1rem; }
+
+.notifications-popup-list {
+  background-color: #20004A;
+  border-radius: 1rem;
+  margin-top: 2rem;
+  margin-left: 2rem; }
+
+window {
+  border-radius: 1em;
+  background-color: rgba(0, 0, 0, 0); }

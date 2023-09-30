@@ -1,3 +1,5 @@
+@import './themes/black-hole.scss';
+
 .unset {
     all: unset;
 }
@@ -7,85 +9,89 @@
 /* --------------------------------------- */
 .workspaces button:active {
     /* background-color: rgba(255, 255, 255, 0.2); */
-    color: #FFEDAE;
+    color: $active-workspace-btn;
     border-radius: 0px;
 }
 
 .workspaces {
     padding-right: 4px;
     padding-left: 4px;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-bottom-margin;
     margin-right: 4px;
     margin-left: 8px;
-    background: #0C0023;
+    background-color: $workspace-background;
     border-radius: 15px;
-    min-height: 3px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1.1rem;
 }
 
 .workspaces button {
-    background-color: transparent;
-    color: #C68DF1;
+    background-color: $workspace-background;
+    color: $workspace-btn;
+    border: 0rem;
 }
 
 .workspaces button.focused {
-    border-bottom: 1px solid #FFEDAE;
-    color: #FFEDAE;
-    font-size: large;
-    font-family: "FontAwesome";
+    border-bottom: 1px solid $workspace-focused-bottom;
+    color: $workspace-focused;
+    font-family: $icon-font-family;
     border-radius: 0px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     padding-right: 10px;
     padding-left: 10px;
-    min-width: 1em;
+    // min-width: 1em;
 }
 
 .workspaces button.unfocused {
-    font-size: large;
-    font-family: "FontAwesome";
-    padding-top: 2px;
-    padding-bottom: 2px;
+    font-family: $icon-font-family;
+    padding-top: 0px;
+    padding-bottom: 0px;
     padding-right: 10px;
     padding-left: 10px;
-    min-width: 1em;
+    // min-width: 1em;
+    border-radius: 0px;
 }
 
 .workspaces button.has-windows {
-    color: #FFEDAE;
+    color: $workspace-has-windows;
 }
 
 
 .workspaces button:hover {
-    color: #9e999b;
+    background-color: $workspace-hover-background;
+    color: $workspace-hover-color;
 }
 
 
 .clock {
     font-size: 1em;
-    /* font-family: "VEXA light R"; */
-    background: linear-gradient(to right, #FFEDAE, #C68DF1);
-    color: #0C0023;
+    // font-family: "VEXA light R"; 
+    background: $clock-background;
+    color: $clock-color;
     border-radius: 2em;
-    margin-top: 0.4em;
-    margin-bottom: 0.4em;
+    margin-top: $bar-top-margin + 0.1rem;
+    margin-bottom: $bar-top-margin + 0.1rem;
     padding-left: 1em;
     padding-right: 1em;
 }
 
 .bar {
-    background-color: #20004A;
-    color: #d6e3ff;
+    background-color: $bar-background;
+    color: $bar-color;
     min-height: 8px;
+    border-radius: 0rem;
 }
 
 .internet-box {
-    background: linear-gradient(to right, #FFEDAE, #C68DF1);
-    color: #0C0023;
+    background: $internet-box-background;
+    color: $internet-box-color;
     /* min-width: 100px; */
     border-radius: 2em;
-    margin-top: 0.4em;
-    margin-bottom: 0.4em;
+    margin-top: $bar-top-margin + 0.1rem;
+    margin-bottom: $bar-top-margin + 0.1rem;
     margin-left: 0.1em;
 }
 
@@ -96,29 +102,45 @@
     margin-top: 0.2em;
     margin-bottom: 0.2em;
     margin-right: 0.2em;
-    background-color: #0C0023;
-    color: #B6C5ED;
+    background-color: $wifi-name-background;
+    color: $wifi-name-color;
     font-weight: bold;
     border-top-right-radius: 2em;
     border-bottom-right-radius: 2em;
 }
 
 .wifi-icon-strength {
-    font-family: "FontAwesome";
+    font-family: $icon-font-family;
     margin-left: 0.7em;
     margin-top: 0.2em;
     margin-bottom: 0.2em;
     padding-right: 0.5em;
     padding-left: 0.6em;
-    background-color: #0C0023;
-    color: #B6C5ED;
+    background-color: $wifi-icon-background;
+    color: $wifi-icon-color;
     border-top-left-radius: 2em;
     border-bottom-left-radius: 2em;
 }
 
+.systray {
+    background-color: $systray-background;
+    border-radius: 2rem;
+    margin-top: $bar-top-margin + 0.1rem;
+    margin-bottom: $bar-top-margin + 0.1rem;
+    margin-left: 0.4rem;
+    min-height: 0.1rem;
+}
+
 .systray button {
-    background-color: #20004A;
-    border-radius: 0em;
+    background-color: $systray-btn-background;
+    border-radius: 2rem;
+    padding-right: 0.5rem;
+    min-height: 0.1rem;
+    // font-size: 1rem;
+}
+
+.systray button:hover {
+    background-color: $systray-btn-hover-background;
 }
 
 .tray-btn {
@@ -129,8 +151,8 @@
 /* -------------- Battery -------------- */
 /* ------------------------------------- */
 .battery {
-    background-color: #20004A;
-    color: #FF8580;
+    background-color: $battery-background;
+    color: $battery-color;
     min-width: 20px;
     min-height: 20px;
     font-size: 3px;
@@ -138,53 +160,56 @@
 
 @keyframes colorChange {
     0% {
-        color: #431d61;
+        color:  $battery-color;
     }
 
     50% {
-        color: #FF8580;
+        color: $battery-background;
     }
 
     100% {
-        color: #431d61;
+        color:  $battery-color;
     }
 }
 
 .battery-inner {
-    color: #FF8580;
+    color: $battery-inner-color;
     margin-top: 0.2em;
     margin-right: 0.3em;
     margin-bottom: 0.2em;
+    font-family: $icon-font-family;
     min-width: 2px;
     font-size: 2.0em;
 }
 
 .battery-inner-charging {
-    color: #FF8580;
+    color: $battery-inner-color;
     margin-top: 0.2em;
     margin-right: 0.2em;
     margin-bottom: 0.2em;
+    font-family: $icon-font-family;
     min-width: 2px;
     font-size: 2.0em;
-    animation: colorChange 2s infinite;
+    animation: colorChange 2.0s infinite;
 }
 
 /* --------------------------------- */
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-    background-color: #20004A;
-    color: #FDC227;
+    background-color: $cpu-background;
+    color: $cpu-color;
     min-width: 20px;
     min-height: 20px;
     font-size: 3px;
 }
 
 .cpu-inner {
-    color: #FDC227;
+    color: $cpu-inner-color;
     margin-top: 0.2em;
     margin-right: 0.3em;
     margin-bottom: 0.2em;
+    font-family: $icon-font-family;
     min-width: 2px;
     font-size: 2.0em;
 }
@@ -193,16 +218,17 @@
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-    background-color: #20004A;
-    color: #C78DF2;
+    background-color: $temp-background;
+    color: $temp-color;
     min-width: 20px;
     min-height: 20px;
     font-size: 3px;
 }
 
 .temp-inner {
-    color: #C78DF2;
+    color: $temp-inner-color;
     margin-top: 0.2em;
+    font-family: $icon-font-family;
     margin-right: 0.3em;
     margin-bottom: 0.2em;
     min-width: 2px;
@@ -213,15 +239,16 @@
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-    background-color: #20004A;
-    color: #B8E8FF;
+    background-color: $ram-background;
+    color: $ram-color;
     min-width: 20px;
     min-height: 20px;
     font-size: 3px;
 }
 
 .ram-inner {
-    color: #B8E8FF;
+    color: $ram-inner-color;
+    font-family: $icon-font-family;
     margin-top: 0.2em;
     margin-right: 0.3em;
     margin-bottom: 0.2em;
@@ -233,14 +260,14 @@
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-    background-color: #0C0023;
+    background-color: $hardware-box-color;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
     padding-left: 0.7em;
     padding-right: 0.7em;
     border-radius: 1em;
-    margin-top: 0.3em;
-    margin-bottom: 0.3em;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-bottom-margin + 0.1rem;
     margin-right: 0em;
 }
 
@@ -261,41 +288,51 @@
 }
 
 .vol-osd {
-    background-color: #20004A;
+    background-color: $vol-osd-background;
     padding: 1rem;
     padding-left: 1.5rem;
     border-radius: 1rem;
-    border: 2px solid #F3ACAF;
+    border: $border-size solid $vol-osd-border-color;
 }
 
 scale trough highlight {
     border-radius: 2em;
-    color: #FDEAB0;
-    background-color: #FDEAB0;
+    background-color: $scale-highlight-background;
 }
 
 scale slider {
-    background-color: #FDEAB0;
+    background-color: $scale-slider-background;
 }
 
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
-.notification-popups{
-    border: 2px solid #F3ACAF;
+
+.notifications-revealer-box {
+    background-color: $secondary-background-color;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-bottom-margin;
     border-radius: 2rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.notification-popups {
+    border: $border-size solid $notifications-border;
+    border-radius: 1rem;
     padding: 1rem;
 }
 
 .notifications-popup-list {
-    background-color: #20004A;
-    border-radius: 2rem;
-    margin-bottom: 2rem;
+    background-color: $notifications-popup-list-background;
+    border-radius: 1rem;
+    margin-top: 2rem;
     margin-left: 2rem;
 }
 
-
 window {
-    border-radius: 2em;
+    border-radius: 1em;
     background-color: rgba(0, 0, 0, 0.0);
 }

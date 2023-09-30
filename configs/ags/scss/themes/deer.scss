@@ -1,0 +1,115 @@
+// -----------------------------
+// --------- Variables ---------
+// -----------------------------
+$border-color: #FDEAB0;
+$border-size: 0.1rem;
+
+$primary-color: #FDB4B7;
+$primary-background-color: #001B3D;
+
+$secondary-color: #9FCAFF;
+$secondary-background-color: #00497D;
+
+$tertiary-color: #B8E8FF;
+$tertiary-background-color: #3B2163;
+
+$icon-font-family: "FontAwesome";
+
+$bar-top-margin: 0.3rem;
+$bar-bottom-margin: 0.3rem;
+
+// ------------------------------
+// --------- Workspaces ---------
+// ------------------------------
+$workspace-btn: $secondary-color;
+$active-workspace-btn: $primary-color;
+$workspace-background: $secondary-background-color;
+$workspace-focused: $primary-color;
+$workspace-focused-bottom: $workspace-focused;
+$workspace-has-windows: $workspace-focused;
+$workspace-hover-background: rgba($primary-color, 0.9);
+$workspace-hover-color: rgba($primary-background-color, 0.9);
+
+// --------------------------------
+// --------- Clock widget ---------
+// --------------------------------
+$clock-background: linear-gradient(to right, #9FCAFF, #FA8595);
+$clock-color: #001B3D;
+
+// -----------------------
+// --------- bar ---------
+// -----------------------
+$bar-background: $primary-background-color;
+$bar-color: $tertiary-color;
+
+// --------------------------------
+// --------- internet box ---------
+// --------------------------------
+$internet-box-background: linear-gradient(to right, $primary-color, $secondary-color);
+$internet-box-color: $bar-background;
+$wifi-name-background: $bar-background;
+$wifi-name-color: $bar-color;
+$wifi-icon-background: $bar-background;
+$wifi-icon-color: $bar-color;
+
+// --------- systray ---------
+// ---------------------------
+$systray-background: #00497D;
+$systray-btn-background: $systray-background;
+$systray-btn-hover-background: $workspace-focused;
+
+// --------------------------------
+// --------- hardware-box ---------
+// --------------------------------
+$hardware-box-color: $secondary-background-color;
+
+// ---------------------------
+// --------- battery ---------
+// ---------------------------
+$battery-background: $hardware-box-color;
+$battery-color: #FF8580;
+$battery-inner-color: $battery-color;
+
+// -----------------------
+// --------- CPU ---------
+// -----------------------
+$cpu-background: $hardware-box-color;
+$cpu-color: #FDC227;
+$cpu-inner-color: $cpu-color;
+
+
+// ------------------------
+// --------- Temp ---------
+// ------------------------
+$temp-background: $hardware-box-color;
+$temp-color: $secondary-color;
+$temp-inner-color: $temp-color;
+
+
+// -----------------------
+// --------- RAM ---------
+// -----------------------
+$ram-background: $hardware-box-color;
+$ram-color: $tertiary-color;
+$ram-inner-color: $ram-color;
+
+
+// ---------------------------
+// --------- Vol osd ---------
+// ---------------------------
+$vol-osd-background: $primary-background-color;
+$vol-osd-border-color: $border-color;
+
+
+// -----------------------------
+// --------- GTK Scale ---------
+// -----------------------------
+$scale-highlight-background: $primary-color;
+$scale-slider-background: $scale-highlight-background;
+
+
+// ---------------------------------
+// --------- Notifications ---------
+// ---------------------------------
+$notifications-border: $border-color;
+$notifications-popup-list-background: $primary-background-color;
