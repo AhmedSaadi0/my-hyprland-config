@@ -1,6 +1,8 @@
-const { App } = ags
-const { Label, Box, Icon, Window, Button, Revealer } = ags.Widget
-const { exec, execAsync } = ags.Utils;
+
+import theme from "../theme/service.js";
+
+const { Label, Box, Icon, Window, Button, Revealer } = ags.Widget;
+
 
 const Profile = () => {
 
@@ -49,6 +51,7 @@ const Themes = () => {
         child: Label({
             label: "ثقب  󰇩"
         }),
+        onClicked: () => theme.changeTheme(0),
     })
 
     const deerTheme = Button({
@@ -61,22 +64,8 @@ const Themes = () => {
         child: Label({
             label: "غزال  "
         }),
-        onClicked: () => {
-            const scss = ags.App.configDir + '/scss/main.scss';
-            const css = ags.App.configDir + '/style.css';
-
-            execAsync( [
-                    'sed',
-                    '-i',
-                    `s/black-hole/deer/`,
-                    "/home/ahmed/.config/ags/scss/main.scss"
-                ]
-            ).then(() => {
-                exec(`sassc ${scss} ${css}`);
-                App.resetCss();
-                App.applyCss(css);
-            }).catch(print)
-        }
+        onClicked: () => theme.changeTheme(1),
+        
     })
 
     const colorTheme = Button({

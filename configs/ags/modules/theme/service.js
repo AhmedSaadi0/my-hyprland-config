@@ -1,5 +1,8 @@
 const { Service } = ags;
-const { USER, exec, execAsync, readFile, writeFile, CACHE_DIR } = ags.Utils;
+const { exec, execAsync } = ags.Utils;
+import Themes from "./themes.js";
+import { BLACK_HOLE_THEME, DEER_THEME } from "./themes.js";
+
 
 class ThemeService extends Service {
     static {
@@ -10,14 +13,27 @@ class ThemeService extends Service {
         );
     }
 
+    qtFilePath = '/home/ahmed/.config/qt5ct/qt5ct.conf';
+    plasmaColorChanger = ags.App.configDir + '/modules/theme/bin/plasma-theme';
+    plasmaColorsPath = ags.App.configDir + '/modules/theme/plasma-colors/';
+    selectedTheme = BLACK_HOLE_THEME;
+
     constructor() {
         super();
         exec('swww init');
-        this.setup();
+        this.changeTheme(this.selectedTheme);
     }
 
     changeTheme(selectedTheme) {
-        Themes.BLACK_HOLE_THEME.css_theme
+        let theme = Themes[selectedTheme];
+        this.selectedTheme = selectedTheme;
+
+        this.changeCss(theme.css_theme);
+        this.changeWallpaper(theme.wallpaper);
+        this.changePlasmaColor(theme.plasma_color);
+        this.changeQtStyle(theme.qt_style_theme);
+        this.changeIcons(theme.qt_icon_theme);
+        this.changeKvantumTheme(theme.kvantum_theme);
     }
 
     changeWallpaper(wallpaper) {
@@ -32,31 +48,31 @@ class ThemeService extends Service {
         ]).catch(print);
     }
 
-    changeCss(oldTheme, newTheme) {
+    changeCss(cssTheme) {
         const scss = ags.App.configDir + '/scss/main.scss';
         const css = ags.App.configDir + '/style.css';
 
-        execAsync(
-            [
-                'sed',
-                '-i',
-                `s/${oldTheme}/${newTheme}/`,
-                scss
-            ]
-            // `sed -i 's/@import \.\/themes\/black-hole\.scss;/@import .\/themes\/deer.scss;/g' ${scss}`
-        ).then(() => {
+        // const sedCommand = `sed -i "1s/^.*$/@import '\\''${cssTheme}.scss'\\'';/" ${scss}`;
+        // const sedCommand = `sed -i "1s/.*/This is the new first line/" ${scss}`;
+        const newTh = `@import './themes/${cssTheme}';`;
+
+        execAsync([
+            "sed",
+            "-i",
+            `1s|.*|${newTh}|`,
+            scss
+        ]).then(() => {
             exec(`sassc ${scss} ${css}`);
-            App.resetCss();
-            App.applyCss(`${tmp}/style.css`);
+            ags.App.resetCss();
+            ags.App.applyCss(css);
         }).catch(print)
     }
 
     changePlasmaColor(plasmaColor) {
         execAsync([
-            PLASMA_COLOR_CHANGER,
+            this.plasmaColorChanger,
             '-c',
-            PLASMA_COLORS_PATH,
-            plasmaColor
+            this.plasmaColorsPath + plasmaColor
         ]).catch(print);
     }
 
@@ -64,8 +80,8 @@ class ThemeService extends Service {
         execAsync([
             'sed',
             '-i',
-            `"s/style=.*/style=${qtStyle}/g"`,
-            QT_FILE_PATH,
+            `s/style=.*/style=${qtStyle}/g`,
+            this.qtFilePath,
         ]).catch(print);
     }
 
@@ -73,8 +89,8 @@ class ThemeService extends Service {
         execAsync([
             'sed',
             '-i',
-            `"s/icon_theme=.*/icon_theme=${icons}/g"`,
-            QT_FILE_PATH,
+            `s/icon_theme=.*/icon_theme=${icons}/g`,
+            this.qtFilePath,
         ]).catch(print);
     }
 
@@ -88,75 +104,9 @@ class ThemeService extends Service {
 
 }
 
-class BrightnessService extends Service {
-    static {
-        // every subclass of GObject.Object has to register itself
-        // takes three arguments
-        // the class itself
-        // an object defining the signals
-        // an object defining its properties
-        Service.register(
-            this,
-            {
-                // 'name-of-signal': [type as a string from GObject.TYPE_<type>],
-                'screen-changed': ['float'],
-            },
-            {
-                // 'kebab-cased-name': [type as a string from GObject.TYPE_<type>, 'r' | 'w' | 'rw']
-                // 'r' means readable
-                // 'w' means writable
-                // guess what 'rw' means
-                'screen-value': ['float', 'rw'],
-            },
-        );
-    }
-
-    _screenValue = 0;
-
-    // the getter has to be in snake_case
-    get screen_value() { return this._screenValue; }
-
-    // the setter has to be in snake_case too
-    set screen_value(percent) {
-        if (percent < 0)
-            percent = 0;
-
-        if (percent > 1)
-            percent = 1;
-
-        Utils.execAsync(`brightnessctl s ${percent * 100}% -q`)
-            .then(() => {
-                this._screen = percent;
-
-                // signals has to be explicity emitted
-                this.emit('changed'); // emits "changed"
-                this.notify('screen'); // emits "notify::screen"
-
-                // or use Service.changed(propName: string) which does the above two
-                // this.changed('screen');
-            })
-            .catch(print);
-    }
-
-    constructor() {
-        super();
-        const current = Number(exec('brightnessctl g'));
-        const max = Number(exec('brightnessctl m'));
-        this._screenValue = current / max;
-    }
-
-    // overwriting connectWidget method, let's you
-    // change the default event that widgets connect to
-    connectWidget(widget, callback, event = 'screen-changed') {
-        super.connectWidget(widget, callback, event);
-    }
-}
 
 // the singleton instance
-const service = new BrightnessService();
-
-// make it global for easy use with cli
-globalThis.brightness = service;
+const theme = new ThemeService();
 
 // export to use in other modules
-export default service;
+export default theme;
