@@ -1,4 +1,4 @@
-@import './themes/black-hole.scss';
+@import './themes/colors.scss';
 
 .unset {
     all: unset;
@@ -8,7 +8,6 @@
 /* -------------- Workspace -------------- */
 /* --------------------------------------- */
 .workspaces button:active {
-    /* background-color: rgba(255, 255, 255, 0.2); */
     color: $active-workspace-btn;
     border-radius: 0px;
 }
@@ -309,7 +308,7 @@ scale slider {
 /* ------------------------------------------- */
 
 .notifications-revealer-box {
-    background-color: $secondary-background-color;
+    background-color: $notifications-revealer-box-background;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin;
     border-radius: 2rem;
@@ -332,13 +331,13 @@ scale slider {
     margin-left: 2rem;
 }
 
-.notification-close-button {
-    background-color: $secondary-background-color;
-}
+// .notification-close-button {
+//     background-color: $secondary-background-color;
+// }
 
-.notification-close-button:hover {
-    background-color: $primary-color;
-}
+// .notification-close-button:hover {
+//     background-color: $primary-color;
+// }
 
 window {
     border-radius: 1em;
@@ -353,22 +352,21 @@ window {
     background-position: center;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
-    min-width: 18rem;
+    min-width: 23rem;
     min-height: 12rem;
 }
 
 .left-menu-box {
-    background-color: #20004A;
+    background-color: $menu-box-background;
     // min-width: 18rem;
     // min-height: 32rem;
     border-radius: 1rem;
-    border: 2px solid #FDD3BA;
+    border: 2px solid $menu-box-borders;
 }
 
 .profile-box {
-    // background-color: rgba(#813dff, 0.5);
-    background-image: linear-gradient(to right, rgba(#9359ff, 0.8), rgba(#FF00AA, 0.6));
-    color: #0C0023;
+    background-image: $profile-box-background;
+    color: $profile-box-color;
     min-width: 20rem;
     min-height: 8rem;
     margin-left: 1rem;
@@ -388,7 +386,7 @@ window {
 }
 
 .themes-box {
-    background-color: #0C0023;
+    background-color: $theme-box-background;
     min-height: 3rem;
     margin: 1rem;
     padding: 1rem;
@@ -396,16 +394,26 @@ window {
 }
 
 .selected-theme {
-    background-image: linear-gradient(to right, #9359ff, #FF00AA);
-    color: #0C0023;
+    background-image: $selected-theme-background;
+    color: $selected-theme-color;
 }
 
 .selected-theme:hover {
-    background-image: linear-gradient(to right, #ff9900, #ff6600);
-    color: #341C47;
+    background-image: $selected-theme-hover-background;
+    color: $selected-theme-hover-color;
 }
 
-.menu-button{
+.theme-btn {
+    border-radius: 1rem;
+    background-color: $menu-btn-background;
+}
+
+.theme-btn:hover {
+    border-radius: 1rem;
+    background-color: $menu-btn-hover;
+}
+
+.menu-button {
     border-radius: 1rem;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin;
@@ -413,4 +421,9 @@ window {
     padding-top: 0rem;
     padding-bottom: 0rem;
     margin-left: 0.5rem;
+    background-color: $menu-btn-background;
+}
+
+.menu-button:hover {
+    background-color: $menu-btn-hover;
 }
