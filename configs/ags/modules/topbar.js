@@ -1,10 +1,10 @@
-import { NetworkInformation } from "./internet.js";
-import { Workspaces } from "./workspace.js";
-import { Volume } from "./volume.js";
-import { HardwareBox } from "./hardware/all.js";
-import { SysTrayBox } from "./systray.js";
-import NotificationIndicator from "./notifications/NotificationIndicator.js";
-
+import { NetworkInformation } from "./widgets/internet.js";
+import { Workspaces } from "./widgets/workspace.js";
+import { Volume } from "./widgets/volume.js";
+import { HardwareBox } from "./widgets/hardware/all.js";
+import { SysTrayBox } from "./widgets/systray.js";
+import NotificationIndicator from "./widgets/NotificationIndicator.js";
+import { MenuButton } from './menus/left_menu.js'
 const { Window, CenterBox, Box, Label } = ags.Widget;
 const { execAsync } = ags.Utils;
 
@@ -47,6 +47,7 @@ const Left = () => Box({
         NetworkInformation(),
         Volume(),
         SysTrayBox(),
+        MenuButton(),
     ],
 });
 

@@ -1,4 +1,4 @@
-import HoverRevealer from '../widgets/HoverRevealer.js';
+import HoverRevealer from '../utils/HoverRevealer.js';
 const { Label, Icon } = ags.Widget;
 const { Notifications } = ags.Service;
 
@@ -35,6 +35,7 @@ export default ({
         }]],
     }),
     child: Label({
+        style: "margin-left: 0.4rem",
         truncate: 'end',
         maxWidthChars: 40,
         connections: [[Notifications, label => {

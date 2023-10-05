@@ -1,3 +1,14 @@
+// #411352
+// #722991
+// #e1d9f5
+// #8a49b3
+// #300c32
+// Lavender: #e6e6fa
+// Mauve: #e0b0ff
+// Violet: #8f00ff
+// Plum: #8e3179
+// Burgundy: #800020
+// Magenta: #ff00ff
 // -----------------------------
 // --------- Variables ---------
 // -----------------------------
@@ -13,7 +24,7 @@ $secondary-background-color: #0C0023;
 $tertiary-color: #B8E8FF;
 $tertiary-background-color: #3B2163;
 
-$icon-font-family: "FontAwesome";
+$icon-font-family: "Font Awesome 5 Free Solid 11";
 
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
@@ -34,7 +45,7 @@ $workspace-hover-color: rgba($primary-background-color, 0.9);
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
-$clock-background: linear-gradient(to right, #ffe070, #ba60ff);
+$clock-background: linear-gradient(to right, #9359ff, #FF00AA, #ffb92d);
 $clock-color: $secondary-background-color;
 
 // -----------------------
@@ -46,13 +57,14 @@ $bar-color: $tertiary-color;
 // --------------------------------
 // --------- internet box ---------
 // --------------------------------
-$internet-box-background: linear-gradient(to right, $primary-color, $secondary-color);
+$internet-box-background: linear-gradient(to right, #ffb92d, #FF00AA);
 $internet-box-color: $bar-background;
 $wifi-name-background: $bar-background;
 $wifi-name-color: $bar-color;
 $wifi-icon-background: $bar-background;
 $wifi-icon-color: $bar-color;
 
+// ---------------------------
 // --------- systray ---------
 // ---------------------------
 $systray-background: #3B2163;

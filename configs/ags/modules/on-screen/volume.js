@@ -1,4 +1,4 @@
-import { ShowWindow } from '../utils.js';
+import ShowWindow from '../utils/ShowWindow.js';
 const { Audio } = ags.Service
 const { Box, Stack, Icon, Slider, Window } = ags.Widget
 

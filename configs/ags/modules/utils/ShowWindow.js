@@ -2,17 +2,16 @@
 let isProcessing = false; // Flag to track processing status
 let timeoutId; // Store the timeout ID
 
-
-export const ShowWindow = (windowName, timeout = 5000) => {
+export default (windowName, timeout = 5000) => {
     if (isProcessing) {
-        // If processing, reset the timer and do something else
+        // If processing, reset the timer
         clearTimeout(timeoutId);
     } else {
-        // If not processing, do something
+        // If not processing, show or hide the window
         ags.App.toggleWindow(windowName);
     }
 
-    // Set a 5-second delay before doing something else
+    // Set a 5-second delay before show or hide the window
     timeoutId = setTimeout(() => {
         ags.App.toggleWindow(windowName);
         isProcessing = false; // Reset the processing flag
