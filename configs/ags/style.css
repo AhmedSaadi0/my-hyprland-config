@@ -63,7 +63,7 @@ button:hover {
 
 .clock {
   font-size: 1em;
-  background: linear-gradient(to right, #ff00ff, #0cdfff);
+  background: linear-gradient(to right, #ff00ff, #1ed4fd);
   color: #1F1635;
   border-radius: 2em;
   margin-top: 0.4rem;
@@ -197,6 +197,9 @@ button:hover {
   min-height: 20px;
   font-size: 3px; }
 
+.no-hover:hover {
+  all: unset; }
+
 .temp-inner {
   color: #ff00ff;
   margin-top: 0.2em;
@@ -211,13 +214,13 @@ button:hover {
 /* --------------------------------- */
 .ram {
   background-color: #1F1635;
-  color: #B8E8FF;
+  color: #C1C4EB;
   min-width: 20px;
   min-height: 20px;
   font-size: 3px; }
 
 .ram-inner {
-  color: #B8E8FF;
+  color: #C1C4EB;
   font-family: "Font Awesome 5 Free Solid 11";
   margin-top: 0.2em;
   margin-right: 0.3em;
@@ -297,6 +300,11 @@ window {
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
+.left-menu-box {
+  background-color: #352558;
+  border-radius: 1rem;
+  border: 2px solid #1ed4fd; }
+
 .left-menu-header {
   background-size: cover;
   background-position: center;
@@ -304,11 +312,6 @@ window {
   border-top-right-radius: 1rem;
   min-width: 23rem;
   min-height: 12rem; }
-
-.left-menu-box {
-  background-color: #352558;
-  border-radius: 1rem;
-  border: 2px solid #1ed4fd; }
 
 .profile-box {
   background-image: linear-gradient(to right, rgba(147, 89, 255, 0.8), rgba(255, 0, 170, 0.6));

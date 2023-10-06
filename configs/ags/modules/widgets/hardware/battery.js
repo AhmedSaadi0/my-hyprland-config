@@ -7,7 +7,7 @@ const label = Label({
 })
 
 const button = Button({
-    className: "unset",
+    className: "unset no-hover",
     child: label,
 });
 

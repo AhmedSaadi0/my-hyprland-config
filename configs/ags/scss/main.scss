@@ -224,6 +224,10 @@
     font-size: 3px;
 }
 
+.no-hover:hover {
+    all: unset;
+}
+
 .temp-inner {
     color: $temp-inner-color;
     margin-top: 0.2em;
@@ -347,6 +351,14 @@ window {
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
+.left-menu-box {
+    background-color: $menu-box-background;
+    // min-width: 18rem;
+    // min-height: 32rem;
+    border-radius: 1rem;
+    border: 2px solid $menu-box-borders;
+}
+
 .left-menu-header {
     background-size: cover;
     background-position: center;
@@ -354,14 +366,6 @@ window {
     border-top-right-radius: 1rem;
     min-width: 23rem;
     min-height: 12rem;
-}
-
-.left-menu-box {
-    background-color: $menu-box-background;
-    // min-width: 18rem;
-    // min-height: 32rem;
-    border-radius: 1rem;
-    border: 2px solid $menu-box-borders;
 }
 
 .profile-box {

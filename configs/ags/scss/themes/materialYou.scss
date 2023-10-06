@@ -1,31 +1,20 @@
-// #411352
-// #722991
-// #e1d9f5
-// #8a49b3
-// #300c32
-// Lavender: #e6e6fa
-// Mauve: #e0b0ff
-// Violet: #8f00ff
-// Plum: #8e3179
-// Burgundy: #800020
-// Magenta: #ff00ff
 // -----------------------------
 // --------- Variables ---------
 // -----------------------------
-$border-color: #1ed4fd;
+$border-color: #5D484C;
 $border-size: 0.1rem;
 
-$bg-one: #352558;
-$bg-two: #1F1635;
-$bg-three: #154a63;
+$bg-one: #FFDAD9;
+$bg-two: #E9C7C6;
+$bg-three: #FEC2A6;
 
-$fg-one: #1ed4fd;
-$fg-two: #ff00ff;
-$fg-three: #C1C4EB;
+$fg-one: #775653;
+$fg-two: #595380;
+$fg-three: #4B5569;
 
-$text-color: #bdddee;
+$text-color: #4C566A;
 
-$icon-font-family: "Font Awesome 5 Free Solid 11";
+$icon-font-family: "FontAwesome";
 
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
@@ -57,37 +46,37 @@ $bar-color: $text-color;
 // --------------------------------
 // --------- internet box ---------
 // --------------------------------
-$internet-box-background: linear-gradient(to right, #ffb92d, #0cdfff);
-$internet-box-color: $bar-background;
-$wifi-name-background: $bar-background;
-$wifi-name-color: $bar-color;
-$wifi-icon-background: $bar-background;
-$wifi-icon-color: $bar-color;
+$internet-box-background: linear-gradient(to right, #78d8db, #75AFB1);
+$internet-box-color: $text-color;
+$wifi-name-background: #ffc4cb;
+$wifi-name-color: #4C566A;
+$wifi-icon-background: $wifi-name-background;
+$wifi-icon-color: $wifi-name-color;
 
 // ---------------------------
 // --------- systray ---------
 // ---------------------------
 $systray-background: $bg-two;
-$systray-btn-background: $systray-background;
+$systray-btn-background: $bg-two;
 $systray-btn-hover-background: $workspace-focused;
 
 // --------------------------------
 // --------- hardware-box ---------
 // --------------------------------
-$hardware-box-color: $bg-two;
+$hardware-box-color: rgba(#595380, 0.9);
 
 // ---------------------------
 // --------- battery ---------
 // ---------------------------
 $battery-background: $hardware-box-color;
-$battery-color: $fg-one;
+$battery-color: #ffdada;
 $battery-inner-color: $battery-color;
 
 // -----------------------
 // --------- CPU ---------
 // -----------------------
 $cpu-background: $hardware-box-color;
-$cpu-color: #b18dff;
+$cpu-color: #ffddb2;
 $cpu-inner-color: $cpu-color;
 
 
@@ -95,7 +84,7 @@ $cpu-inner-color: $cpu-color;
 // --------- Temp ---------
 // ------------------------
 $temp-background: $hardware-box-color;
-$temp-color: $fg-two;
+$temp-color: #e6bdbe;
 $temp-inner-color: $temp-color;
 
 
@@ -103,7 +92,7 @@ $temp-inner-color: $temp-color;
 // --------- RAM ---------
 // -----------------------
 $ram-background: $hardware-box-color;
-$ram-color: $fg-three;
+$ram-color: #ece0df;
 $ram-inner-color: $ram-color;
 
 
@@ -134,18 +123,19 @@ $notifications-revealer-box-background: $bg-three;
 $menu-box-background: $bg-one;
 $menu-box-borders: $fg-one;
 
-$profile-box-background: linear-gradient(to right, rgba(#9359ff, 0.8), rgba(#FF00AA, 0.6));
-$profile-box-color: $bg-one;
+$profile-box-background: linear-gradient(to right, rgba(#ffb3b6, 0.8), rgba(#e0e0ff, 0.6));
+$profile-box-color: $text-color;
 
 $theme-box-background: $bg-two;
 
-$selected-theme-background: linear-gradient(to right, #9359ff, #FF00AA);
-$selected-theme-color: $bg-one;
-$selected-theme-hover-background: linear-gradient(to right, #ff9900, #ff6600);
-$selected-theme-hover-color: $bg-three;
+$selected-theme-background: linear-gradient(to right, #ffb3b6, #C2C3EB);
+$selected-theme-color: $text-color;
+$selected-theme-hover-background: linear-gradient(to right, #C2C3EB, #ffb3b6);
+$selected-theme-hover-color: $text-color;
 
 $menu-btn-background: $bg-one;
 $menu-btn-hover: $fg-one;
+
 
 // --------------------------------
 // --------- GTK elements ---------

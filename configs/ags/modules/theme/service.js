@@ -32,7 +32,7 @@ class ThemeService extends Service {
         this.changeCss(theme.css_theme);
         this.changeWallpaper(theme.wallpaper);
         this.changePlasmaColor(theme.plasma_color);
-        this.changeGTKTheme(theme.gtk_theme);
+        this.changeGTKTheme(theme.gtk_theme, theme.gtk_icon_theme);
         this.changeQtStyle(theme.qt_style_theme);
         this.changeIcons(theme.qt_icon_theme);
         this.changeKvantumTheme(theme.kvantum_theme);
@@ -88,7 +88,7 @@ class ThemeService extends Service {
         ]).catch(print);
     }
 
-    changeGTKTheme(GTKTheme) {
+    changeGTKTheme(GTKTheme, iconTheme) {
         execAsync([
             `gsettings`,
             `set`,
@@ -96,12 +96,21 @@ class ThemeService extends Service {
             `gtk-theme`,
             GTKTheme
         ]).catch(print);
+
         execAsync([
             `gsettings`,
             `set`,
             `org.gnome.desktop.wm.preferences`,
             `theme`,
             GTKTheme
+        ]).catch(print);
+
+        execAsync([
+            `gsettings`,
+            `set`,
+            `org.gnome.desktop.interface`,
+            `icon-theme`,
+            iconTheme
         ]).catch(print);
     }
 

@@ -1,7 +1,7 @@
 
 import themeService from "../theme/service.js";
 import ThemesDictionary from "../theme/themes.js";
-import { BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME } from "../theme/themes.js";
+import { BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 
 const { Label, Box, Icon, Window, Button, Revealer } = ags.Widget;
 const { USER } = ags.Utils;
@@ -45,84 +45,85 @@ const Header = () => {
     })
 }
 
-const ThemesButtons = () => {
-
-    const blackHoleTheme = Button({
-        style: `
+const ThemeButton = ({ label, theme, end = "margin-left: 1rem;" }) => Button({
+    style: `
             min-width: 5rem;
             min-height: 2rem;
-            margin-left: 1rem;
+            ${end}
             border-radius: 1rem;
         `,
-        child: Label({
-            label: "ثقب  󰇩"
-        }),
-        onClicked: () => themeService.changeTheme(BLACK_HOLE_THEME),
-        connections: [
-            [themeService, btn => {
-                btn.className = "theme-btn";
-                if (themeService.selectedTheme === BLACK_HOLE_THEME) {
-                    btn.className = "selected-theme";
-                }
-            }]
-        ]
-    })
-
-    const deerTheme = Button({
-        style: `
-            min-width: 5rem;
-            min-height: 2rem;
-            margin-left: 1rem;
-            border-radius: 1rem;
-        `,
-        child: Label({
-            label: "غزال  "
-        }),
-        onClicked: () => themeService.changeTheme(DEER_THEME),
-        connections: [
-            [themeService, btn => {
-                btn.className = "theme-btn";
-                if (themeService.selectedTheme === DEER_THEME) {
-                    btn.className = "selected-theme";
-                }
-            }]
-        ]
-    })
-
-    const colorTheme = Button({
-        style: `
-            min-width: 5rem;
-            min-height: 2rem;
-            border-radius: 1rem;
-        `,
-        className: "theme-btn",
-        child: Label({
-            label: "جمالي  "
-        }),
-        onClicked: () => themeService.changeTheme(COLOR_THEME),
-        connections: [
-            [themeService, btn => {
-                btn.className = "theme-btn";
-                if (themeService.selectedTheme === COLOR_THEME) {
-                    btn.className = "selected-theme";
-                }
-            }]
-        ],
-    })
+    child: Label({
+        label: label
+    }),
+    onClicked: () => themeService.changeTheme(theme),
+    connections: [
+        [themeService, btn => {
+            btn.className = "theme-btn";
+            if (themeService.selectedTheme === theme) {
+                btn.className = "selected-theme";
+            }
+        }]
+    ]
+})
 
 
-    return Box({
-        className: "themes-box",
+const ThemesButtonsRowOne = () => {
+
+    const blackHoleTheme = ThemeButton({
+        label: "ثقب  󰇩",
+        theme: BLACK_HOLE_THEME
+    });
+
+    const deerTheme = ThemeButton({
+        label: "غزال  ",
+        theme: DEER_THEME
+    });
+
+    const colorTheme = ThemeButton({
+        label: "جمالي  ",
+        theme: COLOR_THEME,
+        end: "",
+    });
+
+    const SiberianTheme = ThemeButton({
+        label: "تدرج  ",
+        theme: SIBERIAN_THEME,
+    });
+
+    const MaterialYouTheme = ThemeButton({
+        label: "مادي    ",
+        theme: MATERIAL_YOU,
+    });
+
+    const row1 = Box({
         children: [
             blackHoleTheme,
             deerTheme,
-            colorTheme,
+            colorTheme
+        ]
+    })
+    const row2 = Box({
+        style: `
+            margin-top: 1rem;
+        `,
+        children: [
+            SiberianTheme,
+            MaterialYouTheme
+        ]
+    })
+
+    return Box({
+        className: "themes-box",
+        vertical: true,
+        children: [
+            row1,
+            row2,
         ]
     })
 }
 
 
-const Menu = Revealer({
+const menuRevealer = Revealer({
     transition: "slide_down",
     child: Box({
         className: "left-menu-box",
@@ -130,7 +131,7 @@ const Menu = Revealer({
         children: [
             Header(),
             Profile(),
-            ThemesButtons()
+            ThemesButtonsRowOne()
         ]
     })
 })
@@ -146,16 +147,15 @@ export const LeftMenu = () => Window({
             min-height: 0.0001rem;
         `,
         children: [
-            Menu,
+            menuRevealer,
         ],
     })
 })
-
 
 export const MenuButton = () => Button({
     className: "menu-button",
     child: Label({ label: "" }),
     onClicked: () => {
-        Menu.revealChild = !Menu.revealChild;
+        menuRevealer.revealChild = !menuRevealer.revealChild;
     }
 });

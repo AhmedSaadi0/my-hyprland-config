@@ -15,7 +15,6 @@ $fg-three: #B8E8FF;
 
 $text-color: #bdddee;
 
-
 $icon-font-family: "FontAwesome";
 
 $bar-top-margin: 0.3rem;
@@ -36,7 +35,9 @@ $workspace-hover-color: rgba($bg-two, 0.9);
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
-$clock-background: linear-gradient(to right, #9FCAFF, #FA8595);
+// $clock-background: linear-gradient(to right, #9FCAFF, #FA8595);
+$clock-background: linear-gradient(to right, $fg-two, $fg-one);
+
 $clock-color: #001B3D;
 
 // -----------------------
