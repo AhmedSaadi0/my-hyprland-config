@@ -1,12 +1,12 @@
 button {
-  background-color: #1F1635;
-  color: #bdddee;
-  border-color: #1F1635; }
+  background-color: #3B2163;
+  color: #B8E8FF;
+  border-color: #3B2163; }
 
 button:hover {
-  background-color: #1ed4fd;
-  color: #154a63;
-  border-color: #1ed4fd; }
+  background-color: #FFEDAE;
+  color: #20004A;
+  border-color: #FFEDAE; }
 
 .unset {
   all: unset; }
@@ -15,31 +15,31 @@ button:hover {
 /* -------------- Workspace -------------- */
 /* --------------------------------------- */
 .workspaces button:active {
-  color: #1ed4fd;
+  color: #FFEDAE;
   border-radius: 0px; }
 
 .workspaces {
   padding-right: 4px;
   padding-left: 4px;
   margin-top: 0.3rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
   margin-right: 4px;
   margin-left: 8px;
-  background-color: #1F1635;
-  border-radius: 15px;
+  background-color: #0C0023;
+  border-radius: 0.8rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
 
 .workspaces button {
-  background-color: #1F1635;
-  color: #bdddee;
+  background-color: #0C0023;
+  color: #C68DF1;
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #1ed4fd;
-  color: #1ed4fd;
-  font-family: "Font Awesome 5 Free Solid 11";
+  border-bottom: 1px solid #FFEDAE;
+  color: #FFEDAE;
+  font-family: "Material Design Icons";
   border-radius: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
@@ -47,7 +47,7 @@ button:hover {
   padding-left: 10px; }
 
 .workspaces button.unfocused {
-  font-family: "Font Awesome 5 Free Solid 11";
+  font-family: "Material Design Icons";
   padding-top: 0px;
   padding-bottom: 0px;
   padding-right: 10px;
@@ -55,36 +55,37 @@ button:hover {
   border-radius: 0px; }
 
 .workspaces button.has-windows {
-  color: #1ed4fd; }
+  color: #FFEDAE; }
 
 .workspaces button:hover {
-  background-color: rgba(255, 0, 255, 0.9);
-  color: rgba(31, 22, 53, 0.9); }
+  background-color: rgba(198, 141, 241, 0.9);
+  color: rgba(12, 0, 35, 0.9); }
 
 .clock {
   font-size: 1em;
-  background: linear-gradient(to right, #ff00ff, #1ed4fd);
-  color: #1F1635;
-  border-radius: 2em;
+  background: linear-gradient(to right, #C68DF1, #FFEDAE);
+  color: #0C0023;
+  border-radius: 0.8rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   padding-left: 1em;
   padding-right: 1em; }
 
 .bar {
-  background-color: #352558;
-  color: #bdddee;
+  background-color: #20004A;
+  color: #cecece;
   min-height: 8px;
   border-radius: 0rem; }
 
 .internet-box {
-  background: linear-gradient(to right, #ffb92d, #0cdfff);
-  color: #352558;
+  background: linear-gradient(to right, #ffb92d, #FF00AA);
+  color: #20004A;
   /* min-width: 100px; */
-  border-radius: 2em;
+  border-radius: 0.8rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
-  margin-left: 0.1em; }
+  margin-left: 0.1em;
+  padding-right: 0.3rem; }
 
 .wifi-name-label {
   padding-left: 0.5em;
@@ -93,77 +94,78 @@ button:hover {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   margin-right: 0.2em;
-  background-color: #352558;
-  color: #bdddee;
+  background-color: #20004A;
+  color: #cecece;
   font-weight: bold;
-  border-top-right-radius: 2em;
-  border-bottom-right-radius: 2em; }
+  border-top-right-radius: 0.8rem;
+  border-bottom-right-radius: 0.8rem; }
 
 .wifi-icon-strength {
-  font-family: "Font Awesome 5 Free Solid 11";
-  margin-left: 0.7em;
+  font-family: "Material Design Icons";
+  margin-left: 0.2em;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   padding-right: 0.5em;
   padding-left: 0.6em;
-  background-color: #352558;
-  color: #bdddee;
-  border-top-left-radius: 2em;
-  border-bottom-left-radius: 2em; }
+  background-color: #20004A;
+  color: #cecece;
+  border-top-left-radius: 0.8rem;
+  border-bottom-left-radius: 0.8rem; }
 
 .systray {
-  background-color: #1F1635;
-  border-radius: 2rem;
+  background-color: #3B2163;
+  border-radius: 0.8rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button {
-  background-color: #1F1635;
-  border-radius: 2rem;
-  padding-right: 0.5rem;
+  background-color: #3B2163;
+  border-radius: 0.8rem;
+  padding-right: 0.6rem;
+  padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background-color: #1ed4fd; }
+  background-color: #FFEDAE; }
 
 .tray-btn {
-  border: 0; }
+  border: 0rem; }
 
 /* ------------------------------------- */
 /* -------------- Battery -------------- */
 /* ------------------------------------- */
 .battery {
-  background-color: #1F1635;
-  color: #1ed4fd;
+  background-color: #0C0023;
+  color: #FF8580;
   min-width: 20px;
   min-height: 20px;
   font-size: 3px; }
 
 @keyframes colorChange {
   0% {
-    color: #1ed4fd; }
+    color: #FF8580; }
   50% {
-    color: #1F1635; }
+    color: #0C0023; }
   100% {
-    color: #1ed4fd; } }
+    color: #FF8580; } }
 
 .battery-inner {
-  color: #1ed4fd;
+  color: #FF8580;
   margin-top: 0.2em;
   margin-right: 0.3em;
   margin-bottom: 0.2em;
-  font-family: "Font Awesome 5 Free Solid 11";
+  font-family: "Material Design Icons";
   min-width: 2px;
   font-size: 2.0em; }
 
 .battery-inner-charging {
-  color: #1ed4fd;
+  color: #FF8580;
   margin-top: 0.2em;
   margin-right: 0.2em;
   margin-bottom: 0.2em;
-  font-family: "Font Awesome 5 Free Solid 11";
+  font-family: "Material Design Icons";
   min-width: 2px;
   font-size: 2.0em;
   animation: colorChange 2.0s infinite; }
@@ -172,18 +174,18 @@ button:hover {
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background-color: #1F1635;
-  color: #b18dff;
+  background-color: #0C0023;
+  color: #FDC227;
   min-width: 20px;
   min-height: 20px;
   font-size: 3px; }
 
 .cpu-inner {
-  color: #b18dff;
+  color: #FDC227;
   margin-top: 0.2em;
   margin-right: 0.3em;
   margin-bottom: 0.2em;
-  font-family: "Font Awesome 5 Free Solid 11";
+  font-family: "Material Design Icons";
   min-width: 2px;
   font-size: 2.0em; }
 
@@ -191,8 +193,8 @@ button:hover {
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background-color: #1F1635;
-  color: #ff00ff;
+  background-color: #0C0023;
+  color: #C68DF1;
   min-width: 20px;
   min-height: 20px;
   font-size: 3px; }
@@ -201,9 +203,9 @@ button:hover {
   all: unset; }
 
 .temp-inner {
-  color: #ff00ff;
+  color: #C68DF1;
   margin-top: 0.2em;
-  font-family: "Font Awesome 5 Free Solid 11";
+  font-family: "Material Design Icons";
   margin-right: 0.3em;
   margin-bottom: 0.2em;
   min-width: 2px;
@@ -213,15 +215,15 @@ button:hover {
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background-color: #1F1635;
-  color: #C1C4EB;
+  background-color: #0C0023;
+  color: #B8E8FF;
   min-width: 20px;
   min-height: 20px;
   font-size: 3px; }
 
 .ram-inner {
-  color: #C1C4EB;
-  font-family: "Font Awesome 5 Free Solid 11";
+  color: #B8E8FF;
+  font-family: "Material Design Icons";
   margin-top: 0.2em;
   margin-right: 0.3em;
   margin-bottom: 0.2em;
@@ -232,12 +234,12 @@ button:hover {
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background-color: #1F1635;
+  background-color: #0C0023;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
-  padding-left: 0.7em;
-  padding-right: 0.7em;
-  border-radius: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: 0.8rem;
   margin-top: 0.3rem;
   margin-bottom: 0.4rem;
   margin-right: 0em; }
@@ -246,7 +248,7 @@ button:hover {
 /* -------------- Volume -------------- */
 /* ------------------------------------ */
 .volume {
-  border-radius: 2em;
+  border-radius: 0.8rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
@@ -256,72 +258,72 @@ button:hover {
   margin-left: 1em; }
 
 .vol-osd {
-  background-color: #352558;
+  background-color: #20004A;
   padding: 1rem;
   padding-left: 1.5rem;
-  border-radius: 1rem;
-  border: 0.1rem solid #1ed4fd; }
+  border-radius: 0.8rem;
+  border: 0.1rem solid #FDBBC4; }
 
 scale trough highlight {
-  border-radius: 2em;
-  background-color: #1ed4fd; }
+  border-radius: 0.8rem;
+  background-color: #FFEDAE; }
 
 scale slider {
-  background-color: #1ed4fd; }
+  background-color: #FFEDAE; }
 
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
 .notifications-revealer-box {
-  background-color: #154a63;
+  background-color: #3B2163;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 2rem;
+  border-radius: 0.8rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem; }
 
 .notification-popups {
-  border: 0.1rem solid #1ed4fd;
-  border-radius: 1rem;
+  border: 0.1rem solid #FFEDAE;
+  border-radius: 0.8rem;
   padding: 1rem; }
 
 .notifications-popup-list {
-  background-color: #352558;
-  border-radius: 1rem;
+  background-color: #20004A;
+  border-radius: 0.8rem;
   margin-top: 2rem;
   margin-left: 2rem; }
 
 window {
-  border-radius: 1em;
+  border-radius: 0.8rem;
   background-color: rgba(0, 0, 0, 0); }
 
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
 .left-menu-box {
-  background-color: #352558;
-  border-radius: 1rem;
-  border: 2px solid #1ed4fd; }
+  background-color: #20004A;
+  border-radius: 0.8rem;
+  border: 2px solid #FFEDAE; }
 
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: 0.8rem;
+  border-top-right-radius: 0.8rem;
   min-width: 23rem;
   min-height: 12rem; }
 
 .profile-box {
   background-image: linear-gradient(to right, rgba(147, 89, 255, 0.8), rgba(255, 0, 170, 0.6));
-  color: #352558;
+  color: #20004A;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: -3rem;
-  border-radius: 1rem; }
+  border-radius: 0.8rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -331,38 +333,63 @@ window {
   font-family: "VIP Rawy Regular";
   font-size: xx-large; }
 
+/* -------------- Theme Box -------------- */
 .themes-box {
-  background-color: #1F1635;
-  min-height: 3rem;
+  background-color: #0C0023;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1rem; }
+  border-radius: 0.8rem; }
 
 .selected-theme {
   background-image: linear-gradient(to right, #9359ff, #FF00AA);
-  color: #352558; }
+  color: #20004A; }
 
 .selected-theme:hover {
   background-image: linear-gradient(to right, #ff9900, #ff6600);
-  color: #154a63; }
+  color: #3B2163; }
 
 .theme-btn {
-  border-radius: 1rem;
-  background-color: #352558; }
+  border-radius: 0.8rem;
+  background-color: #20004A;
+  border-color: #20004A; }
 
 .theme-btn:hover {
-  border-radius: 1rem;
-  background-color: #1ed4fd; }
+  border-radius: 0.8rem;
+  background-color: #FFEDAE; }
 
 .menu-button {
-  border-radius: 1rem;
+  border-radius: 0.8rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
   margin-left: 0.5rem;
-  background-color: #352558; }
+  background-color: #20004A; }
 
 .menu-button:hover {
-  background-color: #1ed4fd; }
+  background-color: #FFEDAE; }
+
+.shadow {
+  box-shadow: 1px 1px 3px 1px #141414;
+  transition-property: background-color;
+  transition-duration: .5s; }
+
+/* ----------------------------------------------- */
+/* -------------- Notification menu -------------- */
+/* ----------------------------------------------- */
+.notification-menu-header {
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: 0.8rem;
+  border-top-right-radius: 0.8rem;
+  min-width: 23rem;
+  min-height: 12rem; }
+
+.notification-item {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background-color: #0C0023; }

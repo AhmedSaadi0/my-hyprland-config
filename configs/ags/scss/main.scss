@@ -1,4 +1,4 @@
-@import './themes/colors.scss';
+@import './themes/black-hole.scss';
 
 .unset {
     all: unset;
@@ -16,11 +16,11 @@
     padding-right: 4px;
     padding-left: 4px;
     margin-top: $bar-top-margin;
-    margin-bottom: $bar-bottom-margin;
+    margin-bottom: $bar-bottom-margin + 0.1rem;
     margin-right: 4px;
     margin-left: 8px;
     background-color: $workspace-background;
-    border-radius: 15px;
+    border-radius: $border-radius;
     padding-left: 1rem;
     padding-right: 1rem;
     font-size: 1.1rem;
@@ -68,9 +68,10 @@
 .clock {
     font-size: 1em;
     // font-family: "VEXA light R"; 
+    // font-family: "ae_Ostorah"; 
     background: $clock-background;
     color: $clock-color;
-    border-radius: 2em;
+    border-radius: $border-radius;
     margin-top: $bar-top-margin + 0.1rem;
     margin-bottom: $bar-top-margin + 0.1rem;
     padding-left: 1em;
@@ -88,10 +89,11 @@
     background: $internet-box-background;
     color: $internet-box-color;
     /* min-width: 100px; */
-    border-radius: 2em;
+    border-radius: $border-radius;
     margin-top: $bar-top-margin + 0.1rem;
     margin-bottom: $bar-top-margin + 0.1rem;
     margin-left: 0.1em;
+    padding-right: 0.3rem;
 }
 
 .wifi-name-label {
@@ -104,26 +106,26 @@
     background-color: $wifi-name-background;
     color: $wifi-name-color;
     font-weight: bold;
-    border-top-right-radius: 2em;
-    border-bottom-right-radius: 2em;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
 }
 
 .wifi-icon-strength {
     font-family: $icon-font-family;
-    margin-left: 0.7em;
+    margin-left: 0.2em;
     margin-top: 0.2em;
     margin-bottom: 0.2em;
     padding-right: 0.5em;
     padding-left: 0.6em;
     background-color: $wifi-icon-background;
     color: $wifi-icon-color;
-    border-top-left-radius: 2em;
-    border-bottom-left-radius: 2em;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
 }
 
 .systray {
     background-color: $systray-background;
-    border-radius: 2rem;
+    border-radius: $border-radius;
     margin-top: $bar-top-margin + 0.1rem;
     margin-bottom: $bar-top-margin + 0.1rem;
     margin-left: 0.4rem;
@@ -132,8 +134,9 @@
 
 .systray button {
     background-color: $systray-btn-background;
-    border-radius: 2rem;
-    padding-right: 0.5rem;
+    border-radius: $border-radius;
+    padding-right: 0.6rem;
+    padding-left: 0.4rem;
     min-height: 0.1rem;
     // font-size: 1rem;
 }
@@ -143,7 +146,7 @@
 }
 
 .tray-btn {
-    border: 0;
+    border: 0rem;
 }
 
 /* ------------------------------------- */
@@ -266,9 +269,9 @@
     background-color: $hardware-box-color;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
-    padding-left: 0.7em;
-    padding-right: 0.7em;
-    border-radius: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-radius: $border-radius;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin + 0.1rem;
     margin-right: 0em;
@@ -279,7 +282,7 @@
 /* -------------- Volume -------------- */
 /* ------------------------------------ */
 .volume {
-    border-radius: 2em;
+    border-radius: $border-radius;
     margin-top: 6px;
     margin-bottom: 6px;
     padding-left: 1em;
@@ -294,12 +297,12 @@
     background-color: $vol-osd-background;
     padding: 1rem;
     padding-left: 1.5rem;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     border: $border-size solid $vol-osd-border-color;
 }
 
 scale trough highlight {
-    border-radius: 2em;
+    border-radius: $border-radius;
     background-color: $scale-highlight-background;
 }
 
@@ -315,7 +318,7 @@ scale slider {
     background-color: $notifications-revealer-box-background;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin;
-    border-radius: 2rem;
+    border-radius: $border-radius;
     padding-left: 0.7rem;
     padding-right: 0.7rem;
     margin-left: 0.5rem;
@@ -324,13 +327,13 @@ scale slider {
 
 .notification-popups {
     border: $border-size solid $notifications-border;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     padding: 1rem;
 }
 
 .notifications-popup-list {
     background-color: $notifications-popup-list-background;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     margin-top: 2rem;
     margin-left: 2rem;
 }
@@ -344,7 +347,7 @@ scale slider {
 // }
 
 window {
-    border-radius: 1em;
+    border-radius: $border-radius;
     background-color: rgba(0, 0, 0, 0.0);
 }
 
@@ -355,15 +358,15 @@ window {
     background-color: $menu-box-background;
     // min-width: 18rem;
     // min-height: 32rem;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     border: 2px solid $menu-box-borders;
 }
 
 .left-menu-header {
     background-size: cover;
     background-position: center;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
     min-width: 23rem;
     min-height: 12rem;
 }
@@ -376,7 +379,7 @@ window {
     margin-left: 1rem;
     margin-right: 1rem;
     margin-top: -3rem;
-    border-radius: 1rem;
+    border-radius: $border-radius;
 }
 
 .profile-icon {
@@ -389,12 +392,12 @@ window {
     font-size: xx-large;
 }
 
+/* -------------- Theme Box -------------- */
 .themes-box {
     background-color: $theme-box-background;
-    min-height: 3rem;
     margin: 1rem;
     padding: 1rem;
-    border-radius: 1rem;
+    border-radius: $border-radius;
 }
 
 .selected-theme {
@@ -408,17 +411,18 @@ window {
 }
 
 .theme-btn {
-    border-radius: 1rem;
+    border-radius: $border-radius;
     background-color: $menu-btn-background;
+    border-color: $menu-btn-background;
 }
 
 .theme-btn:hover {
-    border-radius: 1rem;
+    border-radius: $border-radius;
     background-color: $menu-btn-hover;
 }
 
 .menu-button {
-    border-radius: 1rem;
+    border-radius: $border-radius;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin;
     border: 0px;
@@ -430,4 +434,31 @@ window {
 
 .menu-button:hover {
     background-color: $menu-btn-hover;
+}
+
+.shadow {
+    box-shadow: 1px 1px 3px 1px rgba(20, 20, 20, 10);
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+/* ----------------------------------------------- */
+/* -------------- Notification menu -------------- */
+/* ----------------------------------------------- */
+.notification-menu-header {
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    min-width: 23rem;
+    min-height: 12rem;
+}
+
+.notification-item{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: $border-radius;
+    background-color: #0C0023;
 }

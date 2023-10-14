@@ -12,17 +12,20 @@ $fg-one: #775653;
 $fg-two: #595380;
 $fg-three: #4B5569;
 
-$text-color: #4C566A;
+// $text-color: #4C566A;
+$text-color: #3f3a57;
 
 $icon-font-family: "FontAwesome";
 
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
 
+$border-radius: 2rem;
+
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
-$workspace-btn: $text-color;
+$workspace-btn: #7786a3;
 $active-workspace-btn: $fg-one;
 $workspace-background: $bg-two;
 $workspace-focused: $fg-one;
@@ -63,7 +66,7 @@ $systray-btn-hover-background: $workspace-focused;
 // --------------------------------
 // --------- hardware-box ---------
 // --------------------------------
-$hardware-box-color: rgba(#595380, 0.9);
+$hardware-box-color: rgba(#765654, 0.9);
 
 // ---------------------------
 // --------- battery ---------

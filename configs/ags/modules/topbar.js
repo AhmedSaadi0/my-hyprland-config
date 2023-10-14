@@ -4,8 +4,9 @@ import { Volume } from "./widgets/volume.js";
 import { HardwareBox } from "./widgets/hardware/all.js";
 import { SysTrayBox } from "./widgets/systray.js";
 import NotificationIndicator from "./widgets/NotificationIndicator.js";
+import {NotificationCenterButton} from "./menus/notification_center.js";
 import { MenuButton } from './menus/left_menu.js'
-const { Window, CenterBox, Box, Label } = ags.Widget;
+const { Window, CenterBox, Box, Label, Button } = ags.Widget;
 const { execAsync } = ags.Utils;
 
 
@@ -22,6 +23,7 @@ const Clock = () => Label({
         ],
     ],
 });
+
 
 // layout of the bar
 const Right = () => Box({
@@ -46,6 +48,7 @@ const Left = () => Box({
         NotificationIndicator(),
         NetworkInformation(),
         Volume(),
+        NotificationCenterButton(),
         SysTrayBox(),
         MenuButton(),
     ],
@@ -54,7 +57,7 @@ const Left = () => Box({
 
 export const Bar = ({ monitor } = {}) => Window({
     name: `bar${monitor || ''}`, // name has to be unique
-    className: 'bar',
+    className: 'bar shadow',
     monitor,
     anchor: ['top', 'left', 'right'],
     exclusive: true,

@@ -1,0 +1,17 @@
+*{
+	font:							"JF Flat 11";
+	foreground:						#f1dc6e;
+	background:						#323131;
+	foreground-alt:					#aabbdc;
+	background-alt:					#1d2021;
+	active-background:				linear-gradient(to left, #fe8019, #f1dc6e);
+	urgent-background:				#ff2222aa;
+    
+	foreground-selected:			#1d2021;
+	
+	selected-background:			@active-background;
+	selected-urgent-background:		@urgent-background;
+	selected-active-background:		@active-background;
+	separatorcolor:					@active-background;
+	bordercolor:					@active-background;
+}

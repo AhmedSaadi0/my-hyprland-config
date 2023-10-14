@@ -2,6 +2,7 @@ import { Bar } from "./modules/topbar.js";
 import { VolumeOSD } from "./modules/on-screen/volume.js";
 import Notifications from './modules/notifications/Notifications.js';
 import { LeftMenu } from "./modules/menus/left_menu.js";
+import { NotificationCenter } from "./modules/menus/notification_center.js";
 
 
 // in config.js
@@ -18,5 +19,6 @@ export default {
         VolumeOSD(),
         Notifications(),
         LeftMenu(),
+        NotificationCenter()
     ],
 };

@@ -104,9 +104,9 @@ export const NetworkInformation = () => Box({
 
 
             box.children = [
+                NetSpeedMeters(),
                 ssidLabel,
                 internetStatusLabel,
-                NetSpeedMeters(),
             ];
 
             box.show_all();

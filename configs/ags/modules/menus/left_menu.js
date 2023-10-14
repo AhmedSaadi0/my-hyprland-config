@@ -4,7 +4,7 @@ import ThemesDictionary from "../theme/themes.js";
 import { BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 
 const { Label, Box, Icon, Window, Button, Revealer } = ags.Widget;
-const { USER } = ags.Utils;
+const { USER, execAsync } = ags.Utils;
 
 
 const Profile = () => {
@@ -66,11 +66,10 @@ const ThemeButton = ({ label, theme, end = "margin-left: 1rem;" }) => Button({
     ]
 })
 
-
 const ThemesButtonsRowOne = () => {
 
     const blackHoleTheme = ThemeButton({
-        label: "ثقب  󰇩",
+        label: "ثقب    󰇩",
         theme: BLACK_HOLE_THEME
     });
 
@@ -91,7 +90,7 @@ const ThemesButtonsRowOne = () => {
     });
 
     const MaterialYouTheme = ThemeButton({
-        label: "مادي    ",
+        label: "مادي ",
         theme: MATERIAL_YOU,
     });
 
@@ -122,6 +121,69 @@ const ThemesButtonsRowOne = () => {
     })
 }
 
+const PowerButtonsRow = () => {
+
+    const powerOff = Button({
+        className: "theme-btn",
+        style: `
+                min-width: 5rem;
+                min-height: 2rem;
+                border-radius: 1rem;
+                margin-left: 1rem;
+            `,
+        child: Label({
+            label: ""
+        }),
+        onClicked: () => execAsync("poweroff").catch(print),
+    })
+
+    const reboot = Button({
+        className: "theme-btn",
+        style: `
+                min-width: 5rem;
+                min-height: 2rem;
+                border-radius: 1rem;
+                margin-left: 1rem;
+            `,
+        child: Label({
+            label: ""
+        }),
+        onClicked: () => execAsync("reboot").catch(print),
+    })
+
+    const logout = Button({
+        className: "theme-btn",
+        style: `
+                min-width: 5rem;
+                min-height: 2rem;
+                border-radius: 1rem;
+            `,
+        child: Label({
+            label: ""
+        }),
+        onClicked: () => execAsync("loginctl kill-session self").catch(print),
+    })
+
+
+    const row1 = Box({
+        children: [
+            powerOff,
+            reboot,
+            logout,
+        ]
+    })
+
+    return Box({
+        className: "themes-box",
+        style:`
+            margin-top:0rem;
+        `,
+        vertical: true,
+        children: [
+            row1,
+        ]
+    })
+}
 
 const menuRevealer = Revealer({
     transition: "slide_down",
@@ -131,11 +193,11 @@ const menuRevealer = Revealer({
         children: [
             Header(),
             Profile(),
-            ThemesButtonsRowOne()
+            ThemesButtonsRowOne(),
+            PowerButtonsRow()
         ]
-    })
+    }),
 })
-
 
 export const LeftMenu = () => Window({
     name: `left_menu`,
@@ -151,6 +213,8 @@ export const LeftMenu = () => Window({
         ],
     })
 })
+
+globalThis.showLeftMenu = () => menuRevealer.revealChild = !menuRevealer.revealChild;
 
 export const MenuButton = () => Button({
     className: "menu-button",

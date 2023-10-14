@@ -1,8 +1,8 @@
-const { Service } = ags;
-const { USER, exec, execAsync } = ags.Utils;
-
 import ThemesDictionary from "./themes.js";
 import { BLACK_HOLE_THEME } from "./themes.js";
+const { Service } = ags;
+const { USER, exec, execAsync } = ags.Utils;
+const { timeout } = ags.Utils;
 
 
 class ThemeService extends Service {
@@ -18,6 +18,7 @@ class ThemeService extends Service {
     plasmaColorChanger = ags.App.configDir + '/modules/theme/bin/plasma-theme';
     plasmaColorsPath = ags.App.configDir + '/modules/theme/plasma-colors/';
     selectedTheme = BLACK_HOLE_THEME;
+    rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
 
     constructor() {
         super();
@@ -32,10 +33,11 @@ class ThemeService extends Service {
         this.changeCss(theme.css_theme);
         this.changeWallpaper(theme.wallpaper);
         this.changePlasmaColor(theme.plasma_color);
-        this.changeGTKTheme(theme.gtk_theme, theme.gtk_icon_theme);
+        this.changeGTKTheme(theme.gtk_theme, theme.gtk_mode, theme.gtk_icon_theme);
         this.changeQtStyle(theme.qt_style_theme);
         this.changeIcons(theme.qt_icon_theme);
         this.changeKvantumTheme(theme.kvantum_theme);
+        this.changeRofiTheme(theme.rofi_theme);
         let hypr = theme.hypr;
 
         this.steHyprland(
@@ -44,6 +46,8 @@ class ThemeService extends Service {
             hypr.inactive_border,
             hypr.rounding,
             hypr.drop_shadow,
+            hypr.kitty,
+            hypr.konsole,
         )
         this.emit("changed");
     }
@@ -64,8 +68,6 @@ class ThemeService extends Service {
         const scss = ags.App.configDir + '/scss/main.scss';
         const css = ags.App.configDir + '/style.css';
 
-        // const sedCommand = `sed -i "1s/^.*$/@import '\\''${cssTheme}.scss'\\'';/" ${scss}`;
-        // const sedCommand = `sed -i "1s/.*/This is the new first line/" ${scss}`;
         const newTh = `@import './themes/${cssTheme}';`;
 
         execAsync([
@@ -88,7 +90,16 @@ class ThemeService extends Service {
         ]).catch(print);
     }
 
-    changeGTKTheme(GTKTheme, iconTheme) {
+    changeGTKTheme(GTKTheme, gtkMode, iconTheme) {
+
+        execAsync([
+            `gsettings`,
+            `set`,
+            `org.gnome.desktop.interface`,
+            `color-scheme`,
+            `prefer-${gtkMode}`
+        ]).catch(print);
+
         execAsync([
             `gsettings`,
             `set`,
@@ -120,12 +131,27 @@ class ThemeService extends Service {
         inactive_border,
         rounding,
         drop_shadow,
+        kittyConfig,
+        konsoleTheme,
     ) {
-        execAsync(`hyprctl keyword general:border_size ${border_width}`);
-        execAsync(`hyprctl keyword general:col.active_border ${active_border}`);
-        execAsync(`hyprctl keyword general:col.inactive_border ${inactive_border}`);
-        execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
-        execAsync(`hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`);
+
+        const kittyBind = `bind = $mainMod, Return, exec, kitty -c ${ags.App.configDir}/modules/theme/kitty/${kittyConfig}`;
+        const konsoleBind = `bind = $mainMod, Return, exec, konsole --profile ${konsoleTheme}`;
+
+        execAsync([
+            "sed",
+            "-i",
+            `42s|.*|${konsoleBind}|`,
+            `/home/${USER}/.config/hypr/binding.conf`
+        ]).then(() => {
+            timeout(500, () => {
+                execAsync(`hyprctl keyword general:border_size ${border_width}`);
+                execAsync(`hyprctl keyword general:col.active_border ${active_border}`);
+                execAsync(`hyprctl keyword general:col.inactive_border ${inactive_border}`);
+                execAsync(`hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`);
+                execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
+            })
+        }).catch(print)
     }
 
     changeQtStyle(qtStyle) {
@@ -143,6 +169,16 @@ class ThemeService extends Service {
             '-i',
             `s/icon_theme=.*/icon_theme=${icons}/g`,
             this.qtFilePath,
+        ]).catch(print);
+    }
+
+    changeRofiTheme(rofiTheme) {
+        const newTheme = `@import "${ags.App.configDir}/modules/theme/rofi/${rofiTheme}"`;
+        execAsync([
+            "sed",
+            "-i",
+            `11s|.*|${newTheme}|`,
+            this.rofiFilePath
         ]).catch(print);
     }
 
