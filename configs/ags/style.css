@@ -63,7 +63,7 @@ button:hover {
 
 .clock {
   font-size: 1em;
-  background: linear-gradient(to right, #C68DF1, #FFEDAE);
+  background: linear-gradient(to right, #9359ff, #FF00AA, #ffb92d);
   color: #0C0023;
   border-radius: 0.8rem;
   margin-top: 0.4rem;
@@ -393,3 +393,66 @@ window {
   padding: 1rem;
   border-radius: 0.8rem;
   background-color: #0C0023; }
+
+/* -------------------------------------------- */
+/* -------------- Desktop Widget -------------- */
+/* -------------------------------------------- */
+.father-box {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 0.8rem; }
+
+.row-two {
+  background-color: #3B2163;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  border-top-right-radius: 1.5rem; }
+
+.row-three {
+  background-color: #3B2163;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  border-bottom-right-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
+
+.row-box {
+  background-color: #3B2163;
+  min-width: 10rem;
+  padding-top: 1.5rem;
+  padding-right: 1.5rem;
+  border-top-right-radius: 1.5rem; }
+
+.weather-icon {
+  background-color: #3B2163;
+  border-top-left-radius: 1.5rem;
+  font-size: xx-large;
+  padding-left: 2rem;
+  padding-right: 2rem; }
+
+.user-icon {
+  background-color: #3b2163;
+  padding: 0.5rem;
+  margin-left: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-radius: 1.5rem;
+  border-bottom-left-radius: 0rem; }
+
+.insider-weather-icon {
+  background-color: #6f3ad1;
+  padding-right: 0.5rem;
+  border-radius: 10rem;
+  min-width: 3rem;
+  min-height: 3.5rem;
+  font-size: x-large; }
+
+.insider-box {
+  background-color: #1aa14e;
+  border-radius: 3rem;
+  padding: 0.4rem; }
+
+.line {
+  background-color: #000000;
+  min-height: 0.1px;
+  min-width: 10rem;
+  font-family: "Material Design Icons"; }

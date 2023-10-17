@@ -1,4 +1,5 @@
-const { Box, EventBox, Revealer } = ags.Widget;
+import { Box, EventBox, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
+import { timeout } from 'resource:///com/github/Aylur/ags/utils.js';
 
 export default ({
     boxClass,
@@ -32,7 +33,7 @@ export default ({
                 return;
 
             revealer.revealChild = true;
-            ags.Utils.timeout(duration, () => open = true);
+            timeout(duration, () => open = true);
         },
         onHoverLost: () => {
             if (!open)

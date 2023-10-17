@@ -1,7 +1,8 @@
 const { GLib } = imports.gi;
-const { Notifications } = ags.Service;
-const { lookUpIcon, timeout } = ags.Utils;
-const { Box, Icon, Label, EventBox, Button, Revealer } = ags.Widget;
+import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
+import { lookUpIcon, timeout } from 'resource:///com/github/Aylur/ags/utils.js';
+import { Box, Icon, Label, EventBox, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
+import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 
 const NotificationIcon = ({ appEntry, appIcon, image }) => {
     if (image) {
@@ -45,8 +46,9 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
     });
 };
 
-export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
-    const hovered = ags.Variable(false);
+export default (notification) => {
+    const hovered = Variable(false);
+    let timeoutId;
 
     const bodyLabel = Label({
         style: `margin-top: 1rem;`,
@@ -59,7 +61,7 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
     })
 
     try {
-        bodyLabel.label = body;
+        bodyLabel.label = notification.body;
     } catch (error) {
         bodyLabel.label = "...";
     }
@@ -67,23 +69,27 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
     const hover = () => {
         hovered.value = true;
         hovered._block = true;
+        clearTimeout(timeoutId);
 
         timeout(100, () => hovered._block = false);
     };
 
     const hoverLost = () => GLib.idle_add(0, () => {
-        if (hovered._block)
-            return GLib.SOURCE_REMOVE;
+        timeoutId = setTimeout(() => {
+            if (hovered._block)
+                return GLib.SOURCE_REMOVE;
 
-        hovered.value = false;
-        Notifications.dismiss(id);
-        return GLib.SOURCE_REMOVE;
+            hovered.value = false;
+            notification.dismiss();
+            return GLib.SOURCE_REMOVE;
+        }, 3000);
+    
     });
 
     const content = Box({
         style: `min-width: 400px;`,
         children: [
-            NotificationIcon(icon),
+            NotificationIcon(notification),
             Box({
                 hexpand: true,
                 vertical: true,
@@ -100,15 +106,15 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
                                 maxWidthChars: 24,
                                 truncate: 'end',
                                 wrap: true,
-                                label: summary,
-                                useMarkup: summary.startsWith('<'),
+                                label: notification.summary,
+                                useMarkup: notification.summary.startsWith('<'),
                             }),
                             // Notification Body
                             Label({
                                 className: 'notification-time',
                                 style: `margin-left: 1rem; margin-top: 0.5rem;`,
                                 valign: 'start',
-                                label: GLib.DateTime.new_from_unix_local(time).format('%H:%M'),
+                                label: GLib.DateTime.new_from_unix_local(notification.time).format('%H:%M'),
                             }),
                             // Notification Close Button
                             Button({
@@ -116,7 +122,7 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
                                 className: 'notification-close-button',
                                 valign: 'start',
                                 child: Icon('window-close-symbolic'),
-                                onClicked: () => Notifications.close(id),
+                                onClicked: () => { notification.close() },
                             }),
                         ],
                     }),
@@ -134,11 +140,11 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
             onHover: hover,
             child: Box({
                 className: 'notification-actions',
-                children: actions.map(action => Button({
+                children: notification.actions.map(action => Button({
                     onHover: hover,
                     style: `margin-top: 1rem;`,
                     className: 'action-button',
-                    onClicked: () => Notifications.invoke(id, action.id),
+                    onClicked: () => Notifications.invoke(notification.id, action.id),
                     hexpand: true,
                     child: Label(action.label),
                 })),
@@ -147,11 +153,11 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
     });
 
     const mainbox = EventBox({
-        className: `notification ${urgency}`,
+        className: `notification ${notification.urgency}`,
         vexpand: false,
         onPrimaryClick: () => {
             hovered.value = false;
-            Notifications.dismiss(id);
+            notification.dismiss();
         },
         properties: [['hovered', hovered]],
         onHover: hover,
@@ -160,7 +166,7 @@ export default ({ id, summary, body, actions, urgency, time, ...icon }) => {
             vertical: true,
             children: [
                 content,
-                actions.length > 0 && actionsbox,
+                notification.actions.length > 0 && actionsbox,
             ],
         }),
     });

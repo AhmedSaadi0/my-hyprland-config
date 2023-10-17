@@ -1,9 +1,8 @@
 import ThemesDictionary from "./themes.js";
 import { BLACK_HOLE_THEME } from "./themes.js";
-const { Service } = ags;
-const { USER, exec, execAsync } = ags.Utils;
-const { timeout } = ags.Utils;
-
+import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+import App from "resource:///com/github/Aylur/ags/app.js";
+import Service from 'resource:///com/github/Aylur/ags/service.js';
 
 class ThemeService extends Service {
     static {
@@ -15,8 +14,8 @@ class ThemeService extends Service {
     }
 
     qtFilePath = `/home/${USER}/.config/qt5ct/qt5ct.conf`;
-    plasmaColorChanger = ags.App.configDir + '/modules/theme/bin/plasma-theme';
-    plasmaColorsPath = ags.App.configDir + '/modules/theme/plasma-colors/';
+    plasmaColorChanger = App.configDir + '/modules/theme/bin/plasma-theme';
+    plasmaColorsPath = App.configDir + '/modules/theme/plasma-colors/';
     selectedTheme = BLACK_HOLE_THEME;
     rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
 
@@ -65,8 +64,8 @@ class ThemeService extends Service {
     }
 
     changeCss(cssTheme) {
-        const scss = ags.App.configDir + '/scss/main.scss';
-        const css = ags.App.configDir + '/style.css';
+        const scss = App.configDir + '/scss/main.scss';
+        const css = App.configDir + '/style.css';
 
         const newTh = `@import './themes/${cssTheme}';`;
 
@@ -77,8 +76,8 @@ class ThemeService extends Service {
             scss
         ]).then(() => {
             exec(`sassc ${scss} ${css}`);
-            ags.App.resetCss();
-            ags.App.applyCss(css);
+            App.resetCss();
+            App.applyCss(css);
         }).catch(print)
     }
 
@@ -135,7 +134,7 @@ class ThemeService extends Service {
         konsoleTheme,
     ) {
 
-        const kittyBind = `bind = $mainMod, Return, exec, kitty -c ${ags.App.configDir}/modules/theme/kitty/${kittyConfig}`;
+        const kittyBind = `bind = $mainMod, Return, exec, kitty -c ${App.configDir}/modules/theme/kitty/${kittyConfig}`;
         const konsoleBind = `bind = $mainMod, Return, exec, konsole --profile ${konsoleTheme}`;
 
         execAsync([
@@ -173,7 +172,7 @@ class ThemeService extends Service {
     }
 
     changeRofiTheme(rofiTheme) {
-        const newTheme = `@import "${ags.App.configDir}/modules/theme/rofi/${rofiTheme}"`;
+        const newTheme = `@import "${App.configDir}/modules/theme/rofi/${rofiTheme}"`;
         execAsync([
             "sed",
             "-i",

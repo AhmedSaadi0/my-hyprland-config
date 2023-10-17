@@ -1,6 +1,6 @@
-const { Hyprland } = ags.Service;
-const { Box, Label, Button } = ags.Widget;
-const { execAsync } = ags.Utils;
+import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
+import { Box, Label, Button } from 'resource:///com/github/Aylur/ags/widget.js';
+import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 export const Workspaces = () => Box({
     className: 'unset workspaces',

@@ -1,7 +1,6 @@
-const { Box, Label } = ags.Widget;
-const { Network } = ags.Service;
-const { exec } = ags.Utils;
-
+import { Box, Label } from 'resource:///com/github/Aylur/ags/widget.js';
+import { exec } from 'resource:///com/github/Aylur/ags/utils.js';
+import Network from 'resource:///com/github/Aylur/ags/service/network.js';
 
 function convertToH(bytes) {
     let speed;

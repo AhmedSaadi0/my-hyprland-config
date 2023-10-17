@@ -1,5 +1,5 @@
-const { Box, Button, Label, CircularProgress } = ags.Widget
-const { execAsync } = ags.Utils;
+import { Box, Button, Label, CircularProgress } from 'resource:///com/github/Aylur/ags/widget.js'
+import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 // import { CircularProgressBarBin2 } from "../circular.js"
 
 const label = Label({
@@ -29,6 +29,9 @@ export const CpuWidget1 = () => CircularProgress({
 const progress = CircularProgress({
     className: "cpu",
     child: button,
+    startAt: 0,
+    rounded: false,
+    inverted: true,
 });
 
 export const CpuWidget = () => Box({

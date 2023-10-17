@@ -2,5 +2,25 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
     },
-    "python.formatting.provider": "none"
+    "python.formatting.provider": "none",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#234481",
+        "activityBar.background": "#234481",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#19070d",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#234481",
+        "statusBar.background": "#182f59",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#234481",
+        "statusBarItem.remoteBackground": "#182f59",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#182f59",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#182f5999",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#182f59"
 }
