@@ -1,5 +1,5 @@
-const { SystemTray } = ags.Service
-const { Box, Icon, Button } = ags.Widget
+import SystemTray from 'resource:///com/github/Aylur/ags/service/systemtray.js'
+import { Box, Icon, Button } from 'resource:///com/github/Aylur/ags/widget.js'
 const { Gravity } = imports.gi.Gdk;
 
 const PanelButton = ({ className, content, ...rest }) => Button({

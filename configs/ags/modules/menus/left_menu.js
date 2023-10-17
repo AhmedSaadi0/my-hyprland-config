@@ -1,10 +1,9 @@
-
 import themeService from "../theme/service.js";
 import ThemesDictionary from "../theme/themes.js";
 import { BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 
-const { Label, Box, Icon, Window, Button, Revealer } = ags.Widget;
-const { USER, execAsync } = ags.Utils;
+import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
+import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 
 const Profile = () => {

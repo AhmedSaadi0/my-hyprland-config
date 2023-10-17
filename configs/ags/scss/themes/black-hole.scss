@@ -49,8 +49,8 @@ $workspace-hover-color: rgba($bg-two, 0.9);
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
-// $clock-background: linear-gradient(to right, #9359ff, #FF00AA, #ffb92d);
-$clock-background: linear-gradient(to right, $fg-two, $fg-one);
+$clock-background: linear-gradient(to right, #9359ff, #FF00AA, #ffb92d);
+// $clock-background: linear-gradient(to right, $fg-two, $fg-one);
 $clock-color: $bg-two;
 
 // -----------------------

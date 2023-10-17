@@ -1,6 +1,7 @@
 import HoverRevealer from '../utils/HoverRevealer.js';
-const { Label, Icon } = ags.Widget;
-const { Notifications } = ags.Service;
+import { Label, Icon } from 'resource:///com/github/Aylur/ags/widget.js';
+import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
+import { timeout } from 'resource:///com/github/Aylur/ags/utils.js';
 
 export default ({
     direction = 'left',
@@ -12,7 +13,9 @@ export default ({
             box.visible =
                 Notifications.notifications.length > 0 || Notifications.dnd;
         }],
-        ['button-press-event', () => Notifications.close(Notifications.notifications[0].id)],
+        ['button-press-event', () => {
+            Notifications.notifications[0].close()
+        }],
     ],
     connections: [[Notifications, revealer => {
         const title = Notifications.notifications[0]?.summary;
@@ -21,7 +24,7 @@ export default ({
 
         revealer._title = title;
         revealer.revealChild = true;
-        ags.Utils.timeout(3000, () => {
+        timeout(3000, () => {
             revealer.revealChild = false;
         });
     }]],

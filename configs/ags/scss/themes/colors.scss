@@ -59,12 +59,14 @@ $bar-color: $text-color;
 // --------------------------------
 // --------- internet box ---------
 // --------------------------------
-$internet-box-background: linear-gradient(to right, #ffb92d, #0cdfff);
+// $internet-box-background: linear-gradient(to right, #ffb92d, #0cdfff);
+// $internet-box-background: linear-gradient(to right, #EF96D3, #ff2176);
+$internet-box-background: linear-gradient(to right, #82D8D2, #478DD7);
 $internet-box-color: $bar-background;
 $wifi-name-background: $bar-background;
 $wifi-name-color: $bar-color;
-$wifi-icon-background: $bar-background;
-$wifi-icon-color: $bar-color;
+$wifi-icon-background: $wifi-name-background;
+$wifi-icon-color: $wifi-name-color;
 
 // ---------------------------
 // --------- systray ---------

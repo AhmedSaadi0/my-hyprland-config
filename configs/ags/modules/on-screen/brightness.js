@@ -1,6 +1,6 @@
-const { Audio } = ags.Service
-const { Box, Stack, Icon, Slider, Window } = ags.Widget
-
+import Audio from 'resource:///com/github/Aylur/ags/service/audio.js'
+import { Box, Stack, Icon, Slider, Window } from 'resource:///com/github/Aylur/ags/widget.js'
+import App from "resource:///com/github/Aylur/ags/app.js";
 export const Volume = () => Box({
     className: 'vol-osd',
     style: 'min-width: 140px',
@@ -56,12 +56,12 @@ function showVol() {
         clearTimeout(timeoutId);
     } else {
         // If not processing, do something
-        ags.App.toggleWindow('vol_osd');
+        App.toggleWindow('vol_osd');
     }
 
     // Set a 5-second delay before doing something else
     timeoutId = setTimeout(() => {
-        ags.App.toggleWindow('vol_osd');
+        App.toggleWindow('vol_osd');
         isProcessing = false; // Reset the processing flag
     }, 5000);
 

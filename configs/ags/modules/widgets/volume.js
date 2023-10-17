@@ -1,5 +1,5 @@
-const { Audio } = ags.Service
-const { Box, Stack, Icon, Slider } = ags.Widget
+import Audio from 'resource:///com/github/Aylur/ags/service/audio.js'
+import { Box, Stack, Icon, Slider } from 'resource:///com/github/Aylur/ags/widget.js'
 
 export const Volume = () => Box({
     className: 'volume',

@@ -1,6 +1,4 @@
-const { USER } = ags.Utils;
-
-const { Label, Box, Icon, Window, Button, Revealer } = ags.Widget;
+import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 
 
 const NotificationItem = () => {
@@ -33,7 +31,7 @@ const NotificationItem = () => {
     })
 
     return Box({
-        className:"notification-item",
+        className: "notification-item",
         spacing: 8,
         vertical: true,
         children: [

@@ -1,6 +1,6 @@
 import ShowWindow from '../utils/ShowWindow.js';
-const { Audio } = ags.Service
-const { Box, Stack, Icon, Slider, Window } = ags.Widget
+import Audio from 'resource:///com/github/Aylur/ags/service/audio.js'
+import { Box, Stack, Icon, Slider, Window } from 'resource:///com/github/Aylur/ags/widget.js'
 
 export const Volume = () => Box({
     className: 'vol-osd',

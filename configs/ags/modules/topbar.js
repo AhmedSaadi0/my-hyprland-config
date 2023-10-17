@@ -6,8 +6,9 @@ import { SysTrayBox } from "./widgets/systray.js";
 import NotificationIndicator from "./widgets/NotificationIndicator.js";
 import {NotificationCenterButton} from "./menus/notification_center.js";
 import { MenuButton } from './menus/left_menu.js'
-const { Window, CenterBox, Box, Label, Button } = ags.Widget;
-const { execAsync } = ags.Utils;
+
+import { Window, CenterBox, Box, Label } from 'resource:///com/github/Aylur/ags/widget.js';
+import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 
 const Clock = () => Label({
