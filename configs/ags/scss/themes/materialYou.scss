@@ -15,7 +15,8 @@ $fg-three: #4B5569;
 // $text-color: #4C566A;
 $text-color: #3f3a57;
 
-$icon-font-family: "Font Awesome";
+// $icon-font-family: "Font Awesome";
+$icon-font-family: "Font Awesome 5 Free Solid";
 
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
@@ -39,6 +40,18 @@ $workspace-hover-color: rgba($bg-two, 0.9);
 // --------------------------------
 $clock-background: linear-gradient(to right, $fg-two, $fg-one);
 $clock-color: $bg-two;
+
+// --------------------------------
+// --------- prayer times ---------
+// --------------------------------
+$bar-prayer-times-box-background: #ECA3AC;
+$bar-prayer-times-box-color: $text-color;
+
+// -------------------------------
+// --------- Bar Weather ---------
+// -------------------------------
+$bar-weather-background: linear-gradient(to right, #FEC2A6, #FEC2A6);
+$bar-weather-color: $fg-two;
 
 // -----------------------
 // --------- bar ---------

@@ -1,0 +1,254 @@
+import { Service, Utils, App } from '../utils/imports.js';
+
+const currentDate = new Date();
+
+const day = currentDate.getDate();
+const month = currentDate.getMonth() + 1;
+const year = currentDate.getFullYear();
+
+// Create a function to add leading zeros if necessary
+function addLeadingZero(number) {
+    return number < 10 ? `0${number}` : number;
+}
+
+const formattedDate = `${addLeadingZero(day)}-${addLeadingZero(month)}-${year}`;
+
+
+class PrayerTimesService extends Service {
+    static {
+        Service.register(this,
+            {},
+            {
+                'nextPrayerName': ['string', 'r'],
+                'nextPrayerTime': ['string', 'r'],
+
+                'prayerNow': ['string', 'r'],
+
+                'hijriDate': ['string', 'r'],
+                'hijriDay': ['string', 'r'],
+                'hijriWeekday': ['string', 'r'],
+                'hijriMonth': ['string', 'r'],
+                'hijriYear': ['string', 'r'],
+            }
+        );
+    }
+
+    _prayerNow = null;
+
+    constructor() {
+        super();
+        this.state = {};
+        this.initPrayerTimes();
+    }
+
+    initPrayerTimes() {
+        Utils.execAsync([
+            `curl`,
+            `https://api.aladhan.com/v1/timingsByCity/${formattedDate}?city=sanaa&country=yemen`
+        ]).then(val => {
+            const jsonData = JSON.parse(val);
+            this.state = jsonData;
+            this._prayerNow = null;
+            this.emit("changed");
+        }).catch(() => {
+            const source = setTimeout(() => {
+                this.initPrayerTimes()
+                source.destroy()
+            }, 300000);
+        })
+    }
+
+    getMillisecondsBetweenDates(date1, date2) {
+        // Get the difference in milliseconds between the two dates.
+        const differenceInMilliseconds = date2.getTime() - date1.getTime();
+        return differenceInMilliseconds;
+    }
+
+    millisecondsToTime(milliseconds) {
+        const totalMilliseconds = parseInt(milliseconds);
+
+        const hours = Math.floor(totalMilliseconds / 3600000);
+        const minutes = Math.floor((totalMilliseconds % 3600000) / 60000);
+        const seconds = Math.floor(((totalMilliseconds % 3600000) % 60000) / 1000);
+
+        // Return the time as a string.
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
+    getPrayerNameAr(prayerTime) {
+        switch (prayerTime) {
+            case "Isha":
+                return "العشاء";
+            case "Maghrib":
+                return "المغرب";
+            case "Asr":
+                return "العصر";
+            case "Dhuhr":
+                return "الظهر";
+            case "Fajr":
+                return "الفجر";
+            default:
+                return "";
+        }
+    }
+
+    notifyForPrayerTime(now, secondTime) {
+        const source = setTimeout(() => {
+            Utils.execAsync([
+                `paplay`,
+                `${App.configDir}/sounds/prayer-notification.ogg`,
+            ]).catch(print)
+            this.emit("changed");
+            source.destroy()
+        }, this.getMillisecondsBetweenDates(now, secondTime));
+    }
+
+    calculateForNextPrayerTime() {
+        const source = setTimeout(() => {
+            this._prayerNow = null;
+            this.emit("changed");
+            source.destroy()
+        }, 20 * 60 * 1000);
+    }
+
+    getNextPrayerTime(json) {
+        const now = new Date();
+
+        if (Object.keys(json).length === 0 || json.code === 404) {
+            return {
+                name: "",
+                time: "",
+            }
+        }
+
+        let isha = this.timeToDateObj(json.data.timings.Isha);
+        let maghrib = this.timeToDateObj(json.data.timings.Maghrib);
+        let asr = this.timeToDateObj(json.data.timings.Asr);
+        let dhuhr = this.timeToDateObj(json.data.timings.Dhuhr);
+        let fajr = this.timeToDateObj(json.data.timings.Fajr);
+
+        const prayerTimes = ["Isha", "Maghrib", "Asr", "Dhuhr", "Fajr"];
+
+        for (const prayerTime of prayerTimes) {
+            // Checks if it is now a prayer time
+            const prayerTimeObj = this.timeToDateObj(json.data.timings[prayerTime]);
+            const fifteenMinutesAfterPrayerTime = new Date(prayerTimeObj.getTime() + 20 * 60 * 1000); // Adds 15 minutes to prayer time in milliseconds
+
+            if (now >= prayerTimeObj && now < fifteenMinutesAfterPrayerTime) {
+                this._prayerNow = this.getPrayerNameAr(prayerTime);
+                this.emit("changed");
+                this.calculateForNextPrayerTime()
+                return;
+            } 
+        }
+
+        if (now >= isha || now < fajr) {
+            this.notifyForPrayerTime(now, fajr);
+            return {
+                name: "الفجر",
+                time: json.data.timings.Fajr,
+            };
+        }
+
+        if (now >= maghrib && now < isha) {
+            this.notifyForPrayerTime(now, isha);
+            return {
+                name: "العشاء",
+                time: json.data.timings.Isha,
+            };
+        }
+
+        if (now >= asr && now < maghrib) {
+            this.notifyForPrayerTime(now, maghrib);
+            return {
+                name: "المغرب",
+                time: json.data.timings.Maghrib,
+            };
+        }
+
+        if (now >= dhuhr && now < asr) {
+            this.notifyForPrayerTime(now, asr);
+            return {
+                name: "العصر",
+                time: json.data.timings.Asr,
+            };
+        }
+
+        else {
+            this.notifyForPrayerTime(now, dhuhr);
+            return {
+                name: "الظهر",
+                time: json.data.timings.Dhuhr,
+            };
+        }
+    }
+
+    timeToDateObj(time) {
+        // Split the time string into hours and minutes
+        const [hours, minutes] = time.split(':');
+
+        // Create a new Date object
+        const date = new Date();
+
+        // Set the hours and minutes of the Date object
+        date.setHours(hours);
+        date.setMinutes(minutes);
+
+        // Return the Date object
+        return date;
+    }
+
+    // Getters
+    get prayerNow() {
+        return this._prayerNow;
+    }
+
+    get nextPrayerName() {
+        return this.getNextPrayerTime(this.state).name;
+    }
+
+    get nextPrayerTime() {
+        return this.getNextPrayerTime(this.state).time;
+    }
+
+    get hijriDate() {
+        return this.state?.date.hijri.date;
+    }
+
+    get hijriDay() {
+        return this.state?.date.hijri.day;
+    }
+
+    get hijriWeekday() {
+        return decodeUnicode(this.state?.date.hijri.weekday.ar);
+    }
+
+    get hijriMonth() {
+        return decodeUnicode(this.state?.date.hijri.month.ar);
+    }
+
+    get hijriYear() {
+        return this.state?.date.hijri.year;
+    }
+
+    decodeUnicode(str) {
+        // Create a regular expression to match Unicode escape sequences
+        const regex = /\\u([a-fA-F0-9]{4})/g;
+
+        // Replace all Unicode escape sequences with their corresponding characters
+        const decodedStr = str.replace(regex, (match, uCode) => {
+            return String.fromCharCode(parseInt(uCode, 16));
+        });
+
+        // Return the decoded string
+        return decodedStr;
+    }
+
+}
+
+
+// the singleton instance
+const prayerService = new PrayerTimesService();
+
+// export to use in other modules
+export default prayerService;
