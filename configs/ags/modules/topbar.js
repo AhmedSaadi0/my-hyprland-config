@@ -58,11 +58,12 @@ const Left = () => Box({
 
 export const Bar = ({ monitor } = {}) => Window({
     name: `bar${monitor || ''}`, // name has to be unique
-    className: 'bar shadow',
+    className: 'bar-bg',
     monitor,
     anchor: ['top', 'left', 'right'],
     exclusive: true,
     child: CenterBox({
+        className: "bar shadow",
         startWidget: Right(),
         centerWidget: Center(),
         endWidget: Left(),

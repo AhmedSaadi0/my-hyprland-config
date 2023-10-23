@@ -10,25 +10,22 @@ const Popups = () => Box({
         ['map', new Map()],
         ['dismiss', (box, id, force = false) => {
 
-            timeout(3000, () => {
-                if (!id || !box._map.has(id)) {
-                    // box.get_parent().revealChild = false;
-                    return;
-                }
+            if (!id || !box._map.has(id)) {
+                // box.get_parent().revealChild = false;
+                return;
+            }
 
-                if (box._map.get(id)._hovered.value && !force)
-                    return;
+            if (box._map.get(id)._hovered.value && !force)
+                return;
 
-                if (box._map.size - 1 === 0)
-                    box.get_parent().revealChild = false;
+            if (box._map.size - 1 === 0)
+                box.get_parent().revealChild = false;
 
-                timeout(400, () => {
-                    box._map.get(id)?.destroy();
-                    box._map.delete(id);
-                    box.get_parent().revealChild = false;
-                });
+            timeout(400, () => {
+                box._map.get(id)?.destroy();
+                box._map.delete(id);
+                box.get_parent().revealChild = false;
             });
-
         }],
         ['notify', (box, id) => {
 
@@ -60,7 +57,7 @@ const Popups = () => Box({
     ],
 });
 
-const PopupList = ({ transition = 'slide_down' } = {}) => Box({
+const PopupList = ({ transition = 'slide_up' } = {}) => Box({
     className: 'notifications-popup-list',
     children: [
         Revealer({
@@ -73,6 +70,6 @@ const PopupList = ({ transition = 'slide_down' } = {}) => Box({
 export default monitor => Window({
     monitor,
     name: `notifications${monitor}`,
-    anchor: ['top', "left"],
+    anchor: ['bottom', "left"],
     child: PopupList(),
 });

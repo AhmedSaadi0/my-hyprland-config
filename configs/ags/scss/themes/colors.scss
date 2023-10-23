@@ -25,7 +25,7 @@ $fg-three: #C1C4EB;
 
 $text-color: #bdddee;
 
-$icon-font-family: "FontAwesome";
+$icon-font-family: "Font Awesome";
 
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
@@ -150,6 +150,32 @@ $selected-theme-hover-color: $bg-three;
 
 $menu-btn-background: $bg-one;
 $menu-btn-hover: $fg-one;
+
+
+/* ------------------------------------------ */
+/* -------------- Music Player -------------- */
+/* ------------------------------------------ */
+$music-father-box-bg: $bg-three;
+// $music-wd-box-bg: #6f3ad1;
+$music-wd-box-bg: linear-gradient(to right, #8e52ff, #0088ff);
+
+$music-wd-player-bg: $bg-two;
+$music-wd-player-fg: $fg-three;
+
+$music-wd-title-fg: $bg-two;
+$music-wd-artist-fg: $fg-three;
+
+$music-wd-button-img: linear-gradient(to right, $bg-one, $bg-one);
+$music-wd-button-fg: $fg-three;
+$music-wd-button-hover-img: linear-gradient(to top, $fg-one, $fg-two);
+
+$music-wd-button-play-img: $selected-theme-background;
+$music-wd-button-play-fg: $bg-two;
+
+$music-wd-button-stop-img: $music-wd-button-img;
+$music-wd-button-stop-fg: $music-wd-button-fg;
+
+$left-menu-music-wd-padding-right: 1.3rem;
 
 // --------------------------------
 // --------- GTK elements ---------

@@ -1,11 +1,14 @@
 import MaterialYouOne from "./MaterialYouOne.js"
 import { Box, Window } from 'resource:///com/github/Aylur/ags/widget.js';
+import MusicPlayer from "../MusicPLayer.js";
+import FuzzyClock from "../FuzzyClock.js";
 
 
 export default desktop => Window({
     name: `desktop_widget`,
-    margin: [12, 0, 0, 12],
+    margin: [100, 0, 0, 80],
     layer: 'background',
+    focusable:true,
     anchor: ['top', "left"],
-    child: MaterialYouOne(),
+    child: FuzzyClock(),
 })

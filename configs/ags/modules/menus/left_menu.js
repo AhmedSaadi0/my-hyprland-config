@@ -1,9 +1,9 @@
-import themeService from "../theme/service.js";
+import themeService from '../services/ThemeService.js';
 import ThemesDictionary from "../theme/themes.js";
 import { BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
-
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+import MusicPLayer from '../widgets/MusicPLayer.js';
 
 
 const Profile = () => {
@@ -193,6 +193,7 @@ const menuRevealer = Revealer({
             Header(),
             Profile(),
             ThemesButtonsRowOne(),
+            MusicPLayer("left-menu-music-wd"),
             PowerButtonsRow()
         ]
     }),
@@ -200,10 +201,11 @@ const menuRevealer = Revealer({
 
 export const LeftMenu = () => Window({
     name: `left_menu`,
-    margin: [12, 0, 0, 12],
+    margin: [0, 0, 0, 0],
     // layer: 'overlay',
     anchor: ['top', "left"],
     child: Box({
+        // className: "left-menu-window",
         style: `
             min-height: 0.0001rem;
         `,

@@ -15,7 +15,7 @@ $fg-three: #4B5569;
 // $text-color: #4C566A;
 $text-color: #3f3a57;
 
-$icon-font-family: "FontAwesome";
+$icon-font-family: "Font Awesome";
 
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
@@ -138,6 +138,28 @@ $selected-theme-hover-color: $text-color;
 
 $menu-btn-background: $bg-one;
 $menu-btn-hover: $fg-one;
+
+/* ------------------------------------------ */
+/* -------------- Music Player -------------- */
+/* ------------------------------------------ */
+$music-father-box-bg: $bg-three;
+// $music-wd-box-bg: #6f3ad1;
+$music-wd-box-bg: linear-gradient(to right, $bg-two, $bg-two);
+$music-wd-player-bg: $bg-two;
+$music-wd-player-fg: $fg-three;
+$music-wd-title-fg: $fg-two;
+$music-wd-artist-fg: $fg-three;
+$music-wd-button-img: linear-gradient(to right, $bg-one, $bg-one);
+$music-wd-button-hover-img: linear-gradient(to top, $fg-one, $fg-two);
+$music-wd-button-fg: $fg-three;
+
+$music-wd-button-play-img: $selected-theme-background;
+$music-wd-button-play-fg: $fg-two;
+
+$music-wd-button-stop-img: $music-wd-button-img;
+$music-wd-button-stop-fg: $music-wd-button-fg;
+
+$left-menu-music-wd-padding-right: 1.6rem;
 
 
 // --------------------------------
