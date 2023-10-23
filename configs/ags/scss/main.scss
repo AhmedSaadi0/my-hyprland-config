@@ -4,6 +4,10 @@
     all: unset;
 }
 
+.icon-font {
+    font-family: $icon-font-family;
+}
+
 /* --------------------------------------- */
 /* -------------- Workspace -------------- */
 /* --------------------------------------- */
@@ -78,6 +82,43 @@
     padding-right: 1em;
 }
 
+.bar-prayer-times-box {
+    font-size: 1em;
+    background: $bar-prayer-times-box-background;
+    color: $bar-prayer-times-box-color;
+    border-radius: $border-radius;
+    margin-top: $bar-top-margin + 0.1rem;
+    margin-bottom: $bar-top-margin + 0.1rem;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+    padding-left: 0.5rem;
+}
+
+.bar-prayer-times-icon{
+    font-family: $icon-font-family;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.bar-weather-box {
+    font-size: 1em;
+    // font-family: "VEXA light R"; 
+    background: $bar-weather-background;
+    color: $bar-weather-color;
+    border-radius: $border-radius;
+    margin-top: $bar-top-margin + 0.1rem;
+    margin-bottom: $bar-top-margin + 0.1rem;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+    padding-left: 0.8rem;
+}
+
+.bar-weather-icon {
+    font-family: $icon-font-family;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
 .bar-bg {
     background-color: rgba(#000000, 0.0);
     min-height: 8px;
@@ -90,6 +131,12 @@
     min-height: 8px;
     border-radius: 0rem;
     margin-bottom: 0.5rem; // Add some margin to show shadows
+}
+
+.small-shadow {
+    box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
+    transition-property: background-color;
+    transition-duration: .5s;
 }
 
 .shadow {
@@ -113,9 +160,6 @@
     margin-bottom: $bar-top-margin + 0.1rem;
     margin-left: 0.1em;
     padding-right: 1rem;
-    box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
-    transition-property: background-color;
-    transition-duration: .5s;
 }
 
 .wifi-name-label {
@@ -335,7 +379,6 @@ scale slider {
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
-
 .notifications-revealer-box {
     background-color: $notifications-revealer-box-background;
     margin-top: $bar-top-margin;
@@ -343,8 +386,8 @@ scale slider {
     border-radius: $border-radius;
     padding-left: 0.7rem;
     padding-right: 0.7rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    margin-left: 0.7rem;
+    margin-right: 0rem;
 }
 
 .notification-popups {
@@ -389,9 +432,9 @@ window {
     margin-right: 1rem;
 
     // box-shadow: 1px 1px 2px 2px rgba(#000000, 0.3);
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
     transition-property: background-color;
-    transition-duration: 0.5s;
+    transition-duration: 1.5s;
 
 }
 
@@ -405,7 +448,7 @@ window {
 }
 
 .profile-box {
-    background-image: $profile-box-background;
+    background: $profile-box-background;
     color: $profile-box-color;
     min-width: 20rem;
     min-height: 8rem;
@@ -434,12 +477,12 @@ window {
 }
 
 .selected-theme {
-    background-image: $selected-theme-background;
+    background: $selected-theme-background;
     color: $selected-theme-color;
 }
 
 .selected-theme:hover {
-    background-image: $selected-theme-hover-background;
+    background: $selected-theme-hover-background;
     color: $selected-theme-hover-color;
 }
 
@@ -586,7 +629,7 @@ window {
 }
 
 .music-wd-box {
-    background-image: $music-wd-box-bg;
+    background: $music-wd-box-bg;
     // padding-top: 1rem;
     padding: 1rem;
     margin: 0.5rem;
@@ -595,7 +638,7 @@ window {
 }
 
 .left-menu-music-wd {
-    background-image: $music-wd-box-bg;
+    background: $music-wd-box-bg;
     border-radius: $border-radius;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -658,36 +701,36 @@ window {
     border-radius: 50%;
     min-width: 40px;
     min-height: 40px;
-    background-image: $music-wd-button-img;
+    background: $music-wd-button-img;
     color: $music-wd-button-fg;
-    transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
 
 }
 
 .music-wd-button:hover {
-    background-image: $music-wd-button-hover-img;
+    background: $music-wd-button-hover-img;
 }
 
 .music-wd-button-play {
-    background-image: $music-wd-button-play-img;
+    background: $music-wd-button-play-img;
     color: $music-wd-button-play-fg;
     border-radius: 3rem;
     min-height: 40px;
     min-width: 80px;
-    transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .music-wd-button-stop {
-    background-image: $music-wd-button-stop-img;
+    background: $music-wd-button-stop-img;
     color: $music-wd-button-stop-fg;
     border-radius: 3rem;
     min-height: 40px;
     min-width: 80px;
-    transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .music-wd-button-play:hover {
-    background-image: $music-wd-button-hover-img;
+    background: $music-wd-button-hover-img;
 }
 
 /* ----------------------------------------- */
@@ -702,7 +745,7 @@ window {
 .wd-time-now {
     font-size: 2.3rem;
     color: #FFB431;
-    font-family: "VIP Rawy Regular";
+    font-family: "VEXA light R";
 }
 
 .wd-fuzzy-time {

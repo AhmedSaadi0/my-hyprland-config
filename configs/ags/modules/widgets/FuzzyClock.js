@@ -38,8 +38,7 @@ export default FuzzyClock => Widget.Box({
         ]).then(val => {
             const date = val.split("|")
             const day = date[0]
-            const hour = date[1]
-            timeNow.label = `الساعة الان ${date[1]}`;
+            let hour = date[1]
 
             if (day == SATURDAY) {
                 fuzzyDay.label = "اسبوع جديد ";
@@ -73,6 +72,10 @@ export default FuzzyClock => Widget.Box({
                 fuzzyTime.label = `ليلة سعيدة\t`;
             }
 
+            if (hour > 12) {
+                hour = hour - 12;
+            }
+            timeNow.label = `الساعة الان ${hour}`;
 
         }).catch(print)
     }]]

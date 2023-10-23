@@ -70,7 +70,7 @@ const NetSpeedMeters = () => {
 };
 
 export const NetworkInformation = () => Box({
-    className: "internet-box",
+    className: "internet-box small-shadow",
     connections: [
         [Network, box => {
             let internetLabel;

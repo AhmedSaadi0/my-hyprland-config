@@ -1,5 +1,6 @@
-import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
-import Service from 'resource:///com/github/Aylur/ags/service.js';
+// import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+// import Service from 'resource:///com/github/Aylur/ags/service.js';
+import { Service, Utils } from '../utils/imports.js';
 
 
 class WeatherService extends Service {
@@ -33,23 +34,48 @@ class WeatherService extends Service {
         );
     }
 
-    weatherUrl = `curl ar.wttr.in/'sanaa?format=j1'`;
-
     constructor() {
         super();
         this.state = {};
-        this.getInitWeather();
+        this.initWeather();
     }
 
-    getInitWeather() {
-        execAsync([
+    initWeather() {
+        Utils.interval(900000, () => {
+            this.getWeather();
+        });
+    }
+
+    getWeather() {
+        Utils.execAsync([
             'curl',
             `ar.wttr.in/sanaa?format=j1`
         ]).then(val => {
             const jsonData = JSON.parse(val);
             this.state = jsonData;
             this.emit("changed");
-        }).catch(print)
+        }).catch(() => {
+            const source = setTimeout(() => {
+                this.getWeather()
+                source.destroy()
+            }, 300000);
+        })
+    }
+
+    isDay() {
+        const sunsetTime = "18:30";
+
+        const currentDate = new Date();
+
+        const currentHour = currentDate.getHours();
+        const currentMinute = currentDate.getMinutes();
+
+        const [sunsetHour, sunsetMinute] = sunsetTime.split(":").map(Number);
+
+        const sunsetMinutes = sunsetHour * 60 + sunsetMinute;
+        const currentMinutes = currentHour * 60 + currentMinute;
+
+        return currentMinutes < sunsetMinutes;
     }
 
     get arValue() {
@@ -58,7 +84,11 @@ class WeatherService extends Service {
 
     get weatherCode() {
         const weatherCode = this.state?.current_condition?.[0]?.weatherCode;
-        return sun_icon_dic[weatherCode] || '';
+        if (this.isDay()) {
+            return sun_icon_dic[weatherCode] || '';
+        } else {
+            return moon_icon_dic[weatherCode] || '';
+        }
     }
 
     get maxTempC() {
@@ -76,11 +106,15 @@ class WeatherService extends Service {
 
     get weatherCode1() {
         const weatherCode = this.state?.weather?.[0]?.hourly?.[4]?.weatherCode;
-        return sun_icon_dic[weatherCode] || '';
+        if (this.isDay()) {
+            return sun_icon_dic[weatherCode] || '';
+        } else {
+            return moon_icon_dic[weatherCode] || '';
+        }
     }
 
     get weatherTime1() {
-        return "سبت";
+        return "اليوم";
     }
 
     // -------------------------------------------
@@ -90,11 +124,15 @@ class WeatherService extends Service {
 
     get weatherCode2() {
         const weatherCode = this.state?.weather?.[1]?.hourly?.[4]?.weatherCode;
-        return sun_icon_dic[weatherCode] || '';
+        if (this.isDay()) {
+            return sun_icon_dic[weatherCode] || '';
+        } else {
+            return moon_icon_dic[weatherCode] || '';
+        }
     }
 
     get weatherTime2() {
-        return "احد";
+        return "غداً";
     }
 
     // -------------------------------------------
@@ -104,19 +142,28 @@ class WeatherService extends Service {
 
     get weatherCode3() {
         const weatherCode = this.state?.weather?.[2]?.hourly?.[4]?.weatherCode;
-        return moon_icon_dic[weatherCode] || '';
+        if (this.isDay()) {
+            return sun_icon_dic[weatherCode] || '';
+        } else {
+            return moon_icon_dic[weatherCode] || '';
+        }
     }
 
     get weatherTime3() {
-        return "اثنين";
+        return "بعد غداً";
     }
+
     // -------------------------------------------
     get avgTempC4() {
         return `${this.state.weather[0].hourly[7].tempC} C°`;
     }
 
     get weatherCode4() {
-        return moon_icon_dic[this.state.weather[0].hourly[7].weatherCode];
+        if (this.isDay()) {
+            return sun_icon_dic[weatherCode] || '';
+        } else {
+            return moon_icon_dic[weatherCode] || '';
+        }
     }
 
     get weatherTime4() {
