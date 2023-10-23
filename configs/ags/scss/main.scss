@@ -1,4 +1,4 @@
-@import './themes/black-hole.scss';
+@import './themes/colors.scss';
 
 .unset {
     all: unset;
@@ -78,12 +78,31 @@
     padding-right: 1em;
 }
 
+.bar-bg {
+    background-color: rgba(#000000, 0.0);
+    min-height: 8px;
+    border-radius: 0rem;
+}
+
 .bar {
     background-color: $bar-background;
     color: $bar-color;
     min-height: 8px;
     border-radius: 0rem;
+    margin-bottom: 0.5rem; // Add some margin to show shadows
 }
+
+.shadow {
+    // box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.3);
+    // transition-property: background-color;
+    // transition-duration: 0.5s;
+
+    box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
+    // box-shadow: 1px 1px 4px 4px rgba(0, 0, 0, 0.3);
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
 
 .internet-box {
     background: $internet-box-background;
@@ -93,7 +112,10 @@
     margin-top: $bar-top-margin + 0.1rem;
     margin-bottom: $bar-top-margin + 0.1rem;
     margin-left: 0.1em;
-    padding-right: 0.3rem;
+    padding-right: 1rem;
+    box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
+    transition-property: background-color;
+    transition-duration: .5s;
 }
 
 .wifi-name-label {
@@ -335,6 +357,7 @@ scale slider {
     background-color: $notifications-popup-list-background;
     border-radius: $border-radius;
     margin-top: 2rem;
+    margin-bottom: 2rem;
     margin-left: 2rem;
 }
 
@@ -360,6 +383,16 @@ window {
     // min-height: 32rem;
     border-radius: $border-radius;
     border: 2px solid $menu-box-borders;
+    margin-top: 0.45rem;
+    margin-left: 0.45rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+
+    // box-shadow: 1px 1px 2px 2px rgba(#000000, 0.3);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
+    transition-property: background-color;
+    transition-duration: 0.5s;
+
 }
 
 .left-menu-header {
@@ -436,12 +469,6 @@ window {
     background-color: $menu-btn-hover;
 }
 
-.shadow {
-    box-shadow: 1px 1px 3px 1px rgba(20, 20, 20, 10);
-    transition-property: background-color;
-    transition-duration: .5s;
-}
-
 /* ----------------------------------------------- */
 /* -------------- Notification menu -------------- */
 /* ----------------------------------------------- */
@@ -472,58 +499,68 @@ window {
 
 }
 
-.row-two {
+.weather-wd-row-two {
     background-color: #3B2163;
     padding-top: 1rem;
     padding-bottom: 1rem;
     padding-right: 1rem;
-    border-top-right-radius: 1.5rem;
-}
-
-.row-three {
-    background-color: #3B2163;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-right: 1rem;
-    border-bottom-right-radius: 1.5rem;
-    border-bottom-left-radius: 1.5rem;
-}
-
-.row-box {
-    background-color: #3B2163;
-    min-width: 10rem;
-    padding-top: 1.5rem;
-    padding-right: 1.5rem;
-    border-top-right-radius: 1.5rem;
-}
-
-.weather-icon {
-    background-color: #3B2163;
     border-top-left-radius: 1.5rem;
-    font-size: xx-large;
+}
+
+.wd-row-three {
+    background-color: #3B2163;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    // border-bottom-right-radius: 1.5rem;
+    // border-bottom-left-radius: 1.5rem;
+}
+
+.weather-wd-text {
+    font-size: smaller;
+    color: #9f79d1;
+}
+
+.weather-wd-title-text-box {
+    background-color: #3B2163;
+    min-width: 10.55rem;
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+    border-top-left-radius: 1.5rem;
+}
+
+.weather-wd-icon {
+    background-color: #3B2163;
+    border-top-right-radius: 1.5rem;
+    min-width: 0.75rem;
+    font-size: x-large;
     padding-left: 2rem;
     padding-right: 2rem;
+    font-family: $icon-font-family;
 }
 
 .user-icon {
     background-color: rgba(#3B2163, 1);
     padding: 0.5rem;
-    margin-left: 0.8rem;
+    margin-right: 0.8rem;
     margin-bottom: 0.8rem;
     border-radius: 1.5rem;
-    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0rem;
 }
 
-.insider-weather-icon {
+.weather-wd-day-icon {
     background-color: #6f3ad1;
-    padding-right: 0.5rem;
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
     border-radius: 10rem;
+    margin-bottom: 0.5rem;
     min-width: 3rem;
     min-height: 3.5rem;
     font-size: x-large;
+    font-family: 'FontAwesome';
 }
 
-.insider-box {
+.weather-wd-day-box {
     background-color: #1aa14e;
     border-radius: 3rem;
     padding: 0.4rem;
@@ -534,4 +571,146 @@ window {
     min-height: 0.1px;
     min-width: 10rem;
     font-family: $icon-font-family;
+}
+
+/* ------------------------------------------ */
+/* -------------- Music Player -------------- */
+/* ------------------------------------------ */
+.music-father-box {
+    background-color: $music-father-box-bg;
+    border-bottom-right-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+    padding-right: 9px;
+    padding-left: 9px;
+    padding-bottom: 9px;
+}
+
+.music-wd-box {
+    background-image: $music-wd-box-bg;
+    // padding-top: 1rem;
+    padding: 1rem;
+    margin: 0.5rem;
+    border-radius: $border-radius;
+
+}
+
+.left-menu-music-wd {
+    background-image: $music-wd-box-bg;
+    border-radius: $border-radius;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: $left-menu-music-wd-padding-right;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.music-wd-row-one {
+    padding-right: 8px;
+}
+
+.music-wd-row-two {
+    margin-right: 8px;
+    margin-top: 8px;
+    // margin-bottom: 8px;
+}
+
+.music-wd-row-three {
+    padding-top: 10px;
+}
+
+.music-wd-player {
+    background-color: $music-wd-player-bg;
+    padding-left: 0.4rem;
+    padding-right: 0.7rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    color: $music-wd-player-fg;
+    border-radius: 1rem;
+    min-width: 2rem;
+    // border: 0px;
+}
+
+.music-wd-title {
+    color: $music-wd-title-fg;
+    // font-size: small;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.music-wd-file-name {
+    color: $music-wd-artist-fg;
+    font-size: x-small;
+}
+
+// .music-wd-progress trough highlight {
+//     border-radius: 0px;
+//     background-color: #000000;
+// }
+
+// .music-wd-progress slider {
+//     min-width: 20px;
+//     min-height: 1px;
+// }
+
+.music-wd-button {
+    border-radius: 50%;
+    min-width: 40px;
+    min-height: 40px;
+    background-image: $music-wd-button-img;
+    color: $music-wd-button-fg;
+    transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
+
+}
+
+.music-wd-button:hover {
+    background-image: $music-wd-button-hover-img;
+}
+
+.music-wd-button-play {
+    background-image: $music-wd-button-play-img;
+    color: $music-wd-button-play-fg;
+    border-radius: 3rem;
+    min-height: 40px;
+    min-width: 80px;
+    transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.music-wd-button-stop {
+    background-image: $music-wd-button-stop-img;
+    color: $music-wd-button-stop-fg;
+    border-radius: 3rem;
+    min-height: 40px;
+    min-width: 80px;
+    transition: background-image 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.music-wd-button-play:hover {
+    background-image: $music-wd-button-hover-img;
+}
+
+/* ----------------------------------------- */
+/* -------------- Fuzzy clock -------------- */
+/* ----------------------------------------- */
+.wd-fuzzy-day {
+    font-size: 2.5rem;
+    color: #FF09A4;
+    font-family: "VIP Rawy Regular";
+}
+
+.wd-time-now {
+    font-size: 2.3rem;
+    color: #FFB431;
+    font-family: "VIP Rawy Regular";
+}
+
+.wd-fuzzy-time {
+    font-size: 1.8rem;
+    color: #A1CEFB;
+    font-family: "VIP Rawy Regular";
+}
+
+.wd-fuzzy-clock-box {
+    // background-color: #1aa14e;
 }

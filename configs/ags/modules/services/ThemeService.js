@@ -1,5 +1,5 @@
-import ThemesDictionary from "./themes.js";
-import { BLACK_HOLE_THEME } from "./themes.js";
+import ThemesDictionary from "../theme/themes.js";
+import { BLACK_HOLE_THEME } from '../theme/themes.js';
 import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';

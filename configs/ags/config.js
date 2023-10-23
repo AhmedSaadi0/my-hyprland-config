@@ -23,7 +23,7 @@ export default {
         MyNotifications(),
         LeftMenu(),
         NotificationCenter(),
-        // Desktop()
+        Desktop()
     ],
 };
 

@@ -16,7 +16,7 @@ const black_hole = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(FDBBC4ff) 0deg",
+        "active_border": "rgba(FDBBC4ff) rgba(ff00ffff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 8,
         "drop_shadow": "no",
@@ -38,7 +38,7 @@ const deer = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(FDB4B7ff) 0deg",
+        "active_border": "rgba(FDB4B7ff) rgba(A2E8FFff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 8,
         "drop_shadow": "no",
@@ -60,7 +60,7 @@ const colors = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(1ed4fdff) 0deg",
+        "active_border": "rgba(FD02FFff) rgba(1ed4fdff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 8,
         "drop_shadow": "no",
@@ -82,7 +82,7 @@ const siberian = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(FDB4B7ff) 0deg",
+        "active_border": "rgba(FDB4B7ff) rgba(A2E8FFff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 5,
         "drop_shadow": "no",
@@ -104,7 +104,7 @@ const materialYou = {
     gtk_mode: "light",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(5D484Cff) 0deg",
+        "active_border": "rgba(678382ff) rgba(9d6c73ff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 30,
         "drop_shadow": "no",

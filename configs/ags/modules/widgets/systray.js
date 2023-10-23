@@ -1,16 +1,15 @@
-import SystemTray from 'resource:///com/github/Aylur/ags/service/systemtray.js'
-import { Box, Icon, Button } from 'resource:///com/github/Aylur/ags/widget.js'
 const { Gravity } = imports.gi.Gdk;
+import { SystemTray, Widget } from '../utils/imports.js';
 
-const PanelButton = ({ className, content, ...rest }) => Button({
+const PanelButton = ({ className, content, ...rest }) => Widget.Button({
     className: `panel-button ${className} `,
-    child: Box({ children: [content] }),
+    child: Widget.Box({ children: [content] }),
     ...rest,
 });
 
 const SysTrayItem = item => PanelButton({
     className: "tray-btn",
-    content: Icon({
+    content: Widget.Icon({
         binds: [[
             'icon',
             item,
@@ -42,7 +41,7 @@ const SysTrayItem = item => PanelButton({
     ),
 });
 
-export const SysTrayBox = () => Box({
+export const SysTrayBox = () => Widget.Box({
     className: 'systray',
     properties: [
         [
