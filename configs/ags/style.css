@@ -579,6 +579,7 @@ window {
   font-size: x-small; }
 
 .music-wd-button {
+  font-family: "Font Awesome 5 Free Solid";
   border-radius: 50%;
   min-width: 40px;
   min-height: 40px;
@@ -611,17 +612,62 @@ window {
 /* ----------------------------------------- */
 /* -------------- Fuzzy clock -------------- */
 /* ----------------------------------------- */
-.wd-fuzzy-day {
+.wd-fuzzy-day-box {
   font-size: 2.5rem;
-  color: #FF09A4;
+  background: rgba(0, 0, 0, 0);
+  color: #ff00ff;
   font-family: "VIP Rawy Regular"; }
+
+.wd-fuzzy-day-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  font-family: "Font Awesome 5 Free Solid";
+  padding-top: 0.6rem; }
+
+.wd-fuzzy-day-text {
+  font-size: 3rem; }
 
 .wd-time-now {
   font-size: 2.3rem;
+  background: rgba(0, 0, 0, 0);
   color: #FFB431;
-  font-family: "VEXA light R"; }
+  font-family: "VEXA light R";
+  margin-bottom: 0.5rem; }
 
-.wd-fuzzy-time {
+.wd-fuzzy-time-box {
   font-size: 1.8rem;
-  color: #A1CEFB;
+  background: rgba(0, 0, 0, 0);
+  color: #1ed4fd; }
+
+.wd-fuzzy-time-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  font-family: "Font Awesome 5 Free Solid"; }
+
+.wd-fuzzy-time-text {
+  font-size: 1.8rem;
   font-family: "VIP Rawy Regular"; }
+
+.saying-wd-label {
+  min-width: 25rem;
+  margin-top: 1rem;
+  font-size: 2rem;
+  color: #FFB431;
+  background: rgba(0, 0, 0, 0);
+  font-family: "VIP Rawy Regular"; }
+
+.color-wd-separator {
+  background: linear-gradient(to bottom, #ff00ff, #FFB431, #1ed4fd);
+  margin-top: 1rem; }
+
+.colors-wd-music-player-box {
+  padding-top: 1rem;
+  min-width: 30rem;
+  font-family: "VIP Rawy Regular";
+  font-size: 1.5rem; }
+
+.colors-wd-music-player-title {
+  color: #ff00ff; }
+
+.colors-wd-music-player-artist {
+  color: #1ed4fd; }

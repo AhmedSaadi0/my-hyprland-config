@@ -22,5 +22,8 @@
         "titleBar.inactiveBackground": "#182f5999",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#182f59"
+    "peacock.color": "#182f59",
+    "cSpell.words": [
+        "fajr"
+    ]
 }

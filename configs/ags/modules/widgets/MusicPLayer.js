@@ -2,6 +2,7 @@ import { Box, Slider, Label, Button, MenuItem, Menu } from 'resource:///com/gith
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 import Gdk from 'gi://Gdk';
+import { Utils } from '../utils/imports.js';
 
 var selectedMusicPlayer = null;
 const PLAYER_MENU_ARROW = "🞃"
@@ -119,14 +120,16 @@ const RowTwo = () => {
         connections: [[Mpris, self => {
             let player = Mpris.getPlayer(selectedMusicPlayer);
 
-            title.label = player?.trackTitle;
-            artist.label = player?.trackArtists[0];
+            if (player !== null) {
+                title.label = player?.trackTitle;
+                artist.label = player?.trackArtists[0];
+            }
 
             const songLengthInSeconds = player?.length;
             const minutes = Math.floor(songLengthInSeconds / 60);
             const seconds = songLengthInSeconds % 60;
 
-            length.label = `${minutes}:${seconds}`;
+            length.label = `${minutes}:${seconds} `;
         }]]
     })
 }
@@ -136,27 +139,55 @@ const ButtonsRow = () => {
     let backBtn = Button({
         className: "unset music-wd-button",
         label: "",
-        onClicked: () => {Mpris.getPlayer(selectedMusicPlayer)?.previous()},
+        onClicked: () => { Mpris.getPlayer(selectedMusicPlayer)?.previous() },
     })
     let playBtn = Button({
         className: "unset music-wd-button-play",
         label: "",
-        onClicked: () => {Mpris.getPlayer(selectedMusicPlayer)?.playPause()},
+        onClicked: () => { Mpris.getPlayer(selectedMusicPlayer)?.playPause() },
     })
     let nextBtn = Button({
         className: "unset music-wd-button",
         label: "",
-        onClicked: () => {Mpris.getPlayer(selectedMusicPlayer)?.next()},
+        onClicked: () => { Mpris.getPlayer(selectedMusicPlayer)?.next() },
     })
-    let volUpBtn = Button({
+    let skipForwardBtn = Button({
         className: "unset music-wd-button",
-        label: "🕪",
-        onClicked: () => Audio.speaker.volume = Audio.speaker.volume + 0.1
+        // label: "",
+        label: "",
+        style: `
+            padding-right: 2px;
+        `,
+        // onClicked: () => Audio.speaker.volume = Audio.speaker.volume + 0.1
+        onClicked: () => {
+            const decimalNumber = Mpris.getPlayer(selectedMusicPlayer)?.position;
+
+            Utils.execAsync([
+                'playerctl',
+                '-p',
+                selectedMusicPlayer,
+                'position',
+                `${decimalNumber + 10}`,
+            ]).catch(print)
+        }
     })
-    let volDownBtn = Button({
+    let skipBackwardBtn = Button({
+        style: `
+            padding-left: 2px;
+        `,
         className: "unset music-wd-button",
-        label: "🕩",
-        onClicked: () => Audio.speaker.volume = Audio.speaker.volume - 0.1
+        label: "",
+        onClicked: () => {
+            const decimalNumber = Mpris.getPlayer(selectedMusicPlayer)?.position;
+
+            Utils.execAsync([
+                'playerctl',
+                '-p',
+                selectedMusicPlayer,
+                'position',
+                `${decimalNumber - 10}`,
+            ]).catch(print)
+        }
     })
 
     return Box({
@@ -167,8 +198,8 @@ const ButtonsRow = () => {
             backBtn,
             playBtn,
             nextBtn,
-            volDownBtn,
-            volUpBtn,
+            skipBackwardBtn,
+            skipForwardBtn,
         ],
         connections: [[Mpris, self => {
             let player = Mpris.getPlayer(selectedMusicPlayer);
@@ -204,7 +235,7 @@ const ButtonsRow = () => {
 // })
 
 export default className => Box({
-    className: className || "music-wd-box", 
+    className: className || "music-wd-box",
     vertical: true,
     children: [
         RowOne(),

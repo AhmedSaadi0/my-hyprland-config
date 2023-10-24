@@ -1,8 +1,10 @@
-import ThemesDictionary from "../theme/themes.js";
+import ThemesDictionary, { COLOR_THEME } from "../theme/themes.js";
 import { BLACK_HOLE_THEME } from '../theme/themes.js';
 import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';
+import prayerService from "./PrayerTimesService.js";
+import ColorWidget from "../widgets/desktop/ColorsWidget.js";
 
 class ThemeService extends Service {
     static {
@@ -37,8 +39,9 @@ class ThemeService extends Service {
         this.changeIcons(theme.qt_icon_theme);
         this.changeKvantumTheme(theme.kvantum_theme);
         this.changeRofiTheme(theme.rofi_theme);
-        let hypr = theme.hypr;
+        this.showDesktopWidget();
 
+        let hypr = theme.hypr;
         this.steHyprland(
             hypr.border_width,
             hypr.active_border,
@@ -48,6 +51,7 @@ class ThemeService extends Service {
             hypr.kitty,
             hypr.konsole,
         )
+        prayerService.emit("changed");
         this.emit("changed");
     }
 
@@ -187,6 +191,22 @@ class ThemeService extends Service {
             '--set',
             kvantumTheme,
         ]).catch(print);
+    }
+
+    showDesktopWidget() {
+        if (this.selectedTheme == COLOR_THEME) {
+            execAsync([
+                "ags",
+                "-r",
+                "ViewColorWidget()"
+            ]).catch(print);
+        } else {
+            execAsync([
+                "ags",
+                "-r",
+                "HideColorWidget()"
+            ]).catch(print);
+        }
     }
 
 }

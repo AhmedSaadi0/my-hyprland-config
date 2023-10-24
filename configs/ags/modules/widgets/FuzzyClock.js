@@ -1,3 +1,4 @@
+import { TitleText } from "../utils/helpers.js";
 import { Widget, Utils } from "../utils/imports.js";
 
 const SATURDAY = 6;
@@ -8,20 +9,33 @@ const WEDNESDAY = 3;
 const THURSDAY = 4;
 const FRIDAY = 5;
 
-const fuzzyDay = Widget.Label({
-    className:"wd-fuzzy-day",
-    xalign: 0,
+
+const fuzzyDay = TitleText({
+    title: "",
+    text: "",
+    titleClass: "wd-fuzzy-day-text",
+    textClass: "wd-fuzzy-day-icon",
+    boxClass: "wd-fuzzy-day-box",
+    titleXalign: 0,
+    textXalign: 0,
+    vertical: false,
 });
 
 const timeNow = Widget.Label({
-    className:"wd-time-now",
+    className: "wd-time-now",
     xalign: 0,
 })
 
-const fuzzyTime = Widget.Label({
-    className:"wd-fuzzy-time",
-    xalign: 0,
-})
+const fuzzyTime = TitleText({
+    title: "",
+    text: "",
+    titleClass: "wd-fuzzy-time-text",
+    textClass: "wd-fuzzy-time-icon",
+    boxClass: "wd-fuzzy-time-box",
+    titleXalign: 0,
+    textXalign: 0,
+    vertical: false,
+});
 
 export default FuzzyClock => Widget.Box({
     className: "wd-fuzzy-clock-box",
@@ -41,35 +55,56 @@ export default FuzzyClock => Widget.Box({
             let hour = date[1]
 
             if (day == SATURDAY) {
-                fuzzyDay.label = "اسبوع جديد ";
+                fuzzyDay.children[0].label = "اسبوع جديد";
+                fuzzyDay.children[1].label = "";
             } else if (day == SUNDAY) {
-                fuzzyDay.label = "استمر ";
+                fuzzyDay.children[0].label = "استمر";
+                fuzzyDay.children[1].label = "";
             } else if (day == MONDAY) {
-                fuzzyDay.label = "واصل طريقك ";
+                // fuzzyDay.children[0].label = "واصل طريقك";
+                fuzzyDay.children[0].label = "جلسة";
+                // fuzzyDay.children[1].label = "🎶";
+                fuzzyDay.children[1].label = "";
             } else if (day == TUESDAY) {
-                fuzzyDay.label = "نصف الاسبوع ⌚";
+                fuzzyDay.children[0].label = "نصف الاسبوع";
+                // fuzzyDay.children[1].label = "";
+                fuzzyDay.children[1].label = "";
             } else if (day == WEDNESDAY) {
-                fuzzyDay.label = "باقي يومين ";
+                fuzzyDay.children[0].label = "باقي يومين";
+                // fuzzyDay.children[1].label = "";
+                fuzzyDay.children[1].label = "";
             } else if (day == THURSDAY) {
-                fuzzyDay.label = "ارررحب يالخميس 😉";
+                fuzzyDay.children[0].label = "ارررحب يالخميس";
+                fuzzyDay.children[1].label = "";
             } else if (day == FRIDAY) {
-                fuzzyDay.label = "عطلة 😍!";
+                fuzzyDay.children[0].label = "عطلة";
+                // fuzzyDay.children[1].label = "";
+                fuzzyDay.children[1].label = "";
             }
 
+
             if (hour >= 0 && hour < 4) {
-                fuzzyTime.label = `النوم\t😴`;
-            } else if (hour >= 4 && hour < 9){
-                fuzzyTime.label = `صباح الخير\t`;
-            } else if (hour >= 9 && hour < 12){
-                fuzzyTime.label = `الصبوح\t`;
-            } else if (hour >= 12 && hour < 15){
-                fuzzyTime.label = `الغداء\t`;
-            } else if (hour >= 15 && hour < 18){
-                fuzzyTime.label = `شاي بعد الغداء\t`;
-            } else if (hour >= 18 && hour < 21){
-                fuzzyTime.label = `العشاء\t`;
-            } else if (hour >= 21){
-                fuzzyTime.label = `ليلة سعيدة\t`;
+                fuzzyTime.children[0].label = "وقت البرمجة";
+                // fuzzyTime.children[1].label = "";
+                fuzzyTime.children[1].label = "";
+            } else if (hour >= 4 && hour < 9) {
+                fuzzyTime.children[0].label = "صباح الخير";
+                fuzzyTime.children[1].label = "";
+            } else if (hour >= 9 && hour < 12) {
+                fuzzyTime.children[0].label = "الصبوح";
+                fuzzyTime.children[1].label = "";
+            } else if (hour >= 12 && hour < 15) {
+                fuzzyTime.children[0].label = "الغداء";
+                fuzzyTime.children[1].label = "";
+            } else if (hour >= 15 && hour < 18) {
+                fuzzyTime.children[0].label = "شاي بعد الغداء";
+                fuzzyTime.children[1].label = "";
+            } else if (hour >= 18 && hour < 21) {
+                fuzzyTime.children[0].label = "العشاء";
+                fuzzyTime.children[1].label = "";
+            } else if (hour >= 21) {
+                fuzzyTime.children[0].label = "ليلة سعيدة";
+                fuzzyTime.children[1].label = "";
             }
 
             if (hour > 12) {

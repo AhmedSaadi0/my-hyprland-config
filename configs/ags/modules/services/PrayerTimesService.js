@@ -60,7 +60,10 @@ class PrayerTimesService extends Service {
 
     getMillisecondsBetweenDates(date1, date2) {
         // Get the difference in milliseconds between the two dates.
-        const differenceInMilliseconds = date2.getTime() - date1.getTime();
+        let differenceInMilliseconds = date2.getTime() - date1.getTime();
+        if (differenceInMilliseconds < 0) {
+            differenceInMilliseconds = differenceInMilliseconds * -1;
+        }
         return differenceInMilliseconds;
     }
 
@@ -92,22 +95,26 @@ class PrayerTimesService extends Service {
         }
     }
 
+    source = null;
+
     notifyForPrayerTime(now, secondTime) {
-        const source = setTimeout(() => {
+
+        this.source = setTimeout(() => {
             Utils.execAsync([
                 `paplay`,
                 `${App.configDir}/sounds/prayer-notification.ogg`,
             ]).catch(print)
             this.emit("changed");
-            source.destroy()
+            this.calculateForNextPrayerTime();
+            this.source.destroy();
         }, this.getMillisecondsBetweenDates(now, secondTime));
     }
 
     calculateForNextPrayerTime() {
-        const source = setTimeout(() => {
+        const calculate = setTimeout(() => {
             this._prayerNow = null;
             this.emit("changed");
-            source.destroy()
+            calculate.destroy()
         }, 20 * 60 * 1000);
     }
 
@@ -136,10 +143,14 @@ class PrayerTimesService extends Service {
 
             if (now >= prayerTimeObj && now < fifteenMinutesAfterPrayerTime) {
                 this._prayerNow = this.getPrayerNameAr(prayerTime);
-                this.emit("changed");
+                // this.emit("changed");
                 this.calculateForNextPrayerTime()
-                return;
-            } 
+                break;
+            }
+        }
+
+        if (this.source) {
+            this.source.destroy();
         }
 
         if (now >= isha || now < fajr) {
