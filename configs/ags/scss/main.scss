@@ -94,7 +94,7 @@
     padding-left: 0.5rem;
 }
 
-.bar-prayer-times-icon{
+.bar-prayer-times-icon {
     font-family: $icon-font-family;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -698,13 +698,13 @@ window {
 // }
 
 .music-wd-button {
+    font-family: $icon-font-family;
     border-radius: 50%;
     min-width: 40px;
     min-height: 40px;
     background: $music-wd-button-img;
     color: $music-wd-button-fg;
     transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-
 }
 
 .music-wd-button:hover {
@@ -736,24 +736,83 @@ window {
 /* ----------------------------------------- */
 /* -------------- Fuzzy clock -------------- */
 /* ----------------------------------------- */
-.wd-fuzzy-day {
+
+// Day
+.wd-fuzzy-day-box {
     font-size: 2.5rem;
-    color: #FF09A4;
+    background: $wd-fuzzy-day-box-bg;
+    color: $wd-fuzzy-day-box-fg;
     font-family: "VIP Rawy Regular";
+}
+
+.wd-fuzzy-day-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    font-family: $icon-font-family;
+    padding-top: 0.6rem;
+}
+
+.wd-fuzzy-day-text {
+    font-size: 3rem;
 }
 
 .wd-time-now {
     font-size: 2.3rem;
-    color: #FFB431;
+    background: $wd-time-now-bg;
+    color: $wd-time-now-fg;
     font-family: "VEXA light R";
+    margin-bottom: 0.5rem;
 }
 
-.wd-fuzzy-time {
+// Time
+.wd-fuzzy-time-box {
     font-size: 1.8rem;
-    color: #A1CEFB;
+    background: $wd-fuzzy-time-box-bg;
+    color: $wd-fuzzy-time-box-fg;
+}
+
+.wd-fuzzy-time-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    font-family: $icon-font-family;
+}
+
+.wd-fuzzy-time-text {
+    font-size: 1.8rem;
     font-family: "VIP Rawy Regular";
 }
 
 .wd-fuzzy-clock-box {
     // background-color: #1aa14e;
+}
+
+.saying-wd-label {
+    min-width: 25rem;
+    margin-top: 1rem;
+    font-size: 2rem;
+    color: $saying-wd-label-fg;
+    background: $saying-wd-label-bg;
+    font-family: "VIP Rawy Regular";
+}
+
+.color-wd-separator {
+    background: $color-desktop-wd-separator-background;
+    margin-top: 1rem;
+}
+
+.colors-wd-music-player-box{
+    padding-top: 1rem;
+    min-width: 30rem;
+    font-family: "VIP Rawy Regular";
+    font-size: 1.5rem;
+
+}
+.colors-wd-music-player-title{
+    // min-width: 20rem;
+    color: $wd-fuzzy-day-box-fg;
+}
+.colors-wd-music-player-artist{
+    // min-width: 10rem;
+    color: $wd-fuzzy-time-box-fg;
+
 }

@@ -10,9 +10,9 @@ export const TitleText = ({
     titleXalign = 0.5,
     textXalign = 0.5,
     connections = [],
+    vertical = true,
 }) => {
 
-    // Create the _title and _text Labels with the state values
     const _title = Label({
         label: title,
         className: titleClass,
@@ -25,14 +25,9 @@ export const TitleText = ({
         xalign: textXalign,
     });
 
-    const updateLabels = (newTitle, newText) => {
-        _title.label = newTitle;
-        _text.set_label(newText);
-    };
-
     return Box({
         className: boxClass,
-        vertical: true,
+        vertical: vertical,
         homogeneous: homogeneous,
         children: [
             _title,

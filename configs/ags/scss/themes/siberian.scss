@@ -135,6 +135,23 @@ $notifications-border: $fg-one;
 $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
 
+// ------------------------------------
+// --------- color-desktop-wd ---------
+// ------------------------------------
+$color-desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, #FFB431, $fg-one);
+
+$wd-fuzzy-day-box-bg: rgba(#000000, 0);
+$wd-fuzzy-day-box-fg: $fg-two;
+
+$wd-time-now-bg: rgba(#000000, 0);
+$wd-time-now-fg: #FFB431;
+
+$wd-fuzzy-time-box-bg: rgba(#000000, 0);
+$wd-fuzzy-time-box-fg: $fg-one;
+
+$saying-wd-label-bg: rgba(#000000, 0);
+$saying-wd-label-fg: #FFB431;
+
 // ------------------------
 // --------- Menu ---------
 // ------------------------
