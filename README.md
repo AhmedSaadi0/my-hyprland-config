@@ -1,14 +1,54 @@
-# This is my Hyprland config
-It is still in development. Day by day I am going to add more things.
+# This is my Hyprland config 
+**Note:** This configuration is a work in progress, and I will continue to add more features as time permits.
 
-## Installing
+**ملاحظة:** هذه الإعدادات لا تزال في مرحلة التطوير، وسأقوم بإضافة المزيد من الميزات بصورة مستمرة عندما يتاح لدي وقت أكثر.
+
+### Required dependencies - برامج ضرورية
+- [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
+- [AGS](https://github.com/Aylur/ags/wiki/installation)
+- Rofi
+- network-manager-applet
+- playerctl
+- polkit-kde-agent
+- ttf-font-awesome-5
+- qt5ct
+- Dolphin
+- brightnessctl
+- gammastep
+- wl-clipboard
+- hyprpicker
+
+### Optional dependencies - برامج اختيارية
+- strawberry
+- easyeffects
+- nwg-look
+- blueman
+- telegram-desktop
+- discord
+- qt5-gsettings
+- kvantum
+- lightly-qt
+- konsole
+- vs code
+- firefox
+
+## Installing - التثبيت
+
+### For Arch Users - لمستخدمي Arch:
+```bash
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop rofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git
+```
+
+
+### Copy files - نسخ الملفات:
+
 	git clone git@github.com:AhmedSaadi0/my-hyprland-config.git
 	mv ~/.config/hypr/ ~/.config/hypr-old
 	cp my-hyprland-config ~/.config/hypr
 	cp ~/.config/hypr/config/ags ~/.config/ags
 
 
-### Creating crontab for battery 40-80 rule
+### Creating crontab for battery 40-80 rule - انشاء كرون تاب لتحسين استخدام البطارية باستخدام قاعدة الشحن 40-80 
     VISUAL=/usr/bin/nano crontab -e
     * * * * * ~/.config/hypr/scripts/battery.sh
 
