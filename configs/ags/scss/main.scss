@@ -1,4 +1,4 @@
-@import './themes/colors.scss';
+@import './themes/win20.scss';
 
 .unset {
     all: unset;
@@ -739,47 +739,45 @@ window {
 
 // Day
 .wd-fuzzy-day-box {
-    font-size: 2.5rem;
     background: $wd-fuzzy-day-box-bg;
     color: $wd-fuzzy-day-box-fg;
-    font-family: "VIP Rawy Regular";
 }
 
 .wd-fuzzy-day-icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    font-family: $icon-font-family;
-    padding-top: 0.6rem;
+    font-size: $wd-fuzzy-day-icon-font-size;
+    margin: $wd-fuzzy-day-icon-margin;
+    font-family: $wd-fuzzy-day-icon-font-family;
+    padding: $wd-fuzzy-day-icon-padding;
 }
 
 .wd-fuzzy-day-text {
-    font-size: 3rem;
+    font-family: $wd-fuzzy-day-text-font-family;
+    font-size: $wd-fuzzy-day-text-font-size;
 }
 
 .wd-time-now {
-    font-size: 2.3rem;
+    font-size: $wd-time-now-font-size;
     background: $wd-time-now-bg;
     color: $wd-time-now-fg;
-    font-family: "VEXA light R";
-    margin-bottom: 0.5rem;
+    font-family: $wd-time-now-font-family;
+    margin: $wd-time-now-margin;
 }
 
 // Time
 .wd-fuzzy-time-box {
-    font-size: 1.8rem;
     background: $wd-fuzzy-time-box-bg;
     color: $wd-fuzzy-time-box-fg;
 }
 
 .wd-fuzzy-time-icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    font-family: $icon-font-family;
+    font-size: $wd-fuzzy-time-icon-font-size;
+    margin: $wd-fuzzy-time-icon-margin;
+    font-family: $wd-fuzzy-time-icon-font-family;
 }
 
 .wd-fuzzy-time-text {
-    font-size: 1.8rem;
-    font-family: "VIP Rawy Regular";
+    font-size: $wd-fuzzy-time-text-font-size;
+    font-family: $wd-fuzzy-time-text-font-family;
 }
 
 .wd-fuzzy-clock-box {
@@ -787,32 +785,33 @@ window {
 }
 
 .saying-wd-label {
-    min-width: 25rem;
-    margin-top: 1rem;
-    font-size: 2rem;
+    min-width: $saying-wd-label-min-width;
+    font-size: $saying-wd-label-font-size;
     color: $saying-wd-label-fg;
     background: $saying-wd-label-bg;
-    font-family: "VIP Rawy Regular";
+    font-family: $saying-wd-label-font-family;
 }
 
-.color-wd-separator {
-    background: $color-desktop-wd-separator-background;
-    margin-top: 1rem;
+.desktop-wd-separator {
+    background: $desktop-wd-separator-background;
+    // margin-top: 1rem;
+    min-height: 1px;
+    min-width: 1px;
 }
 
-.colors-wd-music-player-box{
-    padding-top: 1rem;
-    min-width: 30rem;
-    font-family: "VIP Rawy Regular";
-    font-size: 1.5rem;
-
+.desktop-wd-music-player-box {
+    padding: $music-info-wd-padding;
+    min-width: $music-info-wd-min-width;
+    font-family: $music-info-wd-font-family;
+    font-size: $music-info-wd-font-size;
 }
-.colors-wd-music-player-title{
+
+.desktop-wd-music-player-title {
     // min-width: 20rem;
-    color: $wd-fuzzy-day-box-fg;
+    color: $music-info-wd-title-fg;
 }
-.colors-wd-music-player-artist{
-    // min-width: 10rem;
-    color: $wd-fuzzy-time-box-fg;
 
+.desktop-wd-music-player-artist {
+    // min-width: 10rem;
+    color: $music-info-wd-artist-fg;
 }

@@ -6,7 +6,12 @@ import { Mpris, Widget } from "../../utils/imports.js";
 const DesktopWidget = Widget.Box({
     spacing: 18,
     homogeneous: false,
+    vertical: true,
     children: [
+        FuzzyClock(),
+        Widget.Box({
+            className: "desktop-wd-separator",
+        }),
         Widget.Box({
             vertical: true,
             className: "desktop-wd-music-player-box",
@@ -34,28 +39,27 @@ const DesktopWidget = Widget.Box({
         }),
         Widget.Box({
             className: "desktop-wd-separator",
-        }),
-        FuzzyClock(),
-        Widget.Box({
-            className: "desktop-wd-separator",
+            style: `
+                margin-top: 0.5rem;
+            `,
         }),
         Saying(),
     ]
 })
 
 const FinalWidget = () => Widget.Window({
-    name: `desktop_color_widget`,
-    margin: [80, 0, 0, 80],
+    name: `desktop_win20_widget`,
+    margin: [20, 0, 0, 80],
     layer: 'background',
     visible: false,
     focusable: false,
-    anchor: ['top'],
+    anchor: ['top', "left"],
     child: DesktopWidget,
 })
 
-const ColorWidget = FinalWidget();
+const win20Widget = FinalWidget();
 
-globalThis.ShowColorWidget = () => ColorWidget.visible = true;
-globalThis.HideColorWidget = () => ColorWidget.visible = false;
+globalThis.ShowWin20Widget = () => win20Widget.visible = true;
+globalThis.HideWin20Widget = () => win20Widget.visible = false;
 
-export default ColorWidget;
+export default win20Widget;

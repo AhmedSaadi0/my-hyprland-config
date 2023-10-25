@@ -10,7 +10,7 @@ const THURSDAY = 4;
 const FRIDAY = 5;
 
 
-const fuzzyDay = TitleText({
+const FuzzyDay = () => TitleText({
     title: "",
     text: "",
     titleClass: "wd-fuzzy-day-text",
@@ -21,12 +21,12 @@ const fuzzyDay = TitleText({
     vertical: false,
 });
 
-const timeNow = Widget.Label({
+const TimeNow = () => Widget.Label({
     className: "wd-time-now",
     xalign: 0,
 })
 
-const fuzzyTime = TitleText({
+const FuzzyTime = () => TitleText({
     title: "",
     text: "",
     titleClass: "wd-fuzzy-time-text",
@@ -41,9 +41,9 @@ export default FuzzyClock => Widget.Box({
     className: "wd-fuzzy-clock-box",
     vertical: true,
     children: [
-        fuzzyDay,
-        timeNow,
-        fuzzyTime,
+        FuzzyDay(),
+        TimeNow(),
+        FuzzyTime(),
     ],
     connections: [[900000, box => {
         Utils.execAsync([
@@ -54,63 +54,67 @@ export default FuzzyClock => Widget.Box({
             const day = date[0]
             let hour = date[1]
 
+            let usedFuzzyDay = box.children[0];
+            let usedTimeNow = box.children[1];
+            let usedFuzzyTime = box.children[2];
+
             if (day == SATURDAY) {
-                fuzzyDay.children[0].label = "اسبوع جديد";
-                fuzzyDay.children[1].label = "";
+                usedFuzzyDay.children[0].label = "اسبوع جديد";
+                usedFuzzyDay.children[1].label = "";
             } else if (day == SUNDAY) {
-                fuzzyDay.children[0].label = "استمر";
-                fuzzyDay.children[1].label = "";
+                usedFuzzyDay.children[0].label = "استمر";
+                usedFuzzyDay.children[1].label = "";
             } else if (day == MONDAY) {
-                // fuzzyDay.children[0].label = "واصل طريقك";
-                fuzzyDay.children[0].label = "جلسة";
-                // fuzzyDay.children[1].label = "🎶";
-                fuzzyDay.children[1].label = "";
+                // fuzzyDatWd.children[0].label = "واصل طريقك";
+                usedFuzzyDay.children[0].label = "جلسة";
+                // fuzzyDatWd.children[1].label = "🎶";
+                usedFuzzyDay.children[1].label = "";
             } else if (day == TUESDAY) {
-                fuzzyDay.children[0].label = "نصف الاسبوع";
-                // fuzzyDay.children[1].label = "";
-                fuzzyDay.children[1].label = "";
+                usedFuzzyDay.children[0].label = "نصف الاسبوع";
+                // fuzzyDatWd.children[1].label = "";
+                usedFuzzyDay.children[1].label = "";
             } else if (day == WEDNESDAY) {
-                fuzzyDay.children[0].label = "باقي يومين";
-                // fuzzyDay.children[1].label = "";
-                fuzzyDay.children[1].label = "";
+                usedFuzzyDay.children[0].label = "باقي يومين";
+                // fuzzyDatWd.children[1].label = "";
+                usedFuzzyDay.children[1].label = "";
             } else if (day == THURSDAY) {
-                fuzzyDay.children[0].label = "ارررحب يالخميس";
-                fuzzyDay.children[1].label = "";
+                usedFuzzyDay.children[0].label = "ارررحب يالخميس";
+                usedFuzzyDay.children[1].label = "";
             } else if (day == FRIDAY) {
-                fuzzyDay.children[0].label = "عطلة";
-                // fuzzyDay.children[1].label = "";
-                fuzzyDay.children[1].label = "";
+                usedFuzzyDay.children[0].label = "عطلة";
+                // fuzzyDatWd.children[1].label = "";
+                usedFuzzyDay.children[1].label = "";
             }
 
 
             if (hour >= 0 && hour < 4) {
-                fuzzyTime.children[0].label = "وقت البرمجة";
-                // fuzzyTime.children[1].label = "";
-                fuzzyTime.children[1].label = "";
+                usedFuzzyTime.children[0].label = "وقت البرمجة";
+                // usedFuzzyTime.children[1].label = "";
+                usedFuzzyTime.children[1].label = "";
             } else if (hour >= 4 && hour < 9) {
-                fuzzyTime.children[0].label = "صباح الخير";
-                fuzzyTime.children[1].label = "";
+                usedFuzzyTime.children[0].label = "صباح الخير";
+                usedFuzzyTime.children[1].label = "";
             } else if (hour >= 9 && hour < 12) {
-                fuzzyTime.children[0].label = "الصبوح";
-                fuzzyTime.children[1].label = "";
+                usedFuzzyTime.children[0].label = "الصبوح";
+                usedFuzzyTime.children[1].label = "";
             } else if (hour >= 12 && hour < 15) {
-                fuzzyTime.children[0].label = "الغداء";
-                fuzzyTime.children[1].label = "";
+                usedFuzzyTime.children[0].label = "الغداء";
+                usedFuzzyTime.children[1].label = "";
             } else if (hour >= 15 && hour < 18) {
-                fuzzyTime.children[0].label = "شاي بعد الغداء";
-                fuzzyTime.children[1].label = "";
+                usedFuzzyTime.children[0].label = "شاي بعد الغداء";
+                usedFuzzyTime.children[1].label = "";
             } else if (hour >= 18 && hour < 21) {
-                fuzzyTime.children[0].label = "العشاء";
-                fuzzyTime.children[1].label = "";
+                usedFuzzyTime.children[0].label = "العشاء";
+                usedFuzzyTime.children[1].label = "";
             } else if (hour >= 21) {
-                fuzzyTime.children[0].label = "ليلة سعيدة";
-                fuzzyTime.children[1].label = "";
+                usedFuzzyTime.children[0].label = "ليلة سعيدة";
+                usedFuzzyTime.children[1].label = "";
             }
 
             if (hour > 12) {
                 hour = hour - 12;
             }
-            timeNow.label = `الساعة الان ${hour}`;
+            usedTimeNow.label = `الساعة الان ${hour}`;
 
         }).catch(print)
     }]]

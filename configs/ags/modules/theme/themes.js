@@ -25,6 +25,30 @@ const black_hole = {
     }
 }
 
+const win_20 = {
+    wallpaper: `${WALLPAPER_PATH}/win20.png`,
+    css_theme: "win20.scss",
+    plasma_color: "ArcMidnightDark.colors",
+    // qt_style_theme: "Breeze",
+    qt_style_theme: "Breeze",
+    // qt_style_theme: "kvantum",
+    qt_icon_theme: "NeonIcons",
+    kvantum_theme: "a-color",
+    gtk_theme: "Shades-of-purple",
+    gtk_icon_theme: "oomox-aesthetic-dark",
+    rofi_theme: "win20_theme.rasi",
+    gtk_mode: "dark",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(FDBBC4ff) rgba(ff00ffff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 8,
+        "drop_shadow": "no",
+        "kitty": "kitty.conf",
+        "konsole": "pinky",
+    }
+}
+
 const deer = {
     wallpaper: `${WALLPAPER_PATH}/deer.jpg`,
     css_theme: "deer.scss",
@@ -118,6 +142,7 @@ export const DEER_THEME = 1;
 export const COLOR_THEME = 2;
 export const SIBERIAN_THEME = 3;
 export const MATERIAL_YOU = 4;
+export const WIN_20 = 5;
 
 const ThemesDictionary = {
     [BLACK_HOLE_THEME]: black_hole,
@@ -125,6 +150,7 @@ const ThemesDictionary = {
     [COLOR_THEME]: colors,
     [SIBERIAN_THEME]: siberian,
     [MATERIAL_YOU]: materialYou,
+    [WIN_20]: win_20,
 }
 
 export default ThemesDictionary
