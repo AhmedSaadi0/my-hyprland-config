@@ -1,10 +1,8 @@
-import ThemesDictionary, { COLOR_THEME } from "../theme/themes.js";
-import { BLACK_HOLE_THEME } from '../theme/themes.js';
+import ThemesDictionary, { COLOR_THEME, SIBERIAN_THEME, WIN_20 } from "../theme/themes.js";
 import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';
 import prayerService from "./PrayerTimesService.js";
-import ColorWidget from "../widgets/desktop/ColorsWidget.js";
 
 class ThemeService extends Service {
     static {
@@ -18,7 +16,7 @@ class ThemeService extends Service {
     qtFilePath = `/home/${USER}/.config/qt5ct/qt5ct.conf`;
     plasmaColorChanger = App.configDir + '/modules/theme/bin/plasma-theme';
     plasmaColorsPath = App.configDir + '/modules/theme/plasma-colors/';
-    selectedTheme = BLACK_HOLE_THEME;
+    selectedTheme = WIN_20;
     rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
 
     constructor() {
@@ -194,19 +192,28 @@ class ThemeService extends Service {
     }
 
     showDesktopWidget() {
-        if (this.selectedTheme == COLOR_THEME) {
-            execAsync([
-                "ags",
-                "-r",
-                "ViewColorWidget()"
-            ]).catch(print);
-        } else {
-            execAsync([
-                "ags",
-                "-r",
-                "HideColorWidget()"
-            ]).catch(print);
+
+        if (
+            this.selectedTheme == COLOR_THEME ||
+            this.selectedTheme == SIBERIAN_THEME
+        ) {
+            this.showHideWidget("HideWin20Widget()");
+            this.showHideWidget("ShowColorWidget()");
+        } else if (this.selectedTheme === WIN_20) {
+            this.showHideWidget("HideColorWidget()");
+            this.showHideWidget("ShowWin20Widget()");
+        } else{
+            this.showHideWidget("HideWin20Widget()");
+            this.showHideWidget("HideColorWidget()");
         }
+    }
+
+    showHideWidget(functionName) {
+        execAsync([
+            "ags",
+            "-r",
+            `${functionName}`
+        ]).catch(print);
     }
 
 }

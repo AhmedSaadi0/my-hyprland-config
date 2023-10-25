@@ -7,6 +7,7 @@ import ColorWidget  from './modules/widgets/desktop/ColorsWidget.js';
 import App from "resource:///com/github/Aylur/ags/app.js";
 import { exec } from 'resource:///com/github/Aylur/ags/utils.js';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
+import win20Widget from "./modules/widgets/desktop/Win20Widget.js";
 
 // in config.js
 const scss = App.configDir + '/scss/main.scss';
@@ -27,7 +28,8 @@ export default {
         MyNotifications(),
         LeftMenu(),
         NotificationCenter(),
-        ColorWidget
+        ColorWidget,
+        win20Widget
     ],
 };
 

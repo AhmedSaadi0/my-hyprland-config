@@ -129,7 +129,7 @@ const RowTwo = () => {
             const minutes = Math.floor(songLengthInSeconds / 60);
             const seconds = songLengthInSeconds % 60;
 
-            length.label = `${minutes}:${seconds} `;
+            length.label = `${minutes}:${seconds}   `;
         }]]
     })
 }

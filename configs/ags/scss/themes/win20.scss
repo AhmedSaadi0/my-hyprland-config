@@ -1,36 +1,48 @@
+// #411352
+// #722991
+// #e1d9f5
+// #8a49b3
+// #300c32
+// Lavender: #e6e6fa
+// Mauve: #e0b0ff
+// Violet: #8f00ff
+// Plum: #8e3179
+// Burgundy: #800020
+// Magenta: #ff00ff
 // -----------------------------
 // --------- Variables ---------
 // -----------------------------
-$border-color: #82D9F7;
+$border-color: #FDBBC4;
 $border-size: 0.1rem;
 
+$bg-one: #20004A;
+$bg-two: #0C0023;
+$bg-three: #3B2163;
 
-$bg-one: #001B3D;
-$bg-two: #00497D;
-$bg-three: #412532;
+$fg-one: #ff4bde;
+$fg-two: #198bee;
+$fg-three: #71f1e8;
 
-$fg-one: #a2e8ff;
-$fg-two: #C2C3EB;
-$fg-three: #ffbcb5;
+$text-color: #cecece;
 
-$text-color: #bdddee;
 
-// $icon-font-family: "FontAwesome";
+// $icon-font-family: "Font Awesome 5 Free Solid 11";
+// $icon-font-family: "Material Design Icons";
 // $icon-font-family: "Font Awesome";
 $icon-font-family: "Font Awesome 5 Free Solid";
 
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
 
-$border-radius: 0.5rem;
+$border-radius: 0.8rem;
 
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
-$workspace-btn: $text-color;
+$workspace-btn: $fg-two;
 $active-workspace-btn: $fg-one;
 $workspace-background: $bg-two;
-$workspace-focused: $fg-three;
+$workspace-focused: $fg-one;
 $workspace-focused-bottom: $workspace-focused;
 $workspace-has-windows: $workspace-focused;
 $workspace-hover-background: rgba($fg-two, 0.9);
@@ -39,21 +51,22 @@ $workspace-hover-color: rgba($bg-two, 0.9);
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
-// $clock-background: linear-gradient(to right, #82D9F7, #ffa070);
+// $clock-background: linear-gradient(to right, #9359ff, #FF00AA, #ffb92d);
 $clock-background: linear-gradient(to right, $fg-two, $fg-one);
-$clock-color: #001B3D;
-
-// --------------------------------
-// --------- prayer times ---------
-// --------------------------------
-$bar-prayer-times-box-background: linear-gradient(to right, #CDD4AF, #478DD7);
-$bar-prayer-times-box-color: $bg-one;
+$clock-color: $bg-two;
 
 // -------------------------------
 // --------- Bar Weather ---------
 // -------------------------------
-$bar-weather-background: linear-gradient(to right, #25F7E2, #CDD4AF);
+$bar-weather-background: linear-gradient(to right, #26F7E1, #FF00AA);
 $bar-weather-color: $bg-two;
+
+// --------------------------------
+// --------- prayer times ---------
+// --------------------------------
+$bar-prayer-times-box-background: linear-gradient(to right, #3599FF, #6457F0);
+
+$bar-prayer-times-box-color: $bg-two;
 
 // -----------------------
 // --------- bar ---------
@@ -64,7 +77,7 @@ $bar-color: $text-color;
 // --------------------------------
 // --------- internet box ---------
 // --------------------------------
-$internet-box-background: linear-gradient(to right, $fg-one, $fg-two);
+$internet-box-background: linear-gradient(to left, #3498fd, #ff4bde, #bb8256);
 $internet-box-color: $bar-background;
 $wifi-name-background: $bar-background;
 $wifi-name-color: $bar-color;
@@ -74,9 +87,10 @@ $wifi-icon-color: $bar-color;
 // ---------------------------
 // --------- systray ---------
 // ---------------------------
-$systray-background: $bg-two;
+$systray-background: $bg-three;
 $systray-btn-background: $systray-background;
 $systray-btn-hover-background: $workspace-focused;
+
 
 // --------------------------------
 // --------- hardware-box ---------
@@ -138,20 +152,22 @@ $notifications-revealer-box-background: $bg-three;
 // ----------------------------------
 // --------- desktop-widget ---------
 // ----------------------------------
-$desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, #EA6220, $fg-one);
+$desktop-wd-separator-background: linear-gradient(to right, $fg-two, #FFB431, $fg-one);
 
+// Fuzzy widget
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
 $wd-fuzzy-day-box-fg: $fg-two;
 
 $wd-fuzzy-day-text-font-size: 3rem;
 $wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
+
 $wd-fuzzy-day-icon-font-size: 2rem;
 $wd-fuzzy-day-icon-font-family: $icon-font-family;
 $wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 0rem;
 $wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
 
 $wd-time-now-bg: rgba(#000000, 0);
-$wd-time-now-fg: #EA6220;
+$wd-time-now-fg: #FFB431;
 $wd-time-now-font-size: 2.3rem;
 $wd-time-now-font-family: "VEXA light R";
 $wd-time-now-margin: 0rem 0rem 0.5rem 0rem;
@@ -164,8 +180,9 @@ $wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 0rem;
 $wd-fuzzy-time-text-font-size: 1.8rem;
 $wd-fuzzy-time-text-font-family: "VIP Rawy Regular";
 
+// Saying widget
 $saying-wd-label-bg: rgba(#000000, 0);
-$saying-wd-label-fg: #EA6220;
+$saying-wd-label-fg: #FFB431;
 $saying-wd-label-font-size: 1.5rem;
 $saying-wd-label-min-width: 25rem;
 $saying-wd-label-font-family: "VIP Rawy Regular";
@@ -179,34 +196,36 @@ $music-info-wd-padding: 1rem 0rem 0rem 0rem;
 $music-info-wd-title-fg: $fg-one;
 $music-info-wd-artist-fg: $fg-two;
 
+
 // ------------------------
 // --------- Menu ---------
 // ------------------------
 $menu-box-background: $bg-one;
 $menu-box-borders: $fg-one;
 
-$profile-box-background: linear-gradient(to right, rgba(#5bd5fa, 0.8), rgba(#e0e0ff, 0.6));
+$profile-box-background: linear-gradient(to right, rgba(#9359ff, 0.8), rgba(#FF00AA, 0.6));
 $profile-box-color: $bg-one;
 
 $theme-box-background: $bg-two;
 
-$selected-theme-background: linear-gradient(to right, #5bd5fa, #C2C3EB);
+$selected-theme-background: linear-gradient(to right, #9359ff, #FF00AA);
 $selected-theme-color: $bg-one;
-$selected-theme-hover-background: linear-gradient(to right, #C2C3EB, #5bd5fa);
+$selected-theme-hover-background: linear-gradient(to right, #ff9900, #ff6600);
 $selected-theme-hover-color: $bg-three;
 
 $menu-btn-background: $bg-one;
 $menu-btn-hover: $fg-one;
+
 
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 $music-father-box-bg: $bg-three;
 // $music-wd-box-bg: #6f3ad1;
-$music-wd-box-bg: linear-gradient(to right, $bg-two, $bg-two);
+$music-wd-box-bg: linear-gradient(to right, #5812db, #8F1767);
 $music-wd-player-bg: $bg-two;
 $music-wd-player-fg: $fg-three;
-$music-wd-title-fg: $fg-one;
+$music-wd-title-fg: $bg-two;
 $music-wd-artist-fg: $fg-three;
 $music-wd-button-img: linear-gradient(to right, $bg-one, $bg-one);
 $music-wd-button-hover-img: linear-gradient(to top, $fg-one, $fg-two);
@@ -221,13 +240,14 @@ $music-wd-button-stop-fg: $music-wd-button-fg;
 $left-menu-music-wd-padding-right: 1.3rem;
 
 
+
 // --------------------------------
 // --------- GTK elements ---------
 // --------------------------------
-$btn-background: $bg-two;
-$btn-color: $text-color;
+$btn-background: $bg-three;
+$btn-color: $fg-three;
 $btn-hover-background: $fg-one;
-$btn-hover-color: $bg-three;
+$btn-hover-color: $bg-one;
 
 button {
     background-color: $btn-background;

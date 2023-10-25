@@ -1,5 +1,5 @@
 import themeService from '../services/ThemeService.js';
-import ThemesDictionary from "../theme/themes.js";
+import ThemesDictionary, { WIN_20 } from "../theme/themes.js";
 import { BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
@@ -93,6 +93,12 @@ const ThemesButtonsRowOne = () => {
         theme: MATERIAL_YOU,
     });
 
+    const Win20Theme = ThemeButton({
+        label: "ويندوز ",
+        theme: WIN_20,
+        end: "",
+    });
+
     const row1 = Box({
         children: [
             blackHoleTheme,
@@ -106,7 +112,8 @@ const ThemesButtonsRowOne = () => {
         `,
         children: [
             SiberianTheme,
-            MaterialYouTheme
+            MaterialYouTheme,
+            Win20Theme
         ]
     })
 
