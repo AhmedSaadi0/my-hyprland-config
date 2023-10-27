@@ -33,8 +33,13 @@ const DesktopWidget = Widget.Box({
                 }),
             ],
             connections: [[Mpris, box => {
-                box.children[0].label = Mpris?.players[0].trackTitle;
-                box.children[1].label = Mpris?.players[0].trackArtists[0];
+                if (Mpris?.players.length > 0) {
+                    box.children[0].label = Mpris?.players[0].trackTitle;
+                    box.children[1].label = Mpris?.players[0].trackArtists[0];
+                } else {
+                    box.children[0].label = "لا توجد موسيقى قيد التشغبل";
+                    box.children[1].label = "لا توجد موسيقى قيد التشغبل";
+                }
             }]]
         }),
         Widget.Box({

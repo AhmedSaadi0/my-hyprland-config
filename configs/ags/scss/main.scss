@@ -158,8 +158,8 @@
     border-radius: $border-radius;
     margin-top: $bar-top-margin + 0.1rem;
     margin-bottom: $bar-top-margin + 0.1rem;
-    margin-left: 0.1em;
-    padding-right: 1rem;
+    margin-left: 0.7rem;
+    padding-right: 0.8rem;
 }
 
 .wifi-name-label {
@@ -505,7 +505,11 @@ window {
     padding-top: 0rem;
     padding-bottom: 0rem;
     margin-left: 0.5rem;
+
     background-color: $menu-btn-background;
+    font-family: $icon-font-family;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
 }
 
 .menu-button:hover {
@@ -533,101 +537,110 @@ window {
     background-color: #0C0023;
 }
 
-/* -------------------------------------------- */
-/* -------------- Desktop Widget -------------- */
-/* -------------------------------------------- */
-.father-box {
-    background-color: rgba(#000000, 0.0);
-    border-radius: $border-radius;
+/* ------------------------------------------------------- */
+/* -------------- Material U Desktop Widget -------------- */
+/* ------------------------------------------------------- */
 
+.my-weather-wd-text {
+    font-size: medium;
+    color: #2d293d;
 }
 
-.weather-wd-row-two {
-    background-color: #3B2163;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-right: 1rem;
-    border-top-left-radius: 1.5rem;
+.weather-wd-row-one {
+    background: #DFDCE7;
+    border-radius: 2rem;
+    margin: 1rem;
+    margin-bottom: 0.5rem;
 }
 
-.wd-row-three {
-    background-color: #3B2163;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-right: 1rem;
-    // border-bottom-right-radius: 1.5rem;
-    // border-bottom-left-radius: 1.5rem;
-}
-
-.weather-wd-text {
-    font-size: smaller;
-    color: #9f79d1;
-}
-
-.weather-wd-title-text-box {
-    background-color: #3B2163;
-    min-width: 10.55rem;
+.my-desktop-music-box {
+    background: #97A9AD;
+    border-radius: 2rem;
     padding-top: 1.5rem;
-    padding-left: 1.5rem;
-    border-top-left-radius: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-right: 1.2rem;
+    padding-left: 1rem;
+    min-width: 1rem;
+    margin: 1rem;
+    margin-top: 0.5rem;
 }
 
-.weather-wd-icon {
-    background-color: #3B2163;
-    border-top-right-radius: 1.5rem;
-    min-width: 0.75rem;
-    font-size: x-large;
-    padding-left: 2rem;
-    padding-right: 2rem;
+.my-weather-wd-icon {
+    // background-color: #E9C7C6;
+    color: #2d293d;
+    font-size: xx-large;
+    margin-left: 1rem;
+    margin-right: 1rem;
     font-family: $icon-font-family;
 }
 
-.user-icon {
-    background-color: rgba(#3B2163, 1);
-    padding: 0.5rem;
-    margin-right: 0.8rem;
-    margin-bottom: 0.8rem;
-    border-radius: 1.5rem;
-    border-bottom-right-radius: 0rem;
+.my-wd-user-icon {
+    // background-color: rgba(#E9C7C6, 1);
+    padding: 0.8rem;
+    margin-right: 1rem;
+    border-radius: 2rem;
 }
 
-.weather-wd-day-icon {
-    background-color: #6f3ad1;
+.my-weather-wd-title-text-box {
+    // background-color: #E9C7C6;
+    min-width: 10.55rem;
+    padding-top: 1rem;
+    color: #3F3A57;
+    font-size: x-large;
+    font-family: $saying-wd-label-font-family;
+}
+
+
+// Desktop M-U Weather Days
+.my-weather-wd-row-two {
+    background-color: #E9C7C6;
+
+    margin: 1rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    border-radius: 2rem;
+}
+
+.my-wd-weather-day-name {
+    font-family: $saying-wd-label-font-family;
+    color: #2d2a41;
+}
+
+.my-wd-weather-day-text {
+    font-size: x-small;
+    padding-bottom: 0rem;
+    color: #2d2a41;
+}
+
+.my-weather-wd-day-icon {
+    background: rgba($color: #FFB3B7, $alpha: 0.7);
+    color: #2d2a41;
     padding-right: 0.3rem;
     padding-left: 0.3rem;
     border-radius: 10rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
     min-width: 3rem;
     min-height: 3.5rem;
     font-size: x-large;
-    font-family: 'FontAwesome';
-}
-
-.weather-wd-day-box {
-    background-color: #1aa14e;
-    border-radius: 3rem;
-    padding: 0.4rem;
-}
-
-.line {
-    background-color: #000000;
-    min-height: 0.1px;
-    min-width: 10rem;
     font-family: $icon-font-family;
 }
+
+.my-weather-wd-day-box {
+    background-color: #97A9AD;
+    border-radius: 3rem;
+    padding-top: 0.4rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+}
+
 
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
-.music-father-box {
-    background-color: $music-father-box-bg;
-    border-bottom-right-radius: 1.5rem;
-    border-bottom-left-radius: 1.5rem;
-    padding-right: 9px;
-    padding-left: 9px;
-    padding-bottom: 9px;
-}
-
 .music-wd-box {
     background: $music-wd-box-bg;
     // padding-top: 1rem;

@@ -1,35 +1,30 @@
 import MusicPlayer from "../MusicPLayer.js";
 import { TitleText } from "../../utils/helpers.js";
 import WeatherService from '../../services/WeatherService.js';
-import { Box, Icon, Label } from 'resource:///com/github/Aylur/ags/widget.js';
+import { Widget } from "../../utils/imports.js";
 
-const iconImage = Icon({
+const iconImage = Widget.Icon({
     icon: "/home/ahmed/.config/ags/images/profile-modified.png",
     size: 70,
-    className: "user-icon",
+    className: "my-wd-user-icon",
 })
 
-const weatherIcon = Label({
+const weatherIcon = Widget.Label({
     label: "",
-    className: "weather-wd-icon",
+    className: "my-weather-wd-icon",
 })
 
-
-const RowOne = () => Box({
-    className: "weather-wd-row-one",
+const RowOne = () => Widget.Box({
+    className: "weather-wd-row-one shadow",
     children: [
-        iconImage,
-        // tt,
-        weatherIcon,
     ],
     connections: [[WeatherService, self => {
         const tt = TitleText({
             title: "اليوم",
-            titleClass: "weather-wd-title",
-            // text: "سماء صافية | 9C",
+            // titleClass: "weather-wd-title",
             text: WeatherService.arValue,
-            textClass: "weather-wd-text",
-            boxClass: "weather-wd-title-text-box",
+            textClass: "my-weather-wd-text",
+            boxClass: "my-weather-wd-title-text-box",
             titleXalign: 1,
             textXalign: 1,
         });
@@ -50,22 +45,22 @@ const Insider = ({
     text,
 }) => {
 
-    const label = Label({
+    const label = Widget.Label({
         label: icon,
-        className: "weather-wd-day-icon"
+        className: "my-weather-wd-day-icon"
     })
 
-    return Box({
-        className: "weather-wd-day-box",
+    return Widget.Box({
+        className: "my-weather-wd-day-box",
         vertical: true,
         homogeneous: true,
         children: [
             label,
             TitleText({
                 title: title,
-                titleClass: "",
+                titleClass: "my-wd-weather-day-name",
                 text: text,
-                textClass: "",
+                textClass: "my-wd-weather-day-text",
                 boxClass: "",
             })
         ]
@@ -73,9 +68,9 @@ const Insider = ({
 }
 
 const RowTwo = () => {
-    return Box({
-        className: "weather-wd-row-two",
-        spacing: 15,
+    return Widget.Box({
+        className: "my-weather-wd-row-two shadow",
+        spacing: 16,
         homogeneous: false,
         children: [
         ],
@@ -83,18 +78,23 @@ const RowTwo = () => {
             self.children = [
                 Insider({
                     icon: WeatherService.weatherCode1,
-                    title: WeatherService.avgTempC1,
-                    text: WeatherService.weatherTime1,
+                    title: "اليوم",
+                    text: WeatherService.avgTempC1,
                 }),
                 Insider({
                     icon: WeatherService.weatherCode2,
-                    title: WeatherService.avgTempC2,
-                    text: WeatherService.weatherTime2,
+                    title: "غدا",
+                    text: WeatherService.avgTempC2,
                 }),
                 Insider({
                     icon: WeatherService.weatherCode3,
-                    title: WeatherService.avgTempC3,
-                    text: WeatherService.weatherTime3,
+                    title: "ب غدا",
+                    text: WeatherService.avgTempC3,
+                }),
+                Insider({
+                    icon: WeatherService.weatherCode3,
+                    title: "ب يومين",
+                    text: WeatherService.avgTempC3,
                 }),
 
             ]
@@ -103,35 +103,28 @@ const RowTwo = () => {
     })
 }
 
-const RowThree = () => {
-    return Box({
-        className: "wd-row-three",
-        spacing: 15,
-        homogeneous: false,
-        children: [
-            Label({
-                label: "   🎜   مشغل الموسيقى",
-            }),
-            Label({
-                label: "ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ",
-            }),
-        ]
-    })
-}
-
-export default widget => Box({
-    className: "father-box",
+const DesktopWidget = () => Widget.Box({
     vertical: true,
     children: [
         RowOne(),
         RowTwo(),
-        RowThree(),
-        Box({
-            className: "music-father-box shadow",
-            children: [
-                MusicPlayer(),
-            ]
-        })
+        MusicPlayer("my-desktop-music-box shadow"),
     ]
-
 })
+
+const FWidget = () => Widget.Window({
+    name: `desktop_material_you_widget`,
+    margin: [60, 60],
+    layer: 'background',
+    visible: false,
+    focusable: false,
+    anchor: ['top', "right"],
+    child: DesktopWidget(),
+})
+
+const materialWidget = FWidget();
+
+globalThis.ShowMYWidget = () => materialWidget.visible = true;
+globalThis.HideMYWidget = () => materialWidget.visible = false;
+
+export default materialWidget;
