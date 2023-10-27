@@ -181,7 +181,7 @@ const PowerButtonsRow = () => {
 
     return Box({
         className: "themes-box",
-        style:`
+        style: `
             margin-top:0rem;
         `,
         vertical: true,
@@ -222,12 +222,24 @@ export const LeftMenu = () => Window({
     })
 })
 
-globalThis.showLeftMenu = () => menuRevealer.revealChild = !menuRevealer.revealChild;
+globalThis.showLeftMenu = () => {
+    menuRevealer.revealChild = !menuRevealer.revealChild
+    changeMenuBtn();
+};
 
-export const MenuButton = () => Button({
+function changeMenuBtn() {
+    if (menuRevealer.revealChild) {
+        MenuButton.label = "";
+    } else {
+        MenuButton.label = "";
+    }
+}
+
+export const MenuButton = Button({
     className: "menu-button",
-    child: Label({ label: "" }),
+    label: "",
     onClicked: () => {
         menuRevealer.revealChild = !menuRevealer.revealChild;
+        changeMenuBtn();
     }
 });

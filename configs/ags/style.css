@@ -138,8 +138,8 @@ button:hover {
   border-radius: 0.8rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
-  margin-left: 0.1em;
-  padding-right: 1rem; }
+  margin-left: 0.7rem;
+  padding-right: 0.8rem; }
 
 .wifi-name-label {
   padding-left: 0.5em;
@@ -427,7 +427,10 @@ window {
   padding-top: 0rem;
   padding-bottom: 0rem;
   margin-left: 0.5rem;
-  background-color: #20004A; }
+  background-color: #20004A;
+  font-family: "Font Awesome 5 Free Solid";
+  padding-left: 0.8rem;
+  padding-right: 0.8rem; }
 
 .menu-button:hover {
   background-color: #ff4bde; }
@@ -451,87 +454,89 @@ window {
   border-radius: 0.8rem;
   background-color: #0C0023; }
 
-/* -------------------------------------------- */
-/* -------------- Desktop Widget -------------- */
-/* -------------------------------------------- */
-.father-box {
-  background-color: rgba(0, 0, 0, 0);
-  border-radius: 0.8rem; }
+/* ------------------------------------------------------- */
+/* -------------- Material U Desktop Widget -------------- */
+/* ------------------------------------------------------- */
+.my-weather-wd-text {
+  font-size: medium;
+  color: #2d293d; }
 
-.weather-wd-row-two {
-  background-color: #3B2163;
+.weather-wd-row-one {
+  background: #DFDCE7;
+  border-radius: 2rem;
+  margin: 1rem;
+  margin-bottom: 0.5rem; }
+
+.my-desktop-music-box {
+  background: #97A9AD;
+  border-radius: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-right: 1.2rem;
+  padding-left: 1rem;
+  min-width: 1rem;
+  margin: 1rem;
+  margin-top: 0.5rem; }
+
+.my-weather-wd-icon {
+  color: #2d293d;
+  font-size: xx-large;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-family: "Font Awesome 5 Free Solid"; }
+
+.my-wd-user-icon {
+  padding: 0.8rem;
+  margin-right: 1rem;
+  border-radius: 2rem; }
+
+.my-weather-wd-title-text-box {
+  min-width: 10.55rem;
+  padding-top: 1rem;
+  color: #3F3A57;
+  font-size: x-large;
+  font-family: "VIP Rawy Regular"; }
+
+.my-weather-wd-row-two {
+  background-color: #E9C7C6;
+  margin: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-right: 1rem;
-  border-top-left-radius: 1.5rem; }
+  padding-left: 1rem;
+  border-radius: 2rem; }
 
-.wd-row-three {
-  background-color: #3B2163;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-right: 1rem; }
+.my-wd-weather-day-name {
+  font-family: "VIP Rawy Regular";
+  color: #2d2a41; }
 
-.weather-wd-text {
-  font-size: smaller;
-  color: #9f79d1; }
+.my-wd-weather-day-text {
+  font-size: x-small;
+  padding-bottom: 0rem;
+  color: #2d2a41; }
 
-.weather-wd-title-text-box {
-  background-color: #3B2163;
-  min-width: 10.55rem;
-  padding-top: 1.5rem;
-  padding-left: 1.5rem;
-  border-top-left-radius: 1.5rem; }
-
-.weather-wd-icon {
-  background-color: #3B2163;
-  border-top-right-radius: 1.5rem;
-  min-width: 0.75rem;
-  font-size: x-large;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  font-family: "Font Awesome 5 Free Solid"; }
-
-.user-icon {
-  background-color: #3b2163;
-  padding: 0.5rem;
-  margin-right: 0.8rem;
-  margin-bottom: 0.8rem;
-  border-radius: 1.5rem;
-  border-bottom-right-radius: 0rem; }
-
-.weather-wd-day-icon {
-  background-color: #6f3ad1;
+.my-weather-wd-day-icon {
+  background: rgba(255, 179, 183, 0.7);
+  color: #2d2a41;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
   border-radius: 10rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   min-width: 3rem;
   min-height: 3.5rem;
   font-size: x-large;
-  font-family: 'FontAwesome'; }
-
-.weather-wd-day-box {
-  background-color: #1aa14e;
-  border-radius: 3rem;
-  padding: 0.4rem; }
-
-.line {
-  background-color: #000000;
-  min-height: 0.1px;
-  min-width: 10rem;
   font-family: "Font Awesome 5 Free Solid"; }
+
+.my-weather-wd-day-box {
+  background-color: #97A9AD;
+  border-radius: 3rem;
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem; }
 
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
-.music-father-box {
-  background-color: #3B2163;
-  border-bottom-right-radius: 1.5rem;
-  border-bottom-left-radius: 1.5rem;
-  padding-right: 9px;
-  padding-left: 9px;
-  padding-bottom: 9px; }
-
 .music-wd-box {
   background: linear-gradient(to right, #5812db, #8F1767);
   padding: 1rem;
@@ -659,7 +664,7 @@ window {
   min-width: 1px; }
 
 .desktop-wd-music-player-box {
-  padding: 1rem 0rem 0rem 0rem;
+  padding: 0rem 0rem 0rem 0rem;
   min-width: 30rem;
   font-family: "VIP Rawy Regular";
   font-size: 1.5rem; }

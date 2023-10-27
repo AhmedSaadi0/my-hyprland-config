@@ -97,15 +97,14 @@ class PrayerTimesService extends Service {
 
     source = null;
 
-    notifyForPrayerTime(now, secondTime) {
-
+    notifyForCurrentPrayerTime(now, secondTime) {
         this.source = setTimeout(() => {
             Utils.execAsync([
                 `paplay`,
                 `${App.configDir}/sounds/prayer-notification.ogg`,
             ]).catch(print)
             this.emit("changed");
-            this.calculateForNextPrayerTime();
+            // this.calculateForNextPrayerTime();
             this.source.destroy();
         }, this.getMillisecondsBetweenDates(now, secondTime));
     }
@@ -116,6 +115,18 @@ class PrayerTimesService extends Service {
             this.emit("changed");
             calculate.destroy()
         }, 20 * 60 * 1000);
+    }
+
+    getHoursMinutes(date) {
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        // const ampm = hours >= 12 ? 'PM' : 'AM';
+        const formattedHours = hours % 12 || 12; // Convert 0 to 12 for AM/PM display
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+        const formattedTime = `${formattedHours}:${formattedMinutes}`;
+
+        return formattedTime
     }
 
     getNextPrayerTime(json) {
@@ -154,42 +165,42 @@ class PrayerTimesService extends Service {
         }
 
         if (now >= isha || now < fajr) {
-            this.notifyForPrayerTime(now, fajr);
+            this.notifyForCurrentPrayerTime(now, fajr);
             return {
                 name: "الفجر",
-                time: json.data.timings.Fajr,
+                time: this.getHoursMinutes(fajr),
             };
         }
 
         if (now >= maghrib && now < isha) {
-            this.notifyForPrayerTime(now, isha);
+            this.notifyForCurrentPrayerTime(now, isha);
             return {
                 name: "العشاء",
-                time: json.data.timings.Isha,
+                time: this.getHoursMinutes(isha),
             };
         }
 
         if (now >= asr && now < maghrib) {
-            this.notifyForPrayerTime(now, maghrib);
+            this.notifyForCurrentPrayerTime(now, maghrib);
             return {
                 name: "المغرب",
-                time: json.data.timings.Maghrib,
+                time: this.getHoursMinutes(maghrib),
             };
         }
 
         if (now >= dhuhr && now < asr) {
-            this.notifyForPrayerTime(now, asr);
+            this.notifyForCurrentPrayerTime(now, asr);
             return {
                 name: "العصر",
-                time: json.data.timings.Asr,
+                time: this.getHoursMinutes(asr),
             };
         }
 
         else {
-            this.notifyForPrayerTime(now, dhuhr);
+            this.notifyForCurrentPrayerTime(now, dhuhr);
             return {
                 name: "الظهر",
-                time: json.data.timings.Dhuhr,
+                time: this.getHoursMinutes(dhuhr),
             };
         }
     }

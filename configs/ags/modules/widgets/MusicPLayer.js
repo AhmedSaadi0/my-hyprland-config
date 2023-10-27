@@ -23,7 +23,7 @@ class PlayersMenu {
     }
 }
 
-let length = Label({
+const length = () => Label({
     style: `
         min-width: 2rem;
     `,
@@ -61,7 +61,7 @@ const RowOne = () => {
         // homogeneous: true,
         spacing: 130,
         children: [
-            length,
+            length(),
             selectPlayerBtn,
         ],
         connections: [[Mpris, self => {
@@ -85,9 +85,19 @@ const RowOne = () => {
                 }
             }
             playersMenu.setChildren(playersList);
-            if (selectedMusicPlayer == null) {
+            if (playersList.length > 0) {
                 playerName.label = `${PLAYER_MENU_ARROW} ${playersList[0].child.label}`;
                 selectedMusicPlayer = playersList[0].child.label;
+            }
+
+            let player = Mpris.getPlayer(selectedMusicPlayer);
+
+            const songLengthInSeconds = player?.length;
+            const minutes = Math.floor(songLengthInSeconds / 60);
+            const seconds = songLengthInSeconds % 60;
+
+            if (minutes && seconds) {
+                self.children[0].label = `${minutes}:${seconds}   `;
             }
         }]],
     })
@@ -123,13 +133,11 @@ const RowTwo = () => {
             if (player !== null) {
                 title.label = player?.trackTitle;
                 artist.label = player?.trackArtists[0];
+            } else {
+                title.label = "لا يوجد عنوان";
+                artist.label = "لا يوجد فنان";
             }
 
-            const songLengthInSeconds = player?.length;
-            const minutes = Math.floor(songLengthInSeconds / 60);
-            const seconds = songLengthInSeconds % 60;
-
-            length.label = `${minutes}:${seconds}   `;
         }]]
     })
 }

@@ -111,13 +111,45 @@ export default FuzzyClock => Widget.Box({
                 usedFuzzyTime.children[1].label = "";
             }
 
-            if (hour > 12) {
-                hour = hour - 12;
-            }
-            usedTimeNow.label = `الساعة الان ${hour}`;
+            // if (hour > 12) {
+            //     hour = hour - 12;
+            // }
+            usedTimeNow.label = createFuzzyHour();
 
         }).catch(print)
     }]]
 });
 
 // export default clock = FuzzyClock();
+
+function createFuzzyHour() {
+    const now = new Date();
+    const hours = now.getHours();
+    const timeOfDay = hours >= 12 ? "مساءً" : "صباحًا";
+    const arabicNumbers = [
+        "الأولى",
+        "الثانية",
+        "الثالثة",
+        "الرابعة",
+        "الخامسة",
+        "السادسة",
+        "السابعة",
+        "الثامنة",
+        "التاسعة",
+        "العاشرة",
+        "الحادية عشر",
+        "الثانية عشر",
+    ];
+
+    let timeInArabicWords = "الساعة الآن ";
+
+    if (hours === 0) {
+        timeInArabicWords += "الأولى الثانية عشر ليلاً";
+    } else if (hours === 12) {
+        timeInArabicWords += "الثانية عشر ظهرًا";
+    } else {
+        timeInArabicWords += arabicNumbers[hours % 12 - 1] + " " + timeOfDay;
+    }
+
+    return timeInArabicWords;
+}

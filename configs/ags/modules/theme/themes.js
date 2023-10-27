@@ -22,7 +22,8 @@ const black_hole = {
         "drop_shadow": "no",
         "kitty": "kitty.conf",
         "konsole": "pinky",
-    }
+    },
+    desktop_widget: "",
 }
 
 const win_20 = {
@@ -40,13 +41,14 @@ const win_20 = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(FDBBC4ff) rgba(ff00ffff) 0deg",
+        "active_border": "rgba(EF58BDff) rgba(3F94FBff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 8,
         "drop_shadow": "no",
         "kitty": "kitty.conf",
         "konsole": "pinky",
-    }
+    },
+    desktop_widget: "Win20Widget",
 }
 
 const deer = {
@@ -68,7 +70,8 @@ const deer = {
         "drop_shadow": "no",
         "kitty": "kitty.conf",
         "konsole": "Islamic",
-    }
+    },
+    desktop_widget: "",
 }
 
 const colors = {
@@ -91,6 +94,7 @@ const colors = {
         "kitty": "kitty.conf",
         "konsole": "pinky",
     },
+    desktop_widget: "ColorWidget",
 }
 
 const siberian = {
@@ -112,7 +116,8 @@ const siberian = {
         "drop_shadow": "no",
         "kitty": "kitty.conf",
         "konsole": "Islamic",
-    }
+    },
+    desktop_widget: "ColorWidget",
 }
 
 const materialYou = {
@@ -134,7 +139,8 @@ const materialYou = {
         "drop_shadow": "no",
         "kitty": "materialYou.conf",
         "konsole": "material-you",
-    }
+    },
+    desktop_widget: "MYWidget",
 }
 
 export const BLACK_HOLE_THEME = 0;

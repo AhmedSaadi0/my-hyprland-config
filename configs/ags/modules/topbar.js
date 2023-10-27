@@ -117,12 +117,12 @@ const Center = () => Box({
 const Left = () => Box({
     halign: 'end',
     children: [
+        // Volume(),
         Weather(),
         NetworkInformation(),
-        Volume(),
         // NotificationCenterButton(),
         SysTrayBox(),
-        MenuButton(),
+        MenuButton,
     ],
 });
 

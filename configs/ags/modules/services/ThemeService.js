@@ -1,4 +1,4 @@
-import ThemesDictionary, { COLOR_THEME, SIBERIAN_THEME, WIN_20 } from "../theme/themes.js";
+import ThemesDictionary, { COLOR_THEME, MATERIAL_YOU, SIBERIAN_THEME, WIN_20 } from "../theme/themes.js";
 import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';
@@ -27,7 +27,6 @@ class ThemeService extends Service {
 
     changeTheme(selectedTheme) {
         let theme = ThemesDictionary[selectedTheme];
-        this.selectedTheme = selectedTheme;
 
         this.changeCss(theme.css_theme);
         this.changeWallpaper(theme.wallpaper);
@@ -37,7 +36,7 @@ class ThemeService extends Service {
         this.changeIcons(theme.qt_icon_theme);
         this.changeKvantumTheme(theme.kvantum_theme);
         this.changeRofiTheme(theme.rofi_theme);
-        this.showDesktopWidget();
+        this.showDesktopWidget(theme.desktop_widget);
 
         let hypr = theme.hypr;
         this.steHyprland(
@@ -49,6 +48,8 @@ class ThemeService extends Service {
             hypr.kitty,
             hypr.konsole,
         )
+
+        this.selectedTheme = selectedTheme;
         prayerService.emit("changed");
         this.emit("changed");
     }
@@ -191,28 +192,49 @@ class ThemeService extends Service {
         ]).catch(print);
     }
 
-    showDesktopWidget() {
-
-        if (
-            this.selectedTheme == COLOR_THEME ||
-            this.selectedTheme == SIBERIAN_THEME
-        ) {
-            this.showHideWidget("HideWin20Widget()");
-            this.showHideWidget("ShowColorWidget()");
-        } else if (this.selectedTheme === WIN_20) {
-            this.showHideWidget("HideColorWidget()");
-            this.showHideWidget("ShowWin20Widget()");
-        } else{
-            this.showHideWidget("HideWin20Widget()");
-            this.showHideWidget("HideColorWidget()");
+    showDesktopWidget(widget) {
+        let oldTheme = ThemesDictionary[this.selectedTheme];
+        if (oldTheme.desktop_widget !== widget) {
+            this.hideWidget(oldTheme.desktop_widget);
         }
+        this.showWidget(widget);
+
+
+        // if (
+        //     this.selectedTheme == COLOR_THEME ||
+        //     this.selectedTheme == SIBERIAN_THEME
+        // ) {
+        //     this.hideWidget("Win20Widget()");
+        //     this.hideWidget("MYWidget()");
+        //     this.showWidget("ColorWidget()");
+        // } else if (this.selectedTheme === WIN_20) {
+        //     this.hideWidget("ColorWidget()");
+        //     this.hideWidget("MYWidget()");
+        //     this.showWidget("Win20Widget()");
+        // } else if (this.selectedTheme === MATERIAL_YOU) {
+        //     this.hideWidget("ColorWidget()");
+        //     this.hideWidget("Win20Widget()");
+        //     this.showWidget("MYWidget()");
+        // } else {
+        //     this.hideWidget("Win20Widget()");
+        //     this.hideWidget("MYWidget()");
+        //     this.hideWidget("ColorWidget()");
+        // }
     }
 
-    showHideWidget(functionName) {
+    hideWidget(functionName) {
         execAsync([
             "ags",
             "-r",
-            `${functionName}`
+            `Hide${functionName}()`
+        ]).catch(print);
+    }
+
+    showWidget(functionName) {
+        execAsync([
+            "ags",
+            "-r",
+            `Show${functionName}()`
         ]).catch(print);
     }
 
