@@ -79,20 +79,20 @@ $systray-btn-hover-background: $workspace-focused;
 // --------------------------------
 // --------- hardware-box ---------
 // --------------------------------
-$hardware-box-color: rgba(#765654, 0.9);
+$hardware-box-color: rgba(#E9C7C6, 1);
 
 // ---------------------------
 // --------- battery ---------
 // ---------------------------
 $battery-background: $hardware-box-color;
-$battery-color: #ffdada;
+$battery-color: #995860;
 $battery-inner-color: $battery-color;
 
 // -----------------------
 // --------- CPU ---------
 // -----------------------
 $cpu-background: $hardware-box-color;
-$cpu-color: #ffddb2;
+$cpu-color: #805673;
 $cpu-inner-color: $cpu-color;
 
 
@@ -100,7 +100,7 @@ $cpu-inner-color: $cpu-color;
 // --------- Temp ---------
 // ------------------------
 $temp-background: $hardware-box-color;
-$temp-color: #e6bdbe;
+$temp-color: #5C4C4D;
 $temp-inner-color: $temp-color;
 
 
@@ -108,7 +108,7 @@ $temp-inner-color: $temp-color;
 // --------- RAM ---------
 // -----------------------
 $ram-background: $hardware-box-color;
-$ram-color: #ece0df;
+$ram-color: #3f6e79;
 $ram-inner-color: $ram-color;
 
 
@@ -141,18 +141,18 @@ $desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, #EA6220, $
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
 $wd-fuzzy-day-box-fg: $fg-two;
 
-$wd-fuzzy-day-text-font-size: 3rem;
+$wd-fuzzy-day-text-font-size: 1.8rem;
 $wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
-$wd-fuzzy-day-icon-font-size: 2rem;
+$wd-fuzzy-day-icon-font-size: 1.5rem;
 $wd-fuzzy-day-icon-font-family: $icon-font-family;
 $wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 0rem;
-$wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
+$wd-fuzzy-day-icon-padding: 0rem 0rem 0rem 0rem;
 
 $wd-time-now-bg: rgba(#000000, 0);
 $wd-time-now-fg: #EA6220;
-$wd-time-now-font-size: 2.3rem;
+$wd-time-now-font-size: 1.5rem;
 $wd-time-now-font-family: "VEXA light R";
-$wd-time-now-margin: 0rem 0rem 0.5rem 0rem;
+$wd-time-now-margin: 0rem 0rem 0rem 0rem;
 
 $wd-fuzzy-time-box-bg: rgba(#000000, 0);
 $wd-fuzzy-time-box-fg: $fg-one;
@@ -162,12 +162,15 @@ $wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 0rem;
 $wd-fuzzy-time-text-font-size: 1.8rem;
 $wd-fuzzy-time-text-font-family: "VIP Rawy Regular";
 
-$saying-wd-label-bg: rgba(#000000, 0);
-$saying-wd-label-fg: #EA6220;
+$saying-wd-label-bg: rgba(#ECA3AC, 1);
+$saying-wd-label-fg: #3F3A57;
 $saying-wd-label-font-size: 1.5rem;
 $saying-wd-label-font-size: 1.5rem;
-$saying-wd-label-min-width: 25rem;
+$saying-wd-label-min-width: 1rem;
 $saying-wd-label-font-family: "VIP Rawy Regular";
+$saying-wd-label-padding: 1rem;
+$saying-wd-label-margin: 1rem;
+$saying-wd-label-border-radius: 3rem;
 
 // Music Info
 $music-info-wd-font-family: "VIP Rawy Regular";
@@ -188,7 +191,8 @@ $menu-box-borders: $fg-one;
 $profile-box-background: linear-gradient(to right, rgba(#ffb3b6, 0.8), rgba(#e0e0ff, 0.6));
 $profile-box-color: $text-color;
 
-$theme-box-background: $bg-two;
+$theme-box-background: #b8bbbb;
+$power-box-background: $bg-two;
 
 $selected-theme-background: linear-gradient(to right, #ffb3b6, #C2C3EB);
 $selected-theme-color: $text-color;
@@ -203,13 +207,15 @@ $menu-btn-hover: $fg-one;
 /* ------------------------------------------ */
 $music-father-box-bg: $bg-three;
 // $music-wd-box-bg: #6f3ad1;
-$music-wd-box-bg: linear-gradient(to right, $bg-two, $bg-two);
+$music-wd-box-bg: linear-gradient(to right, #ECB3BA, #ECB3BA);
 $music-wd-player-bg: $bg-two;
 $music-wd-player-fg: $fg-three;
 $music-wd-title-fg: $fg-two;
 $music-wd-artist-fg: $fg-three;
+
 $music-wd-button-img: linear-gradient(to right, $bg-one, $bg-one);
 $music-wd-button-hover-img: linear-gradient(to top, $fg-one, $fg-two);
+
 $music-wd-button-fg: $fg-three;
 
 $music-wd-button-play-img: $selected-theme-background;

@@ -1,10 +1,10 @@
-import { Box, Slider, Label, Button, MenuItem, Menu } from 'resource:///com/github/Aylur/ags/widget.js';
+import { Box, Label, Button, MenuItem, Menu } from 'resource:///com/github/Aylur/ags/widget.js';
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
-import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
+// import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 import Gdk from 'gi://Gdk';
 import { Utils } from '../utils/imports.js';
 
-var selectedMusicPlayer = null;
+export var selectedMusicPlayer = null;
 const PLAYER_MENU_ARROW = "🞃"
 
 class PlayersMenu {
@@ -85,7 +85,8 @@ const RowOne = () => {
                 }
             }
             playersMenu.setChildren(playersList);
-            if (playersList.length > 0) {
+
+            if (playersList.length > 0 && selectedMusicPlayer === null) {
                 playerName.label = `${PLAYER_MENU_ARROW} ${playersList[0].child.label}`;
                 selectedMusicPlayer = playersList[0].child.label;
             }
@@ -99,6 +100,7 @@ const RowOne = () => {
             if (minutes && seconds) {
                 self.children[0].label = `${minutes}:${seconds}   `;
             }
+
         }]],
     })
 }

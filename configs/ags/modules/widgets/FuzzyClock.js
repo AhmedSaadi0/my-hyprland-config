@@ -37,15 +37,15 @@ const FuzzyTime = () => TitleText({
     vertical: false,
 });
 
-export default FuzzyClock => Widget.Box({
-    className: "wd-fuzzy-clock-box",
+export default className => Widget.Box({
+    className: className || "wd-fuzzy-clock-box",
     vertical: true,
     children: [
         FuzzyDay(),
         TimeNow(),
         FuzzyTime(),
     ],
-    connections: [[900000, box => {
+    connections: [[(15 * 1000 * 60), box => {
         Utils.execAsync([
             'date',
             '+%u|%-k'
@@ -111,9 +111,6 @@ export default FuzzyClock => Widget.Box({
                 usedFuzzyTime.children[1].label = "";
             }
 
-            // if (hour > 12) {
-            //     hour = hour - 12;
-            // }
             usedTimeNow.label = createFuzzyHour();
 
         }).catch(print)
@@ -125,9 +122,24 @@ export default FuzzyClock => Widget.Box({
 function createFuzzyHour() {
     const now = new Date();
     const hours = now.getHours();
-    const timeOfDay = hours >= 12 ? "مساءً" : "صباحًا";
+    // const timeOfDay = hours >= 12 ? "مساءً" : "صباحًا";
+    let timeOfDay = "";
+
+    if (hours >= 15) {
+        timeOfDay = "مساءً";
+    } else if (hours >= 12) {
+        timeOfDay = "ظهرا";
+    } else if (hours >= 6) {
+        timeOfDay = "صباحًا";
+    } else if (hours >= 4) {
+        timeOfDay = "فجرا";
+    } else if (hours > 0) {
+        timeOfDay = "بعد منتصف الليل";
+    }
+
+
     const arabicNumbers = [
-        "الأولى",
+        "الواحدة",
         "الثانية",
         "الثالثة",
         "الرابعة",
@@ -144,7 +156,7 @@ function createFuzzyHour() {
     let timeInArabicWords = "الساعة الآن ";
 
     if (hours === 0) {
-        timeInArabicWords += "الأولى الثانية عشر ليلاً";
+        timeInArabicWords += "الثانية عشر ليلاً";
     } else if (hours === 12) {
         timeInArabicWords += "الثانية عشر ظهرًا";
     } else {

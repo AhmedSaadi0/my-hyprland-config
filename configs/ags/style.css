@@ -288,7 +288,7 @@ button:hover {
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background-color: #0C0023;
+  background: #0C0023;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   padding-left: 0.5em;
@@ -316,7 +316,8 @@ button:hover {
   padding: 1rem;
   padding-left: 1.5rem;
   border-radius: 0.8rem;
-  border: 0.1rem solid #FDBBC4; }
+  border: 0.1rem solid #FDBBC4;
+  margin: 1.5rem; }
 
 scale trough highlight {
   border-radius: 0.8rem;
@@ -435,6 +436,12 @@ window {
 .menu-button:hover {
   background-color: #ff4bde; }
 
+.power-box {
+  background-color: #0C0023;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 0.8rem; }
+
 /* ----------------------------------------------- */
 /* -------------- Notification menu -------------- */
 /* ----------------------------------------------- */
@@ -463,13 +470,13 @@ window {
 
 .weather-wd-row-one {
   background: #DFDCE7;
-  border-radius: 2rem;
+  border-radius: 3rem;
   margin: 1rem;
   margin-bottom: 0.5rem; }
 
 .my-desktop-music-box {
   background: #97A9AD;
-  border-radius: 2rem;
+  border-radius: 3rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   padding-right: 1.2rem;
@@ -488,7 +495,7 @@ window {
 .my-wd-user-icon {
   padding: 0.8rem;
   margin-right: 1rem;
-  border-radius: 2rem; }
+  border-radius: 3rem; }
 
 .my-weather-wd-title-text-box {
   min-width: 10.55rem;
@@ -504,7 +511,16 @@ window {
   padding-bottom: 1rem;
   padding-right: 1rem;
   padding-left: 1rem;
-  border-radius: 2rem; }
+  border-radius: 3rem; }
+
+.my-fuzzy-clock-box {
+  background-color: #E9C7C6;
+  margin: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1.5rem;
+  padding-left: 1rem;
+  border-radius: 3rem; }
 
 .my-wd-weather-day-name {
   font-family: "VIP Rawy Regular";
@@ -656,7 +672,10 @@ window {
   font-size: 1.5rem;
   color: #FFB431;
   background: rgba(0, 0, 0, 0);
-  font-family: "VIP Rawy Regular"; }
+  font-family: "VIP Rawy Regular";
+  padding: 0rem;
+  margin: 0rem;
+  border-radius: 0rem; }
 
 .desktop-wd-separator {
   background: linear-gradient(to right, #198bee, #FFB431, #ff4bde);

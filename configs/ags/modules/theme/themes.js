@@ -41,7 +41,7 @@ const win_20 = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(EF58BDff) rgba(3F94FBff) 0deg",
+        "active_border": "rgba(EF58BDff) rgba(08fbffff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 8,
         "drop_shadow": "no",

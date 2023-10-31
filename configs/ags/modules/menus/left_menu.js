@@ -180,7 +180,7 @@ const PowerButtonsRow = () => {
     })
 
     return Box({
-        className: "themes-box",
+        className: "power-box",
         style: `
             margin-top:0rem;
         `,
