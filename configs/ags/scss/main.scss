@@ -332,7 +332,7 @@
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-    background-color: $hardware-box-color;
+    background: $hardware-box-color;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
     padding-left: 0.5em;
@@ -365,6 +365,7 @@
     padding-left: 1.5rem;
     border-radius: $border-radius;
     border: $border-size solid $vol-osd-border-color;
+    margin: 1.5rem;
 }
 
 scale trough highlight {
@@ -516,6 +517,13 @@ window {
     background-color: $menu-btn-hover;
 }
 
+.power-box {
+    background-color: $power-box-background;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: $border-radius;
+}
+
 /* ----------------------------------------------- */
 /* -------------- Notification menu -------------- */
 /* ----------------------------------------------- */
@@ -548,14 +556,15 @@ window {
 
 .weather-wd-row-one {
     background: #DFDCE7;
-    border-radius: 2rem;
+    border-radius: 3rem;
     margin: 1rem;
     margin-bottom: 0.5rem;
+    // margin-left: 11.4rem;
 }
 
 .my-desktop-music-box {
     background: #97A9AD;
-    border-radius: 2rem;
+    border-radius: 3rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     padding-right: 1.2rem;
@@ -563,6 +572,7 @@ window {
     min-width: 1rem;
     margin: 1rem;
     margin-top: 0.5rem;
+    // margin-left: 11.3rem;
 }
 
 .my-weather-wd-icon {
@@ -578,7 +588,7 @@ window {
     // background-color: rgba(#E9C7C6, 1);
     padding: 0.8rem;
     margin-right: 1rem;
-    border-radius: 2rem;
+    border-radius: 3rem;
 }
 
 .my-weather-wd-title-text-box {
@@ -602,7 +612,24 @@ window {
     padding-right: 1rem;
     padding-left: 1rem;
 
-    border-radius: 2rem;
+    // margin-left: 6.4rem;
+
+    border-radius: 3rem;
+}
+
+.my-fuzzy-clock-box{
+    background-color: #E9C7C6;
+
+    margin: 1rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: 3rem;
 }
 
 .my-wd-weather-day-name {
@@ -803,6 +830,9 @@ window {
     color: $saying-wd-label-fg;
     background: $saying-wd-label-bg;
     font-family: $saying-wd-label-font-family;
+    padding: $saying-wd-label-padding;
+    margin: $saying-wd-label-margin;
+    border-radius: $saying-wd-label-border-radius;
 }
 
 .desktop-wd-separator {

@@ -1,6 +1,7 @@
 import FuzzyClock from "../FuzzyClock.js";
 import Saying from "../Saying.js";
 import { Mpris, Widget } from "../../utils/imports.js";
+import { selectedMusicPlayer } from "../MusicPLayer.js";
 
 
 const DesktopWidget = Widget.Box({
@@ -34,8 +35,8 @@ const DesktopWidget = Widget.Box({
             ],
             connections: [[Mpris, box => {
                 if (Mpris?.players.length > 0) {
-                    box.children[0].label = Mpris?.players[0].trackTitle;
-                    box.children[1].label = Mpris?.players[0].trackArtists[0];
+                    box.children[0].label = Mpris?.getPlayer(selectedMusicPlayer).trackTitle;
+                    box.children[1].label = Mpris?.getPlayer(selectedMusicPlayer).trackArtists[0];
                 } else {
                     box.children[0].label = "لا توجد موسيقى قيد التشغبل";
                     box.children[1].label = "لا توجد موسيقى قيد التشغبل";

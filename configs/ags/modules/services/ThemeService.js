@@ -50,8 +50,8 @@ class ThemeService extends Service {
         )
 
         this.selectedTheme = selectedTheme;
-        prayerService.emit("changed");
         this.emit("changed");
+        prayerService.emit("changed");
     }
 
     changeWallpaper(wallpaper) {
@@ -152,6 +152,7 @@ class ThemeService extends Service {
                 execAsync(`hyprctl keyword general:col.inactive_border ${inactive_border}`);
                 execAsync(`hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`);
                 execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
+                execAsync(`hyprctl setcursor material_light_cursors 24 `);
             })
         }).catch(print)
     }

@@ -27,9 +27,9 @@ class WeatherService extends Service {
                 'weatherCode3': ['string', 'r'],
                 'weatherTime3': ['string', 'r'],
 
-                'avgTempC4': ['string', 'r'],
-                'weatherCode4': ['string', 'r'],
-                'weatherTime4': ['string', 'r'],
+                // 'avgTempC4': ['string', 'r'],
+                // 'weatherCode4': ['string', 'r'],
+                // 'weatherTime4': ['string', 'r'],
             }
         );
     }
@@ -102,6 +102,7 @@ class WeatherService extends Service {
     // -------------------------------------------
     get avgTempC1() {
         return `${this.state?.weather?.[0]?.avgtempC || ''} C°`;
+        // return `${this.state?.current_condition?.temp_C || ''} C°`;
     }
 
     get weatherCode1() {
@@ -154,21 +155,23 @@ class WeatherService extends Service {
     }
 
     // -------------------------------------------
-    get avgTempC4() {
-        return `${this.state.weather[0].hourly[7].tempC} C°`;
-    }
+    // get avgTempC4() {
+    //     return `${this.state.weather[0].hourly[7].tempC} C°`;
+    // }
 
-    get weatherCode4() {
-        if (this.isDay()) {
-            return sun_icon_dic[weatherCode] || '';
-        } else {
-            return moon_icon_dic[weatherCode] || '';
-        }
-    }
+    // get weatherCode4() {
+    //     const weatherCode = this.state?.weather?.[2]?.hourly?.[4]?.weatherCode;
 
-    get weatherTime4() {
-        return "12 PM";
-    }
+    //     if (this.isDay()) {
+    //         return sun_icon_dic[weatherCode] || '';
+    //     } else {
+    //         return moon_icon_dic[weatherCode] || '';
+    //     }
+    // }
+
+    // get weatherTime4() {
+    //     return "12 PM";
+    // }
 }
 
 

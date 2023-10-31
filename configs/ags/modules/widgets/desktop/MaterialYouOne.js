@@ -1,10 +1,12 @@
 import MusicPlayer from "../MusicPLayer.js";
-import { TitleText } from "../../utils/helpers.js";
 import WeatherService from '../../services/WeatherService.js';
+import FuzzyClock from "../FuzzyClock.js";
+import Saying from "../Saying.js";
+import { TitleText } from "../../utils/helpers.js";
 import { Widget } from "../../utils/imports.js";
 
 const iconImage = Widget.Icon({
-    icon: "/home/ahmed/.config/ags/images/profile-modified.png",
+    icon: "/home/ahmed/.config/ags/images/image.png",
     size: 70,
     className: "my-wd-user-icon",
 })
@@ -15,7 +17,7 @@ const weatherIcon = Widget.Label({
 })
 
 const RowOne = () => Widget.Box({
-    className: "weather-wd-row-one shadow",
+    className: "weather-wd-row-one small-shadow",
     children: [
     ],
     connections: [[WeatherService, self => {
@@ -69,7 +71,7 @@ const Insider = ({
 
 const RowTwo = () => {
     return Widget.Box({
-        className: "my-weather-wd-row-two shadow",
+        className: "my-weather-wd-row-two small-shadow",
         spacing: 16,
         homogeneous: false,
         children: [
@@ -91,11 +93,11 @@ const RowTwo = () => {
                     title: "ب غدا",
                     text: WeatherService.avgTempC3,
                 }),
-                Insider({
-                    icon: WeatherService.weatherCode3,
-                    title: "ب يومين",
-                    text: WeatherService.avgTempC3,
-                }),
+                // Insider({
+                //     icon: WeatherService.weatherCode4,
+                //     title: "ب يومين",
+                //     text: WeatherService.avgTempC4,
+                // }),
 
             ]
         }
@@ -108,7 +110,9 @@ const DesktopWidget = () => Widget.Box({
     children: [
         RowOne(),
         RowTwo(),
-        MusicPlayer("my-desktop-music-box shadow"),
+        FuzzyClock("my-fuzzy-clock-box small-shadow"),
+        MusicPlayer("my-desktop-music-box small-shadow"),
+        Saying("saying-wd-label small-shadow"),
     ]
 })
 

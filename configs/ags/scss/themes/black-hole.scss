@@ -183,6 +183,9 @@ $saying-wd-label-fg: #EA6220;
 $saying-wd-label-font-size: 1.5rem;
 $saying-wd-label-min-width: 25rem;
 $saying-wd-label-font-family: "VIP Rawy Regular";
+$saying-wd-label-padding: 0rem;
+$saying-wd-label-margin: 0rem;
+$saying-wd-label-border-radius: 0rem;
 
 // Music Info
 $music-info-wd-font-family: "VIP Rawy Regular";
@@ -204,6 +207,7 @@ $profile-box-background: linear-gradient(to right, rgba(#9359ff, 0.8), rgba(#FF0
 $profile-box-color: $bg-one;
 
 $theme-box-background: $bg-two;
+$power-box-background: $theme-box-background;
 
 $selected-theme-background: linear-gradient(to right, #9359ff, #FF00AA);
 $selected-theme-color: $bg-one;

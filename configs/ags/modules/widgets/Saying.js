@@ -301,11 +301,12 @@ const words_dict = [
     "الدال على الخير كفاعله.",
     "الرفق بالجاني عتاب.",
     "السر أمانة.",
-    "الشريف إذا تَقَوَّى تواضع والوضيع إذا تَقَوَّى تكبر."
+    "الشريف إذا تَقَوَّى تواضع والوضيع إذا تَقَوَّى تكبر.",
+    "الناس الذين غيروا العالم هم الناس الذين واصلوا البحث عندما بدا الأمر مستحيلاً بالنسبة للآخرين.",
 ];
 
-export default SayingLabel => Widget.Label({
-    className: "saying-wd-label",
+export default className => Widget.Label({
+    className: className || "saying-wd-label",
     label: "",
     justification: 'left',
     // truncate: 'end',
@@ -313,7 +314,7 @@ export default SayingLabel => Widget.Label({
     maxWidthChars: 24,
     wrap: true,
     connections: [[
-        (15 * 1000 * 60), label => {
+        (30 * 1000 * 60), label => {
             const randomIndex = Math.floor(Math.random() * words_dict.length);
 
             // Use the random index to get a random element
