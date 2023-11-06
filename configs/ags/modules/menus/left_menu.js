@@ -1,6 +1,6 @@
 import themeService from '../services/ThemeService.js';
-import ThemesDictionary, { WIN_20 } from "../theme/themes.js";
-import { BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
+import ThemesDictionary from "../theme/themes.js";
+import { GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
@@ -44,59 +44,94 @@ const Header = () => {
     })
 }
 
-const ThemeButton = ({ label, theme, end = "margin-left: 1rem;" }) => Button({
-    style: `
-            min-width: 5rem;
-            min-height: 2rem;
-            ${end}
-            border-radius: 1rem;
-        `,
-    child: Label({
+const ThemeButton = ({ label, icon, theme, end = "margin-left: 1rem;" }) => {
+
+    const _label = Label({
+        className: "theme-btn-label",
         label: label
-    }),
-    onClicked: () => themeService.changeTheme(theme),
-    connections: [
-        [themeService, btn => {
-            btn.className = "theme-btn";
-            if (themeService.selectedTheme === theme) {
-                btn.className = "selected-theme";
-            }
-        }]
-    ]
-})
+    })
+
+    const _icon = Label({
+        className: "theme-btn-icon",
+        label: icon,
+        xalign: 0.5,
+    })
+
+    const box = Box({
+        className: "theme-btn-box",
+        // homogeneous: true,
+        children: [
+            _label,
+            _icon
+        ]
+    })
+
+    const button = Button({
+        style: `
+                min-width: 5rem;
+                min-height: 2rem;
+                ${end}
+                border-radius: 1rem;
+            `,
+        child: box,
+        onClicked: () => themeService.changeTheme(theme),
+        connections: [
+            [themeService, btn => {
+                btn.className = "theme-btn";
+                if (themeService.selectedTheme === theme) {
+                    btn.className = "selected-theme";
+                }
+            }]
+        ]
+    })
+
+    return button
+}
 
 const ThemesButtonsRowOne = () => {
 
     const blackHoleTheme = ThemeButton({
-        label: "ثقب    󰇩",
+        label: "ثقب",
+        icon: "󰇩",
         theme: BLACK_HOLE_THEME
     });
 
     const deerTheme = ThemeButton({
-        label: "غزال  ",
+        label: "غزال",
+        icon: "",
         theme: DEER_THEME
     });
 
     const colorTheme = ThemeButton({
-        label: "جمالي  ",
+        label: "جمالي",
+        icon: "",
         theme: COLOR_THEME,
         end: "",
     });
 
-    const SiberianTheme = ThemeButton({
-        label: "تدرج  ",
+    const siberianTheme = ThemeButton({
+        label: "تدرج",
+        icon: "",
         theme: SIBERIAN_THEME,
     });
 
-    const MaterialYouTheme = ThemeButton({
-        label: "مادي ",
+    const materialYouTheme = ThemeButton({
+        label: "مادي",
+        icon: "",
         theme: MATERIAL_YOU,
     });
 
-    const Win20Theme = ThemeButton({
-        label: "ويندوز ",
+    const win20Theme = ThemeButton({
+        label: "ويندوز",
+        icon: "",
         theme: WIN_20,
         end: "",
+    });
+
+    const gameTheme = ThemeButton({
+        label: "لعبة",
+        icon: "",
+        theme: GAME_THEME,
     });
 
     const row1 = Box({
@@ -111,9 +146,17 @@ const ThemesButtonsRowOne = () => {
             margin-top: 1rem;
         `,
         children: [
-            SiberianTheme,
-            MaterialYouTheme,
-            Win20Theme
+            siberianTheme,
+            materialYouTheme,
+            win20Theme
+        ]
+    })
+    const row3 = Box({
+        style: `
+            margin-top: 1rem;
+        `,
+        children: [
+            gameTheme,
         ]
     })
 
@@ -123,9 +166,11 @@ const ThemesButtonsRowOne = () => {
         children: [
             row1,
             row2,
+            row3,
         ]
     })
 }
+
 
 const PowerButtonsRow = () => {
 

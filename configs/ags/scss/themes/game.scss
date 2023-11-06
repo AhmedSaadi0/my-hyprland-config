@@ -15,15 +15,15 @@
 $border-color: #1ed4fd;
 $border-size: 0.1rem;
 
-$bg-one: #352558;
-$bg-two: #1F1635;
-$bg-three: #154a63;
+$bg-one: #001E2E;
+$bg-two: #2A4A5F;
+$bg-three: #1D2624;
 
-$fg-one: #1ed4fd;
-$fg-two: #ff00ff;
-$fg-three: #C1C4EB;
+$fg-one: #78F8DD;
+$fg-two: #FFDAD6;
+$fg-three: #14EFFD;
 
-$text-color: #bdddee;
+$text-color: #D4E4FB;
 
 $icon-font-family: "Font Awesome 5 Free Solid";
 
@@ -53,7 +53,7 @@ $clock-color: $bg-two;
 // -------------------------------
 // --------- Bar Weather ---------
 // -------------------------------
-$bar-weather-background: linear-gradient(to right, #25F7E2, #CDD4AF);
+$bar-weather-background: linear-gradient(to right, $fg-one, $fg-three);
 $bar-weather-color: $bg-two;
 
 // -----------------------
@@ -65,7 +65,7 @@ $bar-color: $text-color;
 // --------------------------------
 // --------- prayer times ---------
 // --------------------------------
-$bar-prayer-times-box-background: linear-gradient(to right, #82D8D2, #478DD7);
+$bar-prayer-times-box-background: linear-gradient(to right, $fg-three, #ff9c88);
 $bar-prayer-times-box-color: $bg-two;
 
 // --------------------------------
@@ -103,7 +103,7 @@ $battery-inner-color: $battery-color;
 // --------- CPU ---------
 // -----------------------
 $cpu-background: $hardware-box-color;
-$cpu-color: #b18dff;
+$cpu-color: #95ffea;
 $cpu-inner-color: $cpu-color;
 
 
@@ -197,15 +197,15 @@ $music-info-wd-artist-fg: $fg-two;
 $menu-box-background: $bg-one;
 $menu-box-borders: $fg-one;
 
-$profile-box-background: linear-gradient(to right, rgba(#a280ff, 0.8), rgba(#774cf0, 0.6));
+$profile-box-background: linear-gradient(to right, rgba(#80D6D2, 0.8), rgba(#539CD6, 0.6));
 $profile-box-color: $bg-two;
 
-$theme-box-background: #241546;
-$power-box-background: $bg-two;
+$theme-box-background: #1c3b32;
+$power-box-background: #58324C;
 
-$selected-theme-background: linear-gradient(to right, #9359ff, #FF00AA);
+$selected-theme-background: linear-gradient(to right, #488FD7, #18F0FA);
 $selected-theme-color: $bg-one;
-$selected-theme-hover-background: linear-gradient(to right, #ff9900, #ff6600);
+$selected-theme-hover-background: linear-gradient(to right, $fg-two, $fg-one);
 $selected-theme-hover-color: $bg-three;
 
 $menu-btn-background: $bg-one;
@@ -217,7 +217,7 @@ $menu-btn-hover: $fg-one;
 /* ------------------------------------------ */
 $music-father-box-bg: $bg-three;
 // $music-wd-box-bg: #6f3ad1;
-$music-wd-box-bg: linear-gradient(to right, #8e52ff, #0088ff);
+$music-wd-box-bg: linear-gradient(to right, #64D5AF, #49A5A4);
 
 $music-wd-player-bg: $bg-two;
 $music-wd-player-fg: $fg-three;
@@ -229,7 +229,7 @@ $music-wd-button-img: linear-gradient(to right, $bg-one, $bg-one);
 $music-wd-button-fg: $fg-three;
 $music-wd-button-hover-img: linear-gradient(to top, $fg-one, $fg-two);
 
-$music-wd-button-play-img: $selected-theme-background;
+$music-wd-button-play-img: linear-gradient(to bottom, $fg-three, $fg-two);
 $music-wd-button-play-fg: $bg-two;
 
 $music-wd-button-stop-img: $music-wd-button-img;

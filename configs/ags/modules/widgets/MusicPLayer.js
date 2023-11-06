@@ -38,12 +38,15 @@ const RowOne = () => {
 
     let playerName = Label({
         style: `
-            min-width: 6.5rem;
+            min-width: 6rem;
         `,
         label: "",
-        xalign: 1,
-        maxWidthChars: 12,
-        vexpand: false,
+        justification: 'right',
+        truncate: 'end',
+        xalign: 0,
+        maxWidthChars: 10,
+        wrap: true,
+        useMarkup: true,
     });
 
     const playersMenu = new PlayersMenu();
@@ -111,8 +114,9 @@ const RowTwo = () => {
         justification: 'left',
         truncate: 'end',
         xalign: 0,
-        maxWidthChars: 1,
-        vexpand: false,
+        maxWidthChars: 24,
+        wrap: true,
+        useMarkup: true,
     });
     let artist = Label({
         className: "music-wd-file-name",

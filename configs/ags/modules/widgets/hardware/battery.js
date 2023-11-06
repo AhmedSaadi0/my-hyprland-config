@@ -3,7 +3,7 @@ import Battery from 'resource:///com/github/Aylur/ags/service/battery.js'
 
 const label = Label({
     className: "battery-inner",
-    label: "󰄯"
+    label: ""
 })
 
 const button = Button({

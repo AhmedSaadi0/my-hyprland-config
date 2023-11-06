@@ -2,14 +2,14 @@
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 button {
-  background-color: #3B2163;
-  color: #71f1e8;
-  border-color: #3B2163; }
+  background-color: #1F1635;
+  color: #bdddee;
+  border-color: #1F1635; }
 
 button:hover {
-  background-color: #ff4bde;
-  color: #20004A;
-  border-color: #ff4bde; }
+  background-color: #1ed4fd;
+  color: #154a63;
+  border-color: #1ed4fd; }
 
 .unset {
   all: unset; }
@@ -21,7 +21,7 @@ button:hover {
 /* -------------- Workspace -------------- */
 /* --------------------------------------- */
 .workspaces button:active {
-  color: #ff4bde;
+  color: #1ed4fd;
   border-radius: 0px; }
 
 .workspaces {
@@ -31,20 +31,20 @@ button:hover {
   margin-bottom: 0.4rem;
   margin-right: 4px;
   margin-left: 8px;
-  background-color: #0C0023;
+  background: #1F1635;
   border-radius: 0.8rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
 
 .workspaces button {
-  background-color: #0C0023;
-  color: #198bee;
+  background: #1F1635;
+  color: #bdddee;
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #ff4bde;
-  color: #ff4bde;
+  border-bottom: 1px solid #1ed4fd;
+  color: #1ed4fd;
   font-family: "Font Awesome 5 Free Solid";
   border-radius: 0px;
   padding-top: 0px;
@@ -61,16 +61,16 @@ button:hover {
   border-radius: 0px; }
 
 .workspaces button.has-windows {
-  color: #ff4bde; }
+  color: #1ed4fd; }
 
 .workspaces button:hover {
-  background-color: rgba(25, 139, 238, 0.9);
-  color: rgba(12, 0, 35, 0.9); }
+  background: rgba(255, 0, 255, 0.9);
+  color: rgba(31, 22, 53, 0.9); }
 
 .clock {
   font-size: 1em;
-  background: linear-gradient(to right, #198bee, #ff4bde);
-  color: #0C0023;
+  background: linear-gradient(to right, #ff00ff, #1ed4fd);
+  color: #1F1635;
   border-radius: 0.8rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
@@ -79,8 +79,8 @@ button:hover {
 
 .bar-prayer-times-box {
   font-size: 1em;
-  background: linear-gradient(to right, #3599FF, #6457F0);
-  color: #0C0023;
+  background: linear-gradient(to right, #82D8D2, #478DD7);
+  color: #1F1635;
   border-radius: 0.8rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
@@ -95,8 +95,8 @@ button:hover {
 
 .bar-weather-box {
   font-size: 1em;
-  background: linear-gradient(to right, #26F7E1, #FF00AA);
-  color: #0C0023;
+  background: linear-gradient(to right, #25F7E2, #CDD4AF);
+  color: #1F1635;
   border-radius: 0.8rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
@@ -110,30 +110,30 @@ button:hover {
   padding-right: 0.5rem; }
 
 .bar-bg {
-  background-color: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0);
   min-height: 8px;
   border-radius: 0rem; }
 
 .bar {
-  background-color: #20004A;
-  color: #cecece;
+  background: #352558;
+  color: #bdddee;
   min-height: 8px;
   border-radius: 0rem;
   margin-bottom: 0.5rem; }
 
 .small-shadow {
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
-  transition-property: background-color;
+  transition-property: background;
   transition-duration: .5s; }
 
 .shadow {
   box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.3);
-  transition-property: background-color;
+  transition-property: background;
   transition-duration: .5s; }
 
 .internet-box {
-  background: linear-gradient(to left, #3498fd, #ff4bde, #bb8256);
-  color: #20004A;
+  background: linear-gradient(to right, #82D8D2, #478DD7);
+  color: #352558;
   /* min-width: 100px; */
   border-radius: 0.8rem;
   margin-top: 0.4rem;
@@ -148,8 +148,8 @@ button:hover {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   margin-right: 0.2em;
-  background-color: #20004A;
-  color: #cecece;
+  background: #352558;
+  color: #bdddee;
   font-weight: bold;
   border-top-right-radius: 0.8rem;
   border-bottom-right-radius: 0.8rem; }
@@ -161,13 +161,13 @@ button:hover {
   margin-bottom: 0.2em;
   padding-right: 0.5em;
   padding-left: 0.6em;
-  background-color: #20004A;
-  color: #cecece;
+  background: #352558;
+  color: #bdddee;
   border-top-left-radius: 0.8rem;
   border-bottom-left-radius: 0.8rem; }
 
 .systray {
-  background-color: #3B2163;
+  background: #1F1635;
   border-radius: 0.8rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
@@ -175,14 +175,14 @@ button:hover {
   min-height: 0.1rem; }
 
 .systray button {
-  background-color: #3B2163;
+  background: #1F1635;
   border-radius: 0.8rem;
   padding-right: 0.6rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background-color: #ff4bde; }
+  background: #1ed4fd; }
 
 .tray-btn {
   border: 0rem; }
@@ -191,112 +191,91 @@ button:hover {
 /* -------------- Battery -------------- */
 /* ------------------------------------- */
 .battery {
-  background-color: #0C0023;
-  color: #FF8580;
-  min-width: 20px;
-  min-height: 20px;
-  font-size: 3px; }
+  background: #1F1635;
+  color: #1ed4fd;
+  min-width: 1.5rem;
+  min-height: 0.5rem;
+  font-size: 0.2rem; }
 
 @keyframes colorChange {
   0% {
-    color: #FF8580; }
+    color: #1ed4fd; }
   50% {
-    color: #0C0023; }
+    color: #1F1635; }
   100% {
-    color: #FF8580; } }
+    color: #1ed4fd; } }
 
 .battery-inner {
-  color: #FF8580;
-  margin-top: 0.2em;
-  margin-right: 0.3em;
-  margin-bottom: 0.2em;
+  color: #1ed4fd;
   font-family: "Font Awesome 5 Free Solid";
-  min-width: 2px;
-  font-size: 2.0em; }
+  font-size: 0.4rem; }
 
 .battery-inner-charging {
-  color: #FF8580;
-  margin-top: 0.2em;
-  margin-right: 0.2em;
-  margin-bottom: 0.2em;
+  color: #1ed4fd;
   font-family: "Font Awesome 5 Free Solid";
-  min-width: 2px;
-  font-size: 2.0em;
+  font-size: 0.4rem;
   animation: colorChange 2.0s infinite; }
 
 /* --------------------------------- */
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background-color: #0C0023;
-  color: #FDC227;
-  min-width: 20px;
-  min-height: 20px;
-  font-size: 3px; }
+  background: #1F1635;
+  color: #b18dff;
+  min-width: 1.5rem;
+  min-height: 0.1rem;
+  font-size: 0.2rem; }
 
 .cpu-inner {
-  color: #FDC227;
-  margin-top: 0.2em;
-  margin-right: 0.3em;
-  margin-bottom: 0.2em;
+  color: #b18dff;
   font-family: "Font Awesome 5 Free Solid";
-  min-width: 2px;
-  font-size: 2.0em; }
+  font-size: 0.4rem; }
 
 /* ---------------------------------- */
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background-color: #0C0023;
-  color: #198bee;
-  min-width: 20px;
-  min-height: 20px;
-  font-size: 3px; }
+  background: #1F1635;
+  color: #ff00ff;
+  min-width: 1.5rem;
+  min-height: 0.1rem;
+  font-size: 0.2rem; }
 
 .no-hover:hover {
   all: unset; }
 
 .temp-inner {
-  color: #198bee;
-  margin-top: 0.2em;
+  color: #ff00ff;
   font-family: "Font Awesome 5 Free Solid";
-  margin-right: 0.3em;
-  margin-bottom: 0.2em;
-  min-width: 2px;
-  font-size: 2.0em; }
+  font-size: 0.4rem; }
 
 /* --------------------------------- */
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background-color: #0C0023;
-  color: #71f1e8;
-  min-width: 20px;
-  min-height: 20px;
-  font-size: 3px; }
+  background: #1F1635;
+  color: #C1C4EB;
+  min-width: 1.5rem;
+  min-height: 0.1rem;
+  font-size: 0.2rem; }
 
 .ram-inner {
-  color: #71f1e8;
+  color: #C1C4EB;
   font-family: "Font Awesome 5 Free Solid";
-  margin-top: 0.2em;
-  margin-right: 0.3em;
-  margin-bottom: 0.2em;
-  min-width: 2px;
-  font-size: 2.0em; }
+  font-size: 0.4rem; }
 
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: #0C0023;
+  background: #1F1635;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   padding-left: 0.5em;
   padding-right: 0.5em;
   border-radius: 0.8rem;
   margin-top: 0.3rem;
-  margin-bottom: 0.4rem;
-  margin-right: 0em; }
+  margin-bottom: 0.4rem; }
 
 /* ------------------------------------ */
 /* -------------- Volume -------------- */
@@ -312,25 +291,25 @@ button:hover {
   margin-left: 1em; }
 
 .vol-osd {
-  background-color: #20004A;
+  background: #352558;
   padding: 1rem;
   padding-left: 1.5rem;
   border-radius: 0.8rem;
-  border: 0.1rem solid #FDBBC4;
+  border: 0.1rem solid #1ed4fd;
   margin: 1.5rem; }
 
 scale trough highlight {
   border-radius: 0.8rem;
-  background-color: #ff4bde; }
+  background: #1ed4fd; }
 
 scale slider {
-  background-color: #ff4bde; }
+  background: #1ed4fd; }
 
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
 .notifications-revealer-box {
-  background-color: #3B2163;
+  background: #154a63;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border-radius: 0.8rem;
@@ -340,34 +319,33 @@ scale slider {
   margin-right: 0rem; }
 
 .notification-popups {
-  border: 0.1rem solid #ff4bde;
+  border: 0.1rem solid #1ed4fd;
   border-radius: 0.8rem;
   padding: 1rem; }
 
 .notifications-popup-list {
-  background-color: #20004A;
+  background: #352558;
   border-radius: 0.8rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  margin-left: 2rem; }
+  min-height: 0.001rem;
+  min-width: 0.001rem; }
 
 window {
   border-radius: 0.8rem;
-  background-color: rgba(0, 0, 0, 0); }
+  background: rgba(0, 0, 0, 0); }
 
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
 .left-menu-box {
-  background-color: #20004A;
+  background: #352558;
   border-radius: 0.8rem;
-  border: 2px solid #ff4bde;
+  border: 2px solid #1ed4fd;
   margin-top: 0.45rem;
   margin-left: 0.45rem;
   margin-bottom: 1rem;
   margin-right: 1rem;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
-  transition-property: background-color;
+  transition-property: background;
   transition-duration: 1.5s; }
 
 .left-menu-header {
@@ -379,8 +357,8 @@ window {
   min-height: 12rem; }
 
 .profile-box {
-  background: linear-gradient(to right, rgba(147, 89, 255, 0.8), rgba(255, 0, 170, 0.6));
-  color: #20004A;
+  background: linear-gradient(to right, rgba(162, 128, 255, 0.8), rgba(119, 76, 240, 0.6));
+  color: #1F1635;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
@@ -398,27 +376,36 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-  background-color: #0C0023;
+  background: #241546;
   margin: 1rem;
   padding: 1rem;
   border-radius: 0.8rem; }
 
 .selected-theme {
   background: linear-gradient(to right, #9359ff, #FF00AA);
-  color: #20004A; }
+  color: #352558; }
 
 .selected-theme:hover {
   background: linear-gradient(to right, #ff9900, #ff6600);
-  color: #3B2163; }
+  color: #154a63; }
 
 .theme-btn {
   border-radius: 0.8rem;
-  background-color: #20004A;
-  border-color: #20004A; }
+  background: #352558;
+  border-color: #352558;
+  font-family: "Font Awesome 5 Free Solid"; }
 
 .theme-btn:hover {
   border-radius: 0.8rem;
-  background-color: #ff4bde; }
+  background: #1ed4fd;
+  font-family: "Font Awesome 5 Free Solid"; }
+
+.theme-btn-icon {
+  font-family: "Font Awesome 5 Free Solid";
+  min-width: 2rem; }
+
+.theme-btn-label {
+  min-width: 3rem; }
 
 .menu-button {
   border-radius: 0.8rem;
@@ -428,16 +415,16 @@ window {
   padding-top: 0rem;
   padding-bottom: 0rem;
   margin-left: 0.5rem;
-  background-color: #20004A;
+  background: #352558;
   font-family: "Font Awesome 5 Free Solid";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
 
 .menu-button:hover {
-  background-color: #ff4bde; }
+  background: #1ed4fd; }
 
 .power-box {
-  background-color: #0C0023;
+  background: #1F1635;
   margin: 1rem;
   padding: 1rem;
   border-radius: 0.8rem; }
@@ -459,7 +446,7 @@ window {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 0.8rem;
-  background-color: #0C0023; }
+  background: #0C0023; }
 
 /* ------------------------------------------------------- */
 /* -------------- Material U Desktop Widget -------------- */
@@ -505,7 +492,7 @@ window {
   font-family: "VIP Rawy Regular"; }
 
 .my-weather-wd-row-two {
-  background-color: #E9C7C6;
+  background: #E9C7C6;
   margin: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -514,7 +501,7 @@ window {
   border-radius: 3rem; }
 
 .my-fuzzy-clock-box {
-  background-color: #E9C7C6;
+  background: #E9C7C6;
   margin: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -544,7 +531,7 @@ window {
   font-family: "Font Awesome 5 Free Solid"; }
 
 .my-weather-wd-day-box {
-  background-color: #97A9AD;
+  background: #97A9AD;
   border-radius: 3rem;
   padding-top: 0.4rem;
   padding-left: 0.4rem;
@@ -554,13 +541,13 @@ window {
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 .music-wd-box {
-  background: linear-gradient(to right, #5812db, #8F1767);
+  background: linear-gradient(to right, #8e52ff, #0088ff);
   padding: 1rem;
   margin: 0.5rem;
   border-radius: 0.8rem; }
 
 .left-menu-music-wd {
-  background: linear-gradient(to right, #5812db, #8F1767);
+  background: linear-gradient(to right, #8e52ff, #0088ff);
   border-radius: 0.8rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -581,22 +568,22 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background-color: #0C0023;
+  background: #1F1635;
   padding-left: 0.4rem;
   padding-right: 0.7rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #71f1e8;
+  color: #C1C4EB;
   border-radius: 1rem;
   min-width: 2rem; }
 
 .music-wd-title {
-  color: #0C0023;
+  color: #1F1635;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem; }
 
 .music-wd-file-name {
-  color: #71f1e8;
+  color: #C1C4EB;
   font-size: x-small; }
 
 .music-wd-button {
@@ -604,38 +591,38 @@ window {
   border-radius: 50%;
   min-width: 40px;
   min-height: 40px;
-  background: linear-gradient(to right, #20004A, #20004A);
-  color: #71f1e8;
+  background: linear-gradient(to right, #352558, #352558);
+  color: #C1C4EB;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button:hover {
-  background: linear-gradient(to top, #ff4bde, #198bee); }
+  background: linear-gradient(to top, #1ed4fd, #ff00ff); }
 
 .music-wd-button-play {
   background: linear-gradient(to right, #9359ff, #FF00AA);
-  color: #0C0023;
+  color: #1F1635;
   border-radius: 3rem;
   min-height: 40px;
   min-width: 80px;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button-stop {
-  background: linear-gradient(to right, #20004A, #20004A);
-  color: #71f1e8;
+  background: linear-gradient(to right, #352558, #352558);
+  color: #C1C4EB;
   border-radius: 3rem;
   min-height: 40px;
   min-width: 80px;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button-play:hover {
-  background: linear-gradient(to top, #ff4bde, #198bee); }
+  background: linear-gradient(to top, #1ed4fd, #ff00ff); }
 
 /* ----------------------------------------- */
 /* -------------- Fuzzy clock -------------- */
 /* ----------------------------------------- */
 .wd-fuzzy-day-box {
   background: rgba(0, 0, 0, 0);
-  color: #198bee; }
+  color: #ff00ff; }
 
 .wd-fuzzy-day-icon {
   font-size: 2rem;
@@ -656,7 +643,7 @@ window {
 
 .wd-fuzzy-time-box {
   background: rgba(0, 0, 0, 0);
-  color: #ff4bde; }
+  color: #1ed4fd; }
 
 .wd-fuzzy-time-icon {
   font-size: 1.5rem;
@@ -669,8 +656,8 @@ window {
 
 .saying-wd-label {
   min-width: 25rem;
-  font-size: 1.5rem;
-  color: #FFB431;
+  font-size: 1.8rem;
+  color: #31ff87;
   background: rgba(0, 0, 0, 0);
   font-family: "VIP Rawy Regular";
   padding: 0rem;
@@ -678,18 +665,18 @@ window {
   border-radius: 0rem; }
 
 .desktop-wd-separator {
-  background: linear-gradient(to right, #198bee, #FFB431, #ff4bde);
+  background: linear-gradient(to bottom, #ff00ff, #FFB431, #1ed4fd);
   min-height: 1px;
   min-width: 1px; }
 
 .desktop-wd-music-player-box {
-  padding: 0rem 0rem 0rem 0rem;
+  padding: 1rem 0rem 0rem 0rem;
   min-width: 30rem;
   font-family: "VIP Rawy Regular";
   font-size: 1.5rem; }
 
 .desktop-wd-music-player-title {
-  color: #ff4bde; }
+  color: #1ed4fd; }
 
 .desktop-wd-music-player-artist {
-  color: #198bee; }
+  color: #ff00ff; }

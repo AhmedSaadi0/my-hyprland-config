@@ -5,7 +5,7 @@ import App  from "resource:///com/github/Aylur/ags/app.js";
 
 const label = Label({
     className: "ram-inner",
-    label: "󰄯"
+    label: ""
 })
 
 const button = Button({
