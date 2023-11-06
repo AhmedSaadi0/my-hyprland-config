@@ -11,8 +11,8 @@ const black_hole = {
     qt_icon_theme: "NeonIcons",
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
-    gtk_icon_theme: "oomox-aesthetic-dark",
-    rofi_theme: "win20_theme.rasi",
+    gtk_icon_theme: "NeonIcons",
+    // rofi_theme: "win20_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -36,8 +36,8 @@ const win_20 = {
     qt_icon_theme: "NeonIcons",
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
-    gtk_icon_theme: "oomox-aesthetic-dark",
-    rofi_theme: "win20_theme.rasi",
+    gtk_icon_theme: "NeonIcons",
+    // rofi_theme: "win20_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -58,9 +58,9 @@ const deer = {
     qt_style_theme: "Breeze",
     qt_icon_theme: "oomox-aesthetic-dark",
     kvantum_theme: "a-color",
-    gtk_theme: "Shades-of-purple",
+    gtk_theme: "Kimi-dark",
     gtk_icon_theme: "oomox-aesthetic-dark",
-    rofi_theme: "islamic_theme.rasi",
+    // rofi_theme: "islamic_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -81,9 +81,9 @@ const colors = {
     qt_style_theme: "Breeze",
     qt_icon_theme: "NeonIcons",
     kvantum_theme: "a-color",
-    gtk_theme: "Kimi-dark",
-    gtk_icon_theme: "oomox-aesthetic-dark",
-    rofi_theme: "colors_theme.rasi",
+    gtk_icon_theme: "NeonIcons",
+    // rofi_theme: "colors_theme.rasi",
+    gtk_theme: "Shades-of-purple",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -106,7 +106,7 @@ const siberian = {
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
     gtk_icon_theme: "NeonIcons",
-    rofi_theme: "islamic_theme.rasi",
+    // rofi_theme: "islamic_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -127,9 +127,10 @@ const materialYou = {
     qt_style_theme: "Breeze",
     qt_icon_theme: "kora-grey-light-panel",
     kvantum_theme: "a-m-you",
-    gtk_theme: "WhiteSur-Light-solid",
-    gtk_icon_theme: "Papirus-Light",
-    rofi_theme: "light_material_you_theme.rasi",
+    // gtk_theme: "WhiteSur-Light-solid",
+    gtk_theme: "Colorful-Dark-GTK",
+    gtk_icon_theme: "kora-grey-light-panel",
+    // rofi_theme: "light_material_you_theme.rasi",
     gtk_mode: "light",
     hypr: {
         "border_width": 2,
@@ -143,12 +144,36 @@ const materialYou = {
     desktop_widget: "MYWidget",
 }
 
+const game = {
+    wallpaper: `${WALLPAPER_PATH}/game.png`,
+    css_theme: "game.scss",
+    plasma_color: "ArcStarryDark.colors",
+    qt_style_theme: "Lightly",
+    qt_icon_theme: "la-capitaine-icon-theme",
+    kvantum_theme: "a-color",
+    gtk_theme: "Orchis-Green-Dark-Compact",
+    gtk_icon_theme: "la-capitaine-icon-theme",
+    // rofi_theme: "colors_theme.rasi",
+    gtk_mode: "dark",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(ffff7fff) rgba(ffaa7fff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 8,
+        "drop_shadow": "no",
+        "kitty": "kitty.conf",
+        "konsole": "game",
+    },
+    desktop_widget: "",
+}
+
 export const BLACK_HOLE_THEME = 0;
 export const DEER_THEME = 1;
 export const COLOR_THEME = 2;
 export const SIBERIAN_THEME = 3;
 export const MATERIAL_YOU = 4;
 export const WIN_20 = 5;
+export const GAME_THEME = 6;
 
 const ThemesDictionary = {
     [BLACK_HOLE_THEME]: black_hole,
@@ -157,6 +182,7 @@ const ThemesDictionary = {
     [SIBERIAN_THEME]: siberian,
     [MATERIAL_YOU]: materialYou,
     [WIN_20]: win_20,
+    [GAME_THEME]: game,
 }
 
 export default ThemesDictionary

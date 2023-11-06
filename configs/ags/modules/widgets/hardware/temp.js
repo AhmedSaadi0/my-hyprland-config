@@ -4,7 +4,7 @@ import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 const label = Label({
     className: "temp-inner",
-    label: "󰄯"
+    label: ""
 })
 
 const button = Button({

@@ -35,7 +35,7 @@ class ThemeService extends Service {
         this.changeQtStyle(theme.qt_style_theme);
         this.changeIcons(theme.qt_icon_theme);
         this.changeKvantumTheme(theme.kvantum_theme);
-        this.changeRofiTheme(theme.rofi_theme);
+        // this.changeRofiTheme(theme.rofi_theme);
         this.showDesktopWidget(theme.desktop_widget);
 
         let hypr = theme.hypr;
@@ -152,7 +152,7 @@ class ThemeService extends Service {
                 execAsync(`hyprctl keyword general:col.inactive_border ${inactive_border}`);
                 execAsync(`hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`);
                 execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
-                execAsync(`hyprctl setcursor material_light_cursors 24 `);
+                // execAsync(`hyprctl setcursor material_light_cursors 24 `);
             })
         }).catch(print)
     }
@@ -199,28 +199,6 @@ class ThemeService extends Service {
             this.hideWidget(oldTheme.desktop_widget);
         }
         this.showWidget(widget);
-
-
-        // if (
-        //     this.selectedTheme == COLOR_THEME ||
-        //     this.selectedTheme == SIBERIAN_THEME
-        // ) {
-        //     this.hideWidget("Win20Widget()");
-        //     this.hideWidget("MYWidget()");
-        //     this.showWidget("ColorWidget()");
-        // } else if (this.selectedTheme === WIN_20) {
-        //     this.hideWidget("ColorWidget()");
-        //     this.hideWidget("MYWidget()");
-        //     this.showWidget("Win20Widget()");
-        // } else if (this.selectedTheme === MATERIAL_YOU) {
-        //     this.hideWidget("ColorWidget()");
-        //     this.hideWidget("Win20Widget()");
-        //     this.showWidget("MYWidget()");
-        // } else {
-        //     this.hideWidget("Win20Widget()");
-        //     this.hideWidget("MYWidget()");
-        //     this.hideWidget("ColorWidget()");
-        // }
     }
 
     hideWidget(functionName) {

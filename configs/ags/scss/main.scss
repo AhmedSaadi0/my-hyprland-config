@@ -1,4 +1,4 @@
-@import './themes/win20.scss';
+@import './themes/colors.scss';
 
 .unset {
     all: unset;
@@ -23,7 +23,7 @@
     margin-bottom: $bar-bottom-margin + 0.1rem;
     margin-right: 4px;
     margin-left: 8px;
-    background-color: $workspace-background;
+    background: $workspace-background;
     border-radius: $border-radius;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -31,7 +31,7 @@
 }
 
 .workspaces button {
-    background-color: $workspace-background;
+    background: $workspace-background;
     color: $workspace-btn;
     border: 0rem;
 }
@@ -64,7 +64,7 @@
 
 
 .workspaces button:hover {
-    background-color: $workspace-hover-background;
+    background: $workspace-hover-background;
     color: $workspace-hover-color;
 }
 
@@ -120,13 +120,13 @@
 }
 
 .bar-bg {
-    background-color: rgba(#000000, 0.0);
+    background: rgba(#000000, 0.0);
     min-height: 8px;
     border-radius: 0rem;
 }
 
 .bar {
-    background-color: $bar-background;
+    background: $bar-background;
     color: $bar-color;
     min-height: 8px;
     border-radius: 0rem;
@@ -135,18 +135,18 @@
 
 .small-shadow {
     box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
-    transition-property: background-color;
+    transition-property: background;
     transition-duration: .5s;
 }
 
 .shadow {
     // box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.3);
-    // transition-property: background-color;
+    // transition-property: background;
     // transition-duration: 0.5s;
 
     box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
     // box-shadow: 1px 1px 4px 4px rgba(0, 0, 0, 0.3);
-    transition-property: background-color;
+    transition-property: background;
     transition-duration: .5s;
 }
 
@@ -169,7 +169,7 @@
     margin-top: 0.2em;
     margin-bottom: 0.2em;
     margin-right: 0.2em;
-    background-color: $wifi-name-background;
+    background: $wifi-name-background;
     color: $wifi-name-color;
     font-weight: bold;
     border-top-right-radius: $border-radius;
@@ -183,14 +183,14 @@
     margin-bottom: 0.2em;
     padding-right: 0.5em;
     padding-left: 0.6em;
-    background-color: $wifi-icon-background;
+    background: $wifi-icon-background;
     color: $wifi-icon-color;
     border-top-left-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
 }
 
 .systray {
-    background-color: $systray-background;
+    background: $systray-background;
     border-radius: $border-radius;
     margin-top: $bar-top-margin + 0.1rem;
     margin-bottom: $bar-top-margin + 0.1rem;
@@ -199,7 +199,7 @@
 }
 
 .systray button {
-    background-color: $systray-btn-background;
+    background: $systray-btn-background;
     border-radius: $border-radius;
     padding-right: 0.6rem;
     padding-left: 0.4rem;
@@ -208,7 +208,7 @@
 }
 
 .systray button:hover {
-    background-color: $systray-btn-hover-background;
+    background: $systray-btn-hover-background;
 }
 
 .tray-btn {
@@ -219,11 +219,11 @@
 /* -------------- Battery -------------- */
 /* ------------------------------------- */
 .battery {
-    background-color: $battery-background;
+    background: $battery-background;
     color: $battery-color;
-    min-width: 20px;
-    min-height: 20px;
-    font-size: 3px;
+    min-width: 1.5rem;
+    min-height: 0.5rem;
+    font-size: 0.2rem;
 }
 
 @keyframes colorChange {
@@ -242,22 +242,16 @@
 
 .battery-inner {
     color: $battery-inner-color;
-    margin-top: 0.2em;
-    margin-right: 0.3em;
-    margin-bottom: 0.2em;
     font-family: $icon-font-family;
-    min-width: 2px;
-    font-size: 2.0em;
+    // margin-right: 0.13rem;
+    font-size: 0.4rem;
 }
 
 .battery-inner-charging {
     color: $battery-inner-color;
-    margin-top: 0.2em;
-    margin-right: 0.2em;
-    margin-bottom: 0.2em;
     font-family: $icon-font-family;
-    min-width: 2px;
-    font-size: 2.0em;
+    // margin-right: 0.13rem;
+    font-size: 0.4rem;
     animation: colorChange 2.0s infinite;
 }
 
@@ -265,32 +259,29 @@
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-    background-color: $cpu-background;
+    background: $cpu-background;
     color: $cpu-color;
-    min-width: 20px;
-    min-height: 20px;
-    font-size: 3px;
+    min-width: 1.5rem;
+    min-height: 0.1rem;
+    font-size: 0.2rem;
 }
 
 .cpu-inner {
     color: $cpu-inner-color;
-    margin-top: 0.2em;
-    margin-right: 0.3em;
-    margin-bottom: 0.2em;
     font-family: $icon-font-family;
-    min-width: 2px;
-    font-size: 2.0em;
+    // margin-right: 0.13rem;
+    font-size: 0.4rem;
 }
 
 /* ---------------------------------- */
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-    background-color: $temp-background;
+    background: $temp-background;
     color: $temp-color;
-    min-width: 20px;
-    min-height: 20px;
-    font-size: 3px;
+    min-width: 1.5rem;
+    min-height: 0.1rem;
+    font-size: 0.2rem;
 }
 
 .no-hover:hover {
@@ -299,33 +290,27 @@
 
 .temp-inner {
     color: $temp-inner-color;
-    margin-top: 0.2em;
     font-family: $icon-font-family;
-    margin-right: 0.3em;
-    margin-bottom: 0.2em;
-    min-width: 2px;
-    font-size: 2.0em;
+    // margin-right: 0.13rem;
+    font-size: 0.4rem;
 }
 
 /* --------------------------------- */
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-    background-color: $ram-background;
+    background: $ram-background;
     color: $ram-color;
-    min-width: 20px;
-    min-height: 20px;
-    font-size: 3px;
+    min-width: 1.5rem;
+    min-height: 0.1rem;
+    font-size: 0.2rem;
 }
 
 .ram-inner {
     color: $ram-inner-color;
     font-family: $icon-font-family;
-    margin-top: 0.2em;
-    margin-right: 0.3em;
-    margin-bottom: 0.2em;
-    min-width: 2px;
-    font-size: 2.0em;
+    // margin-right: 0.13rem;
+    font-size: 0.4rem;
 }
 
 /* ------------------------------------------ */
@@ -340,7 +325,7 @@
     border-radius: $border-radius;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin + 0.1rem;
-    margin-right: 0em;
+    // margin-right: 0em;
 }
 
 
@@ -360,7 +345,7 @@
 }
 
 .vol-osd {
-    background-color: $vol-osd-background;
+    background: $vol-osd-background;
     padding: 1rem;
     padding-left: 1.5rem;
     border-radius: $border-radius;
@@ -370,18 +355,18 @@
 
 scale trough highlight {
     border-radius: $border-radius;
-    background-color: $scale-highlight-background;
+    background: $scale-highlight-background;
 }
 
 scale slider {
-    background-color: $scale-slider-background;
+    background: $scale-slider-background;
 }
 
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
 .notifications-revealer-box {
-    background-color: $notifications-revealer-box-background;
+    background: $notifications-revealer-box-background;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin;
     border-radius: $border-radius;
@@ -398,31 +383,30 @@ scale slider {
 }
 
 .notifications-popup-list {
-    background-color: $notifications-popup-list-background;
+    background: $notifications-popup-list-background;
     border-radius: $border-radius;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    margin-left: 2rem;
+    min-height: 0.001rem;
+    min-width: 0.001rem;
 }
 
 // .notification-close-button {
-//     background-color: $secondary-background-color;
+//     background: $secondary-background;
 // }
 
 // .notification-close-button:hover {
-//     background-color: $primary-color;
+//     background: $primary-color;
 // }
 
 window {
     border-radius: $border-radius;
-    background-color: rgba(0, 0, 0, 0.0);
+    background: rgba(0, 0, 0, 0.0);
 }
 
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
 .left-menu-box {
-    background-color: $menu-box-background;
+    background: $menu-box-background;
     // min-width: 18rem;
     // min-height: 32rem;
     border-radius: $border-radius;
@@ -434,7 +418,7 @@ window {
 
     // box-shadow: 1px 1px 2px 2px rgba(#000000, 0.3);
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
-    transition-property: background-color;
+    transition-property: background;
     transition-duration: 1.5s;
 
 }
@@ -471,7 +455,7 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-    background-color: $theme-box-background;
+    background: $theme-box-background;
     margin: 1rem;
     padding: 1rem;
     border-radius: $border-radius;
@@ -489,13 +473,29 @@ window {
 
 .theme-btn {
     border-radius: $border-radius;
-    background-color: $menu-btn-background;
+    background: $menu-btn-background;
     border-color: $menu-btn-background;
+    font-family: $icon-font-family;
 }
 
 .theme-btn:hover {
     border-radius: $border-radius;
-    background-color: $menu-btn-hover;
+    background: $menu-btn-hover;
+    font-family: $icon-font-family;
+}
+
+.theme-btn-icon {
+    font-family: "Font Awesome 5 Free Solid";
+    // background-color: #5e6466;
+    min-width: 2rem;
+    // margin-right: -0.5rem;
+}
+
+.theme-btn-label{
+    // background: #55393a;
+    min-width: 3rem;
+    // padding-right: 0.5rem;
+    // margin-right: 0.5rem;
 }
 
 .menu-button {
@@ -507,18 +507,18 @@ window {
     padding-bottom: 0rem;
     margin-left: 0.5rem;
 
-    background-color: $menu-btn-background;
+    background: $menu-btn-background;
     font-family: $icon-font-family;
     padding-left: 0.8rem;
     padding-right: 0.8rem;
 }
 
 .menu-button:hover {
-    background-color: $menu-btn-hover;
+    background: $menu-btn-hover;
 }
 
 .power-box {
-    background-color: $power-box-background;
+    background: $power-box-background;
     margin: 1rem;
     padding: 1rem;
     border-radius: $border-radius;
@@ -542,7 +542,7 @@ window {
     margin-top: 1rem;
     padding: 1rem;
     border-radius: $border-radius;
-    background-color: #0C0023;
+    background: #0C0023;
 }
 
 /* ------------------------------------------------------- */
@@ -576,7 +576,7 @@ window {
 }
 
 .my-weather-wd-icon {
-    // background-color: #E9C7C6;
+    // background: #E9C7C6;
     color: #2d293d;
     font-size: xx-large;
     margin-left: 1rem;
@@ -585,14 +585,14 @@ window {
 }
 
 .my-wd-user-icon {
-    // background-color: rgba(#E9C7C6, 1);
+    // background: rgba(#E9C7C6, 1);
     padding: 0.8rem;
     margin-right: 1rem;
     border-radius: 3rem;
 }
 
 .my-weather-wd-title-text-box {
-    // background-color: #E9C7C6;
+    // background: #E9C7C6;
     min-width: 10.55rem;
     padding-top: 1rem;
     color: #3F3A57;
@@ -603,7 +603,7 @@ window {
 
 // Desktop M-U Weather Days
 .my-weather-wd-row-two {
-    background-color: #E9C7C6;
+    background: #E9C7C6;
 
     margin: 1rem;
 
@@ -618,7 +618,7 @@ window {
 }
 
 .my-fuzzy-clock-box{
-    background-color: #E9C7C6;
+    background: #E9C7C6;
 
     margin: 1rem;
 
@@ -657,7 +657,7 @@ window {
 }
 
 .my-weather-wd-day-box {
-    background-color: #97A9AD;
+    background: #97A9AD;
     border-radius: 3rem;
     padding-top: 0.4rem;
     padding-left: 0.4rem;
@@ -704,7 +704,7 @@ window {
 }
 
 .music-wd-player {
-    background-color: $music-wd-player-bg;
+    background: $music-wd-player-bg;
     padding-left: 0.4rem;
     padding-right: 0.7rem;
     padding-top: 0.2rem;
@@ -729,7 +729,7 @@ window {
 
 // .music-wd-progress trough highlight {
 //     border-radius: 0px;
-//     background-color: #000000;
+//     background: #000000;
 // }
 
 // .music-wd-progress slider {
@@ -821,7 +821,7 @@ window {
 }
 
 .wd-fuzzy-clock-box {
-    // background-color: #1aa14e;
+    // background: #1aa14e;
 }
 
 .saying-wd-label {
