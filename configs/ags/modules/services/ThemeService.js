@@ -1,4 +1,4 @@
-import ThemesDictionary, { COLOR_THEME, MATERIAL_YOU, SIBERIAN_THEME, WIN_20 } from "../theme/themes.js";
+import ThemesDictionary, { WIN_20 } from "../theme/themes.js";
 import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';
@@ -195,10 +195,12 @@ class ThemeService extends Service {
 
     showDesktopWidget(widget) {
         let oldTheme = ThemesDictionary[this.selectedTheme];
-        if (oldTheme.desktop_widget !== widget) {
+        if (oldTheme.desktop_widget !== widget && oldTheme.desktop_widget !== null) {
             this.hideWidget(oldTheme.desktop_widget);
         }
-        this.showWidget(widget);
+        if (widget !== null) {
+            this.showWidget(widget);
+        }
     }
 
     hideWidget(functionName) {

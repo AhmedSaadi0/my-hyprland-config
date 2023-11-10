@@ -2,14 +2,16 @@
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 button {
-  background-color: #1F1635;
-  color: #bdddee;
-  border-color: #1F1635; }
+  background-color: #2D293B;
+  color: #ceceff;
+  border-color: #2D293B;
+  border-radius: 1.5rem; }
 
 button:hover {
-  background-color: #1ed4fd;
-  color: #154a63;
-  border-color: #1ed4fd; }
+  background-color: #ECBFBD;
+  color: #2D293B;
+  border-color: #ECBFBD;
+  border-radius: 1.5rem; }
 
 .unset {
   all: unset; }
@@ -21,7 +23,7 @@ button:hover {
 /* -------------- Workspace -------------- */
 /* --------------------------------------- */
 .workspaces button:active {
-  color: #1ed4fd;
+  color: #ECBFBD;
   border-radius: 0px; }
 
 .workspaces {
@@ -31,20 +33,20 @@ button:hover {
   margin-bottom: 0.4rem;
   margin-right: 4px;
   margin-left: 8px;
-  background: #1F1635;
-  border-radius: 0.8rem;
+  background: #2D293B;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
 
 .workspaces button {
-  background: #1F1635;
-  color: #bdddee;
+  background: #2D293B;
+  color: #ceceff;
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #1ed4fd;
-  color: #1ed4fd;
+  border-bottom: 1px solid #EADDA0;
+  color: #EADDA0;
   font-family: "Font Awesome 5 Free Solid";
   border-radius: 0px;
   padding-top: 0px;
@@ -61,17 +63,17 @@ button:hover {
   border-radius: 0px; }
 
 .workspaces button.has-windows {
-  color: #1ed4fd; }
+  color: #EADDA0; }
 
 .workspaces button:hover {
-  background: rgba(255, 0, 255, 0.9);
-  color: rgba(31, 22, 53, 0.9); }
+  background: rgba(240, 175, 225, 0.9);
+  color: rgba(45, 41, 59, 0.9); }
 
 .clock {
   font-size: 1em;
-  background: linear-gradient(to right, #ff00ff, #1ed4fd);
-  color: #1F1635;
-  border-radius: 0.8rem;
+  background: linear-gradient(to right, #A4B9EF, #F0AFE1);
+  color: #2D293B;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   padding-left: 1em;
@@ -79,9 +81,9 @@ button:hover {
 
 .bar-prayer-times-box {
   font-size: 1em;
-  background: linear-gradient(to right, #82D8D2, #478DD7);
-  color: #1F1635;
-  border-radius: 0.8rem;
+  background: linear-gradient(to right, #EADDA0, #F0AFE1);
+  color: #2D293B;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.7rem;
@@ -95,9 +97,9 @@ button:hover {
 
 .bar-weather-box {
   font-size: 1em;
-  background: linear-gradient(to right, #25F7E2, #CDD4AF);
-  color: #1F1635;
-  border-radius: 0.8rem;
+  background: linear-gradient(to right, #F0AFE1, #E28C8C);
+  color: #2D293B;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.7rem;
@@ -115,8 +117,8 @@ button:hover {
   border-radius: 0rem; }
 
 .bar {
-  background: #352558;
-  color: #bdddee;
+  background: #1B1923;
+  color: #ceceff;
   min-height: 8px;
   border-radius: 0rem;
   margin-bottom: 0.5rem; }
@@ -132,10 +134,10 @@ button:hover {
   transition-duration: .5s; }
 
 .internet-box {
-  background: linear-gradient(to right, #82D8D2, #478DD7);
-  color: #352558;
+  background: linear-gradient(to right, #C6AAE8, #ECBFBD);
+  color: #2D293B;
   /* min-width: 100px; */
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.7rem;
@@ -148,11 +150,11 @@ button:hover {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   margin-right: 0.2em;
-  background: #352558;
-  color: #bdddee;
+  background: #1B1923;
+  color: #ceceff;
   font-weight: bold;
-  border-top-right-radius: 0.8rem;
-  border-bottom-right-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
 
 .wifi-icon-strength {
   font-family: "Font Awesome 5 Free Solid";
@@ -161,28 +163,28 @@ button:hover {
   margin-bottom: 0.2em;
   padding-right: 0.5em;
   padding-left: 0.6em;
-  background: #352558;
-  color: #bdddee;
-  border-top-left-radius: 0.8rem;
-  border-bottom-left-radius: 0.8rem; }
+  background: #1B1923;
+  color: #ceceff;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .systray {
-  background: #1F1635;
-  border-radius: 0.8rem;
+  background: #2D293B;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button {
-  background: #1F1635;
-  border-radius: 0.8rem;
+  background: #2D293B;
+  border-radius: 1.5rem;
   padding-right: 0.6rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background: #1ed4fd; }
+  background: #EADDA0; }
 
 .tray-btn {
   border: 0rem; }
@@ -191,27 +193,27 @@ button:hover {
 /* -------------- Battery -------------- */
 /* ------------------------------------- */
 .battery {
-  background: #1F1635;
-  color: #1ed4fd;
+  background: #2D293B;
+  color: #B3E1A3;
   min-width: 1.5rem;
   min-height: 0.5rem;
   font-size: 0.2rem; }
 
 @keyframes colorChange {
   0% {
-    color: #1ed4fd; }
+    color: #B3E1A3; }
   50% {
-    color: #1F1635; }
+    color: #2D293B; }
   100% {
-    color: #1ed4fd; } }
+    color: #B3E1A3; } }
 
 .battery-inner {
-  color: #1ed4fd;
+  color: #B3E1A3;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
 .battery-inner-charging {
-  color: #1ed4fd;
+  color: #B3E1A3;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem;
   animation: colorChange 2.0s infinite; }
@@ -220,14 +222,14 @@ button:hover {
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: #1F1635;
-  color: #b18dff;
+  background: #2D293B;
+  color: #EADDA0;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
 
 .cpu-inner {
-  color: #b18dff;
+  color: #EADDA0;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -235,8 +237,8 @@ button:hover {
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: #1F1635;
-  color: #ff00ff;
+  background: #2D293B;
+  color: #F0AFE1;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
@@ -245,7 +247,7 @@ button:hover {
   all: unset; }
 
 .temp-inner {
-  color: #ff00ff;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -253,14 +255,14 @@ button:hover {
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: #1F1635;
-  color: #C1C4EB;
+  background: #2D293B;
+  color: #EADDA0;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
 
 .ram-inner {
-  color: #C1C4EB;
+  color: #EADDA0;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -268,12 +270,12 @@ button:hover {
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: #1F1635;
+  background: #2D293B;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.4rem; }
 
@@ -281,7 +283,7 @@ button:hover {
 /* -------------- Volume -------------- */
 /* ------------------------------------ */
 .volume {
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
@@ -291,55 +293,55 @@ button:hover {
   margin-left: 1em; }
 
 .vol-osd {
-  background: #352558;
+  background: #1B1923;
   padding: 1rem;
   padding-left: 1.5rem;
-  border-radius: 0.8rem;
-  border: 0.1rem solid #1ed4fd;
+  border-radius: 1.5rem;
+  border: 0.1rem solid #C6AAE8;
   margin: 1.5rem; }
 
 scale trough highlight {
-  border-radius: 0.8rem;
-  background: #1ed4fd; }
+  border-radius: 1.5rem;
+  background: #ECBFBD; }
 
 scale slider {
-  background: #1ed4fd; }
+  background: #ECBFBD; }
 
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
 .notifications-revealer-box {
-  background: #154a63;
+  background: #2D293B;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   margin-left: 0.7rem;
   margin-right: 0rem; }
 
 .notification-popups {
-  border: 0.1rem solid #1ed4fd;
-  border-radius: 0.8rem;
-  padding: 1rem; }
+  border: 0.1rem solid #ECBFBD;
+  border-radius: 1.5rem;
+  padding: 1rem;
+  background: #1B1923; }
 
 .notifications-popup-list {
-  background: #352558;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   min-height: 0.001rem;
   min-width: 0.001rem; }
 
 window {
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   background: rgba(0, 0, 0, 0); }
 
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
 .left-menu-box {
-  background: #352558;
-  border-radius: 0.8rem;
-  border: 2px solid #1ed4fd;
+  background: #1B1923;
+  border-radius: 1.5rem;
+  border: 2px solid #ECBFBD;
   margin-top: 0.45rem;
   margin-left: 0.45rem;
   margin-bottom: 1rem;
@@ -351,20 +353,20 @@ window {
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 0.8rem;
-  border-top-right-radius: 0.8rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   min-width: 23rem;
   min-height: 12rem; }
 
 .profile-box {
-  background: linear-gradient(to right, rgba(162, 128, 255, 0.8), rgba(119, 76, 240, 0.6));
-  color: #1F1635;
+  background: linear-gradient(to right, rgba(240, 175, 225, 0.9), rgba(234, 221, 160, 0.6));
+  color: #1B1923;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: -3rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -376,29 +378,31 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-  background: #241546;
+  background: #2D293B;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .selected-theme {
-  background: linear-gradient(to right, #9359ff, #FF00AA);
-  color: #352558; }
+  background: linear-gradient(to right, #F0AFE1, #A4B9EF);
+  color: #1B1923;
+  border-radius: 1.5rem; }
 
 .selected-theme:hover {
-  background: linear-gradient(to right, #ff9900, #ff6600);
-  color: #154a63; }
+  background: linear-gradient(to right, #EADDA0, #ff55ff);
+  color: #2D293B;
+  border-radius: 1.5rem; }
 
 .theme-btn {
-  border-radius: 0.8rem;
-  background: #352558;
-  border-color: #352558;
-  font-family: "Font Awesome 5 Free Solid"; }
+  border-radius: 1.5rem;
+  background: #1B1923;
+  border-color: #1B1923;
+  border-radius: 1.5rem; }
 
 .theme-btn:hover {
-  border-radius: 0.8rem;
-  background: #1ed4fd;
-  font-family: "Font Awesome 5 Free Solid"; }
+  border-radius: 1.5rem;
+  background: #ECBFBD;
+  border-radius: 1.5rem; }
 
 .theme-btn-icon {
   font-family: "Font Awesome 5 Free Solid";
@@ -408,26 +412,26 @@ window {
   min-width: 3rem; }
 
 .menu-button {
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
   margin-left: 0.5rem;
-  background: #352558;
+  background: #1B1923;
   font-family: "Font Awesome 5 Free Solid";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
 
 .menu-button:hover {
-  background: #1ed4fd; }
+  background: #ECBFBD; }
 
 .power-box {
-  background: #1F1635;
+  background: #2D293B;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 /* ----------------------------------------------- */
 /* -------------- Notification menu -------------- */
@@ -435,8 +439,8 @@ window {
 .notification-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 0.8rem;
-  border-top-right-radius: 0.8rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   min-width: 23rem;
   min-height: 12rem; }
 
@@ -445,7 +449,7 @@ window {
   margin-right: 1rem;
   margin-top: 1rem;
   padding: 1rem;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   background: #0C0023; }
 
 /* ------------------------------------------------------- */
@@ -541,18 +545,18 @@ window {
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 .music-wd-box {
-  background: linear-gradient(to right, #8e52ff, #0088ff);
+  background: linear-gradient(to right, #2D293B, #2D293B);
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .left-menu-music-wd {
-  background: linear-gradient(to right, #8e52ff, #0088ff);
-  border-radius: 0.8rem;
+  background: linear-gradient(to right, #2D293B, #2D293B);
+  border-radius: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
-  padding-right: 1.3rem;
+  padding-right: 2.1rem;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-bottom: 1rem; }
@@ -568,22 +572,22 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background: #1F1635;
+  background: #2D293B;
   padding-left: 0.4rem;
   padding-right: 0.7rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #C1C4EB;
+  color: #EADDA0;
   border-radius: 1rem;
   min-width: 2rem; }
 
 .music-wd-title {
-  color: #1F1635;
+  color: #ECBFBD;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem; }
 
 .music-wd-file-name {
-  color: #C1C4EB;
+  color: #EADDA0;
   font-size: x-small; }
 
 .music-wd-button {
@@ -591,38 +595,38 @@ window {
   border-radius: 50%;
   min-width: 40px;
   min-height: 40px;
-  background: linear-gradient(to right, #352558, #352558);
-  color: #C1C4EB;
+  background: linear-gradient(to right, #1B1923, #1B1923);
+  color: #EADDA0;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button:hover {
-  background: linear-gradient(to top, #1ed4fd, #ff00ff); }
+  background: linear-gradient(to top, #ECBFBD, #F0AFE1); }
 
 .music-wd-button-play {
-  background: linear-gradient(to right, #9359ff, #FF00AA);
-  color: #1F1635;
+  background: linear-gradient(to right, #F0AFE1, #A4B9EF);
+  color: #2D293B;
   border-radius: 3rem;
   min-height: 40px;
   min-width: 80px;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button-stop {
-  background: linear-gradient(to right, #352558, #352558);
-  color: #C1C4EB;
+  background: linear-gradient(to right, #1B1923, #1B1923);
+  color: #EADDA0;
   border-radius: 3rem;
   min-height: 40px;
   min-width: 80px;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button-play:hover {
-  background: linear-gradient(to top, #1ed4fd, #ff00ff); }
+  background: linear-gradient(to top, #ECBFBD, #F0AFE1); }
 
 /* ----------------------------------------- */
 /* -------------- Fuzzy clock -------------- */
 /* ----------------------------------------- */
 .wd-fuzzy-day-box {
   background: rgba(0, 0, 0, 0);
-  color: #ff00ff; }
+  color: #F0AFE1; }
 
 .wd-fuzzy-day-icon {
   font-size: 2rem;
@@ -637,13 +641,13 @@ window {
 .wd-time-now {
   font-size: 2.3rem;
   background: rgba(0, 0, 0, 0);
-  color: #FFB431;
+  color: #ECBFBD;
   font-family: "VEXA light R";
   margin: 0rem 0rem 0.5rem 0rem; }
 
 .wd-fuzzy-time-box {
   background: rgba(0, 0, 0, 0);
-  color: #1ed4fd; }
+  color: #EADDA0; }
 
 .wd-fuzzy-time-icon {
   font-size: 1.5rem;
@@ -657,7 +661,7 @@ window {
 .saying-wd-label {
   min-width: 25rem;
   font-size: 1.8rem;
-  color: #31ff87;
+  color: #F0AFE1;
   background: rgba(0, 0, 0, 0);
   font-family: "VIP Rawy Regular";
   padding: 0rem;
@@ -665,7 +669,7 @@ window {
   border-radius: 0rem; }
 
 .desktop-wd-separator {
-  background: linear-gradient(to bottom, #ff00ff, #FFB431, #1ed4fd);
+  background: linear-gradient(to bottom, #F0AFE1, #EADDA0, #ECBFBD);
   min-height: 1px;
   min-width: 1px; }
 
@@ -676,7 +680,7 @@ window {
   font-size: 1.5rem; }
 
 .desktop-wd-music-player-title {
-  color: #1ed4fd; }
+  color: #ECBFBD; }
 
 .desktop-wd-music-player-artist {
-  color: #ff00ff; }
+  color: #EADDA0; }

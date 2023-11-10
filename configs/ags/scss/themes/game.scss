@@ -133,7 +133,8 @@ $vol-osd-border-color: $border-color;
 // -----------------------------
 // --------- GTK Scale ---------
 // -----------------------------
-$scale-highlight-background: $fg-one;
+// $scale-highlight-background: $border-color;
+$scale-highlight-background: $fg-three;
 $scale-slider-background: $scale-highlight-background;
 
 
