@@ -41,7 +41,7 @@ const win_20 = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(EF58BDff) rgba(08fbffff) 0deg",
+        "active_border": "rgba(EB08FBff) rgba(16D7BAff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 8,
         "drop_shadow": "no",
@@ -164,7 +164,55 @@ const game = {
         "kitty": "kitty.conf",
         "konsole": "game",
     },
-    desktop_widget: "",
+    desktop_widget: null,
+}
+
+const dark = {
+    wallpaper: `${WALLPAPER_PATH}/dark.jpg`,
+    css_theme: "dark.scss",
+    plasma_color: "DarkAGS.colors",
+    qt_style_theme: "Breeze",
+    qt_icon_theme: "oomox-aesthetic-dark",
+    kvantum_theme: "a-color",
+    gtk_theme: "Orchis-Orange-Dark-Compact",
+    // gtk_theme: "Tokyonight-Dark-BL",
+    gtk_icon_theme: "oomox-aesthetic-dark",
+    // rofi_theme: "colors_theme.rasi",
+    gtk_mode: "dark",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(ff9a4cff) rgba(5af009ff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 8,
+        "drop_shadow": "no",
+        "kitty": "kitty.conf",
+        "konsole": "dark",
+    },
+    desktop_widget: "Win20Widget",
+}
+
+const uniCat = {
+    wallpaper: `${WALLPAPER_PATH}/unicat.png`,
+    css_theme: "unicat.scss",
+    plasma_color: "Unicat.colors",
+    qt_style_theme: "Breeze",
+    qt_icon_theme: "oomox-aesthetic-dark",
+    kvantum_theme: "a-color",
+    // gtk_theme: "Orchis-Orange-Dark-Compact",
+    gtk_theme: "Tokyonight-Dark-BL",
+    gtk_icon_theme: "oomox-aesthetic-dark",
+    // rofi_theme: "colors_theme.rasi",
+    gtk_mode: "dark",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(ECBFBDff) rgba(F0AFE1ff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 17,
+        "drop_shadow": "no",
+        "kitty": "kitty.conf",
+        "konsole": "unicat",
+    },
+    desktop_widget: "Win20Widget",
 }
 
 export const BLACK_HOLE_THEME = 0;
@@ -174,6 +222,8 @@ export const SIBERIAN_THEME = 3;
 export const MATERIAL_YOU = 4;
 export const WIN_20 = 5;
 export const GAME_THEME = 6;
+export const DARK_THEME = 7;
+export const UNICAT_THEME = 8;
 
 const ThemesDictionary = {
     [BLACK_HOLE_THEME]: black_hole,
@@ -183,6 +233,8 @@ const ThemesDictionary = {
     [MATERIAL_YOU]: materialYou,
     [WIN_20]: win_20,
     [GAME_THEME]: game,
+    [DARK_THEME]: dark,
+    [UNICAT_THEME]: uniCat,
 }
 
 export default ThemesDictionary

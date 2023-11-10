@@ -1,4 +1,4 @@
-@import './themes/colors.scss';
+@import './themes/unicat.scss';
 
 .unset {
     all: unset;
@@ -353,6 +353,10 @@
     margin: 1.5rem;
 }
 
+// scale trough {
+//     border-radius: $border-radius;
+//     background: $scale-highlight-background;
+// }
 scale trough highlight {
     border-radius: $border-radius;
     background: $scale-highlight-background;
@@ -360,6 +364,8 @@ scale trough highlight {
 
 scale slider {
     background: $scale-slider-background;
+    // min-width: 1px;
+    // min-height: 1px;  
 }
 
 /* ------------------------------------------- */
@@ -380,10 +386,10 @@ scale slider {
     border: $border-size solid $notifications-border;
     border-radius: $border-radius;
     padding: 1rem;
+    background: $notifications-popup-list-background;
 }
 
 .notifications-popup-list {
-    background: $notifications-popup-list-background;
     border-radius: $border-radius;
     min-height: 0.001rem;
     min-width: 0.001rem;
@@ -464,38 +470,37 @@ window {
 .selected-theme {
     background: $selected-theme-background;
     color: $selected-theme-color;
+    border-radius: $border-radius;
 }
 
 .selected-theme:hover {
     background: $selected-theme-hover-background;
     color: $selected-theme-hover-color;
+    border-radius: $border-radius;
 }
 
 .theme-btn {
     border-radius: $border-radius;
     background: $menu-btn-background;
     border-color: $menu-btn-background;
-    font-family: $icon-font-family;
+    border-radius: $border-radius;
 }
 
 .theme-btn:hover {
     border-radius: $border-radius;
     background: $menu-btn-hover;
-    font-family: $icon-font-family;
+    border-radius: $border-radius;
 }
 
 .theme-btn-icon {
-    font-family: "Font Awesome 5 Free Solid";
-    // background-color: #5e6466;
+    font-family: $icon-font-family;
+    // color: $text-color;
     min-width: 2rem;
-    // margin-right: -0.5rem;
 }
 
 .theme-btn-label{
-    // background: #55393a;
+    // color: $text-color;
     min-width: 3rem;
-    // padding-right: 0.5rem;
-    // margin-right: 0.5rem;
 }
 
 .menu-button {

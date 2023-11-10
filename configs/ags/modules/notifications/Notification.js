@@ -142,7 +142,7 @@ export default (notification) => {
                 className: 'notification-actions',
                 children: notification.actions.map(action => Button({
                     onHover: hover,
-                    style: `margin-top: 1rem;`,
+                    style: `margin-bottom: 0.5rem; margin-top: 1rem; margin-left: 0.5rem; margin-right: 0.5rem`,
                     className: 'action-button',
                     onClicked: () => Notifications.invoke(notification.id, action.id),
                     hexpand: true,

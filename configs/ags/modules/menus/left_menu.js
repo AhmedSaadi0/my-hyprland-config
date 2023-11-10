@@ -1,6 +1,6 @@
 import themeService from '../services/ThemeService.js';
 import ThemesDictionary from "../theme/themes.js";
-import { GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
+import { UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
@@ -47,18 +47,18 @@ const Header = () => {
 const ThemeButton = ({ label, icon, theme, end = "margin-left: 1rem;" }) => {
 
     const _label = Label({
-        className: "theme-btn-label",
+        className: "unset theme-btn-label",
         label: label
     })
 
     const _icon = Label({
-        className: "theme-btn-icon",
+        className: "unset theme-btn-icon",
         label: icon,
         xalign: 0.5,
     })
 
     const box = Box({
-        className: "theme-btn-box",
+        className: "unset theme-btn-box",
         // homogeneous: true,
         children: [
             _label,
@@ -134,6 +134,18 @@ const ThemesButtonsRowOne = () => {
         theme: GAME_THEME,
     });
 
+    const darkTheme = ThemeButton({
+        label: "مظلم",
+        icon: "",
+        theme: DARK_THEME,
+    });
+    const unicatTheme = ThemeButton({
+        label: "قط",
+        icon: "",
+        theme: UNICAT_THEME,
+        end: "",
+    });
+
     const row1 = Box({
         children: [
             blackHoleTheme,
@@ -157,6 +169,8 @@ const ThemesButtonsRowOne = () => {
         `,
         children: [
             gameTheme,
+            darkTheme,
+            unicatTheme
         ]
     })
 
