@@ -136,7 +136,7 @@ const ThemesButtonsRowOne = () => {
 
     const darkTheme = ThemeButton({
         label: "مظلم",
-        icon: "",
+        icon: "󱀝",
         theme: DARK_THEME,
     });
     const unicatTheme = ThemeButton({

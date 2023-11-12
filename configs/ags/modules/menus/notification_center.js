@@ -1,4 +1,4 @@
-import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
+import { Label, Box, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { Notifications } from '../utils/imports.js';
 import Notification from '../menus/MenuNotification.js';
 
@@ -30,19 +30,67 @@ const MenuBox = () => {
                 );
             }
 
-            if (array.length < 1) {
-                notificationList.push(
+            let noNotifications = Box({
+                vertical: true,
+                className: "notification-this-is-all",
+                children: [
                     Label({
-                        className: "notification-this-is-all",
-                        label: "No notification"
+                        className: "no-notification-icon",
+                        // label: "󰂛"
+                        // label: "",
+                        label: "󱇥",
                     }),
-                )
+                    Label({
+                        className: "no-notification-text",
+                        label: "لا يوجد اي اشعارات جديدة",
+                    }),
+                ]
+            })
+
+            if (array.length < 1) {
+                notificationList.push(noNotifications)
             }
 
-            self.children = notificationList;
-
-            self.visible = Notifications.notifications.length > 0;
+            self.children = [...notificationList];
         }]],
+    })
+}
+
+const NotificationHeader = () => {
+
+    return Box({
+        className: 'notification-header-box',
+        // homogeneous: true,
+        spacing: 70,
+        children: [
+            Button({
+                className: "unset notification-center-header-clear",
+                label: "",
+                // label: "",
+                // label: "",
+                // label: "",
+                // label: "",
+                // label: "󰅖",
+                onClicked: () => Notifications.clear(),
+            }),
+            Label({
+                className: "notification-center-header-text",
+                label: "مركز الاشعارات"
+            }),
+            Button({
+                className: "unset notification-center-header-mute",
+                label: "󰂚",
+                onClicked: () => Notifications.dnd = !Notifications.dnd,
+                // label: "",
+            })
+        ],
+        connections: [[Notifications, self => {
+            if (Notifications.dnd) {
+                self.children[2].label = "󰂛";
+            } else {
+                self.children[2].label = "󰂚";
+            }
+        }]]
     })
 }
 
@@ -52,6 +100,7 @@ const menuRevealer = Revealer({
         className: "left-menu-box",
         vertical: true,
         children: [
+            NotificationHeader(),
             MenuBox(),
         ]
     }),
@@ -74,7 +123,7 @@ export const NotificationCenter = () => Window({
 
 globalThis.showNotificationCenter = () => menuRevealer.revealChild = !menuRevealer.revealChild;
 
-// Notification muted  |  | 󰂛 |  
+// Notification muted  |  | 󰂛 |  |  
 // Notification 󰂜 | 󰂚 |  | 
 // Notification Broadcast 󰂞 | 󰂟 | 󰪒 | 
 // Notification has data 
@@ -82,5 +131,14 @@ export const NotificationCenterButton = () => Button({
     className: "notification-center-button",
     // child: Label({ label: "" }),
     label: "",
-    onClicked: () => showNotificationCenter()
+    onClicked: () => showNotificationCenter(),
+    connections: [[Notifications, self => {
+        if (Notifications.dnd) {
+            self.label = "󰂛";
+        } else if (Notifications.notifications.length === 0) {
+            self.label = "󰂚";
+        } else if (Notifications.notifications.length > 0) {
+            self.label = "";
+        }
+    }]]
 });
