@@ -114,7 +114,7 @@ export default (notification) => {
             // onHover: hover,
             style: `margin-bottom: 0.5rem; margin-top: 1rem; margin-left: 0.5rem; margin-right: 0.5rem`,
             className: 'action-button',
-            onClicked: () => Notifications.invoke(notification.id, action.id),
+            onClicked: () => notification.invoke(action.id),
             hexpand: true,
             child: Label(action.label),
         })),
@@ -126,7 +126,8 @@ export default (notification) => {
         onPrimaryClick: () => {
             // hovered.value = false;
             // notification.dismiss();
-            notification.close();
+            // notification.close();
+            // notification.invoke();
         },
         child: Box({
             vertical: true,

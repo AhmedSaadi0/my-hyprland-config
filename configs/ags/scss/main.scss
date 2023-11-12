@@ -539,11 +539,11 @@ window {
     // border-top-right-radius: $border-radius;
     padding: 1rem;
     // min-width: 23rem;
-    // min-height: 12rem;
+    // min-height: 30rem;
 }
 
 .horizontal-line {
-    background: #fff;
+    background: $notifications-separator-background;
     min-height: 1px;
     min-width: 1rem;
     margin-top: 1rem;
@@ -562,14 +562,58 @@ window {
     padding-top: 0rem;
     padding-bottom: 0rem;
     padding-right: 0.8rem;
-    padding-left: 0.8rem;
+    padding-left: 0.6rem;
 }
 
 .notification-this-is-all {
+    color: $text-color;
     margin-top: 1rem;
     margin-bottom: 1rem;
     min-width: 1rem;
     min-height: 1rem;
+}
+
+.no-notification-icon {
+    min-width: 22.5rem;
+    margin-bottom: 1rem;
+    font-family: $icon-font-family;
+}
+
+.no-notification-text {
+    min-width: 22.5rem;
+}
+
+.notification-header-box{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background: $notifications-header-bg;
+    color: $notifications-header-fg;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+}
+
+.notification-center-header-text {
+    min-width: 7.7rem;
+}
+
+.notification-center-header-mute {
+    padding-left: 1rem;
+    padding-right: 1.2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    font-family: $icon-font-family;
+    border-radius: $border-radius;
+}
+
+.notification-center-header-clear {
+    padding-left: 1rem;
+    padding-right: 1.2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-right: 0.7rem;
+    font-family: $icon-font-family;
+    border-radius: $border-radius;
 }
 
 /* ------------------------------------------ */

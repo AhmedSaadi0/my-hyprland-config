@@ -134,6 +134,9 @@ $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
 $notifications-bar-btn-bg: $bg-three;
 $notifications-bar-btn-fg: $fg-two;
+$notifications-header-bg: $bg-two;
+$notifications-header-fg: $text-color;
+$notifications-separator-background: $text-color;
 
 // ----------------------------------
 // --------- desktop-widget ---------
@@ -241,12 +244,14 @@ button {
     background-color: $btn-background;
     color: $btn-color;
     border-color: $btn-background;
+    border-radius: $border-radius;
 }
 
 button:hover {
     background-color: $btn-hover-background;
     color: $btn-hover-color;
     border-color: $btn-hover-background;
+    border-radius: $border-radius;
 }
 
 

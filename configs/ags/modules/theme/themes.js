@@ -124,7 +124,7 @@ const materialYou = {
     qt_style_theme: "Breeze",
     qt_icon_theme: "kora-grey-light-panel",
     kvantum_theme: "a-m-you",
-    gtk_theme: "WhiteSur-Light-solid",
+    gtk_theme: "Cabinet-Light-Orange",
     // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "kora-grey-light-panel",
     // rofi_theme: "light_material_you_theme.rasi",
