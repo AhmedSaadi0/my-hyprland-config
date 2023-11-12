@@ -439,107 +439,33 @@ window {
 .notification-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
-  min-width: 23rem;
-  min-height: 12rem; }
+  padding: 1rem; }
 
-.notification-item {
-  margin-left: 1rem;
-  margin-right: 1rem;
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: 1.5rem;
-  background: #0C0023; }
-
-/* ------------------------------------------------------- */
-/* -------------- Material U Desktop Widget -------------- */
-/* ------------------------------------------------------- */
-.my-weather-wd-text {
-  font-size: medium;
-  color: #2d293d; }
-
-.weather-wd-row-one {
-  background: #DFDCE7;
-  border-radius: 3rem;
-  margin: 1rem;
-  margin-bottom: 0.5rem; }
-
-.my-desktop-music-box {
-  background: #97A9AD;
-  border-radius: 3rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  padding-right: 1.2rem;
-  padding-left: 1rem;
+.horizontal-line {
+  background: #fff;
+  min-height: 1px;
   min-width: 1rem;
-  margin: 1rem;
-  margin-top: 0.5rem; }
+  margin-top: 1rem;
+  margin-bottom: 1rem; }
 
-.my-weather-wd-icon {
-  color: #2d293d;
-  font-size: xx-large;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  font-family: "Font Awesome 5 Free Solid"; }
-
-.my-wd-user-icon {
-  padding: 0.8rem;
-  margin-right: 1rem;
-  border-radius: 3rem; }
-
-.my-weather-wd-title-text-box {
-  min-width: 10.55rem;
-  padding-top: 1rem;
-  color: #3F3A57;
-  font-size: x-large;
-  font-family: "VIP Rawy Regular"; }
-
-.my-weather-wd-row-two {
-  background: #E9C7C6;
-  margin: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  border-radius: 3rem; }
-
-.my-fuzzy-clock-box {
-  background: #E9C7C6;
-  margin: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-right: 1.5rem;
-  padding-left: 1rem;
-  border-radius: 3rem; }
-
-.my-wd-weather-day-name {
-  font-family: "VIP Rawy Regular";
-  color: #2d2a41; }
-
-.my-wd-weather-day-text {
-  font-size: x-small;
+.notification-center-button {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  background: #2D293B;
+  color: #F0AFE1;
+  font-family: "Font Awesome 5 Free Solid";
+  border-radius: 1.5rem;
+  padding: 0rem;
+  padding-top: 0rem;
   padding-bottom: 0rem;
-  color: #2d2a41; }
+  padding-right: 0.8rem;
+  padding-left: 0.8rem; }
 
-.my-weather-wd-day-icon {
-  background: rgba(255, 179, 183, 0.7);
-  color: #2d2a41;
-  padding-right: 0.3rem;
-  padding-left: 0.3rem;
-  border-radius: 10rem;
-  margin-bottom: 0.2rem;
-  min-width: 3rem;
-  min-height: 3.5rem;
-  font-size: x-large;
-  font-family: "Font Awesome 5 Free Solid"; }
-
-.my-weather-wd-day-box {
-  background: #97A9AD;
-  border-radius: 3rem;
-  padding-top: 0.4rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem; }
+.notification-this-is-all {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  min-width: 1rem;
+  min-height: 1rem; }
 
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
@@ -674,7 +600,7 @@ window {
   min-width: 1px; }
 
 .desktop-wd-music-player-box {
-  padding: 1rem 0rem 0rem 0rem;
+  padding: 0rem 0rem 0rem 0rem;
   min-width: 30rem;
   font-family: "VIP Rawy Regular";
   font-size: 1.5rem; }

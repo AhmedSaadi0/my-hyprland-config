@@ -135,6 +135,8 @@ $scale-slider-background: $scale-highlight-background;
 $notifications-border: $fg-one;
 $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
+$notifications-bar-btn-bg: $bg-three;
+$notifications-bar-btn-fg: $fg-two;
 
 // ----------------------------------
 // --------- desktop-widget ---------
@@ -178,7 +180,7 @@ $saying-wd-label-border-radius: 0rem;
 $music-info-wd-font-family: "VIP Rawy Regular";
 $music-info-wd-font-size: 1.5rem;
 $music-info-wd-min-width: 30rem;
-$music-info-wd-padding: 1rem 0rem 0rem 0rem;
+$music-info-wd-padding: 0rem 0rem 0rem 0rem;
 
 $music-info-wd-title-fg: $fg-one;
 $music-info-wd-artist-fg: $fg-three;

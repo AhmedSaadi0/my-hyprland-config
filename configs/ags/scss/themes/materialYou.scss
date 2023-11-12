@@ -132,6 +132,8 @@ $scale-slider-background: $scale-highlight-background;
 $notifications-border: $fg-one;
 $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
+$notifications-bar-btn-bg: $bg-three;
+$notifications-bar-btn-fg: $fg-two;
 
 // ----------------------------------
 // --------- desktop-widget ---------
@@ -245,4 +247,127 @@ button:hover {
     background-color: $btn-hover-background;
     color: $btn-hover-color;
     border-color: $btn-hover-background;
+}
+
+
+
+/* ------------------------------------------------------- */
+/* -------------- Material U Desktop Widget -------------- */
+/* ------------------------------------------------------- */
+
+.my-weather-wd-text {
+    font-size: medium;
+    color: #2d293d;
+}
+
+.weather-wd-row-one {
+    background: #DFDCE7;
+    border-radius: 3rem;
+    margin: 1rem;
+    margin-bottom: 0.5rem;
+    // margin-left: 11.4rem;
+}
+
+.my-desktop-music-box {
+    background: #97A9AD;
+    border-radius: 3rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-right: 1.2rem;
+    padding-left: 1rem;
+    min-width: 1rem;
+    margin: 1rem;
+    margin-top: 0.5rem;
+    // margin-left: 11.3rem;
+}
+
+.my-weather-wd-icon {
+    // background: #E9C7C6;
+    color: #2d293d;
+    font-size: xx-large;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-family: $icon-font-family;
+}
+
+.my-wd-user-icon {
+    // background: rgba(#E9C7C6, 1);
+    padding: 0.8rem;
+    margin-right: 1rem;
+    border-radius: 3rem;
+}
+
+.my-weather-wd-title-text-box {
+    // background: #E9C7C6;
+    min-width: 10.55rem;
+    padding-top: 1rem;
+    color: #3F3A57;
+    font-size: x-large;
+    font-family: $saying-wd-label-font-family;
+}
+
+
+// Desktop M-U Weather Days
+.my-weather-wd-row-two {
+    background: #E9C7C6;
+    margin: 1rem;
+
+    margin-right: 2.5rem;
+    margin-left: 2.5rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: 3rem;
+}
+
+.my-fuzzy-clock-box{
+    background: #E9C7C6;
+
+    margin: 1rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: 3rem;
+}
+
+.my-wd-weather-day-name {
+    font-family: $saying-wd-label-font-family;
+    color: #2d2a41;
+}
+
+.my-wd-weather-day-text {
+    font-size: x-small;
+    padding-bottom: 0rem;
+    color: #2d2a41;
+}
+
+.my-weather-wd-day-icon {
+    background: rgba($color: #FFB3B7, $alpha: 0.7);
+    color: #2d2a41;
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+    border-radius: 10rem;
+    margin-bottom: 0.2rem;
+    min-width: 3rem;
+    min-height: 3.5rem;
+    font-size: x-large;
+    font-family: $icon-font-family;
+}
+
+.my-weather-wd-day-box {
+    background: #97A9AD;
+    border-radius: 3rem;
+    padding-top: 0.4rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
 }

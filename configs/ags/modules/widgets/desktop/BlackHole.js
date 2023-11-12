@@ -72,7 +72,7 @@ const Insider = ({
 const RowTwo = () => {
     return Widget.Box({
         className: "my-weather-wd-row-two small-shadow",
-        spacing: 30,
+        spacing: 16,
         homogeneous: false,
         children: [
         ],
@@ -117,8 +117,8 @@ const DesktopWidget = () => Widget.Box({
 })
 
 const FWidget = () => Widget.Window({
-    name: `desktop_material_you_widget`,
-    margin: [60, 60],
+    name: `desktop_black_hole_widget_widget`,
+    margin: [60, 100],
     layer: 'background',
     visible: false,
     focusable: false,
@@ -126,9 +126,9 @@ const FWidget = () => Widget.Window({
     child: DesktopWidget(),
 })
 
-const materialWidget = FWidget();
+const blackHoleWidget = FWidget();
 
-globalThis.ShowMYWidget = () => materialWidget.visible = true;
-globalThis.HideMYWidget = () => materialWidget.visible = false;
+globalThis.ShowBHWidget = () => blackHoleWidget.visible = true;
+globalThis.HideBHWidget = () => blackHoleWidget.visible = false;
 
-export default materialWidget;
+export default blackHoleWidget;

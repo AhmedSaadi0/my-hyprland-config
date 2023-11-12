@@ -1,56 +1,48 @@
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
+import { Notifications } from '../utils/imports.js';
+import Notification from '../menus/MenuNotification.js';
 
-
-const NotificationItem = () => {
-
-    let title = Label({
-        label: "العنوان",
-        justification: "right",
-        truncate: 'end',
-        xalign: 0,
-        maxWidthChars: 24,
-        wrap: false,
-    })
-
-    let message = Label({
-        label: "نص الرسالة",
-        justification: "right",
-        truncate: 'end',
-        xalign: 0,
-        maxWidthChars: 24,
-        wrap: false,
-    })
-
-    let time = Label({
-        label: "04:57 AM 10/10/2023",
-        justification: "right",
-        truncate: 'end',
-        xalign: 0,
-        maxWidthChars: 24,
-        wrap: false,
-    })
-
-    return Box({
-        className: "notification-item",
-        spacing: 8,
-        vertical: true,
-        children: [
-            title,
-            message,
-            time
-        ]
-    })
-}
 
 const MenuBox = () => {
+
     return Box({
         className: "notification-menu-header",
         vertical: true,
-        children: [
-            NotificationItem(),
-            NotificationItem(),
-            NotificationItem(),
-        ],
+        children: [],
+        connections: [[Notifications, self => {
+
+            let notificationList = [];
+
+            const array = Notifications.notifications.reverse();
+
+            for (let index = 0; index < array.length; index++) {
+                const element = array[index];
+                let line = Box({
+                    className: "horizontal-line"
+                });
+                if (index === array.length - 1) {
+                    line = null;
+                }
+
+                notificationList.push(
+                    Notification(element),
+                    line
+                );
+            }
+
+            if (array.length < 1) {
+                notificationList.push(
+                    Label({
+                        className: "notification-this-is-all",
+                        label: "No notification"
+                    }),
+                )
+            }
+
+            self.children = notificationList;
+
+            self.visible = Notifications.notifications.length > 0;
+        }]],
     })
 }
 
@@ -67,7 +59,7 @@ const menuRevealer = Revealer({
 
 export const NotificationCenter = () => Window({
     name: `notification_center`,
-    margin: [12, 0, 0, 12],
+    margin: [0, 0, 0, 500],
     // layer: 'overlay',
     anchor: ['top', "left"],
     child: Box({
@@ -82,13 +74,13 @@ export const NotificationCenter = () => Window({
 
 globalThis.showNotificationCenter = () => menuRevealer.revealChild = !menuRevealer.revealChild;
 
-// مسجد 
 // Notification muted  |  | 󰂛 |  
 // Notification 󰂜 | 󰂚 |  | 
 // Notification Broadcast 󰂞 | 󰂟 | 󰪒 | 
 // Notification has data 
 export const NotificationCenterButton = () => Button({
-    className: "menu-button",
-    child: Label({ label: "" }),
+    className: "notification-center-button",
+    // child: Label({ label: "" }),
+    label: "",
     onClicked: () => showNotificationCenter()
 });
