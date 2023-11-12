@@ -3,8 +3,8 @@ import { Workspaces } from "./widgets/workspace.js";
 import { Volume } from "./widgets/volume.js";
 import { HardwareBox } from "./widgets/hardware/all.js";
 import { SysTrayBox } from "./widgets/systray.js";
-import NotificationIndicator from "./widgets/NotificationIndicator.js";
-// import { NotificationCenterButton } from "./menus/notification_center.js";
+// import NotificationIndicator from "./widgets/NotificationIndicator.js";
+import { NotificationCenterButton } from "./menus/notification_center.js";
 import { MenuButton } from './menus/left_menu.js'
 
 import { Window, CenterBox, Box, Label } from 'resource:///com/github/Aylur/ags/widget.js';
@@ -103,7 +103,7 @@ const Right = () => Box({
         Workspaces(),
         HardwareBox(),
         PrayerTimes(),
-        NotificationIndicator(),
+        // NotificationIndicator(),
         // ClientTitle(),
     ],
 });
@@ -118,9 +118,9 @@ const Left = () => Box({
     halign: 'end',
     children: [
         // Volume(),
+        NotificationCenterButton(),
         Weather(),
         NetworkInformation(),
-        // NotificationCenterButton(),
         SysTrayBox(),
         MenuButton,
     ],

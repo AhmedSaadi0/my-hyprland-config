@@ -1,4 +1,4 @@
-import ThemesDictionary, { WIN_20 } from "../theme/themes.js";
+import ThemesDictionary, { WIN_20 , UNICAT_THEME } from "../theme/themes.js";
 import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';
@@ -16,7 +16,7 @@ class ThemeService extends Service {
     qtFilePath = `/home/${USER}/.config/qt5ct/qt5ct.conf`;
     plasmaColorChanger = App.configDir + '/modules/theme/bin/plasma-theme';
     plasmaColorsPath = App.configDir + '/modules/theme/plasma-colors/';
-    selectedTheme = WIN_20;
+    selectedTheme = UNICAT_THEME;
     rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
 
     constructor() {
