@@ -12,7 +12,7 @@ const button = Button({
 });
 
 // const progress = Widget.CircularProgress({
-//     style:
+//     css:
 //         'min-width: 50px;' + // its size is min(min-height, min-width)
 //         'min-height: 50px;' +
 //         'font-size: 6px;' + // to set its thickness set font-size on it
@@ -35,7 +35,7 @@ export const BatteryWidget = () => CircularProgress({
     child: button,
     startAt: 0,
     rounded: false,
-    inverted: true,
+    // inverted: true,
     connections: [
         [Battery, batteryProgress => {
 

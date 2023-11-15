@@ -4,7 +4,7 @@ import { Box, Stack, Icon, Slider, Window } from 'resource:///com/github/Aylur/a
 
 export const Volume = () => Box({
     className: 'vol-osd shadow',
-    style: 'min-width: 140px',
+    css: 'min-width: 140px',
     children: [
         Stack({
             className: "vol-stack",
@@ -51,7 +51,7 @@ export const Volume = () => Box({
 export const VolumeOSD = () => Window({
     name: `vol_osd`,
     focusable: false,
-    margin: [0, 0, 140, 0],
+    margins: [0, 0, 140, 0],
     layer: 'overlay',
     popup: true,
     anchor: ['bottom'],

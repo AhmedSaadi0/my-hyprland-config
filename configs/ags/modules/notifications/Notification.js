@@ -7,10 +7,10 @@ import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 const NotificationIcon = ({ appEntry, appIcon, image }) => {
     if (image) {
         return Box({
-            valign: 'start',
+            vpack: 'start',
             hexpand: false,
             className: 'notification-img',
-            style: `
+            css: `
                 background-image: url("${image}");
                 background-size: contain;
                 background-repeat: no-repeat;
@@ -31,17 +31,17 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
         icon = appEntry;
 
     return Box({
-        valign: 'start',
+        vpack: 'start',
         hexpand: false,
-        style: `
+        css: `
                 min-width: 78px;
                 min-height: 78px;
                 margin-left: 1rem;
         `,
         children: [Icon({
             icon, size: 58,
-            halign: 'center', hexpand: true,
-            valign: 'center', vexpand: true,
+            hpack: 'center', hexpand: true,
+            vpack: 'center', vexpand: true,
         })],
     });
 };
@@ -51,7 +51,7 @@ export default (notification) => {
     let timeoutId;
 
     const bodyLabel = Label({
-        style: `margin-top: 1rem;`,
+        css: `margin-top: 1rem;`,
         className: 'notification-description',
         hexpand: true,
         useMarkup: true,
@@ -87,7 +87,7 @@ export default (notification) => {
     });
 
     const content = Box({
-        style: `min-width: 400px;`,
+        css: `min-width: 400px;`,
         children: [
             NotificationIcon(notification),
             Box({
@@ -99,7 +99,7 @@ export default (notification) => {
                             // Notification Title
                             Label({
                                 className: 'notification-title',
-                                style: `margin-left: 1rem;`,
+                                css: `margin-left: 1rem;`,
                                 xalign: 0,
                                 justification: 'left',
                                 hexpand: true,
@@ -112,15 +112,15 @@ export default (notification) => {
                             // Notification Body
                             Label({
                                 className: 'notification-time',
-                                style: `margin-left: 1rem; margin-top: 0.5rem;`,
-                                valign: 'start',
+                                css: `margin-left: 1rem; margin-top: 0.5rem;`,
+                                vpack: 'start',
                                 label: GLib.DateTime.new_from_unix_local(notification.time).format('%H:%M'),
                             }),
                             // Notification Close Button
                             Button({
                                 onHover: hover,
                                 className: 'notification-close-button',
-                                valign: 'start',
+                                vpack: 'start',
                                 child: Icon('window-close-symbolic'),
                                 onClicked: () => { notification.close() },
                             }),
@@ -142,7 +142,7 @@ export default (notification) => {
                 className: 'notification-actions',
                 children: notification.actions.map(action => Button({
                     onHover: hover,
-                    style: `margin-bottom: 0.5rem; margin-top: 1rem; margin-left: 0.5rem; margin-right: 0.5rem`,
+                    css: `margin-bottom: 0.5rem; margin-top: 1rem; margin-left: 0.5rem; margin-right: 0.5rem`,
                     className: 'action-button',
                     onClicked: () => Notifications.invoke(notification.id, action.id),
                     hexpand: true,

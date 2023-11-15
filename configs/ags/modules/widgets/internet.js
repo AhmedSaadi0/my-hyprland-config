@@ -42,11 +42,11 @@ const NetSpeedMeters = () => {
 
             const download = Label({
                 justification: "right",
-                style: "min-width: 60px",
+                css: "min-width: 60px",
             });
             const upload = Label({
                 justification: "right",
-                style: "min-width: 80px",
+                css: "min-width: 80px",
             });
 
             const downloadSpeed = (receivedBytes - prevReceivedBytes) / (TIMEOUT / 1000);

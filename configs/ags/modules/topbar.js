@@ -115,7 +115,7 @@ const Center = () => Box({
 });
 
 const Left = () => Box({
-    halign: 'end',
+    hpack: 'end',
     children: [
         // Volume(),
         NotificationCenterButton(),

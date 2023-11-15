@@ -23,7 +23,7 @@ exec(`sassc ${scss} ${css}`);
 
 
 export default {
-    style: css,
+    css: css,
     cacheNotificationActions: true,
     windows: [
         Bar(),

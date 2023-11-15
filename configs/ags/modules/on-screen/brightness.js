@@ -3,7 +3,7 @@ import { Box, Stack, Icon, Slider, Window } from 'resource:///com/github/Aylur/a
 import App from "resource:///com/github/Aylur/ags/app.js";
 export const Volume = () => Box({
     className: 'vol-osd',
-    style: 'min-width: 140px',
+    css: 'min-width: 140px',
     children: [
         Stack({
             className: "vol-stack",
@@ -72,7 +72,7 @@ export const VolumeOSD = () => Window({
     name: `vol_osd`,
     className: "vol-osd",
     focusable: false,
-    margin: [0, 0, 140, 0],
+    margins: [0, 0, 140, 0],
     layer: 'overlay',
     popup: true,
     anchor: ['bottom'],

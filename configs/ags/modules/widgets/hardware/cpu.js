@@ -16,11 +16,11 @@ const progress = CircularProgress({
     child: button,
     startAt: 0,
     rounded: false,
-    inverted: true,
+    // inverted: true,
 });
 
 export const CpuWidget = () => Box({
-    style: "margin-left: 1.0em;",
+    css: "margin-left: 1.0em;",
     connections: [
         [1000, box => {
             execAsync(`/home/ahmed/.config/ags/scripts/cpu.sh`)

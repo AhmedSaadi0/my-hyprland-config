@@ -17,12 +17,12 @@ const progress = CircularProgress({
     child: button,
     startAt: 0,
     rounded: false,
-    inverted: true,
+    // inverted: true,
 
 });
 
 export const TempWidget = () => Box({
-    style: "margin-right: 1.0em;",
+    css: "margin-right: 1.0em;",
     connections: [
         [30000, box => {
             execAsync(`/home/ahmed/.config/ags/scripts/temp.sh`)

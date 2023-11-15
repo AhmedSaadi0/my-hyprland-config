@@ -18,12 +18,12 @@ const progress = CircularProgress({
     className: "ram",
     startAt: 0,
     rounded: false,
-    inverted: true,
+    // inverted: true,
     child: button,
 });
 
 export const RamWidget = () => Box({
-    style: "margin-left: 1.0em;",
+    css: "margin-left: 1.0em;",
     connections: [
         [30000, box => {
             execAsync(`/home/ahmed/.config/ags/scripts/ram.sh`)

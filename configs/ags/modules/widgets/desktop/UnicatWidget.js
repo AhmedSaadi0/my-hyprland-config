@@ -45,7 +45,7 @@ const DesktopWidget = Widget.Box({
         }),
         Widget.Box({
             className: "desktop-wd-separator",
-            style: `
+            css: `
                 margin-top: 0.5rem;
             `,
         }),
@@ -55,7 +55,7 @@ const DesktopWidget = Widget.Box({
 
 const FinalWidget = () => Widget.Window({
     name: `desktop_unicat_widget`,
-    margin: [100, 140],
+    margins: [100, 140],
     layer: 'background',
     visible: false,
     focusable: false,
