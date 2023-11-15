@@ -3,7 +3,7 @@ import { Box, Stack, Icon, Slider } from 'resource:///com/github/Aylur/ags/widge
 
 export const Volume = () => Box({
     className: 'volume',
-    style: 'min-width: 100px',
+    css: 'min-width: 100px',
     children: [
         Stack({
             className: "vol-stack",

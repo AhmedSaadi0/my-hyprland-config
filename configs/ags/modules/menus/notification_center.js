@@ -1,9 +1,9 @@
-import { Label, Box, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
+import { Scrollable, Label, Box, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { Notifications } from '../utils/imports.js';
 import Notification from '../menus/MenuNotification.js';
 
 
-const MenuBox = () => {
+const NotificationsBox = () => {
 
     return Box({
         className: "notification-menu-header",
@@ -42,7 +42,7 @@ const MenuBox = () => {
                     }),
                     Label({
                         className: "no-notification-text",
-                        label: "لا يوجد اي اشعارات جديدة",
+                        label: "لا توجد اي اشعارات جديدة",
                     }),
                 ]
             })
@@ -94,6 +94,13 @@ const NotificationHeader = () => {
     })
 }
 
+const notificationContainer = Scrollable({
+    hscroll: 'never',
+    vscroll: 'automatic',
+    className: "notification-center-container",
+    child: NotificationsBox()
+});
+
 const menuRevealer = Revealer({
     transition: "slide_down",
     child: Box({
@@ -101,18 +108,18 @@ const menuRevealer = Revealer({
         vertical: true,
         children: [
             NotificationHeader(),
-            MenuBox(),
+            notificationContainer,
         ]
     }),
 })
 
 export const NotificationCenter = () => Window({
     name: `notification_center`,
-    margin: [0, 0, 0, 500],
+    margins: [0, 0, 0, 500],
     // layer: 'overlay',
     anchor: ['top', "left"],
     child: Box({
-        style: `
+        css: `
             min-height: 0.0001rem;
         `,
         children: [
@@ -137,6 +144,7 @@ export const NotificationCenterButton = () => Button({
             self.label = "󰂛";
         } else if (Notifications.notifications.length === 0) {
             self.label = "󰂚";
+            // self.label = "󱇥";
         } else if (Notifications.notifications.length > 0) {
             self.label = "";
         }

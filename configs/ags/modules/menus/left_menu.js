@@ -1,6 +1,6 @@
 import themeService from '../services/ThemeService.js';
 import ThemesDictionary from "../theme/themes.js";
-import { UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
+import { NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
@@ -19,7 +19,7 @@ const Profile = () => {
     })
 
     return Box({
-        className: "profile-box",
+        className: 'profile-box',
         vertical: true,
         children: [
             userImage,
@@ -31,14 +31,14 @@ const Profile = () => {
 const Header = () => {
     return Box({
         className: "left-menu-header",
-        style: `
+        css: `
             background-image: url("/home/${USER}/.config/ags/images/black-hole.png");
         `,
         vertical: true,
         connections: [
             [themeService, box => {
                 let wallpaper = ThemesDictionary[themeService.selectedTheme].wallpaper;
-                box.style = `background-image: url("/home/${USER}/${wallpaper}");`;
+                box.css = `background-image: url("/home/${USER}/${wallpaper}");`;
             }]
         ]
     })
@@ -67,7 +67,7 @@ const ThemeButton = ({ label, icon, theme, end = "margin-left: 1rem;" }) => {
     })
 
     const button = Button({
-        style: `
+        css: `
                 min-width: 5rem;
                 min-height: 2rem;
                 ${end}
@@ -139,11 +139,18 @@ const ThemesButtonsRowOne = () => {
         icon: "󱀝",
         theme: DARK_THEME,
     });
+
     const unicatTheme = ThemeButton({
         label: "قط",
         icon: "",
         theme: UNICAT_THEME,
         end: "",
+    });
+
+    const newCatTheme = ThemeButton({
+        label: "قط",
+        icon: "",
+        theme: NEW_CAT_THEME,
     });
 
     const row1 = Box({
@@ -154,7 +161,7 @@ const ThemesButtonsRowOne = () => {
         ]
     })
     const row2 = Box({
-        style: `
+        css: `
             margin-top: 1rem;
         `,
         children: [
@@ -164,13 +171,21 @@ const ThemesButtonsRowOne = () => {
         ]
     })
     const row3 = Box({
-        style: `
+        css: `
             margin-top: 1rem;
         `,
         children: [
             gameTheme,
             darkTheme,
             unicatTheme
+        ]
+    })
+    const row4 = Box({
+        css: `
+            margin-top: 1rem;
+        `,
+        children: [
+            newCatTheme,
         ]
     })
 
@@ -181,6 +196,7 @@ const ThemesButtonsRowOne = () => {
             row1,
             row2,
             row3,
+            row4
         ]
     })
 }
@@ -190,7 +206,7 @@ const PowerButtonsRow = () => {
 
     const powerOff = Button({
         className: "theme-btn",
-        style: `
+        css: `
                 min-width: 5rem;
                 min-height: 2rem;
                 border-radius: 1rem;
@@ -204,7 +220,7 @@ const PowerButtonsRow = () => {
 
     const reboot = Button({
         className: "theme-btn",
-        style: `
+        css: `
                 min-width: 5rem;
                 min-height: 2rem;
                 border-radius: 1rem;
@@ -218,7 +234,7 @@ const PowerButtonsRow = () => {
 
     const logout = Button({
         className: "theme-btn",
-        style: `
+        css: `
                 min-width: 5rem;
                 min-height: 2rem;
                 border-radius: 1rem;
@@ -240,7 +256,7 @@ const PowerButtonsRow = () => {
 
     return Box({
         className: "power-box",
-        style: `
+        css: `
             margin-top:0rem;
         `,
         vertical: true,
@@ -267,12 +283,12 @@ const menuRevealer = Revealer({
 
 export const LeftMenu = () => Window({
     name: `left_menu`,
-    margin: [0, 0, 0, 0],
+    margins: [0, 0, 0, 0],
     // layer: 'overlay',
     anchor: ['top', "left"],
     child: Box({
         // className: "left-menu-window",
-        style: `
+        css: `
             min-height: 0.0001rem;
         `,
         children: [

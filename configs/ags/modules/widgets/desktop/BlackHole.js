@@ -72,7 +72,7 @@ const Insider = ({
 const RowTwo = () => {
     return Widget.Box({
         className: "my-weather-wd-row-two small-shadow",
-        spacing: 16,
+        spacing: 50,
         homogeneous: false,
         children: [
         ],
@@ -118,7 +118,7 @@ const DesktopWidget = () => Widget.Box({
 
 const FWidget = () => Widget.Window({
     name: `desktop_black_hole_widget_widget`,
-    margin: [60, 100],
+    margins: [60, 100],
     layer: 'background',
     visible: false,
     focusable: false,

@@ -1,4 +1,4 @@
-import ThemesDictionary, { WIN_20 , UNICAT_THEME } from "../theme/themes.js";
+import ThemesDictionary, { WIN_20, UNICAT_THEME } from "../theme/themes.js";
 import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';
@@ -31,7 +31,9 @@ class ThemeService extends Service {
         this.changeCss(theme.css_theme);
         this.changeWallpaper(theme.wallpaper);
         this.changePlasmaColor(theme.plasma_color);
+
         this.changeGTKTheme(theme.gtk_theme, theme.gtk_mode, theme.gtk_icon_theme);
+
         this.changeQtStyle(theme.qt_style_theme);
         this.changeIcons(theme.qt_icon_theme);
         this.changeKvantumTheme(theme.kvantum_theme);
@@ -85,11 +87,16 @@ class ThemeService extends Service {
     }
 
     changePlasmaColor(plasmaColor) {
+        const plasmaCmd = `plasma-apply-colorscheme`;
         execAsync([
-            this.plasmaColorChanger,
-            '-c',
-            this.plasmaColorsPath + plasmaColor
+            plasmaCmd,
+            plasmaColor.split('.')[0]
         ]).catch(print);
+        // execAsync([
+        //     this.plasmaColorChanger,
+        //     '-c',
+        //     this.plasmaColorsPath + plasmaColor
+        // ]).catch(print);
     }
 
     changeGTKTheme(GTKTheme, gtkMode, iconTheme) {
@@ -102,12 +109,13 @@ class ThemeService extends Service {
             `prefer-${gtkMode}`
         ]).catch(print);
 
+
         execAsync([
             `gsettings`,
             `set`,
             `org.gnome.desktop.interface`,
             `gtk-theme`,
-            GTKTheme
+            `Adwaita`
         ]).catch(print);
 
         execAsync([
@@ -115,8 +123,27 @@ class ThemeService extends Service {
             `set`,
             `org.gnome.desktop.wm.preferences`,
             `theme`,
-            GTKTheme
+            `Adwaita`
         ]).catch(print);
+
+        setTimeout(() => {
+            execAsync([
+                `gsettings`,
+                `set`,
+                `org.gnome.desktop.interface`,
+                `gtk-theme`,
+                GTKTheme
+            ]).catch(print);
+
+            execAsync([
+                `gsettings`,
+                `set`,
+                `org.gnome.desktop.wm.preferences`,
+                `theme`,
+                GTKTheme
+            ]).catch(print);
+
+        }, 2000);
 
         execAsync([
             `gsettings`,
@@ -146,13 +173,13 @@ class ThemeService extends Service {
             `42s|.*|${konsoleBind}|`,
             `/home/${USER}/.config/hypr/binding.conf`
         ]).then(() => {
-            timeout(500, () => {
+            timeout(1000, () => {
                 execAsync(`hyprctl keyword general:border_size ${border_width}`);
                 execAsync(`hyprctl keyword general:col.active_border ${active_border}`);
                 execAsync(`hyprctl keyword general:col.inactive_border ${inactive_border}`);
                 execAsync(`hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`);
                 execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
-                // execAsync(`hyprctl setcursor material_light_cursors 24 `);
+                execAsync(`hyprctl setcursor material_light_cursors 24 `);
             })
         }).catch(print)
     }

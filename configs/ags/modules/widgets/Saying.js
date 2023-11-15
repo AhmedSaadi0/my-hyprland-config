@@ -307,21 +307,21 @@ const words_dict = [
 
 export default className => Widget.Label({
     className: className || "saying-wd-label",
-    label: "",
+    // label: "SUIII",
     justification: 'left',
     // truncate: 'end',
     xalign: 0,
     maxWidthChars: 24,
     wrap: true,
-    connections: [[
-        (30 * 1000 * 60), label => {
+    connections: [
+        [(30 * 1000 * 60), self => {
             const randomIndex = Math.floor(Math.random() * words_dict.length);
 
             // Use the random index to get a random element
             const randomSaying = words_dict[randomIndex];
 
-            label.label = randomSaying;
-        }
-    ]]
+            self.label = randomSaying;
+        }],
+    ]
 })
 

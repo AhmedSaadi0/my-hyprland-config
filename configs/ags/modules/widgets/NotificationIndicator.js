@@ -38,7 +38,7 @@ export default ({
         }]],
     }),
     child: Label({
-        style: "margin-left: 0.4rem",
+        css: "margin-left: 0.4rem",
         truncate: 'end',
         maxWidthChars: 40,
         connections: [[Notifications, label => {

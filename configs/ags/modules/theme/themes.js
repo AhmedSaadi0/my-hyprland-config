@@ -9,6 +9,7 @@ const black_hole = {
     qt_icon_theme: "BeautySolar",
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
+    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "BeautySolar",
     // rofi_theme: "win20_theme.rasi",
     gtk_mode: "dark",
@@ -33,6 +34,7 @@ const win_20 = {
     qt_icon_theme: "BeautySolar",
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
+    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "BeautySolar",
     // rofi_theme: "win20_theme.rasi",
     gtk_mode: "dark",
@@ -56,6 +58,7 @@ const deer = {
     qt_icon_theme: "oomox-aesthetic-dark",
     kvantum_theme: "a-color",
     gtk_theme: "Kimi-dark",
+    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "oomox-aesthetic-dark",
     // rofi_theme: "islamic_theme.rasi",
     gtk_mode: "dark",
@@ -68,7 +71,7 @@ const deer = {
         "kitty": "kitty.conf",
         "konsole": "Islamic",
     },
-    desktop_widget: "",
+    desktop_widget: null,
 }
 
 const colors = {
@@ -81,6 +84,7 @@ const colors = {
     gtk_icon_theme: "Magma",
     // rofi_theme: "colors_theme.rasi",
     gtk_theme: "Shades-of-purple",
+    // gtk_theme: "Colorful-Dark-GTK",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -102,6 +106,7 @@ const siberian = {
     qt_icon_theme: "NeonIcons",
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
+    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "NeonIcons",
     // rofi_theme: "islamic_theme.rasi",
     gtk_mode: "dark",
@@ -149,6 +154,7 @@ const game = {
     qt_icon_theme: "la-capitaine-icon-theme",
     kvantum_theme: "a-color",
     gtk_theme: "Orchis-Green-Dark-Compact",
+    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "la-capitaine-icon-theme",
     // rofi_theme: "colors_theme.rasi",
     gtk_mode: "dark",
@@ -171,8 +177,9 @@ const dark = {
     qt_style_theme: "Breeze",
     qt_icon_theme: "Infinity-Dark-Icons",
     kvantum_theme: "a-color",
-    gtk_theme: "Orchis-Orange-Dark-Compact",
-    // gtk_theme: "Tokyonight-Dark-BL",
+    // gtk_theme: "Orchis-Orange-Dark-Compact",
+    gtk_theme: "Tokyonight-Dark-BL",
+    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "Infinity-Dark-Icons",
     // rofi_theme: "colors_theme.rasi",
     gtk_mode: "dark",
@@ -197,6 +204,7 @@ const uniCat = {
     kvantum_theme: "a-color",
     // gtk_theme: "Orchis-Orange-Dark-Compact",
     gtk_theme: "Tokyonight-Dark-BL",
+    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "Magma",
     // rofi_theme: "colors_theme.rasi",
     gtk_mode: "dark",
@@ -212,6 +220,31 @@ const uniCat = {
     desktop_widget: "UnicatWidget",
 }
 
+const newCat = {
+    wallpaper: `${WALLPAPER_PATH}/catMachup.jpg`,
+    css_theme: "newCat.scss",
+    plasma_color: "NewCat.colors",
+    qt_style_theme: "Breeze",
+    qt_icon_theme: "Gradient-Dark-Icons",
+    kvantum_theme: "a-color",
+    // gtk_theme: "Orchis-Orange-Dark-Compact",
+    gtk_theme: "Tokyonight-Dark-BL",
+    // gtk_theme: "Colorful-Dark-GTK",
+    gtk_icon_theme: "Gradient-Dark-Icons",
+    // rofi_theme: "colors_theme.rasi",
+    gtk_mode: "dark",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(ECBFBDff) rgba(F0AFE1ff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 17,
+        "drop_shadow": "no",
+        "kitty": "kitty.conf",
+        "konsole": "NewCat",
+    },
+    desktop_widget: null,
+}
+
 export const BLACK_HOLE_THEME = 0;
 export const DEER_THEME = 1;
 export const COLOR_THEME = 2;
@@ -221,6 +254,7 @@ export const WIN_20 = 5;
 export const GAME_THEME = 6;
 export const DARK_THEME = 7;
 export const UNICAT_THEME = 8;
+export const NEW_CAT_THEME = 9;
 
 const ThemesDictionary = {
     [BLACK_HOLE_THEME]: black_hole,
@@ -232,6 +266,7 @@ const ThemesDictionary = {
     [GAME_THEME]: game,
     [DARK_THEME]: dark,
     [UNICAT_THEME]: uniCat,
+    [NEW_CAT_THEME]: newCat,
 }
 
 export default ThemesDictionary

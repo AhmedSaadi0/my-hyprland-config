@@ -51,7 +51,7 @@ const DesktopWidget = Widget.Box({
 
 const FinalWidget = () => Widget.Window({
     name: `desktop_color_widget`,
-    margin: [80, 0, 0, 80],
+    margins: [80, 0, 0, 80],
     layer: 'background',
     visible: false,
     focusable: false,

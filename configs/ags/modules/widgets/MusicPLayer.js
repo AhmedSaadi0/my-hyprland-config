@@ -24,7 +24,7 @@ class PlayersMenu {
 }
 
 const length = () => Label({
-    style: `
+    css: `
         min-width: 2rem;
     `,
     label: "",
@@ -37,7 +37,7 @@ const length = () => Label({
 const RowOne = () => {
 
     let playerName = Label({
-        style: `
+        css: `
             min-width: 6rem;
         `,
         label: "",
@@ -98,7 +98,7 @@ const RowOne = () => {
 
             const songLengthInSeconds = player?.length;
             const minutes = Math.floor(songLengthInSeconds / 60);
-            const seconds = songLengthInSeconds % 60;
+            const seconds = Math.round(songLengthInSeconds % 60);
 
             if (minutes && seconds) {
                 self.children[0].label = `${minutes}:${seconds}   `;
@@ -169,7 +169,7 @@ const ButtonsRow = () => {
         className: "unset music-wd-button",
         // label: "",
         label: "",
-        style: `
+        css: `
             padding-right: 2px;
         `,
         // onClicked: () => Audio.speaker.volume = Audio.speaker.volume + 0.1
@@ -186,7 +186,7 @@ const ButtonsRow = () => {
         }
     })
     let skipBackwardBtn = Button({
-        style: `
+        css: `
             padding-left: 2px;
         `,
         className: "unset music-wd-button",
