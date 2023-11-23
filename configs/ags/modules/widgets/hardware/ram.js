@@ -1,7 +1,5 @@
 import { Box, Button, Label, CircularProgress } from 'resource:///com/github/Aylur/ags/widget.js'
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
-// import { CircularProgressBarBin2 } from "../circular.js"
-import App  from "resource:///com/github/Aylur/ags/app.js";
 
 const label = Label({
     className: "ram-inner",
@@ -11,7 +9,7 @@ const label = Label({
 const button = Button({
     className: "unset no-hover",
     child: label,
-    onClicked: () => App.toggleWindow('vol_osd'),
+    onClicked: () => showHardwareMenu(),
 });
 
 const progress = CircularProgress({
