@@ -9,6 +9,7 @@ const label = Label({
 const button = Button({
     className: "unset no-hover",
     child: label,
+    onClicked: () => showHardwareMenu(),
 });
 
 const progress = CircularProgress({
@@ -28,7 +29,6 @@ export const CpuWidget = () => Box({
                     progress.value = val / 100;
                     label.tooltipMarkup = `<span weight='bold' foreground='#FDC227'>يتم استخدام (${val}%) من المعالج</span>`
                 }).catch(print);
-
             box.children = [
                 progress
             ];

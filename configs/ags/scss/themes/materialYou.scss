@@ -231,6 +231,23 @@ $music-wd-button-stop-fg: $music-wd-button-fg;
 
 $left-menu-music-wd-padding-right: 1.8rem;
 
+// ---------------------------
+// --------- HW menu ---------
+// ---------------------------
+$hardware-menu-box-background: $bg-one;
+$hardware-menu-header-box-background: $bg-two;
+
+$hardware-cpu-box-background: linear-gradient(to top, #7ED8DB, rgb(129, 180, 161));
+$hardware-cpu-box-color: $text-color;
+$hardware-cpu-table-row-header-background: rgb(129, 180, 161);
+$hardware-cpu-table-row-header-color: $text-color;
+
+$hardware-ram-box-background: linear-gradient(to top, $fg-three, $fg-one);
+$hardware-ram-box-color: $bg-one;
+$hardware-ram-table-row-header-background: $fg-one;
+$hardware-ram-table-row-header-color: $bg-two;
+
+
 // --------------------------------
 // --------- GTK elements ---------
 // --------------------------------
@@ -329,7 +346,7 @@ button:hover {
     border-radius: 3rem;
 }
 
-.my-fuzzy-clock-box{
+.my-fuzzy-clock-box {
     background: #E9C7C6;
 
     margin: 1rem;

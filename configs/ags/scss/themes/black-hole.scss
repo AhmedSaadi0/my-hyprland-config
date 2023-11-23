@@ -246,6 +246,21 @@ $music-wd-button-stop-fg: $music-wd-button-fg;
 
 $left-menu-music-wd-padding-right: 1.8rem;
 
+// ---------------------------
+// --------- HW menu ---------
+// ---------------------------
+$hardware-menu-box-background: $bg-one;
+$hardware-menu-header-box-background: $bg-two;
+
+$hardware-cpu-box-background: linear-gradient(to top, $fg-one, $fg-two);
+$hardware-cpu-box-color: $bg-one;
+$hardware-cpu-table-row-header-background: $fg-two;
+$hardware-cpu-table-row-header-color: $bg-one;
+
+$hardware-ram-box-background: linear-gradient(to top,  #E952ED, #4F92B4);
+$hardware-ram-box-color: $bg-one;
+$hardware-ram-table-row-header-background: #5d86b9;
+$hardware-ram-table-row-header-color: $bg-two;
 
 // --------------------------------
 // --------- GTK elements ---------

@@ -307,7 +307,7 @@ const words_dict = [
 
 export default className => Widget.Label({
     className: className || "saying-wd-label",
-    // label: "SUIII",
+// label: "SUIII",
     justification: 'left',
     // truncate: 'end',
     xalign: 0,

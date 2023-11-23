@@ -11,6 +11,7 @@ import win20Widget from "./modules/widgets/desktop/Win20Widget.js";
 import materialWidget from "./modules/widgets/desktop/MaterialYouOne.js";
 import unicatWidget from "./modules/widgets/desktop/UnicatWidget.js";
 import blackHoleWidget from "./modules/widgets/desktop/BlackHole.js";
+import { HardwareMenu } from "./modules/menus/HardwareMenu.js";
 
 // in config.js
 const scss = App.configDir + '/scss/main.scss';
@@ -31,6 +32,7 @@ export default {
         MyNotifications(),
         LeftMenu(),
         NotificationCenter(),
+        HardwareMenu(),
         ColorWidget,
         win20Widget,
         materialWidget,

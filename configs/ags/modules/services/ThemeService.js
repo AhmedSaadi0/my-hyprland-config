@@ -170,7 +170,7 @@ class ThemeService extends Service {
         execAsync([
             "sed",
             "-i",
-            `42s|.*|${konsoleBind}|`,
+            `42s|.*|${kittyBind}|`,
             `/home/${USER}/.config/hypr/binding.conf`
         ]).then(() => {
             timeout(1000, () => {

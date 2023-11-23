@@ -10,6 +10,7 @@ const label = Label({
 const button = Button({
     className: "unset no-hover",
     child: label,
+    onClicked: () => showHardwareMenu(),
 });
 
 const progress = CircularProgress({

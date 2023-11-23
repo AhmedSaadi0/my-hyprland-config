@@ -118,7 +118,7 @@ const DesktopWidget = () => Widget.Box({
 
 const FWidget = () => Widget.Window({
     name: `desktop_black_hole_widget_widget`,
-    margins: [60, 100],
+    margins: [140, 100],
     layer: 'background',
     visible: false,
     focusable: false,
