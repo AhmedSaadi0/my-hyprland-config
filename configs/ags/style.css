@@ -194,26 +194,26 @@ button:hover {
 /* ------------------------------------- */
 .battery {
   background: #2D293B;
-  color: #B3E1A3;
+  color: #F0AFE1;
   min-width: 1.5rem;
   min-height: 0.5rem;
   font-size: 0.2rem; }
 
 @keyframes colorChange {
   0% {
-    color: #B3E1A3; }
+    color: #F0AFE1; }
   50% {
     color: #2D293B; }
   100% {
-    color: #B3E1A3; } }
+    color: #F0AFE1; } }
 
 .battery-inner {
-  color: #B3E1A3;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
 .battery-inner-charging {
-  color: #B3E1A3;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem;
   animation: colorChange 2.0s infinite; }
@@ -223,13 +223,13 @@ button:hover {
 /* --------------------------------- */
 .cpu {
   background: #2D293B;
-  color: #EADDA0;
+  color: #ECBFBD;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
 
 .cpu-inner {
-  color: #EADDA0;
+  color: #ECBFBD;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -238,7 +238,7 @@ button:hover {
 /* ---------------------------------- */
 .temp {
   background: #2D293B;
-  color: #F0AFE1;
+  color: #E28C8C;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
@@ -247,7 +247,7 @@ button:hover {
   all: unset; }
 
 .temp-inner {
-  color: #F0AFE1;
+  color: #E28C8C;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -256,13 +256,13 @@ button:hover {
 /* --------------------------------- */
 .ram {
   background: #2D293B;
-  color: #EADDA0;
+  color: #C6AAE8;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
 
 .ram-inner {
-  color: #EADDA0;
+  color: #C6AAE8;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -672,70 +672,70 @@ window {
   padding: 0.5rem; }
 
 .menu-cpu {
-  color: #EADDA0;
+  color: #ECBFBD;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-cpu-icon {
-  color: #EADDA0;
+  color: #ECBFBD;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-ram {
-  color: #EADDA0;
+  color: #C6AAE8;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-ram-icon {
-  color: #EADDA0;
+  color: #C6AAE8;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-battery {
-  color: #B3E1A3;
+  color: #F0AFE1;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-battery-icon {
-  color: #B3E1A3;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-battery-icon-charging {
-  color: #B3E1A3;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem;
   animation: colorChange 2.0s infinite; }
 
 .menu-temp {
-  color: #F0AFE1;
+  color: #E28C8C;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-temp-icon {
-  color: #F0AFE1;
+  color: #E28C8C;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .table-row-app-name-header {
-  min-width: 5rem; }
+  min-width: 6rem; }
 
 .table-row-app-percentage-header {
-  min-width: 2.5rem; }
+  min-width: 3rem; }
 
 .table-row-app-name {
-  min-width: 5rem; }
+  min-width: 6rem; }
 
 .table-row-app-percentage {
-  min-width: 2.5rem; }
+  min-width: 3rem; }
 
 .hardware-cpu-box {
   background: linear-gradient(to top, #F0AFE1, #d2b2f8);
@@ -764,12 +764,59 @@ window {
 
 .hardware-ram-table-row-header {
   padding: 1rem;
-  background: #F0AFE1;
+  background: #e0a2d2;
   color: #1B1923;
   border-top-right-radius: 1.5rem;
   border-top-left-radius: 1.5rem; }
 
 .hardware-ram-table-row {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem; }
+
+.hardware-menu-tables-box {
+  background: #2D293B;
+  padding: 0.8rem;
+  padding-top: 0rem;
+  margin-top: 0.8rem;
+  border-radius: 1.5rem; }
+
+.hardware-bat-box {
+  background: rgba(226, 140, 140, 0.9);
+  color: #211008;
+  border-radius: 1.5rem;
+  margin-top: 1rem;
+  min-height: 3rem; }
+
+.hardware-bat-table-row-header {
+  padding: 1rem;
+  background: #E28C8C;
+  color: #211008;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
+
+.hardware-bat-table-row {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem; }
+
+.hardware-os-box {
+  background: rgba(240, 175, 225, 0.9);
+  color: #211008;
+  border-radius: 1.5rem;
+  margin-top: 1rem;
+  min-height: 3rem; }
+
+.hardware-os-table-row-header {
+  padding: 1rem;
+  background: rgba(240, 175, 225, 0.8);
+  color: #211008;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
+
+.hardware-os-table-row {
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;

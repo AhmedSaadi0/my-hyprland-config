@@ -12,17 +12,17 @@ processes_array=()
 # Loop through the top processes and add them to the array
 first_line=true
 while read -r line; do
-    if [ "$first_line" = true ]; then
+  if [ "$first_line" = true ]; then
     first_line=false
-    else
+  else
     processes_array+=(",")
-    fi
-    pid=$(echo "$line" | awk '{print $1}')
-    cpu=$(echo "$line" | awk '{print $2}')
-    # Normalize CPU usage by dividing by the number of CPU cores
-    normalized_cpu=$(echo "scale=2; $cpu / $num_cores" | bc)
-    command=$(echo "$line" | awk '{print $3}')
-    processes_array+=("{\"pid\": \"$pid\", \"process\": \"$command\", \"%\": \"$normalized_cpu\"}")
+  fi
+  pid=$(echo "$line" | awk '{print $1}')
+  cpu=$(echo "$line" | awk '{print $2}')
+  # Normalize CPU usage by dividing by the number of CPU cores
+  normalized_cpu=$(echo "scale=2; $cpu / $num_cores" | bc)
+  command=$(echo "$line" | awk '{print $3}')
+  processes_array+=("{\"pid\": \"$pid\", \"process\": \"$command\", \"%\": \"$normalized_cpu\"}")
 done <<< "$top_processes"
 
 # Print the JSON array

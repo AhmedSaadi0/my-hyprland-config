@@ -236,16 +236,27 @@ $left-menu-music-wd-padding-right: 1.8rem;
 // ---------------------------
 $hardware-menu-box-background: $bg-one;
 $hardware-menu-header-box-background: $bg-two;
+$hardware-menu-tables-box-background: $bg-two;
 
-$hardware-cpu-box-background: linear-gradient(to top, #7ED8DB, rgb(129, 180, 161));
+$hardware-cpu-box-background: rgba(#92B9B8, 0.7);
 $hardware-cpu-box-color: $text-color;
-$hardware-cpu-table-row-header-background: rgb(129, 180, 161);
+$hardware-cpu-table-row-header-background: rgba(#84a7a5, 0.7);
 $hardware-cpu-table-row-header-color: $text-color;
 
-$hardware-ram-box-background: linear-gradient(to top, $fg-three, $fg-one);
-$hardware-ram-box-color: $bg-one;
-$hardware-ram-table-row-header-background: $fg-one;
-$hardware-ram-table-row-header-color: $bg-two;
+$hardware-ram-box-background: rgba(#DFDCE7, 0.7);
+$hardware-ram-box-color: $text-color;
+$hardware-ram-table-row-header-background: rgba(#b6b6b6, 0.7);
+$hardware-ram-table-row-header-color: $text-color;
+
+$hardware-bat-box-background: rgba(#ECA3AC, 0.8);
+$hardware-bat-box-color: $text-color;
+$hardware-bat-table-row-header-background: #e49fa7;
+$hardware-bat-table-row-header-color: $text-color;
+
+$hardware-os-box-background: rgba(#FEC2A6, 0.7);
+$hardware-os-box-color: $text-color;
+$hardware-os-table-row-header-background: rgba(#ddab93, 0.7);
+$hardware-os-table-row-header-color: $text-color;
 
 
 // --------------------------------
