@@ -86,3 +86,9 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 <p align='center'>
 	<img alt='screenshot 9' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/9.png'/>
 </p>
+<p align='center'>
+	<img alt='screenshot 12' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/12.png'/>
+</p>
+<p align='center'>
+	<img alt='screenshot 13' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/13.png'/>
+</p>
