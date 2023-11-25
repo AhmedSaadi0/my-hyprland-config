@@ -913,23 +913,24 @@ window {
 
 // --------- Table rows ---------
 .table-row-app-name-header {
-    min-width: 5rem;
+    min-width: 6rem;
 }
 
 .table-row-app-percentage-header {
-    min-width: 2.5rem;
+    min-width: 3rem;
     // margin-left: 0.5rem;
 }
 
 .table-row-app-name {
-    min-width: 5rem;
-
+    min-width: 6rem;
+    // font-family: $icon-font-family;
 }
 
 .table-row-app-percentage {
-    min-width: 2.5rem;
+    min-width: 3rem;
 }
 
+// --------- CPU Table ---------
 .hardware-cpu-box {
     background: $hardware-cpu-box-background;
     color: $hardware-cpu-box-color;
@@ -953,6 +954,7 @@ window {
     padding-bottom: 0.5rem;
 }
 
+// --------- RAM Table ---------
 .hardware-ram-box {
     background: $hardware-ram-box-background;
     color: $hardware-ram-box-color;
@@ -969,6 +971,65 @@ window {
 }
 
 .hardware-ram-table-row {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+// --------- HW ---------
+.hardware-menu-tables-box{
+    background: $hardware-menu-tables-box-background;
+    padding: 0.8rem;
+    padding-top: 0rem;
+    margin-top: 0.8rem;
+    border-radius: $border-radius;
+}
+
+// --------- HW Table ---------
+.hardware-bat-box {
+    background: $hardware-bat-box-background;
+    color: $hardware-bat-box-color;
+    border-radius: $border-radius;
+    margin-top: 1rem;
+    min-height: 3rem;
+}
+
+.hardware-bat-table-row-header {
+    padding: 1rem;
+    // min-width: 13rem;
+    background: $hardware-bat-table-row-header-background;
+    color: $hardware-bat-table-row-header-color;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+}
+
+.hardware-bat-table-row {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+// --------- OS Table ---------
+.hardware-os-box {
+    background: $hardware-os-box-background;
+    color: $hardware-os-box-color;
+    border-radius: $border-radius;
+    margin-top: 1rem;
+    min-height: 3rem;
+}
+
+.hardware-os-table-row-header {
+    padding: 1rem;
+    // min-width: 13rem;
+    background: $hardware-os-table-row-header-background;
+    color: $hardware-os-table-row-header-color;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+}
+
+.hardware-os-table-row {
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 0.5rem;

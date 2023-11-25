@@ -86,14 +86,14 @@ $hardware-box-color: $bg-three;
 // --------- battery ---------
 // ---------------------------
 $battery-background: $hardware-box-color;
-$battery-color: #B3E1A3;
+$battery-color: #F0AFE1;
 $battery-inner-color: $battery-color;
 
 // -----------------------
 // --------- CPU ---------
 // -----------------------
 $cpu-background: $hardware-box-color;
-$cpu-color: #EADDA0;
+$cpu-color: #ECBFBD;
 $cpu-inner-color: $cpu-color;
 
 
@@ -101,7 +101,7 @@ $cpu-inner-color: $cpu-color;
 // --------- Temp ---------
 // ------------------------
 $temp-background: $hardware-box-color;
-$temp-color: $fg-two;
+$temp-color: #E28C8C;
 $temp-inner-color: $temp-color;
 
 
@@ -109,7 +109,7 @@ $temp-inner-color: $temp-color;
 // --------- RAM ---------
 // -----------------------
 $ram-background: $hardware-box-color;
-$ram-color: $fg-three;
+$ram-color: #C6AAE8;
 $ram-inner-color: $ram-color;
 
 
@@ -234,6 +234,7 @@ $left-menu-music-wd-padding-right: 1.8rem;
 // ---------------------------
 $hardware-menu-box-background: $bg-one;
 $hardware-menu-header-box-background: $bg-two;
+$hardware-menu-tables-box-background: $bg-two;
 
 $hardware-cpu-box-background: linear-gradient(to top, $fg-two, #d2b2f8);
 $hardware-cpu-box-color: $bg-one;
@@ -242,8 +243,18 @@ $hardware-cpu-table-row-header-color: $bg-one;
 
 $hardware-ram-box-background: linear-gradient(to bottom, #F0AFE1, #A4B9EF);;
 $hardware-ram-box-color: $bg-one;
-$hardware-ram-table-row-header-background: $fg-two;
+$hardware-ram-table-row-header-background: #e0a2d2;
 $hardware-ram-table-row-header-color: $bg-one;
+
+$hardware-bat-box-background: rgba(#E28C8C, 0.9);
+$hardware-bat-box-color: #211008;
+$hardware-bat-table-row-header-background: #E28C8C;
+$hardware-bat-table-row-header-color: #211008;
+
+$hardware-os-box-background: rgba($fg-two, 0.9);
+$hardware-os-box-color: #211008;
+$hardware-os-table-row-header-background: rgba($fg-two, 0.8);
+$hardware-os-table-row-header-color: #211008;
 
 // --------------------------------
 // --------- GTK elements ---------
