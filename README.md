@@ -40,12 +40,30 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 ```
 
 
-### Copy files - نسخ الملفات:
+### Setting up files - اعداد الملفات:
 
 	git clone git@github.com:AhmedSaadi0/my-hyprland-config.git
 	mv ~/.config/hypr/ ~/.config/hypr-old
-	cp my-hyprland-config ~/.config/hypr
-	cp ~/.config/hypr/config/ags ~/.config/ags
+	cp -r my-hyprland-config ~/.config/hypr
+	cp -r ~/.config/hypr/configs/ags ~/.config/ags
+	cp ~/.config/ags/modules/theme/plasma-colors/* ~/.local/share/color-schemes/
+	cp ~/.config/hypr/configs/qt5ct.conf ~/.config/qt5ct/
+	sudo cp /etc/environment /etc/environmentOLD
+	sudo chmod +x ~/.config/hypr/scripts/*
+	sudo chmod +x ~/.config/ags/scripts/*
+	echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
+	mkdir ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/BeautySolar.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/Magma.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/NeonIcons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/NeonIcons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/configs/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
+
+
 
 
 ### Creating crontab for battery 40-80 rule - انشاء كرون تاب لتحسين استخدام البطارية باستخدام قاعدة الشحن 40-80 
