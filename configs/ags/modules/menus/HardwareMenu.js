@@ -19,7 +19,7 @@ const cpuProgress = Widget.CircularProgress({
     connections: [
         [1000, self => {
             if (menuIsOpen) {
-                Utils.execAsync(`/home/ahmed/.config/ags/scripts/cpu.sh`)
+                Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu.sh`)
                     .then(val => {
                         cpuProgress.value = val / 100;
                         self.child.tooltipMarkup = `<span weight='bold'>مستهلك من المعالج(${val}%)</span>`
@@ -42,7 +42,7 @@ const ramProgress = Widget.CircularProgress({
     connections: [
         [1000, self => {
             if (menuIsOpen) {
-                Utils.execAsync(`/home/ahmed/.config/ags/scripts/ram.sh`)
+                Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
                     .then(val => {
                         self.value = (val / 100);
                         self.child.tooltipMarkup = `<span weight='bold'>مستهلك من الرام (${val}%)</span>`
@@ -69,21 +69,21 @@ const batteryProgress = Widget.CircularProgress({
         var label = "";
 
         if (Battery.charging) {
-            if (percentage < 55) {
+            if (percentage <= 55) {
                 label = "󱊤";
-            } else if (percentage < 70) {
+            } else if (percentage <= 70) {
                 label = "󱊥";
-            } else if (percentage < 80) {
+            } else if (percentage > 70) {
                 label = "󱊦";
             }
             // self.child.label = "";
             self.child.className = "menu-battery-icon-charging";
         } else {
-            if (percentage < 55) {
+            if (percentage <= 55) {
                 label = "󱊡";
-            } else if (percentage < 70) {
+            } else if (percentage <= 70) {
                 label = "󱊢";
-            } else if (percentage < 80) {
+            } else if (percentage > 70) {
                 label = "󱊣";
             }
             // self.child.label = "";
@@ -107,7 +107,7 @@ const tempProgress = Widget.CircularProgress({
     // inverted: true,
     connections: [
         [30000, self => {
-            Utils.execAsync(`/home/ahmed/.config/ags/scripts/temp.sh`)
+            Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/temp.sh`)
                 .then(val => {
                     const temps = val.split("\n");
                     let total = 0;
@@ -240,7 +240,7 @@ const tablesBox = () => {
         deviceName: batDeviceName,
         connections: [
             [Battery, self => {
-                Utils.execAsync("/home/ahmed/.config/ags/scripts/hardware_info.sh")
+                Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/hardware_info.sh`)
                     .then(val => {
                         let data = JSON.parse(val);
                         let children = [
@@ -259,7 +259,7 @@ const tablesBox = () => {
                                 deviceName: batDeviceName,
                             }),
                             tableRow({
-                                appName: "القدرة   ",
+                                appName: "الصحة   ",
                                 percentage: data["Capacity"] + "%",
                                 deviceName: batDeviceName,
                             }),
@@ -291,7 +291,7 @@ const tablesBox = () => {
         deviceName: osClassName,
         connections: [
             [Battery, self => {
-                Utils.execAsync("/home/ahmed/.config/ags/scripts/uptime.sh")
+                Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/uptime.sh`)
                     .then(val => {
                         // let data = JSON.parse(val);
 
@@ -333,13 +333,13 @@ const tablesBox = () => {
         spacing: 13,
         children: [
             hardwareUsageTable({
-                scriptPath: "/home/ahmed/.config/ags/scripts/cpu_usage.sh",
+                scriptPath: `/home/${Utils.USER}/.config/ags/scripts/cpu_usage.sh`,
                 deviceName: "cpu",
                 headerRightText: "CPU",
                 // headerLeftText: `${cpuUsage}`,
             }),
             hardwareUsageTable({
-                scriptPath: "/home/ahmed/.config/ags/scripts/ram_usage.sh",
+                scriptPath: `/home/${Utils.USER}/.config/ags/scripts/ram_usage.sh`,
                 deviceName: "ram",
                 headerRightText: "RAM",
                 // headerLeftText: `${ramUsage}`,

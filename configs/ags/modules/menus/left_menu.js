@@ -9,7 +9,7 @@ import MusicPLayer from '../widgets/MusicPLayer.js';
 const Profile = () => {
     const userImage = Icon({
         className: "profile-icon",
-        icon: "/home/ahmed/.config/ags/images/image.png",
+        icon: `/home/${USER}/.config/ags/images/image.png`,
         size: 80,
     })
 

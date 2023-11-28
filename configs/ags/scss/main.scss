@@ -545,6 +545,7 @@ window {
     padding: 1rem;
     // min-width: 23rem;
     // min-height: 30rem;
+    color: $text-color;
 }
 
 .horizontal-line {
@@ -553,6 +554,7 @@ window {
     min-width: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    color: $text-color;
 }
 
 .notification-center-button {
@@ -784,9 +786,9 @@ window {
     font-family: $wd-fuzzy-time-text-font-family;
 }
 
-.wd-fuzzy-clock-box {
-    // background: #1aa14e;
-}
+// .wd-fuzzy-clock-box {
+//     // background: #1aa14e;
+// }
 
 .saying-wd-label {
     min-width: $saying-wd-label-min-width;

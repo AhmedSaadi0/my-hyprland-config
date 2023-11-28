@@ -1,5 +1,6 @@
 import { Box, Button, Label, CircularProgress } from 'resource:///com/github/Aylur/ags/widget.js'
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+import { Utils } from '../../utils/imports.js';
 // import { CircularProgressBarBin2 } from "../circular.js"
 
 const label = Label({
@@ -26,7 +27,7 @@ export const TempWidget = () => Box({
     css: "margin-right: 1.0em;",
     connections: [
         [30000, box => {
-            execAsync(`/home/ahmed/.config/ags/scripts/temp.sh`)
+            execAsync(`/home/${Utils.USER}/.config/ags/scripts/temp.sh`)
                 .then(val => {
                     const temps = val.split("\n");
                     let total = 0;
