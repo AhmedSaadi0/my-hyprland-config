@@ -13,7 +13,8 @@ $fg-two: #595380;
 $fg-three: #4B5569;
 
 // $text-color: #4C566A;
-$text-color: #3f3a57;
+$text-color: #454061;
+
 
 // $icon-font-family: "Font Awesome";
 $icon-font-family: "Font Awesome 5 Free Solid";
@@ -133,7 +134,7 @@ $notifications-border: $fg-one;
 $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
 $notifications-bar-btn-bg: $bg-three;
-$notifications-bar-btn-fg: $fg-two;
+$notifications-bar-btn-fg: $text-color;
 $notifications-header-bg: $bg-two;
 $notifications-header-fg: $text-color;
 $notifications-separator-background: $text-color;
@@ -238,14 +239,14 @@ $hardware-menu-box-background: $bg-one;
 $hardware-menu-header-box-background: $bg-two;
 $hardware-menu-tables-box-background: $bg-two;
 
-$hardware-cpu-box-background: rgba(#92B9B8, 0.7);
+$hardware-cpu-box-background: rgba(#805673, 0.4);
 $hardware-cpu-box-color: $text-color;
-$hardware-cpu-table-row-header-background: rgba(#84a7a5, 0.7);
+$hardware-cpu-table-row-header-background: rgba(#805673, 0.5);
 $hardware-cpu-table-row-header-color: $text-color;
 
-$hardware-ram-box-background: rgba(#DFDCE7, 0.7);
+$hardware-ram-box-background: rgba(#92B9B8, 0.7);
 $hardware-ram-box-color: $text-color;
-$hardware-ram-table-row-header-background: rgba(#b6b6b6, 0.7);
+$hardware-ram-table-row-header-background: rgba(#84a7a5, 0.7);
 $hardware-ram-table-row-header-color: $text-color;
 
 $hardware-bat-box-background: rgba(#ECA3AC, 0.8);
@@ -286,7 +287,6 @@ button:hover {
 /* ------------------------------------------------------- */
 /* -------------- Material U Desktop Widget -------------- */
 /* ------------------------------------------------------- */
-
 .my-weather-wd-text {
     font-size: medium;
     color: #2d293d;

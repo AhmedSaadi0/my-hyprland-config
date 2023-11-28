@@ -3,10 +3,10 @@ import WeatherService from '../../services/WeatherService.js';
 import FuzzyClock from "../FuzzyClock.js";
 import Saying from "../Saying.js";
 import { TitleText } from "../../utils/helpers.js";
-import { Widget } from "../../utils/imports.js";
+import { Utils, Widget } from "../../utils/imports.js";
 
 const iconImage = Widget.Icon({
-    icon: "/home/ahmed/.config/ags/images/image.png",
+    icon: `/home/${Utils.USER}/.config/ags/images/image.png`,
     size: 70,
     className: "my-wd-user-icon",
 })

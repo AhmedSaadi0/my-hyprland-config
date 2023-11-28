@@ -1,5 +1,6 @@
 import { Box, Button, Label, CircularProgress } from 'resource:///com/github/Aylur/ags/widget.js'
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+import { Utils } from '../../utils/imports.js';
 
 const label = Label({
     className: "ram-inner",
@@ -24,7 +25,7 @@ export const RamWidget = () => Box({
     css: "margin-left: 1.0em;",
     connections: [
         [30000, box => {
-            execAsync(`/home/ahmed/.config/ags/scripts/ram.sh`)
+            execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
                 .then(val => {
                     progress.value = (val / 100);
                     label.tooltipMarkup = `<span weight='bold' foreground='#79A7EC'>نسبة الرام المستهلكة (${val}%)</span>`

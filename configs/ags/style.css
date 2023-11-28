@@ -72,7 +72,7 @@ button:hover {
 .clock {
   font-size: 1em;
   background: linear-gradient(to right, #A4B9EF, #F0AFE1);
-  color: #2D293B;
+  color: #1B1923;
   border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
@@ -82,7 +82,7 @@ button:hover {
 .bar-prayer-times-box {
   font-size: 1em;
   background: linear-gradient(to right, #EADDA0, #F0AFE1);
-  color: #2D293B;
+  color: #1B1923;
   border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
@@ -98,7 +98,7 @@ button:hover {
 .bar-weather-box {
   font-size: 1em;
   background: linear-gradient(to right, #F0AFE1, #E28C8C);
-  color: #2D293B;
+  color: #1B1923;
   border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
@@ -135,7 +135,7 @@ button:hover {
 
 .internet-box {
   background: linear-gradient(to right, #C6AAE8, #ECBFBD);
-  color: #2D293B;
+  color: #1B1923;
   /* min-width: 100px; */
   border-radius: 1.5rem;
   margin-top: 0.4rem;
@@ -444,14 +444,16 @@ window {
 .notification-menu-header {
   background-size: cover;
   background-position: center;
-  padding: 1rem; }
+  padding: 1rem;
+  color: #ceceff; }
 
 .horizontal-line {
   background: #ceceff;
   min-height: 1px;
   min-width: 1rem;
   margin-top: 1rem;
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem;
+  color: #ceceff; }
 
 .notification-center-button {
   margin-top: 0.3rem;
@@ -546,12 +548,12 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background: #2D293B;
+  background: #F0AFE1;
   padding-left: 0.4rem;
   padding-right: 0.7rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #EADDA0;
+  color: #1B1923;
   border-radius: 1rem;
   min-width: 2rem; }
 
@@ -738,14 +740,14 @@ window {
   min-width: 3rem; }
 
 .hardware-cpu-box {
-  background: linear-gradient(to top, #F0AFE1, #d2b2f8);
+  background: linear-gradient(to top, #F0AFE1, #ECBFBD);
   color: #1B1923;
   border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
-  background: #C6AAE8;
+  background: #deb3b2;
   color: #1B1923;
   border-top-right-radius: 1.5rem;
   border-top-left-radius: 1.5rem; }

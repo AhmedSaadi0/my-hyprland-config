@@ -86,14 +86,14 @@ $hardware-box-color: $bg-three;
 // --------- battery ---------
 // ---------------------------
 $battery-background: $hardware-box-color;
-$battery-color: #B3E1A3;
+$battery-color: #FAAB78;
 $battery-inner-color: $battery-color;
 
 // -----------------------
 // --------- CPU ---------
 // -----------------------
 $cpu-background: $hardware-box-color;
-$cpu-color: #EADDA0;
+$cpu-color: $fg-two;
 $cpu-inner-color: $cpu-color;
 
 
@@ -101,7 +101,7 @@ $cpu-inner-color: $cpu-color;
 // --------- Temp ---------
 // ------------------------
 $temp-background: $hardware-box-color;
-$temp-color: $fg-two;
+$temp-color: #F6E2D9;
 $temp-inner-color: $temp-color;
 
 
