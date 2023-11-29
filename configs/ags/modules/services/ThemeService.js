@@ -36,7 +36,7 @@ class ThemeService extends Service {
 
         this.changeQtStyle(theme.qt_style_theme);
         this.changeIcons(theme.qt_icon_theme);
-        this.changeKvantumTheme(theme.kvantum_theme);
+        // this.changeKvantumTheme(theme.kvantum_theme);
         // this.changeRofiTheme(theme.rofi_theme);
         this.showDesktopWidget(theme.desktop_widget);
 
@@ -179,7 +179,7 @@ class ThemeService extends Service {
                 execAsync(`hyprctl keyword general:col.inactive_border ${inactive_border}`);
                 execAsync(`hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`);
                 execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
-                execAsync(`hyprctl setcursor material_light_cursors 24 `);
+                // execAsync(`hyprctl setcursor material_light_cursors 24 `);
             })
         }).catch(print)
     }

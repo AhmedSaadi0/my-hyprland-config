@@ -120,7 +120,7 @@ export const NotificationCenter = () => Window({
     anchor: ['top', "left"],
     child: Box({
         css: `
-            min-height: 0.0001rem;
+            min-height: 1.0001rem;
         `,
         children: [
             menuRevealer,
