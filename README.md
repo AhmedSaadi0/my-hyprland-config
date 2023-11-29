@@ -17,6 +17,12 @@
 - gammastep
 - wl-clipboard
 - hyprpicker
+- sysstat
+- bc
+- kitty
+- sassc
+- systemsettings
+- ttf-font-awesome-5
 
 ### Optional dependencies - برامج اختيارية
 - strawberry
@@ -36,7 +42,7 @@
 
 ### For Arch Users - لمستخدمي Arch:
 ```bash
-yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop rofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop rofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-
 ```
 
 
@@ -48,6 +54,8 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	cp -r ~/.config/hypr/configs/ags ~/.config/ags
 	cp ~/.config/ags/modules/theme/plasma-colors/* ~/.local/share/color-schemes/
 	cp ~/.config/hypr/configs/qt5ct.conf ~/.config/qt5ct/
+	mkdir ~/.fonts
+	cp -r ~/.config/hypr/configs/.fonts/* ~/.fonts
 	sudo cp /etc/environment /etc/environmentOLD
 	sudo chmod +x ~/.config/hypr/scripts/*
 	sudo chmod +x ~/.config/ags/scripts/*
@@ -63,7 +71,8 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	tar xvf ~/.config/hypr/configs/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
 
-
+### You can change system fonts if you want to 'JF Flat' to have the same font I had
+### بامكانك تغير خط الجهاز الى 'JF Flat' اذا اردت لتحصل على نفس الخط الذي لدي
 
 
 ### Creating crontab for battery 40-80 rule - انشاء كرون تاب لتحسين استخدام البطارية باستخدام قاعدة الشحن 40-80 
