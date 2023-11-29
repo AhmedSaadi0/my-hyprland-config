@@ -72,7 +72,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	tar xvf ~/.config/hypr/configs/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
 
 ### You can change system fonts if you want to 'JF Flat' to have the same font I had
-### بامكانك تغير خط الجهاز الى 'JF Flat' اذا اردت لتحصل على نفس الخط الذي لدي
+### بامكانك تغير خط الجهاز الى 'JF Flat' اذا اردت ان تحصل على نفس الخط الذي لدي
 
 
 ### Creating crontab for battery 40-80 rule - انشاء كرون تاب لتحسين استخدام البطارية باستخدام قاعدة الشحن 40-80 
