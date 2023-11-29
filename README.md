@@ -52,6 +52,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	mv ~/.config/hypr/ ~/.config/hypr-old
 	cp -r my-hyprland-config ~/.config/hypr
 	cp -r ~/.config/hypr/configs/ags ~/.config/ags
+	mkdir ~/.local/share/color-schemes/
 	cp ~/.config/ags/modules/theme/plasma-colors/* ~/.local/share/color-schemes/
 	cp ~/.config/hypr/configs/qt5ct.conf ~/.config/qt5ct/
 	mkdir ~/.fonts
@@ -60,6 +61,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	sudo chmod +x ~/.config/hypr/scripts/*
 	sudo chmod +x ~/.config/ags/scripts/*
 	echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
+	cp -r ~/.config/hypr/configs/wofi ~/.config/wofi
 	mkdir ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/BeautySolar.tar.gz -C ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
@@ -70,6 +72,13 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	tar xvf ~/.config/hypr/configs/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
+	mkdir ~/.themes
+	tar xvf ~/.config/hypr/configs/gtk-themes/Cabinet-Light-Orange.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/configs/gtk-themes/Kimi-dark.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/configs/gtk-themes/Orchis-Green-Dark-Compact.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/configs/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
+	tar xvf ~/.config/hypr/configs/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
+
 
 ### You can change system fonts if you want to 'JF Flat' to have the same font I had
 ### بامكانك تغير خط الجهاز الى 'JF Flat' اذا اردت ان تحصل على نفس الخط الذي لدي

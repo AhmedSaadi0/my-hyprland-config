@@ -2,14 +2,16 @@
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 button {
-  background-color: #111316;
+  background-color: #2D293B;
   color: #ceceff;
-  border-color: #111316; }
+  border-color: #2D293B;
+  border-radius: 1.5rem; }
 
 button:hover {
-  background-color: #F4A83D;
-  color: #2F3443;
-  border-color: #F4A83D; }
+  background-color: #ECBFBD;
+  color: #2D293B;
+  border-color: #ECBFBD;
+  border-radius: 1.5rem; }
 
 .unset {
   all: unset; }
@@ -21,7 +23,7 @@ button:hover {
 /* -------------- Top bar widgets -------------- */
 /* --------------------------------------------- */
 .workspaces button:active {
-  color: #F4A83D;
+  color: #ECBFBD;
   border-radius: 0px; }
 
 .workspaces {
@@ -31,20 +33,20 @@ button:hover {
   margin-bottom: 0.4rem;
   margin-right: 4px;
   margin-left: 8px;
-  background: #2F3443;
-  border-radius: 0.5rem;
+  background: #2D293B;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
 
 .workspaces button {
-  background: #2F3443;
+  background: #2D293B;
   color: #ceceff;
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #ff557f;
-  color: #ff557f;
+  border-bottom: 1px solid #EADDA0;
+  color: #EADDA0;
   font-family: "Font Awesome 5 Free Solid";
   border-radius: 0px;
   padding-top: 0px;
@@ -61,17 +63,17 @@ button:hover {
   border-radius: 0px; }
 
 .workspaces button.has-windows {
-  color: #ff557f; }
+  color: #EADDA0; }
 
 .workspaces button:hover {
-  background: rgba(170, 170, 255, 0.9);
-  color: rgba(17, 19, 22, 0.9); }
+  background: rgba(240, 175, 225, 0.9);
+  color: rgba(45, 41, 59, 0.9); }
 
 .clock {
   font-size: 1em;
-  background: linear-gradient(to right, #F4A83D, #aaaaff);
-  color: #111316;
-  border-radius: 0.5rem;
+  background: linear-gradient(to right, #A4B9EF, #F0AFE1);
+  color: #1B1923;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   padding-left: 1em;
@@ -79,9 +81,9 @@ button:hover {
 
 .bar-prayer-times-box {
   font-size: 1em;
-  background: linear-gradient(to right, #2F3443, #2F3443);
-  color: #ceceff;
-  border-radius: 0.5rem;
+  background: linear-gradient(to right, #EADDA0, #F0AFE1);
+  color: #1B1923;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.7rem;
@@ -95,9 +97,9 @@ button:hover {
 
 .bar-weather-box {
   font-size: 1em;
-  background: linear-gradient(to right, #2F3443, #2F3443);
-  color: #ceceff;
-  border-radius: 0.5rem;
+  background: linear-gradient(to right, #F0AFE1, #E28C8C);
+  color: #1B1923;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.7rem;
@@ -115,7 +117,7 @@ button:hover {
   border-radius: 0rem; }
 
 .bar {
-  background: #191C21;
+  background: #1B1923;
   color: #ceceff;
   min-height: 8px;
   border-radius: 0rem;
@@ -132,10 +134,10 @@ button:hover {
   transition-duration: .5s; }
 
 .internet-box {
-  background: linear-gradient(to right, #2F3443, #2F3443);
-  color: #ceceff;
+  background: linear-gradient(to right, #C6AAE8, #ECBFBD);
+  color: #1B1923;
   /* min-width: 100px; */
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.7rem;
@@ -148,11 +150,11 @@ button:hover {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   margin-right: 0.2em;
-  background: #191C21;
+  background: #1B1923;
   color: #ceceff;
   font-weight: bold;
-  border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem; }
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
 
 .wifi-icon-strength {
   font-family: "Font Awesome 5 Free Solid";
@@ -161,28 +163,28 @@ button:hover {
   margin-bottom: 0.2em;
   padding-right: 0.5em;
   padding-left: 0.6em;
-  background: #191C21;
+  background: #1B1923;
   color: #ceceff;
-  border-top-left-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem; }
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .systray {
-  background: #2F3443;
-  border-radius: 0.5rem;
+  background: #2D293B;
+  border-radius: 1.5rem;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
   margin-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button {
-  background: #2F3443;
-  border-radius: 0.5rem;
+  background: #2D293B;
+  border-radius: 1.5rem;
   padding-right: 0.6rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background: #ff557f; }
+  background: #EADDA0; }
 
 .tray-btn {
   border: 0rem; }
@@ -191,27 +193,27 @@ button:hover {
 /* -------------- Battery -------------- */
 /* ------------------------------------- */
 .battery {
-  background: #2F3443;
-  color: #FF8580;
+  background: #2D293B;
+  color: #F0AFE1;
   min-width: 1.5rem;
   min-height: 0.5rem;
   font-size: 0.2rem; }
 
 @keyframes colorChange {
   0% {
-    color: #FF8580; }
+    color: #F0AFE1; }
   50% {
-    color: #2F3443; }
+    color: #2D293B; }
   100% {
-    color: #FF8580; } }
+    color: #F0AFE1; } }
 
 .battery-inner {
-  color: #FF8580;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
 .battery-inner-charging {
-  color: #FF8580;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem;
   animation: colorChange 2.0s infinite; }
@@ -220,14 +222,14 @@ button:hover {
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: #2F3443;
-  color: #FDC227;
+  background: #2D293B;
+  color: #ECBFBD;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
 
 .cpu-inner {
-  color: #FDC227;
+  color: #ECBFBD;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -235,8 +237,8 @@ button:hover {
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: #2F3443;
-  color: #aaaaff;
+  background: #2D293B;
+  color: #E28C8C;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
@@ -245,7 +247,7 @@ button:hover {
   all: unset; }
 
 .temp-inner {
-  color: #aaaaff;
+  color: #E28C8C;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -253,14 +255,14 @@ button:hover {
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: #2F3443;
-  color: #ff557f;
+  background: #2D293B;
+  color: #C6AAE8;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
 
 .ram-inner {
-  color: #ff557f;
+  color: #C6AAE8;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -268,12 +270,12 @@ button:hover {
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: #2F3443;
+  background: #2D293B;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.4rem; }
 
@@ -281,7 +283,7 @@ button:hover {
 /* -------------- Volume -------------- */
 /* ------------------------------------ */
 .volume {
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
@@ -291,55 +293,55 @@ button:hover {
   margin-left: 1em; }
 
 .vol-osd {
-  background: #191C21;
+  background: #1B1923;
   padding: 1rem;
   padding-left: 1.5rem;
-  border-radius: 0.5rem;
-  border: 0.1rem solid #E49F5C;
+  border-radius: 1.5rem;
+  border: 0.1rem solid #C6AAE8;
   margin: 1.5rem; }
 
 scale trough highlight {
-  border-radius: 0.5rem;
-  background: #F4A83D; }
+  border-radius: 1.5rem;
+  background: #ECBFBD; }
 
 scale slider {
-  background: #F4A83D; }
+  background: #ECBFBD; }
 
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
 .notifications-revealer-box {
-  background: #2F3443;
+  background: #2D293B;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   margin-left: 0.7rem;
   margin-right: 0rem; }
 
 .notification-popups {
-  border: 0.1rem solid #F4A83D;
-  border-radius: 0.5rem;
+  border: 0.1rem solid #ECBFBD;
+  border-radius: 1.5rem;
   padding: 1rem;
-  background: #191C21; }
+  background: #1B1923; }
 
 .notifications-popup-list {
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   min-height: 0.001rem;
   min-width: 0.001rem; }
 
 window {
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   background: rgba(0, 0, 0, 0); }
 
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
 .left-menu-box {
-  background: #191C21;
-  border-radius: 0.5rem;
-  border: 2px solid #F4A83D;
+  background: #1B1923;
+  border-radius: 1.5rem;
+  border: 2px solid #ECBFBD;
   margin-top: 0.45rem;
   margin-left: 0.45rem;
   margin-bottom: 1rem;
@@ -351,20 +353,20 @@ window {
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   min-width: 23rem;
   min-height: 12rem; }
 
 .profile-box {
-  background: linear-gradient(to right, rgba(245, 149, 73, 0.6), rgba(255, 85, 127, 0.6));
-  color: #191C21;
+  background: linear-gradient(to right, rgba(240, 175, 225, 0.9), rgba(234, 221, 160, 0.6));
+  color: #1B1923;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: -3rem;
-  border-radius: 0.5rem; }
+  border-radius: 1.5rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -376,36 +378,36 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-  background: #111316;
+  background: #2D293B;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 0.5rem; }
+  border-radius: 1.5rem; }
 
 .selected-theme {
-  background: linear-gradient(to right, #F59549, #C2C3EB);
-  color: #191C21;
-  border-radius: 0.5rem;
+  background: linear-gradient(to right, #F0AFE1, #A4B9EF);
+  color: #1B1923;
+  border-radius: 1.5rem;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .selected-theme:hover {
-  background: linear-gradient(to right, #ff557f, #ff55ff);
-  color: #2F3443;
-  border-radius: 0.5rem; }
+  background: linear-gradient(to right, #EADDA0, #ff55ff);
+  color: #2D293B;
+  border-radius: 1.5rem; }
 
 .theme-btn {
-  border-radius: 0.5rem;
-  background: #191C21;
-  border-color: #191C21;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
+  background: #1B1923;
+  border-color: #1B1923;
+  border-radius: 1.5rem;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .theme-btn:hover {
-  border-radius: 0.5rem;
-  background: #F4A83D; }
+  border-radius: 1.5rem;
+  background: #ECBFBD; }
 
 .theme-btn-icon {
   font-family: "Font Awesome 5 Free Solid";
@@ -415,26 +417,26 @@ window {
   min-width: 3rem; }
 
 .menu-button {
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
   margin-left: 0.5rem;
-  background: #191C21;
+  background: #1B1923;
   font-family: "Font Awesome 5 Free Solid";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
 
 .menu-button:hover {
-  background: #F4A83D; }
+  background: #ECBFBD; }
 
 .power-box {
-  background: #111316;
+  background: #2D293B;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 0.5rem; }
+  border-radius: 1.5rem; }
 
 /* ----------------------------------------------- */
 /* -------------- Notification menu -------------- */
@@ -456,10 +458,10 @@ window {
 .notification-center-button {
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  background: #2F3443;
-  color: #aaaaff;
+  background: #2D293B;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   padding: 0rem;
   padding-top: 0rem;
   padding-bottom: 0rem;
@@ -485,10 +487,10 @@ window {
 .notification-header-box {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background: #111316;
+  background: #2D293B;
   color: #ceceff;
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .notification-center-header-text {
   min-width: 7.7rem; }
@@ -500,7 +502,7 @@ window {
   padding-bottom: 0.5rem;
   margin-right: 0.5rem;
   font-family: "Font Awesome 5 Free Solid";
-  border-radius: 0.5rem; }
+  border-radius: 1.5rem; }
 
 .notification-center-header-clear {
   padding-left: 1rem;
@@ -509,24 +511,24 @@ window {
   padding-bottom: 0.5rem;
   margin-right: 0.7rem;
   font-family: "Font Awesome 5 Free Solid";
-  border-radius: 0.5rem; }
+  border-radius: 1.5rem; }
 
 .notification-center-container {
   min-height: 30rem;
-  border-radius: 0.5rem; }
+  border-radius: 1.5rem; }
 
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 .music-wd-box {
-  background: linear-gradient(to right, #111316, #111316);
+  background: linear-gradient(to right, #2D293B, #2D293B);
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 0.5rem; }
+  border-radius: 1.5rem; }
 
 .left-menu-music-wd {
-  background: linear-gradient(to right, #111316, #111316);
-  border-radius: 0.5rem;
+  background: linear-gradient(to right, #2D293B, #2D293B);
+  border-radius: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
@@ -546,22 +548,22 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background: #111316;
+  background: #F0AFE1;
   padding-left: 0.4rem;
   padding-right: 0.7rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #ff557f;
+  color: #1B1923;
   border-radius: 1rem;
   min-width: 2rem; }
 
 .music-wd-title {
-  color: #F4A83D;
+  color: #ECBFBD;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem; }
 
 .music-wd-file-name {
-  color: #ff557f;
+  color: #EADDA0;
   font-size: x-small; }
 
 .music-wd-button {
@@ -569,25 +571,25 @@ window {
   border-radius: 50%;
   min-width: 40px;
   min-height: 40px;
-  background: linear-gradient(to right, #191C21, #191C21);
+  background: linear-gradient(to right, #1B1923, #1B1923);
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button:hover {
-  background: linear-gradient(to top, #F4A83D, #aaaaff); }
+  background: linear-gradient(to top, #ECBFBD, #F0AFE1); }
 
 .music-wd-button-play {
-  background: linear-gradient(to right, #F59549, #C2C3EB);
+  background: linear-gradient(to right, #F0AFE1, #A4B9EF);
   border-radius: 3rem;
   min-height: 40px;
   min-width: 80px;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button-play:hover {
-  background: linear-gradient(to top, #F4A83D, #aaaaff); }
+  background: linear-gradient(to top, #ECBFBD, #F0AFE1); }
 
 .music-wd-button-stop {
-  background: linear-gradient(to right, #191C21, #191C21);
-  color: #ff557f;
+  background: linear-gradient(to right, #1B1923, #1B1923);
+  color: #EADDA0;
   border-radius: 3rem;
   min-height: 40px;
   min-width: 80px;
@@ -598,7 +600,7 @@ window {
 /* ----------------------------------------- */
 .wd-fuzzy-day-box {
   background: rgba(0, 0, 0, 0);
-  color: #aaaaff; }
+  color: #F0AFE1; }
 
 .wd-fuzzy-day-icon {
   font-size: 2rem;
@@ -613,13 +615,13 @@ window {
 .wd-time-now {
   font-size: 2.3rem;
   background: rgba(0, 0, 0, 0);
-  color: #F4A83D;
+  color: #ECBFBD;
   font-family: "VEXA light R";
   margin: 0rem 0rem 0.5rem 0rem; }
 
 .wd-fuzzy-time-box {
   background: rgba(0, 0, 0, 0);
-  color: #ff557f; }
+  color: #EADDA0; }
 
 .wd-fuzzy-time-icon {
   font-size: 1.5rem;
@@ -633,7 +635,7 @@ window {
 .saying-wd-label {
   min-width: 25rem;
   font-size: 1.8rem;
-  color: #aaaaff;
+  color: #F0AFE1;
   background: rgba(0, 0, 0, 0);
   font-family: "VIP Rawy Regular";
   padding: 0rem;
@@ -641,7 +643,7 @@ window {
   border-radius: 0rem; }
 
 .desktop-wd-separator {
-  background: linear-gradient(to bottom, #aaaaff, #ff557f, #F4A83D);
+  background: linear-gradient(to bottom, #F0AFE1, #EADDA0, #ECBFBD);
   min-height: 1px;
   min-width: 1px; }
 
@@ -652,76 +654,76 @@ window {
   font-size: 1.5rem; }
 
 .desktop-wd-music-player-title {
-  color: #F4A83D; }
+  color: #ECBFBD; }
 
 .desktop-wd-music-player-artist {
-  color: #ff557f; }
+  color: #EADDA0; }
 
 /* ------------------------------------------- */
 /* -------------- Hardware menu -------------- */
 /* ------------------------------------------- */
 .hardware-menu-box {
-  background: #191C21;
-  border-radius: 0.5rem;
-  border: 0.1rem solid #E49F5C;
+  background: #1B1923;
+  border-radius: 1.5rem;
+  border: 0.1rem solid #C6AAE8;
   padding: 1rem; }
 
 .hardware-menu-header-box {
-  background: #111316;
-  border-radius: 0.5rem;
+  background: #2D293B;
+  border-radius: 1.5rem;
   padding: 0.5rem; }
 
 .menu-cpu {
-  color: #FDC227;
+  color: #ECBFBD;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-cpu-icon {
-  color: #FDC227;
+  color: #ECBFBD;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-ram {
-  color: #ff557f;
+  color: #C6AAE8;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-ram-icon {
-  color: #ff557f;
+  color: #C6AAE8;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-battery {
-  color: #FF8580;
+  color: #F0AFE1;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-battery-icon {
-  color: #FF8580;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-battery-icon-charging {
-  color: #FF8580;
+  color: #F0AFE1;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem;
   animation: colorChange 2.0s infinite; }
 
 .menu-temp {
-  color: #aaaaff;
+  color: #E28C8C;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-temp-icon {
-  color: #aaaaff;
+  color: #E28C8C;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
@@ -738,17 +740,17 @@ window {
   min-width: 3rem; }
 
 .hardware-cpu-box {
-  background: linear-gradient(to top, #F4A83D, #aaaaff, #ff557f);
-  color: #191C21;
-  border-radius: 0.5rem;
+  background: linear-gradient(to top, #F0AFE1, #ECBFBD);
+  color: #1B1923;
+  border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
-  background: #d86293;
-  color: #191C21;
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem; }
+  background: #deb3b2;
+  color: #1B1923;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-cpu-table-row {
   padding-left: 1rem;
@@ -757,17 +759,17 @@ window {
   padding-bottom: 0.5rem; }
 
 .hardware-ram-box {
-  background: linear-gradient(to top, #ff557f, #F4A83D);
-  color: #191C21;
-  border-radius: 0.5rem;
+  background: linear-gradient(to bottom, #F0AFE1, #A4B9EF);
+  color: #1B1923;
+  border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-ram-table-row-header {
   padding: 1rem;
-  background: #df8f40;
-  color: #111316;
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem; }
+  background: #e0a2d2;
+  color: #1B1923;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-ram-table-row {
   padding-left: 1rem;
@@ -776,25 +778,25 @@ window {
   padding-bottom: 0.5rem; }
 
 .hardware-menu-tables-box {
-  background: #111316;
+  background: #2D293B;
   padding: 0.8rem;
   padding-top: 0rem;
   margin-top: 0.8rem;
-  border-radius: 0.5rem; }
+  border-radius: 1.5rem; }
 
 .hardware-bat-box {
-  background: #987fd6;
+  background: rgba(226, 140, 140, 0.9);
   color: #211008;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-bat-table-row-header {
   padding: 1rem;
-  background: #8b75c4;
+  background: #E28C8C;
   color: #211008;
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-bat-table-row {
   padding-left: 1rem;
@@ -803,18 +805,18 @@ window {
   padding-bottom: 0.5rem; }
 
 .hardware-os-box {
-  background: rgba(170, 170, 255, 0.9);
+  background: rgba(240, 175, 225, 0.9);
   color: #211008;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-os-table-row-header {
   padding: 1rem;
-  background: rgba(170, 170, 255, 0.8);
+  background: rgba(240, 175, 225, 0.8);
   color: #211008;
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-os-table-row {
   padding-left: 1rem;
