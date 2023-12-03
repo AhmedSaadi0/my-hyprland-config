@@ -16,11 +16,11 @@ const SysTrayItem = item => PanelButton({
             'icon'
         ]],
     }),
-    binds: [[
-        'tooltipMarkup',
-        item,
-        'tooltipMarkup'
-    ]],
+    // binds: [[
+    //     'tooltipMarkup',
+    //     item,
+    //     'tooltipMarkup'
+    // ]],
     setup: btn => {
         const id = item.menu.connect(
             'popped-up',

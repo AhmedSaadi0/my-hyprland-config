@@ -23,6 +23,8 @@
 - sassc
 - systemsettings
 - ttf-font-awesome-5
+- acpi
+- fish
 
 ### Optional dependencies - برامج اختيارية
 - strawberry
@@ -42,26 +44,42 @@
 
 ### For Arch Users - لمستخدمي Arch:
 ```bash
-yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish
 ```
 
 
 ### Setting up files - اعداد الملفات:
 
 	git clone git@github.com:AhmedSaadi0/my-hyprland-config.git
+
+	# backup your files
 	mv ~/.config/hypr/ ~/.config/hypr-old
+	mv ~/.config/ags/ ~/.config/ags-old
+	mv ~/.config/wofi/ ~/.config/wofi-old
+	cp ~/.config/fish/config.fish ~/.config/fish/config.back.fish
+
+	# copy files
 	cp -r my-hyprland-config ~/.config/hypr
 	cp -r ~/.config/hypr/configs/ags ~/.config/ags
+	cp -r ~/.config/hypr/configs/wofi ~/.config/wofi
+	cp ~/.config/hypr/configs/config.fish ~/.config/fish/config.fish
+
+	# set permissions for scripts
+	sudo chmod +x ~/.config/hypr/scripts/*
+	sudo chmod +x ~/.config/ags/scripts/*
+
+	# setup environment
+	sudo cp /etc/environment /etc/environmentOLD
+	echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
+
+	# copy theme files
 	mkdir ~/.local/share/color-schemes/
 	cp ~/.config/ags/modules/theme/plasma-colors/* ~/.local/share/color-schemes/
 	cp ~/.config/hypr/configs/qt5ct.conf ~/.config/qt5ct/
+
 	mkdir ~/.fonts
 	cp -r ~/.config/hypr/configs/.fonts/* ~/.fonts
-	sudo cp /etc/environment /etc/environmentOLD
-	sudo chmod +x ~/.config/hypr/scripts/*
-	sudo chmod +x ~/.config/ags/scripts/*
-	echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
-	cp -r ~/.config/hypr/configs/wofi ~/.config/wofi
+
 	mkdir ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/BeautySolar.tar.gz -C ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
@@ -72,6 +90,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	tar xvf ~/.config/hypr/configs/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
 	tar xvf ~/.config/hypr/configs/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
+
 	mkdir ~/.themes
 	tar xvf ~/.config/hypr/configs/gtk-themes/Cabinet-Light-Orange.tar.gz -C ~/.themes
 	tar xvf ~/.config/hypr/configs/gtk-themes/Kimi-dark.tar.gz -C ~/.themes

@@ -122,7 +122,7 @@ const FWidget = () => Widget.Window({
     layer: 'background',
     visible: false,
     focusable: false,
-    anchor: ['top', "right"],
+    anchor: ['top', "left"],
     child: DesktopWidget(),
 })
 
