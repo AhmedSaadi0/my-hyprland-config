@@ -2,6 +2,8 @@ import ShowWindow from '../utils/ShowWindow.js';
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js'
 import { Box, Stack, Icon, Slider, Window } from 'resource:///com/github/Aylur/ags/widget.js'
 
+var oldValue = 0;
+
 export const Volume = () => Box({
     className: 'vol-osd shadow',
     css: 'min-width: 140px',
@@ -38,11 +40,12 @@ export const Volume = () => Box({
             drawValue: false,
             onChange: ({ value }) => Audio.speaker.volume = value,
             connections: [[Audio, slider => {
-                if (!Audio.speaker) {
+                if (!Audio.speaker || oldValue === Audio.speaker.volume) {
                     return;
                 }
                 ShowWindow("vol_osd");
-                slider.value = Audio.speaker.volume;
+                oldValue = Audio.speaker.volume;
+                slider.value = oldValue;
             }, 'speaker-changed']],
         }),
     ],

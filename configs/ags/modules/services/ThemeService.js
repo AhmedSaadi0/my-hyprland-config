@@ -180,7 +180,7 @@ class ThemeService extends Service {
                 execAsync(`hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`);
                 execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
                 // execAsync(`hyprctl setcursor material_light_cursors 24 `);
-            })
+            });
         }).catch(print)
     }
 
@@ -226,7 +226,9 @@ class ThemeService extends Service {
             this.hideWidget(oldTheme.desktop_widget);
         }
         if (widget !== null) {
-            this.showWidget(widget);
+            timeout(1000, () => {
+                this.showWidget(widget);
+            });
         }
     }
 

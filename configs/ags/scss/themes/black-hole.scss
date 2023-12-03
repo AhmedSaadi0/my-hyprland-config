@@ -189,7 +189,7 @@ $saying-wd-label-font-size: 1.5rem;
 $saying-wd-label-min-width: 1rem;
 $saying-wd-label-font-family: "VIP Rawy Regular";
 $saying-wd-label-padding: 1rem;
-$saying-wd-label-margin: 1rem;
+$saying-wd-label-margin: 0rem 1rem;
 $saying-wd-label-border-radius: $border-radius;
 
 // Music Info
@@ -303,12 +303,10 @@ button:hover {
 }
 
 .weather-wd-row-one {
-    // background: $bg-one;
     background: rgba($fg-two, 0.7);
     border-radius: $border-radius;
-    margin: 1rem;
-    margin-bottom: 0.5rem;
-    // margin-left: 11.4rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .my-desktop-music-box {
@@ -353,6 +351,7 @@ button:hover {
     // background: #E9C7C6;
     background: $bg-one;
     margin: 1rem;
+    margin-bottom: 0rem;
 
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -368,6 +367,7 @@ button:hover {
     background: rgba(#5E3AB3, 0.8);
 
     margin: 1rem;
+    margin-bottom: 0.5rem;
 
     padding-top: 1rem;
     padding-bottom: 1rem;
