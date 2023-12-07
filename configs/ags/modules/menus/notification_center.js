@@ -1,6 +1,6 @@
 import { Scrollable, Label, Box, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { Notifications } from '../utils/imports.js';
-import Notification from '../menus/MenuNotification.js';
+import Notification from '../notifications/MenuNotification.js';
 
 
 const NotificationsBox = () => {
@@ -120,7 +120,7 @@ export const NotificationCenter = () => Window({
     anchor: ['top', "left"],
     child: Box({
         css: `
-            min-height: 1px;
+            min-height: 2px;
         `,
         children: [
             menuRevealer,

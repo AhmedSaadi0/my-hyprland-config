@@ -130,6 +130,7 @@ class PrayerTimesService extends Service {
     }
 
     getNextPrayerTime(json) {
+
         const now = new Date();
 
         if (Object.keys(json).length === 0 || json.code === 404) {

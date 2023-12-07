@@ -305,13 +305,22 @@ button:hover {
     border-radius: 3rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    padding-right: 1.2rem;
-    padding-left: 1rem;
     min-width: 1rem;
     margin: 1rem;
     margin-top: 0.5rem;
     // margin-left: 11.3rem;
 }
+
+.my-desktop-music-box:dir(rtl) {
+    padding-right: 1.2rem;
+    padding-left: 1rem;
+}
+
+.my-desktop-music-box:dir(ltr) {
+    padding-left: 1.2rem;
+    padding-right: 1rem;
+}
+
 
 .my-weather-wd-icon {
     // background: #E9C7C6;
@@ -327,6 +336,14 @@ button:hover {
     padding: 0.8rem;
     margin-right: 1rem;
     border-radius: 3rem;
+}
+
+.my-wd-user-icon:dir(rtl) {
+    margin-right: 1rem;
+}
+
+.my-wd-user-icon:dir(ltr) {
+    margin-left: 1rem;
 }
 
 .my-weather-wd-title-text-box {
@@ -364,12 +381,20 @@ button:hover {
 
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-right: 1.5rem;
-    padding-left: 1rem;
 
     // margin-left: 6.4rem;
 
     border-radius: 3rem;
+}
+
+.my-fuzzy-clock-box:dir(rtl) {
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+}
+
+.my-fuzzy-clock-box:dir(ltr) {
+    padding-left: 1.5rem;
+    padding-right: 1rem;
 }
 
 .my-wd-weather-day-name {

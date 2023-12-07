@@ -21,13 +21,13 @@ fi
 
 # Set icon and message based on battery level
 if [[ $charging_status == "Discharging" && $battery_percentage -lt 40 ]]; then
-    icon_name="~/.config/hypr/icons/battery-low.svg"
+    icon_name="battery-empty"
     message="نسبة البطارية أقل من 40%. حسب قاعدة 40-80 يفضل شحن جهازك المحمول الان."
 
     notify-send -i "$icon_name" -t "$show_time" "نسبة شحن البطارية ("$battery_percentage"%)" "$message"
     paplay $sound_file
 elif [[ ($charging_status == "Charging" || $charging_status == "Not charging") && $battery_percentage -gt 80 ]]; then
-    icon_name="~/.config/hypr/icons/battery-fully-charged.svg"
+    icon_name="battery-full"
     message="نسبة البطارية أعلى من 80%. حسب قاعدة 40-80 يفضل فصل الشاحن الان"
 
     notify-send -i "$icon_name" -t "$show_time" "نسبة شحن البطارية ("$battery_percentage"%)" "$message"

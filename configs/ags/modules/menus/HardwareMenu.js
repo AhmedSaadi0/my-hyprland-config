@@ -377,7 +377,7 @@ export const HardwareMenu = () => Widget.Window({
     child: Widget.Box({
         // className: "left-menu-window",
         css: `
-            min-height: 1px;
+            min-height: 2px;
         `,
         children: [
             menuRevealer,

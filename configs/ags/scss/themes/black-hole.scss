@@ -160,7 +160,7 @@ $notifications-separator-background: $text-color;
 $desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, #EA6220, $fg-one);
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
-$wd-fuzzy-day-box-fg: $fg-three;
+$wd-fuzzy-day-box-fg: $bg-three;
 
 $wd-fuzzy-day-text-font-size: 1.8rem;
 $wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
@@ -170,13 +170,13 @@ $wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 0rem;
 $wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
 
 $wd-time-now-bg: rgba(#000000, 0);
-$wd-time-now-fg: #FF5400;
+$wd-time-now-fg: #432681;
 $wd-time-now-font-size: 1.5rem;
 $wd-time-now-font-family: "VEXA light R";
 $wd-time-now-margin: 0rem 0rem 0.5rem 0rem;
 
 $wd-fuzzy-time-box-bg: rgba(#000000, 0);
-$wd-fuzzy-time-box-fg: $fg-one;
+$wd-fuzzy-time-box-fg: $bg-one;
 $wd-fuzzy-time-icon-font-size: 1.5rem;
 $wd-fuzzy-time-icon-font-family: $icon-font-family;
 $wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 0rem;
@@ -351,6 +351,7 @@ button:hover {
     // background: #E9C7C6;
     background: $bg-one;
     margin: 1rem;
+    margin-top: 0.5rem;
     margin-bottom: 0rem;
 
     padding-top: 1rem;
@@ -364,7 +365,7 @@ button:hover {
 }
 
 .my-fuzzy-clock-box {
-    background: rgba(#5E3AB3, 0.8);
+    background: rgba(#FFEFB0, 0.7);
 
     margin: 1rem;
     margin-bottom: 0.5rem;

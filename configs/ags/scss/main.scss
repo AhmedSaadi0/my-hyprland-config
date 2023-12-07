@@ -21,13 +21,21 @@
     padding-left: 4px;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin + 0.1rem;
-    margin-right: 4px;
-    margin-left: 8px;
     background: $workspace-background;
     border-radius: $border-radius;
     padding-left: 1rem;
     padding-right: 1rem;
     font-size: 1.1rem;
+}
+
+.workspaces:dir(rtl) {
+    margin-right: 4px;
+    margin-left: 8px;
+}
+
+.workspaces:dir(ltr) {
+    margin-right: 8px;
+    margin-left: 4px;
 }
 
 .workspaces button {
@@ -62,12 +70,10 @@
     color: $workspace-has-windows;
 }
 
-
 .workspaces button:hover {
     background: $workspace-hover-background;
     color: $workspace-hover-color;
 }
-
 
 .clock {
     font-size: 1em;
@@ -91,13 +97,20 @@
     margin-bottom: $bar-top-margin + 0.1rem;
     margin-left: 0.7rem;
     margin-right: 0.7rem;
-    padding-left: 0.5rem;
+}
+
+.bar-prayer-times-box:dir(rtl) {
+    padding-left: 0.7rem;
+}
+
+.bar-prayer-times-box:dir(ltr) {
+    padding-right: 0.7rem;
 }
 
 .bar-prayer-times-icon {
     font-family: $icon-font-family;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
 }
 
 .bar-weather-box {
@@ -110,7 +123,14 @@
     margin-bottom: $bar-top-margin + 0.1rem;
     margin-left: 0.7rem;
     margin-right: 0.7rem;
+}
+
+.bar-weather-box:dir(rtl) {
     padding-left: 0.8rem;
+}
+
+.bar-weather-box:dir(ltr) {
+    padding-right: 0.8rem;
 }
 
 .bar-weather-icon {
@@ -158,35 +178,65 @@
     border-radius: $border-radius;
     margin-top: $bar-top-margin + 0.1rem;
     margin-bottom: $bar-top-margin + 0.1rem;
+}
+
+.internet-box:dir(rtl) {
     margin-left: 0.7rem;
     padding-right: 0.8rem;
 }
 
+.internet-box:dir(ltr) {
+    margin-right: 0.7rem;
+    padding-left: 0.8rem;
+}
+
 .wifi-name-label {
-    padding-left: 0.5em;
-    padding-right: 1em;
     /* margin-left: 0.7em; */
     margin-top: 0.2em;
     margin-bottom: 0.2em;
-    margin-right: 0.2em;
     background: $wifi-name-background;
     color: $wifi-name-color;
     font-weight: bold;
+}
+
+.wifi-name-label:dir(rtl) {
+    padding-left: 0.5em;
+    padding-right: 1em;
+    margin-right: 0.2em;
     border-top-right-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
 }
 
-.wifi-icon-strength {
-    font-family: $icon-font-family;
-    margin-left: 0.2em;
-    margin-top: 0.2em;
-    margin-bottom: 0.2em;
+.wifi-name-label:dir(ltr) {
     padding-right: 0.5em;
-    padding-left: 0.6em;
-    background: $wifi-icon-background;
-    color: $wifi-icon-color;
+    padding-left: 1em;
+    margin-left: 0.2em;
     border-top-left-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
+}
+
+.wifi-icon-strength {
+    font-family: $icon-font-family;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    background: $wifi-icon-background;
+    color: $wifi-icon-color;
+}
+
+.wifi-icon-strength:dir(rtl) {
+    margin-left: 0.2em;
+    padding-right: 0.5em;
+    padding-left: 0.6em;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+}
+
+.wifi-icon-strength:dir(ltr) {
+    margin-right: 0.2em;
+    padding-left: 0.5em;
+    padding-right: 0.6em;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
 }
 
 .systray {
@@ -194,14 +244,21 @@
     border-radius: $border-radius;
     margin-top: $bar-top-margin + 0.1rem;
     margin-bottom: $bar-top-margin + 0.1rem;
-    margin-left: 0.4rem;
     min-height: 0.1rem;
+}
+
+.systray:dir(rtl) {
+    margin-left: 0.4rem;
+}
+
+.systray:dir(ltr) {
+    margin-right: 0.4rem;
 }
 
 .systray button {
     background: $systray-btn-background;
     border-radius: $border-radius;
-    padding-right: 0.6rem;
+    padding-right: 0.4rem;
     padding-left: 0.4rem;
     min-height: 0.1rem;
     // font-size: 1rem;
@@ -340,17 +397,28 @@
     padding-right: 1em;
 }
 
-.vol-stack {
+.vol-stack:dir(rtl) {
     margin-left: 1em;
+}
+
+.vol-stack:dir(ltr) {
+    margin-right: 1em;
 }
 
 .vol-osd {
     background: $vol-osd-background;
     padding: 1rem;
-    padding-left: 1.5rem;
     border-radius: $border-radius;
     border: $border-size solid $vol-osd-border-color;
     margin: 1.5rem;
+}
+
+.vol-osd:dir(rtl) {
+    padding-left: 1.5rem;
+}
+
+.vol-osd:dir(ltr) {
+    padding-right: 1.5rem;
 }
 
 // scale trough {
@@ -378,8 +446,16 @@ scale slider {
     border-radius: $border-radius;
     padding-left: 0.7rem;
     padding-right: 0.7rem;
+}
+
+.notifications-revealer-box:dir(rtl) {
     margin-left: 0.7rem;
     margin-right: 0rem;
+}
+
+.notifications-revealer-box:dir(ltr) {
+    margin-right: 0.7rem;
+    margin-left: 0rem;
 }
 
 .notification-popups {
@@ -391,8 +467,8 @@ scale slider {
 
 .notifications-popup-list {
     border-radius: $border-radius;
-    min-height: 0.001rem;
-    min-width: 0.001rem;
+    min-height: 1.2px;
+    // background: #fff;
 }
 
 // .notification-close-button {
@@ -413,20 +489,24 @@ window {
 /* --------------------------------------- */
 .left-menu-box {
     background: $menu-box-background;
-    // min-width: 18rem;
-    // min-height: 32rem;
     border-radius: $border-radius;
     border: 2px solid $menu-box-borders;
     margin-top: 0.45rem;
-    margin-left: 0.45rem;
     margin-bottom: 1rem;
-    margin-right: 1rem;
-
     // box-shadow: 1px 1px 2px 2px rgba(#000000, 0.3);
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
     transition-property: background;
     transition-duration: 1.5s;
+}
 
+.left-menu-box:dir(rtl) {
+    margin-left: 0.45rem;
+    margin-right: 1rem;
+}
+
+.left-menu-box:dir(ltr) {
+    margin-right: 0.45rem;
+    margin-left: 1rem;
 }
 
 .left-menu-header {
@@ -515,12 +595,20 @@ window {
     border: 0px;
     padding-top: 0rem;
     padding-bottom: 0rem;
-    margin-left: 0.5rem;
+
 
     background: $menu-btn-background;
     font-family: $icon-font-family;
     padding-left: 0.8rem;
     padding-right: 0.8rem;
+}
+
+.menu-button:dir(rtl) {
+    margin-left: 0.5rem;
+}
+
+.menu-button:dir(ltr) {
+    margin-right: 0.5rem;
 }
 
 .menu-button:hover {
@@ -568,8 +656,16 @@ window {
     padding: 0rem;
     padding-top: 0rem;
     padding-bottom: 0rem;
+}
+
+.notification-center-button:dir(rtl) {
     padding-right: 1.4rem;
     padding-left: 1.2rem;
+}
+
+.notification-center-button:dir(ltr) {
+    padding-left: 1.4rem;
+    padding-right: 1.2rem;
 }
 
 .notification-this-is-all {
@@ -581,10 +677,18 @@ window {
 }
 
 .no-notification-icon {
-    padding-right: 0.5rem;
+
     margin-bottom: 0.5rem;
     font-family: $icon-font-family;
     font-size: 3rem;
+}
+
+.no-notification-icon:dir(rtl) {
+    padding-right: 0.5rem;
+}
+
+.no-notification-icon:dir(ltr) {
+    padding-left: 0.5rem;
 }
 
 .no-notification-text {
@@ -605,23 +709,42 @@ window {
 }
 
 .notification-center-header-mute {
-    padding-left: 1rem;
-    padding-right: 1.2rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    margin-right: 0.5rem;
     font-family: $icon-font-family;
     border-radius: $border-radius;
 }
 
-.notification-center-header-clear {
+.notification-center-header-mute:dir(rtl) {
     padding-left: 1rem;
     padding-right: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+.notification-center-header-mute:dir(ltr) {
+    padding-right: 1rem;
+    padding-left: 1.2rem;
+    margin-left: 0.5rem;
+}
+
+.notification-center-header-clear {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    margin-right: 0.7rem;
     font-family: $icon-font-family;
     border-radius: $border-radius;
+}
+
+.notification-center-header-clear:dir(rtl) {
+    padding-left: 1rem;
+    padding-right: 1.2rem;
+    margin-right: 0.7rem;
+
+}
+
+.notification-center-header-clear:dir(ltr) {
+    padding-right: 1rem;
+    padding-left: 1.2rem;
+    margin-left: 0.7rem;
 }
 
 .notification-center-container {
@@ -639,7 +762,6 @@ window {
     padding: 1rem;
     margin: 0.5rem;
     border-radius: $border-radius;
-
 }
 
 .left-menu-music-wd {
@@ -647,11 +769,19 @@ window {
     border-radius: $border-radius;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-left: 1rem;
-    padding-right: $left-menu-music-wd-padding-right;
     margin-left: 1rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
+}
+
+.left-menu-music-wd:dir(rtl) {
+    padding-left: 1rem;
+    padding-right: $left-menu-music-wd-padding-right;
+}
+
+.left-menu-music-wd:dir(ltr) {
+    padding-right: 1rem;
+    padding-left: $left-menu-music-wd-padding-right;
 }
 
 .music-wd-row-one {
@@ -670,8 +800,6 @@ window {
 
 .music-wd-player {
     background: $music-wd-player-bg;
-    padding-left: 0.4rem;
-    padding-right: 0.7rem;
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
     color: $music-wd-player-fg;
@@ -680,11 +808,29 @@ window {
     // border: 0px;
 }
 
+.music-wd-player:dir(rtl) {
+    padding-left: 0.4rem;
+    padding-right: 0.7rem;
+}
+
+.music-wd-player:dir(ltr) {
+    padding-right: 0.4rem;
+    padding-left: 0.7rem;
+}
+
 .music-wd-title {
     color: $music-wd-title-fg;
     // font-size: small;
     margin-bottom: 0.5rem;
+
+}
+
+.music-wd-title:dir(rtl) {
     padding-left: 0.5rem;
+}
+
+.music-wd-title:dir(ltr) {
+    padding-right: 0.5rem;
 }
 
 .music-wd-file-name {
@@ -714,7 +860,6 @@ window {
 
 .music-wd-button:hover {
     background: $music-wd-button-hover-img;
-
 }
 
 .music-wd-button-play {
@@ -946,7 +1091,6 @@ window {
     color: $hardware-cpu-table-row-header-color;
     border-top-right-radius: $border-radius;
     border-top-left-radius: $border-radius;
-
 }
 
 .hardware-cpu-table-row {
@@ -980,7 +1124,7 @@ window {
 }
 
 // --------- HW ---------
-.hardware-menu-tables-box{
+.hardware-menu-tables-box {
     background: $hardware-menu-tables-box-background;
     padding: 0.8rem;
     padding-top: 0rem;

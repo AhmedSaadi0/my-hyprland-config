@@ -49,7 +49,9 @@ const Weather = () => {
                 weatherService,
                 weatherBox => {
                     if (weatherService.arValue != '') {
-                        text.label = `${weatherService.avgTempC1} - ${weatherService.arValue}`;
+                        const max = weatherService.maxTempC;
+                        const min = weatherService.minTempC;
+                        text.label = `(${min} - ${max}) ${weatherService.arValue}`;
                         icon.label = `${weatherService.weatherCode}`;
                     } else {
                         text.label = `خدمة الطقس غير متاحة`;

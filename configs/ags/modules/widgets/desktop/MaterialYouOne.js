@@ -110,8 +110,16 @@ const DesktopWidget = () => Widget.Box({
     children: [
         RowOne(),
         RowTwo(),
-        FuzzyClock("my-fuzzy-clock-box small-shadow"),
+        // FuzzyClock("my-fuzzy-clock-box small-shadow"),
         MusicPlayer("my-desktop-music-box small-shadow"),
+        // Saying("saying-wd-label small-shadow"),
+    ]
+})
+
+const DesktopWidget2 = () => Widget.Box({
+    vertical: true,
+    children: [
+        FuzzyClock("my-fuzzy-clock-box small-shadow"),
         Saying("saying-wd-label small-shadow"),
     ]
 })
@@ -122,13 +130,30 @@ const FWidget = () => Widget.Window({
     layer: 'background',
     visible: false,
     focusable: false,
-    anchor: ['top', "right"],
+    anchor: ['top', "left"],
     child: DesktopWidget(),
 })
 
-const materialWidget = FWidget();
+const FWidget2 = () => Widget.Window({
+    name: `desktop_material_you_widget_2`,
+    margins: [60, 60],
+    layer: 'background',
+    visible: false,
+    focusable: false,
+    anchor: ['top', "right"],
+    child: DesktopWidget2(),
+})
 
-globalThis.ShowMYWidget = () => materialWidget.visible = true;
-globalThis.HideMYWidget = () => materialWidget.visible = false;
+const materialWidget = FWidget();
+const materialWidget2 = FWidget2();
+
+globalThis.ShowMYWidget = () => {
+    materialWidget.visible = true
+    materialWidget2.visible = true
+};
+globalThis.HideMYWidget = () => {
+    materialWidget.visible = false
+    materialWidget2.visible = false
+};
 
 export default materialWidget;
