@@ -2,10 +2,9 @@ import themeService from '../services/ThemeService.js';
 import ThemesDictionary from "../theme/themes.js";
 import { NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
-import { USER, execAsync, exec } from 'resource:///com/github/Aylur/ags/utils.js';
+import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
-
-const local = exec(`/home/${USER}/.config/ags/scripts/lang.sh`);
+import { local } from '../utils/helpers.js';
 
 const Profile = () => {
     const userImage = Icon({
@@ -288,7 +287,7 @@ export const LeftMenu = () => Window({
     name: `left_menu`,
     margins: [0, 0, 0, 0],
     // layer: 'overlay',
-    anchor: ['top', "left"],
+    anchor: ['top', local === "RTL" ? "left" : "right"],
     child: Box({
         // className: "left-menu-window",
         css: `
@@ -301,7 +300,7 @@ export const LeftMenu = () => Window({
 })
 
 globalThis.showLeftMenu = () => {
-    menuRevealer.revealChild = !menuRevealer.revealChild
+    menuRevealer.revealChild = !menuRevealer.revealChild;
     changeMenuBtn();
 };
 

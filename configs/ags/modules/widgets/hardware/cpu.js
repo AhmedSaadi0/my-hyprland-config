@@ -22,7 +22,7 @@ const progress = CircularProgress({
 });
 
 export const CpuWidget = () => Box({
-    css: "margin-left: 1.0em;",
+    className: "bar-hw-cpu-box",
     connections: [
         [1000, box => {
             execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu.sh`)

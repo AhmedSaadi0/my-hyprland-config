@@ -3,6 +3,7 @@ import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
 // import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 import Gdk from 'gi://Gdk';
 import { Utils } from '../utils/imports.js';
+import { local } from '../utils/helpers.js';
 
 export var selectedMusicPlayer = null;
 const PLAYER_MENU_ARROW = "🞃"
@@ -170,7 +171,7 @@ const ButtonsRow = () => {
         // label: "",
         label: "",
         css: `
-            padding-right: 2px;
+            ${local === "RTL" ? "padding-right: 2px;" : "padding-left: 2px;"}
         `,
         // onClicked: () => Audio.speaker.volume = Audio.speaker.volume + 0.1
         onClicked: () => {
@@ -236,17 +237,6 @@ const ButtonsRow = () => {
         }]]
     })
 }
-
-// export default widget => Box({
-//     className: "music-wd-box",
-//     vertical: true,
-//     children: [
-//         RowOne(),
-//         RowTwo(),
-//         // Prog(),
-//         ButtonsRow(),
-//     ]
-// })
 
 export default className => Box({
     className: className || "music-wd-box",

@@ -1,4 +1,6 @@
 import { Box, Label } from 'resource:///com/github/Aylur/ags/widget.js';
+import { Utils } from './imports.js';
+
 
 export const TitleText = ({
     title,
@@ -36,3 +38,5 @@ export const TitleText = ({
         connections: connections,
     });
 };
+
+export const local = Utils.exec(`/home/${Utils.USER}/.config/ags/scripts/lang.sh`);

@@ -2,6 +2,7 @@ import MyNotification from '../notifications/Notification.js';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 import { Box, Revealer, Window, Label } from 'resource:///com/github/Aylur/ags/widget.js';
 import { timeout } from 'resource:///com/github/Aylur/ags/utils.js';
+import { local } from '../utils/helpers.js';
 
 const Popups = () => Box({
     className: "notification-popups",
@@ -71,6 +72,6 @@ export default monitor => Window({
     monitor,
     name: `notifications${monitor}`,
     margins: [30, 30],
-    anchor: ['bottom', "left"],
+    anchor: ['bottom', local === "RTL" ? "left" : "right"],
     child: PopupList(),
 });

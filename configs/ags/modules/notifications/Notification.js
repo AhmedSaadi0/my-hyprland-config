@@ -3,6 +3,9 @@ import Notifications from 'resource:///com/github/Aylur/ags/service/notification
 import { lookUpIcon, timeout } from 'resource:///com/github/Aylur/ags/utils.js';
 import { Box, Icon, Label, EventBox, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import Variable from 'resource:///com/github/Aylur/ags/variable.js';
+import { local } from '../utils/helpers.js';
+
+const rtlMargin = local === "RTL" ? "margin-left: 1rem;" : "margin-right: 1rem;";
 
 const NotificationIcon = ({ appEntry, appIcon, image }) => {
     if (image) {
@@ -17,7 +20,7 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
                 background-position: center;
                 min-width: 78px;
                 min-height: 78px;
-                margin-left: 1rem;
+                ${rtlMargin}
                 border-radius: 1rem;
             `,
         });
@@ -36,7 +39,7 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
         css: `
                 min-width: 78px;
                 min-height: 78px;
-                margin-left: 1rem;
+                ${rtlMargin}
         `,
         children: [Icon({
             icon, size: 58,
@@ -99,7 +102,7 @@ export default (notification) => {
                             // Notification Title
                             Label({
                                 className: 'notification-title',
-                                css: `margin-left: 1rem;`,
+                                css: `${rtlMargin}`,
                                 xalign: 0,
                                 justification: 'left',
                                 hexpand: true,
@@ -112,7 +115,7 @@ export default (notification) => {
                             // Notification Body
                             Label({
                                 className: 'notification-time',
-                                css: `margin-left: 1rem; margin-top: 0.5rem;`,
+                                css: `${rtlMargin} margin-top: 0.5rem;`,
                                 vpack: 'start',
                                 label: GLib.DateTime.new_from_unix_local(notification.time).format('%H:%M'),
                             }),
