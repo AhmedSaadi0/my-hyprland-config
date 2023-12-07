@@ -1,3 +1,4 @@
+import { local } from "../utils/helpers.js";
 import { Widget, Utils, Battery } from "../utils/imports.js";
 
 var menuIsOpen = null;
@@ -373,7 +374,7 @@ export const HardwareMenu = () => Widget.Window({
     name: `hardware_menu`,
     margins: [6, 250],
     // layer: 'overlay',
-    anchor: ['top', "right"],
+    anchor: ['top', local === "RTL" ? "right" : "left"],
     child: Widget.Box({
         // className: "left-menu-window",
         css: `

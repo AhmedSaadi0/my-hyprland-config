@@ -1,6 +1,7 @@
 import { Scrollable, Label, Box, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { Notifications } from '../utils/imports.js';
 import Notification from '../notifications/MenuNotification.js';
+import { local } from '../utils/helpers.js';
 
 
 const NotificationsBox = () => {
@@ -117,7 +118,7 @@ export const NotificationCenter = () => Window({
     name: `notification_center`,
     margins: [0, 0, 0, 500],
     // layer: 'overlay',
-    anchor: ['top', "left"],
+    anchor: ['top', local === "RTL" ? "left" : "right"],
     child: Box({
         css: `
             min-height: 2px;

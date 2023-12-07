@@ -1,7 +1,6 @@
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 
 
-
 const menuRevealer = Revealer({
     transition: "slide_down",
     child: Box({

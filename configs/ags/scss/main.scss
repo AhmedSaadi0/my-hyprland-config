@@ -1,4 +1,4 @@
-@import './themes/unicat.scss';
+@import './themes/newCat.scss';
 
 .unset {
     all: unset;
@@ -382,7 +382,30 @@
     border-radius: $border-radius;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-bottom-margin + 0.1rem;
-    // margin-right: 0em;
+}
+
+.bar-hw-temp-box:dir(rtl) {
+    margin-right: 0.5rem;
+}
+
+.bar-hw-temp-box:dir(ltr) {
+    margin-left: 0.5rem;
+}
+
+.bar-hw-ram-box:dir(rtl) {
+    margin-left: 0.5rem;
+}
+
+.bar-hw-ram-box:dir(ltr) {
+    margin-right: 0.5rem;
+}
+
+.bar-hw-cpu-box:dir(rtl) {
+    margin-left: 0.5rem;
+}
+
+.bar-hw-cpu-box:dir(ltr) {
+    margin-right: 0.5rem;
 }
 
 

@@ -1,6 +1,6 @@
 import { NetworkInformation } from "./widgets/internet.js";
 import { Workspaces } from "./widgets/workspace.js";
-import { Volume } from "./widgets/volume.js";
+// import { Volume } from "./widgets/volume.js";
 import { HardwareBox } from "./widgets/hardware/all.js";
 import { SysTrayBox } from "./widgets/systray.js";
 // import NotificationIndicator from "./widgets/NotificationIndicator.js";

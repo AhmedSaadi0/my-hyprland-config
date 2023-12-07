@@ -22,7 +22,7 @@ const progress = CircularProgress({
 });
 
 export const RamWidget = () => Box({
-    css: "margin-left: 1.0em;",
+    className: "bar-hw-ram-box",
     connections: [
         [30000, box => {
             execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
