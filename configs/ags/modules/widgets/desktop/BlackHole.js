@@ -110,25 +110,53 @@ const DesktopWidget = () => Widget.Box({
     children: [
         RowOne(),
         RowTwo(),
-        FuzzyClock("my-fuzzy-clock-box small-shadow"),
+        // FuzzyClock("my-fuzzy-clock-box small-shadow"),
         MusicPlayer("my-desktop-music-box small-shadow"),
+        // Saying("saying-wd-label small-shadow"),
+    ]
+})
+
+const DesktopWidget2 = () => Widget.Box({
+    vertical: true,
+    children: [
+        // RowOne(),
+        // RowTwo(),
+        FuzzyClock("my-fuzzy-clock-box small-shadow"),
+        // MusicPlayer("my-desktop-music-box small-shadow"),
         Saying("saying-wd-label small-shadow"),
     ]
 })
 
 const FWidget = () => Widget.Window({
     name: `desktop_black_hole_widget_widget`,
-    margins: [140, 100],
+    margins: [80, 80],
     layer: 'background',
     visible: false,
     focusable: false,
-    anchor: ['top', "left"],
+    anchor: ['top', "right"],
     child: DesktopWidget(),
 })
 
-const blackHoleWidget = FWidget();
+const FWidget2 = () => Widget.Window({
+    name: `desktop_black_hole_widget_widget_2`,
+    margins: [80, 80],
+    layer: 'background',
+    visible: false,
+    focusable: false,
+    anchor: ['bottom', "left"],
+    child: DesktopWidget2(),
+})
 
-globalThis.ShowBHWidget = () => blackHoleWidget.visible = true;
-globalThis.HideBHWidget = () => blackHoleWidget.visible = false;
+const blackHoleWidget = FWidget();
+const blackHoleWidget2 = FWidget2();
+
+globalThis.ShowBHWidget = () => {
+    blackHoleWidget.visible = true
+    blackHoleWidget2.visible = true
+};
+globalThis.HideBHWidget = () => {
+    blackHoleWidget.visible = false
+    blackHoleWidget2.visible = false
+};
 
 export default blackHoleWidget;

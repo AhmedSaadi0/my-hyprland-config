@@ -2,9 +2,10 @@ import themeService from '../services/ThemeService.js';
 import ThemesDictionary from "../theme/themes.js";
 import { NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
-import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+import { USER, execAsync, exec } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
 
+const local = exec(`/home/${USER}/.config/ags/scripts/lang.sh`);
 
 const Profile = () => {
     const userImage = Icon({
@@ -44,7 +45,7 @@ const Header = () => {
     })
 }
 
-const ThemeButton = ({ label, icon, theme, end = "margin-left: 1rem;" }) => {
+const ThemeButton = ({ label, icon, theme, end = local === "RTL" ? "margin-left: 1rem;" : "margin-right: 1rem;" }) => {
 
     const _label = Label({
         className: "unset theme-btn-label",
@@ -204,13 +205,15 @@ const ThemesButtonsRowOne = () => {
 
 const PowerButtonsRow = () => {
 
+    const powerBtnMargin = local === "RTL" ? "margin-left: 1rem;" : "margin-right: 1rem;";
+
     const powerOff = Button({
         className: "theme-btn",
         css: `
                 min-width: 5rem;
                 min-height: 2rem;
                 border-radius: 1rem;
-                margin-left: 1rem;
+                ${powerBtnMargin}
             `,
         child: Label({
             label: ""
@@ -224,7 +227,7 @@ const PowerButtonsRow = () => {
                 min-width: 5rem;
                 min-height: 2rem;
                 border-radius: 1rem;
-                margin-left: 1rem;
+                ${powerBtnMargin}
             `,
         child: Label({
             label: ""
@@ -289,7 +292,7 @@ export const LeftMenu = () => Window({
     child: Box({
         // className: "left-menu-window",
         css: `
-            min-height: 1px;
+            min-height: 2px;
         `,
         children: [
             menuRevealer,

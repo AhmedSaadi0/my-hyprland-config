@@ -29,7 +29,7 @@ const DesktopWidget = Widget.Box({
                 }),
             ],
             connections: [[Mpris, box => {
-                if (Mpris?.players.length > 0) {
+                if (Mpris?.players.length > 0 && Mpris?.getPlayer(selectedMusicPlayer)) {
                     box.children[0].label = Mpris?.getPlayer(selectedMusicPlayer)?.trackTitle;
                     box.children[1].label = Mpris?.getPlayer(selectedMusicPlayer)?.trackArtists[0];
                 } else {

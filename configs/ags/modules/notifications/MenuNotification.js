@@ -1,5 +1,4 @@
 const { GLib } = imports.gi;
-import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 import { lookUpIcon } from 'resource:///com/github/Aylur/ags/utils.js';
 import { Box, Icon, Label, EventBox, Button } from 'resource:///com/github/Aylur/ags/widget.js';
 
