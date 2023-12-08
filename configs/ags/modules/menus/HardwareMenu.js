@@ -260,22 +260,22 @@ const tablesBox = () => {
                                 deviceName: batDeviceName,
                             }),
                             tableRow({
-                                appName: "الصحة   ",
+                                appName: local === "RTL" ? "الصحة   " : "Health   ",
                                 percentage: data["Capacity"] + "%",
                                 deviceName: batDeviceName,
                             }),
                             tableRow({
-                                appName: "الفولتية  ",
+                                appName: local === "RTL" ? "الفولتية  " : "Voltage  ",
                                 percentage: data["Voltage"],
                                 deviceName: batDeviceName,
                             }),
                             tableRow({
-                                appName: "الطاقة  ",
+                                appName: local === "RTL" ? "الطاقة  " : "Energy  ",
                                 percentage: `${Battery.energy}`,
                                 deviceName: batDeviceName,
                             }),
                             tableRow({
-                                appName: "الدورات  ",
+                                appName: local === "RTL" ? "الدورات  " : "Cycles  ",
                                 percentage: data["Charge_Cycles"],
                                 deviceName: batDeviceName,
                             }),

@@ -1,4 +1,4 @@
-@import './themes/newCat.scss';
+@import './themes/harmony.scss';
 
 .unset {
     all: unset;
@@ -154,20 +154,29 @@
 }
 
 .small-shadow {
-    box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
     transition-property: background;
     transition-duration: .5s;
 }
 
 .shadow {
-    // box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.3);
-    // transition-property: background;
-    // transition-duration: 0.5s;
-
-    box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
-    // box-shadow: 1px 1px 4px 4px rgba(0, 0, 0, 0.3);
     transition-property: background;
     transition-duration: .5s;
+}
+
+.small-shadow:dir(rtl) {
+    box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
+}
+
+.small-shadow:dir(ltr) {
+    box-shadow: 1px 2px 2px 1px rgba(#000000, 0.1);
+}
+
+.shadow:dir(rtl) {
+    box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
+}
+
+.shadow:dir(ltr) {
+    box-shadow: 1px 2px 3px 1px rgba(#000000, 0.3);
 }
 
 
@@ -232,9 +241,9 @@
 }
 
 .wifi-icon-strength:dir(ltr) {
-    margin-right: 0.2em;
-    padding-left: 0.5em;
-    padding-right: 0.6em;
+    margin-right: 0.2rem;
+    padding-left: 0.2rem;
+    padding-right: 1rem;
     border-top-right-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
 }
@@ -516,8 +525,6 @@ window {
     border: 2px solid $menu-box-borders;
     margin-top: 0.45rem;
     margin-bottom: 1rem;
-    // box-shadow: 1px 1px 2px 2px rgba(#000000, 0.3);
-    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
     transition-property: background;
     transition-duration: 1.5s;
 }
@@ -525,11 +532,13 @@ window {
 .left-menu-box:dir(rtl) {
     margin-left: 0.45rem;
     margin-right: 1rem;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .left-menu-box:dir(ltr) {
     margin-right: 0.45rem;
     margin-left: 1rem;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
 .left-menu-header {
@@ -679,16 +688,13 @@ window {
     padding: 0rem;
     padding-top: 0rem;
     padding-bottom: 0rem;
-}
-
-.notification-center-button:dir(rtl) {
     padding-right: 1.4rem;
     padding-left: 1.2rem;
 }
 
-.notification-center-button:dir(ltr) {
-    padding-left: 1.4rem;
-    padding-right: 1.2rem;
+.notification-center-button:hover{
+    background-color: $notifications-bar-btn-hover-bg;
+    color: $notifications-bar-btn-hover-fg;
 }
 
 .notification-this-is-all {
@@ -700,19 +706,12 @@ window {
 }
 
 .no-notification-icon {
-
     margin-bottom: 0.5rem;
     font-family: $icon-font-family;
     font-size: 3rem;
+    padding-right: 0.7rem;
 }
 
-.no-notification-icon:dir(rtl) {
-    padding-right: 0.5rem;
-}
-
-.no-notification-icon:dir(ltr) {
-    padding-left: 0.5rem;
-}
 
 .no-notification-text {
     min-width: 22.5rem;
@@ -736,38 +735,35 @@ window {
     padding-bottom: 0.5rem;
     font-family: $icon-font-family;
     border-radius: $border-radius;
-}
-
-.notification-center-header-mute:dir(rtl) {
     padding-left: 1rem;
     padding-right: 1.2rem;
     margin-right: 0.5rem;
 }
 
-.notification-center-header-mute:dir(ltr) {
-    padding-right: 1rem;
-    padding-left: 1.2rem;
-    margin-left: 0.5rem;
-}
+// .notification-center-header-mute:dir(rtl) {
+// }
+
+// .notification-center-header-mute:dir(ltr) {
+//     padding-right: 1rem;
+//     padding-left: 1.2rem;
+//     margin-left: 0.5rem;
+// }
 
 .notification-center-header-clear {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     font-family: $icon-font-family;
     border-radius: $border-radius;
+    padding-left: 1rem;
+    padding-right: 1.2rem;
 }
 
 .notification-center-header-clear:dir(rtl) {
-    padding-left: 1rem;
-    padding-right: 1.2rem;
     margin-right: 0.7rem;
-
 }
 
 .notification-center-header-clear:dir(ltr) {
-    padding-right: 1rem;
-    padding-left: 1.2rem;
-    margin-left: 0.7rem;
+    margin-left: 1rem;
 }
 
 .notification-center-container {
@@ -876,17 +872,17 @@ window {
     border-radius: 50%;
     min-width: 40px;
     min-height: 40px;
-    background: $music-wd-button-img;
+    background: $music-wd-button-bg;
     // color: $music-wd-button-fg;
     transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .music-wd-button:hover {
-    background: $music-wd-button-hover-img;
+    background: $music-wd-button-hover-bg;
 }
 
 .music-wd-button-play {
-    background: $music-wd-button-play-img;
+    background: $music-wd-button-play-bg;
     // color: $music-wd-button-play-fg;
     border-radius: 3rem;
     min-height: 40px;
@@ -895,11 +891,11 @@ window {
 }
 
 .music-wd-button-play:hover {
-    background: $music-wd-button-hover-img;
+    background: $music-wd-button-hover-bg;
 }
 
 .music-wd-button-stop {
-    background: $music-wd-button-stop-img;
+    background: $music-wd-button-stop-bg;
     color: $music-wd-button-stop-fg;
     border-radius: 3rem;
     min-height: 40px;

@@ -55,11 +55,11 @@ const deer = {
     css_theme: "deer.scss",
     plasma_color: "BlueDeer.colors",
     qt_style_theme: "Breeze",
-    qt_icon_theme: "oomox-aesthetic-dark",
+    qt_icon_theme: "Vivid-Dark-Icons",
     kvantum_theme: "a-color",
     gtk_theme: "Kimi-dark",
     // gtk_theme: "Colorful-Dark-GTK",
-    gtk_icon_theme: "oomox-aesthetic-dark",
+    gtk_icon_theme: "Vivid-Dark-Icons",
     // rofi_theme: "islamic_theme.rasi",
     gtk_mode: "dark",
     hypr: {
@@ -234,7 +234,6 @@ const newCat = {
     gtk_theme: "Tokyonight-Dark-BL",
     // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "Gradient-Dark-Icons",
-    // rofi_theme: "colors_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -248,6 +247,51 @@ const newCat = {
     desktop_widget: null,
 }
 
+const golden = {
+    wallpaper: `${WALLPAPER_PATH}/golden.png`,
+    css_theme: "golden.scss",
+    plasma_color: "Gold.colors",
+    qt_style_theme: "Breeze",
+    qt_icon_theme: "Zafiro-Nord-Dark-Black",
+    kvantum_theme: "a-color",
+    gtk_theme: "Cabinet-Light-Orange",
+    // gtk_theme: "Orchis-Yellow-Compact",
+    gtk_icon_theme: "kora-grey-light-panel",
+    gtk_mode: "dark",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(2C3041ff) rgba(611a15ff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 17,
+        "drop_shadow": "no",
+        "kitty": "golden.conf",
+        "konsole": "material-you",
+    },
+    desktop_widget: "GoldenWidget",
+}
+
+const harmony = {
+    wallpaper: `${WALLPAPER_PATH}/ign_wanderlust.jpg`,
+    css_theme: "harmony.scss",
+    plasma_color: "Nordic.colors",
+    qt_style_theme: "Breeze",
+    qt_icon_theme: "Windows11-red-dark",
+    kvantum_theme: "a-color",
+    gtk_theme: "Nordic-darker-standard-buttons",
+    gtk_icon_theme: "Windows11-red-dark",
+    gtk_mode: "dark",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(BF616Bff) rgba(BF616Bff) 0deg",
+        "inactive_border": "rgba(2E3440ff) 0deg",
+        "rounding": 10,
+        "drop_shadow": "no",
+        "kitty": "harmony.conf",
+        "konsole": "NewCat",
+    },
+    desktop_widget: "HarmonyWidget",
+}
+
 export const BLACK_HOLE_THEME = 0;
 export const DEER_THEME = 1;
 export const COLOR_THEME = 2;
@@ -258,6 +302,8 @@ export const GAME_THEME = 6;
 export const DARK_THEME = 7;
 export const UNICAT_THEME = 8;
 export const NEW_CAT_THEME = 9;
+export const GOLDEN_THEME = 10;
+export const HARMONY_THEME = 11;
 
 const ThemesDictionary = {
     [BLACK_HOLE_THEME]: black_hole,
@@ -270,6 +316,8 @@ const ThemesDictionary = {
     [DARK_THEME]: dark,
     [UNICAT_THEME]: uniCat,
     [NEW_CAT_THEME]: newCat,
+    [GOLDEN_THEME]: golden,
+    [HARMONY_THEME]: harmony,
 }
 
 export default ThemesDictionary
