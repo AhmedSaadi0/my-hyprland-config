@@ -1,6 +1,5 @@
 import themeService from '../services/ThemeService.js';
-import ThemesDictionary from "../theme/themes.js";
-import { NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
+import ThemesDictionary, { GOLDEN_THEME, HARMONY_THEME, NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
@@ -153,6 +152,19 @@ const ThemesButtonsRowOne = () => {
         theme: NEW_CAT_THEME,
     });
 
+    const goldenTheme = ThemeButton({
+        label: "ذهبي",
+        icon: "󰉊",
+        theme: GOLDEN_THEME,
+    });
+
+    const harmonyTheme = ThemeButton({
+        label: "تناغم",
+        icon: "󰔉",
+        theme: HARMONY_THEME,
+        end: "",
+    });
+
     const row1 = Box({
         children: [
             blackHoleTheme,
@@ -186,6 +198,8 @@ const ThemesButtonsRowOne = () => {
         `,
         children: [
             newCatTheme,
+            goldenTheme,
+            harmonyTheme,
         ]
     })
 

@@ -1,3 +1,4 @@
+import { local } from "../utils/helpers.js";
 import { Widget } from "../utils/imports.js";
 
 const words_dict = [
@@ -307,8 +308,8 @@ const words_dict = [
 
 export default className => Widget.Label({
     className: className || "saying-wd-label",
-// label: "SUIII",
-    justification: 'left',
+    // label: "SUIII",
+    justification: local === "RTL" ? 'left' : "right",
     // truncate: 'end',
     xalign: 0,
     maxWidthChars: 24,

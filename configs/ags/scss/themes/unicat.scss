@@ -135,6 +135,10 @@ $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
 $notifications-bar-btn-bg: $bg-three;
 $notifications-bar-btn-fg: $fg-two;
+
+$notifications-bar-btn-hover-bg: $fg-one;
+$notifications-bar-btn-hover-fg: $bg-one;
+
 $notifications-header-bg: $bg-two;
 $notifications-header-fg: $text-color;
 $notifications-separator-background: $text-color;
@@ -151,7 +155,7 @@ $wd-fuzzy-day-text-font-size: 3rem;
 $wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
 $wd-fuzzy-day-icon-font-size: 2rem;
 $wd-fuzzy-day-icon-font-family: $icon-font-family;
-$wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 0rem;
+$wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 1rem;
 $wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
 
 $wd-time-now-bg: rgba(#000000, 0);
@@ -164,7 +168,7 @@ $wd-fuzzy-time-box-bg: rgba(#000000, 0);
 $wd-fuzzy-time-box-fg: $fg-three;
 $wd-fuzzy-time-icon-font-size: 1.5rem;
 $wd-fuzzy-time-icon-font-family: $icon-font-family;
-$wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 0rem;
+$wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 1rem;
 $wd-fuzzy-time-text-font-size: 1.8rem;
 $wd-fuzzy-time-text-font-family: "VIP Rawy Regular";
 
@@ -217,14 +221,14 @@ $music-wd-player-bg: $fg-two;
 $music-wd-player-fg: $bg-one;
 $music-wd-title-fg: $fg-one;
 $music-wd-artist-fg: $fg-three;
-$music-wd-button-img: linear-gradient(to right, $bg-one, $bg-one);
-$music-wd-button-hover-img: linear-gradient(to top, $fg-one, $fg-two);
+$music-wd-button-bg: linear-gradient(to right, $bg-one, $bg-one);
+$music-wd-button-hover-bg: linear-gradient(to top, $fg-one, $fg-two);
 $music-wd-button-fg: $fg-three;
 
-$music-wd-button-play-img: $selected-theme-background;
+$music-wd-button-play-bg: $selected-theme-background;
 $music-wd-button-play-fg: $bg-two;
 
-$music-wd-button-stop-img: $music-wd-button-img;
+$music-wd-button-stop-bg: $music-wd-button-bg;
 $music-wd-button-stop-fg: $music-wd-button-fg;
 
 $left-menu-music-wd-padding-right: 1.8rem;

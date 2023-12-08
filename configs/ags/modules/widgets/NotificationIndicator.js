@@ -2,6 +2,7 @@ import HoverRevealer from '../utils/HoverRevealer.js';
 import { Label, Icon } from 'resource:///com/github/Aylur/ags/widget.js';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 import { timeout } from 'resource:///com/github/Aylur/ags/utils.js';
+import { local } from '../utils/helpers.js';
 
 export default ({
     direction = 'left',
@@ -38,7 +39,7 @@ export default ({
         }]],
     }),
     child: Label({
-        css: "margin-left: 0.4rem",
+        css: local === "RTL" ? "margin-left: 0.4rem" : "margin-right: 0.4rem",
         truncate: 'end',
         maxWidthChars: 40,
         connections: [[Notifications, label => {

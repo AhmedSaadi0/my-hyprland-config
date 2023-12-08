@@ -1,4 +1,4 @@
-import { TitleText } from "../utils/helpers.js";
+import { TitleText, local } from "../utils/helpers.js";
 import { Widget, Utils } from "../utils/imports.js";
 
 const SATURDAY = 6;
@@ -16,14 +16,14 @@ const FuzzyDay = () => TitleText({
     titleClass: "wd-fuzzy-day-text",
     textClass: "wd-fuzzy-day-icon",
     boxClass: "wd-fuzzy-day-box",
-    titleXalign: 0,
-    textXalign: 0,
+    titleXalign: 0, // local === "RTL" ? 0 : 1,
+    textXalign: 0, // local === "RTL" ? 0 : 1,
     vertical: false,
 });
 
 const TimeNow = () => Widget.Label({
     className: "wd-time-now",
-    xalign: 0,
+    xalign: 0, // local === "RTL" ? 0 : 1,
 })
 
 const FuzzyTime = () => TitleText({
@@ -32,8 +32,8 @@ const FuzzyTime = () => TitleText({
     titleClass: "wd-fuzzy-time-text",
     textClass: "wd-fuzzy-time-icon",
     boxClass: "wd-fuzzy-time-box",
-    titleXalign: 0,
-    textXalign: 0,
+    titleXalign: 0, // local === "RTL" ? 0 : 1,
+    textXalign: 0, // local === "RTL" ? 0 : 1,
     vertical: false,
 });
 

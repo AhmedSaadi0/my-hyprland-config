@@ -2,7 +2,7 @@ import MusicPlayer from "../MusicPLayer.js";
 import WeatherService from '../../services/WeatherService.js';
 import FuzzyClock from "../FuzzyClock.js";
 import Saying from "../Saying.js";
-import { TitleText } from "../../utils/helpers.js";
+import { TitleText, local } from "../../utils/helpers.js";
 import { Utils, Widget } from "../../utils/imports.js";
 
 const iconImage = Widget.Icon({
@@ -27,8 +27,8 @@ const RowOne = () => Widget.Box({
             text: WeatherService.arValue,
             textClass: "my-weather-wd-text",
             boxClass: "my-weather-wd-title-text-box",
-            titleXalign: 1,
-            textXalign: 1,
+            titleXalign: local === "RTL" ? 1 : 0,
+            textXalign: local === "RTL" ? 1 : 0,
         });
 
         weatherIcon.label = WeatherService.weatherCode;
@@ -72,7 +72,7 @@ const Insider = ({
 const RowTwo = () => {
     return Widget.Box({
         className: "my-weather-wd-row-two small-shadow",
-        spacing: 50,
+        spacing: 55,
         homogeneous: false,
         children: [
         ],

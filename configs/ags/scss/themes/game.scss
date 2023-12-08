@@ -146,6 +146,10 @@ $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
 $notifications-bar-btn-bg: $bg-three;
 $notifications-bar-btn-fg: $fg-two;
+
+$notifications-bar-btn-hover-bg: $fg-one;
+$notifications-bar-btn-hover-fg: $bg-one;
+
 $notifications-header-bg: $bg-two;
 $notifications-header-fg: $text-color;
 $notifications-separator-background: $text-color;
@@ -231,14 +235,14 @@ $music-wd-player-fg: $fg-three;
 $music-wd-title-fg: $bg-two;
 $music-wd-artist-fg: $fg-three;
 
-$music-wd-button-img: linear-gradient(to right, $bg-one, $bg-one);
+$music-wd-button-bg: linear-gradient(to right, $bg-one, $bg-one);
 $music-wd-button-fg: $fg-three;
-$music-wd-button-hover-img: linear-gradient(to top, $fg-one, $fg-two);
+$music-wd-button-hover-bg: linear-gradient(to top, $fg-one, $fg-two);
 
-$music-wd-button-play-img: linear-gradient(to bottom, $fg-three, $fg-two);
+$music-wd-button-play-bg: linear-gradient(to bottom, $fg-three, $fg-two);
 $music-wd-button-play-fg: $bg-two;
 
-$music-wd-button-stop-img: $music-wd-button-img;
+$music-wd-button-stop-bg: $music-wd-button-bg;
 $music-wd-button-stop-fg: $music-wd-button-fg;
 
 $left-menu-music-wd-padding-right: 1.8rem;

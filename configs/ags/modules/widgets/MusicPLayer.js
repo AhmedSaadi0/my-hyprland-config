@@ -153,7 +153,7 @@ const ButtonsRow = () => {
 
     let backBtn = Button({
         className: "unset music-wd-button",
-        label: "",
+        label: local === "RTL" ? "" : "",
         onClicked: () => { Mpris.getPlayer(selectedMusicPlayer)?.previous() },
     })
     let playBtn = Button({
@@ -163,13 +163,13 @@ const ButtonsRow = () => {
     })
     let nextBtn = Button({
         className: "unset music-wd-button",
-        label: "",
+        label: local === "RTL" ? "" : "",
         onClicked: () => { Mpris.getPlayer(selectedMusicPlayer)?.next() },
     })
     let skipForwardBtn = Button({
         className: "unset music-wd-button",
         // label: "",
-        label: "",
+        label: local === "RTL" ? "" : "",
         css: `
             ${local === "RTL" ? "padding-right: 2px;" : "padding-left: 2px;"}
         `,
@@ -191,7 +191,8 @@ const ButtonsRow = () => {
             padding-left: 2px;
         `,
         className: "unset music-wd-button",
-        label: "",
+        // label: "",
+        label: local === "RTL" ? "" : "",
         onClicked: () => {
             const decimalNumber = Mpris.getPlayer(selectedMusicPlayer)?.position;
 
