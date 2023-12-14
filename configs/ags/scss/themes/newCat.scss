@@ -146,50 +146,49 @@ $notifications-separator-background: $text-color;
 // ----------------------------------
 // --------- desktop-widget ---------
 // ----------------------------------
-$desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, $fg-three, $fg-one);
+$desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, #EA6220, $fg-one);
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
-$wd-fuzzy-day-box-fg: $fg-two;
+$wd-fuzzy-day-box-fg: $bg-three;
 
-$wd-fuzzy-day-text-font-size: 3rem;
+$wd-fuzzy-day-text-font-size: 1.8rem;
 $wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
-$wd-fuzzy-day-icon-font-size: 2rem;
+$wd-fuzzy-day-icon-font-size: 1.5rem;
 $wd-fuzzy-day-icon-font-family: $icon-font-family;
 $wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 1rem;
 $wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
 
 $wd-time-now-bg: rgba(#000000, 0);
-$wd-time-now-fg: $fg-one;
-$wd-time-now-font-size: 2.3rem;
+$wd-time-now-fg: #432681;
+$wd-time-now-font-size: 1.5rem;
 $wd-time-now-font-family: "VEXA light R";
 $wd-time-now-margin: 0rem 0rem 0.5rem 0rem;
 
 $wd-fuzzy-time-box-bg: rgba(#000000, 0);
-$wd-fuzzy-time-box-fg: $fg-three;
+$wd-fuzzy-time-box-fg: $bg-one;
 $wd-fuzzy-time-icon-font-size: 1.5rem;
 $wd-fuzzy-time-icon-font-family: $icon-font-family;
 $wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 1rem;
 $wd-fuzzy-time-text-font-size: 1.8rem;
 $wd-fuzzy-time-text-font-family: "VIP Rawy Regular";
 
-$saying-wd-label-bg: rgba(#000000, 0);
-$saying-wd-label-fg: $fg-two;
-$saying-wd-label-font-size: 1.8rem;
-$saying-wd-label-min-width: 25rem;
+$saying-wd-label-bg: rgba($fg-three, 0.8);
+$saying-wd-label-fg: $bg-one;
+$saying-wd-label-font-size: 1.5rem;
+$saying-wd-label-min-width: 1rem;
 $saying-wd-label-font-family: "VIP Rawy Regular";
-$saying-wd-label-padding: 0rem;
-$saying-wd-label-margin: 0rem;
-$saying-wd-label-border-radius: 0rem;
+$saying-wd-label-padding: 1rem;
+$saying-wd-label-margin: 0rem 1rem;
+$saying-wd-label-border-radius: $border-radius;
 
 // Music Info
 $music-info-wd-font-family: "VIP Rawy Regular";
 $music-info-wd-font-size: 1.5rem;
 $music-info-wd-min-width: 30rem;
-$music-info-wd-padding: 0rem 0rem 0rem 0rem;
+$music-info-wd-padding: 1rem 0rem 0rem 0rem;
 
 $music-info-wd-title-fg: $fg-one;
-$music-info-wd-artist-fg: $fg-three;
-
+$music-info-wd-artist-fg: $fg-two;
 // ------------------------
 // --------- Menu ---------
 // ------------------------
@@ -282,4 +281,122 @@ button:hover {
     color: $btn-hover-color;
     border-color: $btn-hover-background;
     border-radius: $border-radius;
+}
+
+/* -------------------------------------------- */
+/* -------------- Desktop Widget -------------- */
+/* -------------------------------------------- */
+.my-weather-wd-text {
+    font-size: medium;
+    color: $bg-one;
+}
+
+.weather-wd-row-one {
+    background: rgba($fg-two, 0.7);
+    border-radius: $border-radius;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.my-desktop-music-box {
+    background: $music-wd-box-bg;
+    border-radius: $border-radius;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-right: 1.2rem;
+    padding-left: 1rem;
+    min-width: 1rem;
+    margin: 1rem;
+    margin-top: 0.5rem;
+    // margin-left: 11.3rem;
+}
+
+.my-weather-wd-icon {
+    color: $bg-one;
+    font-size: xx-large;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-family: $icon-font-family;
+}
+
+.my-wd-user-icon {
+    padding: 0.8rem;
+    margin-right: 1rem;
+    border-radius: $border-radius;
+}
+
+.my-weather-wd-title-text-box {
+    // background: #E9C7C6;
+    min-width: 10.55rem;
+    padding-top: 1rem;
+    color: $bg-one;
+    font-size: x-large;
+    font-family: $saying-wd-label-font-family;
+}
+
+
+// Desktop M-U Weather Days
+.my-weather-wd-row-two {
+    // background: #E9C7C6;
+    background: $bg-one;
+    margin: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: $border-radius;
+}
+
+.my-fuzzy-clock-box {
+    background: rgba(#FFEFB0, 0.7);
+
+    margin: 1rem;
+    margin-bottom: 0.5rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: $border-radius;
+}
+
+.my-wd-weather-day-name {
+    font-family: $saying-wd-label-font-family;
+    color: $bg-one;
+}
+
+.my-wd-weather-day-text {
+    font-size: x-small;
+    padding-bottom: 0rem;
+    color: $bg-one;
+}
+
+.my-weather-wd-day-icon {
+    background: rgba($color: $bg-three, $alpha: 0.7);
+    color: $text-color;
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+    border-radius: $border-radius;
+    margin-bottom: 0.2rem;
+    min-width: 3rem;
+    min-height: 3.5rem;
+    font-size: x-large;
+    font-family: $icon-font-family;
+}
+
+.my-weather-wd-day-box {
+    background: $fg-two;
+    border-radius: $border-radius;
+    padding-top: 0.4rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
 }

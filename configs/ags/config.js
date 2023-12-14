@@ -14,6 +14,8 @@ import unicatWidget from "./modules/widgets/desktop/UnicatWidget.js";
 import blackHoleWidget from "./modules/widgets/desktop/BlackHole.js";
 import goldenWidget from "./modules/widgets/desktop/Golden.js";
 import harmonyWidget from './modules/widgets/desktop/Harmony.js';
+import newCatWidget from './modules/widgets/desktop/NewCat.js';
+import deerWidget from './modules/widgets/desktop/DeerWidget.js';
 
 // in config.js
 const scss = App.configDir + '/scss/main.scss';
@@ -38,6 +40,8 @@ export default {
         blackHoleWidget,
         goldenWidget,
         harmonyWidget,
+        newCatWidget,
+        deerWidget
     ],
 };
 
