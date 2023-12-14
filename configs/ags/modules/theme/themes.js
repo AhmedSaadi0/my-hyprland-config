@@ -71,7 +71,7 @@ const deer = {
         "kitty": "deer.conf",
         "konsole": "Islamic",
     },
-    desktop_widget: null,
+    desktop_widget: "DeerWidget",
 }
 
 const colors = {
@@ -244,7 +244,7 @@ const newCat = {
         "kitty": "new_cat.conf",
         "konsole": "NewCat",
     },
-    desktop_widget: null,
+    desktop_widget: "NewCatWidget",
 }
 
 const golden = {
@@ -253,11 +253,11 @@ const golden = {
     plasma_color: "Gold.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Zafiro-Nord-Dark-Black",
-    kvantum_theme: "a-color",
+    kvantum_theme: "a-m-you",
     gtk_theme: "Cabinet-Light-Orange",
     // gtk_theme: "Orchis-Yellow-Compact",
     gtk_icon_theme: "kora-grey-light-panel",
-    gtk_mode: "dark",
+    gtk_mode: "light",
     hypr: {
         "border_width": 2,
         "active_border": "rgba(2C3041ff) rgba(611a15ff) 0deg",
@@ -276,7 +276,7 @@ const harmony = {
     plasma_color: "Nordic.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Windows11-red-dark",
-    kvantum_theme: "a-color",
+    kvantum_theme: "Sweet-Mars",
     gtk_theme: "Nordic-darker-standard-buttons",
     gtk_icon_theme: "Windows11-red-dark",
     gtk_mode: "dark",

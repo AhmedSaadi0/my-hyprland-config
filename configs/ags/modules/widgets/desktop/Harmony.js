@@ -55,7 +55,7 @@ const DesktopWidget = Widget.Box({
 
 const FinalWidget = () => Widget.Window({
     name: `desktop_harmony_widget`,
-    margins: [140, 140],
+    margins: [100, 100],
     layer: 'background',
     visible: false,
     focusable: false,

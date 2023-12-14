@@ -283,7 +283,7 @@ button:hover {
     background-color: $btn-hover-background;
     color: $btn-hover-color;
     border-color: $btn-hover-background;
-    border-radius: $border-radius;
+    border-radius: $border-radius - 1;
 }
 
 
