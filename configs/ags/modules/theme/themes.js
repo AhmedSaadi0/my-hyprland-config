@@ -206,7 +206,7 @@ const uniCat = {
     qt_icon_theme: "Magma",
     kvantum_theme: "a-color",
     // gtk_theme: "Orchis-Orange-Dark-Compact",
-    gtk_theme: "Tokyonight-Dark-BL",
+    gtk_theme: "Dracula",
     // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "Magma",
     // rofi_theme: "colors_theme.rasi",

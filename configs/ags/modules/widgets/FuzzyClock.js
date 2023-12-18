@@ -68,7 +68,7 @@ export default className => Widget.Box({
                 usedTimeNow.label = "استمر في السعي نحو أهدافك.";
             } else if (day == MONDAY) {
                 usedFuzzyDay.children[0].label = "جلسة خفيفة اليوم";
-                usedFuzzyDay.children[1].label = "";
+                usedFuzzyDay.children[1].label = "";
                 usedTimeNow.label = "استمتع بلحظة الاستراحة واستعد للأيام القادمة.";
             } else if (day == TUESDAY) {
                 usedFuzzyDay.children[0].label = "نصف الأسبوع قد حان";

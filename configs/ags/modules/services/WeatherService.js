@@ -13,6 +13,8 @@ class WeatherService extends Service {
                 'weatherCode': ['string', 'r'],
                 'maxTempC': ['float', 'r'],
                 'minTempC': ['float', 'r'],
+                'feelsLike': ['float', 'r'],
+                'tempC': ['float', 'r'],
 
                 // HOURS
                 'avgTempC1': ['string', 'r'],
@@ -97,6 +99,14 @@ class WeatherService extends Service {
 
     get minTempC() {
         return this.state?.weather?.[0]?.mintempC || '';
+    }
+
+    get feelsLike() {
+        return this.state?.current_condition?.[0].FeelsLikeC || '';
+    }
+
+    get feelsLike() {
+        return this.state?.current_condition?.[0].temp_C || '';
     }
 
     // -------------------------------------------

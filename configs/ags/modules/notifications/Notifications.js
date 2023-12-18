@@ -70,6 +70,7 @@ const PopupList = ({ transition = 'slide_up' } = {}) => Box({
 
 export default monitor => Window({
     monitor,
+    layer: 'overlay',
     name: `notifications${monitor}`,
     margins: [30, 30],
     anchor: ['bottom', local === "RTL" ? "left" : "right"],

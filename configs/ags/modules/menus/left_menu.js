@@ -43,7 +43,7 @@ const Header = () => {
     })
 }
 
-const ThemeButton = ({ label, icon, theme, end = local === "RTL" ? "margin-left: 1rem;" : "margin-right: 1rem;" }) => {
+const ThemeButton = ({ label, icon, theme, end = local === "RTL" ? "margin-left: 1.1rem;" : "margin-right: 1.1rem;" }) => {
 
     const _label = Label({
         className: "unset theme-btn-label",

@@ -147,7 +147,7 @@ export const NotificationCenterButton = () => Button({
             self.label = "󰂚";
             // self.label = "󱇥";
         } else if (Notifications.notifications.length > 0) {
-            self.label = "";
+            self.label = `${Notifications.notifications.length} `;
         }
     }]]
 });

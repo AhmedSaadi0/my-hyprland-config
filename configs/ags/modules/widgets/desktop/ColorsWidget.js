@@ -5,7 +5,7 @@ import { selectedMusicPlayer } from "../MusicPLayer.js";
 
 
 const DesktopWidget = Widget.Box({
-    spacing: 18,
+    spacing: 38,
     homogeneous: false,
     children: [
         Widget.Box({
