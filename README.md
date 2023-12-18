@@ -101,6 +101,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	tar xvf ~/.config/hypr/configs/gtk-themes/Orchis-Green-Dark-Compact.tar.gz -C ~/.themes
 	tar xvf ~/.config/hypr/configs/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
 	tar xvf ~/.config/hypr/configs/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/configs/gtk-themes/Dracula.tar.gz -C ~/.themes
 
 
 ### You can change system fonts if you want to 'JF Flat' to have the same font I had
