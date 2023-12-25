@@ -1,5 +1,5 @@
 import themeService from '../services/ThemeService.js';
-import ThemesDictionary, { GOLDEN_THEME, HARMONY_THEME, NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
+import ThemesDictionary, { CIRCLES_THEME, GOLDEN_THEME, HARMONY_THEME, NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
@@ -88,7 +88,9 @@ const ThemeButton = ({ label, icon, theme, end = local === "RTL" ? "margin-left:
 }
 
 const ThemesButtonsRowOne = () => {
-
+    // -----------------------------------
+    // ---------- Theme Buttons ----------
+    // -----------------------------------
     const blackHoleTheme = ThemeButton({
         label: "ثقب",
         icon: "󰇩",
@@ -165,6 +167,15 @@ const ThemesButtonsRowOne = () => {
         end: "",
     });
 
+    const circlesTheme = ThemeButton({
+        label: "دوائر",
+        icon: "",
+        theme: CIRCLES_THEME,
+    });
+
+    // --------------------------
+    // ---------- ROWS ----------
+    // --------------------------
     const row1 = Box({
         children: [
             blackHoleTheme,
@@ -202,6 +213,14 @@ const ThemesButtonsRowOne = () => {
             harmonyTheme,
         ]
     })
+    const row5 = Box({
+        css: `
+            margin-top: 1rem;
+        `,
+        children: [
+            circlesTheme,
+        ]
+    })
 
     return Box({
         className: "themes-box",
@@ -210,7 +229,8 @@ const ThemesButtonsRowOne = () => {
             row1,
             row2,
             row3,
-            row4
+            row4,
+            row5,
         ]
     })
 }

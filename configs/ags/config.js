@@ -16,6 +16,8 @@ import goldenWidget from "./modules/widgets/desktop/Golden.js";
 import harmonyWidget from './modules/widgets/desktop/Harmony.js';
 import newCatWidget from './modules/widgets/desktop/NewCat.js';
 import deerWidget from './modules/widgets/desktop/DeerWidget.js';
+import { PrayerTimesMenu } from './modules/menus/PrayerTimesMenu.js';
+import circlesMusicWidget from './modules/widgets/desktop/Circles.js';
 
 // in config.js
 const scss = App.configDir + '/scss/main.scss';
@@ -33,15 +35,7 @@ export default {
         LeftMenu(),
         NotificationCenter(),
         HardwareMenu(),
-        ColorWidget,
-        win20Widget,
-        materialWidget,
-        unicatWidget,
-        blackHoleWidget,
-        goldenWidget,
-        harmonyWidget,
-        newCatWidget,
-        deerWidget
+        PrayerTimesMenu(),
     ],
 };
 

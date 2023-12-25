@@ -29,6 +29,12 @@ class PrayerTimesService extends Service {
                 'hijriWeekday': ['string', 'r'],
                 'hijriMonth': ['string', 'r'],
                 'hijriYear': ['string', 'r'],
+
+                'isha': ['string', 'r'],
+                'maghrib': ['string', 'r'],
+                'asr': ['string', 'r'],
+                'dhuhr': ['string', 'r'],
+                'fajr': ['string', 'r'],
             }
         );
     }
@@ -118,11 +124,17 @@ class PrayerTimesService extends Service {
     }
 
     getHoursMinutes(date) {
+        if (date === null || date === undefined) {
+            return "-";
+        }
+
         const hours = date.getHours();
         const minutes = date.getMinutes();
         // const ampm = hours >= 12 ? 'PM' : 'AM';
-        const formattedHours = hours % 12 || 12; // Convert 0 to 12 for AM/PM display
+        let formattedHours = hours % 12 || 12; // Convert 0 to 12 for AM/PM display
         const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+        formattedHours = formattedHours < 10 ? `0${formattedHours}` : formattedHours
 
         const formattedTime = `${formattedHours}:${formattedMinutes}`;
 
@@ -208,6 +220,10 @@ class PrayerTimesService extends Service {
 
     timeToDateObj(time) {
         // Split the time string into hours and minutes
+        if (time === undefined) {
+            return null
+        }
+
         const [hours, minutes] = time.split(':');
 
         // Create a new Date object
@@ -252,6 +268,26 @@ class PrayerTimesService extends Service {
 
     get hijriYear() {
         return this.state?.date.hijri.year;
+    }
+
+    get isha() {
+        let isha = this.timeToDateObj(this.state?.data?.timings.Isha);
+        return this.getHoursMinutes(isha);
+    }
+    get maghrib() {
+        let maghrib = this.timeToDateObj(this.state?.data?.timings.Maghrib);
+        return this.getHoursMinutes(maghrib);
+    }
+    get asr() {
+        let asr = this.timeToDateObj(this.state?.data?.timings.Asr);
+        return this.getHoursMinutes(asr);
+    }
+    get dhuhr() {
+        let dhuhr = this.timeToDateObj(this.state?.data?.timings.Dhuhr);
+        return this.getHoursMinutes(dhuhr);
+    }
+    get fajr() {
+        return this.state?.data?.timings.Fajr;
     }
 
     decodeUnicode(str) {

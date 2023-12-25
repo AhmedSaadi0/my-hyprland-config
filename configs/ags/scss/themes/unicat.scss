@@ -2,7 +2,7 @@
 // --------- Variables ---------
 // -----------------------------
 $border-color: #C6AAE8;
-$border-size: 0.1rem;
+$border-size: 2px;
 
 $bg-one: #1B1923;
 $bg-two: #2D293B;
@@ -190,11 +190,20 @@ $music-info-wd-padding: 0rem 0rem 0rem 0rem;
 $music-info-wd-title-fg: $fg-one;
 $music-info-wd-artist-fg: $fg-three;
 
+// --------------------------------
+// --------- Prayer times ---------
+// --------------------------------
+$prayer-times-menu-header-bg: $bg-two;
+$prayer-times-menu-header-fg: $text-color;
+
+$prayer-times-next-prayer-bg: $fg-two;
+$prayer-times-next-prayer-fg: $bg-two;
+
 // ------------------------
 // --------- Menu ---------
 // ------------------------
 $menu-box-background: $bg-one;
-$menu-box-borders: $fg-one;
+$menu-box-borders: $border-color;
 
 // $profile-box-background: linear-gradient(to right, rgba(#F59549, 0.6), rgba(#aaaaff, 0.6));
 $profile-box-background: linear-gradient(to right, rgba($fg-two, 0.9), rgba($fg-three, 0.6));

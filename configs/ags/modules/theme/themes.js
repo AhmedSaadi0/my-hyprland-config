@@ -42,7 +42,7 @@ const win_20 = {
         "border_width": 2,
         "active_border": "rgba(EB08FBff) rgba(16D7BAff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
-        "rounding": 8,
+        "rounding": 12,
         "drop_shadow": "no",
         "kitty": "win_20.conf",
         "konsole": "pinky",
@@ -292,6 +292,29 @@ const harmony = {
     desktop_widget: "HarmonyWidget",
 }
 
+
+const circles = {
+    wallpaper: `${WALLPAPER_PATH}/wall_arch.png`,
+    css_theme: "circles.scss",
+    plasma_color: "Circles.colors",
+    qt_style_theme: "Breeze",
+    qt_icon_theme: "Windows11-red-dark",
+    kvantum_theme: "a-circles",
+    gtk_theme: "Nordic-darker-standard-buttons",
+    gtk_icon_theme: "Windows11-red-dark",
+    gtk_mode: "dark",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(61AFEFff) rgba(7EC7A2ff) 0deg",
+        "inactive_border": "rgba(00000000) 0deg",
+        "rounding": 10,
+        "drop_shadow": "no",
+        "kitty": "circles.conf",
+        "konsole": "Circles",
+    },
+    desktop_widget: "CirclesWidget",
+}
+
 export const BLACK_HOLE_THEME = 0;
 export const DEER_THEME = 1;
 export const COLOR_THEME = 2;
@@ -304,6 +327,7 @@ export const UNICAT_THEME = 8;
 export const NEW_CAT_THEME = 9;
 export const GOLDEN_THEME = 10;
 export const HARMONY_THEME = 11;
+export const CIRCLES_THEME = 12;
 
 const ThemesDictionary = {
     [BLACK_HOLE_THEME]: black_hole,
@@ -318,6 +342,7 @@ const ThemesDictionary = {
     [NEW_CAT_THEME]: newCat,
     [GOLDEN_THEME]: golden,
     [HARMONY_THEME]: harmony,
+    [CIRCLES_THEME]: circles,
 }
 
 export default ThemesDictionary
