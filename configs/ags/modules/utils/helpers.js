@@ -13,6 +13,7 @@ export const TitleText = ({
     textXalign = 0.5,
     connections = [],
     vertical = true,
+    spacing = 0,
 }) => {
 
     const _title = Label({
@@ -31,6 +32,7 @@ export const TitleText = ({
         className: boxClass,
         vertical: vertical,
         homogeneous: homogeneous,
+        spacing: spacing,
         children: [
             _title,
             _text,

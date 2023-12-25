@@ -1,9 +1,7 @@
 import { NetworkInformation } from "./widgets/internet.js";
 import { Workspaces } from "./widgets/workspace.js";
-// import { Volume } from "./widgets/volume.js";
 import { HardwareBox } from "./widgets/hardware/all.js";
 import { SysTrayBox } from "./widgets/systray.js";
-// import NotificationIndicator from "./widgets/NotificationIndicator.js";
 import { NotificationCenterButton } from "./menus/notification_center.js";
 import { MenuButton } from './menus/left_menu.js'
 
@@ -11,6 +9,8 @@ import { Window, CenterBox, Box, Label } from 'resource:///com/github/Aylur/ags/
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import weatherService from "./services/WeatherService.js";
 import prayerService from "./services/PrayerTimesService.js";
+import { Widget } from "./utils/imports.js";
+
 
 
 const Clock = () => Label({
@@ -32,6 +32,7 @@ const Weather = () => {
     let icon = Label({
         className: 'bar-weather-icon',
     })
+
     let text = Label({
         truncate: 'end',
         xalign: 0,
@@ -64,20 +65,29 @@ const Weather = () => {
 
 const PrayerTimes = () => {
 
-    let icon = Label({
-        className: 'bar-prayer-times-icon',
-        label: '',
-    })
-    let text = Label({
-        truncate: 'end',
-        xalign: 0,
-        maxWidthChars: 24,
-    })
+    const iconButton = Widget.Button({
+        className: 'unset un-hover',
+        onClicked: () => showPrayerTimesMenu(),
+        child: Label({
+            className: 'bar-prayer-times-icon ',
+            label: '',
+        })
+    });
+
+    let text = Widget.Button({
+        className: 'unset un-hover',
+        onClicked: () => showPrayerTimesMenu(),
+        child: Label({
+            truncate: 'end',
+            xalign: 0,
+            maxWidthChars: 24,
+        })
+    });
 
     return Box({
         className: 'bar-prayer-times-box small-shadow',
         children: [
-            icon,
+            iconButton,
             text,
         ],
         connections: [
@@ -86,12 +96,12 @@ const PrayerTimes = () => {
                 box => {
                     if (prayerService.nextPrayerName != '') {
                         if (!prayerService.prayerNow) {
-                            text.label = `${prayerService.nextPrayerName} (${prayerService.nextPrayerTime})`
+                            text.child.label = `${prayerService.nextPrayerName} (${prayerService.nextPrayerTime})`
                         } else {
-                            text.label = `حان الان وقت صلاة ${prayerService.prayerNow}`
+                            text.child.label = `حان الان وقت صلاة ${prayerService.prayerNow}`
                         }
                     } else {
-                        text.label = `غير متاحة`;
+                        text.child.label = `غير متاحة`;
                     }
                 }
             ],
@@ -128,13 +138,12 @@ const Left = () => Box({
     ],
 });
 
-
 export const Bar = ({ monitor } = {}) => Window({
     name: `bar${monitor || ''}`, // name has to be unique
     className: 'bar-bg',
     monitor,
     anchor: ['top', 'left', 'right'],
-    exclusive: true,
+    exclusivity: "exclusive",
     child: CenterBox({
         className: "bar shadow",
         startWidget: Right(),

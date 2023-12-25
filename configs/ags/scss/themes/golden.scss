@@ -2,7 +2,7 @@
 // --------- Variables ---------
 // -----------------------------
 $border-color: #2C3041;
-$border-size: 0.1rem;
+$border-size: 2px;
 
 $bg-one: #F0EEDA;
 $bg-two: #E9C7C6;
@@ -19,7 +19,7 @@ $icon-font-family: "Font Awesome 5 Free Solid";
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
 
-$border-radius: 1.2rem;
+$border-radius: 1rem;
 
 // ------------------------------
 // --------- Workspaces ---------
@@ -36,7 +36,7 @@ $workspace-hover-color: rgba($bg-two, 0.9);
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
-$clock-background: linear-gradient(to right, #2C3041);
+$clock-background: linear-gradient(to right, #2C3041, #2C3041);
 $clock-color: #F0EEDA;
 
 // --------------------------------
@@ -189,6 +189,15 @@ $music-info-wd-padding: 1rem 0rem 0rem 0rem;
 $music-info-wd-title-fg: $fg-one;
 $music-info-wd-artist-fg: $fg-two;
 
+// --------------------------------
+// --------- Prayer times ---------
+// --------------------------------
+$prayer-times-menu-header-bg: $bg-two;
+$prayer-times-menu-header-fg: $text-color;
+
+$prayer-times-next-prayer-bg: linear-gradient(to left, $fg-two, $fg-one);
+$prayer-times-next-prayer-fg: $text-color;
+
 // ------------------------
 // --------- Menu ---------
 // ------------------------
@@ -244,7 +253,7 @@ $hardware-cpu-box-color: #211008;
 $hardware-cpu-table-row-header-background: #e66b4c;
 $hardware-cpu-table-row-header-color: #211008;
 
-$hardware-ram-box-background: linear-gradient(to top,  #B9C4B5, #FCEA96);
+$hardware-ram-box-background: linear-gradient(to top, #B9C4B5, #FCEA96);
 $hardware-ram-box-color: #211008;
 $hardware-ram-table-row-header-background: #ded18d;
 $hardware-ram-table-row-header-color: #211008;

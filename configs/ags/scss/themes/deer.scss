@@ -2,7 +2,7 @@
 // --------- Variables ---------
 // -----------------------------
 $border-color: #FDB4B7;
-$border-size: 0.1rem;
+$border-size: 2px;
 
 
 $bg-one: #001B3D;
@@ -142,6 +142,15 @@ $notifications-header-bg: $bg-two;
 $notifications-header-fg: $text-color;
 $notifications-separator-background: $text-color;
 
+// --------------------------------
+// --------- Prayer times ---------
+// --------------------------------
+$prayer-times-menu-header-bg: $bg-two;
+$prayer-times-menu-header-fg: $text-color;
+
+$prayer-times-next-prayer-bg: linear-gradient(to left, $fg-two, $fg-one);
+$prayer-times-next-prayer-fg: $bg-two;
+
 // ------------------------
 // --------- Menu ---------
 // ------------------------
@@ -210,8 +219,6 @@ $music-info-wd-title-fg: $fg-one;
 $music-info-wd-artist-fg: $fg-two;
 
 
-
-
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
@@ -232,7 +239,7 @@ $music-wd-button-play-fg: $bg-two;
 $music-wd-button-stop-bg: $music-wd-button-bg;
 $music-wd-button-stop-fg: $music-wd-button-fg;
 
-$left-menu-music-wd-padding-right: 1.8rem;
+$left-menu-music-wd-padding-right: 2rem;
 
 // ---------------------------
 // --------- HW menu ---------

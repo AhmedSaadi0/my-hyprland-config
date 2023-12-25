@@ -129,7 +129,7 @@ const DesktopWidget2 = () => Widget.Box({
 
 const FWidget = () => Widget.Window({
     name: `desktop_new_cat_widget_widget`,
-    margins: [10, 10],
+    margins: [50, 50],
     layer: 'background',
     visible: false,
     focusable: false,
@@ -139,7 +139,7 @@ const FWidget = () => Widget.Window({
 
 const FWidget2 = () => Widget.Window({
     name: `desktop_new_cat_widget_widget_2`,
-    margins: [10, 10],
+    margins: [50, 50],
     layer: 'background',
     visible: false,
     focusable: false,

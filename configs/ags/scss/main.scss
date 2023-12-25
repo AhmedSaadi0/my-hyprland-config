@@ -1,6 +1,10 @@
-@import './themes/colors.scss';
+@import './themes/circles.scss';
 
 .unset {
+    all: unset;
+}
+
+.un-hover:hover {
     all: unset;
 }
 
@@ -88,30 +92,6 @@
     padding-right: 1em;
 }
 
-.bar-prayer-times-box {
-    font-size: 1em;
-    background: $bar-prayer-times-box-background;
-    color: $bar-prayer-times-box-color;
-    border-radius: $border-radius;
-    margin-top: $bar-top-margin + 0.1rem;
-    margin-bottom: $bar-top-margin + 0.1rem;
-    margin-left: 0.7rem;
-    margin-right: 0.7rem;
-}
-
-.bar-prayer-times-box:dir(rtl) {
-    padding-left: 0.7rem;
-}
-
-.bar-prayer-times-box:dir(ltr) {
-    padding-right: 0.7rem;
-}
-
-.bar-prayer-times-icon {
-    font-family: $icon-font-family;
-    padding-left: 0.7rem;
-    padding-right: 0.7rem;
-}
 
 .bar-weather-box {
     font-size: 1em;
@@ -137,6 +117,26 @@
     font-family: $icon-font-family;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+}
+
+@if variable-exists(bar-weather-icon-bg) {
+    .bar-weather-icon:dir(rtl) {
+        background: $bar-weather-icon-bg;
+        padding-left: 0.4rem;
+        color: $bar-weather-icon-fg;
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        margin-left: 0.5rem;
+    }
+
+    .bar-weather-icon:dir(ltr) {
+        background: $bar-weather-icon-bg;
+        color: $bar-weather-icon-fg;
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+        margin-right: 0.5rem;
+    }
+
 }
 
 .bar-bg {
@@ -522,7 +522,7 @@ window {
 .left-menu-box {
     background: $menu-box-background;
     border-radius: $border-radius;
-    border: 2px solid $menu-box-borders;
+    border: $border-size solid $menu-box-borders;
     margin-top: 0.45rem;
     margin-bottom: 1rem;
     transition-property: background;
@@ -693,7 +693,7 @@ window {
     padding-left: 0.7rem;
 }
 
-.notification-center-button:hover{
+.notification-center-button:hover {
     background-color: $notifications-bar-btn-hover-bg;
     color: $notifications-bar-btn-hover-fg;
 }
@@ -1200,4 +1200,90 @@ window {
     padding-right: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+}
+
+/* ----------------------------------------------- */
+/* -------------- Prayer times menu -------------- */
+/* ----------------------------------------------- */
+.bar-prayer-times-box {
+    font-size: 1em;
+    background: $bar-prayer-times-box-background;
+    color: $bar-prayer-times-box-color;
+    border-radius: $border-radius;
+    margin-top: $bar-top-margin + 0.1rem;
+    margin-bottom: $bar-top-margin + 0.1rem;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+}
+
+.bar-prayer-times-box:dir(rtl) {
+    padding-left: 0.7rem;
+}
+
+.bar-prayer-times-box:dir(ltr) {
+    padding-right: 0.7rem;
+}
+
+.bar-prayer-times-icon {
+    font-family: $icon-font-family;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+}
+
+@if variable-exists(prayer-times-icon-bg) {
+    .bar-prayer-times-icon:dir(rtl) {
+        background: $prayer-times-icon-bg;
+        color: $prayer-times-icon-fg;
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        margin-left: 0.5rem;
+    }
+
+    .bar-prayer-times-icon:dir(ltr) {
+        background: $prayer-times-icon-bg;
+        color: $prayer-times-icon-fg;
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+        margin-right: 0.5rem;
+    }
+}
+
+.prayer-times-menu-box {
+    background: $menu-box-background;
+    border-radius: $border-radius;
+    border: $border-size solid $border-color;
+}
+
+.prayer-times-menu-header {
+    background: $prayer-times-menu-header-bg;
+    color: $prayer-times-menu-header-fg;
+    padding: 1rem;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+}
+
+.prayer-time-item-box-class {
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.isha-item {
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+}
+
+.next-prayer {
+    background: $prayer-times-next-prayer-bg;
+    color: $prayer-times-next-prayer-fg;
+}
+
+.prayer-times-menu-header-icon {
+    font-family: $icon-font-family;
+}
+
+.prayer-times-menu-header-title {
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
