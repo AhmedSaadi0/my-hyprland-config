@@ -1,4 +1,4 @@
-@import './themes/circles.scss';
+@import './themes/unicat.scss';
 
 .unset {
     all: unset;
@@ -1237,6 +1237,7 @@ window {
         border-top-right-radius: $border-radius;
         border-bottom-right-radius: $border-radius;
         margin-left: 0.5rem;
+        padding-left: 0.5rem;
     }
 
     .bar-prayer-times-icon:dir(ltr) {
@@ -1245,6 +1246,7 @@ window {
         border-top-left-radius: $border-radius;
         border-bottom-left-radius: $border-radius;
         margin-right: 0.5rem;
+        padding-right: 0.5rem;
     }
 }
 
@@ -1270,8 +1272,8 @@ window {
 }
 
 .isha-item {
-    border-bottom-right-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius - 0.2rem;
+    border-bottom-left-radius: $border-radius - 0.2rem;
 }
 
 .next-prayer {

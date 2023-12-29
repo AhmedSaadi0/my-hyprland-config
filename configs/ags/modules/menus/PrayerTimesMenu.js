@@ -4,11 +4,6 @@ import { Widget } from '../utils/imports.js';
 
 const MenuRevealer = () => {
 
-    const header2 = Widget.Label({
-        label: "اوقات الصلوات",
-        className: "prayer-times-menu-header"
-    })
-
     const header = TitleText({
         title: "اوقات الصلوات",
         text: "",

@@ -298,10 +298,10 @@ const circles = {
     css_theme: "circles.scss",
     plasma_color: "Circles.colors",
     qt_style_theme: "Breeze",
-    qt_icon_theme: "Windows11-red-dark",
+    qt_icon_theme: "FairyWren",
     kvantum_theme: "a-circles",
     gtk_theme: "Nordic-darker-standard-buttons",
-    gtk_icon_theme: "Windows11-red-dark",
+    gtk_icon_theme: "FairyWren",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,

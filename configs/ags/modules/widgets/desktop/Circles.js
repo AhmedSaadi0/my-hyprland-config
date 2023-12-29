@@ -42,6 +42,7 @@ const MusicWidget = Widget.Box({
     ]
 })
 
+
 const CircleMusicWidget = () => Widget.Window({
     name: `desktop_circles_widget`,
     margins: [135, 60],

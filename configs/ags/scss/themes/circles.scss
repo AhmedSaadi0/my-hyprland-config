@@ -89,14 +89,14 @@ $hardware-box-color: $bg-two;
 // --------- battery ---------
 // ---------------------------
 $battery-background: $hardware-box-color;
-$battery-color: $fg-three;
+$battery-color: #C8CCD4;
 $battery-inner-color: $battery-color;
 
 // -----------------------
 // --------- CPU ---------
 // -----------------------
 $cpu-background: $hardware-box-color;
-$cpu-color: #FDC227;
+$cpu-color: $fg-three;
 $cpu-inner-color: $cpu-color;
 
 
@@ -167,7 +167,7 @@ $profile-box-color: $bg-one;
 $theme-box-background: $bg-two;
 $power-box-background: $theme-box-background;
 
-$selected-theme-background: linear-gradient(to right, #9FCAFF, #FA8595);
+$selected-theme-background: linear-gradient(to right, $fg-one, $fg-two, $fg-three);
 $selected-theme-color: $bg-one;
 $selected-theme-hover-background: linear-gradient(to right, #ff9900, #ff6600);
 $selected-theme-hover-color: $bg-three;
