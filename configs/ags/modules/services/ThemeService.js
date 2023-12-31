@@ -3,6 +3,7 @@ import { timeout, USER, exec, execAsync } from 'resource:///com/github/Aylur/ags
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';
 import prayerService from "./PrayerTimesService.js";
+import { Utils } from "../utils/imports.js";
 
 class ThemeService extends Service {
     static {
@@ -19,9 +20,13 @@ class ThemeService extends Service {
     selectedTheme = UNICAT_THEME;
     rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
 
+    CACHE_FILE_PATH = `/home/${USER}/.cache/ahmed-theme.temp`
+
     constructor() {
         super();
         exec('swww init');
+
+        this.getSelectedTheme();
         this.changeTheme(this.selectedTheme);
     }
 
@@ -54,6 +59,8 @@ class ThemeService extends Service {
         this.selectedTheme = selectedTheme;
         this.emit("changed");
         prayerService.emit("changed");
+
+        this.setSelectedTheme(selectedTheme);
     }
 
     changeWallpaper(wallpaper) {
@@ -246,6 +253,16 @@ class ThemeService extends Service {
             "-r",
             `Show${functionName}()`
         ]).catch(print);
+    }
+
+    setSelectedTheme(selectedTheme) {
+        Utils.writeFile(selectedTheme, this.CACHE_FILE_PATH).catch(err => print(err))
+    }
+    getSelectedTheme() {
+        this.selectedTheme = Utils.readFile(this.CACHE_FILE_PATH)
+        if (!this.selectedTheme) {
+            this.selectedTheme = UNICAT_THEME
+        }
     }
 
 }
