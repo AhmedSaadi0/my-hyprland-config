@@ -72,7 +72,7 @@ const NotificationHeader = () => {
                 // label: "",
                 // label: "",
                 // label: "󰅖",
-                onClicked: () => Notifications.clear(),
+                onClicked: () => {Notifications.clear()},
             }),
             Label({
                 className: "notification-center-header-text",

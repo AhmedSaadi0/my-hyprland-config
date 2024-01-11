@@ -257,7 +257,7 @@ $hardware-cpu-box-color: $bg-one;
 $hardware-cpu-table-row-header-background: #b37672;
 $hardware-cpu-table-row-header-color: $bg-one;
 
-$hardware-ram-box-background: linear-gradient(to top,  $fg-two, $fg-one);
+$hardware-ram-box-background: linear-gradient(to top, $fg-two, $fg-one);
 $hardware-ram-box-color: $bg-one;
 $hardware-ram-table-row-header-background: #5ca3d3;
 $hardware-ram-table-row-header-color: $bg-two;
@@ -408,4 +408,15 @@ button:hover {
     padding-top: 0.4rem;
     padding-left: 0.4rem;
     padding-right: 0.4rem;
+}
+
+.desktop-cpu-circle-icon {
+    color: #1E222A;
+    font-family: $icon-font-family;
+    font-size: 1.5rem;
+}
+
+.desktop-core-circle {
+    color: $fg-two;
+    background-color: #343842;
 }

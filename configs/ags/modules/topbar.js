@@ -12,20 +12,14 @@ import prayerService from "./services/PrayerTimesService.js";
 import { Widget } from "./utils/imports.js";
 
 
-
 const Clock = () => Label({
     className: 'clock',
-    connections: [
-        [
-            1000,
-            label => execAsync(
-                ['date', '+(%I:%M) %A, %d %B']
-            ).then(
-                date => label.label = date
-            ).catch(print)
-        ],
-    ],
-});
+}).poll(1000, self => execAsync(
+    ['date', '+(%I:%M) %A, %d %B']
+).then(
+    date => self.label = date
+).catch(print)
+);
 
 const Weather = () => {
 
@@ -45,21 +39,15 @@ const Weather = () => {
             icon,
             text,
         ],
-        connections: [
-            [
-                weatherService,
-                weatherBox => {
-                    if (weatherService.arValue != '') {
-                        const max = weatherService.maxTempC;
-                        const min = weatherService.minTempC;
-                        text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.arValue}`;
-                        icon.label = `${weatherService.weatherCode}`;
-                    } else {
-                        text.label = `خدمة الطقس غير متاحة`;
-                    }
-                }
-            ],
-        ],
+    }).hook(weatherService, self => {
+        if (weatherService.arValue != '') {
+            const max = weatherService.maxTempC;
+            const min = weatherService.minTempC;
+            text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.arValue}`;
+            icon.label = `${weatherService.weatherCode}`;
+        } else {
+            text.label = `خدمة الطقس غير متاحة`;
+        }
     })
 }
 
@@ -90,22 +78,16 @@ const PrayerTimes = () => {
             iconButton,
             text,
         ],
-        connections: [
-            [
-                prayerService,
-                box => {
-                    if (prayerService.nextPrayerName != '') {
-                        if (!prayerService.prayerNow) {
-                            text.child.label = `${prayerService.nextPrayerName} (${prayerService.nextPrayerTime})`
-                        } else {
-                            text.child.label = `حان الان وقت صلاة ${prayerService.prayerNow}`
-                        }
-                    } else {
-                        text.child.label = `غير متاحة`;
-                    }
-                }
-            ],
-        ],
+    }).hook(prayerService, box => {
+        if (prayerService.nextPrayerName != '') {
+            if (!prayerService.prayerNow) {
+                text.child.label = `${prayerService.nextPrayerName} (${prayerService.nextPrayerTime})`
+            } else {
+                text.child.label = `حان الان وقت صلاة ${prayerService.prayerNow}`
+            }
+        } else {
+            text.child.label = `غير متاحة`;
+        }
     })
 }
 
@@ -134,14 +116,14 @@ const Left = () => Box({
         Weather(),
         NetworkInformation(),
         SysTrayBox(),
-        MenuButton,
+        MenuButton(),
     ],
 });
 
 export const Bar = ({ monitor } = {}) => Window({
     name: `bar${monitor || ''}`, // name has to be unique
     className: 'bar-bg',
-    monitor,
+    monitor: monitor,
     anchor: ['top', 'left', 'right'],
     exclusivity: "exclusive",
     child: CenterBox({

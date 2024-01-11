@@ -2,39 +2,45 @@ import { Box, Button, Label, CircularProgress } from 'resource:///com/github/Ayl
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import { Utils } from '../../utils/imports.js';
 
-const label = Label({
-    className: "ram-inner",
-    label: ""
-})
 
-const button = Button({
-    className: "unset no-hover",
-    child: label,
-    onClicked: () => showHardwareMenu(),
-});
+export const RamWidget = () => {
 
-const progress = CircularProgress({
-    className: "ram",
-    startAt: 0,
-    rounded: false,
-    // inverted: true,
-    child: button,
-});
+    const label = Label({
+        className: "ram-inner",
+        label: ""
+    })
 
-export const RamWidget = () => Box({
-    className: "bar-hw-ram-box",
-    connections: [
-        [30000, box => {
-            execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
-                .then(val => {
-                    progress.value = (val / 100);
-                    label.tooltipMarkup = `<span weight='bold' foreground='#79A7EC'>نسبة الرام المستهلكة (${val}%)</span>`
-                }).catch(print);
+    const button = Button({
+        className: "unset no-hover",
+        child: label,
+        onClicked: () => showHardwareMenu(),
+    });
 
-            box.children = [
-                progress
-            ];
-            box.show_all();
-        }],
-    ],
-});
+    const progress = CircularProgress({
+        className: "ram",
+        startAt: 0,
+        rounded: false,
+        // inverted: true,
+        child: button,
+    });
+
+    return Box({
+        className: "bar-hw-ram-box",
+        connections: [
+            [30000, box => {
+                execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
+                    .then(val => {
+                        progress.value = (val / 100);
+                        label.tooltipMarkup = `<span weight='bold' foreground='#79A7EC'>نسبة الرام المستهلكة (${val}%)</span>`
+                    }).catch(print);
+
+                box.children = [
+                    progress
+                ];
+                box.show_all();
+            }],
+        ],
+    });
+
+
+} 

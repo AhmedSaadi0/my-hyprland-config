@@ -314,15 +314,12 @@ export default className => Widget.Label({
     xalign: 0,
     maxWidthChars: 24,
     wrap: true,
-    connections: [
-        [(30 * 1000 * 60), self => {
-            const randomIndex = Math.floor(Math.random() * words_dict.length);
+}).poll((30 * 1000 * 60), self => {
+    const randomIndex = Math.floor(Math.random() * words_dict.length);
 
-            // Use the random index to get a random element
-            const randomSaying = words_dict[randomIndex];
+    // Use the random index to get a random element
+    const randomSaying = words_dict[randomIndex];
 
-            self.label = randomSaying;
-        }],
-    ]
-})
+    self.label = randomSaying;
+});
 

@@ -4,9 +4,10 @@ import FuzzyClock from "../FuzzyClock.js";
 import Saying from "../Saying.js";
 import { TitleText, local } from "../../utils/helpers.js";
 import { Utils, Widget } from "../../utils/imports.js";
+import settings from "../../settings.js";
 
 const iconImage = Widget.Icon({
-    icon: `/home/${Utils.USER}/.config/ags/images/image.png`,
+    icon: `${settings.assets.wallpapers}/image.png`,
     size: 70,
     className: "my-wd-user-icon",
 })

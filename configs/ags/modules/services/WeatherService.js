@@ -1,5 +1,7 @@
 // import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 // import Service from 'resource:///com/github/Aylur/ags/service.js';
+import settings from '../settings.js';
+import { notify } from '../utils/helpers.js';
 import { Service, Utils } from '../utils/imports.js';
 
 
@@ -36,6 +38,9 @@ class WeatherService extends Service {
         );
     }
 
+    coldWeatherWarned = false
+    hotWeatherWarned = false
+
     constructor() {
         super();
         this.state = {};
@@ -55,13 +60,36 @@ class WeatherService extends Service {
         ]).then(val => {
             const jsonData = JSON.parse(val);
             this.state = jsonData;
+            this.checkColdWeather()
             this.emit("changed");
         }).catch(() => {
             const source = setTimeout(() => {
                 this.getWeather()
                 source.destroy()
+                this.checkColdWeather()
             }, 300000);
         })
+    }
+
+    checkColdWeather() {
+        if (parseInt(this.minTempC) <= 7 && !this.coldWeatherWarned) {
+            notify({
+                tonePath: settings.assets.audio.cold_weather,
+                title: "طقس بارد !",
+                message: `درجة الحرارة الصغرى اليوم ${this.minTempC}°`,
+                icon: settings.assets.icons.cold_weather,
+                priority: "critical",
+            })
+            this.coldWeatherWarned = true;
+        } else if (parseInt(this.maxTempC) > 30 && !this.hotWeatherWarned) {
+            notify({
+                tonePath: settings.assets.audio.cold_weather,
+                title: "طقس حار !",
+                message: `درجة الحرارة الكبرى اليوم ${this.maxTempC}°`,
+                icon: settings.assets.icons.hot_weather,
+            })
+            this.hotWeatherWarned = true;
+        }
     }
 
     isDay() {
@@ -99,6 +127,10 @@ class WeatherService extends Service {
 
     get minTempC() {
         return this.state?.weather?.[0]?.mintempC || '';
+    }
+
+    get tempC() {
+        return this.state?.current_condition?.[0]?.temp_C || '';
     }
 
     get feelsLike() {

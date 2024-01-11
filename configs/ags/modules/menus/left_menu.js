@@ -1,14 +1,15 @@
 import themeService from '../services/ThemeService.js';
-import ThemesDictionary, { CIRCLES_THEME, GOLDEN_THEME, HARMONY_THEME, NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU } from "../theme/themes.js";
+import ThemesDictionary, { CIRCLES_THEME, GOLDEN_THEME, HARMONY_THEME, NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU, WHITE_FLOWER } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
-import { USER, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
+import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
 import { local } from '../utils/helpers.js';
+import settings from '../settings.js';
 
 const Profile = () => {
     const userImage = Icon({
         className: "profile-icon",
-        icon: `/home/${USER}/.config/ags/images/image.png`,
+        icon: `${settings.assets.wallpapers}/image.png`,
         size: 80,
     })
 
@@ -31,13 +32,13 @@ const Header = () => {
     return Box({
         className: "left-menu-header",
         css: `
-            background-image: url("/home/${USER}/.config/ags/images/black-hole.png");
+            background-image: url("${settings.assets.wallpapers}/black-hole.png");
         `,
         vertical: true,
         connections: [
             [themeService, box => {
                 let wallpaper = ThemesDictionary[themeService.selectedTheme].wallpaper;
-                box.css = `background-image: url("/home/${USER}/${wallpaper}");`;
+                box.css = `background-image: url("${wallpaper}");`;
             }]
         ]
     })
@@ -173,6 +174,12 @@ const ThemesButtonsRowOne = () => {
         theme: CIRCLES_THEME,
     });
 
+    const whiteFlower = ThemeButton({
+        label: "ابيض",
+        icon: "",
+        theme: WHITE_FLOWER,
+    });
+
     // --------------------------
     // ---------- ROWS ----------
     // --------------------------
@@ -219,6 +226,7 @@ const ThemesButtonsRowOne = () => {
         `,
         children: [
             circlesTheme,
+            whiteFlower,
         ]
     })
 
@@ -346,7 +354,7 @@ function changeMenuBtn() {
     }
 }
 
-export const MenuButton = Button({
+export const MenuButton = () => Button({
     className: "menu-button",
     label: "",
     onClicked: () => {

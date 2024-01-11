@@ -1,3 +1,5 @@
+import settings from '../settings.js';
+import { notify } from '../utils/helpers.js';
 import { Service, Utils, App } from '../utils/imports.js';
 
 const currentDate = new Date();
@@ -105,10 +107,12 @@ class PrayerTimesService extends Service {
 
     notifyForCurrentPrayerTime(now, secondTime) {
         this.source = setTimeout(() => {
-            Utils.execAsync([
-                `paplay`,
-                `${App.configDir}/sounds/prayer-notification.ogg`,
-            ]).catch(print)
+            notify({
+                title: "اوقات الصلوات !",
+                message: `حان الان موعد صلاة (${this.prayerNow})`,
+                icon: settings.assets.icons.mosque,
+                tonePath: settings.assets.audio.prayer_time,
+            });
             this.emit("changed");
             // this.calculateForNextPrayerTime();
             this.source.destroy();

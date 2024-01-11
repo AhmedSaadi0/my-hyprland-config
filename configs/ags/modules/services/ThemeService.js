@@ -125,14 +125,6 @@ class ThemeService extends Service {
             `Adwaita`
         ]).catch(print);
 
-        execAsync([
-            `gsettings`,
-            `set`,
-            `org.gnome.desktop.wm.preferences`,
-            `theme`,
-            `Adwaita`
-        ]).catch(print);
-
         setTimeout(() => {
             execAsync([
                 `gsettings`,
