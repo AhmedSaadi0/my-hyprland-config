@@ -32,7 +32,9 @@ const SysTrayItem = item => PanelButton({
                 menu.disconnect(id);
             });
     },
-    onPrimaryClick: (_, event) => item.activate(event).catch(print),
+    onPrimaryClick: (_, event) => {
+        item.activate(event).catch(print)
+    },
     onSecondaryClick: btn => item.menu.popup_at_widget(
         btn,
         Gravity.SOUTH,

@@ -1,6 +1,4 @@
-import { Box, Label } from 'resource:///com/github/Aylur/ags/widget.js';
-import { Utils } from './imports.js';
-
+import { App, Utils, Widget } from './imports.js';
 
 export const TitleText = ({
     title,
@@ -16,19 +14,19 @@ export const TitleText = ({
     spacing = 0,
 }) => {
 
-    const _title = Label({
+    const _title = Widget.Label({
         label: title,
         className: titleClass,
         xalign: titleXalign,
     });
 
-    const _text = Label({
+    const _text = Widget.Label({
         label: text,
         className: textClass,
         xalign: textXalign,
     });
 
-    return Box({
+    return Widget.Box({
         className: boxClass,
         vertical: vertical,
         homogeneous: homogeneous,
@@ -42,3 +40,27 @@ export const TitleText = ({
 };
 
 export const local = Utils.exec(`/home/${Utils.USER}/.config/ags/scripts/lang.sh`);
+
+export const notify = ({
+    tonePath,
+    title,
+    message,
+    icon,
+    priority = 'normal',
+}) => {
+
+    Utils.execAsync([
+        `paplay`,
+        tonePath,
+    ]).catch(print)
+
+    Utils.execAsync([
+        `notify-send`,
+        "-u",
+        priority,
+        "-i",
+        icon,
+        title,
+        message,
+    ]);
+};

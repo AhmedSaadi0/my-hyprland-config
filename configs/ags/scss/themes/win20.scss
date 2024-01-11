@@ -12,7 +12,7 @@
 // -----------------------------
 // --------- Variables ---------
 // -----------------------------
-$border-color: #FDBBC4;
+$border-color: #FF4BDE;
 $border-size: 2px;
 
 $bg-one: #20004A;
@@ -145,7 +145,7 @@ $scale-slider-background: $scale-highlight-background;
 // ---------------------------------
 // --------- Notifications ---------
 // ---------------------------------
-$notifications-border: $fg-one;
+$notifications-border: $border-color;
 $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
 $notifications-bar-btn-bg: $bg-three;
@@ -221,7 +221,7 @@ $prayer-times-next-prayer-fg: $bg-two;
 // --------- Menu ---------
 // ------------------------
 $menu-box-background: $bg-one;
-$menu-box-borders: $fg-one;
+$menu-box-borders: $border-color;
 
 $profile-box-background: linear-gradient(to right, rgba(#9359ff, 0.8), rgba(#FF00AA, 0.6));
 $profile-box-color: $bg-one;

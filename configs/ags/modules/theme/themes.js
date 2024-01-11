@@ -1,5 +1,7 @@
+import settings from "../settings.js";
 
-const WALLPAPER_PATH = ".config/ags/images";
+// const WALLPAPER_PATH = ".config/ags/images";
+const WALLPAPER_PATH = settings.assets.wallpapers;
 
 const black_hole = {
     wallpaper: `${WALLPAPER_PATH}/black-hole.png`,
@@ -124,7 +126,7 @@ const siberian = {
 
 const materialYou = {
     wallpaper: `${WALLPAPER_PATH}/pastel.jpg`,
-    css_theme: "materialYou.scss",
+    css_theme: "material-you.scss",
     plasma_color: "MyMaterialYou.colors",
     qt_style_theme: "Breeze",
     // qt_icon_theme: "Delight-brown-dark",
@@ -155,7 +157,7 @@ const game = {
     qt_style_theme: "Lightly",
     qt_icon_theme: "la-capitaine-icon-theme",
     kvantum_theme: "a-color",
-    gtk_theme: "Orchis-Green-Dark-Compact",
+    gtk_theme: "Tokyonight-Dark-BL",
     // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "la-capitaine-icon-theme",
     // rofi_theme: "colors_theme.rasi",
@@ -213,7 +215,7 @@ const uniCat = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        "active_border": "rgba(ECBFBDff) rgba(F0AFE1ff) 0deg",
+        "active_border": "rgba(C6AAE8ff) rgba(F0AFE1ff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 17,
         "drop_shadow": "no",
@@ -315,6 +317,29 @@ const circles = {
     desktop_widget: "CirclesWidget",
 }
 
+const whiteFlower = {
+    wallpaper: `${WALLPAPER_PATH}/white-flower.jpg`,
+    css_theme: "white-flower.scss",
+
+    plasma_color: "MateriaYaruLight.colors",
+    qt_style_theme: "Breeze",
+    qt_icon_theme: "Rowaita-Pink-Light",
+    kvantum_theme: "a-m-you",
+    gtk_theme: "Jasper-Light-Dracula",
+    gtk_icon_theme: "Rowaita-Pink-Light",
+    gtk_mode: "light",
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(678382ff) rgba(9d6c73ff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 8,
+        "drop_shadow": "no",
+        "kitty": "white_flower.conf",
+        "konsole": "material-you",
+    },
+    desktop_widget: "WhiteFlower",
+}
+
 export const BLACK_HOLE_THEME = 0;
 export const DEER_THEME = 1;
 export const COLOR_THEME = 2;
@@ -328,6 +353,7 @@ export const NEW_CAT_THEME = 9;
 export const GOLDEN_THEME = 10;
 export const HARMONY_THEME = 11;
 export const CIRCLES_THEME = 12;
+export const WHITE_FLOWER = 13;
 
 const ThemesDictionary = {
     [BLACK_HOLE_THEME]: black_hole,
@@ -343,6 +369,7 @@ const ThemesDictionary = {
     [GOLDEN_THEME]: golden,
     [HARMONY_THEME]: harmony,
     [CIRCLES_THEME]: circles,
+    [WHITE_FLOWER]: whiteFlower,
 }
 
 export default ThemesDictionary

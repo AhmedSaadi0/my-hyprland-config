@@ -1,8 +1,9 @@
-@import './themes/dark.scss';
+@import './themes/white-flower.scss';
 
 .unset {
     all: unset;
 }
+
 
 .un-hover:hover {
     all: unset;
@@ -11,6 +12,7 @@
 .icon-font {
     font-family: $icon-font-family;
 }
+
 
 /* --------------------------------------------- */
 /* -------------- Top bar widgets -------------- */
@@ -149,7 +151,7 @@
     background: $bar-background;
     color: $bar-color;
     min-height: 8px;
-    border-radius: 0rem;
+
     margin-bottom: 0.5rem; // Add some margin to show shadows
 }
 
@@ -587,6 +589,7 @@ window {
     padding-left: 0.6rem;
     padding-right: 0.6rem;
     transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .selected-theme:hover {
@@ -603,11 +606,13 @@ window {
     padding-left: 0.6rem;
     padding-right: 0.6rem;
     transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .theme-btn:hover {
+    color: $btn-hover-color;
+    border-color: $btn-hover-background;
     border-radius: $border-radius;
-    background: $menu-btn-hover;
 }
 
 .theme-btn-icon {
@@ -823,7 +828,7 @@ window {
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
     color: $music-wd-player-fg;
-    border-radius: 1rem;
+    border-radius: $border-radius;
     min-width: 2rem;
     // border: 0px;
 }
@@ -885,7 +890,7 @@ window {
 .music-wd-button-play {
     background: $music-wd-button-play-bg;
     // color: $music-wd-button-play-fg;
-    border-radius: 3rem;
+    border-radius: $border-radius;
     min-height: 40px;
     min-width: 80px;
     transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -898,7 +903,7 @@ window {
 .music-wd-button-stop {
     background: $music-wd-button-stop-bg;
     color: $music-wd-button-stop-fg;
-    border-radius: 3rem;
+    border-radius: $border-radius;
     min-height: 40px;
     min-width: 80px;
     transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -1272,8 +1277,8 @@ window {
 }
 
 .isha-item {
-    border-bottom-right-radius: $border-radius - 0.2rem;
-    border-bottom-left-radius: $border-radius - 0.2rem;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
 }
 
 .next-prayer {
