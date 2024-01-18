@@ -21,16 +21,13 @@ export const BatteryWidget = () => {
         startAt: 0,
         rounded: false,
         // inverted: true,
-        connections: [
-            [Battery, batteryProgress => {
-                if (Battery.charging) {
-                    label.className = "battery-inner-charging";
-                } else {
-                    label.className = "battery-inner";
-                }
-                batteryProgress.value = (Battery.percent / 100);
-                label.tooltipMarkup = `<span weight='bold' foreground='#FF8580'>نسبة البطارية (${Battery.percent}%)</span>`
-            }],
-        ],
+    }).hook(Battery, batteryProgress => {
+        if (Battery.charging) {
+            label.className = "battery-inner-charging";
+        } else {
+            label.className = "battery-inner";
+        }
+        batteryProgress.value = (Battery.percent / 100);
+        label.tooltipMarkup = `<span weight='bold' foreground='#FF8580'>نسبة البطارية (${Battery.percent}%)</span>`
     })
 }

@@ -86,7 +86,7 @@ export default (notification) => {
             notification.dismiss();
             return GLib.SOURCE_REMOVE;
         }, 3000);
-    
+
     });
 
     const content = Box({
@@ -138,7 +138,6 @@ export default (notification) => {
     // Notification Action Button
     const actionsbox = Revealer({
         transition: 'slide_up',
-        binds: [['revealChild', hovered]],
         child: EventBox({
             onHover: hover,
             child: Box({
@@ -153,7 +152,7 @@ export default (notification) => {
                 })),
             }),
         }),
-    });
+    }).bind('revealChild', hovered);
 
     const mainbox = EventBox({
         className: `notification ${notification.urgency}`,
@@ -162,7 +161,7 @@ export default (notification) => {
             hovered.value = false;
             notification.dismiss();
         },
-        properties: [['hovered', hovered]],
+        attribute: { 'hovered': hovered },
         onHover: hover,
         onHoverLost: hoverLost,
         child: Box({

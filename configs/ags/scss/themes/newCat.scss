@@ -293,6 +293,15 @@ button:hover {
     border-radius: $border-radius;
 }
 
+// --------- Menu ---------
+$menu-bg: $bg-one;
+$menu-fg: $text-color;
+$menuitem-hover-bg: rgba($text-color, 0.2);
+$menuitem-hover-fg: $text-color;
+
+$menuitem-disabled-bg: rgba($text-color, 0.1);
+$menuitem-disabled-fg: rgba($text-color, 0.5);
+
 /* -------------------------------------------- */
 /* -------------- Desktop Widget -------------- */
 /* -------------------------------------------- */

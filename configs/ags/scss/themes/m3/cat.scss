@@ -1,0 +1,62 @@
+// Color Scheme:
+// #454d6a
+// #bab295
+// #544d6a
+// #455c6a
+// Color Scheme:
+// #f1a37d
+// #0e5c82
+// #01a37d
+// #f1b27d
+// Color Scheme:
+// #749ca8
+// #8b6357
+// #839ca8
+// #74aba8
+// Color Scheme:
+// #729eab
+// #8d6154
+// #819eab
+// #72adab
+// -----------------------------
+// --------- Variables ---------
+// -----------------------------
+$border-color: #894587;
+$border-size: 2px;
+
+$primary: #454d6a;
+$secondary: #bab295;
+$tertiary: #544d6a;
+$background: #455c6a;
+$outlined: #998d96;
+$on-primary: #f1a37d;
+$on-secondary: #0e5c82;
+$on-tertiary: #01a37d;
+$on-background: #f1b27d;
+$primary-container: #749ca8;
+$secondary-container: #8b6357;
+$tertiary-container: #839ca8;
+$surface: #74aba8;
+$surface-variant: #4d444c;
+$on-primary-container: #ffd6fe;
+$on-secondary-container: #d2e4ff;
+$on-tertiary-container: #f4d9ff;
+$on-surface: #e9e0e4;
+$on-surface-variant: #d0c3cc;
+
+
+// $text-color: #4C566A;
+$text-color: #bec9c7;
+
+
+// $icon-font-family: "Font Awesome";
+$icon-font-family: "Font Awesome 5 Free Solid";
+
+$bar-top-margin: 0.3rem;
+$bar-bottom-margin: 0.3rem;
+
+$border-radius: 0.5rem;
+
+
+// @import './deer-m3.scss';
+@import './main.scss';

@@ -68,45 +68,44 @@ const RowOne = () => {
             length(),
             selectPlayerBtn,
         ],
-        connections: [[Mpris, self => {
-            let playersList = []
-            for (const player in Mpris.players) {
-                if (Object.hasOwnProperty.call(Mpris.players, player)) {
-                    const element = Mpris.players[player];
-                    playersList.push(
-                        MenuItem({
-                            child: Label({
-                                label: element.name,
-                                xalign: 0.5,
-                            }),
-                            onActivate: () => {
-                                playerName.label = `${PLAYER_MENU_ARROW} ${element.name}`;
-                                selectedMusicPlayer = element.name;
-                                Mpris.emit("changed");
-                            }
+    }).hook(Mpris, self => {
+        let playersList = []
+        for (const player in Mpris.players) {
+            if (Object.hasOwnProperty.call(Mpris.players, player)) {
+                const element = Mpris.players[player];
+                playersList.push(
+                    MenuItem({
+                        child: Label({
+                            label: element.name,
+                            xalign: 0.5,
                         }),
-                    )
-                }
+                        onActivate: () => {
+                            playerName.label = `${PLAYER_MENU_ARROW} ${element.name}`;
+                            selectedMusicPlayer = element.name;
+                            Mpris.emit("changed");
+                        }
+                    }),
+                )
             }
-            playersMenu.setChildren(playersList);
+        }
+        playersMenu.setChildren(playersList);
 
-            if (playersList.length > 0 && selectedMusicPlayer === null) {
-                playerName.label = `${PLAYER_MENU_ARROW} ${playersList[0].child.label}`;
-                selectedMusicPlayer = playersList[0].child.label;
-            }
+        if (playersList.length > 0 && selectedMusicPlayer === null) {
+            playerName.label = `${PLAYER_MENU_ARROW} ${playersList[0].child.label}`;
+            selectedMusicPlayer = playersList[0].child.label;
+        }
 
-            let player = Mpris.getPlayer(selectedMusicPlayer);
+        let player = Mpris.getPlayer(selectedMusicPlayer);
 
-            const songLengthInSeconds = player?.length;
-            const minutes = Math.floor(songLengthInSeconds / 60);
-            const seconds = Math.round(songLengthInSeconds % 60);
+        const songLengthInSeconds = player?.length;
+        const minutes = Math.floor(songLengthInSeconds / 60);
+        const seconds = Math.round(songLengthInSeconds % 60);
 
-            if (minutes && seconds) {
-                self.children[0].label = `${minutes}:${seconds}   `;
-            }
+        if (minutes && seconds) {
+            self.children[0].label = `${minutes}:${seconds}   `;
+        }
 
-        }]],
-    })
+    });
 }
 
 const RowTwo = () => {
@@ -134,18 +133,17 @@ const RowTwo = () => {
             title,
             artist
         ],
-        connections: [[Mpris, self => {
-            let player = Mpris.getPlayer(selectedMusicPlayer);
+    }).hook(Mpris, self => {
+        let player = Mpris.getPlayer(selectedMusicPlayer);
 
-            if (player !== null) {
-                title.label = player?.trackTitle;
-                artist.label = player?.trackArtists[0];
-            } else {
-                title.label = "لا يوجد عنوان";
-                artist.label = "لا يوجد فنان";
-            }
+        if (player !== null) {
+            title.label = player?.trackTitle;
+            artist.label = player?.trackArtists[0];
+        } else {
+            title.label = "لا يوجد عنوان";
+            artist.label = "لا يوجد فنان";
+        }
 
-        }]]
     })
 }
 
@@ -217,25 +215,24 @@ const ButtonsRow = () => {
             skipBackwardBtn,
             skipForwardBtn,
         ],
-        connections: [[Mpris, self => {
-            let player = Mpris.getPlayer(selectedMusicPlayer);
-            nextBtn.set_sensitive(player?.canGoNext);
-            backBtn.set_sensitive(player?.canGoPrev);
-            playBtn.set_sensitive(player?.canPlay);
+    }).hook(Mpris, self => {
+        let player = Mpris.getPlayer(selectedMusicPlayer);
+        nextBtn.set_sensitive(player?.canGoNext);
+        backBtn.set_sensitive(player?.canGoPrev);
+        playBtn.set_sensitive(player?.canPlay);
 
-            if (player?.playBackStatus === "Playing") {
-                playBtn.label = "⏸";
-                playBtn.className = "unset music-wd-button-play";
-            } else if (player?.playBackStatus === "Paused") {
-                // playBtn.label = "⏯";
-                playBtn.label = "";
-                playBtn.className = "unset music-wd-button-stop";
-            } else if (player?.playBackStatus === "Stopped") {
-                playBtn.label = "";
-                playBtn.className = "unset music-wd-button-stop";
-            }
+        if (player?.playBackStatus === "Playing") {
+            playBtn.label = "⏸";
+            playBtn.className = "unset music-wd-button-play";
+        } else if (player?.playBackStatus === "Paused") {
+            // playBtn.label = "⏯";
+            playBtn.label = "";
+            playBtn.className = "unset music-wd-button-stop";
+        } else if (player?.playBackStatus === "Stopped") {
+            playBtn.label = "";
+            playBtn.className = "unset music-wd-button-stop";
+        }
 
-        }]]
     })
 }
 

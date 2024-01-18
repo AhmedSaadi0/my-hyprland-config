@@ -13,13 +13,12 @@ import { Widget } from "./utils/imports.js";
 
 
 const Clock = () => Label({
-    className: 'clock',
+    className: 'clock small-shadow',
 }).poll(1000, self => execAsync(
     ['date', '+(%I:%M) %A, %d %B']
 ).then(
     date => self.label = date
-).catch(print)
-);
+).catch(print));
 
 const Weather = () => {
 

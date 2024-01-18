@@ -19,27 +19,24 @@ const weatherIcon = Widget.Label({
 
 const RowOne = () => Widget.Box({
     className: "weather-wd-row-one small-shadow",
-    children: [
-    ],
-    connections: [[WeatherService, self => {
-        const tt = TitleText({
-            title: "اليوم",
-            // titleClass: "weather-wd-title",
-            text: WeatherService.arValue,
-            textClass: "my-weather-wd-text",
-            boxClass: "my-weather-wd-title-text-box",
-            titleXalign: 1,
-            textXalign: 1,
-        });
+}).hook(WeatherService, self => {
+    const tt = TitleText({
+        title: "اليوم",
+        // titleClass: "weather-wd-title",
+        text: WeatherService.arValue,
+        textClass: "my-weather-wd-text",
+        boxClass: "my-weather-wd-title-text-box",
+        titleXalign: 1,
+        textXalign: 1,
+    });
 
-        weatherIcon.label = WeatherService.weatherCode;
+    weatherIcon.label = WeatherService.weatherCode;
 
-        self.children = [
-            weatherIcon,
-            tt,
-            iconImage,
-        ]
-    }]]
+    self.children = [
+        weatherIcon,
+        tt,
+        iconImage,
+    ]
 });
 
 const Insider = ({
@@ -75,34 +72,30 @@ const RowTwo = () => {
         className: "my-weather-wd-row-two small-shadow",
         spacing: 50,
         homogeneous: false,
-        children: [
-        ],
-        connections: [[WeatherService, self => {
-            self.children = [
-                Insider({
-                    icon: WeatherService.weatherCode1,
-                    title: "اليوم",
-                    text: WeatherService.avgTempC1,
-                }),
-                Insider({
-                    icon: WeatherService.weatherCode2,
-                    title: "غدا",
-                    text: WeatherService.avgTempC2,
-                }),
-                Insider({
-                    icon: WeatherService.weatherCode3,
-                    title: "ب غدا",
-                    text: WeatherService.avgTempC3,
-                }),
-                // Insider({
-                //     icon: WeatherService.weatherCode4,
-                //     title: "ب يومين",
-                //     text: WeatherService.avgTempC4,
-                // }),
+    }).hook(WeatherService, self => {
+        self.children = [
+            Insider({
+                icon: WeatherService.weatherCode1,
+                title: "اليوم",
+                text: WeatherService.avgTempC1,
+            }),
+            Insider({
+                icon: WeatherService.weatherCode2,
+                title: "غدا",
+                text: WeatherService.avgTempC2,
+            }),
+            Insider({
+                icon: WeatherService.weatherCode3,
+                title: "ب غدا",
+                text: WeatherService.avgTempC3,
+            }),
+            // Insider({
+            //     icon: WeatherService.weatherCode4,
+            //     title: "ب يومين",
+            //     text: WeatherService.avgTempC4,
+            // }),
 
-            ]
-        }
-        ]]
+        ]
     })
 }
 

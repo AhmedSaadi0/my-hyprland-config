@@ -1,4 +1,4 @@
-import { App, Utils, Widget } from './imports.js';
+import { Utils, Widget } from './imports.js';
 
 export const TitleText = ({
     title,
@@ -9,7 +9,6 @@ export const TitleText = ({
     homogeneous = false,
     titleXalign = 0.5,
     textXalign = 0.5,
-    connections = [],
     vertical = true,
     spacing = 0,
 }) => {
@@ -35,7 +34,6 @@ export const TitleText = ({
             _title,
             _text,
         ],
-        connections: connections,
     });
 };
 
@@ -64,3 +62,19 @@ export const notify = ({
         message,
     ]);
 };
+/**
+Widget({
+    replacement for properties
+    attribute: {
+        'custom-prop': 123,
+        'another': 'xyz',
+    },
+
+    setup: self => self
+        .on('some-signal-on-this', self => { }) // replacement for connections
+        .hook(gobject, self => { }, 'event') // replacement for connections
+        .poll(1000, self => { }) // replacement connections
+        .bind('prop', gobject, 'target_prop', v => v) // replacement for binds
+    })
+ * 
+ */

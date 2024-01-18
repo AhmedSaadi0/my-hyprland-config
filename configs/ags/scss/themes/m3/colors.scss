@@ -1,0 +1,45 @@
+// -----------------------------
+// --------- Variables ---------
+// -----------------------------
+$border-color: #894587;
+$border-size: 2px;
+
+$primary: #f9acff;
+$secondary: #a1c9ff;
+$tertiary: #e5b4ff;
+$background: #1e1a1d;
+$outlined: #998d96;
+
+$on-primary: #570066;
+$on-secondary: #00325a;
+$on-tertiary: #4c0e6f;
+$on-background: #e9e0e4;
+
+$primary-container: #761886;
+$secondary-container: #00487f;
+$tertiary-container: #642b87;
+$surface: #1e1a1d;
+$surface-variant: #4d444c;
+
+$on-primary-container: #ffd6fe;
+$on-secondary-container: #d2e4ff;
+$on-tertiary-container: #f4d9ff;
+$on-surface: #e9e0e4;
+$on-surface-variant: #d0c3cc;
+
+
+// $text-color: #4C566A;
+$text-color: #bec9c7;
+
+
+// $icon-font-family: "Font Awesome";
+$icon-font-family: "Font Awesome 5 Free Solid";
+
+$bar-top-margin: 0.3rem;
+$bar-bottom-margin: 0.3rem;
+
+$border-radius: 0.5rem;
+
+
+// @import './deer-m3.scss';
+@import './main.scss';
