@@ -9,18 +9,11 @@ const PanelButton = ({ className, content, ...rest }) => Widget.Button({
 
 const SysTrayItem = item => PanelButton({
     className: "tray-btn",
-    content: Widget.Icon({
-        binds: [[
-            'icon',
-            item,
-            'icon'
-        ]],
-    }),
-    // binds: [[
-    //     'tooltipMarkup',
-    //     item,
-    //     'tooltipMarkup'
-    // ]],
+    content: Widget.Icon().bind(
+        'icon',
+        item,
+        'icon'
+    ),
     setup: btn => {
         const id = item.menu.connect(
             'popped-up',
@@ -45,37 +38,25 @@ const SysTrayItem = item => PanelButton({
 
 export const SysTrayBox = () => Widget.Box({
     className: 'systray',
-    properties: [
-        [
-            'items',
-            new Map()
-        ],
-        [
-            'onAdded',
-            (box, id) => {
-                const item = SystemTray.getItem(id);
-                if (box._items.has(id) || !item)
-                    return;
+    attribute: {
+        'items': new Map(),
+        'onAdded': (box, id) => {
+            const item = SystemTray.getItem(id);
+            if (box.attribute.items.has(id) || !item)
+                return;
 
-                const widget = SysTrayItem(item);
-                box._items.set(id, widget);
-                box.add(widget);
-                box.show_all();
-            }
-        ],
-        [
-            'onRemoved',
-            (box, id) => {
-                if (!box._items.has(id))
-                    return;
+            const widget = SysTrayItem(item);
+            box.attribute.items.set(id, widget);
+            box.add(widget);
+            box.show_all();
+        },
+        'onRemoved': (box, id) => {
+            if (!box.attribute.items.has(id))
+                return;
 
-                box._items.get(id).destroy();
-                box._items.delete(id);
-            }
-        ],
-    ],
-    connections: [
-        [SystemTray, (box, id) => box._onAdded(box, id), 'added'],
-        [SystemTray, (box, id) => box._onRemoved(box, id), 'removed'],
-    ],
-});
+            box.attribute.items.get(id).destroy();
+            box.attribute.items.delete(id);
+        }
+    },
+}).hook(SystemTray, (box, id) => box.attribute.onAdded(box, id), 'added').
+    hook(SystemTray, (box, id) => box.attribute.onRemoved(box, id), 'removed');

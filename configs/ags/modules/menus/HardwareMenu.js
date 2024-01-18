@@ -16,19 +16,15 @@ const cpuProgress = Widget.CircularProgress({
     }),
     startAt: 0,
     rounded: false,
-    // inverted: true,
-    connections: [
-        [1000, self => {
-            if (menuIsOpen) {
-                Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu.sh`)
-                    .then(val => {
-                        cpuProgress.value = val / 100;
-                        self.child.tooltipMarkup = `<span weight='bold'>مستهلك من المعالج(${val}%)</span>`
-                        cpuUsage = val;
-                    }).catch(print);
-            }
-        }],
-    ],
+}).poll(1000, self => {
+    if (menuIsOpen) {
+        Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu.sh`)
+            .then(val => {
+                cpuProgress.value = val / 100;
+                self.child.tooltipMarkup = `<span weight='bold'>مستهلك من المعالج(${val}%)</span>`
+                cpuUsage = val;
+            }).catch(print);
+    }
 });
 
 const ramProgress = Widget.CircularProgress({
@@ -39,20 +35,18 @@ const ramProgress = Widget.CircularProgress({
     }),
     startAt: 0,
     rounded: false,
-    // inverted: true,
-    connections: [
-        [1000, self => {
-            if (menuIsOpen) {
-                Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
-                    .then(val => {
-                        self.value = (val / 100);
-                        self.child.tooltipMarkup = `<span weight='bold'>مستهلك من الرام (${val}%)</span>`
-                        ramUsage = val;
-                    }).catch(print);
-            }
-        }],
-    ],
-});
+}).poll(
+    1000, self => {
+        if (menuIsOpen) {
+            Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
+                .then(val => {
+                    self.value = (val / 100);
+                    self.child.tooltipMarkup = `<span weight='bold'>مستهلك من الرام (${val}%)</span>`
+                    ramUsage = val;
+                }).catch(print);
+        }
+    }
+);
 
 const batteryProgress = Widget.CircularProgress({
     className: "menu-battery",
@@ -62,39 +56,37 @@ const batteryProgress = Widget.CircularProgress({
     }),
     startAt: 0,
     rounded: false,
-    // inverted: true,
-    connections: [[Battery, self => {
-        let percentage = Battery.percent;
-        self.value = percentage / 100;
+}).hook(Battery, self => {
+    let percentage = Battery.percent;
+    self.value = percentage / 100;
 
-        var label = "";
+    var label = "";
 
-        if (Battery.charging) {
-            if (percentage <= 55) {
-                label = "󱊤";
-            } else if (percentage <= 70) {
-                label = "󱊥";
-            } else if (percentage > 70) {
-                label = "󱊦";
-            }
-            // self.child.label = "";
-            self.child.className = "menu-battery-icon-charging";
-        } else {
-            if (percentage <= 55) {
-                label = "󱊡";
-            } else if (percentage <= 70) {
-                label = "󱊢";
-            } else if (percentage > 70) {
-                label = "󱊣";
-            }
-            // self.child.label = "";
-            self.child.className = "menu-battery-icon";
+    if (Battery.charging) {
+        if (percentage <= 55) {
+            label = "󱊤";
+        } else if (percentage <= 70) {
+            label = "󱊥";
+        } else if (percentage > 70) {
+            label = "󱊦";
         }
-        self.child.label = label;
+        // self.child.label = "";
+        self.child.className = "menu-battery-icon-charging";
+    } else {
+        if (percentage <= 55) {
+            label = "󱊡";
+        } else if (percentage <= 70) {
+            label = "󱊢";
+        } else if (percentage > 70) {
+            label = "󱊣";
+        }
+        // self.child.label = "";
+        self.child.className = "menu-battery-icon";
+    }
+    self.child.label = label;
 
-        self.child.tooltipMarkup = `<span weight='bold'>نسبة البطارية (${percentage}%)</span>`
+    self.child.tooltipMarkup = `<span weight='bold'>نسبة البطارية (${percentage}%)</span>`
 
-    }]],
 });
 
 const tempProgress = Widget.CircularProgress({
@@ -105,25 +97,21 @@ const tempProgress = Widget.CircularProgress({
     }),
     startAt: 0,
     rounded: false,
-    // inverted: true,
-    connections: [
-        [30000, self => {
-            Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/temp.sh`)
-                .then(val => {
-                    const temps = val.split("\n");
-                    let total = 0;
-                    for (let index = 0; index < temps.length; index++) {
-                        const element = temps[index].replace("+", "").replace("°C", "");
-                        total += parseInt(element);
-                    }
-                    total = parseInt(total / temps.length);
-                    self.value = (total / 100);
+}).poll(30000, self => {
+    Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/temp.sh`)
+        .then(val => {
+            const temps = val.split("\n");
+            let total = 0;
+            for (let index = 0; index < temps.length; index++) {
+                const element = temps[index].replace("+", "").replace("°C", "");
+                total += parseInt(element);
+            }
+            total = parseInt(total / temps.length);
+            self.value = (total / 100);
 
-                    self.child.tooltipMarkup = `<span weight='bold'>اجمالي درجة حرارة الاجهزة (${total}%)</span>`
+            self.child.tooltipMarkup = `<span weight='bold'>اجمالي درجة حرارة الاجهزة (${total}%)</span>`
 
-                }).catch(print);
-        }],
-    ],
+        }).catch(print);
 });
 
 const headerBox = Widget.Box({
@@ -180,55 +168,58 @@ const hardwareUsageTable = ({
     interval = 2000,
     headerRightText = "العملية",
     headerLeftText = "%",
-    connections = null
 }) => {
-    return Widget.Box({
+
+    const table = Widget.Box({
         className: `hardware-${deviceName}-box`,
         vertical: true,
         children: [],
-        connections: connections ? connections : [
-            [interval, self => {
+    });
 
-                if (deviceName === "cpu") {
-                    headerLeftText = `${cpuUsage}%`
-                }
-                if (deviceName === "ram") {
-                    headerLeftText = `${ramUsage}%`
-                }
+    if (scriptPath) {
+        table.poll(interval, self => {
 
-                // Calling only if menu is open
-                if (!cpuIsInitialized || !ramIsInitialized || menuIsOpen) {
-                    Utils.execAsync(scriptPath)
-                        .then(val => {
-                            let data = JSON.parse(val);
-                            let children = [
-                                tableRow({
-                                    appName: headerRightText,
-                                    percentage: headerLeftText,
-                                    header: true,
-                                    deviceName: deviceName,
-                                })
-                            ];
-                            for (let index = 0; index < data.length; index++) {
-                                const element = data[index];
-                                children.push(tableRow({
-                                    appName: element["process"],
-                                    percentage: element["%"],
-                                    deviceName: deviceName,
-                                }));
-                            }
-                            self.children = children;
-                        }).catch(print);
-                    if (deviceName === "cpu" && !cpuIsInitialized) {
-                        cpuIsInitialized = true;
-                    }
-                    if (deviceName === "ram" && !ramIsInitialized) {
-                        ramIsInitialized = true;
-                    }
+            if (deviceName === "cpu") {
+                headerLeftText = `${cpuUsage}%`
+            }
+            if (deviceName === "ram") {
+                headerLeftText = `${ramUsage}%`
+            }
+
+            // Calling only if menu is open
+            if (!cpuIsInitialized || !ramIsInitialized || menuIsOpen) {
+                Utils.execAsync(scriptPath)
+                    .then(val => {
+                        let data = JSON.parse(val);
+                        let children = [
+                            tableRow({
+                                appName: headerRightText,
+                                percentage: headerLeftText,
+                                header: true,
+                                deviceName: deviceName,
+                            })
+                        ];
+                        for (let index = 0; index < data.length; index++) {
+                            const element = data[index];
+                            children.push(tableRow({
+                                appName: element["process"],
+                                percentage: element["%"],
+                                deviceName: deviceName,
+                            }));
+                        }
+                        self.children = children;
+                    }).catch(print);
+                if (deviceName === "cpu" && !cpuIsInitialized) {
+                    cpuIsInitialized = true;
                 }
-            }],
-        ],
-    })
+                if (deviceName === "ram" && !ramIsInitialized) {
+                    ramIsInitialized = true;
+                }
+            }
+        });
+    }
+
+    return table;
 };
 
 
@@ -239,93 +230,87 @@ const tablesBox = () => {
     let batteryTable = hardwareUsageTable({
         scriptPath: "",
         deviceName: batDeviceName,
-        connections: [
-            [Battery, self => {
-                Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/hardware_info.sh`)
-                    .then(val => {
-                        let data = JSON.parse(val);
-                        let children = [
-                            // Header
-                            tableRow({
-                                appName: "البطارية",
-                                percentage: "",
-                                header: true,
-                                deviceName: batDeviceName,
-                                rightTextXalign: 1,
-                            }),
-                            // Body
-                            tableRow({
-                                appName: "النسبة  ",
-                                percentage: `${Battery.percent}%`,
-                                deviceName: batDeviceName,
-                            }),
-                            tableRow({
-                                appName: local === "RTL" ? "الصحة   " : "Health   ",
-                                percentage: data["Capacity"] + "%",
-                                deviceName: batDeviceName,
-                            }),
-                            tableRow({
-                                appName: local === "RTL" ? "الفولتية  " : "Voltage  ",
-                                percentage: data["Voltage"],
-                                deviceName: batDeviceName,
-                            }),
-                            tableRow({
-                                appName: local === "RTL" ? "الطاقة  " : "Energy  ",
-                                percentage: `${Battery.energy}`,
-                                deviceName: batDeviceName,
-                            }),
-                            tableRow({
-                                appName: local === "RTL" ? "الدورات  " : "Cycles  ",
-                                percentage: data["Charge_Cycles"],
-                                deviceName: batDeviceName,
-                            }),
-                        ];
-                        self.children = children;
-                    }).catch(print);
-            }],
-        ]
+    }).hook(Battery, self => {
+        Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/hardware_info.sh`)
+            .then(val => {
+                let data = JSON.parse(val);
+                let children = [
+                    // Header
+                    tableRow({
+                        appName: "البطارية",
+                        percentage: "",
+                        header: true,
+                        deviceName: batDeviceName,
+                        rightTextXalign: 1,
+                    }),
+                    // Body
+                    tableRow({
+                        appName: "النسبة  ",
+                        percentage: `${Battery.percent}%`,
+                        deviceName: batDeviceName,
+                    }),
+                    tableRow({
+                        appName: local === "RTL" ? "الصحة   " : "Health   ",
+                        percentage: data["Capacity"] + "%",
+                        deviceName: batDeviceName,
+                    }),
+                    tableRow({
+                        appName: local === "RTL" ? "الفولتية  " : "Voltage  ",
+                        percentage: data["Voltage"],
+                        deviceName: batDeviceName,
+                    }),
+                    tableRow({
+                        appName: local === "RTL" ? "الطاقة  " : "Energy  ",
+                        percentage: `${Battery.energy}`,
+                        deviceName: batDeviceName,
+                    }),
+                    tableRow({
+                        appName: local === "RTL" ? "الدورات  " : "Cycles  ",
+                        percentage: data["Charge_Cycles"],
+                        deviceName: batDeviceName,
+                    }),
+                ];
+                self.children = children;
+            }).catch(print);
     })
 
     let osClassName = "os";
     let tempTable = hardwareUsageTable({
         scriptPath: "",
         deviceName: osClassName,
-        connections: [
-            [Battery, self => {
-                Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/uptime.sh`)
-                    .then(val => {
-                        // let data = JSON.parse(val);
+    }).hook(Battery, self => {
+        Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/uptime.sh`)
+            .then(val => {
+                // let data = JSON.parse(val);
 
-                        let children = [
-                            // Header
-                            tableRow({
-                                appName: "النظام",
-                                percentage: "",
-                                header: true,
-                                rightTextXalign: 1,
-                                deviceName: osClassName,
-                            }),
-                            // Body
-                            tableRow({
-                                appName: "Arch",
-                                percentage: "",
-                                deviceName: osClassName,
-                            }),
-                            tableRow({
-                                appName: val,
-                                percentage: "",
-                                deviceName: osClassName,
-                            }),
-                            tableRow({
-                                appName: "Ahmed",
-                                percentage: "",
-                                deviceName: osClassName,
-                            }),
-                        ];
-                        self.children = children;
-                    }).catch(print);
-            }],
-        ]
+                let children = [
+                    // Header
+                    tableRow({
+                        appName: "النظام",
+                        percentage: "",
+                        header: true,
+                        rightTextXalign: 1,
+                        deviceName: osClassName,
+                    }),
+                    // Body
+                    tableRow({
+                        appName: "Arch",
+                        percentage: "",
+                        deviceName: osClassName,
+                    }),
+                    tableRow({
+                        appName: val,
+                        percentage: "",
+                        deviceName: osClassName,
+                    }),
+                    tableRow({
+                        appName: "Ahmed",
+                        percentage: "",
+                        deviceName: osClassName,
+                    }),
+                ];
+                self.children = children;
+            }).catch(print);
     })
 
     return Widget.Box({

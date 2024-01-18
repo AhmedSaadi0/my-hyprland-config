@@ -73,27 +73,26 @@ const MenuRevealer = () => {
                 maghrib,
                 isha,
             ],
-            connections: [[prayerService, box => {
-                const nextPrayer = prayerService.nextPrayerName;
+        }).hook(prayerService, box => {
+            const nextPrayer = prayerService.nextPrayerName;
 
-                box.children[1].children[1].label = `${prayerService.fajr}`;
-                box.children[2].children[1].label = `${prayerService.dhuhr}`;
-                box.children[3].children[1].label = `${prayerService.asr}`;
-                box.children[4].children[1].label = `${prayerService.maghrib}`;
-                box.children[5].children[1].label = `${prayerService.isha}`;
+            box.children[1].children[1].label = `${prayerService.fajr}`;
+            box.children[2].children[1].label = `${prayerService.dhuhr}`;
+            box.children[3].children[1].label = `${prayerService.asr}`;
+            box.children[4].children[1].label = `${prayerService.maghrib}`;
+            box.children[5].children[1].label = `${prayerService.isha}`;
 
-                if (nextPrayer === "الفجر") {
-                    updateClasses(box, 1);
-                } else if (nextPrayer === "الظهر") {
-                    updateClasses(box, 2);
-                } else if (nextPrayer === "العصر") {
-                    updateClasses(box, 3);
-                } else if (nextPrayer === "المغرب") {
-                    updateClasses(box, 4);
-                } else if (nextPrayer === "العشاء") {
-                    updateClasses(box, 5);
-                }
-            }]]
+            if (nextPrayer === "الفجر") {
+                updateClasses(box, 1);
+            } else if (nextPrayer === "الظهر") {
+                updateClasses(box, 2);
+            } else if (nextPrayer === "العصر") {
+                updateClasses(box, 3);
+            } else if (nextPrayer === "المغرب") {
+                updateClasses(box, 4);
+            } else if (nextPrayer === "العشاء") {
+                updateClasses(box, 5);
+            }
         }),
     })
 }

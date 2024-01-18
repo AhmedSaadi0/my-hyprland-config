@@ -1,98 +1,3 @@
-// -----------------------------
-// --------- Variables ---------
-// -----------------------------
-$border-color: #894587;
-$border-size: 2px;
-
-$primary: #894587;
-$secondary: #6d5869;
-$tertiary: #825246;
-$background: #fffbff;
-$outlined: #7f747c;
-
-$on-primary: #ffffff;
-$on-secondary: #ffffff;
-$on-tertiary: #ffffff;
-$on-background: #1e1a1d;
-
-$primary-container: #ffd6f7;
-$secondary-container: #f6daef;
-$tertiary-container: #ffdbd2;
-$surface: #fffbff;
-$surface-variant: #eddee8;
-
-$on-primary-container: #37003a;
-$on-secondary-container: #261625;
-$on-tertiary-container: #321209;
-$on-surface: #1e1a1d;
-$on-surface-variant: #4e444b;
-
-
-// $primary: #8cceff;
-// $secondary: #b7c9d9;
-// $tertiary: #cfc0e8;
-// $background: #1a1c1e;
-// $outlined: #8b9198;
-
-// $on-primary: #00344e;
-// $on-secondary: #22323f;
-// $on-tertiary: #352b4b;
-// $on-background: #e2e2e5;
-
-// $primary-container: #004b6f;
-// $secondary-container: #384956;
-// $tertiary-container: #4c4162;
-// $surface: #1a1c1e;
-// $surface-variant: #41474d;
-
-// $on-primary-container: #cae6ff;
-// $on-secondary-container: #d3e5f5;
-// $on-tertiary-container: #eaddff;
-// $on-surface: #e2e2e5;
-// $on-surface-variant: #c1c7ce;
-
-// $primary: #d9b9ff;
-// $secondary: #cfc1da;
-// $tertiary: #f2b7c0;
-// $background: #1d1b1e;
-// $outlined: #958e99;
-
-// $on-primary: #411b6d;
-// $on-secondary: #352d40;
-// $on-tertiary: #4b252d;
-// $on-background: #e7e1e5;
-
-// $primary-container: #583485;
-// $secondary-container: #4c4357;
-// $tertiary-container: #653b43;
-// $surface: #1d1b1e;
-// $surface-variant: #4a454e;
-
-// $on-primary-container: #eedcff;
-// $on-secondary-container: #ecddf7;
-// $on-tertiary-container: #ffd9de;
-// $on-surface: #e7e1e5;
-// $on-surface-variant: #ccc4cf;
-
-// $bg-one: #eddee8;
-// $bg-two: #ffd6f7;
-// $bg-three: #ffdbd2;
-
-// $fg-one: #894587;
-// $fg-two: #6d5869;
-// $fg-three: #825246;
-
-$text-color: #454061;
-
-
-// $icon-font-family: "Font Awesome";
-$icon-font-family: "Font Awesome 5 Free Solid";
-
-$bar-top-margin: 0.3rem;
-$bar-bottom-margin: 0.3rem;
-
-$border-radius: 1rem;
-
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
@@ -108,7 +13,7 @@ $workspace-hover-color: rgba($on-secondary, 0.9);
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
-$clock-background: linear-gradient(to right, $primary-container, $secondary-container);
+$clock-background: linear-gradient(to right, $primary-container,  $tertiary-container);
 $clock-color: $on-primary-container;
 
 // --------------------------------
@@ -230,7 +135,7 @@ $menu-box-borders: $primary;
 $profile-box-background: linear-gradient(to right, rgba($primary-container, 0.8), rgba($secondary-container, 0.6));
 $profile-box-color: $on-primary-container;
 
-$theme-box-background: $secondary-container;
+$theme-box-background: rgba($tertiary-container, 0.5);
 $power-box-background: $surface-variant;
 
 $selected-theme-background: linear-gradient(to right, $primary, $secondary);
@@ -301,26 +206,28 @@ $btn-color: $on-tertiary-container;
 $btn-hover-background: $tertiary;
 $btn-hover-color: $on-tertiary;
 
+
+
 // ----------------------------------
 // --------- desktop-widget ---------
 // ----------------------------------
-$desktop-wd-separator-background: linear-gradient(to bottom, $on-primary-container, $on-secondary-container, $on-tertiary-container);
+$desktop-wd-separator-background: rgba(#000000, 0);
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
 $wd-fuzzy-day-box-fg: $on-primary-container;
 
-$wd-fuzzy-day-text-font-size: 3rem;
+$wd-fuzzy-day-text-font-size: 1.8rem;
 $wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
-$wd-fuzzy-day-icon-font-size: 2rem;
+$wd-fuzzy-day-icon-font-size: 1.5rem;
 $wd-fuzzy-day-icon-font-family: $icon-font-family;
 $wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 1rem;
 $wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
 
 $wd-time-now-bg: rgba(#000000, 0);
 $wd-time-now-fg: $on-secondary-container;
-$wd-time-now-font-size: 2rem;
+$wd-time-now-font-size: 1.5rem;
 $wd-time-now-font-family: "VEXA light R";
-$wd-time-now-margin: 0rem 0rem 0.5rem 0rem;
+$wd-time-now-margin: 0rem 0rem 0rem 0rem;
 
 $wd-fuzzy-time-box-bg: rgba(#000000, 0);
 $wd-fuzzy-time-box-fg: $on-tertiary-container;
@@ -330,20 +237,21 @@ $wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 1rem;
 $wd-fuzzy-time-text-font-size: 1.8rem;
 $wd-fuzzy-time-text-font-family: "VIP Rawy Regular";
 
-$saying-wd-label-bg: rgba(#000000, 0);
-$saying-wd-label-fg: $primary;
+$saying-wd-label-bg: rgba($primary-container, 0.8);
+$saying-wd-label-fg: $on-primary-container;
 $saying-wd-label-font-size: 1.5rem;
-$saying-wd-label-min-width: 25rem;
+$saying-wd-label-font-size: 1.5rem;
+$saying-wd-label-min-width: 1rem;
 $saying-wd-label-font-family: "VIP Rawy Regular";
-$saying-wd-label-padding: 0rem;
-$saying-wd-label-margin: 0rem;
-$saying-wd-label-border-radius: 0rem;
+$saying-wd-label-padding: 1rem;
+$saying-wd-label-margin: 1rem;
+$saying-wd-label-border-radius: 3rem;
 
 // Music Info
 $music-info-wd-font-family: "VIP Rawy Regular";
 $music-info-wd-font-size: 1.5rem;
 $music-info-wd-min-width: 30rem;
-$music-info-wd-padding: 0rem 0rem 0rem 0rem;
+$music-info-wd-padding: 1rem 0rem 0rem 0rem;
 
 $music-info-wd-title-fg: $secondary;
 $music-info-wd-artist-fg: $on-tertiary-container;
@@ -351,9 +259,8 @@ $music-info-wd-artist-fg: $on-tertiary-container;
 // --------- Menu ---------
 $menu-bg: $primary-container;
 $menu-fg: $on-primary-container;
+$menuitem-hover-bg: rgba($secondary-container, 0.2);
+$menuitem-hover-fg: $secondary-container;
 
-$menuitem-hover-bg: rgba($primary, 0.7);
-$menuitem-hover-fg: $on-secondary;
-
-$menuitem-disabled-bg: rgba($on-primary-container, 0.1);
-$menuitem-disabled-fg: rgba($on-primary-container, 0.5);
+$menuitem-disabled-bg: rgba($secondary-container, 0.1);
+$menuitem-disabled-fg: rgba($secondary-container, 0.5);

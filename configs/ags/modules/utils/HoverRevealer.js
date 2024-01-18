@@ -7,9 +7,6 @@ export default ({
     child,
     direction = 'left',
     duration = 500,
-    connections,
-    eventboxConnections,
-    binds,
     ...rest
 }) => {
     let open = false;
@@ -19,15 +16,12 @@ export default ({
 
     const revealer = Revealer({
         transition: `slide_${direction}`,
-        connections,
-        binds,
         transitionDuration: duration,
         child,
     });
 
     const box = EventBox({
         ...rest,
-        connections: eventboxConnections,
         onHover: () => {
             if (open)
                 return;

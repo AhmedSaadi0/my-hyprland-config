@@ -26,21 +26,16 @@ export const RamWidget = () => {
 
     return Box({
         className: "bar-hw-ram-box",
-        connections: [
-            [30000, box => {
-                execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
-                    .then(val => {
-                        progress.value = (val / 100);
-                        label.tooltipMarkup = `<span weight='bold' foreground='#79A7EC'>نسبة الرام المستهلكة (${val}%)</span>`
-                    }).catch(print);
+    }).poll(30000, box => {
+        execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
+            .then(val => {
+                progress.value = (val / 100);
+                label.tooltipMarkup = `<span weight='bold' foreground='#79A7EC'>نسبة الرام المستهلكة (${val}%)</span>`
+            }).catch(print);
 
-                box.children = [
-                    progress
-                ];
-                box.show_all();
-            }],
-        ],
+        box.children = [
+            progress
+        ];
+        box.show_all();
     });
-
-
 } 

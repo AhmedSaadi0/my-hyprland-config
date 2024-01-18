@@ -10,51 +10,50 @@ const NotificationsBox = () => {
         className: "notification-menu-header",
         vertical: true,
         children: [],
-        connections: [[Notifications, self => {
+    }).hook(Notifications, self => {
 
-            let notificationList = [];
+        let notificationList = [];
 
-            const array = Notifications.notifications.reverse();
+        const array = Notifications.notifications.reverse();
 
-            for (let index = 0; index < array.length; index++) {
-                const element = array[index];
-                let line = Box({
-                    className: "horizontal-line"
-                });
-                if (index === array.length - 1) {
-                    line = null;
-                }
-
-                notificationList.push(
-                    Notification(element),
-                    line
-                );
+        for (let index = 0; index < array.length; index++) {
+            const element = array[index];
+            let line = Box({
+                className: "horizontal-line"
+            });
+            if (index === array.length - 1) {
+                line = null;
             }
 
-            let noNotifications = Box({
-                vertical: true,
-                className: "notification-this-is-all",
-                children: [
-                    Label({
-                        className: "no-notification-icon",
-                        // label: "󰂛"
-                        // label: "",
-                        label: "󱇥",
-                    }),
-                    Label({
-                        className: "no-notification-text",
-                        label: "لا توجد اي اشعارات جديدة",
-                    }),
-                ]
-            })
+            notificationList.push(
+                Notification(element),
+                line
+            );
+        }
 
-            if (array.length < 1) {
-                notificationList.push(noNotifications)
-            }
+        let noNotifications = Box({
+            vertical: true,
+            className: "notification-this-is-all",
+            children: [
+                Label({
+                    className: "no-notification-icon",
+                    // label: "󰂛"
+                    // label: "",
+                    label: "󱇥",
+                }),
+                Label({
+                    className: "no-notification-text",
+                    label: "لا توجد اي اشعارات جديدة",
+                }),
+            ]
+        })
 
-            self.children = [...notificationList];
-        }]],
-    })
+        if (array.length < 1) {
+            notificationList.push(noNotifications)
+        }
+
+        self.children = [...notificationList];
+    });
 }
 
 const NotificationHeader = () => {
@@ -72,7 +71,7 @@ const NotificationHeader = () => {
                 // label: "",
                 // label: "",
                 // label: "󰅖",
-                onClicked: () => {Notifications.clear()},
+                onClicked: () => { Notifications.clear() },
             }),
             Label({
                 className: "notification-center-header-text",
@@ -85,13 +84,12 @@ const NotificationHeader = () => {
                 // label: "",
             })
         ],
-        connections: [[Notifications, self => {
-            if (Notifications.dnd) {
-                self.children[2].label = "󰂛";
-            } else {
-                self.children[2].label = "󰂚";
-            }
-        }]]
+    }).hook(Notifications, self => {
+        if (Notifications.dnd) {
+            self.children[2].label = "󰂛";
+        } else {
+            self.children[2].label = "󰂚";
+        }
     })
 }
 
@@ -140,14 +138,13 @@ export const NotificationCenterButton = () => Button({
     // child: Label({ label: "" }),
     label: "",
     onClicked: () => showNotificationCenter(),
-    connections: [[Notifications, self => {
-        if (Notifications.dnd) {
-            self.label = "󰂛";
-        } else if (Notifications.notifications.length === 0) {
-            self.label = "󰂚";
-            // self.label = "󱇥";
-        } else if (Notifications.notifications.length > 0) {
-            self.label = `${Notifications.notifications.length} `;
-        }
-    }]]
+}).hook(Notifications, self => {
+    if (Notifications.dnd) {
+        self.label = "󰂛";
+    } else if (Notifications.notifications.length === 0) {
+        self.label = "󰂚";
+        // self.label = "󱇥";
+    } else if (Notifications.notifications.length > 0) {
+        self.label = `${Notifications.notifications.length} `;
+    }
 });

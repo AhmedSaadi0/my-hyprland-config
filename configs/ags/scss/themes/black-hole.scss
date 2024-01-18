@@ -34,7 +34,7 @@ $icon-font-family: "Font Awesome 5 Free Solid";
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
 
-$border-radius: 1.8rem;
+$border-radius: 1rem;
 
 // ------------------------------
 // --------- Workspaces ---------
@@ -270,7 +270,7 @@ $hardware-cpu-box-color: $bg-one;
 $hardware-cpu-table-row-header-background: $fg-two;
 $hardware-cpu-table-row-header-color: $bg-one;
 
-$hardware-ram-box-background: linear-gradient(to top,  #E952ED, #4F92B4);
+$hardware-ram-box-background: linear-gradient(to top, #E952ED, #4F92B4);
 $hardware-ram-box-color: $bg-one;
 $hardware-ram-table-row-header-background: #5d86b9;
 $hardware-ram-table-row-header-color: $bg-two;
@@ -293,6 +293,7 @@ $btn-color: $fg-three;
 $btn-hover-background: $fg-one;
 $btn-hover-color: $bg-one;
 
+
 button {
     background-color: $btn-background;
     color: $btn-color;
@@ -305,6 +306,14 @@ button:hover {
     border-color: $btn-hover-background;
 }
 
+// --------- Menu ---------
+$menu-bg: $bg-one;
+$menu-fg: $text-color;
+$menuitem-hover-bg: rgba($text-color, 0.2);
+$menuitem-hover-fg: $text-color;
+
+$menuitem-disabled-bg: rgba($text-color, 0.1);
+$menuitem-disabled-fg: rgba($text-color, 0.5);
 
 /* -------------------------------------------- */
 /* -------------- Desktop Widget -------------- */

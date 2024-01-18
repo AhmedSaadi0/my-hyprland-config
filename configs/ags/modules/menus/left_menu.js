@@ -35,13 +35,10 @@ const Header = () => {
             background-image: url("${settings.assets.wallpapers}/black-hole.png");
         `,
         vertical: true,
-        connections: [
-            [themeService, box => {
-                let wallpaper = ThemesDictionary[themeService.selectedTheme].wallpaper;
-                box.css = `background-image: url("${wallpaper}");`;
-            }]
-        ]
-    })
+    }).hook(themeService, box => {
+        let wallpaper = ThemesDictionary[themeService.selectedTheme].wallpaper;
+        box.css = `background-image: url("${wallpaper}");`;
+    });
 }
 
 const ThemeButton = ({ label, icon, theme, end = local === "RTL" ? "margin-left: 1.1rem;" : "margin-right: 1.1rem;" }) => {
@@ -75,15 +72,12 @@ const ThemeButton = ({ label, icon, theme, end = local === "RTL" ? "margin-left:
             `,
         child: box,
         onClicked: () => themeService.changeTheme(theme),
-        connections: [
-            [themeService, btn => {
-                btn.className = "theme-btn";
-                if (themeService.selectedTheme === theme) {
-                    btn.className = "selected-theme";
-                }
-            }]
-        ]
-    })
+    }).hook(themeService, btn => {
+        btn.className = "theme-btn";
+        if (themeService.selectedTheme === theme) {
+            btn.className = "selected-theme";
+        }
+    });
 
     return button
 }
@@ -310,23 +304,25 @@ const PowerButtonsRow = () => {
     })
 }
 
-const menuRevealer = Revealer({
-    transition: "slide_down",
-    child: Box({
-        className: "left-menu-box",
-        vertical: true,
-        children: [
-            Header(),
-            Profile(),
-            ThemesButtonsRowOne(),
-            MusicPLayer("left-menu-music-wd"),
-            PowerButtonsRow()
-        ]
-    }),
+const widgets = Box({
+    className: "left-menu-box",
+    vertical: true,
+    children: [
+        Header(),
+        Profile(),
+        ThemesButtonsRowOne(),
+        MusicPLayer("left-menu-music-wd"),
+        PowerButtonsRow()
+    ]
 })
 
-export const LeftMenu = () => Window({
-    name: `left_menu`,
+const menuRevealer = Revealer({
+    transition: "slide_down",
+    child: widgets,
+})
+
+export const LeftMenu = ({ monitor } = {}) => Window({
+    name: `left_menu_${monitor}`,
     margins: [0, 0, 0, 0],
     // layer: 'overlay',
     anchor: ['top', local === "RTL" ? "left" : "right"],
@@ -341,6 +337,15 @@ export const LeftMenu = () => Window({
     })
 })
 
+export const MenuButton = () => Button({
+    className: "menu-button",
+    label: "",
+    onClicked: () => {
+        menuRevealer.revealChild = !menuRevealer.revealChild;
+        changeMenuBtn();
+    }
+});
+
 globalThis.showLeftMenu = () => {
     menuRevealer.revealChild = !menuRevealer.revealChild;
     changeMenuBtn();
@@ -353,12 +358,3 @@ function changeMenuBtn() {
         MenuButton.label = "";
     }
 }
-
-export const MenuButton = () => Button({
-    className: "menu-button",
-    label: "",
-    onClicked: () => {
-        menuRevealer.revealChild = !menuRevealer.revealChild;
-        changeMenuBtn();
-    }
-});

@@ -1,30 +1,21 @@
-// #411352
-// #722991
-// #e1d9f5
-// #8a49b3
-// #300c32
-// Lavender: #e6e6fa
-// Mauve: #e0b0ff
-// Violet: #8f00ff
-// Plum: #8e3179
-// Burgundy: #800020
-// Magenta: #ff00ff
 // -----------------------------
 // --------- Variables ---------
 // -----------------------------
-$border-color: #1ed4fd;
+$border-color: #61AFEF;
 $border-size: 2px;
 
-$bg-one: #001E2E;
-$bg-two: #2A4A5F;
-$bg-three: #1D2624;
 
-$fg-one: #78F8DD;
-$fg-two: #FFDAD6;
-$fg-three: #14EFFD;
+$bg-one: #1E222A;
+$bg-two: #13161b;
+$bg-three: #13161b;
 
-$text-color: #D4E4FB;
+$fg-one: #61afef;
+$fg-two: #7EC7A2;
+$fg-three: #E06C75;
 
+$text-color: #C8CCD4;
+
+// $icon-font-family: "Font Awesome";
 $icon-font-family: "Font Awesome 5 Free Solid";
 
 $bar-top-margin: 0.3rem;
@@ -48,13 +39,23 @@ $workspace-hover-color: rgba($bg-two, 0.9);
 // --------- Clock widget ---------
 // --------------------------------
 $clock-background: linear-gradient(to right, $fg-two, $fg-one);
-$clock-color: $bg-two;
+$clock-color: #001B3D;
+
+// --------------------------------
+// --------- prayer times ---------
+// --------------------------------
+$bar-prayer-times-box-background: #13161B;
+$bar-prayer-times-box-color: $text-color;
+$prayer-times-icon-bg: #C8CCD4;
+$prayer-times-icon-fg: #13161B;
 
 // -------------------------------
 // --------- Bar Weather ---------
 // -------------------------------
-$bar-weather-background: linear-gradient(to right, $fg-one, $fg-three);
-$bar-weather-color: $bg-two;
+$bar-weather-background: $bg-two;
+$bar-weather-color: $text-color;
+$bar-weather-icon-bg: #E1C07B;
+$bar-weather-icon-fg: $bg-two;
 
 // -----------------------
 // --------- bar ---------
@@ -63,22 +64,14 @@ $bar-background: $bg-one;
 $bar-color: $text-color;
 
 // --------------------------------
-// --------- prayer times ---------
-// --------------------------------
-$bar-prayer-times-box-background: linear-gradient(to right, $fg-three, #ff9c88);
-$bar-prayer-times-box-color: $bg-two;
-
-// --------------------------------
 // --------- internet box ---------
 // --------------------------------
-// $internet-box-background: linear-gradient(to right, #ffb92d, #0cdfff);
-// $internet-box-background: linear-gradient(to right, #EF96D3, #ff2176);
-$internet-box-background: linear-gradient(to right, #82D8D2, #478DD7);
+$internet-box-background: linear-gradient(to right, $fg-three, $fg-three);
 $internet-box-color: $bar-background;
 $wifi-name-background: $bar-background;
 $wifi-name-color: $bar-color;
-$wifi-icon-background: $wifi-name-background;
-$wifi-icon-color: $wifi-name-color;
+$wifi-icon-background: $bar-background;
+$wifi-icon-color: $bar-color;
 
 // ---------------------------
 // --------- systray ---------
@@ -96,14 +89,14 @@ $hardware-box-color: $bg-two;
 // --------- battery ---------
 // ---------------------------
 $battery-background: $hardware-box-color;
-$battery-color: $fg-one;
+$battery-color: #C8CCD4;
 $battery-inner-color: $battery-color;
 
 // -----------------------
 // --------- CPU ---------
 // -----------------------
 $cpu-background: $hardware-box-color;
-$cpu-color: #95ffea;
+$cpu-color: $fg-three;
 $cpu-inner-color: $cpu-color;
 
 
@@ -119,7 +112,7 @@ $temp-inner-color: $temp-color;
 // --------- RAM ---------
 // -----------------------
 $ram-background: $hardware-box-color;
-$ram-color: $fg-three;
+$ram-color: #61AFEF;
 $ram-inner-color: $ram-color;
 
 
@@ -133,19 +126,18 @@ $vol-osd-border-color: $border-color;
 // -----------------------------
 // --------- GTK Scale ---------
 // -----------------------------
-// $scale-highlight-background: $border-color;
-$scale-highlight-background: $fg-three;
+$scale-highlight-background: $fg-one;
 $scale-slider-background: $scale-highlight-background;
 
 
 // ---------------------------------
 // --------- Notifications ---------
 // ---------------------------------
-$notifications-border: $fg-one;
+$notifications-border: $border-color;
 $notifications-popup-list-background: $bg-one;
 $notifications-revealer-box-background: $bg-three;
 $notifications-bar-btn-bg: $bg-three;
-$notifications-bar-btn-fg: $fg-two;
+$notifications-bar-btn-fg: $text-color;
 
 $notifications-bar-btn-hover-bg: $fg-one;
 $notifications-bar-btn-hover-fg: $bg-one;
@@ -153,53 +145,6 @@ $notifications-bar-btn-hover-fg: $bg-one;
 $notifications-header-bg: $bg-two;
 $notifications-header-fg: $text-color;
 $notifications-separator-background: $text-color;
-
-// ----------------------------------
-// --------- desktop-widget ---------
-// ----------------------------------
-$desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, #FFB431, $fg-one);
-
-$wd-fuzzy-day-box-bg: rgba(#000000, 0);
-$wd-fuzzy-day-box-fg: $fg-two;
-
-$wd-fuzzy-day-text-font-size: 3rem;
-$wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
-$wd-fuzzy-day-icon-font-size: 2rem;
-$wd-fuzzy-day-icon-font-family: $icon-font-family;
-$wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 0rem;
-$wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
-
-$wd-time-now-bg: rgba(#000000, 0);
-$wd-time-now-fg: #FFB431;
-$wd-time-now-font-size: 2.3rem;
-$wd-time-now-font-family: "VEXA light R";
-$wd-time-now-margin: 0rem 0rem 0.5rem 0rem;
-
-$wd-fuzzy-time-box-bg: rgba(#000000, 0);
-$wd-fuzzy-time-box-fg: $fg-one;
-$wd-fuzzy-time-icon-font-size: 1.5rem;
-$wd-fuzzy-time-icon-font-family: $icon-font-family;
-$wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 0rem;
-$wd-fuzzy-time-text-font-size: 1.8rem;
-$wd-fuzzy-time-text-font-family: "VIP Rawy Regular";
-
-$saying-wd-label-bg: rgba(#000000, 0);
-$saying-wd-label-fg: #31ff87;
-$saying-wd-label-font-size: 1.8rem;
-$saying-wd-label-min-width: 25rem;
-$saying-wd-label-font-family: "VIP Rawy Regular";
-$saying-wd-label-padding: 0rem;
-$saying-wd-label-margin: 0rem;
-$saying-wd-label-border-radius: 0rem;
-
-// Music Info
-$music-info-wd-font-family: "VIP Rawy Regular";
-$music-info-wd-font-size: 1.5rem;
-$music-info-wd-min-width: 30rem;
-$music-info-wd-padding: 1rem 0rem 0rem 0rem;
-
-$music-info-wd-title-fg: $fg-one;
-$music-info-wd-artist-fg: $fg-two;
 
 // --------------------------------
 // --------- Prayer times ---------
@@ -214,21 +159,68 @@ $prayer-times-next-prayer-fg: $bg-two;
 // --------- Menu ---------
 // ------------------------
 $menu-box-background: $bg-one;
-$menu-box-borders: $fg-one;
+$menu-box-borders: $border-color;
 
-$profile-box-background: linear-gradient(to right, rgba(#80D6D2, 0.8), rgba(#539CD6, 0.6));
-$profile-box-color: $bg-two;
+$profile-box-background: linear-gradient(to right, rgba($fg-one, 0.8), rgba($fg-two, 0.6));
+$profile-box-color: $bg-one;
 
-$theme-box-background: #1c3b32;
-$power-box-background: #58324C;
+$theme-box-background: $bg-two;
+$power-box-background: $theme-box-background;
 
-$selected-theme-background: linear-gradient(to right, #488FD7, #18F0FA);
+$selected-theme-background: linear-gradient(to right, $fg-one, $fg-two, $fg-three);
 $selected-theme-color: $bg-one;
-$selected-theme-hover-background: linear-gradient(to right, $fg-two, $fg-one);
+$selected-theme-hover-background: linear-gradient(to right, #ff9900, #ff6600);
 $selected-theme-hover-color: $bg-three;
 
 $menu-btn-background: $bg-one;
 $menu-btn-hover: $fg-one;
+
+// ----------------------------------
+// --------- desktop-widget ---------
+// ----------------------------------
+$desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, #EA6220, $fg-one);
+
+$wd-fuzzy-day-box-bg: rgba(#000000, 0);
+$wd-fuzzy-day-box-fg: $fg-three;
+
+$wd-fuzzy-day-text-font-size: 1.8rem;
+$wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
+$wd-fuzzy-day-icon-font-size: 1.5rem;
+$wd-fuzzy-day-icon-font-family: $icon-font-family;
+$wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 1rem;
+$wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
+
+$wd-time-now-bg: rgba(#000000, 0);
+$wd-time-now-fg: $fg-two;
+$wd-time-now-font-size: 1.5rem;
+$wd-time-now-font-family: "VEXA light R";
+$wd-time-now-margin: 0rem 0rem 0rem 0rem;
+
+$wd-fuzzy-time-box-bg: rgba(#000000, 0);
+$wd-fuzzy-time-box-fg: $fg-one;
+$wd-fuzzy-time-icon-font-size: 1.5rem;
+$wd-fuzzy-time-icon-font-family: $icon-font-family;
+$wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 1rem;
+$wd-fuzzy-time-text-font-size: 1.8rem;
+$wd-fuzzy-time-text-font-family: "VIP Rawy Regular";
+
+$saying-wd-label-bg: rgba($fg-three, 0);
+$saying-wd-label-fg: $fg-three;
+$saying-wd-label-font-size: 1.5rem;
+$saying-wd-label-min-width: 33rem;
+$saying-wd-label-font-family: "VIP Rawy Regular";
+$saying-wd-label-padding: 1rem;
+$saying-wd-label-margin: 0rem 1rem;
+$saying-wd-label-border-radius: $border-radius;
+
+// Music Info
+$music-info-wd-font-family: "VIP Rawy Regular";
+$music-info-wd-font-size: 1.5rem;
+$music-info-wd-min-width: 33rem;
+$music-info-wd-padding: 1rem 0rem 0rem 0rem;
+
+$music-info-wd-title-fg: $fg-three;
+$music-info-wd-artist-fg: $fg-three;
 
 
 /* ------------------------------------------ */
@@ -236,25 +228,22 @@ $menu-btn-hover: $fg-one;
 /* ------------------------------------------ */
 $music-father-box-bg: $bg-three;
 // $music-wd-box-bg: #6f3ad1;
-$music-wd-box-bg: linear-gradient(to right, #64D5AF, #49A5A4);
-
+$music-wd-box-bg: linear-gradient(to right, $bg-two, $bg-two);
 $music-wd-player-bg: $bg-two;
 $music-wd-player-fg: $fg-three;
-
-$music-wd-title-fg: $bg-two;
+$music-wd-title-fg: $fg-one;
 $music-wd-artist-fg: $fg-three;
-
 $music-wd-button-bg: linear-gradient(to right, $bg-one, $bg-one);
-$music-wd-button-fg: $fg-three;
 $music-wd-button-hover-bg: linear-gradient(to top, $fg-one, $fg-two);
+$music-wd-button-fg: $fg-three;
 
-$music-wd-button-play-bg: linear-gradient(to bottom, $fg-three, $fg-two);
+$music-wd-button-play-bg: $selected-theme-background;
 $music-wd-button-play-fg: $bg-two;
 
 $music-wd-button-stop-bg: $music-wd-button-bg;
 $music-wd-button-stop-fg: $music-wd-button-fg;
 
-$left-menu-music-wd-padding-right: 1.8rem;
+$left-menu-music-wd-padding-right: 2rem;
 
 // ---------------------------
 // --------- HW menu ---------
@@ -265,24 +254,23 @@ $hardware-menu-tables-box-background: $bg-two;
 
 $hardware-cpu-box-background: linear-gradient(to top, $fg-one, $fg-two, $fg-three);
 $hardware-cpu-box-color: $bg-one;
-$hardware-cpu-table-row-header-background: $fg-three;
+$hardware-cpu-table-row-header-background: #b37672;
 $hardware-cpu-table-row-header-color: $bg-one;
 
-$hardware-ram-box-background: linear-gradient(to top,  $fg-three, $fg-one);
+$hardware-ram-box-background: linear-gradient(to top, $fg-two, $fg-one);
 $hardware-ram-box-color: $bg-one;
-$hardware-ram-table-row-header-background: $fg-one;
+$hardware-ram-table-row-header-background: #5ca3d3;
 $hardware-ram-table-row-header-color: $bg-two;
 
-$hardware-bat-box-background: rgba(#987FD6, 1);
+$hardware-bat-box-background: rgba(#C8CCD4, 1);
 $hardware-bat-box-color: #211008;
-$hardware-bat-table-row-header-background: #8b75c4;
+$hardware-bat-table-row-header-background: #b0b3b9;
 $hardware-bat-table-row-header-color: #211008;
 
 $hardware-os-box-background: rgba($fg-two, 0.9);
 $hardware-os-box-color: #211008;
 $hardware-os-table-row-header-background: rgba($fg-two, 0.8);
 $hardware-os-table-row-header-color: #211008;
-
 
 // --------------------------------
 // --------- GTK elements ---------
@@ -303,6 +291,7 @@ button:hover {
     color: $btn-hover-color;
     border-color: $btn-hover-background;
 }
+
 // --------- Menu ---------
 $menu-bg: $bg-one;
 $menu-fg: $text-color;
@@ -311,3 +300,133 @@ $menuitem-hover-fg: $text-color;
 
 $menuitem-disabled-bg: rgba($text-color, 0.1);
 $menuitem-disabled-fg: rgba($text-color, 0.5);
+
+
+/* -------------------------------------------- */
+/* -------------- Desktop Widget -------------- */
+/* -------------------------------------------- */
+.my-weather-wd-text {
+    font-size: medium;
+    color: $bg-one;
+}
+
+.weather-wd-row-one {
+    background: rgba($fg-two, 0.7);
+    border-radius: $border-radius;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.my-desktop-music-box {
+    background: $music-wd-box-bg;
+    border-radius: $border-radius;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-right: 1.2rem;
+    padding-left: 1rem;
+    min-width: 1rem;
+    margin: 1rem;
+    margin-top: 0.5rem;
+    // margin-left: 11.3rem;
+}
+
+.my-weather-wd-icon {
+    color: $bg-one;
+    font-size: xx-large;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-family: $icon-font-family;
+}
+
+.my-wd-user-icon {
+    padding: 0.8rem;
+    margin-right: 1rem;
+    border-radius: $border-radius;
+}
+
+.my-weather-wd-title-text-box {
+    // background: #E9C7C6;
+    min-width: 10.55rem;
+    padding-top: 1rem;
+    color: $bg-one;
+    font-size: x-large;
+    font-family: $saying-wd-label-font-family;
+}
+
+
+// Desktop M-U Weather Days
+.my-weather-wd-row-two {
+    // background: #E9C7C6;
+    background: $bg-one;
+    margin: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: $border-radius;
+}
+
+.my-fuzzy-clock-box {
+    background: rgba($bg-one, 0.7);
+
+    margin: 1rem;
+    margin-bottom: 0.5rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: $border-radius;
+}
+
+.my-wd-weather-day-name {
+    font-family: $saying-wd-label-font-family;
+    color: $bg-one;
+}
+
+.my-wd-weather-day-text {
+    font-size: x-small;
+    padding-bottom: 0rem;
+    color: $bg-one;
+}
+
+.my-weather-wd-day-icon {
+    background: rgba($color: $bg-three, $alpha: 0.7);
+    color: $text-color;
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+    border-radius: $border-radius;
+    margin-bottom: 0.2rem;
+    min-width: 3rem;
+    min-height: 3.5rem;
+    font-size: x-large;
+    font-family: $icon-font-family;
+}
+
+.my-weather-wd-day-box {
+    background: $fg-two;
+    border-radius: $border-radius;
+    padding-top: 0.4rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+}
+
+.desktop-cpu-circle-icon {
+    color: #1E222A;
+    font-family: $icon-font-family;
+    font-size: 1.5rem;
+}
+
+.desktop-core-circle {
+    color: $fg-two;
+    background-color: #343842;
+}

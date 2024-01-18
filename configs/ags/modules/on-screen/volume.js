@@ -18,36 +18,37 @@ export const Volume = () => Box({
                 ['1', Icon('audio-volume-low-symbolic')],
                 ['0', Icon('audio-volume-muted-symbolic')],
             ],
-            connections: [[Audio, stack => {
-                if (!Audio.speaker)
-                    return;
+        }).hook(Audio, stack => {
+            if (!Audio.speaker)
+                return;
 
-                if (Audio.speaker.isMuted) {
-                    stack.shown = '0';
-                    return;
-                }
+            if (Audio.speaker.isMuted) {
+                stack.shown = '0';
+                return;
+            }
 
-                const show = [101, 67, 34, 1, 0].find(
-                    threshold => threshold <= Audio.speaker.volume * 100
-                );
+            const show = [101, 67, 34, 1, 0].find(
+                threshold => threshold <= Audio.speaker.volume * 100
+            );
 
-                stack.shown = `${show}`;
-            }, 'speaker-changed']],
-        }),
+            stack.shown = `${show}`;
+        }, 'speaker-changed'),
         Slider({
             hexpand: true,
             className: "unset",
             drawValue: false,
             onChange: ({ value }) => Audio.speaker.volume = value,
-            connections: [[Audio, slider => {
+        }).hook(
+            Audio, slider => {
                 if (!Audio.speaker || oldValue === Audio.speaker.volume) {
                     return;
                 }
                 ShowWindow("vol_osd");
                 oldValue = Audio.speaker.volume;
                 slider.value = oldValue;
-            }, 'speaker-changed']],
-        }),
+            },
+            'speaker-changed'
+        ),
     ],
 });
 

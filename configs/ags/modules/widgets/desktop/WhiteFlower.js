@@ -33,15 +33,14 @@ const DesktopWidget = Widget.Box({
                     truncate: 'end',
                 }),
             ],
-            connections: [[Mpris, box => {
-                if (Mpris?.players.length > 0 && Mpris?.getPlayer(selectedMusicPlayer)) {
-                    box.children[0].label = Mpris?.getPlayer(selectedMusicPlayer)?.trackTitle;
-                    box.children[1].label = Mpris?.getPlayer(selectedMusicPlayer)?.trackArtists[0];
-                } else {
-                    box.children[0].label = "لا توجد موسيقى قيد التشغبل";
-                    box.children[1].label = "لا توجد موسيقى قيد التشغبل";
-                }
-            }]]
+        }).hook(Mpris, box => {
+            if (Mpris?.players.length > 0 && Mpris?.getPlayer(selectedMusicPlayer)) {
+                box.children[0].label = Mpris?.getPlayer(selectedMusicPlayer)?.trackTitle;
+                box.children[1].label = Mpris?.getPlayer(selectedMusicPlayer)?.trackArtists[0];
+            } else {
+                box.children[0].label = "لا توجد موسيقى قيد التشغبل";
+                box.children[1].label = "لا توجد موسيقى قيد التشغبل";
+            }
         }),
         Widget.Box({
             className: "desktop-wd-separator",

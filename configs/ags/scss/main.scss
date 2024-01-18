@@ -1,9 +1,12 @@
-@import './themes/white-flower.scss';
+@import './themes/black-hole.scss';
 
 .unset {
     all: unset;
 }
 
+// * {
+//     all: unset;
+// }
 
 .un-hover:hover {
     all: unset;
@@ -13,6 +16,7 @@
     font-family: $icon-font-family;
 }
 
+$top-bar-widget-margins: $bar-top-margin+0.2rem;
 
 /* --------------------------------------------- */
 /* -------------- Top bar widgets -------------- */
@@ -35,13 +39,13 @@
 }
 
 .workspaces:dir(rtl) {
-    margin-right: 4px;
-    margin-left: 8px;
+    margin-right: 0.4rem;
+    margin-left: $top-bar-widget-margins;
 }
 
 .workspaces:dir(ltr) {
-    margin-right: 8px;
-    margin-left: 4px;
+    margin-right: $top-bar-widget-margins;
+    margin-left: 0.4rem;
 }
 
 .workspaces button {
@@ -82,14 +86,14 @@
 }
 
 .clock {
-    font-size: 1em;
+    // font-size: 1em;
     // font-family: "VEXA light R"; 
     // font-family: "ae_Ostorah"; 
     background: $clock-background;
     color: $clock-color;
     border-radius: $border-radius;
-    margin-top: $bar-top-margin + 0.1rem;
-    margin-bottom: $bar-top-margin + 0.1rem;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-top-margin;
     padding-left: 1em;
     padding-right: 1em;
 }
@@ -101,10 +105,10 @@
     background: $bar-weather-background;
     color: $bar-weather-color;
     border-radius: $border-radius;
-    margin-top: $bar-top-margin + 0.1rem;
-    margin-bottom: $bar-top-margin + 0.1rem;
-    margin-left: 0.7rem;
-    margin-right: 0.7rem;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-top-margin;
+    margin-left: $top-bar-widget-margins;
+    margin-right: $top-bar-widget-margins;
 }
 
 .bar-weather-box:dir(rtl) {
@@ -187,17 +191,17 @@
     color: $internet-box-color;
     /* min-width: 100px; */
     border-radius: $border-radius;
-    margin-top: $bar-top-margin + 0.1rem;
-    margin-bottom: $bar-top-margin + 0.1rem;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-top-margin;
 }
 
 .internet-box:dir(rtl) {
-    margin-left: 0.7rem;
+    margin-left: $top-bar-widget-margins;
     padding-right: 0.8rem;
 }
 
 .internet-box:dir(ltr) {
-    margin-right: 0.7rem;
+    margin-right: $top-bar-widget-margins;
     padding-left: 0.8rem;
 }
 
@@ -253,17 +257,17 @@
 .systray {
     background: $systray-background;
     border-radius: $border-radius;
-    margin-top: $bar-top-margin + 0.1rem;
-    margin-bottom: $bar-top-margin + 0.1rem;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-top-margin;
     min-height: 0.1rem;
 }
 
 .systray:dir(rtl) {
-    margin-left: 0.4rem;
+    margin-left: $top-bar-widget-margins;
 }
 
 .systray:dir(ltr) {
-    margin-right: 0.4rem;
+    margin-right: $top-bar-widget-margins;
 }
 
 .systray button {
@@ -392,7 +396,7 @@
     padding-right: 0.5em;
     border-radius: $border-radius;
     margin-top: $bar-top-margin;
-    margin-bottom: $bar-bottom-margin + 0.1rem;
+    margin-bottom: $bar-bottom-margin;
 }
 
 .bar-hw-temp-box:dir(rtl) {
@@ -505,9 +509,12 @@ scale slider {
     // background: #fff;
 }
 
-// .notification-close-button {
-//     background: $secondary-background;
-// }
+.notification-close-button {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+}
 
 // .notification-close-button:hover {
 //     background: $primary-color;
@@ -617,12 +624,10 @@ window {
 
 .theme-btn-icon {
     font-family: $icon-font-family;
-    // color: $text-color;
     min-width: 2rem;
 }
 
 .theme-btn-label {
-    // color: $text-color;
     min-width: 3rem;
 }
 
@@ -642,11 +647,11 @@ window {
 }
 
 .menu-button:dir(rtl) {
-    margin-left: 0.5rem;
+    margin-left: $top-bar-widget-margins;
 }
 
 .menu-button:dir(ltr) {
-    margin-right: 0.5rem;
+    margin-right: $top-bar-widget-margins;
 }
 
 .menu-button:hover {
@@ -690,12 +695,10 @@ window {
     color: $notifications-bar-btn-fg;
     font-family: $icon-font-family;
     border-radius: $border-radius;
-    // margin-left: 0.7rem;
-    padding: 0rem;
     padding-top: 0rem;
     padding-bottom: 0rem;
-    padding-right: 1rem;
-    padding-left: 0.7rem;
+    padding-right: 1.1rem;
+    padding-left: 0.8rem;
 }
 
 .notification-center-button:hover {
@@ -879,7 +882,7 @@ window {
     min-width: 40px;
     min-height: 40px;
     background: $music-wd-button-bg;
-    // color: $music-wd-button-fg;
+    color: $music-wd-button-fg;
     transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
@@ -1215,10 +1218,10 @@ window {
     background: $bar-prayer-times-box-background;
     color: $bar-prayer-times-box-color;
     border-radius: $border-radius;
-    margin-top: $bar-top-margin + 0.1rem;
-    margin-bottom: $bar-top-margin + 0.1rem;
-    margin-left: 0.7rem;
-    margin-right: 0.7rem;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-top-margin;
+    margin-left: $top-bar-widget-margins;
+    margin-right: $top-bar-widget-margins;
 }
 
 .bar-prayer-times-box:dir(rtl) {
@@ -1293,4 +1296,69 @@ window {
 .prayer-times-menu-header-title {
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+
+button {
+    background: $btn-background;
+    color: $btn-color;
+    border-color: $btn-background;
+    border-radius: $border-radius;
+
+    padding: 4px 14px;
+    // font-size: 16px;
+    // font-weight: bold;
+
+    border: none;
+    // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+
+
+}
+
+/* Shadow when clicking */
+button:active {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    // transform: translateY(1px);
+}
+
+button:hover {
+    background: $btn-hover-background;
+    color: $btn-hover-color;
+    border-color: $btn-hover-background;
+    border-radius: $border-radius;
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    @if variable-exists(btn-hover-border-radius) {
+        border-radius: $btn-hover-border-radius;
+    }
+
+    transition: background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+menu {
+    border: $border-size $border-color solid;
+    background: $menu-bg;
+    color: $menu-fg;
+    border-radius: $border-radius;
+    padding: 0.3rem;
+    margin-top: 2rem;
+}
+
+menuitem {
+    background: $menu-bg ;
+    color: $menu-fg ;
+}
+
+menuitem:disabled {
+    background: $menuitem-disabled-bg;
+    color: $menuitem-disabled-fg;
+}
+
+menuitem:hover {
+    background: $menuitem-hover-bg;
+    color: $menuitem-hover-fg;
 }

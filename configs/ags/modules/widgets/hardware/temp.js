@@ -23,25 +23,22 @@ export const TempWidget = () => {
 
     return Box({
         className: "bar-hw-temp-box",
-        connections: [
-            [30000, box => {
-                execAsync(`/home/${Utils.USER}/.config/ags/scripts/temp.sh`)
-                    .then(val => {
-                        const temps = val.split("\n");
-                        let total = 0;
-                        for (let index = 0; index < temps.length; index++) {
-                            const element = temps[index].replace("+", "").replace("°C", "");
-                            total += parseInt(element);
-                        }
-                        total = parseInt(total / temps.length);
-                        progress.value = (total / 100);
-                        label.tooltipMarkup = `<span weight='bold' foreground='#C78DF2'>اجمالي درجة حرارة الاجهزة (${total}%)</span>`
-                    }).catch(print);
-                box.children = [
-                    progress
-                ];
-                box.show_all();
-            }],
-        ],
+    }).poll(30000, box => {
+        execAsync(`/home/${Utils.USER}/.config/ags/scripts/temp.sh`)
+            .then(val => {
+                const temps = val.split("\n");
+                let total = 0;
+                for (let index = 0; index < temps.length; index++) {
+                    const element = temps[index].replace("+", "").replace("°C", "");
+                    total += parseInt(element);
+                }
+                total = parseInt(total / temps.length);
+                progress.value = (total / 100);
+                label.tooltipMarkup = `<span weight='bold' foreground='#C78DF2'>اجمالي درجة حرارة الاجهزة (${total}%)</span>`
+            }).catch(print);
+        box.children = [
+            progress
+        ];
+        box.show_all();
     });
 }

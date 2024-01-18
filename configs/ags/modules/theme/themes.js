@@ -54,6 +54,7 @@ const win_20 = {
 
 const deer = {
     wallpaper: `${WALLPAPER_PATH}/deer.jpg`,
+    // css_theme: "deer-m3.scss",
     css_theme: "deer.scss",
     plasma_color: "BlueDeer.colors",
     qt_style_theme: "Breeze",
@@ -79,6 +80,7 @@ const deer = {
 const colors = {
     wallpaper: `${WALLPAPER_PATH}/colors.png`,
     css_theme: "colors.scss",
+    // css_theme: "m3/colors.scss",
     plasma_color: "AColors.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Magma",
@@ -152,15 +154,13 @@ const materialYou = {
 
 const game = {
     wallpaper: `${WALLPAPER_PATH}/game.png`,
-    css_theme: "game.scss",
+    css_theme: "game-m3.scss",
     plasma_color: "ArcStarryDark.colors",
     qt_style_theme: "Lightly",
     qt_icon_theme: "la-capitaine-icon-theme",
     kvantum_theme: "a-color",
     gtk_theme: "Tokyonight-Dark-BL",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "la-capitaine-icon-theme",
-    // rofi_theme: "colors_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -181,11 +181,8 @@ const dark = {
     qt_style_theme: "Breeze",
     qt_icon_theme: "Infinity-Dark-Icons",
     kvantum_theme: "a-color",
-    // gtk_theme: "Orchis-Orange-Dark-Compact",
     gtk_theme: "Tokyonight-Dark-BL",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "Infinity-Dark-Icons",
-    // rofi_theme: "colors_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -203,6 +200,7 @@ const dark = {
 const uniCat = {
     wallpaper: `${WALLPAPER_PATH}/unicat.png`,
     css_theme: "unicat.scss",
+    // css_theme: "m3/unicat.scss",
     plasma_color: "Unicat.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Magma",
@@ -228,6 +226,7 @@ const uniCat = {
 const newCat = {
     wallpaper: `${WALLPAPER_PATH}/catMachup.jpg`,
     css_theme: "newCat.scss",
+    // css_theme: "m3/cat.scss",
     plasma_color: "NewCat.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Gradient-Dark-Icons",
@@ -275,6 +274,7 @@ const golden = {
 const harmony = {
     wallpaper: `${WALLPAPER_PATH}/ign_wanderlust.jpg`,
     css_theme: "harmony.scss",
+    // css_theme: "m3/harmony.scss",
     plasma_color: "Nordic.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Windows11-red-dark",
