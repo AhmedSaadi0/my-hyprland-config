@@ -1,6 +1,5 @@
 import settings from "../settings.js";
 
-// const WALLPAPER_PATH = ".config/ags/images";
 const WALLPAPER_PATH = settings.assets.wallpapers;
 
 const black_hole = {
@@ -11,9 +10,7 @@ const black_hole = {
     qt_icon_theme: "BeautySolar",
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "BeautySolar",
-    // rofi_theme: "win20_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -32,13 +29,10 @@ const win_20 = {
     css_theme: "win20.scss",
     plasma_color: "ArcMidnightDark.colors",
     qt_style_theme: "Breeze",
-    // qt_icon_theme: "cyberpunk-technotronic-filled-folders-2",
     qt_icon_theme: "BeautySolar",
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "BeautySolar",
-    // rofi_theme: "win20_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -80,15 +74,12 @@ const deer = {
 const colors = {
     wallpaper: `${WALLPAPER_PATH}/colors.png`,
     css_theme: "colors.scss",
-    // css_theme: "m3/colors.scss",
     plasma_color: "AColors.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Magma",
     kvantum_theme: "a-color",
     gtk_icon_theme: "Magma",
-    // rofi_theme: "colors_theme.rasi",
     gtk_theme: "Shades-of-purple",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -110,9 +101,7 @@ const siberian = {
     qt_icon_theme: "NeonIcons",
     kvantum_theme: "a-color",
     gtk_theme: "Shades-of-purple",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "NeonIcons",
-    // rofi_theme: "islamic_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -131,14 +120,10 @@ const materialYou = {
     css_theme: "material-you.scss",
     plasma_color: "MyMaterialYou.colors",
     qt_style_theme: "Breeze",
-    // qt_icon_theme: "Delight-brown-dark",
     qt_icon_theme: "Zafiro-Nord-Dark-Black",
     kvantum_theme: "a-m-you",
     gtk_theme: "Cabinet-Light-Orange",
-    // gtk_theme: "Orchis-Orange-Compact",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "kora-grey-light-panel",
-    // rofi_theme: "light_material_you_theme.rasi",
     gtk_mode: "light",
     hypr: {
         "border_width": 2,
@@ -154,7 +139,7 @@ const materialYou = {
 
 const game = {
     wallpaper: `${WALLPAPER_PATH}/game.png`,
-    css_theme: "game-m3.scss",
+    css_theme: "game.scss",
     plasma_color: "ArcStarryDark.colors",
     qt_style_theme: "Lightly",
     qt_icon_theme: "la-capitaine-icon-theme",
@@ -186,7 +171,6 @@ const dark = {
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
-        // "active_border": "rgba(ff9a4cff) rgba(5af009ff) 0deg",
         "active_border": "rgba(ff9a4cff) rgba(0080ffff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
         "rounding": 8,
@@ -200,16 +184,12 @@ const dark = {
 const uniCat = {
     wallpaper: `${WALLPAPER_PATH}/unicat.png`,
     css_theme: "unicat.scss",
-    // css_theme: "m3/unicat.scss",
     plasma_color: "Unicat.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Magma",
     kvantum_theme: "a-color",
-    // gtk_theme: "Orchis-Orange-Dark-Compact",
     gtk_theme: "Dracula",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "Magma",
-    // rofi_theme: "colors_theme.rasi",
     gtk_mode: "dark",
     hypr: {
         "border_width": 2,
@@ -226,14 +206,11 @@ const uniCat = {
 const newCat = {
     wallpaper: `${WALLPAPER_PATH}/catMachup.jpg`,
     css_theme: "newCat.scss",
-    // css_theme: "m3/cat.scss",
     plasma_color: "NewCat.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Gradient-Dark-Icons",
     kvantum_theme: "a-color",
-    // gtk_theme: "Orchis-Orange-Dark-Compact",
     gtk_theme: "Tokyonight-Dark-BL",
-    // gtk_theme: "Colorful-Dark-GTK",
     gtk_icon_theme: "Gradient-Dark-Icons",
     gtk_mode: "dark",
     hypr: {
@@ -256,7 +233,6 @@ const golden = {
     qt_icon_theme: "Zafiro-Nord-Dark-Black",
     kvantum_theme: "a-m-you",
     gtk_theme: "Cabinet-Light-Orange",
-    // gtk_theme: "Orchis-Yellow-Compact",
     gtk_icon_theme: "kora-grey-light-panel",
     gtk_mode: "light",
     hypr: {
@@ -274,7 +250,6 @@ const golden = {
 const harmony = {
     wallpaper: `${WALLPAPER_PATH}/ign_wanderlust.jpg`,
     css_theme: "harmony.scss",
-    // css_theme: "m3/harmony.scss",
     plasma_color: "Nordic.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Windows11-red-dark",
@@ -297,7 +272,7 @@ const harmony = {
 
 const circles = {
     wallpaper: `${WALLPAPER_PATH}/wall_arch.png`,
-    css_theme: "circles.scss",
+    css_theme: "m3/circles.scss",
     plasma_color: "Circles.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "FairyWren",

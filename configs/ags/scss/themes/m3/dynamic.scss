@@ -1,0 +1,38 @@
+$primary: #60dbb9;
+$secondary: #b1ccc1;
+$tertiary: #a8cbe2;
+$background: #191c1b;
+$outlined: #89938e;
+
+$on-primary: #00382b;
+$on-secondary: #1d352d;
+$on-tertiary: #0e3446;
+$on-background: #e1e3e0;
+
+$primary-container: #00513f;
+$secondary-container: #344b43;
+$tertiary-container: #284b5e;
+$surface: #191c1b;
+$surface-variant: #3f4945;
+
+$on-primary-container: #7ef8d4;
+$on-secondary-container: #cee8dd;
+$on-tertiary-container: #c4e8ff;
+$on-surface: #e1e3e0;
+$on-surface-variant: #bec9c3;
+
+
+$text-color: $on-surface;
+
+$border-color: $primary;
+$border-size: 2px;
+
+$icon-font-family: "Font Awesome 5 Free Solid";
+
+$bar-top-margin: 0.3rem;
+$bar-bottom-margin: 0.3rem;
+
+$border-radius: 0.5rem;
+
+// @import './deer-m3.scss';
+@import './main.scss';
