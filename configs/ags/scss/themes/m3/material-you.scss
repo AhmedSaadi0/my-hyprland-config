@@ -4,32 +4,32 @@
 $border-color: #894587;
 $border-size: 2px;
 
-$primary: #4ddad6;
-$secondary: #b0ccca;
-$tertiary: #b2c8e8;
-$background: #191c1c;
-$outlined: #889392;
+$primary: #9b4051;
+$secondary: #006a69;
+$tertiary: #5355a9;
+$background: #FFE8E8;
+$outlined: #847374;
 
-$on-primary: #003736;
-$on-secondary: #1b3534;
-$on-tertiary: #1b324b;
-$on-background: #e0e3e2;
+$on-primary: #ffffff;
+$on-secondary: #ffffff;
+$on-tertiary: #ffffff;
+$on-background: #201a1b;
 
-$primary-container: #00504e;
-$secondary-container: #324b4a;
-$tertiary-container: #324863;
-$surface: #191c1c;
-$surface-variant: #3f4948;
+$primary-container: #ffd9dd;
+$secondary-container: #b8eae8;
+$tertiary-container: #e1dfff;
+$surface: #fffbff;
+$surface-variant: #f4dddf;
 
-$on-primary-container: #6ff7f3;
-$on-secondary-container: #cce8e6;
-$on-tertiary-container: #d2e4ff;
-$on-surface: #e0e3e2;
-$on-surface-variant: #bec9c7;
+$on-primary-container: #400012;
+$on-secondary-container: #001f24;
+$on-tertiary-container: #0b0664;
+$on-surface: #201a1b;
+$on-surface-variant: #524344;
 
 
 // $text-color: #4C566A;
-$text-color: #bec9c7;
+$text-color: #454061;
 
 
 // $icon-font-family: "Font Awesome";
@@ -38,7 +38,8 @@ $icon-font-family: "Font Awesome 5 Free Solid";
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
 
-$border-radius: 0.5rem;
+$border-radius: 2rem;
+$btn-hover-border-radius: 1rem;
 
 // ------------------------------
 // --------- Workspaces ---------
@@ -177,8 +178,9 @@ $menu-box-borders: $primary;
 $profile-box-background: linear-gradient(to right, rgba($primary-container, 0.8), rgba($secondary-container, 0.6));
 $profile-box-color: $on-primary-container;
 
-$theme-box-background: rgba($tertiary-container, 0.5);
-$power-box-background: $surface-variant;
+$theme-box-background: rgba($tertiary-container, 0.7);
+$power-box-background: rgba($secondary-container, 0.5);
+
 
 $selected-theme-background: linear-gradient(to right, $primary, $secondary);
 $selected-theme-color: $on-primary;
@@ -248,39 +250,6 @@ $btn-color: $on-tertiary-container;
 $btn-hover-background: $tertiary;
 $btn-hover-color: $on-tertiary;
 
-button {
-    background: $btn-background;
-    color: $btn-color;
-    border-color: $btn-background;
-    border-radius: $border-radius;
-
-    padding: 4px 14px;
-    // font-size: 16px;
-    // font-weight: bold;
-
-    border: none;
-    // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-
-
-}
-
-/* Shadow when clicking */
-button:active {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    // transform: translateY(1px);
-}
-
-button:hover {
-    background: $btn-hover-background;
-    color: $btn-hover-color;
-    border-color: $btn-hover-background;
-    border-radius: $border-radius;
-    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
-    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
 
 // ----------------------------------
 // --------- desktop-widget ---------
@@ -331,10 +300,156 @@ $music-info-wd-title-fg: $secondary;
 $music-info-wd-artist-fg: $on-tertiary-container;
 
 // --------- Menu ---------
-$menu-bg: $bg-one;
-$menu-fg: $text-color;
-$menuitem-hover-bg: rgba($text-color, 0.2);
-$menuitem-hover-fg: $text-color;
+$menu-bg: $primary-container;
+$menu-fg: $on-primary-container;
 
-$menuitem-disabled-bg: rgba($text-color, 0.1);
-$menuitem-disabled-fg: rgba($text-color, 0.5);
+$menuitem-hover-bg: rgba($primary, 0.7);
+$menuitem-hover-fg: $on-secondary;
+
+$menuitem-disabled-bg: rgba($on-primary-container, 0.1);
+$menuitem-disabled-fg: rgba($on-primary-container, 0.5);
+
+/* ------------------------------------------------------- */
+/* -------------- Material U Desktop Widget -------------- */
+/* ------------------------------------------------------- */
+.my-weather-wd-text {
+    font-size: medium;
+    color: #2d293d;
+}
+
+.weather-wd-row-one {
+    background: rgba($secondary-container, 0.8);
+    color: $on-secondary-container;
+    border-radius: $border-radius;
+    margin: 1rem;
+    margin-bottom: 0.5rem;
+    // margin-left: 11.4rem;
+}
+
+.my-desktop-music-box {
+    background:rgba($tertiary-container, 0.9);
+    color: $on-tertiary-container;
+    border-radius: $border-radius;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    min-width: 1rem;
+    margin: 1rem;
+    margin-top: 0.5rem;
+    // margin-left: 11.3rem;
+}
+
+.my-desktop-music-box:dir(rtl) {
+    padding-right: 1.2rem;
+    padding-left: 1rem;
+}
+
+.my-desktop-music-box:dir(ltr) {
+    padding-left: 1.2rem;
+    padding-right: 1rem;
+}
+
+
+.my-weather-wd-icon {
+    color: $on-secondary-container;
+    font-size: xx-large;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-family: $icon-font-family;
+}
+
+.my-wd-user-icon {
+    // background: rgba(#E9C7C6, 1);
+    padding: 0.8rem;
+    margin-right: 1rem;
+    border-radius: $border-radius;
+}
+
+.my-wd-user-icon:dir(rtl) {
+    margin-right: 1rem;
+}
+
+.my-wd-user-icon:dir(ltr) {
+    margin-left: 1rem;
+}
+
+.my-weather-wd-title-text-box {
+    min-width: 10.55rem;
+    padding-top: 1rem;
+    color: $on-tertiary-container;
+    font-size: x-large;
+    font-family: $saying-wd-label-font-family;
+}
+
+// Desktop M-U Weather Days
+.my-weather-wd-row-two {
+    background:rgba($primary-container, 0.9);
+    color: $on-primary-container;
+    margin: 1rem;
+
+    // margin-right: 2.5rem;
+    // margin-left: 2.5rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: $border-radius;
+}
+
+.my-fuzzy-clock-box {
+    background: rgba($tertiary-container, 0.8);
+
+    margin: 1rem;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    // margin-left: 6.4rem;
+
+    border-radius: $border-radius;
+}
+
+.my-fuzzy-clock-box:dir(rtl) {
+    padding-right: 1.5rem;
+    padding-left: 1rem;
+}
+
+.my-fuzzy-clock-box:dir(ltr) {
+    padding-left: 1.5rem;
+    padding-right: 1rem;
+}
+
+.my-weather-wd-day-box {
+    background: rgba($tertiary, 0.5);
+    border-radius: $border-radius;
+    padding-top: 0.4rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+}
+
+.my-wd-weather-day-name {
+    font-family: $saying-wd-label-font-family;
+    color: $on-secondary-container;
+}
+
+.my-wd-weather-day-text {
+    font-size: x-small;
+    padding-bottom: 0rem;
+    color: $on-secondary-container;
+}
+
+.my-weather-wd-day-icon {
+    background: rgba($color: $tertiary, $alpha: 0.7);
+    color: $on-secondary-container;
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+    border-radius: $border-radius;
+    margin-bottom: 0.2rem;
+    min-width: 3rem;
+    min-height: 3.5rem;
+    font-size: x-large;
+    font-family: $icon-font-family;
+}
