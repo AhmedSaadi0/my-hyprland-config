@@ -1,7 +1,5 @@
 # My Hyprland Config
 
-### English 
-
 <details>
 <summary>العربية</summary>
 
