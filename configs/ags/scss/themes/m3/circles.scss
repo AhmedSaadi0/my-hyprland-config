@@ -1,24 +1,25 @@
 // -----------------------------
 // --------- Variables ---------
 // -----------------------------
-$border-color: #894587;
-$border-size: 2px;
-
 $primary: #95ccff;
 $secondary: #6fdba9;
 $tertiary: #b4ccbd;
 $background: #1E222A;
 $outlined: #8c9198;
+$error: #ffb4a9;
 
 $on-primary: #003352;
 $on-secondary: #003824;
 $on-tertiary: #20352a;
+$on-error: #680003;
 $on-background: #d6e3ff;
 
 $primary-container: #004a75;
 $secondary-container: #005236;
 $tertiary-container: #244c5a;
-$surface: #001b3d;
+$error-container: #930006;
+
+$surface: #1E222A;
 $surface-variant: #42474e;
 
 $on-primary-container: #cde5ff;
@@ -27,10 +28,13 @@ $on-tertiary-container: #c0e9fb;
 $on-surface: #d6e3ff;
 $on-surface-variant: #c2c7cf;
 
+$inversePrimary: #003352;
 
 // $text-color: #4C566A;
-$text-color: #bec9c7;
+$text-color: $on-background;
 
+$border-color: $primary;
+$border-size: 2px;
 
 // $icon-font-family: "Font Awesome";
 $icon-font-family: "Font Awesome 5 Free Solid";

@@ -134,7 +134,7 @@ globalThis.showNotificationCenter = () => menuRevealer.revealChild = !menuReveal
 // Notification Broadcast 󰂞 | 󰂟 | 󰪒 | 
 // Notification has data 
 export const NotificationCenterButton = () => Button({
-    className: "notification-center-button",
+    className: "notification-center-button unset",
     // child: Label({ label: "" }),
     label: "",
     onClicked: () => showNotificationCenter(),

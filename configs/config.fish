@@ -431,9 +431,9 @@ set ascii_17 "
 
 
 function fish_greeting
-    set variables $ascii_1 $ascii_2 $ascii_3 $ascii_4 $ascii_5 $ascii_6 $ascii_7 $ascii_8 $ascii_9 $ascii_10 $ascii_11 $ascii_12 $ascii_13 $ascii_14 $ascii_16 $ascii_15 $ascii_17
+    set variables $ascii_1 $ascii_2 $ascii_3 $ascii_4 $ascii_5 $ascii_6 $ascii_7 $ascii_11 $ascii_12 $ascii_14 $ascii_16 $ascii_15 $ascii_17
 
-    set random_index (shuf -i 1-17 -n 1)
+    set random_index (shuf -i 1-13 -n 1)
 
     set file_path ".cache/ascii-fish.temp"
 
@@ -451,7 +451,7 @@ function fish_greeting
             set current_number (math "$current_number + 1")
 
             # Check if the number is greater than or equal to 16
-            if test $current_number -ge 17
+            if test $current_number -ge 13
                 # If greater than or equal to 16, reset to 0
                 echo 0 > $file_path
             else

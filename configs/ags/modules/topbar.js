@@ -13,17 +13,15 @@ import { Widget } from "./utils/imports.js";
 
 
 const Clock = () => Label({
-    className: 'clock small-shadow',
-}).poll(1000, self => execAsync(
-    ['date', '+(%I:%M) %A, %d %B']
-).then(
+    className: 'clock small-shadow unset',
+}).poll(1000, self => execAsync(['date', '+(%I:%M) %A, %d %B']).then(
     date => self.label = date
 ).catch(print));
 
 const Weather = () => {
 
     let icon = Label({
-        className: 'bar-weather-icon',
+        className: 'bar-weather-icon unset',
     })
 
     let text = Label({
@@ -33,7 +31,7 @@ const Weather = () => {
     })
 
     return Box({
-        className: 'bar-weather-box small-shadow',
+        className: 'bar-weather-box small-shadow unset',
         children: [
             icon,
             text,
@@ -53,16 +51,16 @@ const Weather = () => {
 const PrayerTimes = () => {
 
     const iconButton = Widget.Button({
-        className: 'unset un-hover',
+        className: 'unset un-hover unset',
         onClicked: () => showPrayerTimesMenu(),
         child: Label({
-            className: 'bar-prayer-times-icon ',
+            className: 'bar-prayer-times-icon unset',
             label: '',
         })
     });
 
     let text = Widget.Button({
-        className: 'unset un-hover',
+        className: 'unset un-hover unset',
         onClicked: () => showPrayerTimesMenu(),
         child: Label({
             truncate: 'end',
@@ -72,7 +70,7 @@ const PrayerTimes = () => {
     });
 
     return Box({
-        className: 'bar-prayer-times-box small-shadow',
+        className: 'bar-prayer-times-box small-shadow unset',
         children: [
             iconButton,
             text,
@@ -121,7 +119,7 @@ const Left = () => Box({
 
 export const Bar = ({ monitor } = {}) => Window({
     name: `bar${monitor || ''}`, // name has to be unique
-    className: 'bar-bg',
+    className: 'bar-bg unset',
     monitor: monitor,
     anchor: ['top', 'left', 'right'],
     exclusivity: "exclusive",

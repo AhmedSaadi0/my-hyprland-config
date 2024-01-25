@@ -68,12 +68,12 @@ const NetSpeedMeters = () => {
 };
 
 export const NetworkInformation = () => Box({
-    className: "internet-box small-shadow",
+    className: "internet-box small-shadow unset",
 }).hook(Network, box => {
     let internetLabel;
 
     const ssidLabel = Label({
-        className: "wifi-name-label",
+        className: "wifi-name-label unset",
         label: `${Network.wifi.ssid}`
     });
 
@@ -94,7 +94,7 @@ export const NetworkInformation = () => Box({
     }
 
     const internetStatusLabel = Label({
-        className: "wifi-icon-strength",
+        className: "wifi-icon-strength unset",
         label: internetLabel,
     });
 

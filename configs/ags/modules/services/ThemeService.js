@@ -4,6 +4,7 @@ import App from "resource:///com/github/Aylur/ags/app.js";
 import Service from 'resource:///com/github/Aylur/ags/service.js';
 import prayerService from "./PrayerTimesService.js";
 import { Utils } from "../utils/imports.js";
+import settings from "../settings.js";
 
 class ThemeService extends Service {
     static {
@@ -19,22 +20,35 @@ class ThemeService extends Service {
     plasmaColorsPath = App.configDir + '/modules/theme/plasma-colors/';
     selectedTheme = UNICAT_THEME;
     rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
+    wallpapers_list = [];
 
-    CACHE_FILE_PATH = `/home/${USER}/.cache/ahmed-theme.temp`
+    CACHE_FILE_PATH = `/home/${USER}/.cache/ahmed-hyprland-conf.temp`
+    wallpaperIntervalId
+    selectedLightWallpaper = 0;
+    selectedDarkWallpaper = 0;
 
     constructor() {
         super();
         exec('swww init');
 
-        this.getSelectedTheme();
+        this.getCachedVariables();
         this.changeTheme(this.selectedTheme);
     }
 
     changeTheme(selectedTheme) {
         let theme = ThemesDictionary[selectedTheme];
 
-        this.changeCss(theme.css_theme);
-        this.changeWallpaper(theme.wallpaper);
+        if (this.wallpaperIntervalId) {
+            clearInterval(this.wallpaperIntervalId);
+        }
+
+        if (theme.dynamic) {
+            this.setDynamicWallpapers(theme.wallpaper_path, theme.gtk_mode);
+        } else {
+            this.changeCss(theme.css_theme);
+            this.changeWallpaper(theme.wallpaper);
+        }
+
         this.changePlasmaColor(theme.plasma_color);
 
         this.changeGTKTheme(theme.gtk_theme, theme.gtk_mode, theme.gtk_icon_theme);
@@ -60,7 +74,7 @@ class ThemeService extends Service {
         this.emit("changed");
         prayerService.emit("changed");
 
-        this.setSelectedTheme(selectedTheme);
+        this.cacheVariables();
     }
 
     changeWallpaper(wallpaper) {
@@ -76,8 +90,10 @@ class ThemeService extends Service {
     }
 
     changeCss(cssTheme) {
-        const scss = App.configDir + '/scss/main.scss';
-        const css = App.configDir + '/style.css';
+        // const scss = App.configDir + '/scss/main.scss';
+        const scss = settings.theme.mainCss;
+        // const css = App.configDir + '/style.css';
+        const css = settings.theme.styleCss;
 
         const newTh = `@import './themes/${cssTheme}';`;
 
@@ -90,6 +106,55 @@ class ThemeService extends Service {
             exec(`sassc ${scss} ${css}`);
             App.resetCss();
             App.applyCss(css);
+        }).catch(print)
+    }
+
+    setDynamicWallpapers(path, themeMode) {
+        Utils.execAsync([settings.scripts.get_wallpapers, path])
+            .then(out => {
+
+                const wallpapers = JSON.parse(out);
+                this.wallpapers_list = wallpapers
+
+                // First call
+                this.callNewRandomWallpaper(themeMode);
+
+                // Loop on wallpapers
+                this.wallpaperIntervalId = setInterval(() => {
+                    this.callNewRandomWallpaper(themeMode);
+                }, 5 * 60 * 1000);
+            })
+            .catch(err => print(err));
+    }
+
+    callNewRandomWallpaper(themeMode) {
+        // const randomIndex = Math.floor(Math.random() * this.wallpapers_list.length);
+        let selectedWallpaperIndex = 0;
+
+        if (themeMode == "dark") {
+            selectedWallpaperIndex = this.selectedDarkWallpaper;
+            this.selectedDarkWallpaper = (this.selectedDarkWallpaper + 1) % this.wallpapers_list.length;
+        } else {
+            selectedWallpaperIndex = this.selectedLightWallpaper;
+            this.selectedLightWallpaper = (this.selectedLightWallpaper + 1) % this.wallpapers_list.length;
+        }
+
+        const wallpaper = this.wallpapers_list[selectedWallpaperIndex];
+
+        this.changeWallpaper(wallpaper);
+        this.createM3ColorSchema(wallpaper, themeMode);
+        this.cacheVariables();
+    }
+
+    createM3ColorSchema(wallpaper, mode) {
+        execAsync([
+            "python",
+            settings.scripts.dynamicM3Py,
+            wallpaper,
+            "-m",
+            mode
+        ]).then(() => {
+            this.changeCss("m3/dynamic.scss");
         }).catch(print)
     }
 
@@ -247,13 +312,27 @@ class ThemeService extends Service {
         ]).catch(print);
     }
 
-    setSelectedTheme(selectedTheme) {
-        Utils.writeFile(selectedTheme, this.CACHE_FILE_PATH).catch(err => print(err))
+    cacheVariables() {
+        const newData = {
+            "selected_theme": this.selectedTheme,
+            "selected_dark_wallpaper": this.selectedDarkWallpaper,
+            "selected_light_wallpaper": this.selectedLightWallpaper,
+        }
+        Utils.writeFile(JSON.stringify(newData, null, 2), this.CACHE_FILE_PATH).catch(err => print(err))
     }
-    getSelectedTheme() {
-        this.selectedTheme = Utils.readFile(this.CACHE_FILE_PATH)
-        if (!this.selectedTheme) {
-            this.selectedTheme = UNICAT_THEME
+
+    getCachedVariables() {
+        try {
+            const cachedData = JSON.parse(Utils.readFile(this.CACHE_FILE_PATH));
+            this.selectedTheme = cachedData.selected_theme
+            this.selectedDarkWallpaper = cachedData.selected_dark_wallpaper;
+            this.selectedLightWallpaper = cachedData.selected_light_wallpaper;
+
+            if (!this.selectedTheme) {
+                this.selectedTheme = UNICAT_THEME
+            }
+        } catch (TypeError) {
+            this.cacheVariables();
         }
     }
 

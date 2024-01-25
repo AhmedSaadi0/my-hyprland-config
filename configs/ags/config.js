@@ -5,7 +5,7 @@ import { LeftMenu } from "./modules/menus/left_menu.js";
 import { HardwareMenu } from "./modules/menus/HardwareMenu.js";
 import { NotificationCenter } from "./modules/menus/notification_center.js";
 import { VolumeOSD } from "./modules/on-screen/volume.js";
-import MyNotifications from './modules/notifications/Notifications.js';
+import MyNotifications from './modules/notifications/OSDNotifications.js';
 import { PrayerTimesMenu } from './modules/menus/PrayerTimesMenu.js';
 import ColorWidget from './modules/widgets/desktop/ColorsWidget.js';
 import win20Widget from "./modules/widgets/desktop/Win20Widget.js";
