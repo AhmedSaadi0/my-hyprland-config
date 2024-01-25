@@ -50,6 +50,14 @@
 yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors
 ```
 
+**Note:** إذا كنت تستخدم نظام تشغيل آخر غير أرش فسوف تحتاج إلى تثبيت جميع المعتمدات الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
+
+#### مثلا:
+
+- بالنسبة للتوزيعات القائمة على **دبيان/أوبونتو**، يمكنك تثبيت البرامج باستخدام ```apt install``` او البحث عن طريق ```apt search hyprland```.
+- في **Fedora/RHEL**, استخدم ```dnf install``` او ```yum install```
+- بالنسبة لبرامج ادارة الحزم الاخرى، قم بالبحث عن كل برنامج وتثبيته عبر مدير حزم نظامك.
+
 ### اعداد الملفات:
 
 	git clone git@github.com:AhmedSaadi0/my-hyprland-config.git
@@ -185,6 +193,14 @@ const dynamicM3Light = {
 ```bash
 yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors
 ```
+
+**Note:** If you use an operating system other than Arch, you will need to install all required dependencies. The specific steps may vary depending on your distro. 
+
+#### Example:
+
+- For **Debian/Ubuntu-based** systems, you can install dependencies using ```apt install``` or search using ```apt search hyprland```.
+- On **Fedora/RHEL**, use ```dnf install``` or ```yum install```
+- For other package managers, search for each dependency and install using your system's package manager.
 
 ### Setting up files:
 
