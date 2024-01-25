@@ -45,7 +45,7 @@
 
 ## التثبيت
 
-### لمستخدمي Arch:
+### تثبيت البرامج لمستخدمي Arch:
 ```bash
 yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors
 ```
@@ -109,7 +109,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 ### بامكانك تغير خط الجهاز الى 'JF Flat' اذا اردت ان تحصل على نفس الخط الذي لدي
 
 
-### 40-80 
+### انشاء كرون تاب لتحسين استخدام البطارية باستخدام قاعدة الشحن 40-80
     VISUAL=/usr/bin/nano crontab -e
     * * * * * ~/.config/hypr/scripts/battery.sh
 
@@ -121,16 +121,14 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 yay -S kde-material-you-colors
 ```
 
-- تغيير مسار مجلد الخلفيات في المسار ``` modules/theme/themes.js ```
+- تغيير مسار مجلد الخلفيات في المسار ``` .config/ags/modules/theme/themes.js ```
 - ```wallpaper_path: "path/to/folder"```
 ```javascript
 const dynamicM3Dark = {
-	# قم بوضع المسار الخلفيات للثيم المظلم هنا
     wallpaper_path: `/media/shared/Pictures/wallpapers/dark`,
     ...other_settings
 }
 const dynamicM3Light = {
-	# قم بوضع المسار الخلفيات للثيم الفاتح هنا
     wallpaper_path: `/media/shared/Pictures/wallpapers/light`,
     ...other_settings
 }
@@ -181,9 +179,9 @@ const dynamicM3Light = {
 - vs code
 - firefox
 
-## Installing dependencies:
+## Installing:
 
-### For Arch Users:
+### Installing dependencies for Arch Users:
 ```bash
 yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors
 ```
@@ -271,7 +269,6 @@ const dynamicM3Light = {
 }
 ```
 </details>
-
 
 # Screenshots - لقطات
 <p align='center'>
