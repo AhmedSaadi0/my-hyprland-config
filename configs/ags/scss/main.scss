@@ -1,4 +1,4 @@
-@import './themes/material-you.scss';
+@import './themes/m3/dynamic.scss';
 
 .unset {
     all: unset;
@@ -484,6 +484,8 @@ scale slider {
     border-radius: $border-radius;
     padding-left: 0.7rem;
     padding-right: 0.7rem;
+    background: #fff;
+    min-width: 100rem;
 }
 
 .notifications-revealer-box:dir(rtl) {
@@ -501,17 +503,19 @@ scale slider {
     border-radius: $border-radius;
     padding: 1rem;
     background: $notifications-popup-list-background;
+    color: $text-color;
 }
 
 .notifications-popup-list {
     border-radius: $border-radius;
     min-height: 1.2px;
-    // background: #fff;
+    min-width: 1.2px;
+    background: rgba($color: #000000, $alpha: 0);
 }
 
 .notification-close-button {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    // padding-top: 0.5rem;
+    // padding-bottom: 0.5rem;
     padding-left: 0.7rem;
     padding-right: 0.7rem;
 }
@@ -625,6 +629,11 @@ window {
 .theme-btn-icon {
     font-family: $icon-font-family;
     min-width: 2rem;
+}
+
+.dynamic-theme-btn-icon {
+    font-family: $icon-font-family;
+    min-width: 1.93rem;
 }
 
 .theme-btn-label {
@@ -1349,8 +1358,10 @@ menu {
 }
 
 menuitem {
+    // border-radius: $border-radius;
     background: $menu-bg ;
     color: $menu-fg ;
+    // padding: 1rem 0.5rem;
 }
 
 menuitem:disabled {

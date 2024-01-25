@@ -1,10 +1,11 @@
 import themeService from '../services/ThemeService.js';
-import ThemesDictionary, { CIRCLES_THEME, GOLDEN_THEME, HARMONY_THEME, NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU, WHITE_FLOWER } from "../theme/themes.js";
+import ThemesDictionary, { CIRCLES_THEME, GOLDEN_THEME, HARMONY_THEME, NEW_CAT_THEME, UNICAT_THEME, DARK_THEME, GAME_THEME, WIN_20, BLACK_HOLE_THEME, DEER_THEME, COLOR_THEME, SIBERIAN_THEME, MATERIAL_YOU, WHITE_FLOWER, DYNAMIC_M3_DARK, DYNAMIC_M3_LIGHT } from "../theme/themes.js";
 import { Label, Box, Icon, Window, Button, Revealer } from 'resource:///com/github/Aylur/ags/widget.js';
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import MusicPLayer from '../widgets/MusicPLayer.js';
 import { local } from '../utils/helpers.js';
 import settings from '../settings.js';
+import { Widget } from '../utils/imports.js';
 
 const Profile = () => {
     const userImage = Icon({
@@ -41,22 +42,34 @@ const Header = () => {
     });
 }
 
-const ThemeButton = ({ label, icon, theme, end = local === "RTL" ? "margin-left: 1.1rem;" : "margin-right: 1.1rem;" }) => {
+const ThemeButton = ({
+    label,
+    icon,
+    theme,
+    label_css = "theme-btn-label",
+    icon_css = "theme-btn-icon",
+    end = local === "RTL" ? "margin-left: 1.1rem;" : "margin-right: 1.1rem;",
+    css = `
+        min-width: 5rem;
+        min-height: 2rem;
+        ${end}
+        border-radius: 1rem;
+    `
+}) => {
 
     const _label = Label({
-        className: "unset theme-btn-label",
+        className: `unset ${label_css}`,
         label: label
     })
 
     const _icon = Label({
-        className: "unset theme-btn-icon",
+        className: `unset ${icon_css}`,
         label: icon,
         xalign: 0.5,
     })
 
     const box = Box({
         className: "unset theme-btn-box",
-        // homogeneous: true,
         children: [
             _label,
             _icon
@@ -64,12 +77,7 @@ const ThemeButton = ({ label, icon, theme, end = local === "RTL" ? "margin-left:
     })
 
     const button = Button({
-        css: `
-                min-width: 5rem;
-                min-height: 2rem;
-                ${end}
-                border-radius: 1rem;
-            `,
+        css: css,
         child: box,
         onClicked: () => themeService.changeTheme(theme),
     }).hook(themeService, btn => {
@@ -174,6 +182,43 @@ const ThemesButtonsRowOne = () => {
         theme: WHITE_FLOWER,
     });
 
+    const dynamicTheme = Widget.Box({
+        children: [
+            ThemeButton({
+                label: "",
+                icon: "",
+                theme: DYNAMIC_M3_DARK,
+                label_css: "unset",
+                icon_css: "dynamic-theme-btn-icon",
+                css: `
+                    min-height: 2rem;
+                    border-top-right-radius: 1rem;
+                    border-bottom-right-radius: 1rem;
+
+                    border-top-left-radius: 0rem;
+                    border-bottom-left-radius: 0rem;
+                    `,
+            }),
+            ThemeButton({
+                label: "",
+                icon: "",
+                theme: DYNAMIC_M3_LIGHT,
+                label_css: "unset",
+                icon_css: "dynamic-theme-btn-icon",
+                css: `
+                        min-height: 2rem;
+                        border-top-left-radius: 1rem;
+                        border-bottom-left-radius: 1rem;
+
+                        border-top-right-radius: 0rem;
+                        border-bottom-right-radius: 0rem;
+                    `,
+                end: "",
+            })
+        ]
+    });
+
+
     // --------------------------
     // ---------- ROWS ----------
     // --------------------------
@@ -221,6 +266,7 @@ const ThemesButtonsRowOne = () => {
         children: [
             circlesTheme,
             whiteFlower,
+            dynamicTheme
         ]
     })
 
@@ -293,7 +339,7 @@ const PowerButtonsRow = () => {
     })
 
     return Box({
-        className: "power-box",
+        className: "power-box unset",
         css: `
             margin-top:0rem;
         `,
@@ -305,7 +351,7 @@ const PowerButtonsRow = () => {
 }
 
 const widgets = Box({
-    className: "left-menu-box",
+    className: "left-menu-box unset",
     vertical: true,
     children: [
         Header(),
@@ -338,7 +384,7 @@ export const LeftMenu = ({ monitor } = {}) => Window({
 })
 
 export const MenuButton = () => Button({
-    className: "menu-button",
+    className: "menu-button unset",
     label: "",
     onClicked: () => {
         menuRevealer.revealChild = !menuRevealer.revealChild;

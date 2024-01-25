@@ -1,9 +1,6 @@
 // -----------------------------
 // --------- Variables ---------
 // -----------------------------
-$border-color: #894587;
-$border-size: 2px;
-
 $primary: #9b4051;
 $secondary: #006a69;
 $tertiary: #5355a9;
@@ -30,7 +27,8 @@ $on-surface-variant: #524344;
 
 // $text-color: #4C566A;
 $text-color: #454061;
-
+$border-color: $primary;
+$border-size: 2px;
 
 // $icon-font-family: "Font Awesome";
 $icon-font-family: "Font Awesome 5 Free Solid";

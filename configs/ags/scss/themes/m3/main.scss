@@ -1,3 +1,11 @@
+$text-color: $on-surface;
+$border-color: $primary;
+$border-size: 2px;
+$icon-font-family: "Font Awesome 5 Free Solid";
+$bar-top-margin: 0.3rem;
+$bar-bottom-margin: 0.3rem;
+$border-radius: 0.5rem;
+
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
@@ -13,7 +21,7 @@ $workspace-hover-color: rgba($on-secondary, 0.9);
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
-$clock-background: linear-gradient(to right, $primary-container,  $tertiary-container);
+$clock-background: linear-gradient(to right, $primary-container, $tertiary-container);
 $clock-color: $on-primary-container;
 
 // --------------------------------
@@ -37,8 +45,8 @@ $bar-color: $on-surface;
 // --------------------------------
 // --------- internet box ---------
 // --------------------------------
-$internet-box-background: linear-gradient(to right, $secondary-container);
-$internet-box-color: $on-secondary-container;
+$internet-box-background: linear-gradient(to right, $primary-container, $secondary-container, rgba($error-container, 0.5));
+$internet-box-color: $on-primary-container;
 $wifi-name-background: $surface;
 $wifi-name-color: $on-surface;
 $wifi-icon-background: $wifi-name-background;
@@ -82,15 +90,15 @@ $temp-inner-color: $temp-color;
 // --------- RAM ---------
 // -----------------------
 $ram-background: $hardware-box-color;
-$ram-color: #4C9B6B;
+$ram-color: $error;
 $ram-inner-color: $ram-color;
 
 
 // ---------------------------
 // --------- Vol osd ---------
 // ---------------------------
-$vol-osd-background: $surface-variant;
-$vol-osd-border-color: $on-surface-variant;
+$vol-osd-background: $background;
+$vol-osd-border-color: $on-background;
 
 
 // -----------------------------
@@ -135,8 +143,9 @@ $menu-box-borders: $primary;
 $profile-box-background: linear-gradient(to right, rgba($primary-container, 0.8), rgba($secondary-container, 0.6));
 $profile-box-color: $on-primary-container;
 
-$theme-box-background: rgba($tertiary-container, 0.5);
-$power-box-background: $surface-variant;
+$theme-box-background: rgba($primary-container, 0.5);
+$power-box-background: rgba($tertiary-container, 0.5);
+;
 
 $selected-theme-background: linear-gradient(to right, $primary, $secondary);
 $selected-theme-color: $on-primary;
@@ -197,15 +206,13 @@ $hardware-os-box-color: $on-surface;
 $hardware-os-table-row-header-background: rgba($surface, 0.7);
 $hardware-os-table-row-header-color: $on-surface;
 
-
 // --------------------------------
 // --------- GTK elements ---------
 // --------------------------------
-$btn-background: $tertiary-container;
-$btn-color: $on-tertiary-container;
+$btn-background: $primary-container;
+$btn-color: $on-primary-container;
 $btn-hover-background: $tertiary;
 $btn-hover-color: $on-tertiary;
-
 
 
 // ----------------------------------
@@ -257,10 +264,10 @@ $music-info-wd-title-fg: $secondary;
 $music-info-wd-artist-fg: $on-tertiary-container;
 
 // --------- Menu ---------
-$menu-bg: $primary-container;
-$menu-fg: $on-primary-container;
-$menuitem-hover-bg: rgba($secondary-container, 0.2);
-$menuitem-hover-fg: $secondary-container;
+$menu-bg: $background;
+$menu-fg: $on-background;
+$menuitem-hover-bg: rgba($secondary-container, 1);
+$menuitem-hover-fg: $on-secondary-container;
 
-$menuitem-disabled-bg: rgba($secondary-container, 0.1);
-$menuitem-disabled-fg: rgba($secondary-container, 0.5);
+$menuitem-disabled-bg: rgba($surface-variant, 0.5);
+$menuitem-disabled-fg: rgba($on-surface-variant, 0.5);

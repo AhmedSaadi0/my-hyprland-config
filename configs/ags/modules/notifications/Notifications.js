@@ -46,15 +46,9 @@ const Popups = () => Box({
                 }
             }
             box.children = children;
-            timeout(20, () => {
-                box.get_parent().revealChild = true;
-            });
+            box.get_parent().revealChild = true;
+            console.log(box.get_parent().revealChild);
         },
-        // connections: [
-        //     [],
-        //     [],
-        //     [],
-        // ],
     }
 }).hook(Notifications, (box, id) => box.attribute.notify(box, id), 'notified').
     hook(Notifications, (box, id) => box.attribute.dismiss(box, id), 'dismissed').
@@ -74,6 +68,7 @@ export default monitor => Window({
     monitor,
     layer: 'overlay',
     name: `notifications${monitor}`,
+    visible: true,
     margins: [30, 30],
     anchor: ['bottom', local === "RTL" ? "left" : "right"],
     child: PopupList(),

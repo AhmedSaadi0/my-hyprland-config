@@ -22,6 +22,7 @@ const black_hole = {
         "konsole": "pinky",
     },
     desktop_widget: "BHWidget",
+    dynamic: false,
 }
 
 const win_20 = {
@@ -44,6 +45,7 @@ const win_20 = {
         "konsole": "pinky",
     },
     desktop_widget: "Win20Widget",
+    dynamic: false,
 }
 
 const deer = {
@@ -69,6 +71,7 @@ const deer = {
         "konsole": "Islamic",
     },
     desktop_widget: "DeerWidget",
+    dynamic: false,
 }
 
 const colors = {
@@ -91,6 +94,7 @@ const colors = {
         "konsole": "pinky",
     },
     desktop_widget: "ColorWidget",
+    dynamic: false,
 }
 
 const siberian = {
@@ -113,6 +117,7 @@ const siberian = {
         "konsole": "Islamic",
     },
     desktop_widget: "ColorWidget",
+    dynamic: false,
 }
 
 const materialYou = {
@@ -135,6 +140,7 @@ const materialYou = {
         "konsole": "material-you",
     },
     desktop_widget: "MYWidget",
+    dynamic: false,
 }
 
 const game = {
@@ -157,6 +163,7 @@ const game = {
         "konsole": "game",
     },
     desktop_widget: null,
+    dynamic: false,
 }
 
 const dark = {
@@ -179,6 +186,7 @@ const dark = {
         "konsole": "dark",
     },
     desktop_widget: "Win20Widget",
+    dynamic: false,
 }
 
 const uniCat = {
@@ -201,6 +209,7 @@ const uniCat = {
         "konsole": "unicat",
     },
     desktop_widget: "UnicatWidget",
+    dynamic: false,
 }
 
 const newCat = {
@@ -223,6 +232,7 @@ const newCat = {
         "konsole": "NewCat",
     },
     desktop_widget: "NewCatWidget",
+    dynamic: false,
 }
 
 const golden = {
@@ -245,6 +255,7 @@ const golden = {
         "konsole": "material-you",
     },
     desktop_widget: "GoldenWidget",
+    dynamic: false,
 }
 
 const harmony = {
@@ -267,6 +278,7 @@ const harmony = {
         "konsole": "NewCat",
     },
     desktop_widget: "HarmonyWidget",
+    dynamic: false,
 }
 
 
@@ -275,8 +287,8 @@ const circles = {
     css_theme: "m3/circles.scss",
     plasma_color: "Circles.colors",
     qt_style_theme: "Breeze",
-    qt_icon_theme: "FairyWren",
     kvantum_theme: "a-circles",
+    qt_icon_theme: "FairyWren",
     gtk_theme: "Nordic-darker-standard-buttons",
     gtk_icon_theme: "FairyWren",
     gtk_mode: "dark",
@@ -290,12 +302,12 @@ const circles = {
         "konsole": "Circles",
     },
     desktop_widget: "CirclesWidget",
+    dynamic: false,
 }
 
 const whiteFlower = {
     wallpaper: `${WALLPAPER_PATH}/white-flower.jpg`,
     css_theme: "white-flower.scss",
-
     plasma_color: "MateriaYaruLight.colors",
     qt_style_theme: "Breeze",
     qt_icon_theme: "Rowaita-Pink-Light",
@@ -313,6 +325,57 @@ const whiteFlower = {
         "konsole": "material-you",
     },
     desktop_widget: "WhiteFlower",
+    dynamic: false,
+}
+
+const dynamicM3Dark = {
+    wallpaper_path: `/media/shared/Pictures/wallpapers/dark`,
+    dynamic: true,
+    gtk_mode: "dark",
+
+    plasma_color: "MateriaYaruDark.colors",
+    qt_style_theme: "Breeze",
+    kvantum_theme: "MateriaDark", // not used
+    gtk_theme: "Tokyonight-Dark-BL",
+
+    qt_icon_theme: "Gradient-Dark-Icons",
+    gtk_icon_theme: "Gradient-Dark-Icons",
+
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(678382ff) rgba(9d6c73ff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 8,
+        "drop_shadow": "no",
+        "kitty": "material-you.conf",
+        "konsole": "material-you",
+    },
+    desktop_widget: null,
+}
+
+const dynamicM3Light = {
+    wallpaper_path: `/media/shared/Pictures/wallpapers/light`,
+    dynamic: true,
+    gtk_mode: "light",
+
+    plasma_color: "MateriaYaruDark.colors",
+    qt_style_theme: "Breeze",
+    kvantum_theme: "MateriaDark", // not used
+    gtk_theme: "Jasper-Light-Dracula",
+
+    qt_icon_theme: "Gradient-Dark-Icons",
+    gtk_icon_theme: "Gradient-Dark-Icons",
+
+    hypr: {
+        "border_width": 2,
+        "active_border": "rgba(678382ff) rgba(9d6c73ff) 0deg",
+        "inactive_border": "rgba(59595900) 0deg",
+        "rounding": 8,
+        "drop_shadow": "no",
+        "kitty": "material-you.conf",
+        "konsole": "material-you",
+    },
+    desktop_widget: null,
 }
 
 export const BLACK_HOLE_THEME = 0;
@@ -329,6 +392,8 @@ export const GOLDEN_THEME = 10;
 export const HARMONY_THEME = 11;
 export const CIRCLES_THEME = 12;
 export const WHITE_FLOWER = 13;
+export const DYNAMIC_M3_DARK = 14;
+export const DYNAMIC_M3_LIGHT = 15;
 
 const ThemesDictionary = {
     [BLACK_HOLE_THEME]: black_hole,
@@ -345,6 +410,8 @@ const ThemesDictionary = {
     [HARMONY_THEME]: harmony,
     [CIRCLES_THEME]: circles,
     [WHITE_FLOWER]: whiteFlower,
+    [DYNAMIC_M3_DARK]: dynamicM3Dark,
+    [DYNAMIC_M3_LIGHT]: dynamicM3Light,
 }
 
 export default ThemesDictionary

@@ -1,38 +1,34 @@
-$primary: #60dbb9;
-$secondary: #b1ccc1;
-$tertiary: #a8cbe2;
-$background: #191c1b;
-$outlined: #89938e;
+/* File created by ThemeService written by ahmedsaadi0 */
+$primary: #ffb596;
+$secondary: #e7beae;
+$tertiary: #d4c78e;
+$error: #ffb4a9;
+$background: #201a18;
+$surface: #201a18;
+$surface-variant: #52433e;
+$outlined: #a08d86;
+$shadow: #000000;
+$inverseSurface: #ede0dc;
 
-$on-primary: #00382b;
-$on-secondary: #1d352d;
-$on-tertiary: #0e3446;
-$on-background: #e1e3e0;
+$on-primary: #5a1b00;
+$on-secondary: #432a20;
+$on-tertiary: #383006;
+$on-error: #680003;
+$on-background: #ede0dc;
 
-$primary-container: #00513f;
-$secondary-container: #344b43;
-$tertiary-container: #284b5e;
-$surface: #191c1b;
-$surface-variant: #3f4945;
+$primary-container: #7b2f09;
+$secondary-container: #5d4035;
+$tertiary-container: #4f471a;
+$error-container: #930006;
 
-$on-primary-container: #7ef8d4;
-$on-secondary-container: #cee8dd;
-$on-tertiary-container: #c4e8ff;
-$on-surface: #e1e3e0;
-$on-surface-variant: #bec9c3;
+$on-primary-container: #ffdbcc;
+$on-secondary-container: #ffdbcc;
+$on-tertiary-container: #f1e3a8;
+$on-error-container: #ffb4a9;
+$on-surface: #ede0dc;
+$on-surface-variant: #d8c2ba;
 
+$inverseOnSurface: #362f2d;
+$inversePrimary: #9a4620;
 
-$text-color: $on-surface;
-
-$border-color: $primary;
-$border-size: 2px;
-
-$icon-font-family: "Font Awesome 5 Free Solid";
-
-$bar-top-margin: 0.3rem;
-$bar-bottom-margin: 0.3rem;
-
-$border-radius: 0.5rem;
-
-// @import './deer-m3.scss';
 @import './main.scss';
