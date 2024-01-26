@@ -4,7 +4,7 @@ $border-size: 2px;
 $icon-font-family: "Font Awesome 5 Free Solid";
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
-$border-radius: 0.5rem;
+$border-radius: 1rem;
 
 // ------------------------------
 // --------- Workspaces ---------
@@ -39,8 +39,8 @@ $bar-weather-color: $on-tertiary-container;
 // -----------------------
 // --------- bar ---------
 // -----------------------
-$bar-background: $background;
-$bar-color: $on-surface;
+$bar-background: rgba($background, 0.9);
+$bar-color: $on-background;
 
 // --------------------------------
 // --------- internet box ---------

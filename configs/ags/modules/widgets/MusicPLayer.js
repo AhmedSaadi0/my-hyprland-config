@@ -1,8 +1,5 @@
-import { Box, Label, Button, MenuItem, Menu } from 'resource:///com/github/Aylur/ags/widget.js';
-import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
-// import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 import Gdk from 'gi://Gdk';
-import { Utils } from '../utils/imports.js';
+import { Mpris, Utils, Widget } from '../utils/imports.js';
 import { local } from '../utils/helpers.js';
 
 export var selectedMusicPlayer = null;
@@ -10,7 +7,7 @@ const PLAYER_MENU_ARROW = "🞃"
 
 class PlayersMenu {
     constructor() {
-        this.menu = Menu({
+        this.menu = Widget.Menu({
             children: [],
         });
     }
@@ -24,7 +21,7 @@ class PlayersMenu {
     }
 }
 
-const length = () => Label({
+const length = () => Widget.Label({
     css: `
         min-width: 2rem;
     `,
@@ -37,7 +34,7 @@ const length = () => Label({
 
 const RowOne = () => {
 
-    let playerName = Label({
+    let playerName = Widget.Label({
         css: `
             min-width: 6rem;
         `,
@@ -52,7 +49,7 @@ const RowOne = () => {
 
     const playersMenu = new PlayersMenu();
 
-    const selectPlayerBtn = Button({
+    const selectPlayerBtn = Widget.Button({
         className: "music-wd-player",
         child: playerName,
         onClicked: (event) => {
@@ -60,7 +57,7 @@ const RowOne = () => {
         },
     });
 
-    return Box({
+    return Widget.Box({
         className: "music-wd-row-one",
         // homogeneous: true,
         spacing: 130,
@@ -74,8 +71,8 @@ const RowOne = () => {
             if (Object.hasOwnProperty.call(Mpris.players, player)) {
                 const element = Mpris.players[player];
                 playersList.push(
-                    MenuItem({
-                        child: Label({
+                    Widget.MenuItem({
+                        child: Widget.Label({
                             label: element.name,
                             xalign: 0.5,
                         }),
@@ -109,7 +106,7 @@ const RowOne = () => {
 }
 
 const RowTwo = () => {
-    let title = Label({
+    let title = Widget.Label({
         className: "music-wd-title",
         justification: 'left',
         truncate: 'end',
@@ -118,7 +115,7 @@ const RowTwo = () => {
         wrap: true,
         useMarkup: true,
     });
-    let artist = Label({
+    let artist = Widget.Label({
         className: "music-wd-file-name",
         justification: 'left',
         truncate: 'end',
@@ -126,7 +123,7 @@ const RowTwo = () => {
         maxWidthChars: 1,
         vexpand: false,
     });
-    return Box({
+    return Widget.Box({
         vertical: true,
         className: "music-wd-row-two",
         children: [
@@ -149,22 +146,22 @@ const RowTwo = () => {
 
 const ButtonsRow = () => {
 
-    let backBtn = Button({
+    let backBtn = Widget.Button({
         className: "unset music-wd-button",
         label: local === "RTL" ? "" : "",
         onClicked: () => { Mpris.getPlayer(selectedMusicPlayer)?.previous() },
     })
-    let playBtn = Button({
+    let playBtn = Widget.Button({
         className: "unset music-wd-button-play",
         label: "",
         onClicked: () => { Mpris.getPlayer(selectedMusicPlayer)?.playPause() },
     })
-    let nextBtn = Button({
+    let nextBtn = Widget.Button({
         className: "unset music-wd-button",
         label: local === "RTL" ? "" : "",
         onClicked: () => { Mpris.getPlayer(selectedMusicPlayer)?.next() },
     })
-    let skipForwardBtn = Button({
+    let skipForwardBtn = Widget.Button({
         className: "unset music-wd-button",
         // label: "",
         label: local === "RTL" ? "" : "",
@@ -184,7 +181,7 @@ const ButtonsRow = () => {
             ]).catch(print)
         }
     })
-    let skipBackwardBtn = Button({
+    let skipBackwardBtn = Widget.Button({
         css: `
             padding-left: 2px;
         `,
@@ -204,7 +201,7 @@ const ButtonsRow = () => {
         }
     })
 
-    return Box({
+    return Widget.Box({
         className: "music-wd-row-three",
         spacing: 10,
         // homogeneous: true,
@@ -236,7 +233,7 @@ const ButtonsRow = () => {
     })
 }
 
-export default className => Box({
+export default className => Widget.Box({
     className: className || "music-wd-box",
     vertical: true,
     children: [
@@ -245,3 +242,8 @@ export default className => Box({
         ButtonsRow(),
     ]
 });
+
+
+globalThis.mp = () => {
+    Mpris.players
+}
