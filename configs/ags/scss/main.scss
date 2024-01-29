@@ -508,8 +508,6 @@ scale slider {
 
 .notifications-popup-list {
     border-radius: $border-radius;
-    min-height: 1.2px;
-    min-width: 1.2px;
     background: rgba($color: #000000, $alpha: 0);
 }
 
@@ -901,7 +899,9 @@ window {
 
 .music-wd-button-play {
     background: $music-wd-button-play-bg;
-    // color: $music-wd-button-play-fg;
+    @if variable-exists($name: music-wd-button-play-fg){
+        color: $music-wd-button-play-fg;
+    }
     border-radius: $border-radius;
     min-height: 40px;
     min-width: 80px;
@@ -1031,7 +1031,6 @@ window {
     min-width: 7rem;
     min-height: 7rem;
     margin: 1rem;
-
 }
 
 .menu-cpu-icon {
