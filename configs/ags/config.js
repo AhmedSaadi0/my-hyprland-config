@@ -19,7 +19,7 @@ import deerWidget from './modules/widgets/desktop/DeerWidget.js';
 import circlesMusicWidget from './modules/widgets/desktop/Circles.js';
 import whiteFlowerWidget from './modules/widgets/desktop/WhiteFlower.js';
 import { Utils } from './modules/utils/imports.js';
-import { CornerTopleft } from "./modules/components/ScreenCorners.js";
+import { WeatherMenu } from "./modules/menus/Weather.js";
 // import ScreenCorners from './modules/components/ScreenCorners.js';
 
 // in config.js
@@ -36,7 +36,7 @@ let windows = [
     NotificationCenter(),
     HardwareMenu(),
     PrayerTimesMenu(),
-    CornerTopleft(),
+    WeatherMenu(),
 
     // ... Desktop widgets ... //
     ColorWidget,
@@ -51,15 +51,6 @@ let windows = [
     circlesMusicWidget,
     whiteFlowerWidget,
 ];
-
-
-// Utils.execAsync("hyprctl monitors all -j").then(screens => {
-//     const jsonVal = JSON.parse(screens);
-//     for (let i = 0; i < jsonVal.length; i++) {
-//         const screen = jsonVal[i];
-//         windows.push(Bar({ monitor: screen.id }));
-//     }
-// }).catch(print)
 
 const screens = JSON.parse(Utils.exec("hyprctl monitors all -j"));
 

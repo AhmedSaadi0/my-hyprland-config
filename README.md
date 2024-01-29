@@ -50,7 +50,7 @@
 yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors
 ```
 
-**Note:** إذا كنت تستخدم نظام تشغيل آخر غير أرش فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
+**ملاحطة:** إذا كنت تستخدم نظام تشغيل آخر غير أرش فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
 
 #### مثلا:
 
@@ -129,15 +129,18 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 yay -S kde-material-you-colors
 ```
 
-- تغيير مسار مجلد الخلفيات في المسار ``` .config/ags/modules/theme/themes.js ```
+- تغيير مسار مجلد الخلفيات في الملف ``` .config/ags/modules/theme/themes.js ```
 - ```wallpaper_path: "path/to/folder"```
+- ```interval: الوقت_بالملي_ثانية```
 ```javascript
 const dynamicM3Dark = {
-    wallpaper_path: `/media/shared/Pictures/wallpapers/dark`,
+    wallpaper_path: `path/to/my/wallpapers`,
+	interval: 15 * 60 * 1000,
     ...other_settings
 }
 const dynamicM3Light = {
-    wallpaper_path: `/media/shared/Pictures/wallpapers/light`,
+    wallpaper_path: `path/to/my/wallpapers`,
+	interval: 15 * 60 * 1000,
     ...other_settings
 }
 ```
@@ -274,13 +277,17 @@ yay -S kde-material-you-colors
 ```
 
 - Change wallpapers paths for dark & light themes in ``` modules/theme/themes.js ```
+- ```wallpaper_path: "path/to/folder"```
+- ```interval: time_in_millisecond``` 
 ```javascript
 const dynamicM3Dark = {
     wallpaper_path: `/media/shared/Pictures/wallpapers/dark`,
+	interval: 15 * 60 * 1000,
     ...other_settings
 }
 const dynamicM3Light = {
     wallpaper_path: `/media/shared/Pictures/wallpapers/light`,
+	interval: 15 * 60 * 1000,
     ...other_settings
 }
 ```

@@ -284,7 +284,7 @@ const harmony = {
 
 const circles = {
     wallpaper: `${WALLPAPER_PATH}/wall_arch.png`,
-    css_theme: "m3/circles.scss",
+    css_theme: "circles.scss",
     plasma_color: "Circles.colors",
     qt_style_theme: "Breeze",
     kvantum_theme: "a-circles",
@@ -331,15 +331,16 @@ const whiteFlower = {
 const dynamicM3Dark = {
     wallpaper_path: `/media/shared/Pictures/wallpapers/dark`,
     dynamic: true,
+    interval: 15 * 60 * 1000,
     gtk_mode: "dark",
 
     plasma_color: "MateriaYaruDark.colors",
     qt_style_theme: "Breeze",
     kvantum_theme: "MateriaDark", // not used
-    gtk_theme: "Tokyonight-Dark-BL",
+    gtk_theme: "Nordic-darker-standard-buttons",
 
-    qt_icon_theme: "Gradient-Dark-Icons",
-    gtk_icon_theme: "Gradient-Dark-Icons",
+    qt_icon_theme: "Zafiro-Nord-Black-Blue",
+    gtk_icon_theme: "Zafiro-Nord-Black-Blue",
 
     hypr: {
         "border_width": 2,
@@ -351,20 +352,22 @@ const dynamicM3Dark = {
         "konsole": "material-you",
     },
     desktop_widget: null,
+    desktop_widget: "BHWidget",
 }
 
 const dynamicM3Light = {
     wallpaper_path: `/media/shared/Pictures/wallpapers/light`,
     dynamic: true,
+    interval: 15 * 60 * 1000,
     gtk_mode: "light",
 
     plasma_color: "MateriaYaruDark.colors",
     qt_style_theme: "Breeze",
     kvantum_theme: "MateriaDark", // not used
-    gtk_theme: "Jasper-Light-Dracula",
+    gtk_theme: "Victory-black-light-compact",
 
-    qt_icon_theme: "Gradient-Dark-Icons",
-    gtk_icon_theme: "Gradient-Dark-Icons",
+    qt_icon_theme: "Infinity-Dark",
+    gtk_icon_theme: "Infinity-Dark",
 
     hypr: {
         "border_width": 2,
@@ -375,7 +378,8 @@ const dynamicM3Light = {
         "kitty": "material-you.conf",
         "konsole": "material-you",
     },
-    desktop_widget: null,
+    // desktop_widget: null,
+    desktop_widget: "BHWidget",
 }
 
 export const BLACK_HOLE_THEME = 0;

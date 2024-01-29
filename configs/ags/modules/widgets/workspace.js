@@ -38,7 +38,7 @@ export const Workspaces = () => Box({
             label: Hyprland.active.workspace.id == i ? activeIcons[i - 1] : inActiveIcons[i - 1]
         }),
         className: Hyprland.active.workspace.id == i ? 'focused' :
-            Hyprland.workspaces.find(item => item.id === i)?.windows > 0 ? 'unfocused has-windows' : "unfocused"
+            Hyprland.workspaces.find(item => item.id === i)?.windows > 0 ? 'unset unfocused has-windows' : "unset unfocused"
     }));
 });
 

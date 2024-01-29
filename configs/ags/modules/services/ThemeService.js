@@ -43,7 +43,7 @@ class ThemeService extends Service {
         }
 
         if (theme.dynamic) {
-            this.setDynamicWallpapers(theme.wallpaper_path, theme.gtk_mode);
+            this.setDynamicWallpapers(theme.wallpaper_path, theme.gtk_mode, theme.interval);
         } else {
             this.changeCss(theme.css_theme);
             this.changeWallpaper(theme.wallpaper);
@@ -109,7 +109,7 @@ class ThemeService extends Service {
         }).catch(print)
     }
 
-    setDynamicWallpapers(path, themeMode) {
+    setDynamicWallpapers(path, themeMode, interval) {
         Utils.execAsync([settings.scripts.get_wallpapers, path])
             .then(out => {
 
@@ -122,7 +122,7 @@ class ThemeService extends Service {
                 // Loop on wallpapers
                 this.wallpaperIntervalId = setInterval(() => {
                     this.callNewRandomWallpaper(themeMode);
-                }, 5 * 60 * 1000);
+                }, interval);
             })
             .catch(err => print(err));
     }

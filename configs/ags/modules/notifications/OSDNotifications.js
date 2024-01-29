@@ -80,6 +80,10 @@ const OSDNotification = () => Box({
 
 const PopupList = ({ transition = 'slide_up' } = {}) => Box({
     className: 'notifications-popup-list',
+    css: `
+        min-height: 1.2px;
+        min-width: 1.2px;
+    `,
     children: [
         Revealer({
             transition,
