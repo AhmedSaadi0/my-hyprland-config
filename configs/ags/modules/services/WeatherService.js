@@ -15,8 +15,21 @@ class WeatherService extends Service {
                 'weatherCode': ['string', 'r'],
                 'maxTempC': ['float', 'r'],
                 'minTempC': ['float', 'r'],
+
                 'feelsLike': ['float', 'r'],
                 'tempC': ['float', 'r'],
+                'pressure': ['float', 'r'],
+                'windspeedKmph': ['float', 'r'],
+                'humidity': ['float', 'r'],
+                'cloudcover': ['float', 'r'],
+
+                'observation_time': ['string', 'r'],
+                'areaName': ['string', 'r'],
+
+                'sunrise': ['string', 'r'],
+                'sunset': ['string', 'r'],
+                'moonrise': ['string', 'r'],
+                'moonset': ['string', 'r'],
 
                 // HOURS
                 'avgTempC1': ['string', 'r'],
@@ -30,6 +43,9 @@ class WeatherService extends Service {
                 'avgTempC3': ['string', 'r'],
                 'weatherCode3': ['string', 'r'],
                 'weatherTime3': ['string', 'r'],
+
+
+                'hourly': ['dictionary', 'r'],
 
                 // 'avgTempC4': ['string', 'r'],
                 // 'weatherCode4': ['string', 'r'],
@@ -56,7 +72,7 @@ class WeatherService extends Service {
     getWeather() {
         Utils.execAsync([
             'curl',
-            `ar.wttr.in/sanaa?format=j1`
+            `ar.wttr.in/${settings.weather.location}?format=${settings.weather.format}`
         ]).then(val => {
             const jsonData = JSON.parse(val);
             this.state = jsonData;
@@ -137,8 +153,44 @@ class WeatherService extends Service {
         return this.state?.current_condition?.[0].FeelsLikeC || '';
     }
 
-    get feelsLike() {
-        return this.state?.current_condition?.[0].temp_C || '';
+    get pressure() {
+        return this.state?.current_condition?.[0].pressure || '';
+    }
+
+    get windspeedKmph() {
+        return this.state?.current_condition?.[0].windspeedKmph || '';
+    }
+
+    get humidity() {
+        return this.state?.current_condition?.[0].humidity || '';
+    }
+
+    get cloudcover() {
+        return this.state?.current_condition?.[0].cloudcover || '';
+    }
+
+    get observation_time() {
+        return this.state?.current_condition?.[0].observation_time || '';
+    }
+
+    get areaName() {
+        return this.state?.nearest_area?.[0].areaName[0].value || '';
+    }
+
+    get sunrise() {
+        return this.state?.weather?.[0].astronomy[0].sunrise || '';
+    }
+
+    get sunset() {
+        return this.state?.weather?.[0].astronomy[0].sunset || '';
+    }
+
+    get moonrise() {
+        return this.state?.weather?.[0].astronomy[0].moonrise || '';
+    }
+
+    get moonset() {
+        return this.state?.weather?.[0].astronomy[0].moonset || '';
     }
 
     // -------------------------------------------
@@ -197,6 +249,43 @@ class WeatherService extends Service {
     }
 
     // -------------------------------------------
+
+    getHourlyByIndex(index, dict) {
+
+        const hourly = {
+            tempC: `${this.state?.weather?.[0]?.hourly[index].tempC || ''} `,
+            lang_ar: `${this.state?.weather?.[0]?.hourly[index].lang_ar[0].value || ''} `,
+            weatherDesc: `${this.state?.weather?.[0]?.hourly[index].weatherDesc[0].value || ''} `,
+            weatherCode: `${dict[this.state?.weather?.[0]?.hourly[index].weatherCode] || ''}`,
+        }
+
+        return hourly
+    }
+
+    get hourly() {
+        const weatherData = {
+            hour1: {
+                time: `09:00 AM`,
+                ...this.getHourlyByIndex(3, sun_icon_dic)
+            },
+            hour2: {
+                time: `12:00 PM`,
+                ...this.getHourlyByIndex(4, sun_icon_dic)
+            },
+            hour3: {
+                time: `09:00 PM`,
+                ...this.getHourlyByIndex(6, moon_icon_dic)
+            },
+            hour4: {
+                time: `00:00 AM`,
+                ...this.getHourlyByIndex(7, moon_icon_dic)
+            },
+        }
+
+        return weatherData;
+    }
+
+
     // get avgTempC4() {
     //     return `${this.state.weather[0].hourly[7].tempC} C°`;
     // }

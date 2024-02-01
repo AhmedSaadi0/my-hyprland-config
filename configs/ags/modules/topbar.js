@@ -30,22 +30,29 @@ const Weather = () => {
         maxWidthChars: 24,
     })
 
-    return Box({
-        className: 'bar-weather-box small-shadow unset',
-        children: [
-            icon,
-            text,
-        ],
-    }).hook(weatherService, self => {
-        if (weatherService.arValue != '') {
-            const max = weatherService.maxTempC;
-            const min = weatherService.minTempC;
-            text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.arValue}`;
-            icon.label = `${weatherService.weatherCode}`;
-        } else {
-            text.label = `خدمة الطقس غير متاحة`;
-        }
-    })
+    let button = Widget.Button({
+        className: 'unset un-hover',
+        onClicked: () => showWeatherMenu(),
+        child: Box({
+            className: 'bar-weather-box small-shadow unset',
+            children: [
+                icon,
+                text,
+            ],
+        }).hook(weatherService, self => {
+            if (weatherService.arValue != '') {
+                const max = weatherService.maxTempC;
+                const min = weatherService.minTempC;
+                text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.arValue}`;
+                icon.label = `${weatherService.weatherCode}`;
+            } else {
+                text.label = `خدمة الطقس غير متاحة`;
+            }
+        })
+    });
+
+
+    return button
 }
 
 const PrayerTimes = () => {

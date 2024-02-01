@@ -34,6 +34,11 @@ const settings = {
         absoluteDynamicM3Scss: `${getPath("scss/themes/m3/dynamic.scss")}`,
         mainCss: `${getPath("/scss/main.scss")}`,
         styleCss: `${getPath("/style.scss")}`,
+    },
+    weather:{
+        // provider ar.wttr.in
+        location: 'sanaa',
+        format: 'j1',
     }
     // More settings will be moved to here
 }
