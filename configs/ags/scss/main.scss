@@ -61,8 +61,9 @@ $top-bar-widget-margins: $bar-top-margin+0.2rem;
     border-radius: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+    font-size: large;
     // min-width: 1em;
 }
 
@@ -70,10 +71,11 @@ $top-bar-widget-margins: $bar-top-margin+0.2rem;
     font-family: $icon-font-family;
     padding-top: 0px;
     padding-bottom: 0px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
     // min-width: 1em;
     border-radius: 0px;
+    font-size: large;
 }
 
 .workspaces button.has-windows {
@@ -857,7 +859,6 @@ window {
     color: $music-wd-title-fg;
     // font-size: small;
     margin-bottom: 0.5rem;
-
 }
 
 .music-wd-title:dir(rtl) {
@@ -899,13 +900,16 @@ window {
 
 .music-wd-button-play {
     background: $music-wd-button-play-bg;
-    @if variable-exists($name: music-wd-button-play-fg){
+
+    @if variable-exists($name: music-wd-button-play-fg) {
         color: $music-wd-button-play-fg;
     }
+
     border-radius: $border-radius;
     min-height: 40px;
     min-width: 80px;
-    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 .music-wd-button-play:hover {
@@ -1371,4 +1375,111 @@ menuitem:disabled {
 menuitem:hover {
     background: $menuitem-hover-bg;
     color: $menuitem-hover-fg;
+}
+
+// --------------------------
+// ------ weather menu ------
+// --------------------------
+.weather-menu-box {
+    min-width: 2rem;
+
+    @if variable-exists($name: weather-menu-box-bg) {
+        background: $weather-menu-box-bg;
+    }
+
+    @if variable-exists($name: weather-menu-box-fg) {
+        color: $weather-menu-box-fg;
+    }
+
+    padding: 1rem 1rem;
+    border: $border-size solid $border-color;
+    border-radius: $border-radius;
+}
+
+.weather-menu-general-information-box {
+    margin: 0rem 1rem;
+}
+
+.weather-menu-detail-box {
+    margin: 0.4rem 1rem;
+}
+
+.weather-menu-today-box {
+    margin-top: 0.4rem;
+}
+
+.weather-row-two {
+    margin: 2rem 2rem;
+}
+
+.weather-menu-icon {
+    font-family: $icon-font-family;
+    font-size: 7rem;
+    margin: 0rem 1rem;
+}
+
+.weather-menu-city {
+    font-size: 2rem;
+    margin-top: 0.3rem;
+}
+
+.weather-menu-value {
+    font-size: 2.2rem;
+}
+
+.weather-menu-sunrise {
+    font-size: 1.1rem;
+}
+
+.weather-menu-sunrise-icon {
+    font-size: 1.1rem;
+    font-family: $icon-font-family;
+    margin: 0rem 0.5rem;
+}
+
+.weather-menu-sunset {
+    font-size: 1.1rem;
+}
+
+.weather-menu-sunset-icon {
+    font-size: 1.1rem;
+    font-family: $icon-font-family;
+    margin: 0rem 0.5rem;
+}
+
+.weather-menu-today-time {
+    font-size: 1.1rem;
+}
+.weather-menu-today-weather {
+    font-size: 1.1rem;
+    padding: 0rem 1.2rem;
+}
+
+.weather-menu-today-temp {
+    font-size: 1.3rem;
+    font-family: $icon-font-family;
+}
+
+.weather-menu-latest-update {
+    font-size: 1.1rem;
+}
+
+.weather-menu-feels-like {
+    font-size: 1.3rem;
+}
+
+.weather-menu-humidity {
+    font-size: 1.3rem;
+}
+
+.weather-menu-pressure {
+    font-size: 1.3rem;
+}
+
+.weather-menu-wind {
+    font-size: 1.3rem;
+}
+
+.weather-menu-clouds {
+    font-size: 1.3rem;
 }

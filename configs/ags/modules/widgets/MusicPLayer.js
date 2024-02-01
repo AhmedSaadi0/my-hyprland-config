@@ -23,7 +23,7 @@ class PlayersMenu {
 
 const length = () => Widget.Label({
     css: `
-        min-width: 2rem;
+        min-width: 4rem;
     `,
     label: "",
     className: "music-wd-length",
@@ -60,7 +60,7 @@ const RowOne = () => {
     return Widget.Box({
         className: "music-wd-row-one",
         // homogeneous: true,
-        spacing: 130,
+        spacing: 120,
         children: [
             length(),
             selectPlayerBtn,

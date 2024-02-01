@@ -19,7 +19,7 @@ import deerWidget from './modules/widgets/desktop/DeerWidget.js';
 import circlesMusicWidget from './modules/widgets/desktop/Circles.js';
 import whiteFlowerWidget from './modules/widgets/desktop/WhiteFlower.js';
 import { Utils } from './modules/utils/imports.js';
-import { WeatherMenu } from "./modules/menus/Weather.js";
+import { WeatherMenu } from "./modules/menus/WeatherMenu.js";
 // import ScreenCorners from './modules/components/ScreenCorners.js';
 
 // in config.js

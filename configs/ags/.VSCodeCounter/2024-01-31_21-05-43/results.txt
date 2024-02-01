@@ -1,0 +1,160 @@
+Date : 2024-01-31 21:05:43
+Directory : /home/ahmed/.config/ags
+Total : 106 files,  14444 codes, 3958 comments, 3515 blanks, all 21917 lines
+
+Languages
++--------------+------------+------------+------------+------------+------------+
+| language     | files      | code       | comment    | blank      | total      |
++--------------+------------+------------+------------+------------+------------+
+| JavaScript   |         49 |      5,581 |        237 |        726 |      6,544 |
+| SCSS         |         20 |      5,520 |      1,545 |      1,626 |      8,691 |
+| JSON         |          2 |      1,535 |          0 |          1 |      1,536 |
+| CSS          |          1 |        888 |         53 |        202 |      1,143 |
+| Properties   |         18 |        614 |      2,067 |        850 |      3,531 |
+| Python       |          4 |        157 |          8 |         54 |        219 |
+| Shell Script |         12 |        149 |         48 |         56 |        253 |
++--------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                               | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                  |        106 |     14,444 |      3,958 |      3,515 |     21,917 |
+| . (Files)                                                          |          3 |      1,833 |        111 |        415 |      2,359 |
+| modules                                                            |         68 |      7,673 |      2,299 |      1,566 |     11,538 |
+| modules (Files)                                                    |          2 |        148 |          5 |         20 |        173 |
+| modules/components                                                 |          2 |        248 |          9 |         25 |        282 |
+| modules/menus                                                      |          5 |      1,004 |         39 |        129 |      1,172 |
+| modules/notifications                                              |          4 |        427 |         16 |         61 |        504 |
+| modules/on-screen                                                  |          2 |         56 |          1 |          7 |         64 |
+| modules/services                                                   |          6 |      2,310 |         62 |        158 |      2,530 |
+| modules/theme                                                      |         19 |      1,004 |      2,071 |        878 |      3,953 |
+| modules/theme (Files)                                              |          1 |        390 |          4 |         28 |        422 |
+| modules/theme/kitty                                                |         18 |        614 |      2,067 |        850 |      3,531 |
+| modules/utils                                                      |          4 |        135 |         19 |         24 |        178 |
+| modules/widgets                                                    |         24 |      2,341 |         77 |        264 |      2,682 |
+| modules/widgets (Files)                                            |          8 |        941 |         16 |         95 |      1,052 |
+| modules/widgets/desktop                                            |         11 |      1,253 |         58 |        144 |      1,455 |
+| modules/widgets/hardware                                           |          5 |        147 |          3 |         25 |        175 |
+| scripts                                                            |         16 |        306 |         56 |        110 |        472 |
+| scripts (Files)                                                    |         12 |        149 |         48 |         56 |        253 |
+| scripts/m3                                                         |          4 |        157 |          8 |         54 |        219 |
+| scss                                                               |         19 |      4,632 |      1,492 |      1,424 |      7,548 |
+| scss (Files)                                                       |          1 |      1,030 |        129 |        216 |      1,375 |
+| scss/themes                                                        |         18 |      3,602 |      1,363 |      1,208 |      6,173 |
+| scss/themes (Files)                                                |         14 |      2,957 |      1,149 |      1,000 |      5,106 |
+| scss/themes/m3                                                     |          4 |        645 |        214 |        208 |      1,067 |
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------+--------------+------------+------------+------------+------------+
+| filename                                                           | language     | code       | comment    | blank      | total      |
++--------------------------------------------------------------------+--------------+------------+------------+------------+------------+
+| /home/ahmed/.config/ags/config.js                                  | JavaScript   |         57 |          5 |         11 |         73 |
+| /home/ahmed/.config/ags/modules/components/NestedCircles.js        | JavaScript   |        129 |          1 |         14 |        144 |
+| /home/ahmed/.config/ags/modules/components/ScreenCorners.js        | JavaScript   |        119 |          8 |         11 |        138 |
+| /home/ahmed/.config/ags/modules/menus/HardwareMenu.js              | JavaScript   |        330 |         15 |         34 |        379 |
+| /home/ahmed/.config/ags/modules/menus/PrayerTimesMenu.js           | JavaScript   |        116 |          0 |         19 |        135 |
+| /home/ahmed/.config/ags/modules/menus/WeatherMenu.js               | JavaScript   |         88 |          0 |         13 |        101 |
+| /home/ahmed/.config/ags/modules/menus/left_menu.js                 | JavaScript   |        353 |          8 |         46 |        407 |
+| /home/ahmed/.config/ags/modules/menus/notification_center.js       | JavaScript   |        117 |         16 |         17 |        150 |
+| /home/ahmed/.config/ags/modules/notifications/MenuNotification.js  | JavaScript   |        124 |          9 |         13 |        146 |
+| /home/ahmed/.config/ags/modules/notifications/Notification.js      | JavaScript   |        156 |          4 |         18 |        178 |
+| /home/ahmed/.config/ags/modules/notifications/Notifications.js     | JavaScript   |         65 |          1 |         10 |         76 |
+| /home/ahmed/.config/ags/modules/notifications/OSDNotifications.js  | JavaScript   |         82 |          2 |         20 |        104 |
+| /home/ahmed/.config/ags/modules/on-screen/brightness.js            | JavaScript   |          0 |          0 |          1 |          1 |
+| /home/ahmed/.config/ags/modules/on-screen/volume.js                | JavaScript   |         56 |          1 |          6 |         63 |
+| /home/ahmed/.config/ags/modules/services/BrightnessService.js      | JavaScript   |          0 |          1 |          0 |          1 |
+| /home/ahmed/.config/ags/modules/services/PrayerTimesService.js     | JavaScript   |        241 |         17 |         60 |        318 |
+| /home/ahmed/.config/ags/modules/services/ThemeService.js           | JavaScript   |        278 |         16 |         53 |        347 |
+| /home/ahmed/.config/ags/modules/services/WeatherService.js         | JavaScript   |        256 |         28 |         44 |        328 |
+| /home/ahmed/.config/ags/modules/services/prayer-json-example.json  | JSON         |         91 |          0 |          0 |         91 |
+| /home/ahmed/.config/ags/modules/services/weatjer-json-example.json | JSON         |      1,444 |          0 |          1 |      1,445 |
+| /home/ahmed/.config/ags/modules/settings.js                        | JavaScript   |         35 |          1 |          5 |         41 |
+| /home/ahmed/.config/ags/modules/theme/kitty/black_hole.conf        | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/circles.conf           | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/colors.conf            | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/dark.conf              | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/deer.conf              | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/dracula.conf           | Properties   |         27 |         49 |         14 |         90 |
+| /home/ahmed/.config/ags/modules/theme/kitty/game.conf              | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/golden.conf            | Properties   |         34 |         21 |          6 |         61 |
+| /home/ahmed/.config/ags/modules/theme/kitty/harmony.conf           | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/kitty.conf             | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/kitty_all.conf         | Properties   |          0 |      1,664 |        729 |      2,393 |
+| /home/ahmed/.config/ags/modules/theme/kitty/material-you.conf      | Properties   |         33 |         12 |          4 |         49 |
+| /home/ahmed/.config/ags/modules/theme/kitty/materialYou.conf       | Properties   |         34 |         21 |          6 |         61 |
+| /home/ahmed/.config/ags/modules/theme/kitty/new_cat.conf           | Properties   |         34 |         26 |          8 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/siberian.conf          | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/unicat.conf            | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/kitty/white_flower.conf      | Properties   |         34 |         21 |          6 |         61 |
+| /home/ahmed/.config/ags/modules/theme/kitty/win_20.conf            | Properties   |         38 |         23 |          7 |         68 |
+| /home/ahmed/.config/ags/modules/theme/themes.js                    | JavaScript   |        390 |          4 |         28 |        422 |
+| /home/ahmed/.config/ags/modules/topbar.js                          | JavaScript   |        113 |          4 |         15 |        132 |
+| /home/ahmed/.config/ags/modules/utils/HoverRevealer.js             | JavaScript   |         47 |          0 |          8 |         55 |
+| /home/ahmed/.config/ags/modules/utils/ShowWindow.js                | JavaScript   |         15 |          3 |          5 |         23 |
+| /home/ahmed/.config/ags/modules/utils/helpers.js                   | JavaScript   |         56 |         16 |          8 |         80 |
+| /home/ahmed/.config/ags/modules/utils/imports.js                   | JavaScript   |         17 |          0 |          3 |         20 |
+| /home/ahmed/.config/ags/modules/widgets/FuzzyClock.js              | JavaScript   |        147 |          4 |         21 |        172 |
+| /home/ahmed/.config/ags/modules/widgets/MusicPLayer.js             | JavaScript   |        214 |          6 |         29 |        249 |
+| /home/ahmed/.config/ags/modules/widgets/NotificationIndicator.js   | JavaScript   |         38 |          0 |          3 |         41 |
+| /home/ahmed/.config/ags/modules/widgets/Saying.js                  | JavaScript   |        317 |          3 |          6 |        326 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/BlackHole.js       | JavaScript   |        130 |         11 |         17 |        158 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/Circles.js         | JavaScript   |        294 |          9 |         30 |        333 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/ColorsWidget.js    | JavaScript   |         60 |          0 |          6 |         66 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/DeerWidget.js      | JavaScript   |        129 |         11 |         16 |        156 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/Golden.js          | JavaScript   |        128 |          8 |         17 |        153 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/Harmony.js         | JavaScript   |         64 |          0 |          6 |         70 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/MaterialYouOne.js  | JavaScript   |        128 |          8 |         17 |        153 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/NewCat.js          | JavaScript   |        128 |         11 |         17 |        156 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/UnicatWidget.js    | JavaScript   |         64 |          0 |          6 |         70 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/WhiteFlower.js     | JavaScript   |         64 |          0 |          6 |         70 |
+| /home/ahmed/.config/ags/modules/widgets/desktop/Win20Widget.js     | JavaScript   |         64 |          0 |          6 |         70 |
+| /home/ahmed/.config/ags/modules/widgets/hardware/all.js            | JavaScript   |         14 |          0 |          1 |         15 |
+| /home/ahmed/.config/ags/modules/widgets/hardware/battery.js        | JavaScript   |         27 |          1 |          5 |         33 |
+| /home/ahmed/.config/ags/modules/widgets/hardware/cpu.js            | JavaScript   |         33 |          1 |          8 |         42 |
+| /home/ahmed/.config/ags/modules/widgets/hardware/ram.js            | JavaScript   |         33 |          1 |          7 |         41 |
+| /home/ahmed/.config/ags/modules/widgets/hardware/temp.js           | JavaScript   |         40 |          0 |          4 |         44 |
+| /home/ahmed/.config/ags/modules/widgets/internet.js                | JavaScript   |         89 |          1 |         20 |        110 |
+| /home/ahmed/.config/ags/modules/widgets/systray.js                 | JavaScript   |         57 |          0 |          6 |         63 |
+| /home/ahmed/.config/ags/modules/widgets/volume.js                  | JavaScript   |         39 |          1 |          6 |         46 |
+| /home/ahmed/.config/ags/modules/widgets/workspace.js               | JavaScript   |         40 |          1 |          4 |         45 |
+| /home/ahmed/.config/ags/scripts/cpu.sh                             | Shell Script |          2 |          3 |          3 |          8 |
+| /home/ahmed/.config/ags/scripts/cpu_cores.sh                       | Shell Script |         10 |          4 |          4 |         18 |
+| /home/ahmed/.config/ags/scripts/cpu_usage.sh                       | Shell Script |         17 |          7 |          6 |         30 |
+| /home/ahmed/.config/ags/scripts/devices_temps.sh                   | Shell Script |         24 |          3 |          3 |         30 |
+| /home/ahmed/.config/ags/scripts/get_wallpapers.sh                  | Shell Script |         13 |          1 |          5 |         19 |
+| /home/ahmed/.config/ags/scripts/hardware_info.sh                   | Shell Script |         30 |          8 |          8 |         46 |
+| /home/ahmed/.config/ags/scripts/lang.sh                            | Shell Script |          5 |          0 |          1 |          6 |
+| /home/ahmed/.config/ags/scripts/m3/css_theme.py                    | Python       |         46 |          0 |         15 |         61 |
+| /home/ahmed/.config/ags/scripts/m3/dynamic-m3.py                   | Python       |         18 |          2 |          4 |         24 |
+| /home/ahmed/.config/ags/scripts/m3/kitty_theme.py                  | Python       |         50 |          3 |         24 |         77 |
+| /home/ahmed/.config/ags/scripts/m3/plasma_color.py                 | Python       |         43 |          3 |         11 |         57 |
+| /home/ahmed/.config/ags/scripts/net_usage.sh                       | Shell Script |         15 |          7 |          8 |         30 |
+| /home/ahmed/.config/ags/scripts/ram.sh                             | Shell Script |          8 |          4 |          5 |         17 |
+| /home/ahmed/.config/ags/scripts/ram_usage.sh                       | Shell Script |         10 |          6 |          6 |         22 |
+| /home/ahmed/.config/ags/scripts/temp.sh                            | Shell Script |          6 |          4 |          4 |         14 |
+| /home/ahmed/.config/ags/scripts/uptime.sh                          | Shell Script |          9 |          1 |          3 |         13 |
+| /home/ahmed/.config/ags/scss/main.scss                             | SCSS         |      1,030 |        129 |        216 |      1,375 |
+| /home/ahmed/.config/ags/scss/themes/black-hole.scss                | SCSS         |        259 |         93 |         82 |        434 |
+| /home/ahmed/.config/ags/scss/themes/circles.scss                   | SCSS         |        271 |         79 |         82 |        432 |
+| /home/ahmed/.config/ags/scss/themes/colors.scss                    | SCSS         |        169 |         82 |         62 |        313 |
+| /home/ahmed/.config/ags/scss/themes/dark.scss                      | SCSS         |        169 |         74 |         59 |        302 |
+| /home/ahmed/.config/ags/scss/themes/deer.scss                      | SCSS         |        258 |         79 |         79 |        416 |
+| /home/ahmed/.config/ags/scss/themes/game.scss                      | SCSS         |        169 |         83 |         62 |        314 |
+| /home/ahmed/.config/ags/scss/themes/golden.scss                    | SCSS         |        276 |         79 |         88 |        443 |
+| /home/ahmed/.config/ags/scss/themes/harmony.scss                   | SCSS         |        169 |         71 |         59 |        299 |
+| /home/ahmed/.config/ags/scss/themes/m3/circles.scss                | SCSS         |         75 |         13 |         23 |        111 |
+| /home/ahmed/.config/ags/scss/themes/m3/dynamic.scss                | SCSS         |         28 |          1 |          5 |         34 |
+| /home/ahmed/.config/ags/scss/themes/m3/main.scss                   | SCSS         |        261 |        118 |         89 |        468 |
+| /home/ahmed/.config/ags/scss/themes/m3/material-you.scss           | SCSS         |        281 |         82 |         91 |        454 |
+| /home/ahmed/.config/ags/scss/themes/material-you.scss              | SCSS         |        276 |         84 |         91 |        451 |
+| /home/ahmed/.config/ags/scss/themes/newCat.scss                    | SCSS         |        260 |         81 |         80 |        421 |
+| /home/ahmed/.config/ags/scss/themes/siberian.scss                  | SCSS         |        169 |         72 |         61 |        302 |
+| /home/ahmed/.config/ags/scss/themes/unicat.scss                    | SCSS         |        171 |         72 |         59 |        302 |
+| /home/ahmed/.config/ags/scss/themes/white-flower.scss              | SCSS         |        172 |        114 |         73 |        359 |
+| /home/ahmed/.config/ags/scss/themes/win20.scss                     | SCSS         |        169 |         86 |         63 |        318 |
+| /home/ahmed/.config/ags/style.css                                  | CSS          |        888 |         53 |        202 |      1,143 |
+| /home/ahmed/.config/ags/style.scss                                 | SCSS         |        888 |         53 |        202 |      1,143 |
+| Total                                                              |              |     14,444 |      3,958 |      3,515 |     21,917 |
++--------------------------------------------------------------------+--------------+------------+------------+------------+------------+
