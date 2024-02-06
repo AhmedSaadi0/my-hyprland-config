@@ -1,17 +1,3 @@
-// #411352
-// #722991
-// #e1d9f5
-// #8a49b3
-// #300c32
-// Lavender: #e6e6fa
-// Mauve: #e0b0ff
-// Violet: #8f00ff
-// Plum: #8e3179
-// Burgundy: #800020
-// Magenta: #ff00ff
-// -----------------------------
-// --------- Variables ---------
-// -----------------------------
 $border-color: #FF4BDE;
 $border-size: 2px;
 
@@ -25,10 +11,6 @@ $fg-three: #71f1e8;
 
 $text-color: #cecece;
 
-
-// $icon-font-family: "Font Awesome 5 Free Solid 11";
-// $icon-font-family: "Material Design Icons";
-// $icon-font-family: "Font Awesome";
 $icon-font-family: "Font Awesome 5 Free Solid";
 
 $bar-top-margin: 0.3rem;
@@ -60,6 +42,8 @@ $clock-color: $bg-two;
 // -------------------------------
 $bar-weather-background: linear-gradient(to right, #26F7E1, #FF00AA);
 $bar-weather-color: $bg-two;
+$weather-menu-box-bg: $bg-one;
+$weather-menu-box-fg: $text-color;
 
 // --------------------------------
 // --------- prayer times ---------

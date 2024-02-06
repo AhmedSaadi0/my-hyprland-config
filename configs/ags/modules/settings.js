@@ -36,11 +36,16 @@ const settings = {
         styleCss: `${getPath("/style.scss")}`,
     },
     weather:{
-        // provider ar.wttr.in
+        // provider is 'ar.wttr.in'
+        language: 'ar', // Not implemented yot - only arabic is supported
         location: 'sanaa',
         format: 'j1',
-    }
-    // More settings will be moved to here
+    },
+    prayerTimes:{
+        // provider is 'api.aladhan.com'
+        city: 'sanaa',
+        country: 'yemen',
+    },
 }
 
 export default settings

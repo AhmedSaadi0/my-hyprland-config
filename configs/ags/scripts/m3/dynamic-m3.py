@@ -1,6 +1,6 @@
 import argparse
 
-from plasma_color import PlasmaColorExporter
+from plasma_color import ColorExporter
 
 if __name__ == "__main__":
     # main()
@@ -20,4 +20,4 @@ if __name__ == "__main__":
     # Parse the command-line arguments
     args = parser.parse_args()
     selected_color_mode = "dark" if args.mode == "dark" else "light"
-    PlasmaColorExporter(args.image_path, None, selected_color_mode)
+    ColorExporter(args.image_path, None, selected_color_mode)

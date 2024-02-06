@@ -1,34 +1,34 @@
 /* File created by ThemeService written by ahmedsaadi0 */
-$primary: #acc7ff;
-$secondary: #bfc6dc;
-$tertiary: #debbdf;
-$error: #ffb4a9;
-$background: #1b1b1e;
-$surface: #1b1b1e;
-$surface-variant: #44474f;
-$outlined: #8e9099;
+$primary: #7d5800;
+$secondary: #6d5c3f;
+$tertiary: #4d6544;
+$error: #ba1b1b;
+$background: #fffbf8;
+$surface: #fffbf8;
+$surface-variant: #eee1cf;
+$outlined: #807667;
 $shadow: #000000;
-$inverseSurface: #e4e2e6;
+$inverseSurface: #34302a;
 
-$on-primary: #002e6c;
-$on-secondary: #283041;
-$on-tertiary: #402843;
-$on-error: #680003;
-$on-background: #e4e2e6;
+$on-primary: #ffffff;
+$on-secondary: #ffffff;
+$on-tertiary: #ffffff;
+$on-error: #ffffff;
+$on-background: #1e1b16;
 
-$primary-container: #004397;
-$secondary-container: #3f4759;
-$tertiary-container: #583e5b;
-$error-container: #930006;
+$primary-container: #ffdea3;
+$secondary-container: #f7dfbb;
+$tertiary-container: #cfebc1;
+$error-container: #ffdad4;
 
-$on-primary-container: #d6e2ff;
-$on-secondary-container: #dae2f9;
-$on-tertiary-container: #fbd7fb;
-$on-error-container: #ffb4a9;
-$on-surface: #e4e2e6;
-$on-surface-variant: #c4c6d0;
+$on-primary-container: #281900;
+$on-secondary-container: #251a04;
+$on-tertiary-container: #0a2006;
+$on-error-container: #410001;
+$on-surface: #1e1b16;
+$on-surface-variant: #4e4639;
 
-$inverseOnSurface: #2f3033;
-$inversePrimary: #005ac5;
+$inverseOnSurface: #f8efe6;
+$inversePrimary: #f8bd48;
 
 @import './main.scss';
