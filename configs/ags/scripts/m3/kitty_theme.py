@@ -11,7 +11,7 @@ foreground            {primary}
 background            {background}
 selection_foreground  {surface}
 selection_background  {tertiary}
-background_opacity 0.7
+background_opacity 0.8
 shell fish
 
 url_color {inversePrimary}

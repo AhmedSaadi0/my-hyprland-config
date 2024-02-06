@@ -52,7 +52,7 @@ class PrayerTimesService extends Service {
     initPrayerTimes() {
         Utils.execAsync([
             `curl`,
-            `https://api.aladhan.com/v1/timingsByCity/${formattedDate}?city=sanaa&country=yemen`
+            `https://api.aladhan.com/v1/timingsByCity/${formattedDate}?city=${settings.prayerTimes.city}&country=${settings.prayerTimes.country}`
         ]).then(val => {
             const jsonData = JSON.parse(val);
             this.state = jsonData;

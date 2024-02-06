@@ -1361,7 +1361,7 @@ menu {
 }
 
 menuitem {
-    // border-radius: $border-radius;
+    border-radius: $border-radius;
     background: $menu-bg ;
     color: $menu-fg ;
     // padding: 1rem 0.5rem;
@@ -1402,7 +1402,7 @@ menuitem:hover {
 }
 
 .weather-menu-detail-box {
-    margin: 0.4rem 1rem;
+    margin: 0rem 1rem;
 }
 
 .weather-menu-today-box {
@@ -1482,5 +1482,9 @@ menuitem:hover {
 }
 
 .weather-menu-clouds {
+    font-size: 1.3rem;
+}
+
+.weather-menu-min-max {
     font-size: 1.3rem;
 }

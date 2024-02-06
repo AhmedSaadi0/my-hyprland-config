@@ -22,8 +22,8 @@ class ThemeService extends Service {
     rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
     wallpapers_list = [];
 
-    CACHE_FILE_PATH = `/home/${USER}/.cache/ahmed-hyprland-conf.temp`
-    wallpaperIntervalId
+    CACHE_FILE_PATH = `/home/${USER}/.cache/ahmed-hyprland-conf.temp`;
+    wallpaperIntervalId;
     selectedLightWallpaper = 0;
     selectedDarkWallpaper = 0;
 
@@ -235,7 +235,7 @@ class ThemeService extends Service {
         execAsync([
             "sed",
             "-i",
-            `42s|.*|${kittyBind}|`,
+            `42s|.*|${konsoleBind}|`,
             `/home/${USER}/.config/hypr/binding.conf`
         ]).then(() => {
             timeout(1000, () => {

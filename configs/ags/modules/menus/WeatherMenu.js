@@ -90,6 +90,11 @@ const MenuRevealer = () => {
         className: "weather-menu-clouds",
     });
 
+    const minAndMax = Widget.Label({
+        xalign: 0,
+        className: "weather-menu-min-max",
+    });
+
     const generalInformation = Widget.Box({
         vertical: true,
         className: "weather-menu-general-information-box",
@@ -115,7 +120,8 @@ const MenuRevealer = () => {
             humidity,
             pressure,
             wind,
-            clouds
+            clouds,
+            minAndMax
         ]
     });
 
@@ -154,7 +160,7 @@ const MenuRevealer = () => {
             ],
         }).hook(weatherService, box => {
             weatherIcon.label = weatherService.weatherCode;
-            weatherValue.label = `${weatherService.arValue} | ${weatherService.tempC} C°`;
+            weatherValue.label = `${weatherService.arValue}, ${weatherService.tempC} C°`;
             weatherCity.label = weatherService.areaName;
 
             sunrise.children[0].label = weatherService.sunrise;
@@ -170,6 +176,7 @@ const MenuRevealer = () => {
             pressure.label = `الضغط : ${weatherService.pressure}`;
             wind.label = `الرياح : ${weatherService.windspeedKmph}`;
             clouds.label = `السحب : ${weatherService.cloudcover}`;
+            minAndMax.label = `الصغرى والعلياء : ${weatherService.minTempC} - ${weatherService.maxTempC}`
 
             today1.children[0].label = weatherService.hourly.hour1.time;
             today1.children[1].label = `${weatherService.hourly.hour1.weatherCode} ${weatherService.hourly.hour1.tempC} C°`;

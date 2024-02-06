@@ -72,7 +72,7 @@ class WeatherService extends Service {
     getWeather() {
         Utils.execAsync([
             'curl',
-            `ar.wttr.in/${settings.weather.location}?format=${settings.weather.format}`
+            `${settings.weather.language}.wttr.in/${settings.weather.location}?format=${settings.weather.format}`
         ]).then(val => {
             const jsonData = JSON.parse(val);
             this.state = jsonData;
@@ -109,23 +109,38 @@ class WeatherService extends Service {
     }
 
     isDay() {
-        const sunsetTime = "18:30";
+        const sunriseTime = this.sunrise;
+        const sunsetTime = this.sunset;
 
-        const currentDate = new Date();
+        const currentTime = new Date();
+        const sunrise = new Date();
+        const sunset = new Date();
 
-        const currentHour = currentDate.getHours();
-        const currentMinute = currentDate.getMinutes();
+        const sunriseComponents = sunriseTime.split(" ")[0].split(":");
+        const sunriseHour = Number(sunriseComponents[0]);
+        const sunriseMinute = Number(sunriseComponents[1]);
+        const sunrisePeriod = sunriseTime.split(" ")[1];
 
-        const [sunsetHour, sunsetMinute] = sunsetTime.split(":").map(Number);
+        const sunsetComponents = sunsetTime.split(" ")[0].split(":");
+        const sunsetHour = Number(sunsetComponents[0]);
+        const sunsetMinute = Number(sunsetComponents[1]);
+        const sunsetPeriod = sunsetTime.split(" ")[1];
 
-        const sunsetMinutes = sunsetHour * 60 + sunsetMinute;
-        const currentMinutes = currentHour * 60 + currentMinute;
+        sunrise.setHours(sunriseHour + (sunrisePeriod === "PM" && sunriseHour !== 12 ? 12 : 0));
+        sunrise.setMinutes(sunriseMinute);
 
-        return currentMinutes < sunsetMinutes;
+        sunset.setHours(sunsetHour + (sunsetPeriod === "PM" && sunsetHour !== 12 ? 12 : 0));
+        sunset.setMinutes(sunsetMinute);
+
+        return currentTime > sunrise && currentTime < sunset;
     }
 
     get arValue() {
-        return this.state?.current_condition?.[0]?.lang_ar?.[0]?.value || '';
+        try {
+            return this.state?.current_condition?.[0]?.lang_ar[0].value;
+        } catch (TypeError) {
+            return this.state?.current_condition?.[0]?.weatherDesc?.[0]?.value || '';
+        }
     }
 
     get weatherCode() {
@@ -178,11 +193,11 @@ class WeatherService extends Service {
     }
 
     get sunrise() {
-        return this.state?.weather?.[0].astronomy[0].sunrise || '';
+        return this.state?.weather?.[0].astronomy[0].sunrise || '18:00';
     }
 
     get sunset() {
-        return this.state?.weather?.[0].astronomy[0].sunset || '';
+        return this.state?.weather?.[0].astronomy[0].sunset || '05:00';
     }
 
     get moonrise() {
@@ -249,15 +264,19 @@ class WeatherService extends Service {
     }
 
     // -------------------------------------------
-
     getHourlyByIndex(index, dict) {
-
-        const hourly = {
-            tempC: `${this.state?.weather?.[0]?.hourly[index].tempC || ''} `,
-            lang_ar: `${this.state?.weather?.[0]?.hourly[index].lang_ar[0].value || ''} `,
-            weatherDesc: `${this.state?.weather?.[0]?.hourly[index].weatherDesc[0].value || ''} `,
-            weatherCode: `${dict[this.state?.weather?.[0]?.hourly[index].weatherCode] || ''}`,
+        var arValue = null;
+        try {
+            arValue = this.state?.weather?.[0]?.hourly?.[index]?.lang_ar[0]?.value;
+        } catch (TypeError) {
+            arValue = this.state?.weather?.[0]?.hourly?.[index]?.weatherDesc?.[0]?.value || '-';
         }
+        const hourly = {
+            tempC: this.state?.weather?.[0]?.hourly?.[index]?.tempC || '',
+            lang_ar: arValue,
+            weatherDesc: this.state?.weather?.[0]?.hourly?.[index]?.weatherDesc?.[0]?.value || '',
+            weatherCode: dict[this.state?.weather?.[0]?.hourly?.[index]?.weatherCode] || '',
+        };
 
         return hourly
     }
@@ -277,7 +296,7 @@ class WeatherService extends Service {
                 ...this.getHourlyByIndex(6, moon_icon_dic)
             },
             hour4: {
-                time: `00:00 AM`,
+                time: `12:00 AM`,
                 ...this.getHourlyByIndex(7, moon_icon_dic)
             },
         }

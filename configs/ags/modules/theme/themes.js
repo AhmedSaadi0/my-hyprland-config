@@ -322,7 +322,7 @@ const whiteFlower = {
         "rounding": 8,
         "drop_shadow": "no",
         "kitty": "white_flower.conf",
-        "konsole": "material-you",
+        "konsole": "light",
     },
     desktop_widget: "WhiteFlower",
     dynamic: false,
@@ -339,17 +339,17 @@ const dynamicM3Dark = {
     kvantum_theme: "MateriaDark", // not used
     gtk_theme: "Nordic-darker-standard-buttons",
 
-    qt_icon_theme: "Zafiro-Nord-Black-Blue",
-    gtk_icon_theme: "Zafiro-Nord-Black-Blue",
+    qt_icon_theme: "BeautySolar",
+    gtk_icon_theme: "BeautySolar",
 
     hypr: {
         "border_width": 2,
         "active_border": "rgba(678382ff) rgba(9d6c73ff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
-        "rounding": 8,
+        "rounding": 17,
         "drop_shadow": "no",
         "kitty": "material-you.conf",
-        "konsole": "material-you",
+        "konsole": "MaterialYouAlt",
     },
     desktop_widget: null,
     desktop_widget: "BHWidget",
@@ -366,17 +366,17 @@ const dynamicM3Light = {
     kvantum_theme: "MateriaDark", // not used
     gtk_theme: "Victory-black-light-compact",
 
-    qt_icon_theme: "Infinity-Dark",
-    gtk_icon_theme: "Infinity-Dark",
+    qt_icon_theme: "BeautySolar", //-Dark",
+    gtk_icon_theme: "BeautySolar", //-Dark",
 
     hypr: {
         "border_width": 2,
         "active_border": "rgba(678382ff) rgba(9d6c73ff) 0deg",
         "inactive_border": "rgba(59595900) 0deg",
-        "rounding": 8,
+        "rounding": 17,
         "drop_shadow": "no",
         "kitty": "material-you.conf",
-        "konsole": "material-you",
+        "konsole": "MaterialYouAlt",
     },
     // desktop_widget: null,
     desktop_widget: "BHWidget",

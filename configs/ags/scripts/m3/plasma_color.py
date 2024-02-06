@@ -4,13 +4,13 @@ from kde_material_you_colors.utils.m3_scheme_utils import (
     export_schemes,
 )
 from kde_material_you_colors.schemeconfigs import ThemeConfig
-from kde_material_you_colors.utils import plasma_utils, ksyntax_utils
+from kde_material_you_colors.utils import plasma_utils, ksyntax_utils, konsole_utils
 from css_theme import CssThemeExporter
 from kitty_theme import KittyThemeExporter
 from pathlib import Path
 
 
-class PlasmaColorExporter:
+class ColorExporter:
     extras = {}
     colors_dark = {}
     tones_error = {}
@@ -21,21 +21,22 @@ class PlasmaColorExporter:
 
     def __init__(self, wallpaper_data, ncolor, theme_mode):
         material_you_colors = get_material_you_colors(
-            wallpaper_data, ncolor=ncolor, source_type="image"
+            wallpaper_data,
+            ncolor=ncolor,
+            source_type="image",
         )
 
         path = Path(wallpaper_data)
-        print(wallpaper_data)
         if not path.exists():
             return
 
         schemes = ThemeConfig(
             material_you_colors,
             wallpaper_data,
-            0,
-            0,
-            0,
-            0,
+            1,
+            1,
+            100,
+            100,
             None,
         )
 
@@ -54,3 +55,13 @@ class PlasmaColorExporter:
         plasma_utils.make_scheme(schemes)
         plasma_utils.apply_color_schemes(theme_mode == "light")
         ksyntax_utils.export_schemes(schemes)
+
+        konsole_utils.export_scheme(
+            light=theme_mode == "light",
+            pywal_light=theme_mode == "light",
+            schemes=schemes,
+            konsole_opacity=90,
+            konsole_opacity_dark=90,
+            dark_light=theme_mode != "light",
+        )
+        konsole_utils.apply_color_scheme()

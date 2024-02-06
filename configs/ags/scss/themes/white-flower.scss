@@ -27,61 +27,6 @@ $on-tertiary-container: #321209;
 $on-surface: #1e1a1d;
 $on-surface-variant: #4e444b;
 
-
-// $primary: #8cceff;
-// $secondary: #b7c9d9;
-// $tertiary: #cfc0e8;
-// $background: #1a1c1e;
-// $outlined: #8b9198;
-
-// $on-primary: #00344e;
-// $on-secondary: #22323f;
-// $on-tertiary: #352b4b;
-// $on-background: #e2e2e5;
-
-// $primary-container: #004b6f;
-// $secondary-container: #384956;
-// $tertiary-container: #4c4162;
-// $surface: #1a1c1e;
-// $surface-variant: #41474d;
-
-// $on-primary-container: #cae6ff;
-// $on-secondary-container: #d3e5f5;
-// $on-tertiary-container: #eaddff;
-// $on-surface: #e2e2e5;
-// $on-surface-variant: #c1c7ce;
-
-// $primary: #d9b9ff;
-// $secondary: #cfc1da;
-// $tertiary: #f2b7c0;
-// $background: #1d1b1e;
-// $outlined: #958e99;
-
-// $on-primary: #411b6d;
-// $on-secondary: #352d40;
-// $on-tertiary: #4b252d;
-// $on-background: #e7e1e5;
-
-// $primary-container: #583485;
-// $secondary-container: #4c4357;
-// $tertiary-container: #653b43;
-// $surface: #1d1b1e;
-// $surface-variant: #4a454e;
-
-// $on-primary-container: #eedcff;
-// $on-secondary-container: #ecddf7;
-// $on-tertiary-container: #ffd9de;
-// $on-surface: #e7e1e5;
-// $on-surface-variant: #ccc4cf;
-
-// $bg-one: #eddee8;
-// $bg-two: #ffd6f7;
-// $bg-three: #ffdbd2;
-
-// $fg-one: #894587;
-// $fg-two: #6d5869;
-// $fg-three: #825246;
-
 $text-color: #454061;
 
 
@@ -122,6 +67,8 @@ $bar-prayer-times-box-color: $on-tertiary-container;
 // -------------------------------
 $bar-weather-background: linear-gradient(to right, $tertiary-container);
 $bar-weather-color: $on-tertiary-container;
+$weather-menu-box-bg: $background;
+$weather-menu-box-fg: $on-background;
 
 // -----------------------
 // --------- bar ---------
