@@ -41,7 +41,7 @@ class ThemeService extends Service {
     changeTheme(selectedTheme) {
         let theme = ThemesDictionary[selectedTheme];
 
-        this.stopDynamicWallpaper()
+        this.clearDynamicWallpaperInterval();
 
         if (theme.dynamic) {
             this.setDynamicWallpapers(theme.wallpaper_path, theme.gtk_mode, theme.interval);
@@ -130,9 +130,13 @@ class ThemeService extends Service {
                 this.callNextWallpaper(themeMode);
 
                 // Loop on wallpapers
-                this.wallpaperIntervalId = setInterval(() => {
-                    this.callNextWallpaper(themeMode);
-                }, interval);
+                if (this.dynamicWallpaperIsOn) {
+                    this.wallpaperIntervalId = setInterval(() => {
+                        this.callNextWallpaper(themeMode);
+                    }, interval);
+                } else {
+                    this.clearDynamicWallpaperInterval()
+                }
             })
             .catch(err => print(err));
     }
@@ -144,13 +148,17 @@ class ThemeService extends Service {
             this.startDynamicWallpaper();
     }
 
-    stopDynamicWallpaper() {
-        this.dynamicWallpaperStatus = false;
+    clearDynamicWallpaperInterval() {
         if (this.wallpaperIntervalId) {
             clearInterval(this.wallpaperIntervalId);
         }
+    }
+
+    stopDynamicWallpaper() {
+        this.dynamicWallpaperStatus = false;
+        this.clearDynamicWallpaperInterval();
         this.cacheVariables();
-        this.emit("changed")
+        this.emit("changed");
     }
 
     startDynamicWallpaper() {
