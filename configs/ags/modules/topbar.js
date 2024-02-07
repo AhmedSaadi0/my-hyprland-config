@@ -10,6 +10,7 @@ import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import weatherService from "./services/WeatherService.js";
 import prayerService from "./services/PrayerTimesService.js";
 import { Widget } from "./utils/imports.js";
+import themeService from "./services/ThemeService.js";
 
 
 const Clock = () => Label({
@@ -95,12 +96,31 @@ const PrayerTimes = () => {
     })
 }
 
+const DynamicWallpaper = () => Widget.Button({
+    className: 'unset dynamic-wallpaper',
+    onClicked: () => {
+        themeService.toggleDynamicWallpaper()
+    },
+}).hook(themeService, btn => {
+    if (!themeService.isDynamicTheme) {
+        btn.visible = false;
+        return;
+    }
+
+    btn.visible = true;
+    if (themeService.dynamicWallpaperIsOn)
+        btn.label = "";
+    else
+        btn.label = "";
+});
+
 // layout of the bar
 const Right = () => Box({
     children: [
         Workspaces(),
         HardwareBox(),
         PrayerTimes(),
+        DynamicWallpaper(),
         // NotificationIndicator(),
         // ClientTitle(),
     ],

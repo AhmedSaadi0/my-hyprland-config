@@ -121,6 +121,22 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
     VISUAL=/usr/bin/nano crontab -e
     * * * * * ~/.config/hypr/scripts/battery.sh
 
+### تغيير منطقة الطقس واوقات الصلاة
+- قم بتغيير الاعدادت من ملف الاعدادات `.configs/ags/modules/settings.js`
+```javascript
+weather:{
+	// provider is 'ar.wttr.in'
+	language: 'ar', // Not implemented yot - only arabic is supported
+	location: 'sanaa',
+	format: 'j1',
+},
+prayerTimes:{
+	// provider is 'api.aladhan.com'
+	city: 'sanaa',
+	country: 'yemen',
+},
+```
+
 ### اعداد الثيم التلقائي M3 من قوقل
 #### قم بتثبيت [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors) في نظامك
 
@@ -267,6 +283,22 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 ### Creating crontab for battery 40-80 rule:
     VISUAL=/usr/bin/nano crontab -e
     * * * * * ~/.config/hypr/scripts/battery.sh
+
+### Change weather & prayer times location
+- From the settings file in `.configs/ags/modules/settings.js`
+```javascript
+weather:{
+	// provider is 'ar.wttr.in'
+	language: 'ar', // Not implemented yot - only arabic is supported
+	location: 'sanaa',
+	format: 'j1',
+},
+prayerTimes:{
+	// provider is 'api.aladhan.com'
+	city: 'sanaa',
+	country: 'yemen',
+},
+```
 
 ### Setting up Material 3 theme
 - You need to have [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors) installed on your system

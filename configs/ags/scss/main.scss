@@ -38,6 +38,12 @@ $top-bar-widget-margins: $bar-top-margin+0.2rem;
     font-size: 1.1rem;
 }
 
+.dynamic-wallpaper{
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-bottom-margin;
+    padding: 0rem 0.8rem;
+}
+
 .workspaces:dir(rtl) {
     margin-right: 0.4rem;
     margin-left: $top-bar-widget-margins;

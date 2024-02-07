@@ -9,8 +9,10 @@ import settings from "../settings.js";
 class ThemeService extends Service {
     static {
         Service.register(this,
+            {},
             {
-                'selected-theme': []
+                'dynamicWallpaperIsOn': ['boolean', 'r'],
+                'isDynamicTheme': ['boolean', 'r'],
             }
         );
     }
@@ -20,12 +22,13 @@ class ThemeService extends Service {
     plasmaColorsPath = App.configDir + '/modules/theme/plasma-colors/';
     selectedTheme = UNICAT_THEME;
     rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
-    wallpapers_list = [];
+    wallpapersList = [];
 
     CACHE_FILE_PATH = `/home/${USER}/.cache/ahmed-hyprland-conf.temp`;
     wallpaperIntervalId;
     selectedLightWallpaper = 0;
     selectedDarkWallpaper = 0;
+    dynamicWallpaperStatus = true;
 
     constructor() {
         super();
@@ -38,9 +41,7 @@ class ThemeService extends Service {
     changeTheme(selectedTheme) {
         let theme = ThemesDictionary[selectedTheme];
 
-        if (this.wallpaperIntervalId) {
-            clearInterval(this.wallpaperIntervalId);
-        }
+        this.stopDynamicWallpaper()
 
         if (theme.dynamic) {
             this.setDynamicWallpapers(theme.wallpaper_path, theme.gtk_mode, theme.interval);
@@ -110,37 +111,74 @@ class ThemeService extends Service {
         }).catch(print)
     }
 
+    get dynamicWallpaperIsOn() {
+        return this.dynamicWallpaperStatus
+    }
+
+    get isDynamicTheme() {
+        return ThemesDictionary[this.selectedTheme].dynamic
+    }
+
     setDynamicWallpapers(path, themeMode, interval) {
         Utils.execAsync([settings.scripts.get_wallpapers, path])
             .then(out => {
 
                 const wallpapers = JSON.parse(out);
-                this.wallpapers_list = wallpapers
+                this.wallpapersList = wallpapers
 
                 // First call
-                this.callNewRandomWallpaper(themeMode);
+                this.callNextWallpaper(themeMode);
 
                 // Loop on wallpapers
                 this.wallpaperIntervalId = setInterval(() => {
-                    this.callNewRandomWallpaper(themeMode);
+                    this.callNextWallpaper(themeMode);
                 }, interval);
             })
             .catch(err => print(err));
     }
 
-    callNewRandomWallpaper(themeMode) {
+    toggleDynamicWallpaper() {
+        if (this.isDynamicTheme && this.dynamicWallpaperIsOn)
+            this.stopDynamicWallpaper();
+        else
+            this.startDynamicWallpaper();
+    }
+
+    stopDynamicWallpaper() {
+        this.dynamicWallpaperStatus = false;
+        if (this.wallpaperIntervalId) {
+            clearInterval(this.wallpaperIntervalId);
+        }
+        this.cacheVariables();
+        this.emit("changed")
+    }
+
+    startDynamicWallpaper() {
+        let theme = ThemesDictionary[this.selectedTheme];
+        this.dynamicWallpaperStatus = true;
+        if (this.wallpaperIntervalId) {
+            clearInterval(this.wallpaperIntervalId);
+        }
+        this.setDynamicWallpapers(theme.wallpaper_path, theme.gtk_mode, theme.interval);
+        this.cacheVariables();
+        this.emit("changed");
+    }
+
+    callNextWallpaper(themeMode) {
         // const randomIndex = Math.floor(Math.random() * this.wallpapers_list.length);
         let selectedWallpaperIndex = 0;
 
         if (themeMode == "dark") {
             selectedWallpaperIndex = this.selectedDarkWallpaper;
-            this.selectedDarkWallpaper = (this.selectedDarkWallpaper + 1) % this.wallpapers_list.length;
+            if (this.dynamicWallpaperIsOn)
+                this.selectedDarkWallpaper = (this.selectedDarkWallpaper + 1) % this.wallpapersList.length;
         } else {
             selectedWallpaperIndex = this.selectedLightWallpaper;
-            this.selectedLightWallpaper = (this.selectedLightWallpaper + 1) % this.wallpapers_list.length;
+            if (this.dynamicWallpaperIsOn)
+                this.selectedLightWallpaper = (this.selectedLightWallpaper + 1) % this.wallpapersList.length;
         }
 
-        const wallpaper = this.wallpapers_list[selectedWallpaperIndex];
+        const wallpaper = this.wallpapersList[selectedWallpaperIndex];
 
         this.changeWallpaper(wallpaper);
         this.createM3ColorSchema(wallpaper, themeMode);
@@ -165,11 +203,6 @@ class ThemeService extends Service {
             plasmaCmd,
             plasmaColor.split('.')[0]
         ]).catch(print);
-        // execAsync([
-        //     this.plasmaColorChanger,
-        //     '-c',
-        //     this.plasmaColorsPath + plasmaColor
-        // ]).catch(print);
     }
 
     changeGTKTheme(GTKTheme, gtkMode, iconTheme) {
@@ -318,6 +351,7 @@ class ThemeService extends Service {
             "selected_theme": this.selectedTheme,
             "selected_dark_wallpaper": this.selectedDarkWallpaper,
             "selected_light_wallpaper": this.selectedLightWallpaper,
+            "dynamic_wallpaper_status": this.dynamicWallpaperStatus,
         }
         Utils.writeFile(JSON.stringify(newData, null, 2), this.CACHE_FILE_PATH).catch(err => print(err))
     }
@@ -328,6 +362,7 @@ class ThemeService extends Service {
             this.selectedTheme = cachedData.selected_theme
             this.selectedDarkWallpaper = cachedData.selected_dark_wallpaper;
             this.selectedLightWallpaper = cachedData.selected_light_wallpaper;
+            this.dynamicWallpaperStatus = cachedData.dynamic_wallpaper_status;
 
             if (!this.selectedTheme) {
                 this.selectedTheme = UNICAT_THEME
