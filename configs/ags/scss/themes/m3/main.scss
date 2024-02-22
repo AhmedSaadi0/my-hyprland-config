@@ -9,7 +9,7 @@ $border-radius: 1.5rem;
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
-$workspace-btn: $tertiary;
+$workspace-btn: rgba($tertiary, 0.5);
 $active-workspace-btn: $on-primary-container;
 $workspace-background: $primary-container;
 $workspace-focused: $primary;
@@ -58,7 +58,7 @@ $wifi-icon-color: $wifi-name-color;
 // --------- systray ---------
 // ---------------------------
 $systray-background: $surface-variant;
-$systray-btn-background: $tertiary-container;
+$systray-btn-background: $systray-background;
 $systray-btn-hover-background: $workspace-focused;
 
 // --------------------------------
