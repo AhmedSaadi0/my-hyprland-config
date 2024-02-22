@@ -1,13 +1,14 @@
 import os
-from kde_material_you_colors.utils.m3_scheme_utils import (
-    get_material_you_colors,
-    export_schemes,
-)
-from kde_material_you_colors.schemeconfigs import ThemeConfig
-from kde_material_you_colors.utils import plasma_utils, ksyntax_utils, konsole_utils
-from css_theme import CssThemeExporter
-from kitty_theme import KittyThemeExporter
 from pathlib import Path
+
+from css_theme import CssThemeExporter
+from kde_material_you_colors.schemeconfigs import ThemeConfig
+from kde_material_you_colors.utils import konsole_utils, ksyntax_utils, plasma_utils
+from kde_material_you_colors.utils.m3_scheme_utils import (
+    export_schemes,
+    get_material_you_colors,
+)
+from kitty_theme import KittyThemeExporter
 
 
 class ColorExporter:
