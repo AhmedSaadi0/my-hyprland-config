@@ -121,7 +121,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
     VISUAL=/usr/bin/nano crontab -e
     * * * * * ~/.config/hypr/scripts/battery.sh
 
-### تغيير منطقة الطقس واوقات الصلاة
+### تغيير منطقة الطقس واوقات الصلاة ومراقب سرعة النت
 - قم بتغيير الاعدادت من ملف الاعدادات `.configs/ags/modules/settings.js`
 ```javascript
 weather:{
@@ -134,6 +134,12 @@ prayerTimes:{
 	// provider is 'api.aladhan.com'
 	city: 'sanaa',
 	country: 'yemen',
+},
+hardware: {
+	network: {
+		rx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
+		tx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
+	},
 },
 ```
 
@@ -284,7 +290,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
     VISUAL=/usr/bin/nano crontab -e
     * * * * * ~/.config/hypr/scripts/battery.sh
 
-### Change weather & prayer times location
+### Change weather, prayer times location, and network speed monitors
 - From the settings file in `.configs/ags/modules/settings.js`
 ```javascript
 weather:{
@@ -297,6 +303,12 @@ prayerTimes:{
 	// provider is 'api.aladhan.com'
 	city: 'sanaa',
 	country: 'yemen',
+},
+hardware: {
+	network: {
+		rx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
+		tx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
+	},
 },
 ```
 
