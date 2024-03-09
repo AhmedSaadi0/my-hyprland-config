@@ -5,8 +5,7 @@ import { RamWidget } from './ram.js';
 import { Box } from 'resource:///com/github/Aylur/ags/widget.js';
 
 export const HardwareBox = () =>
-  Box({
-    className: 'hardware-box unset',
-    children: [CpuWidget(), RamWidget(), BatteryWidget(), TempWidget()],
-  });
-
+    Box({
+        className: 'hardware-box unset',
+        children: [CpuWidget(), RamWidget(), BatteryWidget(), TempWidget()],
+    });

@@ -1,7 +1,7 @@
-@import './themes/m3/dynamic.scss';
+@import './themes/circles.scss';
 
 .unset {
-    all: unset;
+  all: unset;
 }
 
 // * {
@@ -9,462 +9,458 @@
 // }
 
 .un-hover:hover {
-    all: unset;
+  all: unset;
 }
 
 .icon-font {
-    font-family: $icon-font-family;
+  font-family: $icon-font-family;
 }
 
-$top-bar-widget-margins: $bar-top-margin+0.2rem;
+$top-bar-widget-margins: $bar-top-margin + 0.2rem;
 
 /* --------------------------------------------- */
 /* -------------- Top bar widgets -------------- */
 /* --------------------------------------------- */
 .workspaces button:active {
-    color: $active-workspace-btn;
-    border-radius: 0px;
+  color: $active-workspace-btn;
+  border-radius: 0px;
 }
 
 .workspaces {
-    padding-right: 4px;
-    padding-left: 4px;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-bottom-margin + 0.1rem;
-    background: $workspace-background;
-    border-radius: $border-radius;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    font-size: 1.1rem;
+  padding-right: 4px;
+  padding-left: 4px;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin + 0.1rem;
+  background: $workspace-background;
+  border-radius: $border-radius;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1.1rem;
 }
 
-.dynamic-wallpaper{
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-bottom-margin;
-    padding: 0rem 0.8rem;
+.dynamic-wallpaper {
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin;
+  padding: 0rem 0.8rem;
 }
 
 .workspaces:dir(rtl) {
-    margin-right: 0.4rem;
-    margin-left: $top-bar-widget-margins;
+  margin-right: 0.4rem;
+  margin-left: $top-bar-widget-margins;
 }
 
 .workspaces:dir(ltr) {
-    margin-right: $top-bar-widget-margins;
-    margin-left: 0.4rem;
+  margin-right: $top-bar-widget-margins;
+  margin-left: 0.4rem;
 }
 
 .workspaces button {
-    background: $workspace-background;
-    color: $workspace-btn;
-    border: 0rem;
+  background: $workspace-background;
+  color: $workspace-btn;
+  border: 0rem;
 }
 
 .workspaces button.focused {
-    border-bottom: 1px solid $workspace-focused-bottom;
-    color: $workspace-focused;
-    font-family: $icon-font-family;
-    border-radius: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-right: 0.8rem;
-    padding-left: 0.8rem;
-    font-size: large;
-    // min-width: 1em;
+  border-bottom: 1px solid $workspace-focused-bottom;
+  color: $workspace-focused;
+  font-family: $icon-font-family;
+  border-radius: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 0.8rem;
+  padding-left: 0.8rem;
+  font-size: large;
+  // min-width: 1em;
 }
 
 .workspaces button.unfocused {
-    font-family: $icon-font-family;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    padding-right: 0.8rem;
-    padding-left: 0.8rem;
-    // min-width: 1em;
-    border-radius: 0px;
-    font-size: large;
+  font-family: $icon-font-family;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 0.8rem;
+  padding-left: 0.8rem;
+  // min-width: 1em;
+  border-radius: 0px;
+  font-size: large;
 }
 
 .workspaces button.has-windows {
-    color: $workspace-has-windows;
+  color: $workspace-has-windows;
 }
 
 .workspaces button:hover {
-    background: $workspace-hover-background;
-    color: $workspace-hover-color;
+  background: $workspace-hover-background;
+  color: $workspace-hover-color;
 }
 
 .clock {
-    // font-size: 1em;
-    // font-family: "VEXA light R"; 
-    // font-family: "ae_Ostorah"; 
-    background: $clock-background;
-    color: $clock-color;
-    border-radius: $border-radius;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-top-margin;
-    padding-left: 1em;
-    padding-right: 1em;
+  // font-size: 1em;
+  // font-family: "VEXA light R";
+  // font-family: "ae_Ostorah";
+  background: $clock-background;
+  color: $clock-color;
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-top-margin;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
-
 .bar-weather-box {
-    font-size: 1em;
-    // font-family: "VEXA light R"; 
-    background: $bar-weather-background;
-    color: $bar-weather-color;
-    border-radius: $border-radius;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-top-margin;
-    margin-left: $top-bar-widget-margins;
-    margin-right: $top-bar-widget-margins;
+  font-size: 1em;
+  // font-family: "VEXA light R";
+  background: $bar-weather-background;
+  color: $bar-weather-color;
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-top-margin;
+  margin-left: $top-bar-widget-margins;
+  margin-right: $top-bar-widget-margins;
 }
 
 .bar-weather-box:dir(rtl) {
-    padding-left: 0.8rem;
+  padding-left: 0.8rem;
 }
 
 .bar-weather-box:dir(ltr) {
-    padding-right: 0.8rem;
+  padding-right: 0.8rem;
 }
 
 .bar-weather-icon {
-    font-family: $icon-font-family;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+  font-family: $icon-font-family;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 @if variable-exists(bar-weather-icon-bg) {
-    .bar-weather-icon:dir(rtl) {
-        background: $bar-weather-icon-bg;
-        padding-left: 0.4rem;
-        color: $bar-weather-icon-fg;
-        border-top-right-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
-        margin-left: 0.5rem;
-    }
+  .bar-weather-icon:dir(rtl) {
+    background: $bar-weather-icon-bg;
+    padding-left: 0.4rem;
+    color: $bar-weather-icon-fg;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    margin-left: 0.5rem;
+  }
 
-    .bar-weather-icon:dir(ltr) {
-        background: $bar-weather-icon-bg;
-        color: $bar-weather-icon-fg;
-        border-top-left-radius: $border-radius;
-        border-bottom-left-radius: $border-radius;
-        margin-right: 0.5rem;
-    }
-
+  .bar-weather-icon:dir(ltr) {
+    background: $bar-weather-icon-bg;
+    color: $bar-weather-icon-fg;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    margin-right: 0.5rem;
+  }
 }
 
 .bar-bg {
-    background: rgba(#000000, 0.0);
-    min-height: 8px;
-    border-radius: 0rem;
+  background: rgba(#000000, 0);
+  min-height: 8px;
+  border-radius: 0rem;
 }
 
 .bar {
-    background: $bar-background;
-    color: $bar-color;
-    min-height: 8px;
+  background: $bar-background;
+  color: $bar-color;
+  min-height: 8px;
 
-    margin-bottom: 0.5rem; // Add some margin to show shadows
+  margin-bottom: 0.5rem; // Add some margin to show shadows
 }
 
 .small-shadow {
-    transition-property: background;
-    transition-duration: .5s;
+  transition-property: background;
+  transition-duration: 0.5s;
 }
 
 .shadow {
-    transition-property: background;
-    transition-duration: .5s;
+  transition-property: background;
+  transition-duration: 0.5s;
 }
 
 .small-shadow:dir(rtl) {
-    box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
+  box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
 }
 
 .small-shadow:dir(ltr) {
-    box-shadow: 1px 2px 2px 1px rgba(#000000, 0.1);
+  box-shadow: 1px 2px 2px 1px rgba(#000000, 0.1);
 }
 
 .shadow:dir(rtl) {
-    box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
+  box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
 }
 
 .shadow:dir(ltr) {
-    box-shadow: 1px 2px 3px 1px rgba(#000000, 0.3);
+  box-shadow: 1px 2px 3px 1px rgba(#000000, 0.3);
 }
 
-
 .internet-box {
-    background: $internet-box-background;
-    color: $internet-box-color;
-    /* min-width: 100px; */
-    border-radius: $border-radius;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-top-margin;
+  background: $internet-box-background;
+  color: $internet-box-color;
+  /* min-width: 100px; */
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-top-margin;
 }
 
 .internet-box:dir(rtl) {
-    margin-left: $top-bar-widget-margins;
-    padding-right: 0.8rem;
+  margin-left: $top-bar-widget-margins;
+  padding-right: 0.8rem;
 }
 
 .internet-box:dir(ltr) {
-    margin-right: $top-bar-widget-margins;
-    padding-left: 0.8rem;
+  margin-right: $top-bar-widget-margins;
+  padding-left: 0.8rem;
 }
 
 .wifi-name-label {
-    /* margin-left: 0.7em; */
-    margin-top: 0.2em;
-    margin-bottom: 0.2em;
-    background: $wifi-name-background;
-    color: $wifi-name-color;
-    font-weight: bold;
+  /* margin-left: 0.7em; */
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  background: $wifi-name-background;
+  color: $wifi-name-color;
+  font-weight: bold;
 }
 
 .wifi-name-label:dir(rtl) {
-    padding-left: 0.5em;
-    padding-right: 1em;
-    margin-right: 0.2em;
-    border-top-right-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+  padding-left: 0.5em;
+  padding-right: 1em;
+  margin-right: 0.2em;
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 }
 
 .wifi-name-label:dir(ltr) {
-    padding-right: 0.5em;
-    padding-left: 1em;
-    margin-left: 0.2em;
-    border-top-left-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
+  padding-right: 0.5em;
+  padding-left: 1em;
+  margin-left: 0.2em;
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
 }
 
 .wifi-icon-strength {
-    font-family: $icon-font-family;
-    margin-top: 0.2em;
-    margin-bottom: 0.2em;
-    background: $wifi-icon-background;
-    color: $wifi-icon-color;
+  font-family: $icon-font-family;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  background: $wifi-icon-background;
+  color: $wifi-icon-color;
 }
 
 .wifi-icon-strength:dir(rtl) {
-    margin-left: 0.2em;
-    padding-right: 0.5em;
-    padding-left: 0.6em;
-    border-top-left-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
+  margin-left: 0.2em;
+  padding-right: 0.5em;
+  padding-left: 0.6em;
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
 }
 
 .wifi-icon-strength:dir(ltr) {
-    margin-right: 0.2rem;
-    padding-left: 0.2rem;
-    padding-right: 1rem;
-    border-top-right-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+  margin-right: 0.2rem;
+  padding-left: 0.2rem;
+  padding-right: 1rem;
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 }
 
 .systray {
-    background: $systray-background;
-    border-radius: $border-radius;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-top-margin;
-    min-height: 0.1rem;
+  background: $systray-background;
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-top-margin;
+  min-height: 0.1rem;
 }
 
 .systray:dir(rtl) {
-    margin-left: $top-bar-widget-margins;
+  margin-left: $top-bar-widget-margins;
 }
 
 .systray:dir(ltr) {
-    margin-right: $top-bar-widget-margins;
+  margin-right: $top-bar-widget-margins;
 }
 
 .systray button {
-    background: $systray-btn-background;
-    border-radius: $border-radius;
-    padding-right: 0.4rem;
-    padding-left: 0.4rem;
-    min-height: 0.1rem;
-    // font-size: 1rem;
+  background: $systray-btn-background;
+  border-radius: $border-radius;
+  padding-right: 0.4rem;
+  padding-left: 0.4rem;
+  min-height: 0.1rem;
+  // font-size: 1rem;
 }
 
 .systray button:hover {
-    background: $systray-btn-hover-background;
+  background: $systray-btn-hover-background;
 }
 
 .tray-btn {
-    border: 0rem;
+  border: 0rem;
 }
 
 /* ------------------------------------- */
 /* -------------- Battery -------------- */
 /* ------------------------------------- */
 .battery {
-    background: $battery-background;
-    color: $battery-color;
-    min-width: 1.5rem;
-    min-height: 0.5rem;
-    font-size: 0.2rem;
+  background: $battery-background;
+  color: $battery-color;
+  min-width: 1.5rem;
+  min-height: 0.5rem;
+  font-size: 0.2rem;
 }
 
 @keyframes colorChange {
-    0% {
-        color: $battery-color;
-    }
+  0% {
+    color: $battery-color;
+  }
 
-    50% {
-        color: $battery-background;
-    }
+  50% {
+    color: $battery-background;
+  }
 
-    100% {
-        color: $battery-color;
-    }
+  100% {
+    color: $battery-color;
+  }
 }
 
 .battery-inner {
-    color: $battery-inner-color;
-    font-family: $icon-font-family;
-    // margin-right: 0.13rem;
-    font-size: 0.4rem;
+  color: $battery-inner-color;
+  font-family: $icon-font-family;
+  // margin-right: 0.13rem;
+  font-size: 0.4rem;
 }
 
 .battery-inner-charging {
-    color: $battery-inner-color;
-    font-family: $icon-font-family;
-    // margin-right: 0.13rem;
-    font-size: 0.4rem;
-    animation: colorChange 2.0s infinite;
+  color: $battery-inner-color;
+  font-family: $icon-font-family;
+  // margin-right: 0.13rem;
+  font-size: 0.4rem;
+  animation: colorChange 2s infinite;
 }
 
 /* --------------------------------- */
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-    background: $cpu-background;
-    color: $cpu-color;
-    min-width: 1.5rem;
-    min-height: 0.1rem;
-    font-size: 0.2rem;
+  background: $cpu-background;
+  color: $cpu-color;
+  min-width: 1.5rem;
+  min-height: 0.1rem;
+  font-size: 0.2rem;
 }
 
 .cpu-inner {
-    color: $cpu-inner-color;
-    font-family: $icon-font-family;
-    // margin-right: 0.13rem;
-    font-size: 0.4rem;
+  color: $cpu-inner-color;
+  font-family: $icon-font-family;
+  // margin-right: 0.13rem;
+  font-size: 0.4rem;
 }
 
 /* ---------------------------------- */
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-    background: $temp-background;
-    color: $temp-color;
-    min-width: 1.5rem;
-    min-height: 0.1rem;
-    font-size: 0.2rem;
+  background: $temp-background;
+  color: $temp-color;
+  min-width: 1.5rem;
+  min-height: 0.1rem;
+  font-size: 0.2rem;
 }
 
 .no-hover:hover {
-    all: unset;
+  all: unset;
 }
 
 .temp-inner {
-    color: $temp-inner-color;
-    font-family: $icon-font-family;
-    // margin-right: 0.13rem;
-    font-size: 0.4rem;
+  color: $temp-inner-color;
+  font-family: $icon-font-family;
+  // margin-right: 0.13rem;
+  font-size: 0.4rem;
 }
 
 /* --------------------------------- */
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-    background: $ram-background;
-    color: $ram-color;
-    min-width: 1.5rem;
-    min-height: 0.1rem;
-    font-size: 0.2rem;
+  background: $ram-background;
+  color: $ram-color;
+  min-width: 1.5rem;
+  min-height: 0.1rem;
+  font-size: 0.2rem;
 }
 
 .ram-inner {
-    color: $ram-inner-color;
-    font-family: $icon-font-family;
-    // margin-right: 0.13rem;
-    font-size: 0.4rem;
+  color: $ram-inner-color;
+  font-family: $icon-font-family;
+  // margin-right: 0.13rem;
+  font-size: 0.4rem;
 }
 
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-    background: $hardware-box-color;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    border-radius: $border-radius;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-bottom-margin;
+  background: $hardware-box-color;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin;
 }
 
 .bar-hw-temp-box:dir(rtl) {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .bar-hw-temp-box:dir(ltr) {
-    margin-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .bar-hw-ram-box:dir(rtl) {
-    margin-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .bar-hw-ram-box:dir(ltr) {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .bar-hw-cpu-box:dir(rtl) {
-    margin-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .bar-hw-cpu-box:dir(ltr) {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }
-
 
 /* ------------------------------------ */
 /* -------------- Volume -------------- */
 /* ------------------------------------ */
 .volume {
-    border-radius: $border-radius;
-    margin-top: 6px;
-    margin-bottom: 6px;
-    padding-left: 1em;
-    padding-right: 1em;
+  border-radius: $border-radius;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .vol-stack:dir(rtl) {
-    margin-left: 1em;
+  margin-left: 1em;
 }
 
 .vol-stack:dir(ltr) {
-    margin-right: 1em;
+  margin-right: 1em;
 }
 
 .vol-osd {
-    background: $vol-osd-background;
-    padding: 1rem;
-    border-radius: $border-radius;
-    border: $border-size solid $vol-osd-border-color;
-    margin: 1.5rem;
+  background: $vol-osd-background;
+  padding: 1rem;
+  border-radius: $border-radius;
+  border: $border-size solid $vol-osd-border-color;
+  margin: 1.5rem;
 }
 
 .vol-osd:dir(rtl) {
-    padding-left: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 .vol-osd:dir(ltr) {
-    padding-right: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 // scale trough {
@@ -472,58 +468,58 @@ $top-bar-widget-margins: $bar-top-margin+0.2rem;
 //     background: $scale-highlight-background;
 // }
 scale trough highlight {
-    border-radius: $border-radius;
-    background: $scale-highlight-background;
+  border-radius: $border-radius;
+  background: $scale-highlight-background;
 }
 
 scale slider {
-    background: $scale-slider-background;
-    // min-width: 1px;
-    // min-height: 1px;  
+  background: $scale-slider-background;
+  // min-width: 1px;
+  // min-height: 1px;
 }
 
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
 .notifications-revealer-box {
-    background: $notifications-revealer-box-background;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-bottom-margin;
-    border-radius: $border-radius;
-    padding-left: 0.7rem;
-    padding-right: 0.7rem;
-    background: #fff;
-    min-width: 100rem;
+  background: $notifications-revealer-box-background;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin;
+  border-radius: $border-radius;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  background: #fff;
+  min-width: 100rem;
 }
 
 .notifications-revealer-box:dir(rtl) {
-    margin-left: 0.7rem;
-    margin-right: 0rem;
+  margin-left: 0.7rem;
+  margin-right: 0rem;
 }
 
 .notifications-revealer-box:dir(ltr) {
-    margin-right: 0.7rem;
-    margin-left: 0rem;
+  margin-right: 0.7rem;
+  margin-left: 0rem;
 }
 
 .notification-popups {
-    border: $border-size solid $notifications-border;
-    border-radius: $border-radius;
-    padding: 1rem;
-    background: $notifications-popup-list-background;
-    color: $text-color;
+  border: $border-size solid $notifications-border;
+  border-radius: $border-radius;
+  padding: 1rem;
+  background: $notifications-popup-list-background;
+  color: $text-color;
 }
 
 .notifications-popup-list {
-    border-radius: $border-radius;
-    background: rgba($color: #000000, $alpha: 0);
+  border-radius: $border-radius;
+  background: rgba($color: #000000, $alpha: 0);
 }
 
 .notification-close-button {
-    // padding-top: 0.5rem;
-    // padding-bottom: 0.5rem;
-    padding-left: 0.7rem;
-    padding-right: 0.7rem;
+  // padding-top: 0.5rem;
+  // padding-bottom: 0.5rem;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
 }
 
 // .notification-close-button:hover {
@@ -531,237 +527,238 @@ scale slider {
 // }
 
 window {
-    border-radius: $border-radius;
-    background: rgba(0, 0, 0, 0.0);
+  border-radius: $border-radius;
+  background: rgba(0, 0, 0, 0);
 }
 
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
 .left-menu-box {
-    background: $menu-box-background;
-    border-radius: $border-radius;
-    border: $border-size solid $menu-box-borders;
-    margin-top: 0.45rem;
-    margin-bottom: 1rem;
-    transition-property: background;
-    transition-duration: 1.5s;
+  background: $menu-box-background;
+  border-radius: $border-radius;
+  border: $border-size solid $menu-box-borders;
+  margin-top: 0.45rem;
+  margin-bottom: 1rem;
+  transition-property: background;
+  transition-duration: 1.5s;
 }
 
 .left-menu-box:dir(rtl) {
-    margin-left: 0.45rem;
-    margin-right: 1rem;
-    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
+  margin-left: 0.45rem;
+  margin-right: 1rem;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .left-menu-box:dir(ltr) {
-    margin-right: 0.45rem;
-    margin-left: 1rem;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
+  margin-right: 0.45rem;
+  margin-left: 1rem;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
 .left-menu-header {
-    background-size: cover;
-    background-position: center;
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
-    min-width: 23rem;
-    min-height: 12rem;
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  min-width: 23rem;
+  min-height: 12rem;
 }
 
 .profile-box {
-    background: $profile-box-background;
-    color: $profile-box-color;
-    min-width: 20rem;
-    min-height: 8rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-top: -3rem;
-    border-radius: $border-radius;
+  background: $profile-box-background;
+  color: $profile-box-color;
+  min-width: 20rem;
+  min-height: 8rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: -3rem;
+  border-radius: $border-radius;
 }
 
 .profile-icon {
-    margin-top: -3rem;
+  margin-top: -3rem;
 }
 
 .profile-label {
-    margin-top: 1rem;
-    font-family: "VIP Rawy Regular";
-    font-size: xx-large;
+  margin-top: 1rem;
+  font-family: 'VIP Rawy Regular';
+  font-size: xx-large;
 }
-
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-    background: $theme-box-background;
-    margin: 1rem;
-    padding: 1rem;
-    border-radius: $border-radius;
+  background: $theme-box-background;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: $border-radius;
 }
 
 .selected-theme {
-    background: $selected-theme-background;
-    color: $selected-theme-color;
-    border-radius: $border-radius;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
-    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background: $selected-theme-background;
+  color: $selected-theme-color;
+  border-radius: $border-radius;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .selected-theme:hover {
-    background: $selected-theme-hover-background;
-    color: $selected-theme-hover-color;
-    border-radius: $border-radius;
+  background: $selected-theme-hover-background;
+  color: $selected-theme-hover-color;
+  border-radius: $border-radius;
 }
 
 .theme-btn {
-    border-radius: $border-radius;
-    background: $menu-btn-background;
-    border-color: $menu-btn-background;
-    border-radius: $border-radius;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
-    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: $border-radius;
+  background: $menu-btn-background;
+  border-color: $menu-btn-background;
+  border-radius: $border-radius;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .theme-btn:hover {
-    color: $btn-hover-color;
-    border-color: $btn-hover-background;
-    border-radius: $border-radius;
+  color: $btn-hover-color;
+  border-color: $btn-hover-background;
+  border-radius: $border-radius;
 }
 
 .theme-btn-icon {
-    font-family: $icon-font-family;
-    min-width: 2rem;
+  font-family: $icon-font-family;
+  min-width: 2rem;
 }
 
 .dynamic-theme-btn-icon {
-    font-family: $icon-font-family;
-    min-width: 1.93rem;
+  font-family: $icon-font-family;
+  min-width: 1.93rem;
 }
 
 .theme-btn-label {
-    min-width: 3rem;
+  min-width: 3rem;
 }
 
 .menu-button {
-    border-radius: $border-radius;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-bottom-margin;
-    border: 0px;
-    padding-top: 0rem;
-    padding-bottom: 0rem;
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin;
+  border: 0px;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
 
-
-    background: $menu-btn-background;
-    font-family: $icon-font-family;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
+  background: $menu-btn-background;
+  font-family: $icon-font-family;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
 }
 
 .menu-button:dir(rtl) {
-    margin-left: $top-bar-widget-margins;
+  margin-left: $top-bar-widget-margins;
 }
 
 .menu-button:dir(ltr) {
-    margin-right: $top-bar-widget-margins;
+  margin-right: $top-bar-widget-margins;
 }
 
 .menu-button:hover {
-    background: $menu-btn-hover;
+  background: $menu-btn-hover;
 }
 
 .power-box {
-    background: $power-box-background;
-    margin: 1rem;
-    padding: 1rem;
-    border-radius: $border-radius;
+  background: $power-box-background;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: $border-radius;
 }
 
 /* ----------------------------------------------- */
 /* -------------- Notification menu -------------- */
 /* ----------------------------------------------- */
 .notification-menu-header {
-    background-size: cover;
-    background-position: center;
-    // border-top-left-radius: $border-radius;
-    // border-top-right-radius: $border-radius;
-    padding: 1rem;
-    // min-width: 23rem;
-    // min-height: 30rem;
-    color: $text-color;
+  background-size: cover;
+  background-position: center;
+  // border-top-left-radius: $border-radius;
+  // border-top-right-radius: $border-radius;
+  padding: 1rem;
+  // min-width: 23rem;
+  // min-height: 30rem;
+  color: $text-color;
 }
 
 .horizontal-line {
-    background: $notifications-separator-background;
-    min-height: 1px;
-    min-width: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    color: $text-color;
+  background: $notifications-separator-background;
+  min-height: 1px;
+  min-width: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: $text-color;
 }
 
 .notification-center-button {
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-bottom-margin;
-    background: $notifications-bar-btn-bg;
-    color: $notifications-bar-btn-fg;
-    font-family: $icon-font-family;
-    border-radius: $border-radius;
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-    padding-right: 1.1rem;
-    padding-left: 0.8rem;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin;
+  background: $notifications-bar-btn-bg;
+  color: $notifications-bar-btn-fg;
+  font-family: $icon-font-family;
+  border-radius: $border-radius;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+  padding-right: 1.1rem;
+  padding-left: 0.8rem;
 }
 
 .notification-center-button:hover {
-    background-color: $notifications-bar-btn-hover-bg;
-    color: $notifications-bar-btn-hover-fg;
+  background-color: $notifications-bar-btn-hover-bg;
+  color: $notifications-bar-btn-hover-fg;
 }
 
 .notification-this-is-all {
-    color: $text-color;
-    margin-top: 10rem;
-    margin-bottom: 1rem;
-    min-width: 1rem;
-    min-height: 1rem;
+  color: $text-color;
+  margin-top: 10rem;
+  margin-bottom: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
 }
 
 .no-notification-icon {
-    margin-bottom: 0.5rem;
-    font-family: $icon-font-family;
-    font-size: 3rem;
-    padding-right: 0.7rem;
+  margin-bottom: 0.5rem;
+  font-family: $icon-font-family;
+  font-size: 3rem;
+  padding-right: 0.7rem;
 }
 
-
 .no-notification-text {
-    min-width: 22.5rem;
+  min-width: 22.5rem;
 }
 
 .notification-header-box {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    background: $notifications-header-bg;
-    color: $notifications-header-fg;
-    border-top-right-radius: $border-radius;
-    border-top-left-radius: $border-radius;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: $notifications-header-bg;
+  color: $notifications-header-fg;
+  border-top-right-radius: $border-radius;
+  border-top-left-radius: $border-radius;
 }
 
 .notification-center-header-text {
-    min-width: 7.7rem;
+  min-width: 7.7rem;
 }
 
 .notification-center-header-mute {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    font-family: $icon-font-family;
-    border-radius: $border-radius;
-    padding-left: 1rem;
-    padding-right: 1.2rem;
-    margin-right: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-family: $icon-font-family;
+  border-radius: $border-radius;
+  padding-left: 1rem;
+  padding-right: 1.2rem;
+  margin-right: 0.5rem;
 }
 
 // .notification-center-header-mute:dir(rtl) {
@@ -774,110 +771,110 @@ window {
 // }
 
 .notification-center-header-clear {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    font-family: $icon-font-family;
-    border-radius: $border-radius;
-    padding-left: 1rem;
-    padding-right: 1.2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-family: $icon-font-family;
+  border-radius: $border-radius;
+  padding-left: 1rem;
+  padding-right: 1.2rem;
 }
 
 .notification-center-header-clear:dir(rtl) {
-    margin-right: 0.7rem;
+  margin-right: 0.7rem;
 }
 
 .notification-center-header-clear:dir(ltr) {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 .notification-center-container {
-    // min-width: 25rem;
-    min-height: 30rem;
-    border-radius: $border-radius;
+  // min-width: 25rem;
+  min-height: 30rem;
+  border-radius: $border-radius;
 }
 
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 .music-wd-box {
-    background: $music-wd-box-bg;
-    // padding-top: 1rem;
-    padding: 1rem;
-    margin: 0.5rem;
-    border-radius: $border-radius;
+  background: $music-wd-box-bg;
+  // padding-top: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: $border-radius;
 }
 
 .left-menu-music-wd {
-    background: $music-wd-box-bg;
-    border-radius: $border-radius;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+  background: $music-wd-box-bg;
+  border-radius: $border-radius;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 }
 
 .left-menu-music-wd:dir(rtl) {
-    padding-left: 1rem;
-    padding-right: $left-menu-music-wd-padding-right;
+  padding-left: 1rem;
+  padding-right: $left-menu-music-wd-padding-right;
 }
 
 .left-menu-music-wd:dir(ltr) {
-    padding-right: 1rem;
-    padding-left: $left-menu-music-wd-padding-right;
+  padding-right: 1rem;
+  padding-left: $left-menu-music-wd-padding-right;
 }
 
 .music-wd-row-one {
-    padding-right: 8px;
+  padding-right: 8px;
 }
 
 .music-wd-row-two {
-    margin-right: 8px;
-    margin-top: 8px;
-    // margin-bottom: 8px;
+  margin-right: 8px;
+  margin-top: 8px;
+  // margin-bottom: 8px;
 }
 
 .music-wd-row-three {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .music-wd-player {
-    background: $music-wd-player-bg;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-    color: $music-wd-player-fg;
-    border-radius: $border-radius;
-    min-width: 2rem;
-    // border: 0px;
+  background: $music-wd-player-bg;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  color: $music-wd-player-fg;
+  border-radius: $border-radius;
+  min-width: 2rem;
+  // border: 0px;
 }
 
 .music-wd-player:dir(rtl) {
-    padding-left: 0.4rem;
-    padding-right: 0.7rem;
+  padding-left: 0.4rem;
+  padding-right: 0.7rem;
 }
 
 .music-wd-player:dir(ltr) {
-    padding-right: 0.4rem;
-    padding-left: 0.7rem;
+  padding-right: 0.4rem;
+  padding-left: 0.7rem;
 }
 
 .music-wd-title {
-    color: $music-wd-title-fg;
-    // font-size: small;
-    margin-bottom: 0.5rem;
+  color: $music-wd-title-fg;
+  // font-size: small;
+  margin-bottom: 0.5rem;
 }
 
 .music-wd-title:dir(rtl) {
-    padding-left: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 .music-wd-title:dir(ltr) {
-    padding-right: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .music-wd-file-name {
-    color: $music-wd-artist-fg;
-    font-size: x-small;
+  color: $music-wd-artist-fg;
+  font-size: x-small;
 }
 
 // .music-wd-progress trough highlight {
@@ -891,44 +888,49 @@ window {
 // }
 
 .music-wd-button {
-    font-family: $icon-font-family;
-    border-radius: 50%;
-    min-width: 40px;
-    min-height: 40px;
-    background: $music-wd-button-bg;
-    color: $music-wd-button-fg;
-    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+  font-family: $icon-font-family;
+  border-radius: 50%;
+  min-width: 40px;
+  min-height: 40px;
+  background: $music-wd-button-bg;
+  color: $music-wd-button-fg;
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 .music-wd-button:hover {
-    background: $music-wd-button-hover-bg;
+  background: $music-wd-button-hover-bg;
 }
 
 .music-wd-button-play {
-    background: $music-wd-button-play-bg;
+  background: $music-wd-button-play-bg;
 
-    @if variable-exists($name: music-wd-button-play-fg) {
-        color: $music-wd-button-play-fg;
-    }
+  @if variable-exists($name: music-wd-button-play-fg) {
+    color: $music-wd-button-play-fg;
+  }
 
-    border-radius: $border-radius;
-    min-height: 40px;
-    min-width: 80px;
-    transition: background 0.2s ease-in-out,
+  border-radius: $border-radius;
+  min-height: 40px;
+  min-width: 80px;
+  transition:
+    background 0.2s ease-in-out,
     color 0.2s ease-in-out;
 }
 
 .music-wd-button-play:hover {
-    background: $music-wd-button-hover-bg;
+  background: $music-wd-button-hover-bg;
 }
 
 .music-wd-button-stop {
-    background: $music-wd-button-stop-bg;
-    color: $music-wd-button-stop-fg;
-    border-radius: $border-radius;
-    min-height: 40px;
-    min-width: 80px;
-    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+  background: $music-wd-button-stop-bg;
+  color: $music-wd-button-stop-fg;
+  border-radius: $border-radius;
+  min-height: 40px;
+  min-width: 80px;
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 /* ----------------------------------------- */
@@ -937,45 +939,45 @@ window {
 
 // Day
 .wd-fuzzy-day-box {
-    background: $wd-fuzzy-day-box-bg;
-    color: $wd-fuzzy-day-box-fg;
+  background: $wd-fuzzy-day-box-bg;
+  color: $wd-fuzzy-day-box-fg;
 }
 
 .wd-fuzzy-day-icon {
-    font-size: $wd-fuzzy-day-icon-font-size;
-    margin: $wd-fuzzy-day-icon-margin;
-    font-family: $wd-fuzzy-day-icon-font-family;
-    padding: $wd-fuzzy-day-icon-padding;
+  font-size: $wd-fuzzy-day-icon-font-size;
+  margin: $wd-fuzzy-day-icon-margin;
+  font-family: $wd-fuzzy-day-icon-font-family;
+  padding: $wd-fuzzy-day-icon-padding;
 }
 
 .wd-fuzzy-day-text {
-    font-family: $wd-fuzzy-day-text-font-family;
-    font-size: $wd-fuzzy-day-text-font-size;
+  font-family: $wd-fuzzy-day-text-font-family;
+  font-size: $wd-fuzzy-day-text-font-size;
 }
 
 .wd-time-now {
-    font-size: $wd-time-now-font-size;
-    background: $wd-time-now-bg;
-    color: $wd-time-now-fg;
-    font-family: $wd-time-now-font-family;
-    margin: $wd-time-now-margin;
+  font-size: $wd-time-now-font-size;
+  background: $wd-time-now-bg;
+  color: $wd-time-now-fg;
+  font-family: $wd-time-now-font-family;
+  margin: $wd-time-now-margin;
 }
 
 // Time
 .wd-fuzzy-time-box {
-    background: $wd-fuzzy-time-box-bg;
-    color: $wd-fuzzy-time-box-fg;
+  background: $wd-fuzzy-time-box-bg;
+  color: $wd-fuzzy-time-box-fg;
 }
 
 .wd-fuzzy-time-icon {
-    font-size: $wd-fuzzy-time-icon-font-size;
-    margin: $wd-fuzzy-time-icon-margin;
-    font-family: $wd-fuzzy-time-icon-font-family;
+  font-size: $wd-fuzzy-time-icon-font-size;
+  margin: $wd-fuzzy-time-icon-margin;
+  font-family: $wd-fuzzy-time-icon-font-family;
 }
 
 .wd-fuzzy-time-text {
-    font-size: $wd-fuzzy-time-text-font-size;
-    font-family: $wd-fuzzy-time-text-font-family;
+  font-size: $wd-fuzzy-time-text-font-size;
+  font-family: $wd-fuzzy-time-text-font-family;
 }
 
 // .wd-fuzzy-clock-box {
@@ -983,514 +985,513 @@ window {
 // }
 
 .saying-wd-label {
-    min-width: $saying-wd-label-min-width;
-    font-size: $saying-wd-label-font-size;
-    color: $saying-wd-label-fg;
-    background: $saying-wd-label-bg;
-    font-family: $saying-wd-label-font-family;
-    padding: $saying-wd-label-padding;
-    margin: $saying-wd-label-margin;
-    border-radius: $saying-wd-label-border-radius;
+  min-width: $saying-wd-label-min-width;
+  font-size: $saying-wd-label-font-size;
+  color: $saying-wd-label-fg;
+  background: $saying-wd-label-bg;
+  font-family: $saying-wd-label-font-family;
+  padding: $saying-wd-label-padding;
+  margin: $saying-wd-label-margin;
+  border-radius: $saying-wd-label-border-radius;
 }
 
 .desktop-wd-separator {
-    background: $desktop-wd-separator-background;
-    // margin-top: 1rem;
-    min-height: 1px;
-    min-width: 1px;
+  background: $desktop-wd-separator-background;
+  // margin-top: 1rem;
+  min-height: 1px;
+  min-width: 1px;
 }
 
 .desktop-wd-music-player-box {
-    padding: $music-info-wd-padding;
-    min-width: $music-info-wd-min-width;
-    font-family: $music-info-wd-font-family;
-    font-size: $music-info-wd-font-size;
+  padding: $music-info-wd-padding;
+  min-width: $music-info-wd-min-width;
+  font-family: $music-info-wd-font-family;
+  font-size: $music-info-wd-font-size;
 }
 
 .desktop-wd-music-player-title {
-    // min-width: 20rem;
-    color: $music-info-wd-title-fg;
+  // min-width: 20rem;
+  color: $music-info-wd-title-fg;
 }
 
 .desktop-wd-music-player-artist {
-    // min-width: 10rem;
-    color: $music-info-wd-artist-fg;
+  // min-width: 10rem;
+  color: $music-info-wd-artist-fg;
 }
 
 /* ------------------------------------------- */
 /* -------------- Hardware menu -------------- */
 /* ------------------------------------------- */
 .hardware-menu-box {
-    background: $hardware-menu-box-background;
-    border-radius: $border-radius;
-    border: $border-size solid $border-color;
-    padding: 1rem;
+  background: $hardware-menu-box-background;
+  border-radius: $border-radius;
+  border: $border-size solid $border-color;
+  padding: 1rem;
 }
 
 .hardware-menu-header-box {
-    background: $hardware-menu-header-box-background;
-    border-radius: $border-radius;
-    padding: 0.5rem;
+  background: $hardware-menu-header-box-background;
+  border-radius: $border-radius;
+  padding: 0.5rem;
 }
 
 // --------- CPU ---------
 .menu-cpu {
-    // background: $cpu-background;
-    color: $cpu-color;
-    font-size: 0.6rem;
-    min-width: 7rem;
-    min-height: 7rem;
-    margin: 1rem;
+  // background: $cpu-background;
+  color: $cpu-color;
+  font-size: 0.6rem;
+  min-width: 7rem;
+  min-height: 7rem;
+  margin: 1rem;
 }
 
 .menu-cpu-icon {
-    color: $cpu-inner-color;
-    font-family: $icon-font-family;
-    font-size: 2.5rem;
+  color: $cpu-inner-color;
+  font-family: $icon-font-family;
+  font-size: 2.5rem;
 }
 
 // --------- RAM ---------
 .menu-ram {
-    // background: $ram-background;
-    color: $ram-color;
-    font-size: 0.6rem;
-    min-width: 7rem;
-    min-height: 7rem;
-    margin: 1rem;
+  // background: $ram-background;
+  color: $ram-color;
+  font-size: 0.6rem;
+  min-width: 7rem;
+  min-height: 7rem;
+  margin: 1rem;
 }
 
 .menu-ram-icon {
-    color: $ram-inner-color;
-    font-family: $icon-font-family;
-    font-size: 2.5rem;
+  color: $ram-inner-color;
+  font-family: $icon-font-family;
+  font-size: 2.5rem;
 }
 
 // --------- Battery ---------
 .menu-battery {
-    // background: $battery-background;
-    color: $battery-color;
-    font-size: 0.6rem;
-    min-width: 7rem;
-    min-height: 7rem;
-    margin: 1rem;
+  // background: $battery-background;
+  color: $battery-color;
+  font-size: 0.6rem;
+  min-width: 7rem;
+  min-height: 7rem;
+  margin: 1rem;
 }
 
 .menu-battery-icon {
-    color: $battery-inner-color;
-    font-family: $icon-font-family;
-    font-size: 2.5rem;
+  color: $battery-inner-color;
+  font-family: $icon-font-family;
+  font-size: 2.5rem;
 }
 
 .menu-battery-icon-charging {
-    color: $battery-inner-color;
-    font-family: $icon-font-family;
-    font-size: 2.5rem;
-    animation: colorChange 2.0s infinite;
+  color: $battery-inner-color;
+  font-family: $icon-font-family;
+  font-size: 2.5rem;
+  animation: colorChange 2s infinite;
 }
 
 // --------- Temp ---------
 .menu-temp {
-    // background: $temp-background;
-    color: $temp-color;
-    font-size: 0.6rem;
-    min-width: 7rem;
-    min-height: 7rem;
-    margin: 1rem;
+  // background: $temp-background;
+  color: $temp-color;
+  font-size: 0.6rem;
+  min-width: 7rem;
+  min-height: 7rem;
+  margin: 1rem;
 }
 
 .menu-temp-icon {
-    color: $temp-inner-color;
-    font-family: $icon-font-family;
-    font-size: 2.5rem;
+  color: $temp-inner-color;
+  font-family: $icon-font-family;
+  font-size: 2.5rem;
 }
 
 // --------- Table rows ---------
 .table-row-app-name-header {
-    min-width: 6rem;
+  min-width: 6rem;
 }
 
 .table-row-app-percentage-header {
-    min-width: 3rem;
-    // margin-left: 0.5rem;
+  min-width: 3rem;
+  // margin-left: 0.5rem;
 }
 
 .table-row-app-name {
-    min-width: 6rem;
-    // font-family: $icon-font-family;
+  min-width: 6rem;
+  // font-family: $icon-font-family;
 }
 
 .table-row-app-percentage {
-    min-width: 3rem;
+  min-width: 3rem;
 }
 
 // --------- CPU Table ---------
 .hardware-cpu-box {
-    background: $hardware-cpu-box-background;
-    color: $hardware-cpu-box-color;
-    border-radius: $border-radius;
-    margin-top: 1rem;
+  background: $hardware-cpu-box-background;
+  color: $hardware-cpu-box-color;
+  border-radius: $border-radius;
+  margin-top: 1rem;
 }
 
 .hardware-cpu-table-row-header {
-    padding: 1rem;
-    background: $hardware-cpu-table-row-header-background;
-    color: $hardware-cpu-table-row-header-color;
-    border-top-right-radius: $border-radius;
-    border-top-left-radius: $border-radius;
+  padding: 1rem;
+  background: $hardware-cpu-table-row-header-background;
+  color: $hardware-cpu-table-row-header-color;
+  border-top-right-radius: $border-radius;
+  border-top-left-radius: $border-radius;
 }
 
 .hardware-cpu-table-row {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 // --------- RAM Table ---------
 .hardware-ram-box {
-    background: $hardware-ram-box-background;
-    color: $hardware-ram-box-color;
-    border-radius: $border-radius;
-    margin-top: 1rem;
+  background: $hardware-ram-box-background;
+  color: $hardware-ram-box-color;
+  border-radius: $border-radius;
+  margin-top: 1rem;
 }
 
 .hardware-ram-table-row-header {
-    padding: 1rem;
-    background: $hardware-ram-table-row-header-background;
-    color: $hardware-ram-table-row-header-color;
-    border-top-right-radius: $border-radius;
-    border-top-left-radius: $border-radius;
+  padding: 1rem;
+  background: $hardware-ram-table-row-header-background;
+  color: $hardware-ram-table-row-header-color;
+  border-top-right-radius: $border-radius;
+  border-top-left-radius: $border-radius;
 }
 
 .hardware-ram-table-row {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 // --------- HW ---------
 .hardware-menu-tables-box {
-    background: $hardware-menu-tables-box-background;
-    padding: 0.8rem;
-    padding-top: 0rem;
-    margin-top: 0.8rem;
-    border-radius: $border-radius;
+  background: $hardware-menu-tables-box-background;
+  padding: 0.8rem;
+  padding-top: 0rem;
+  margin-top: 0.8rem;
+  border-radius: $border-radius;
 }
 
 // --------- HW Table ---------
 .hardware-bat-box {
-    background: $hardware-bat-box-background;
-    color: $hardware-bat-box-color;
-    border-radius: $border-radius;
-    margin-top: 1rem;
-    min-height: 3rem;
+  background: $hardware-bat-box-background;
+  color: $hardware-bat-box-color;
+  border-radius: $border-radius;
+  margin-top: 1rem;
+  min-height: 3rem;
 }
 
 .hardware-bat-table-row-header {
-    padding: 1rem;
-    // min-width: 13rem;
-    background: $hardware-bat-table-row-header-background;
-    color: $hardware-bat-table-row-header-color;
-    border-top-right-radius: $border-radius;
-    border-top-left-radius: $border-radius;
+  padding: 1rem;
+  // min-width: 13rem;
+  background: $hardware-bat-table-row-header-background;
+  color: $hardware-bat-table-row-header-color;
+  border-top-right-radius: $border-radius;
+  border-top-left-radius: $border-radius;
 }
 
 .hardware-bat-table-row {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 // --------- OS Table ---------
 .hardware-os-box {
-    background: $hardware-os-box-background;
-    color: $hardware-os-box-color;
-    border-radius: $border-radius;
-    margin-top: 1rem;
-    min-height: 3rem;
+  background: $hardware-os-box-background;
+  color: $hardware-os-box-color;
+  border-radius: $border-radius;
+  margin-top: 1rem;
+  min-height: 3rem;
 }
 
 .hardware-os-table-row-header {
-    padding: 1rem;
-    // min-width: 13rem;
-    background: $hardware-os-table-row-header-background;
-    color: $hardware-os-table-row-header-color;
-    border-top-right-radius: $border-radius;
-    border-top-left-radius: $border-radius;
+  padding: 1rem;
+  // min-width: 13rem;
+  background: $hardware-os-table-row-header-background;
+  color: $hardware-os-table-row-header-color;
+  border-top-right-radius: $border-radius;
+  border-top-left-radius: $border-radius;
 }
 
 .hardware-os-table-row {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 /* ----------------------------------------------- */
 /* -------------- Prayer times menu -------------- */
 /* ----------------------------------------------- */
 .bar-prayer-times-box {
-    font-size: 1em;
-    background: $bar-prayer-times-box-background;
-    color: $bar-prayer-times-box-color;
-    border-radius: $border-radius;
-    margin-top: $bar-top-margin;
-    margin-bottom: $bar-top-margin;
-    margin-left: $top-bar-widget-margins;
-    margin-right: $top-bar-widget-margins;
+  font-size: 1em;
+  background: $bar-prayer-times-box-background;
+  color: $bar-prayer-times-box-color;
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-top-margin;
+  margin-left: $top-bar-widget-margins;
+  margin-right: $top-bar-widget-margins;
 }
 
 .bar-prayer-times-box:dir(rtl) {
-    padding-left: 0.7rem;
+  padding-left: 0.7rem;
 }
 
 .bar-prayer-times-box:dir(ltr) {
-    padding-right: 0.7rem;
+  padding-right: 0.7rem;
 }
 
 .bar-prayer-times-icon {
-    font-family: $icon-font-family;
-    padding-left: 0.7rem;
-    padding-right: 0.7rem;
+  font-family: $icon-font-family;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
 }
 
 @if variable-exists(prayer-times-icon-bg) {
-    .bar-prayer-times-icon:dir(rtl) {
-        background: $prayer-times-icon-bg;
-        color: $prayer-times-icon-fg;
-        border-top-right-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
-        margin-left: 0.5rem;
-        padding-left: 0.5rem;
-    }
+  .bar-prayer-times-icon:dir(rtl) {
+    background: $prayer-times-icon-bg;
+    color: $prayer-times-icon-fg;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    margin-left: 0.5rem;
+    padding-left: 0.5rem;
+  }
 
-    .bar-prayer-times-icon:dir(ltr) {
-        background: $prayer-times-icon-bg;
-        color: $prayer-times-icon-fg;
-        border-top-left-radius: $border-radius;
-        border-bottom-left-radius: $border-radius;
-        margin-right: 0.5rem;
-        padding-right: 0.5rem;
-    }
+  .bar-prayer-times-icon:dir(ltr) {
+    background: $prayer-times-icon-bg;
+    color: $prayer-times-icon-fg;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    margin-right: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 
 .prayer-times-menu-box {
-    background: $menu-box-background;
-    border-radius: $border-radius;
-    border: $border-size solid $border-color;
+  background: $menu-box-background;
+  border-radius: $border-radius;
+  border: $border-size solid $border-color;
 }
 
 .prayer-times-menu-header {
-    background: $prayer-times-menu-header-bg;
-    color: $prayer-times-menu-header-fg;
-    padding: 1rem;
-    border-top-right-radius: $border-radius;
-    border-top-left-radius: $border-radius;
+  background: $prayer-times-menu-header-bg;
+  color: $prayer-times-menu-header-fg;
+  padding: 1rem;
+  border-top-right-radius: $border-radius;
+  border-top-left-radius: $border-radius;
 }
 
 .prayer-time-item-box-class {
-    padding-top: 1.2rem;
-    padding-bottom: 1.2rem;
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 .isha-item {
-    border-bottom-right-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
 }
 
 .next-prayer {
-    background: $prayer-times-next-prayer-bg;
-    color: $prayer-times-next-prayer-fg;
+  background: $prayer-times-next-prayer-bg;
+  color: $prayer-times-next-prayer-fg;
 }
 
 .prayer-times-menu-header-icon {
-    font-family: $icon-font-family;
+  font-family: $icon-font-family;
 }
 
 .prayer-times-menu-header-title {
-    margin-left: 1rem;
-    margin-right: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
-
 button {
-    background: $btn-background;
-    color: $btn-color;
-    border-color: $btn-background;
-    border-radius: $border-radius;
+  background: $btn-background;
+  color: $btn-color;
+  border-color: $btn-background;
+  border-radius: $border-radius;
 
-    padding: 4px 14px;
-    // font-size: 16px;
-    // font-weight: bold;
+  padding: 4px 14px;
+  // font-size: 16px;
+  // font-weight: bold;
 
-    border: none;
-    // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-
-
+  border: none;
+  // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
 }
 
 /* Shadow when clicking */
 button:active {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    // transform: translateY(1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  // transform: translateY(1px);
 }
 
 button:hover {
-    background: $btn-hover-background;
-    color: $btn-hover-color;
-    border-color: $btn-hover-background;
-    border-radius: $border-radius;
-    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background: $btn-hover-background;
+  color: $btn-hover-color;
+  border-color: $btn-hover-background;
+  border-radius: $border-radius;
+  // box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
-    @if variable-exists(btn-hover-border-radius) {
-        border-radius: $btn-hover-border-radius;
-    }
+  @if variable-exists(btn-hover-border-radius) {
+    border-radius: $btn-hover-border-radius;
+  }
 
-    transition: background 0.2s ease-in-out,
+  transition:
+    background 0.2s ease-in-out,
     color 0.2s ease-in-out;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-
 menu {
-    border: $border-size $border-color solid;
-    background: $menu-bg;
-    color: $menu-fg;
-    border-radius: $border-radius;
-    padding: 0.3rem;
-    margin-top: 2rem;
+  border: $border-size $border-color solid;
+  background: $menu-bg;
+  color: $menu-fg;
+  border-radius: $border-radius;
+  padding: 0.3rem;
+  margin-top: 2rem;
 }
 
 menuitem {
-    border-radius: $border-radius;
-    background: $menu-bg ;
-    color: $menu-fg ;
-    // padding: 1rem 0.5rem;
+  border-radius: $border-radius;
+  background: $menu-bg;
+  color: $menu-fg;
+  // padding: 1rem 0.5rem;
 }
 
 menuitem:disabled {
-    background: $menuitem-disabled-bg;
-    color: $menuitem-disabled-fg;
+  background: $menuitem-disabled-bg;
+  color: $menuitem-disabled-fg;
 }
 
 menuitem:hover {
-    background: $menuitem-hover-bg;
-    color: $menuitem-hover-fg;
+  background: $menuitem-hover-bg;
+  color: $menuitem-hover-fg;
 }
 
 // --------------------------
 // ------ weather menu ------
 // --------------------------
 .weather-menu-box {
-    min-width: 2rem;
+  min-width: 2rem;
 
-    @if variable-exists($name: weather-menu-box-bg) {
-        background: $weather-menu-box-bg;
-    }
+  @if variable-exists($name: weather-menu-box-bg) {
+    background: $weather-menu-box-bg;
+  }
 
-    @if variable-exists($name: weather-menu-box-fg) {
-        color: $weather-menu-box-fg;
-    }
+  @if variable-exists($name: weather-menu-box-fg) {
+    color: $weather-menu-box-fg;
+  }
 
-    padding: 1rem 1rem;
-    padding-top: 2rem;
-    border: $border-size solid $border-color;
-    border-radius: $border-radius;
+  padding: 1rem 1rem;
+  padding-top: 2rem;
+  border: $border-size solid $border-color;
+  border-radius: $border-radius;
 }
 
 .weather-menu-general-information-box {
-    margin: 0rem 1rem;
+  margin: 0rem 1rem;
 }
 
 .weather-menu-detail-box {
-    margin: 0rem 1rem;
+  margin: 0rem 1rem;
 }
 
 .weather-menu-today-box {
-    margin-top: 0.4rem;
+  margin-top: 0.4rem;
 }
 
 .weather-row-two {
-    margin: 2rem 2rem;
+  margin: 2rem 2rem;
 }
 
 .weather-menu-icon {
-    font-family: $icon-font-family;
-    font-size: 7rem;
-    margin: 0rem 1rem;
+  font-family: $icon-font-family;
+  font-size: 7rem;
+  margin: 0rem 1rem;
 }
 
 .weather-menu-city {
-    font-size: 2rem;
-    margin-top: 0.3rem;
+  font-size: 2rem;
+  margin-top: 0.3rem;
 }
 
 .weather-menu-value {
-    font-size: 2.2rem;
+  font-size: 2.2rem;
 }
 
 .weather-menu-sunrise {
-    font-size: 1.1rem;
+  font-size: 1.1rem;
 }
 
 .weather-menu-sunrise-icon {
-    font-size: 1.1rem;
-    font-family: $icon-font-family;
-    margin: 0rem 0.5rem;
+  font-size: 1.1rem;
+  font-family: $icon-font-family;
+  margin: 0rem 0.5rem;
 }
 
 .weather-menu-sunset {
-    font-size: 1.1rem;
+  font-size: 1.1rem;
 }
 
 .weather-menu-sunset-icon {
-    font-size: 1.1rem;
-    font-family: $icon-font-family;
-    margin: 0rem 0.5rem;
+  font-size: 1.1rem;
+  font-family: $icon-font-family;
+  margin: 0rem 0.5rem;
 }
 
 .weather-menu-today-time {
-    font-size: 1.1rem;
+  font-size: 1.1rem;
 }
 .weather-menu-today-weather {
-    font-size: 1.1rem;
-    padding: 0rem 1.2rem;
+  font-size: 1.1rem;
+  padding: 0rem 1.2rem;
 }
 
 .weather-menu-today-temp {
-    font-size: 1.3rem;
-    font-family: $icon-font-family;
+  font-size: 1.3rem;
+  font-family: $icon-font-family;
 }
 
 .weather-menu-latest-update {
-    font-size: 1.1rem;
+  font-size: 1.1rem;
 }
 
 .weather-menu-feels-like {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .weather-menu-humidity {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .weather-menu-pressure {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .weather-menu-wind {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .weather-menu-clouds {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .weather-menu-min-max {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
