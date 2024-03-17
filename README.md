@@ -70,9 +70,9 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 
 	# نسخ الملفات
 	cp -r my-hyprland-config ~/.config/hypr
-	cp -r ~/.config/hypr/configs/ags ~/.config/ags
-	cp -r ~/.config/hypr/configs/wofi ~/.config/wofi
-	cp ~/.config/hypr/configs/config.fish ~/.config/fish/config.fish
+	cp -r ~/.config/hypr/config/ags ~/.config/ags
+	cp -r ~/.config/hypr/config/wofi ~/.config/wofi
+	cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
 
 	# اعداد الصلاحيات للملفات التنفيذية
 	sudo chmod +x ~/.config/hypr/scripts/*
@@ -82,36 +82,39 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	sudo cp /etc/environment /etc/environmentOLD
 	echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
 
-	# نسخ ملفات الصيمات
+	# نسخ ملفات الثيمات
 	mkdir ~/.local/share/color-schemes/
-	cp ~/.config/ags/modules/theme/plasma-colors/* ~/.local/share/color-schemes/
-	cp ~/.config/hypr/configs/qt5ct.conf ~/.config/qt5ct/
+	mkdir ~/.config/Kvantum/
+	cp -r ~/.config/hypr/config/plasma-colors/* ~/.local/share/color-schemes/
+	cp -r ~/.config/hypr/config/kvantum-themes/* ~/.config/Kvantum/
+	cp ~/.config/hypr/config/qt5ct.conf ~/.config/qt5ct/
+	cp ~/.config/hypr/config/qt6ct.conf ~/.config/qt6ct/
 
 	mkdir ~/.fonts
-	cp -r ~/.config/hypr/configs/.fonts/* ~/.fonts
+	cp -r ~/.config/hypr/config/.fonts/* ~/.fonts
 
 	mkdir ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/BeautySolar.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Magma.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/NeonIcons.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/BeautySolar.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/NeonIcons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
 
 	mkdir ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Cabinet-Light-Orange.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Kimi-dark.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Nordic-darker-standard-buttons.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Orchis-Green-Dark-Compact.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Dracula.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Cabinet-Light-Orange.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Kimi-dark.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Nordic-darker-standard-buttons.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Orchis-Green-Dark-Compact.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Dracula.tar.gz -C ~/.themes
 
 
 ### بامكانك تغير خط الجهاز الى 'JF Flat' اذا اردت ان تحصل على نفس الخط الذي لدي
@@ -239,9 +242,9 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 
 	# copy files
 	cp -r my-hyprland-config ~/.config/hypr
-	cp -r ~/.config/hypr/configs/ags ~/.config/ags
-	cp -r ~/.config/hypr/configs/wofi ~/.config/wofi
-	cp ~/.config/hypr/configs/config.fish ~/.config/fish/config.fish
+	cp -r ~/.config/hypr/config/ags ~/.config/ags
+	cp -r ~/.config/hypr/config/wofi ~/.config/wofi
+	cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
 
 	# set permissions for scripts
 	sudo chmod +x ~/.config/hypr/scripts/*
@@ -252,35 +255,38 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 	echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
 
 	# copy theme files
-	mkdir ~/.local/share/color-schemes/
-	cp ~/.config/ags/modules/theme/plasma-colors/* ~/.local/share/color-schemes/
-	cp ~/.config/hypr/configs/qt5ct.conf ~/.config/qt5ct/
+   	mkdir ~/.local/share/color-schemes/
+	mkdir ~/.config/Kvantum/
+	cp -r ~/.config/hypr/config/plasma-colors/* ~/.local/share/color-schemes/
+	cp -r ~/.config/hypr/config/kvantum-themes/* ~/.config/Kvantum/
+	cp ~/.config/hypr/config/qt5ct.conf ~/.config/qt5ct/
+	cp ~/.config/hypr/config/qt6ct.conf ~/.config/qt6ct/
 
 	mkdir ~/.fonts
-	cp -r ~/.config/hypr/configs/.fonts/* ~/.fonts
+	cp -r ~/.config/hypr/config/.fonts/* ~/.fonts
 
 	mkdir ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/BeautySolar.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Magma.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/NeonIcons.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
-	tar xvf ~/.config/hypr/configs/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/BeautySolar.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/NeonIcons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
+	tar xvf ~/.config/hypr/config/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
 
 	mkdir ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Cabinet-Light-Orange.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Kimi-dark.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Nordic-darker-standard-buttons.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Orchis-Green-Dark-Compact.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
-	tar xvf ~/.config/hypr/configs/gtk-themes/Dracula.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Cabinet-Light-Orange.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Kimi-dark.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Nordic-darker-standard-buttons.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Orchis-Green-Dark-Compact.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
+	tar xvf ~/.config/hypr/config/gtk-themes/Dracula.tar.gz -C ~/.themes
 
 
 ### You can change system fonts if you want to 'JF Flat' to have the same font I had
