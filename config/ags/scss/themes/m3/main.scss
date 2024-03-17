@@ -33,7 +33,7 @@ $bar-prayer-times-box-color: $on-tertiary-container;
 // -------------------------------
 // --------- Bar Weather ---------
 // -------------------------------
-$bar-weather-background: linear-gradient(to right, $tertiary-container);
+$bar-weather-background: $tertiary-container;
 $bar-weather-color: $on-tertiary-container;
 $weather-menu-box-bg: $background;
 $weather-menu-box-fg: $on-background;
@@ -132,7 +132,7 @@ $notifications-separator-background: $on-surface;
 $prayer-times-menu-header-bg: $tertiary-container;
 $prayer-times-menu-header-fg: $on-tertiary-container;
 
-$prayer-times-next-prayer-bg: linear-gradient(to left, $primary);
+$prayer-times-next-prayer-bg: $primary;
 $prayer-times-next-prayer-fg: $on-primary;
 
 
