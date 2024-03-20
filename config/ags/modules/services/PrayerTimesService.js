@@ -270,23 +270,23 @@ class PrayerTimesService extends Service {
   }
 
   get hijriDate() {
-    return this.state?.date.hijri.date;
+    return this.state?.data?.date.hijri.date;
   }
 
   get hijriDay() {
-    return this.state?.date.hijri.day;
+    return this.state?.data?.date?.hijri.day;
   }
 
   get hijriWeekday() {
-    return decodeUnicode(this.state?.date.hijri.weekday.ar);
+    return decodeUnicode(this.state?.data?.date.hijri.weekday.ar);
   }
 
   get hijriMonth() {
-    return decodeUnicode(this.state?.date.hijri.month.ar);
+    return decodeUnicode(this.state?.data?.date.hijri.month.ar);
   }
 
   get hijriYear() {
-    return this.state?.date.hijri.year;
+    return this.state?.data.date.hijri.year;
   }
 
   get isha() {

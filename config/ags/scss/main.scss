@@ -1314,8 +1314,14 @@ window {
 }
 
 .prayer-times-menu-header-title {
-  margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.prayer-times-menu-header-title:dir(ltr) {
+  margin-right: 1.7rem;
+}
+.prayer-times-menu-header-title:dir(rtl) {
+  margin-left: 1.7rem;
 }
 
 button {
