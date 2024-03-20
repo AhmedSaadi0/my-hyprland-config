@@ -84,7 +84,7 @@ function setFuzzyDays(day, usedFuzzyDay, usedTimeNow) {
     usedTimeNow.label = 'استمر في السعي نحو الخيرات في هذا اليوم.';
   } else if (day == MONDAY) {
     usedFuzzyDay.children[0].label = 'رمضان يزورنا اليوم';
-    usedFuzzyDay.children[1].label = '';
+    usedFuzzyDay.children[1].label = '';
     usedTimeNow.label = 'استمتع بلحظة الصيام وتقرب إلى الله.';
   } else if (day == TUESDAY) {
     usedFuzzyDay.children[0].label = 'نصف الاسبوع قد حل';

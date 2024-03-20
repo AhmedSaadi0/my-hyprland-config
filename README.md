@@ -123,6 +123,8 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 ### انشاء كرون تاب لتحسين استخدام البطارية باستخدام قاعدة الشحن 40-80
     VISUAL=/usr/bin/nano crontab -e
     * * * * * ~/.config/hypr/scripts/battery.sh
+#### تغيير مسار ملف صوت اشعارات البطارية في الملف `hypr/scripts/battery.sh`
+	home_path="/home/ahmed"
 
 ### تغيير منطقة الطقس واوقات الصلاة ومراقب سرعة النت
 - قم بتغيير الاعدادت من ملف الاعدادات `.configs/ags/modules/settings.js`
@@ -295,6 +297,8 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 ### Creating crontab for battery 40-80 rule:
     VISUAL=/usr/bin/nano crontab -e
     * * * * * ~/.config/hypr/scripts/battery.sh
+#### Change home path for battery script in `hypr/scripts/battery.sh`
+	home_path="/home/ahmed"
 
 ### Change weather, prayer times location, and network speed monitors
 - From the settings file in `.configs/ags/modules/settings.js`
