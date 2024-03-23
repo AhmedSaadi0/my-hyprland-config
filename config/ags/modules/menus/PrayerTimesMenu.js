@@ -73,9 +73,11 @@ const MenuRevealer = () => {
       box.children[4].children[1].label = `${prayerService.maghrib}`;
       box.children[5].children[1].label = `${prayerService.isha}`;
 
-      console.log(prayerService);
-
-      header.children[0].label = prayerService.hijriDate;
+      if (typeof prayerService.hijriDate === 'string') {
+        header.children[0].label = prayerService.hijriDate;
+      } else {
+        header.children[0].label = '';
+      }
 
       if (nextPrayer === 'الفجر') {
         updateClasses(box, 1);
