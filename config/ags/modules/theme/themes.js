@@ -9,7 +9,7 @@ const black_hole = {
   qt_5_style_theme: 'Breeze',
   qt_6_style_theme: 'kvantum',
   qt_icon_theme: 'BeautySolar',
-  kvantum_theme: 'Windows11-Afterglowrc',
+  kvantum_theme: 'Win10XOS-Concept',
   gtk_theme: 'Shades-of-purple',
   gtk_icon_theme: 'BeautySolar',
   gtk_mode: 'dark',
@@ -27,13 +27,13 @@ const black_hole = {
 };
 
 const win_20 = {
-  wallpaper: `${WALLPAPER_PATH}/win20.png`,
+  wallpaper: `${WALLPAPER_PATH}/win30.jpg`,
   css_theme: 'win20.scss',
   plasma_color: 'ArcMidnightDark.colors',
   qt_5_style_theme: 'Breeze',
   qt_6_style_theme: 'kvantum',
   qt_icon_theme: 'BeautySolar',
-  kvantum_theme: 'Windows11-Afterglowrc',
+  kvantum_theme: 'Win10XOS-Concept',
   gtk_theme: 'Shades-of-purple',
   gtk_icon_theme: 'BeautySolar',
   gtk_mode: 'dark',
@@ -84,7 +84,7 @@ const colors = {
   qt_5_style_theme: 'Breeze',
   qt_6_style_theme: 'kvantum',
   qt_icon_theme: 'Magma',
-  kvantum_theme: 'Windows11-Afterglowrc',
+  kvantum_theme: 'Win10XOS-Concept',
   gtk_icon_theme: 'Magma',
   gtk_theme: 'Shades-of-purple',
   gtk_mode: 'dark',

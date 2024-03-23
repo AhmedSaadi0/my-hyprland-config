@@ -29,13 +29,8 @@ const SysTrayItem = (item) =>
     onPrimaryClick: (btn, event) => {
       try {
         item.activate(event).catch();
-      } catch (TypeError) {
-        // item.menu.popup_at_widget(
-        //     btn,
-        //     Gravity.SOUTH,
-        //     Gravity.NORTH,
-        //     null
-        // );
+      } catch (Exception) {
+        // item.menu.popup_at_widget(btn, Gravity.SOUTH, Gravity.NORTH, null);
       }
     },
     onSecondaryClick: (btn) =>
