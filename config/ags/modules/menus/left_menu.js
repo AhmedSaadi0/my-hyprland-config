@@ -125,20 +125,20 @@ const ThemesButtonsRowOne = () => {
 
   const colorTheme = ThemeButton({
     label: 'جمالي',
-    icon: '',
+    icon: '',
     theme: COLOR_THEME,
     end: '',
   });
 
   const siberianTheme = ThemeButton({
     label: 'تدرج',
-    icon: '',
+    icon: '󰚠',
     theme: SIBERIAN_THEME,
   });
 
   const materialYouTheme = ThemeButton({
     label: 'مادي',
-    icon: '',
+    icon: '󰦆',
     theme: MATERIAL_YOU,
   });
 
@@ -163,7 +163,7 @@ const ThemesButtonsRowOne = () => {
 
   const unicatTheme = ThemeButton({
     label: 'قط',
-    icon: '',
+    icon: '󰄛',
     theme: UNICAT_THEME,
     end: '',
   });
@@ -286,7 +286,7 @@ const PowerButtonsRow = () => {
         ${powerBtnMargin}
     `,
     child: Label({
-      label: '',
+      label: '',
     }),
     onClicked: () => {
       Utils.execAsync([`paplay`, settings.assets.audio.desktop_logout]).catch(
@@ -305,7 +305,7 @@ const PowerButtonsRow = () => {
         ${powerBtnMargin}
     `,
     child: Label({
-      label: '',
+      label: '',
     }),
     onClicked: () => {
       Utils.execAsync([`paplay`, settings.assets.audio.desktop_logout]).catch(
@@ -323,7 +323,7 @@ const PowerButtonsRow = () => {
         border-radius: 1rem;
     `,
     child: Label({
-      label: '',
+      label: '',
     }),
     onClicked: () => {
       Utils.execAsync([`paplay`, settings.assets.audio.desktop_logout]).catch(

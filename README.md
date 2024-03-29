@@ -13,7 +13,10 @@
 - playerctl
 - polkit-kde-agent
 - ttf-font-awesome-5
+- ttf-jetbrains-mono-nerd
+- ttf-fantasque-nerd
 - qt5ct
+- qt6ct
 - Dolphin
 - brightnessctl
 - gammastep
@@ -27,6 +30,7 @@
 - ttf-font-awesome-5
 - acpi
 - fish
+- kde-powerdevil
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 
 ### برامج اختيارية
@@ -36,18 +40,15 @@
 - blueman
 - telegram-desktop
 - discord
-- qt5-gsettings
 - kvantum
-- lightly-qt
 - konsole
-- vs code
 - firefox
 
 ## التثبيت
 
 ### تثبيت البرامج لمستخدمي Arch:
 ```bash
-yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil
 ```
 
 **ملاحطة:** إذا كنت تستخدم نظام تشغيل آخر غير أرش فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
@@ -60,7 +61,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 
 ### اعداد الملفات:
 
-	git clone git@github.com:AhmedSaadi0/my-hyprland-config.git
+	git clone https://github.com/AhmedSaadi0/my-hyprland-config.git
 
 	# عمل نسخة احتياطية لملفاتك الاصلية
 	mv ~/.config/hypr/ ~/.config/hypr-old
@@ -187,7 +188,9 @@ const dynamicM3Light = {
 - playerctl
 - polkit-kde-agent
 - ttf-font-awesome-5
+- ttf-jetbrains-mono-nerd
 - qt5ct
+- qt6ct
 - Dolphin
 - brightnessctl
 - gammastep
@@ -201,6 +204,7 @@ const dynamicM3Light = {
 - ttf-font-awesome-5
 - acpi
 - fish
+- kde-powerdevil
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 
 ### Optional dependencies:
@@ -210,18 +214,15 @@ const dynamicM3Light = {
 - blueman
 - telegram-desktop
 - discord
-- qt5-gsettings
 - kvantum
-- lightly-qt
 - konsole
-- vs code
 - firefox
 
 ## Installing:
 
 ### Installing dependencies for Arch Users:
 ```bash
-yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi qt5-gsettings konsole blueman ark dolphin ffmpegthumbs playerctl lightly-qt kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil
 ```
 
 **Note:** If you use an operating system other than Arch, you will need to install all required dependencies. The specific steps may vary depending on your distro. 
