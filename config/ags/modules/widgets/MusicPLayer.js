@@ -216,7 +216,7 @@ const ButtonsRow = () => {
         playBtn.set_sensitive(player?.canPlay);
 
         if (player?.playBackStatus === 'Playing') {
-            playBtn.label = '⏸';
+            playBtn.label = '';
             playBtn.className = 'unset music-wd-button-play';
         } else if (player?.playBackStatus === 'Paused') {
             // playBtn.label = "⏯";

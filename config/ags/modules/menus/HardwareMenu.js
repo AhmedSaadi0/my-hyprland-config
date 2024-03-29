@@ -206,27 +206,27 @@ const tablesBox = () => {
           }),
           // Body
           tableRow({
-            appName: 'النسبة  ',
+            appName: local === 'RTL' ? 'النسبة  ': 'percentage ',
             percentage: `${Battery.percent}%`,
             deviceName: batDeviceName,
           }),
           tableRow({
-            appName: local === 'RTL' ? 'الصحة   ' : 'Health   ',
+            appName: local === 'RTL' ? 'الصحة   ' : 'Health   ',
             percentage: data['Capacity'] + '%',
             deviceName: batDeviceName,
           }),
           tableRow({
-            appName: local === 'RTL' ? 'الفولتية  ' : 'Voltage  ',
+            appName: local === 'RTL' ? 'الفولتية  󰚥' : 'Voltage  󰚥',
             percentage: data['Voltage'],
             deviceName: batDeviceName,
           }),
           tableRow({
-            appName: local === 'RTL' ? 'الطاقة  ' : 'Energy  ',
+            appName: local === 'RTL' ? 'الطاقة  ' : 'Energy  ',
             percentage: `${Battery.energy}`,
             deviceName: batDeviceName,
           }),
           tableRow({
-            appName: local === 'RTL' ? 'الدورات  ' : 'Cycles  ',
+            appName: local === 'RTL' ? 'الدورات  󱍸' : 'Cycles  󱍸',
             percentage: data['Charge_Cycles'],
             deviceName: batDeviceName,
           }),

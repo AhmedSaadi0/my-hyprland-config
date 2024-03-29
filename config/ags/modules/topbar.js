@@ -107,8 +107,8 @@ const DynamicWallpaper = () =>
     }
 
     btn.visible = true;
-    if (themeService.dynamicWallpaperIsOn) btn.label = '';
-    else btn.label = '';
+    if (themeService.dynamicWallpaperIsOn) btn.label = '󰋹';
+    else btn.label = '󰋩';
   });
 
 // layout of the bar

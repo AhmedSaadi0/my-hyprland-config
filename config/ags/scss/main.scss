@@ -1,4 +1,4 @@
-@import './themes/m3/dynamic.scss';
+@import './themes/win20.scss';
 
 .unset {
   all: unset;
@@ -41,7 +41,7 @@ $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 .dynamic-wallpaper {
   margin-top: $bar-top-margin;
   margin-bottom: $bar-bottom-margin;
-  padding: 0rem 0.8rem;
+  padding: 0rem 1rem;
 }
 
 .workspaces:dir(rtl) {
