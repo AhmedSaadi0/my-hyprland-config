@@ -50,8 +50,10 @@ const settings = {
   },
   hardware: {
     network: {
-      rx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
+      rx_path: '/sys/class/net/wlp0s20f3/statistics/rx_bytes',
       tx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
+      timeout: 300,
+      interval: 1000,
     },
   },
 };
