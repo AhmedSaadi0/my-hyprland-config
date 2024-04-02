@@ -13,6 +13,7 @@ const black_hole = {
   gtk_theme: 'Shades-of-purple',
   gtk_icon_theme: 'BeautySolar',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(FDBBC4ff) rgba(ff00ffff) 0deg',
@@ -37,6 +38,7 @@ const win_20 = {
   gtk_theme: 'Shades-of-purple',
   gtk_icon_theme: 'BeautySolar',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(EB08FBff) rgba(16D7BAff) 0deg',
@@ -64,6 +66,7 @@ const deer = {
   gtk_icon_theme: 'Vivid-Dark-Icons',
   // rofi_theme: "islamic_theme.rasi",
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(FDB4B7ff) rgba(A2E8FFff) 0deg',
@@ -88,6 +91,7 @@ const colors = {
   gtk_icon_theme: 'Vivid-Dark-Icons',
   gtk_theme: 'Shades-of-purple',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(FD02FFff) rgba(1ed4fdff) 0deg',
@@ -112,6 +116,7 @@ const siberian = {
   gtk_theme: 'Shades-of-purple',
   gtk_icon_theme: 'NeonIcons',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(FDB4B7ff) rgba(A2E8FFff) 0deg',
@@ -136,6 +141,7 @@ const materialYou = {
   gtk_theme: 'Cabinet-Light-Orange',
   gtk_icon_theme: 'kora-grey-light-panel',
   gtk_mode: 'light',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(678382ff) rgba(9d6c73ff) 0deg',
@@ -160,6 +166,7 @@ const game = {
   gtk_theme: 'Tokyonight-Dark-BL',
   gtk_icon_theme: 'la-capitaine-icon-theme',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(ffff7fff) rgba(ffaa7fff) 0deg',
@@ -184,6 +191,7 @@ const dark = {
   gtk_theme: 'Tokyonight-Dark-BL',
   gtk_icon_theme: 'Infinity-Dark-Icons',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(ff9a4cff) rgba(0080ffff) 0deg',
@@ -208,6 +216,7 @@ const uniCat = {
   gtk_theme: 'Dracula',
   gtk_icon_theme: 'Magma',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(C6AAE8ff) rgba(F0AFE1ff) 0deg',
@@ -232,6 +241,7 @@ const newCat = {
   gtk_theme: 'Tokyonight-Dark-BL',
   gtk_icon_theme: 'Gradient-Dark-Icons',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(ECBFBDff) rgba(F0AFE1ff) 0deg',
@@ -256,6 +266,7 @@ const golden = {
   gtk_theme: 'Cabinet-Light-Orange',
   gtk_icon_theme: 'kora-grey-light-panel',
   gtk_mode: 'light',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(2C3041ff) rgba(611a15ff) 0deg',
@@ -280,6 +291,7 @@ const harmony = {
   gtk_theme: 'Nordic-darker-standard-buttons',
   gtk_icon_theme: 'Windows11-red-dark',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(BF616Bff) rgba(BF616Bff) 0deg',
@@ -304,6 +316,7 @@ const circles = {
   gtk_theme: 'Nordic-darker-standard-buttons',
   gtk_icon_theme: 'Vivid-Dark-Icons',
   gtk_mode: 'dark',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(61AFEFff) rgba(7EC7A2ff) 0deg',
@@ -328,6 +341,7 @@ const whiteFlower = {
   gtk_theme: 'Jasper-Light-Dracula',
   gtk_icon_theme: 'Rowaita-Pink-Light',
   gtk_mode: 'light',
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(678382ff) rgba(9d6c73ff) 0deg',
@@ -342,7 +356,7 @@ const whiteFlower = {
 };
 
 const dynamicM3Dark = {
-  wallpaper_path: `/media/shared/Pictures/wallpapers/dark`,
+  wallpaper_path: `/home/ahmed/wallpapers/dark`,
   dynamic: true,
   interval: 15 * 60 * 1000,
   gtk_mode: 'dark',
@@ -356,6 +370,7 @@ const dynamicM3Dark = {
   qt_icon_theme: 'BeautySolar',
   gtk_icon_theme: 'BeautySolar',
 
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(678382ff) rgba(9d6c73ff) 0deg',
@@ -370,7 +385,7 @@ const dynamicM3Dark = {
 };
 
 const dynamicM3Light = {
-  wallpaper_path: `/media/shared/Pictures/wallpapers/light`,
+  wallpaper_path: `/home/ahmed/wallpapers/light`,
   dynamic: true,
   interval: 15 * 60 * 1000,
   gtk_mode: 'light',
@@ -384,6 +399,7 @@ const dynamicM3Light = {
   qt_icon_theme: 'BeautySolar', //-Dark",
   gtk_icon_theme: 'BeautySolar', //-Dark",
 
+  font_name: 'JF Flat 11',
   hypr: {
     border_width: 2,
     active_border: 'rgba(678382ff) rgba(9d6c73ff) 0deg',

@@ -63,7 +63,12 @@ class ThemeService extends Service {
 
     this.changePlasmaColor(theme.plasma_color);
 
-    this.changeGTKTheme(theme.gtk_theme, theme.gtk_mode, theme.gtk_icon_theme);
+    this.changeGTKTheme(
+      theme.gtk_theme,
+      theme.gtk_mode,
+      theme.gtk_icon_theme,
+      theme.font_name
+    );
 
     this.changeQtStyle(theme.qt_5_style_theme, theme.qt_6_style_theme);
     this.changeIcons(theme.qt_icon_theme);
@@ -218,7 +223,7 @@ class ThemeService extends Service {
     execAsync([plasmaCmd, plasmaColor.split('.')[0]]).catch(print);
   }
 
-  changeGTKTheme(GTKTheme, gtkMode, iconTheme) {
+  changeGTKTheme(GTKTheme, gtkMode, iconTheme, fontName) {
     execAsync([
       `gsettings`,
       `set`,
@@ -259,6 +264,14 @@ class ThemeService extends Service {
       `org.gnome.desktop.interface`,
       `icon-theme`,
       iconTheme,
+    ]).catch(print);
+
+    execAsync([
+      `gsettings`,
+      `set`,
+      `org.gnome.desktop.interface`,
+      `font-name`,
+      fontName,
     ]).catch(print);
   }
 
