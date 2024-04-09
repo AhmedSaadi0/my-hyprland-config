@@ -7,7 +7,7 @@ function convertToH(bytes) {
   let speed;
   let dim;
   let bits = bytes * 8;
-  // bits = bits / 10;
+  bits = bits / 10;
 
   if (bits < 1000) {
     bits = 0;
