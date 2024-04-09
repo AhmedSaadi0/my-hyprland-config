@@ -1,4 +1,4 @@
-@import './themes/m3/dynamic.scss';
+@import './themes/win20.scss';
 
 .unset {
   all: unset;
@@ -802,6 +802,10 @@ window {
   padding: 1rem;
   margin: 0.5rem;
   border-radius: $border-radius;
+}
+
+.music-wd-length {
+  font-family: $icon-font-family;
 }
 
 .left-menu-music-wd {
