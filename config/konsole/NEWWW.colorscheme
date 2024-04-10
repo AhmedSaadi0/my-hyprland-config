@@ -89,8 +89,12 @@ Color=0,170,255
 Color=0,170,255
 
 [General]
+Anchor=0.5,0.5
 Blur=true
 ColorRandomization=false
 Description=NEWWW
-Opacity=0.72
+FillStyle=Tile
+Opacity=0.85
 Wallpaper=
+WallpaperFlipType=NoFlip
+WallpaperOpacity=1

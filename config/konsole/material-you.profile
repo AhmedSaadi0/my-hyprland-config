@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=Materia
-Font=Iosevka Custom,11,-1,5,50,0,0,0,0,0
+Font=FantasqueSansM Nerd Font Mono,14,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
 [General]
 Command=/usr/bin/fish

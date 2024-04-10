@@ -1,115 +1,15 @@
-/* File created by ThemeService written by ahmedsaadi0 */
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
-/* ------------------------------------------------------- */
-/* -------------- Material U Desktop Widget -------------- */
-/* ------------------------------------------------------- */
-.my-weather-wd-text {
-  font-size: medium; }
+button {
+  background-color: #3B2163;
+  color: #71f1e8;
+  border-color: #3B2163; }
 
-.weather-wd-row-one {
-  background: rgba(207, 231, 240, 0.8);
-  color: #061e25;
-  border-radius: 1.5rem;
-  margin: 1rem;
-  margin-bottom: 0.5rem; }
-
-.my-desktop-music-box {
-  background: rgba(222, 224, 255, 0.9);
-  color: #151937;
-  border-radius: 1.5rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  min-width: 1rem;
-  margin: 1rem;
-  margin-top: 0.5rem; }
-
-.my-desktop-music-box:dir(rtl) {
-  padding-right: 1.2rem;
-  padding-left: 1rem; }
-
-.my-desktop-music-box:dir(ltr) {
-  padding-left: 1.2rem;
-  padding-right: 1rem; }
-
-.my-weather-wd-icon {
-  color: #061e25;
-  font-size: xx-large;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  font-family: "Font Awesome 5 Free Solid"; }
-
-.my-wd-user-icon {
-  padding: 0.8rem;
-  margin-right: 1rem;
-  border-radius: 1.5rem; }
-
-.my-wd-user-icon:dir(rtl) {
-  margin-right: 1rem; }
-
-.my-wd-user-icon:dir(ltr) {
-  margin-left: 1rem; }
-
-.my-weather-wd-title-text-box {
-  min-width: 10.55rem;
-  padding-top: 1rem;
-  color: #151937;
-  font-size: x-large;
-  font-family: "VIP Rawy Regular"; }
-
-.my-weather-wd-row-two {
-  background: rgba(177, 236, 255, 0.9);
-  color: #001f28;
-  margin: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  border-radius: 1.5rem; }
-
-.my-fuzzy-clock-box {
-  background: rgba(222, 224, 255, 0.8);
-  margin: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-radius: 1.5rem; }
-
-.my-fuzzy-clock-box:dir(rtl) {
-  padding-right: 1.5rem;
-  padding-left: 1rem; }
-
-.my-fuzzy-clock-box:dir(ltr) {
-  padding-left: 1.5rem;
-  padding-right: 1rem; }
-
-.my-weather-wd-day-box {
-  background: rgba(89, 92, 126, 0.6);
-  border-radius: 1.5rem;
-  padding-top: 0.4rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem; }
-
-.my-wd-weather-day-name {
-  font-family: "VIP Rawy Regular";
-  color: #ffffff; }
-
-.my-wd-weather-day-text {
-  font-size: x-small;
-  padding-bottom: 0rem;
-  color: #ffffff; }
-
-.my-weather-wd-day-icon {
-  background: rgba(89, 92, 126, 0.7);
-  color: #ffffff;
-  padding-right: 0.3rem;
-  padding-left: 0.3rem;
-  border-radius: 1.5rem;
-  margin-bottom: 0.2rem;
-  min-width: 3rem;
-  min-height: 3.5rem;
-  font-size: x-large;
-  font-family: "Font Awesome 5 Free Solid"; }
+button:hover {
+  background-color: #ff4bde;
+  color: #20004A;
+  border-color: #ff4bde; }
 
 .unset {
   all: unset; }
@@ -124,7 +24,7 @@
 /* -------------- Top bar widgets -------------- */
 /* --------------------------------------------- */
 .workspaces button:active {
-  color: #001f28;
+  color: #ff4bde;
   border-radius: 0px; }
 
 .workspaces {
@@ -132,8 +32,8 @@
   padding-left: 4px;
   margin-top: 0.3rem;
   margin-bottom: 0.4rem;
-  background: #b1ecff;
-  border-radius: 1.5rem;
+  background: #0C0023;
+  border-radius: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
@@ -152,13 +52,13 @@
   margin-left: 0.4rem; }
 
 .workspaces button {
-  background: #b1ecff;
-  color: rgba(89, 92, 126, 0.5);
+  background: #0C0023;
+  color: #198bee;
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #00677e;
-  color: #00677e;
+  border-bottom: 1px solid #ff4bde;
+  color: #ff4bde;
   font-family: "Font Awesome 5 Free Solid";
   border-radius: 0px;
   padding-top: 0px;
@@ -177,16 +77,16 @@
   font-size: large; }
 
 .workspaces button.has-windows {
-  color: #00677e; }
+  color: #ff4bde; }
 
 .workspaces button:hover {
-  background: rgba(75, 98, 106, 0.9);
-  color: rgba(255, 255, 255, 0.9); }
+  background: rgba(25, 139, 238, 0.9);
+  color: rgba(12, 0, 35, 0.9); }
 
 .clock {
-  background: linear-gradient(to right, #b1ecff, #dee0ff);
-  color: #001f28;
-  border-radius: 1.5rem;
+  background: linear-gradient(to right, #198bee, #ff4bde);
+  color: #0C0023;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   padding-left: 1em;
@@ -194,9 +94,9 @@
 
 .bar-weather-box {
   font-size: 1em;
-  background: #dee0ff;
-  color: #151937;
-  border-radius: 1.5rem;
+  background: linear-gradient(to right, #26F7E1, #FF00AA);
+  color: #0C0023;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -214,8 +114,8 @@
   padding-right: 0.5rem; }
 
 .top-corner {
-  background-color: rgba(250, 252, 253, 0.8);
-  border-radius: 1.5rem; }
+  background-color: #20004A;
+  border-radius: 1rem; }
 
 .bar-bg {
   background: rgba(0, 0, 0, 0);
@@ -223,8 +123,8 @@
   border-radius: 0rem; }
 
 .bar {
-  background: rgba(250, 252, 253, 0.8);
-  color: #191c1d;
+  background: #20004A;
+  color: #cecece;
   min-height: 8px;
   margin-bottom: 0.5rem; }
 
@@ -249,10 +149,10 @@
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3); }
 
 .internet-box {
-  background: linear-gradient(to right, #b1ecff, #cfe7f0, rgba(255, 218, 212, 0.5));
-  color: #001f28;
+  background: linear-gradient(to left, #3498fd, #ff4bde, #bb8256);
+  color: #20004A;
   /* min-width: 100px; */
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -268,48 +168,48 @@
   /* margin-left: 0.7em; */
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  background: #fafcfd;
-  color: #191c1d;
+  background: #20004A;
+  color: #cecece;
   font-weight: bold; }
 
 .wifi-name-label:dir(rtl) {
   padding-left: 0.5em;
   padding-right: 1em;
   margin-right: 0.2em;
-  border-top-right-radius: 1.5rem;
-  border-bottom-right-radius: 1.5rem; }
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem; }
 
 .wifi-name-label:dir(ltr) {
   padding-right: 0.5em;
   padding-left: 1em;
   margin-left: 0.2em;
-  border-top-left-radius: 1.5rem;
-  border-bottom-left-radius: 1.5rem; }
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem; }
 
 .wifi-icon-strength {
   font-family: "Font Awesome 5 Free Solid";
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  background: #fafcfd;
-  color: #191c1d; }
+  background: #20004A;
+  color: #cecece; }
 
 .wifi-icon-strength:dir(rtl) {
   margin-left: 0.2em;
   padding-right: 0.5em;
   padding-left: 0.6em;
-  border-top-left-radius: 1.5rem;
-  border-bottom-left-radius: 1.5rem; }
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem; }
 
 .wifi-icon-strength:dir(ltr) {
   margin-right: 0.2rem;
   padding-left: 0.2rem;
   padding-right: 1rem;
-  border-top-right-radius: 1.5rem;
-  border-bottom-right-radius: 1.5rem; }
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem; }
 
 .systray {
-  background: #dbe4e8;
-  border-radius: 1.5rem;
+  background: #3B2163;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   min-height: 0.1rem; }
@@ -321,14 +221,14 @@
   margin-right: 0.5rem; }
 
 .systray button {
-  background: #dbe4e8;
-  border-radius: 1.5rem;
+  background: #3B2163;
+  border-radius: 1rem;
   padding-right: 0.4rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background: #00677e; }
+  background: #ff4bde; }
 
 .tray-btn {
   border: 0rem; }
@@ -337,27 +237,27 @@
 /* -------------- Battery -------------- */
 /* ------------------------------------- */
 .battery {
-  background: #dbe4e8;
-  color: #00677e;
+  background: #0C0023;
+  color: #FF8580;
   min-width: 1.5rem;
   min-height: 0.5rem;
   font-size: 0.2rem; }
 
 @keyframes colorChange {
   0% {
-    color: #00677e; }
+    color: #FF8580; }
   50% {
-    color: #dbe4e8; }
+    color: #0C0023; }
   100% {
-    color: #00677e; } }
+    color: #FF8580; } }
 
 .battery-inner {
-  color: #00677e;
+  color: #FF8580;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
 .battery-inner-charging {
-  color: #00677e;
+  color: #FF8580;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem;
   animation: colorChange 2s infinite; }
@@ -366,14 +266,14 @@
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: #dbe4e8;
-  color: #4b626a;
+  background: #0C0023;
+  color: #FDC227;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
 
 .cpu-inner {
-  color: #4b626a;
+  color: #FDC227;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -381,8 +281,8 @@
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: #dbe4e8;
-  color: #595c7e;
+  background: #0C0023;
+  color: #198bee;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
@@ -391,7 +291,7 @@
   all: unset; }
 
 .temp-inner {
-  color: #595c7e;
+  color: #198bee;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -399,14 +299,14 @@
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: #dbe4e8;
-  color: #ba1b1b;
+  background: #0C0023;
+  color: #71f1e8;
   min-width: 1.5rem;
   min-height: 0.1rem;
   font-size: 0.2rem; }
 
 .ram-inner {
-  color: #ba1b1b;
+  color: #71f1e8;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 0.4rem; }
 
@@ -414,12 +314,12 @@
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: #dbe4e8;
+  background: #0C0023;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -445,7 +345,7 @@
 /* -------------- Volume -------------- */
 /* ------------------------------------ */
 .volume {
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
@@ -458,10 +358,10 @@
   margin-right: 1em; }
 
 .vol-osd {
-  background: #fafcfd;
+  background: #20004A;
   padding: 1rem;
-  border-radius: 1.5rem;
-  border: 2px solid #191c1d;
+  border-radius: 1rem;
+  border: 2px solid #FF4BDE;
   margin: 1.5rem; }
 
 .vol-osd:dir(rtl) {
@@ -471,20 +371,20 @@
   padding-right: 1.5rem; }
 
 scale trough highlight {
-  border-radius: 1.5rem;
-  background: #00677e; }
+  border-radius: 1rem;
+  background: #ff4bde; }
 
 scale slider {
-  background: #00677e; }
+  background: #ff4bde; }
 
 /* ------------------------------------------- */
 /* -------------- Notifications -------------- */
 /* ------------------------------------------- */
 .notifications-revealer-box {
-  background: #cfe7f0;
+  background: #3B2163;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   background: #fff;
@@ -499,14 +399,14 @@ scale slider {
   margin-left: 0rem; }
 
 .notification-popups {
-  border: 2px solid #00677e;
-  border-radius: 1.5rem;
+  border: 2px solid #FF4BDE;
+  border-radius: 1rem;
   padding: 1rem;
-  background: #fafcfd;
-  color: #191c1d; }
+  background: #20004A;
+  color: #cecece; }
 
 .notifications-popup-list {
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   background: rgba(0, 0, 0, 0); }
 
 .notification-close-button {
@@ -514,16 +414,16 @@ scale slider {
   padding-right: 0.7rem; }
 
 window {
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   background: rgba(0, 0, 0, 0); }
 
 /* --------------------------------------- */
 /* -------------- Left menu -------------- */
 /* --------------------------------------- */
 .left-menu-box {
-  background: #fafcfd;
-  border-radius: 1.5rem;
-  border: 2px solid #00677e;
+  background: #20004A;
+  border-radius: 1rem;
+  border: 2px solid #FF4BDE;
   margin-top: 0.3rem;
   margin-bottom: 1rem;
   transition-property: background;
@@ -542,20 +442,20 @@ window {
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   min-width: 23rem;
   min-height: 12rem; }
 
 .profile-box {
-  background: linear-gradient(to right, rgba(177, 236, 255, 0.8), rgba(207, 231, 240, 0.6));
-  color: #001f28;
+  background: linear-gradient(to right, rgba(147, 89, 255, 0.8), rgba(255, 0, 170, 0.6));
+  color: #20004A;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: -3rem;
-  border-radius: 1.5rem; }
+  border-radius: 1rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -567,39 +467,39 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-  background: rgba(177, 236, 255, 0.5);
+  background: #0C0023;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1.5rem; }
+  border-radius: 1rem; }
 
 .selected-theme {
-  background: linear-gradient(to right, #00677e, #4b626a);
-  color: #ffffff;
-  border-radius: 1.5rem;
+  background: linear-gradient(to right, #9359ff, #FF00AA);
+  color: #20004A;
+  border-radius: 1rem;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .selected-theme:hover {
-  background: linear-gradient(to right, #b1ecff, #cfe7f0);
-  color: #001f28;
-  border-radius: 1.5rem; }
+  background: linear-gradient(to right, #ff9900, #ff6600);
+  color: #3B2163;
+  border-radius: 1rem; }
 
 .theme-btn {
-  border-radius: 1.5rem;
-  background: #dee0ff;
-  border-color: #dee0ff;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
+  background: #20004A;
+  border-color: #20004A;
+  border-radius: 1rem;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .theme-btn:hover {
-  color: #ffffff;
-  border-color: #595c7e;
-  border-radius: 1.5rem; }
+  color: #20004A;
+  border-color: #ff4bde;
+  border-radius: 1rem; }
 
 .theme-btn-icon {
   font-family: "Font Awesome 5 Free Solid";
@@ -613,13 +513,13 @@ window {
   min-width: 3rem; }
 
 .menu-button {
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
-  background: #dee0ff;
+  background: #20004A;
   font-family: "Font Awesome 5 Free Solid";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
@@ -631,13 +531,13 @@ window {
   margin-right: 0.5rem; }
 
 .menu-button:hover {
-  background: #151937; }
+  background: #ff4bde; }
 
 .power-box {
-  background: rgba(222, 224, 255, 0.5);
+  background: #0C0023;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1.5rem; }
+  border-radius: 1rem; }
 
 /* ----------------------------------------------- */
 /* -------------- Notification menu -------------- */
@@ -646,34 +546,34 @@ window {
   background-size: cover;
   background-position: center;
   padding: 1rem;
-  color: #191c1d; }
+  color: #cecece; }
 
 .horizontal-line {
-  background: #191c1d;
+  background: #cecece;
   min-height: 1px;
   min-width: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: #191c1d; }
+  color: #cecece; }
 
 .notification-center-button {
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  background: #dbe4e8;
-  color: #40484b;
+  background: #3B2163;
+  color: #198bee;
   font-family: "Font Awesome 5 Free Solid";
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   padding-top: 0rem;
   padding-bottom: 0rem;
   padding-right: 1.1rem;
   padding-left: 0.8rem; }
 
 .notification-center-button:hover {
-  background-color: #00677e;
-  color: #ffffff; }
+  background-color: #ff4bde;
+  color: #20004A; }
 
 .notification-this-is-all {
-  color: #191c1d;
+  color: #cecece;
   margin-top: 10rem;
   margin-bottom: 1rem;
   min-width: 1rem;
@@ -691,10 +591,10 @@ window {
 .notification-header-box {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background: #dee0ff;
-  color: #151937;
-  border-top-right-radius: 1.5rem;
-  border-top-left-radius: 1.5rem; }
+  background: #0C0023;
+  color: #cecece;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .notification-center-header-text {
   min-width: 7.7rem; }
@@ -703,7 +603,7 @@ window {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-family: "Font Awesome 5 Free Solid";
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   padding-left: 1rem;
   padding-right: 1.2rem;
   margin-right: 0.5rem; }
@@ -712,7 +612,7 @@ window {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-family: "Font Awesome 5 Free Solid";
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   padding-left: 1rem;
   padding-right: 1.2rem; }
 
@@ -724,23 +624,23 @@ window {
 
 .notification-center-container {
   min-height: 30rem;
-  border-radius: 1.5rem; }
+  border-radius: 1rem; }
 
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 .music-wd-box {
-  background: #b1ecff;
+  background: linear-gradient(to right, #5812db, #8F1767);
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 1.5rem; }
+  border-radius: 1rem; }
 
 .music-wd-length {
   font-family: "Font Awesome 5 Free Solid"; }
 
 .left-menu-music-wd {
-  background: #b1ecff;
-  border-radius: 1.5rem;
+  background: linear-gradient(to right, #5812db, #8F1767);
+  border-radius: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-left: 1rem;
@@ -766,11 +666,11 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background: #4b626a;
+  background: #0C0023;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #ffffff;
-  border-radius: 1.5rem;
+  color: #71f1e8;
+  border-radius: 1rem;
   min-width: 2rem; }
 
 .music-wd-player:dir(rtl) {
@@ -782,7 +682,7 @@ window {
   padding-left: 0.7rem; }
 
 .music-wd-title {
-  color: #595c7e;
+  color: #0C0023;
   margin-bottom: 0.5rem; }
 
 .music-wd-title:dir(rtl) {
@@ -792,7 +692,7 @@ window {
   padding-right: 0.5rem; }
 
 .music-wd-file-name {
-  color: #191c1d;
+  color: #71f1e8;
   font-size: x-small; }
 
 .music-wd-button {
@@ -800,28 +700,28 @@ window {
   border-radius: 50%;
   min-width: 40px;
   min-height: 40px;
-  background: #4b626a;
-  color: #ffffff;
+  background: linear-gradient(to right, #20004A, #20004A);
+  color: #71f1e8;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button:hover {
-  background: #595c7e; }
+  background: linear-gradient(to top, #ff4bde, #198bee); }
 
 .music-wd-button-play {
-  background: #00677e;
-  color: #ffffff;
-  border-radius: 1.5rem;
+  background: linear-gradient(to right, #9359ff, #FF00AA);
+  color: #0C0023;
+  border-radius: 1rem;
   min-height: 40px;
   min-width: 80px;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .music-wd-button-play:hover {
-  background: #595c7e; }
+  background: linear-gradient(to top, #ff4bde, #198bee); }
 
 .music-wd-button-stop {
-  background: #4b626a;
-  color: #ffffff;
-  border-radius: 1.5rem;
+  background: linear-gradient(to right, #20004A, #20004A);
+  color: #71f1e8;
+  border-radius: 1rem;
   min-height: 40px;
   min-width: 80px;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
@@ -831,28 +731,28 @@ window {
 /* ----------------------------------------- */
 .wd-fuzzy-day-box {
   background: rgba(0, 0, 0, 0);
-  color: #001f28; }
+  color: #198bee; }
 
 .wd-fuzzy-day-icon {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 0rem 1rem 0rem 1rem;
   font-family: "Font Awesome 5 Free Solid";
   padding: 0.7rem 0rem 0rem 0rem; }
 
 .wd-fuzzy-day-text {
   font-family: "VIP Rawy Regular";
-  font-size: 1.8rem; }
+  font-size: 3rem; }
 
 .wd-time-now {
-  font-size: 1.5rem;
+  font-size: 2.3rem;
   background: rgba(0, 0, 0, 0);
-  color: #061e25;
+  color: #FFB431;
   font-family: "VEXA light R";
-  margin: 0rem 0rem 0rem 0rem; }
+  margin: 0rem 0rem 0.5rem 0rem; }
 
 .wd-fuzzy-time-box {
   background: rgba(0, 0, 0, 0);
-  color: #151937; }
+  color: #ff4bde; }
 
 .wd-fuzzy-time-icon {
   font-size: 1.5rem;
@@ -864,17 +764,17 @@ window {
   font-family: "VIP Rawy Regular"; }
 
 .saying-wd-label {
-  min-width: 1rem;
+  min-width: 25rem;
   font-size: 1.5rem;
-  color: #001f28;
-  background: rgba(177, 236, 255, 0.8);
+  color: #FFB431;
+  background: rgba(0, 0, 0, 0);
   font-family: "VIP Rawy Regular";
-  padding: 1rem;
-  margin: 0rem 1rem 1rem 1rem;
-  border-radius: 1.5rem; }
+  padding: 0rem;
+  margin: 0rem;
+  border-radius: 0rem; }
 
 .desktop-wd-separator {
-  background: rgba(0, 0, 0, 0);
+  background: linear-gradient(to right, #198bee, #FFB431, #ff4bde);
   min-height: 1px;
   min-width: 1px; }
 
@@ -885,76 +785,76 @@ window {
   font-size: 1.5rem; }
 
 .desktop-wd-music-player-title {
-  color: #4b626a; }
+  color: #ff4bde; }
 
 .desktop-wd-music-player-artist {
-  color: #151937; }
+  color: #198bee; }
 
 /* ------------------------------------------- */
 /* -------------- Hardware menu -------------- */
 /* ------------------------------------------- */
 .hardware-menu-box {
-  background: #fafcfd;
-  border-radius: 1.5rem;
-  border: 2px solid #00677e;
+  background: #20004A;
+  border-radius: 1rem;
+  border: 2px solid #FF4BDE;
   padding: 1rem; }
 
 .hardware-menu-header-box {
-  background: #dbe4e8;
-  border-radius: 1.5rem;
+  background: #0C0023;
+  border-radius: 1rem;
   padding: 0.5rem; }
 
 .menu-cpu {
-  color: #4b626a;
+  color: #FDC227;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-cpu-icon {
-  color: #4b626a;
+  color: #FDC227;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-ram {
-  color: #ba1b1b;
+  color: #71f1e8;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-ram-icon {
-  color: #ba1b1b;
+  color: #71f1e8;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-battery {
-  color: #00677e;
+  color: #FF8580;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-battery-icon {
-  color: #00677e;
+  color: #FF8580;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
 .menu-battery-icon-charging {
-  color: #00677e;
+  color: #FF8580;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem;
   animation: colorChange 2s infinite; }
 
 .menu-temp {
-  color: #595c7e;
+  color: #198bee;
   font-size: 0.6rem;
   min-width: 7rem;
   min-height: 7rem;
   margin: 1rem; }
 
 .menu-temp-icon {
-  color: #595c7e;
+  color: #198bee;
   font-family: "Font Awesome 5 Free Solid";
   font-size: 2.5rem; }
 
@@ -971,17 +871,17 @@ window {
   min-width: 3rem; }
 
 .hardware-cpu-box {
-  background: rgba(0, 103, 126, 0.7);
-  color: #ffffff;
-  border-radius: 1.5rem;
+  background: linear-gradient(to top, rgba(255, 75, 222, 0.8), rgba(25, 139, 238, 0.8), rgba(113, 241, 232, 0.8));
+  color: #20004A;
+  border-radius: 1rem;
   margin-top: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
-  background: rgba(0, 103, 126, 0.8);
-  color: #ffffff;
-  border-top-right-radius: 1.5rem;
-  border-top-left-radius: 1.5rem; }
+  background: #56b4d3;
+  color: #20004A;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .hardware-cpu-table-row {
   padding-left: 1rem;
@@ -990,17 +890,17 @@ window {
   padding-bottom: 0.5rem; }
 
 .hardware-ram-box {
-  background: rgba(75, 98, 106, 0.9);
-  color: #ffffff;
-  border-radius: 1.5rem;
+  background: linear-gradient(to top, rgba(113, 241, 232, 0.8), rgba(255, 75, 222, 0.8));
+  color: #20004A;
+  border-radius: 1rem;
   margin-top: 1rem; }
 
 .hardware-ram-table-row-header {
   padding: 1rem;
-  background: rgba(75, 98, 106, 0.9);
-  color: #ffffff;
-  border-top-right-radius: 1.5rem;
-  border-top-left-radius: 1.5rem; }
+  background: #da56d7;
+  color: #0C0023;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .hardware-ram-table-row {
   padding-left: 1rem;
@@ -1009,25 +909,25 @@ window {
   padding-bottom: 0.5rem; }
 
 .hardware-menu-tables-box {
-  background: #b1ecff;
+  background: #0C0023;
   padding: 0.8rem;
   padding-top: 0rem;
   margin-top: 0.8rem;
-  border-radius: 1.5rem; }
+  border-radius: 1rem; }
 
 .hardware-bat-box {
-  background: rgba(89, 92, 126, 0.8);
-  color: #ffffff;
-  border-radius: 1.5rem;
+  background: #987fd6;
+  color: #211008;
+  border-radius: 1rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-bat-table-row-header {
   padding: 1rem;
-  background: #595c7e;
-  color: #ffffff;
-  border-top-right-radius: 1.5rem;
-  border-top-left-radius: 1.5rem; }
+  background: #8b75c4;
+  color: #211008;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .hardware-bat-table-row {
   padding-left: 1rem;
@@ -1036,18 +936,18 @@ window {
   padding-bottom: 0.5rem; }
 
 .hardware-os-box {
-  background: rgba(250, 252, 253, 0.7);
-  color: #191c1d;
-  border-radius: 1.5rem;
+  background: rgba(25, 139, 238, 0.9);
+  color: #211008;
+  border-radius: 1rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-os-table-row-header {
   padding: 1rem;
-  background: rgba(250, 252, 253, 0.7);
-  color: #191c1d;
-  border-top-right-radius: 1.5rem;
-  border-top-left-radius: 1.5rem; }
+  background: rgba(25, 139, 238, 0.8);
+  color: #211008;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .hardware-os-table-row {
   padding-left: 1rem;
@@ -1060,9 +960,9 @@ window {
 /* ----------------------------------------------- */
 .bar-prayer-times-box {
   font-size: 1em;
-  background: #dee0ff;
-  color: #151937;
-  border-radius: 1.5rem;
+  background: linear-gradient(to right, #3599FF, #6457F0);
+  color: #0C0023;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -1080,16 +980,16 @@ window {
   padding-right: 0.7rem; }
 
 .prayer-times-menu-box {
-  background: #fafcfd;
-  border-radius: 1.5rem;
-  border: 2px solid #00677e; }
+  background: #20004A;
+  border-radius: 1rem;
+  border: 2px solid #FF4BDE; }
 
 .prayer-times-menu-header {
-  background: #dee0ff;
-  color: #151937;
+  background: #0C0023;
+  color: #cecece;
   padding: 1rem;
-  border-top-right-radius: 1.5rem;
-  border-top-left-radius: 1.5rem; }
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .prayer-time-item-box-class {
   padding-top: 1.2rem;
@@ -1098,12 +998,12 @@ window {
   padding-left: 1.5rem; }
 
 .isha-item {
-  border-bottom-right-radius: 1.5rem;
-  border-bottom-left-radius: 1.5rem; }
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem; }
 
 .next-prayer {
-  background: #00677e;
-  color: #ffffff; }
+  background: linear-gradient(to left, #198bee, #ff4bde);
+  color: #0C0023; }
 
 .prayer-times-menu-header-icon {
   font-family: "Font Awesome 5 Free Solid"; }
@@ -1118,10 +1018,10 @@ window {
   margin-left: 1.7rem; }
 
 button {
-  background: #b1ecff;
-  color: #001f28;
-  border-color: #b1ecff;
-  border-radius: 1.5rem;
+  background: #3B2163;
+  color: #71f1e8;
+  border-color: #3B2163;
+  border-radius: 1rem;
   padding: 4px 14px;
   border: none;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
@@ -1131,42 +1031,42 @@ button:active {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); }
 
 button:hover {
-  background: #595c7e;
-  color: #ffffff;
-  border-color: #595c7e;
-  border-radius: 1.5rem;
+  background: #ff4bde;
+  color: #20004A;
+  border-color: #ff4bde;
+  border-radius: 1rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
 
 menu {
-  border: 2px #00677e solid;
-  background: #fafcfd;
-  color: #191c1d;
-  border-radius: 1.5rem;
+  border: 2px #FF4BDE solid;
+  background: #20004A;
+  color: #cecece;
+  border-radius: 1rem;
   padding: 0.3rem;
   margin-top: 2rem; }
 
 menuitem {
-  border-radius: 1.5rem;
-  background: #fafcfd;
-  color: #191c1d; }
+  border-radius: 1rem;
+  background: #20004A;
+  color: #cecece; }
 
 menuitem:disabled {
-  background: rgba(219, 228, 232, 0.5);
-  color: rgba(64, 72, 75, 0.5); }
+  background: rgba(206, 206, 206, 0.1);
+  color: rgba(206, 206, 206, 0.5); }
 
 menuitem:hover {
-  background: #cfe7f0;
-  color: #061e25; }
+  background: rgba(206, 206, 206, 0.2);
+  color: #cecece; }
 
 .weather-menu-box {
   min-width: 2rem;
-  background: #fafcfd;
-  color: #191c1d;
+  background: #20004A;
+  color: #cecece;
   padding: 1rem 1rem;
   padding-top: 2rem;
-  border: 2px solid #00677e;
-  border-radius: 1.5rem; }
+  border: 2px solid #FF4BDE;
+  border-radius: 1rem; }
 
 .weather-menu-general-information-box {
   margin: 0rem 1rem; }
