@@ -115,7 +115,7 @@ const menuRevealer = MenuRevealer();
 export const PrayerTimesMenu = () =>
   Widget.Window({
     name: `prayer_times_menu`,
-    margins: [6, 510],
+    margins: [4, 510],
     anchor: ['top', local === 'RTL' ? 'right' : 'left'],
     child: Widget.Box({
       css: `

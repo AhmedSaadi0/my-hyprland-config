@@ -206,7 +206,7 @@ const tablesBox = () => {
           }),
           // Body
           tableRow({
-            appName: local === 'RTL' ? 'النسبة  ': 'percentage ',
+            appName: local === 'RTL' ? 'النسبة  ' : 'percentage ',
             percentage: `${Battery.percent}%`,
             deviceName: batDeviceName,
           }),
@@ -314,7 +314,7 @@ const menuRevealer = Widget.Revealer({
 export const HardwareMenu = () =>
   Widget.Window({
     name: `hardware_menu`,
-    margins: [6, 250],
+    margins: [4, 250],
     // layer: 'overlay',
     anchor: ['top', local === 'RTL' ? 'right' : 'left'],
     child: Widget.Box({

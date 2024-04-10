@@ -1,162 +1,105 @@
-import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-import Gtk from 'gi://Gtk';
+import { Widget } from '../utils/imports.js';
+import Gtk from 'gi://Gtk?version=3.0';
 
-/**
- * @param {string} place
- */
-export const RoundedCorner = (place, props) =>
+const drawingarea = (position) =>
   Widget.DrawingArea({
-    ...props,
-    hpack: place.includes('left') ? 'start' : 'end',
-    vpack: place.includes('top') ? 'start' : 'end',
-    setup: (widget) => {
-      const r = 25; //widget.get_style_context().get_property('border-radius', Gtk.StateFlags.NORMAL);
-      widget.set_size_request(r, r);
-      widget.on('draw', (widget, cr) => {
-        const c = widget
-          .get_style_context()
-          .get_property('background-color', Gtk.StateFlags.NORMAL);
-        const r = widget
-          .get_style_context()
-          .get_property('border-radius', Gtk.StateFlags.NORMAL);
-        widget.set_size_request(r, r);
+    // class-name
+    className: 'top-corner',
+    widthRequest: 50,
+    heightRequest: 50,
+    drawFn: (self, cr, width, height) => {
+      const background = self
+        .get_style_context()
+        .get_background_color(Gtk.StateFlags.NORMAL);
 
-        switch (place) {
-          case 'topleft':
-            cr.arc(r, r, r, Math.PI, (3 * Math.PI) / 2);
-            cr.lineTo(0, 0);
-            break;
-          case 'topright':
-            cr.arc(0, r, r, (3 * Math.PI) / 2, 2 * Math.PI);
-            cr.lineTo(r, 0);
-            break;
-          case 'bottomleft':
-            cr.arc(r, 0, r, Math.PI / 2, Math.PI);
-            cr.lineTo(0, r);
-            break;
-          case 'bottomright':
-            cr.arc(0, 0, r, 0, Math.PI / 2);
-            cr.lineTo(r, r);
-            break;
-        }
+      const borderRadius = parseFloat(
+        self
+          .get_style_context()
+          .get_property('border-radius', Gtk.StateFlags.NORMAL)
+      );
 
-        cr.closePath();
-        cr.setSourceRGBA(c.red, c.green, c.blue, c.alpha);
-        cr.fill();
-      });
+      const cornerRadius = borderRadius;
+      const shadowWidth = 7;
+
+      // Draw shadow
+      cr.setSourceRGBA(0, 0, 0, 0.12);
+
+      if (position === 'top-left') {
+        cr.arc(
+          cornerRadius + shadowWidth,
+          cornerRadius + shadowWidth,
+          cornerRadius + shadowWidth,
+          Math.PI,
+          (3 * Math.PI) / 2
+        );
+        cr.lineTo(0, 0);
+      } else if (position === 'top-right') {
+        cr.arc(
+          width - cornerRadius - shadowWidth,
+          cornerRadius + shadowWidth,
+          cornerRadius + shadowWidth,
+          (3 * Math.PI) / 2,
+          2 * Math.PI
+        );
+        cr.lineTo(width, 0);
+      }
+
+      cr.fill();
+
+      // Draw main shape
+      if (position === 'top-left') {
+        cr.arc(
+          cornerRadius,
+          cornerRadius,
+          cornerRadius,
+          Math.PI,
+          (3 * Math.PI) / 2
+        );
+        cr.lineTo(0, 0);
+      } else if (position === 'top-right') {
+        cr.arc(
+          width - cornerRadius,
+          cornerRadius,
+          cornerRadius,
+          (3 * Math.PI) / 2,
+          2 * Math.PI
+        );
+        cr.lineTo(width, 0);
+      }
+
+      cr.closePath();
+      cr.setSourceRGBA(
+        background.red,
+        background.green,
+        background.blue,
+        background.alpha
+      );
+      cr.fill();
     },
   });
 
-/**
- * @param {string} place
- */
-export const RoundedAngleEnd = (place, props) =>
-  Widget.DrawingArea({
-    ...props,
-    setup: (widget) => {
-      const ratio = 1.5;
-      const r = widget.get_allocated_height();
-      widget.set_size_request(ratio * r, r);
-      widget.on('draw', (widget, cr) => {
-        const context = widget.get_style_context();
-        const c = context.get_property(
-          'background-color',
-          Gtk.StateFlags.NORMAL
-        );
-        const border_color = context.get_property(
-          'color',
-          Gtk.StateFlags.NORMAL
-        );
-        const border_width = context.get_border(Gtk.StateFlags.NORMAL).bottom;
-        const r = widget.get_allocated_height();
-        widget.set_size_request(ratio * r, r);
-        switch (place) {
-          case 'topleft':
-            cr.moveTo(0, 0);
-            cr.curveTo((ratio * r) / 2, 0, (ratio * r) / 2, r, ratio * r, r);
-            cr.lineTo(ratio * r, 0);
-
-            cr.moveTo(0, 0);
-            cr.curveTo((ratio * r) / 2, 0, (ratio * r) / 2, r, ratio * r, r);
-            cr.lineTo(ratio * r, 0);
-            cr.closePath();
-            cr.setSourceRGBA(c.red, c.green, c.blue, c.alpha);
-            cr.fillPreserve();
-            cr.clip();
-            cr.moveTo(0, 0);
-            cr.curveTo((ratio * r) / 2, 0, (ratio * r) / 2, r, ratio * r, r);
-            cr.setLineWidth(border_width * 2);
-            cr.setSourceRGBA(
-              border_color.red,
-              border_color.green,
-              border_color.blue,
-              border_color.alpha
-            );
-            cr.stroke();
-            break;
-
-          case 'topright':
-            cr.moveTo(ratio * r, 0);
-            cr.curveTo((ratio * r) / 2, 0, (ratio * r) / 2, r, 0, r);
-            cr.lineTo(0, 0);
-            cr.closePath();
-            cr.setSourceRGBA(c.red, c.green, c.blue, c.alpha);
-            cr.fillPreserve();
-            cr.clip();
-            cr.moveTo(ratio * r, 0);
-            cr.curveTo((ratio * r) / 2, 0, (ratio * r) / 2, r, 0, r);
-            cr.setLineWidth(border_width * 2);
-            cr.setSourceRGBA(
-              border_color.red,
-              border_color.green,
-              border_color.blue,
-              border_color.alpha
-            );
-            cr.stroke();
-            break;
-        }
-
-        // cr.setLineWidth(border_width);
-        // cr.setSourceRGBA(border_color.red, border_color.green, border_color.blue, border_color.alpha);
-      });
-    },
-  });
-
-export const CornerTopleft = () =>
+export const TopLeftCorner = ({ monitor } = {}) =>
   Widget.Window({
-    name: 'cornertl',
+    name: `top_left_corner_m_${monitor}`,
     layer: 'top',
+    margins: [-7, 0],
     anchor: ['top', 'left'],
     exclusivity: 'normal',
     visible: true,
-    child: RoundedCorner('topleft', { className: 'corner' }),
+    monitor: monitor,
+    child: drawingarea('top-left'),
+    click_through: true,
   });
-export const CornerTopright = () =>
+
+export const TopRightCorner = ({ monitor } = {}) =>
   Widget.Window({
-    name: 'cornertr',
+    name: `top_right_corner_m_${monitor}`,
     layer: 'top',
+    margins: [-7, 0],
     anchor: ['top', 'right'],
     exclusivity: 'normal',
     visible: true,
-    child: RoundedCorner('topright', { className: 'corner' }),
+    monitor: monitor,
+    child: drawingarea('top-right'),
+    click_through: true,
   });
-export const CornerBottomleft = () =>
-  Widget.Window({
-    name: 'cornerbl',
-    layer: 'top',
-    anchor: ['bottom', 'left'],
-    exclusivity: 'normal',
-    visible: true,
-    child: RoundedCorner('bottomleft', { className: 'corner' }),
-  });
-export const CornerBottomright = () =>
-  Widget.Window({
-    name: 'cornerbr',
-    layer: 'top',
-    anchor: ['bottom', 'right'],
-    exclusivity: 'normal',
-    visible: true,
-    child: RoundedCorner('bottomright', { className: 'corner' }),
-  });
-
-export default RoundedCorner;

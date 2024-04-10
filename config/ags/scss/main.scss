@@ -1,4 +1,4 @@
-@import './themes/win20.scss';
+@import './themes/m3/dynamic.scss';
 
 .unset {
   all: unset;
@@ -149,6 +149,11 @@ $top-bar-widget-margins: $bar-top-margin + 0.2rem;
     border-bottom-left-radius: $border-radius;
     margin-right: 0.5rem;
   }
+}
+
+.top-corner {
+  background-color: $bar-background;
+  border-radius: $border-radius;
 }
 
 .bar-bg {
@@ -538,20 +543,20 @@ window {
   background: $menu-box-background;
   border-radius: $border-radius;
   border: $border-size solid $menu-box-borders;
-  margin-top: 0.45rem;
+  margin-top: 0.3rem;
   margin-bottom: 1rem;
   transition-property: background;
   transition-duration: 1.5s;
 }
 
 .left-menu-box:dir(rtl) {
-  margin-left: 0.45rem;
+  margin-left: 0.6rem;
   margin-right: 1rem;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .left-menu-box:dir(ltr) {
-  margin-right: 0.45rem;
+  margin-right: 0.6rem;
   margin-left: 1rem;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }

@@ -19,7 +19,10 @@ import circlesMusicWidget from './modules/widgets/desktop/Circles.js';
 import whiteFlowerWidget from './modules/widgets/desktop/WhiteFlower.js';
 import { WeatherMenu } from './modules/menus/WeatherMenu.js';
 import settings from './modules/settings.js';
-// import ScreenCorners from './modules/components/ScreenCorners.js';
+import {
+  TopLeftCorner,
+  TopRightCorner,
+} from './modules/components/ScreenCorners.js';
 
 // in config.js
 const scss = App.configDir + '/scss/main.scss';
@@ -36,7 +39,6 @@ let windows = [
   HardwareMenu(),
   PrayerTimesMenu(),
   WeatherMenu(),
-
   // ... Desktop widgets ... //
   ColorWidget,
   win20Widget,
@@ -60,6 +62,8 @@ for (let i = 0; i < screens.length; i++) {
 
   const leftMene = LeftMenu({ monitor: screen.id });
   windows.push(leftMene);
+  windows.push(TopLeftCorner({ monitor: screen.id }));
+  windows.push(TopRightCorner({ monitor: screen.id }));
 }
 
 export default {

@@ -1,4 +1,4 @@
-import { App } from './utils/imports.js';
+import { App, Utils } from './utils/imports.js';
 
 const MAIN_PATH = `${App.configDir}`;
 const ASSETS_PATH = `${App.configDir}/assets`;
@@ -10,6 +10,31 @@ const getAssets = (path) => {
 const getPath = (path) => {
   return `${MAIN_PATH}/${path}`;
 };
+
+var networkMonitor = '';
+var networkTimeout = '';
+var networkInterval = '';
+var darkM3WallpaperPath = '';
+var lightM3WallpaperPath = '';
+var weatherLocation = '';
+var city = '';
+var country = '';
+
+try {
+  const configFile = JSON.parse(
+    Utils.readFile(`/home/${Utils.USER}/.ahmed-config.json`)
+  );
+  networkMonitor = configFile.networkMonitor;
+  darkM3WallpaperPath = configFile.darkM3WallpaperPath;
+  lightM3WallpaperPath = configFile.lightM3WallpaperPath;
+  weatherLocation = configFile.weatherLocation;
+  city = configFile.city;
+  country = configFile.country;
+  networkTimeout = configFile.networkTimeout;
+  networkInterval = configFile.networkInterval;
+} catch (TypeError) {
+  console.log('Error reading .ahmed-config.json file');
+}
 
 const settings = {
   assets: {
@@ -36,24 +61,26 @@ const settings = {
     absoluteDynamicM3Scss: `${getPath('scss/themes/m3/dynamic.scss')}`,
     mainCss: `${getPath('/scss/main.scss')}`,
     styleCss: `${getPath('/style.scss')}`,
+    darkM3WallpaperPath: darkM3WallpaperPath,
+    lightM3WallpaperPath: lightM3WallpaperPath,
   },
   weather: {
     // provider is 'ar.wttr.in'
     language: 'ar', // Not implemented yot - only arabic is supported
-    location: 'sanaa',
+    location: weatherLocation,
     format: 'j1',
   },
   prayerTimes: {
     // provider is 'api.aladhan.com'
-    city: 'sanaa',
-    country: 'yemen',
+    city: city,
+    country: country,
   },
   hardware: {
     network: {
-      rx_path: '/sys/class/net/wlp0s20f3/statistics/rx_bytes',
-      tx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
-      timeout: 300,
-      interval: 1000,
+      rx_path: `/sys/class/net/${networkMonitor}/statistics/rx_bytes`,
+      tx_path: `/sys/class/net/${networkMonitor}/statistics/tx_bytes`,
+      timeout: networkTimeout,
+      interval: networkInterval,
     },
   },
 };
