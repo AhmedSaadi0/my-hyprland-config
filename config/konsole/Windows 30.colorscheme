@@ -1,100 +1,100 @@
 [Background]
-Color=31,33,39
+Color=32,1,74
 
 [BackgroundFaint]
-Color=18,18,18
+Color=24,1,56
 
 [BackgroundIntense]
-Color=18,18,18
+Color=26,1,62
 
 [Color0]
-Color=18,18,18
+Color=231,231,231
 
 [Color0Faint]
-Color=18,18,18
+Color=231,231,231
 
 [Color0Intense]
-Color=85,85,85
+Color=231,231,231
 
 [Color1]
-Color=224,108,117
+Color=237,37,78
 
 [Color1Faint]
-Color=224,108,117
+Color=237,37,78
 
 [Color1Intense]
-Color=244,118,128
+Color=237,37,78
 
 [Color2]
-Color=192,131,41
+Color=113,247,159
 
 [Color2Faint]
-Color=192,131,41
+Color=113,247,159
 
 [Color2Intense]
-Color=239,194,131
+Color=113,247,159
 
 [Color3]
-Color=223,212,96
+Color=249,220,92
 
 [Color3Faint]
-Color=223,212,96
+Color=249,220,92
 
 [Color3Intense]
-Color=255,242,109
+Color=249,220,92
 
 [Color4]
-Color=16,128,208
+Color=93,222,236
 
 [Color4Faint]
-Color=16,128,208
+Color=124,183,255
 
 [Color4Intense]
-Color=0,175,255
+Color=93,222,236
 
 [Color5]
-Color=192,131,41
+Color=199,77,237
 
 [Color5Faint]
-Color=192,131,41
+Color=199,77,237
 
 [Color5Intense]
-Color=229,154,48
+Color=199,77,237
 
 [Color6]
-Color=67,168,208
+Color=0,193,228
 
 [Color6Faint]
-Color=67,168,208
+Color=0,193,228
 
 [Color6Intense]
-Color=81,206,255
+Color=0,193,228
 
 [Color7]
-Color=187,187,187
+Color=252,145,58
 
 [Color7Faint]
-Color=187,187,187
+Color=252,145,58
 
 [Color7Intense]
-Color=255,255,255
+Color=252,145,58
 
 [Foreground]
-Color=241,241,241
+Color=195,199,209
 
 [ForegroundFaint]
-Color=187,187,187
+Color=231,231,231
 
 [ForegroundIntense]
-Color=255,84,78
+Color=231,231,231
 
 [General]
 Anchor=0.5,0.5
 Blur=true
 ColorRandomization=false
-Description=Ramadan
+Description=Windows 30
 FillStyle=Tile
-Opacity=0.9
+Opacity=0.8
 Wallpaper=
 WallpaperFlipType=NoFlip
 WallpaperOpacity=1

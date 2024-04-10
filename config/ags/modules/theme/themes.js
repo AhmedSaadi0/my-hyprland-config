@@ -74,7 +74,7 @@ const deer = {
     rounding: 8,
     drop_shadow: 'no',
     kitty: 'deer.conf',
-    konsole: 'Islamic',
+    konsole: 'game',
   },
   desktop_widget: 'DeerWidget',
   dynamic: false,
@@ -124,7 +124,7 @@ const siberian = {
     rounding: 5,
     drop_shadow: 'no',
     kitty: 'siberian.conf',
-    konsole: 'Islamic',
+    konsole: 'game',
   },
   desktop_widget: 'ColorWidget',
   dynamic: false,
@@ -299,7 +299,7 @@ const harmony = {
     rounding: 10,
     drop_shadow: 'no',
     kitty: 'harmony.conf',
-    konsole: 'NewCat',
+    konsole: 'harmony',
   },
   desktop_widget: 'HarmonyWidget',
   dynamic: false,
@@ -356,7 +356,7 @@ const whiteFlower = {
 };
 
 const dynamicM3Dark = {
-  wallpaper_path: `/home/ahmed/wallpapers/dark`,
+  wallpaper_path: settings.theme.darkM3WallpaperPath,
   dynamic: true,
   interval: 15 * 60 * 1000,
   gtk_mode: 'dark',
@@ -385,7 +385,7 @@ const dynamicM3Dark = {
 };
 
 const dynamicM3Light = {
-  wallpaper_path: `/home/ahmed/wallpapers/light`,
+  wallpaper_path: settings.theme.lightM3WallpaperPath,
   dynamic: true,
   interval: 15 * 60 * 1000,
   gtk_mode: 'light',
