@@ -356,7 +356,7 @@ const whiteFlower = {
 };
 
 const dynamicM3Dark = {
-  wallpaper_path: `/home/ahmed/wallpapers/dark`,
+  wallpaper_path: settings.theme.darkM3WallpaperPath,
   dynamic: true,
   interval: 15 * 60 * 1000,
   gtk_mode: 'dark',
@@ -385,7 +385,7 @@ const dynamicM3Dark = {
 };
 
 const dynamicM3Light = {
-  wallpaper_path: `/home/ahmed/wallpapers/light`,
+  wallpaper_path: settings.theme.lightM3WallpaperPath,
   dynamic: true,
   interval: 15 * 60 * 1000,
   gtk_mode: 'light',
