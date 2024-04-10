@@ -135,55 +135,27 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 
     home_path="/home/ahmed"
 
-### تغيير منطقة الطقس واوقات الصلاة ومراقب سرعة النت
+### تغيير الاعدادات
 
-- قم بتغيير الاعدادت من ملف الاعدادات `.configs/ags/modules/settings.js`
+- انشء ملف باسم `.ahmed-config.json` في مجلد الهوم
 
-```javascript
-weather:{
-	// provider is 'ar.wttr.in'
-	language: 'ar', // Not implemented yot - only arabic is supported
-	location: 'sanaa',
-	format: 'j1',
-},
-prayerTimes:{
-	// provider is 'api.aladhan.com'
-	city: 'sanaa',
-	country: 'yemen',
-},
-hardware: {
-	network: {
-		rx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
-		tx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
-	},
-},
+```bash
+nvim .ahmed-config.json
 ```
 
-### اعداد الثيم التلقائي M3 من قوقل
+- قم باضافة الاعدادات حسب جهازك ومنطقتك
 
-#### قم بتثبيت [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors) في نظامك
-
-اذا كنت تستخدم ارش بامكانك تثبيت [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors) بهذا الامر
-
-```Arch
-yay -S kde-material-you-colors
-```
-
-- تغيير مسار مجلد الخلفيات في الملف `.config/ags/modules/theme/themes.js`
-- `wallpaper_path: "path/to/folder"`
-- `interval: الوقت_بالملي_ثانية`
-
-```javascript
-const dynamicM3Dark = {
-  wallpaper_path: `path/to/my/wallpapers`,
-  interval: 15 * 60 * 1000,
-  ...other_settings,
-};
-const dynamicM3Light = {
-  wallpaper_path: `path/to/my/wallpapers`,
-  interval: 15 * 60 * 1000,
-  ...other_settings,
-};
+```json
+{
+  "networkMonitor": "wlp0s20f3",
+  "networkTimeout": 300,
+  "networkInterval": 1000,
+  "darkM3WallpaperPath": "/home/ahmed/wallpapers/dark",
+  "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
+  "weatherLocation": "sanaa",
+  "city": "sanaa",
+  "country": "yemen"
+}
 ```
 
 </details>
@@ -323,55 +295,27 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 
     home_path="/home/ahmed"
 
-### Change weather, prayer times location, and network speed monitors
+### Change the settings
 
-- From the settings file in `.configs/ags/modules/settings.js`
+- Create a file with the name `.ahmed-config.json` in your home directory.
 
-```javascript
-weather:{
-	// provider is 'ar.wttr.in'
-	language: 'ar', // Not implemented yot - only arabic is supported
-	location: 'sanaa',
-	format: 'j1',
-},
-prayerTimes:{
-	// provider is 'api.aladhan.com'
-	city: 'sanaa',
-	country: 'yemen',
-},
-hardware: {
-	network: {
-		rx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
-		tx_path: '/sys/class/net/wlp0s20f3/statistics/tx_bytes',
-	},
-},
+```bash
+nvim .ahmed-config.json
 ```
 
-### Setting up Material 3 theme
+- Add these settings
 
-- You need to have [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors) installed on your system
-
-_If you use Arch you can install it from aur_
-
-```Arch
-yay -S kde-material-you-colors
-```
-
-- Change wallpapers paths for dark & light themes in `modules/theme/themes.js`
-- `wallpaper_path: "path/to/folder"`
-- `interval: time_in_millisecond`
-
-```javascript
-const dynamicM3Dark = {
-  wallpaper_path: `/media/shared/Pictures/wallpapers/dark`,
-  interval: 15 * 60 * 1000,
-  ...other_settings,
-};
-const dynamicM3Light = {
-  wallpaper_path: `/media/shared/Pictures/wallpapers/light`,
-  interval: 15 * 60 * 1000,
-  ...other_settings,
-};
+```json
+{
+  "networkMonitor": "wlp0s20f3",
+  "networkTimeout": 300,
+  "networkInterval": 1000,
+  "darkM3WallpaperPath": "/home/ahmed/wallpapers/dark",
+  "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
+  "weatherLocation": "sanaa",
+  "city": "sanaa",
+  "country": "yemen"
+}
 ```
 
 </details>
