@@ -162,7 +162,7 @@ const game = {
   qt_5_style_theme: 'Breeze',
   qt_6_style_theme: 'kvantum',
   qt_icon_theme: 'la-capitaine-icon-theme',
-  kvantum_theme: 'a-batman',
+  kvantum_theme: 'Gradient-Dark-Kvantum',
   gtk_theme: 'Tokyonight-Dark-BL',
   gtk_icon_theme: 'la-capitaine-icon-theme',
   gtk_mode: 'dark',

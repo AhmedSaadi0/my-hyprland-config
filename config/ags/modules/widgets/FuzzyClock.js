@@ -40,66 +40,66 @@ const FuzzyTime = () =>
   });
 
 function setFuzzyTimes(hour, usedFuzzyTime) {
-  if (hour >= 0 && hour < 3) {
+  if (hour >= 0 && hour < 4) {
+    usedFuzzyTime.children[0].label = 'وقت البرمجة، حان وقت الإبداع';
+    // usedFuzzyTime.children[1].label = "";
+    usedFuzzyTime.children[1].label = '';
+  } else if (hour >= 4 && hour < 9) {
     usedFuzzyTime.children[0].label =
-      'ليلة العيد، استعد لاستقبال الضيوف وتبادل التهاني';
-    usedFuzzyTime.children[1].label = '󱠧';
-  } else if (hour >= 3 && hour < 6) {
+      'صباح الخير! بداية جديدة ليوم مليء بالفرص';
+    usedFuzzyTime.children[1].label = '';
+  } else if (hour >= 9 && hour < 12) {
+    usedFuzzyTime.children[0].label = 'بكوب من القهوة، دع الإنجازات تبدأ';
+    usedFuzzyTime.children[1].label = '';
+  } else if (hour >= 12 && hour < 13) {
     usedFuzzyTime.children[0].label =
-      'صباح العيد، استقبل الصباح بالبهجة والفرح';
-    usedFuzzyTime.children[1].label = '';
-  } else if (hour >= 6 && hour < 12) {
+      'حان وقت الغداء، استرح واستعد للجولة الثانية';
+    usedFuzzyTime.children[1].label = '';
+  } else if (hour >= 13 && hour < 16) {
+    usedFuzzyTime.children[0].label = 'حان وقت الإبداع، شغف وعمل خفيف ينتظرك';
+    usedFuzzyTime.children[1].label = '󱈹';
+  } else if (hour >= 16 && hour < 18) {
     usedFuzzyTime.children[0].label =
-      'استمتع بأوقات الصباح الجميلة والتواصل مع الأهل والأصدقاء';
-    usedFuzzyTime.children[1].label = '';
-  } else if (hour >= 12 && hour < 15) {
-    usedFuzzyTime.children[0].label =
-      'حان وقت الظهر، استرح وقم بالصلاة واستمتع بأجواء العيد';
-    usedFuzzyTime.children[1].label = '󱠧';
-  } else if (hour >= 15 && hour < 18) {
-    usedFuzzyTime.children[0].label =
-      'اجعل بعد الظهر فرصة للترفيه والتسلية مع الأحباب';
-    usedFuzzyTime.children[1].label = '';
+      'استمتع بكوب من الشاي واسترخِ مع كتاب خفيف';
+    usedFuzzyTime.children[1].label = '';
   } else if (hour >= 18 && hour < 21) {
-    usedFuzzyTime.children[0].label =
-      'قم بالخروج والاستمتاع بسهرة العيد مع الأصدقاء';
-    usedFuzzyTime.children[1].label = '';
-  } else if (hour >= 21 && hour < 24) {
-    usedFuzzyTime.children[0].label =
-      'استرخِ في لحظات العيد الهادئة وتأمل اللحظات الجميلة';
-    usedFuzzyTime.children[1].label = '';
+    usedFuzzyTime.children[0].label = 'العشاء جاهز، استمتع بوقتك مع أحبائك';
+    usedFuzzyTime.children[1].label = '';
+  } else if (hour >= 21) {
+    usedFuzzyTime.children[0].label = 'ليلة سعيدة! استرخِ واستعد لغد جديد';
+    usedFuzzyTime.children[1].label = '';
   }
 }
 
 function setFuzzyDays(day, usedFuzzyDay, usedTimeNow) {
-  if (day == WEDNESDAY) {
-    usedFuzzyDay.children[0].label = 'بداية عيد الفطر المبارك';
-    usedFuzzyDay.children[1].label = '';
-    usedTimeNow.label = 'بداية العيد، تهانينا ودعواتنا لكم.';
-  } else if (day == THURSDAY) {
-    usedFuzzyDay.children[0].label = 'اليوم الثاني من عيد الفطر';
-    usedFuzzyDay.children[1].label = '';
-    usedTimeNow.label = 'اليوم الثاني من العيد، استمتعوا بأوقاتكم.';
-  } else if (day == FRIDAY) {
-    usedFuzzyDay.children[0].label = 'اليوم الثالث من عيد الفطر';
-    usedFuzzyDay.children[1].label = '';
-    usedTimeNow.label = 'يوم العيد الثالث، احتفلوا بفرح وسرور.';
-  } else if (day == SATURDAY) {
-    usedFuzzyDay.children[0].label = 'اليوم الرابع من عيد الفطر';
+  if (day == SATURDAY) {
+    usedFuzzyDay.children[0].label = 'مرحبًا بك في يوم جديد،';
     usedFuzzyDay.children[1].label = '';
-    usedTimeNow.label = 'الرابع من العيد، تواصلوا مع الأحباب.';
+    usedTimeNow.label = 'السبت هو بداية لمغامرات جديدة.';
   } else if (day == SUNDAY) {
-    usedFuzzyDay.children[0].label = 'اليوم الخامس من عيد الفطر';
+    usedFuzzyDay.children[0].label = 'الأحد هو فرصة جديدة';
     usedFuzzyDay.children[1].label = '';
-    usedTimeNow.label = 'الخامس من العيد، اجعلوا كل لحظة فرح وسرور.';
+    usedTimeNow.label = 'استمر في السعي نحو أهدافك.';
   } else if (day == MONDAY) {
-    usedFuzzyDay.children[0].label = 'اليوم السادس من عيد الفطر';
-    usedFuzzyDay.children[1].label = '';
-    usedTimeNow.label = 'السادس من العيد، استمتعوا بالأوقات الجميلة.';
-  } else if (day == TUESDAY) {
-    usedFuzzyDay.children[0].label = 'اليوم السابع من عيد الفطر';
+    usedFuzzyDay.children[0].label = 'نصف الأسبوع قد حان';
     usedFuzzyDay.children[1].label = '';
-    usedTimeNow.label = 'السابع من العيد، استمر بالاحتفال والتقرب إلى الله.';
+    usedTimeNow.label = 'حافظ على الزخم والإيجابية.';
+  } else if (day == TUESDAY) {
+    usedFuzzyDay.children[0].label = 'يوم مليء بالأعمال';
+    usedFuzzyDay.children[1].label = '';
+    usedTimeNow.label = 'قم بتجديد طاقتك وجهز نفسك لما هو قادم.';
+  } else if (day == WEDNESDAY) {
+    usedFuzzyDay.children[0].label = 'باقي يومين فقط';
+    usedFuzzyDay.children[1].label = '';
+    usedTimeNow.label = 'استمتع بالتحديات وابذل جهدك.';
+  } else if (day == THURSDAY) {
+    usedFuzzyDay.children[0].label = 'أرحب يا خميس';
+    usedFuzzyDay.children[1].label = '';
+    usedTimeNow.label = 'الوقت للاستمتاع بالجهود المبذولة.';
+  } else if (day == FRIDAY) {
+    usedFuzzyDay.children[0].label = 'يوم الجمعة';
+    usedFuzzyDay.children[1].label = '';
+    usedTimeNow.label = 'متعة واستراحة، استمتع بلحظات الهدوء.';
   }
 }
 
