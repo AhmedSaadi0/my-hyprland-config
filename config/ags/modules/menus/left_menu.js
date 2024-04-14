@@ -199,6 +199,22 @@ const ThemesButtonsRowOne = () => {
     theme: WHITE_FLOWER,
   });
 
+  var dynaicBtn1Css = `
+    min-height: 2rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    border-top-left-radius: 0rem;
+    border-bottom-left-radius: 0rem;
+  `;
+
+  var dynaicBtn2Css = `
+    min-height: 2rem;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-top-right-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+  `;
+
   const dynamicTheme = Widget.Box({
     children: [
       ThemeButton({
@@ -207,14 +223,7 @@ const ThemesButtonsRowOne = () => {
         theme: DYNAMIC_M3_DARK,
         label_css: 'unset',
         icon_css: 'dynamic-theme-btn-icon',
-        css: `
-          min-height: 2rem;
-          border-top-right-radius: 1rem;
-          border-bottom-right-radius: 1rem;
-
-          border-top-left-radius: 0rem;
-          border-bottom-left-radius: 0rem;
-        `,
+        css: local === 'RTL' ? dynaicBtn1Css : dynaicBtn2Css,
       }),
       ThemeButton({
         label: '',
@@ -222,14 +231,7 @@ const ThemesButtonsRowOne = () => {
         theme: DYNAMIC_M3_LIGHT,
         label_css: 'unset',
         icon_css: 'dynamic-theme-btn-icon',
-        css: `
-            min-height: 2rem;
-            border-top-left-radius: 1rem;
-            border-bottom-left-radius: 1rem;
-
-            border-top-right-radius: 0rem;
-            border-bottom-right-radius: 0rem;
-        `,
+        css: local !== 'RTL' ? dynaicBtn1Css : dynaicBtn2Css,
         end: '',
       }),
     ],
@@ -292,7 +294,7 @@ const PowerButtonsRow = () => {
       Utils.execAsync([`paplay`, settings.assets.audio.desktop_logout]).catch(
         print
       );
-      execAsync('poweroff').catch(print);
+      execAsync('systemctl poweroff').catch(print);
     },
   });
 
@@ -311,7 +313,7 @@ const PowerButtonsRow = () => {
       Utils.execAsync([`paplay`, settings.assets.audio.desktop_logout]).catch(
         print
       );
-      execAsync('reboot').catch(print);
+      execAsync('systemctl reboot').catch(print);
     },
   });
 

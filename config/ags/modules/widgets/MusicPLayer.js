@@ -40,7 +40,7 @@ const length = () =>
 const RowOne = () => {
   let playerName = Widget.Label({
     css: `
-      min-width: 6rem;
+      min-width: 5rem;
     `,
     label: '',
     justification: 'right',

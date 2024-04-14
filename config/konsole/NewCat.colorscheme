@@ -1,101 +1,100 @@
 [Background]
-Color=251,243,233
+Color=32,57,88
 
 [BackgroundFaint]
-Color=56,44,20
+Color=6,10,16
 
 [BackgroundIntense]
-Color=25,22,17
+Color=13,23,36
 
 [Color0]
-Color=251,243,233
+Color=141,157,184
 
 [Color0Faint]
-Color=119,108,86
+Color=141,157,184
 
 [Color0Intense]
-Color=102,91,67
+Color=141,157,184
 
 [Color1]
-Color=24,105,10
+Color=247,83,156
 
 [Color1Faint]
-Color=99,150,85
+Color=211,71,134
 
 [Color1Intense]
-Color=24,89,11
+Color=239,81,152
 
 [Color2]
-Color=126,100,54
+Color=113,247,159
 
 [Color2Faint]
-Color=167,145,109
+Color=113,247,159
 
 [Color2Intense]
-Color=107,85,45
+Color=113,247,159
 
 [Color3]
-Color=131,99,20
+Color=249,220,92
 
 [Color3Faint]
-Color=172,145,92
+Color=249,220,92
 
 [Color3Intense]
-Color=111,84,18
+Color=249,220,92
 
 [Color4]
-Color=28,121,13
+Color=124,183,255
 
 [Color4Faint]
-Color=105,163,90
+Color=124,183,255
 
 [Color4Intense]
-Color=28,102,13
+Color=124,183,255
 
 [Color5]
-Color=134,98,25
+Color=199,77,237
 
 [Color5Faint]
-Color=174,144,94
+Color=199,77,237
 
 [Color5Intense]
-Color=114,83,22
+Color=199,77,237
 
 [Color6]
-Color=133,99,9
+Color=0,193,228
 
 [Color6Faint]
-Color=173,145,89
+Color=0,193,228
 
 [Color6Intense]
-Color=113,84,10
+Color=0,193,228
 
 [Color7]
-Color=38,121,22
+Color=220,223,228
 
 [Color7Faint]
-Color=109,163,93
+Color=220,223,228
 
 [Color7Intense]
-Color=35,102,20
+Color=220,223,228
 
 [Foreground]
-Color=72,60,35
+Color=195,199,209
 
 [ForegroundFaint]
-Color=89,77,53
+Color=92,99,112
 
 [ForegroundIntense]
-Color=70,58,32
+Color=130,137,151
 
 [General]
 Anchor=0.5,0.5
-Blur=false
+Blur=true
 ColorRandomization=false
-Description=MaterialYou
+Description=NewCat
 FillStyle=Tile
 Opacity=0.9
 Wallpaper=
 WallpaperFlipType=NoFlip
 WallpaperOpacity=1
-
