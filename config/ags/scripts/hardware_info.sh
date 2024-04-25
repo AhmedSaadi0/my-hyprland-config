@@ -20,6 +20,8 @@ get_battery_info() {
     percentage=$(echo "$battery_info" | grep "percentage:" | awk '{print $2}')
     capacity=$(echo "$battery_info" | grep "capacity:" | awk '{print $2}' | sed 's/%//')
     technology=$(echo "$battery_info" | grep "technology:" | awk '{print $2}')
+    energy_rate=$(echo "$battery_info" | grep "energy-rate" | awk '{print $2}')
+    energy_full_design=$(echo "$battery_info" | grep "energy-full-design" | awk '{print $2}')
     system_info=$(uname -r)
     
     # Format capacity to two decimal places
@@ -35,7 +37,8 @@ get_battery_info() {
     json_output+="\"Kernel\": \"$system_info\","
     json_output+="\"Percentage\": \"$percentage\","
     json_output+="\"Capacity\": \"$capacity\","
-    json_output+="\"Technology\": \"$technology\""
+    json_output+="\"Technology\": \"$technology\","
+    json_output+="\"Energy_Rate\": \"$energy_rate\""
     json_output+="}"
 
     echo "$json_output"

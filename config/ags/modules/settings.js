@@ -43,12 +43,16 @@ const settings = {
       hot_weather: `${getAssets('icons')}/hot-weather.png`,
       cold_weather: `${getAssets('icons')}/cold-weather.png`,
       mosque: `${getAssets('icons')}/mosque.png`,
+      hight_energy_rate: `${getAssets('icons')}/mosque.png`,
+      hight_voltage: `${getAssets('icons')}/mosque.png`,
     },
     audio: {
       cold_weather: `${getAssets('audio')}/cold-weather.mp3`,
       prayer_time: `${getAssets('audio')}/prayer-notification.ogg`,
       desktop_login: `${getAssets('audio')}/desktop-login.mp3`,
       desktop_logout: `${getAssets('audio')}/desktop-logout.mp3`,
+      hight_energy_rate: `${getAssets('audio')}/desktop-logout.mp3`,
+      hight_voltage: `${getAssets('audio')}/desktop-logout.mp3`,
     },
   },
   scripts: {

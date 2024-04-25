@@ -7,7 +7,7 @@ if [ -z "$folder" ]; then
     exit 1
 fi
 
-mapfile -d '' files < <(find "$folder" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) -print0)
+mapfile -d '' files < <(find "$folder" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.gif" \) -print0)
 
 json="["
 for file in "${files[@]}"; do
