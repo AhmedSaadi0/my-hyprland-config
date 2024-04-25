@@ -69,7 +69,8 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
     mv ~/.config/hypr/ ~/.config/hypr-old
     mv ~/.config/ags/ ~/.config/ags-old
     mv ~/.config/wofi/ ~/.config/wofi-old
-    cp ~/.config/fish/config.fish ~/.config/fish/config.back.fish
+    mv ~/.config/easyeffects ~/.config/easyeffects-old
+    mv ~/.config/fish/config.fish ~/.config/fish/config.back.fish
 
     # نسخ الملفات
     cp -r my-hyprland-config ~/.config/hypr
@@ -82,8 +83,13 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
     sudo chmod +x ~/.config/ags/scripts/*
 
     # اعداد بيئة النظام
+    # غير ضرورية لانه يتم استخدام nvidia.conf
+    # استخدمها اذا كنت تعتقد انك تحتاجها فعلا
     sudo cp /etc/environment /etc/environmentOLD
     echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
+
+    # نسخ اعدادت easyeffects
+    cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
 
     # نسخ ملفات الثيمات
     mkdir ~/.local/share/color-schemes/
@@ -229,6 +235,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
     mv ~/.config/hypr/ ~/.config/hypr-old
     mv ~/.config/ags/ ~/.config/ags-old
     mv ~/.config/wofi/ ~/.config/wofi-old
+    mv ~/.config/easyeffects ~/.config/easyeffects-old
     cp ~/.config/fish/config.fish ~/.config/fish/config.back.fish
 
     # copy files
@@ -242,8 +249,13 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
     sudo chmod +x ~/.config/ags/scripts/*
 
     # setup environment
+    # Not needed anymore becuase we are using nvidia.conf
+    # only use it if you think you realy need it
     sudo cp /etc/environment /etc/environmentOLD
     echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
+
+    # Copy easyeffects settings
+    cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
 
     # copy theme files
     mkdir ~/.local/share/color-schemes/

@@ -9,6 +9,7 @@ var ramIsInitialized = false;
 
 var ramUsage = 0;
 var cpuUsage = 0;
+var tempList = new Map();
 
 const cpuProgress = Widget.CircularProgress({
   className: 'menu-cpu',
@@ -99,18 +100,55 @@ const tempProgress = Widget.CircularProgress({
   startAt: 0,
   rounded: false,
 }).poll(30000, (self) => {
-  Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/temp.sh`)
+  Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/devices_temps.sh`)
     .then((val) => {
-      const temps = val.split('\n');
-      let total = 0;
-      for (let index = 0; index < temps.length; index++) {
-        const element = temps[index].replace('+', '').replace('°C', '');
-        total += parseInt(element);
-      }
-      total = parseInt(total / temps.length);
-      self.value = total / 100;
+      let temps = JSON.parse(val);
+      tempList = temps;
 
-      self.child.tooltipMarkup = `<span weight='bold'>اجمالي درجة حرارة الاجهزة (${total}%)</span>`;
+      const wifiTemp = parseInt(temps['wifi']);
+      const CRITICAL_WIFI_TEMP = 90;
+      const nvmeTemp = parseInt(temps['nvme_total']);
+      const CRITICAL_NVME_TEMP = 90;
+      const cpuTemp = parseInt(temps['cpu_total']);
+      const CRITICAL_CPU_TEMP = 90;
+
+      if (wifiTemp >= CRITICAL_WIFI_TEMP) {
+        notify({
+          tonePath: settings.assets.audio.high_temp_warning,
+          title: 'تحذير: درجة حرارة الواي فاي مرتفعة جداً',
+          message: `درجة حرارة جهاز الواي فاي مرتفعة (${wifiTemp}°C) وقد تؤدي إلى أداء غير مستقر أو تلف الأجهزة. يرجى التحقق من تهوية الجهاز والتأكد من عدم وجود مشكلات في التبريد.`,
+          icon: settings.assets.icons.high_temp_warning,
+          priority: 'critical',
+        });
+      }
+
+      if (nvmeTemp >= CRITICAL_NVME_TEMP) {
+        notify({
+          tonePath: settings.assets.audio.high_temp_warning,
+          title: 'تحذير: درجة حرارة NVMe مرتفعة جداً',
+          message: `درجة حرارة NVMe مرتفعة (${nvmeTemp}°C) وقد تؤدي إلى أداء غير مستقر أو تلف الأجهزة. يرجى التحقق من تهوية الجهاز والتأكد من عدم وجود مشكلات في التبريد.`,
+          icon: settings.assets.icons.high_temp_warning,
+          priority: 'critical',
+        });
+      }
+
+      if (cpuTemp >= CRITICAL_CPU_TEMP) {
+        notify({
+          tonePath: settings.assets.audio.high_temp_warning,
+          title: 'تحذير: درجة حرارة المعالج المركزي مرتفعة جداً',
+          message: `درجة حرارة المعالج المركزي مرتفعة (${cpuTemp}°C) وقد تؤدي إلى أداء غير مستقر أو تلف الأجهزة. يرجى التحقق من تهوية الجهاز والتأكد من عدم وجود مشكلات في التبريد.`,
+          icon: settings.assets.icons.high_temp_warning,
+          priority: 'critical',
+        });
+      }
+
+      var totalTemp = wifiTemp + nvmeTemp + cpuTemp;
+      totalTemp = totalTemp / 3;
+
+      tempList['total'] = totalTemp;
+
+      self.value = totalTemp / 100;
+      self.child.tooltipMarkup = `<span weight='bold'>اجمالي درجة حرارة الاجهزة (${parseInt(totalTemp)}%)</span>`;
     })
     .catch(print);
 });
@@ -197,10 +235,12 @@ const tablesBox = () => {
       .then((val) => {
         let data = JSON.parse(val);
 
+        const currentEnergyRate = parseFloat(data['Energy_Rate']);
         const maxAllowedEnergyRate = 30; // Maximum allowed energy rate in W
-        const expectedVoltage = 12; // Expected voltage in V
+        const currentVoltage = parseFloat(data['Voltage']);
+        const highVoltage = 13; // High voltage in V
 
-        if (parseInt(data['Energy_Rate']) > maxAllowedEnergyRate) {
+        if (currentEnergyRate > maxAllowedEnergyRate) {
           notify({
             tonePath: settings.assets.audio.high_energy_rate,
             title: 'تحذير: شحن طاقة مرتفع جداً',
@@ -210,11 +250,11 @@ const tablesBox = () => {
           });
         }
 
-        if (parseInt(data['Voltage']) > expectedVoltage) {
+        if (currentVoltage > highVoltage) {
           notify({
             tonePath: settings.assets.audio.high_voltage,
             title: 'تحذير: فولتية مرتفعة جداً',
-            message: `جهازك يستخدم شاحن بفولتية (${data['Voltage']} V) أعلى من المتوقع (${expectedVoltage} V). قد يؤدي ذلك إلى تلف البطارية أو الدوائر الإلكترونية. يرجى استخدام شاحن مناسب لجهازك.`,
+            message: `جهازك يستخدم شاحن بفولتية (${data['Voltage']} V) أعلى من المتوقع (${highVoltage} V). قد يؤدي ذلك إلى تلف البطارية أو الدوائر الإلكترونية. يرجى استخدام شاحن مناسب لجهازك.`,
             icon: settings.assets.icons.high_voltage,
             priority: 'critical',
           });
@@ -266,40 +306,34 @@ const tablesBox = () => {
   let tempTable = hardwareUsageTable({
     scriptPath: '',
     deviceName: osClassName,
-  }).hook(Battery, (self) => {
-    Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/uptime.sh`)
-      .then((val) => {
-        // let data = JSON.parse(val);
-
-        let children = [
-          // Header
-          tableRow({
-            appName: 'النظام',
-            percentage: '',
-            header: true,
-            rightTextXalign: 1,
-            deviceName: osClassName,
-          }),
-          // Body
-          tableRow({
-            appName: 'Arch',
-            percentage: '',
-            deviceName: osClassName,
-          }),
-          tableRow({
-            appName: val,
-            percentage: '',
-            deviceName: osClassName,
-          }),
-          tableRow({
-            appName: 'Ahmed',
-            percentage: '',
-            deviceName: osClassName,
-          }),
-        ];
-        self.children = children;
-      })
-      .catch(print);
+  }).poll(10 * 1000, (self) => {
+    let children = [
+      // Header
+      tableRow({
+        appName: 'حرارة الاجهزة',
+        percentage: parseInt(tempList['total']) + '%',
+        header: true,
+        rightTextXalign: 0,
+        deviceName: osClassName,
+      }),
+      // Body
+      tableRow({
+        appName: 'الوايفاي  ',
+        percentage: parseInt(tempList['wifi']) + ' C°',
+        deviceName: osClassName,
+      }),
+      tableRow({
+        appName: 'الهارد  󰋊',
+        percentage: parseInt(tempList['nvme_total']) + ' C°',
+        deviceName: osClassName,
+      }),
+      tableRow({
+        appName: 'المعالج  ',
+        percentage: parseInt(tempList['cpu_total']) + ' C°',
+        deviceName: osClassName,
+      }),
+    ];
+    self.children = children;
   });
 
   return Widget.Box({
