@@ -1,12 +1,13 @@
 import os
 
+
 class CssThemeExporter:
     """Handles the generation and export of CSS files based on a color schema."""
 
     file_path = f'{os.path.expanduser("~")}/.config/ags/scss/themes/m3/dynamic.scss'
 
     TEMPLATE = """
-    /* File created by ThemeService written by ahmedsaadi0 */
+    /* This file is created by ThemeService written by ahmedsaadi0 */
 $primary: {primary};
 $secondary: {secondary};
 $tertiary: {tertiary};
