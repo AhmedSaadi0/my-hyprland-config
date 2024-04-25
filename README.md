@@ -399,3 +399,8 @@ nvim .ahmed-config.json
 <p align='center'>
 	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/19.png'/>
 </p>
+
+<hr />
+
+### Credits
+<a href="https://www.flaticon.com/free-icons/high-voltage" title="high voltage icons">High voltage icons created by Muhammad Atif - Flaticon</a>
