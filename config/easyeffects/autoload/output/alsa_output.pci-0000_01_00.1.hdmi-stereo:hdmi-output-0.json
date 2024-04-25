@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.pci-0000_01_00.1.hdmi-stereo",
+    "device-description": "HDA NVidia Digital Stereo (HDMI)",
+    "device-profile": "hdmi-output-0",
+    "preset-name": "لابتوب"
+}

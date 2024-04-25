@@ -39,7 +39,8 @@ class ThemeService extends Service {
 
   constructor() {
     super();
-    exec('swww init');
+    // exec('swww init');
+    exec('swww-daemon');
 
     this.getCachedVariables();
     this.changeTheme(this.selectedTheme);

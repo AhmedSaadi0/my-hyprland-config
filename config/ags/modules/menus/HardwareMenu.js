@@ -1,6 +1,7 @@
 import tableRow from '../components/TableRow.js';
-import { local } from '../utils/helpers.js';
+import { local, notify } from '../utils/helpers.js';
 import { Widget, Utils, Battery } from '../utils/imports.js';
+import settings from '../settings.js';
 
 var menuIsOpen = null;
 var cpuIsInitialized = false;
@@ -195,6 +196,30 @@ const tablesBox = () => {
     Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/hardware_info.sh`)
       .then((val) => {
         let data = JSON.parse(val);
+
+        const maxAllowedEnergyRate = 30; // Maximum allowed energy rate in W
+        const expectedVoltage = 12; // Expected voltage in V
+
+        if (parseInt(data['Energy_Rate']) > maxAllowedEnergyRate) {
+          notify({
+            tonePath: settings.assets.audio.high_energy_rate,
+            title: 'تحذير: شحن طاقة مرتفع جداً',
+            message: `جهازك يشحن بشاحن ذو طاقة مرتفعة جداً (${data['Energy_Rate']} W)، وقد يؤدي ذلك إلى تلف البطارية أو الدوائر الإلكترونية. يرجى التحقق من توافق شاحن الطاقة مع مواصفات جهازك.`,
+            icon: settings.assets.icons.high_energy_rate,
+            priority: 'critical',
+          });
+        }
+
+        if (parseInt(data['Voltage']) > expectedVoltage) {
+          notify({
+            tonePath: settings.assets.audio.high_voltage,
+            title: 'تحذير: فولتية مرتفعة جداً',
+            message: `جهازك يستخدم شاحن بفولتية (${data['Voltage']} V) أعلى من المتوقع (${expectedVoltage} V). قد يؤدي ذلك إلى تلف البطارية أو الدوائر الإلكترونية. يرجى استخدام شاحن مناسب لجهازك.`,
+            icon: settings.assets.icons.high_voltage,
+            priority: 'critical',
+          });
+        }
+
         let children = [
           // Header
           tableRow({
@@ -222,7 +247,8 @@ const tablesBox = () => {
           }),
           tableRow({
             appName: local === 'RTL' ? 'الطاقة  ' : 'Energy  ',
-            percentage: `${Battery.energy}`,
+            // percentage: `${Battery.energy}`,
+            percentage: data['Energy_Rate'],
             deviceName: batDeviceName,
           }),
           tableRow({

@@ -59,8 +59,7 @@ function setFuzzyTimes(hour, usedFuzzyTime) {
     usedFuzzyTime.children[0].label = 'حان وقت الإبداع، شغف وعمل خفيف ينتظرك';
     usedFuzzyTime.children[1].label = '󱈹';
   } else if (hour >= 16 && hour < 18) {
-    usedFuzzyTime.children[0].label =
-      'استمتع بكوب من الشاي واسترخِ مع كتاب خفيف';
+    usedFuzzyTime.children[0].label = 'استمتع بكوب شاي واسترخِ مع كتاب خفيف';
     usedFuzzyTime.children[1].label = '';
   } else if (hour >= 18 && hour < 21) {
     usedFuzzyTime.children[0].label = 'العشاء جاهز، استمتع بوقتك مع أحبائك';
