@@ -110,7 +110,7 @@ const tempProgress = Widget.CircularProgress({
       const nvmeTemp = parseInt(temps['nvme_total']);
       const CRITICAL_NVME_TEMP = 90;
       const cpuTemp = parseInt(temps['cpu_total']);
-      const CRITICAL_CPU_TEMP = 90;
+      const CRITICAL_CPU_TEMP = 100;
 
       if (wifiTemp >= CRITICAL_WIFI_TEMP) {
         notify({
@@ -236,7 +236,7 @@ const tablesBox = () => {
         let data = JSON.parse(val);
 
         const currentEnergyRate = parseFloat(data['Energy_Rate']);
-        const maxAllowedEnergyRate = 30; // Maximum allowed energy rate in W
+        const maxAllowedEnergyRate = 35; // Maximum allowed energy rate in W
         const currentVoltage = parseFloat(data['Voltage']);
         const highVoltage = 13; // High voltage in V
 
