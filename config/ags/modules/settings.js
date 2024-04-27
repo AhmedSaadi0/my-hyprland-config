@@ -43,9 +43,9 @@ const settings = {
       hot_weather: `${getAssets('icons')}/hot-weather.png`,
       cold_weather: `${getAssets('icons')}/cold-weather.png`,
       mosque: `${getAssets('icons')}/mosque.png`,
-      high_energy_rate: `${getAssets('icons')}/mosque.png`,
+      high_energy_rate: `${getAssets('icons')}/electrical-danger-sign.png`,
       high_voltage: `${getAssets('icons')}/electrical-danger-sign.png`,
-      high_temp_warning: `${getAssets('icons')}/mosque.png`,
+      high_temp_warning: `${getAssets('icons')}/electrical-danger-sign.png`,
     },
     audio: {
       cold_weather: `${getAssets('audio')}/cold-weather.mp3`,
