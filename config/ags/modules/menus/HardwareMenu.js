@@ -240,15 +240,15 @@ const tablesBox = () => {
         const currentVoltage = parseFloat(data['Voltage']);
         const highVoltage = 13; // High voltage in V
 
-        if (currentEnergyRate > maxAllowedEnergyRate) {
-          notify({
-            tonePath: settings.assets.audio.high_energy_rate,
-            title: 'تحذير: شحن طاقة مرتفع جداً',
-            message: `جهازك يشحن بشاحن ذو طاقة مرتفعة جداً (${data['Energy_Rate']} W)، وقد يؤدي ذلك إلى تلف البطارية أو الدوائر الإلكترونية. يرجى التحقق من توافق شاحن الطاقة مع مواصفات جهازك.`,
-            icon: settings.assets.icons.high_energy_rate,
-            priority: 'critical',
-          });
-        }
+        // if (currentEnergyRate > maxAllowedEnergyRate) {
+        //   notify({
+        //     tonePath: settings.assets.audio.high_energy_rate,
+        //     title: 'تحذير: شحن طاقة مرتفع جداً',
+        //     message: `جهازك يشحن بشاحن ذو طاقة مرتفعة جداً (${data['Energy_Rate']} W)، وقد يؤدي ذلك إلى تلف البطارية أو الدوائر الإلكترونية. يرجى التحقق من توافق شاحن الطاقة مع مواصفات جهازك.`,
+        //     icon: settings.assets.icons.high_energy_rate,
+        //     priority: 'critical',
+        //   });
+        // }
 
         if (currentVoltage > highVoltage) {
           notify({

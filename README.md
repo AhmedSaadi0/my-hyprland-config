@@ -1,5 +1,9 @@
 # My Hyprland Config
 
+**Join our [Discord Server](https://discord.gg/EUcGgRGhrs) for discussions and support!**
+
+[![Discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/EUcGgRGhrs)
+
 <details>
 <summary>العربية</summary>
 
@@ -31,6 +35,7 @@
 - acpi
 - fish
 - kde-powerdevil
+- gnome-bluetooth-3.0
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 
 ### برامج اختيارية
@@ -50,7 +55,7 @@
 ### تثبيت البرامج لمستخدمي Arch:
 
 ```bash
-yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0
 ```
 
 **ملاحطة:** إذا كنت تستخدم نظام تشغيل آخر غير أرش فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
@@ -197,6 +202,7 @@ nvim .ahmed-config.json
 - acpi
 - fish
 - kde-powerdevil
+- gnome-bluetooth-3.0
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 
 ### Optional dependencies:
@@ -216,7 +222,7 @@ nvim .ahmed-config.json
 ### Installing dependencies for Arch Users:
 
 ```bash
-yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0
 ```
 
 **Note:** If you use an operating system other than Arch, you will need to install all required dependencies. The specific steps may vary depending on your distro.
@@ -403,4 +409,5 @@ nvim .ahmed-config.json
 <hr />
 
 ### Credits
+
 <a href="https://www.flaticon.com/free-icons/high-voltage" title="high voltage icons">High voltage icons created by Muhammad Atif - Flaticon</a>
