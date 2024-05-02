@@ -92,7 +92,7 @@ function setFuzzyDays(day, usedFuzzyDay, usedTimeNow) {
     usedFuzzyDay.children[1].label = '';
     usedTimeNow.label = 'استمتع بالتحديات وابذل جهدك.';
   } else if (day == THURSDAY) {
-    usedFuzzyDay.children[0].label = 'أرحب يا خميس';
+    usedFuzzyDay.children[0].label = 'أرحب يا الخميس';
     usedFuzzyDay.children[1].label = '';
     usedTimeNow.label = 'الوقت للاستمتاع بالجهود المبذولة.';
   } else if (day == FRIDAY) {

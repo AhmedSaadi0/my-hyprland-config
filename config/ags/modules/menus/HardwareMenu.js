@@ -1,5 +1,5 @@
 import tableRow from '../components/TableRow.js';
-import { local, notify } from '../utils/helpers.js';
+import { TitleText, local, notify } from '../utils/helpers.js';
 import settings from '../settings.js';
 
 const powerProfiles = await Service.import('powerprofiles');
@@ -157,7 +157,7 @@ const tempProgress = Widget.CircularProgress({
 
 const hwProgressBox = Widget.Box({
   className: 'hardware-menu-header-box',
-  spacing: 2,
+  // spacing: 2,
   children: [cpuProgress, ramProgress, batteryProgress, tempProgress],
 });
 
@@ -168,29 +168,53 @@ const powerProfilesBox = Widget.Box({
     Widget.Button({
       className: 'power-profiles-box-btn',
       on_clicked: () => (powerProfiles.active_profile = 'performance'),
-      child: Widget.Label({
-        label: '',
-        useMarkup: true,
-        tooltipMarkup: `<span weight='bold'>وضع الاداء العالي</span>`,
+      child: TitleText({
+        title: 'مرتفع',
+        text: '󰾆',
+        vertical: false,
+        titleXalign: 1,
+        textXalign: 0,
+        spacing: 10,
       }),
+      // child: Widget.Label({
+      //   label: 'مرتفع  󰾆',
+      //   useMarkup: true,
+      //   tooltipMarkup: `<span weight='bold'>وضع الاداء العالي</span>`,
+      // }),
     }),
     Widget.Button({
       className: 'power-profiles-box-btn',
       on_clicked: () => (powerProfiles.active_profile = 'balanced'),
-      child: Widget.Label({
-        label: '',
-        useMarkup: true,
-        tooltipMarkup: `<span weight='bold'>وضع الاداء المتزن</span>`,
+      child: TitleText({
+        title: 'معتدل',
+        text: '󰾅',
+        vertical: false,
+        titleXalign: 0,
+        textXalign: 1,
+        spacing: 10,
       }),
+      // child: Widget.Label({
+      //   label: 'معتدل  󰾅',
+      //   useMarkup: true,
+      //   tooltipMarkup: `<span weight='bold'>وضع الاداء المتزن</span>`,
+      // }),
     }),
     Widget.Button({
       className: 'power-profiles-box-btn',
       on_clicked: () => (powerProfiles.active_profile = 'power-saver'),
-      child: Widget.Label({
-        label: '󰡳',
-        useMarkup: true,
-        tooltipMarkup: `<span weight='bold'>وضع حفظ الطاقة</span>`,
+      child: TitleText({
+        title: 'منخفظ',
+        text: '󰓅',
+        vertical: false,
+        titleXalign: 0,
+        textXalign: 1,
+        spacing: 10,
       }),
+      // child: Widget.Label({
+      //   label: 'منخفظ  󰓅',
+      //   useMarkup: true,
+      //   tooltipMarkup: `<span weight='bold'>وضع حفظ الطاقة</span>`,
+      // }),
     }),
   ],
 }).hook(powerProfiles, (self) => {
