@@ -11,6 +11,15 @@ const stack = Widget.Stack({
   shown: 'child2',
 });
 
+const menuRevealer = Widget.Revealer({
+  transition: 'slide_down',
+  child: Widget.Box({
+    className: 'hardware-menu-box',
+    vertical: true,
+    children: [stack],
+  }),
+});
+
 export const networkMenu = Widget.Window({
   name: `network_menu`,
   margins: [4, 250],
@@ -20,11 +29,10 @@ export const networkMenu = Widget.Window({
     css: `
             min-height: 2px;
         `,
-    children: [stack],
+    children: [menuRevealer],
   }),
 });
 
 globalThis.showNetworkMenu = () => {
-  // networkMenu.visible = !networkMenu.visible;
-  stack.set_visible_child_name('child2');
+  menuRevealer.revealChild = !menuRevealer.revealChild;
 };

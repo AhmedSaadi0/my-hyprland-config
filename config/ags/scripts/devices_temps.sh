@@ -20,7 +20,7 @@ echo "{
   \"nvme_sensor1\": $(get_sensor_temp 'Sensor 1:'),
   \"nvme_sensor2\": $(get_sensor_temp 'Sensor 2:'),
   \"cpu_total\": $(get_sensor_temp 'Package id 0:'),
-  \"cpu_Core0\": $(get_sensor_temp 'Core 0:'),
+  \"cpu_core0\": $(get_sensor_temp 'Core 0:'),
   \"cpu_core1\": $(get_sensor_temp 'Core 1:'),
   \"cpu_core2\": $(get_sensor_temp 'Core 2:'),
   \"cpu_core3\": $(get_sensor_temp 'Core 3:'),

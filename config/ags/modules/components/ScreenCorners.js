@@ -18,7 +18,7 @@ const drawingarea = (position) =>
           .get_property('border-radius', Gtk.StateFlags.NORMAL)
       );
 
-      const cornerRadius = borderRadius;
+      const cornerRadius = borderRadius + 3;
       const shadowWidth = 7;
 
       // Draw shadow

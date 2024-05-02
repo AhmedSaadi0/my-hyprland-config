@@ -1,7 +1,9 @@
 import tableRow from '../components/TableRow.js';
 import { local, notify } from '../utils/helpers.js';
-import { Widget, Utils, Battery } from '../utils/imports.js';
 import settings from '../settings.js';
+
+const powerProfiles = await Service.import('powerprofiles');
+const Battery = await Service.import('battery');
 
 var menuIsOpen = null;
 var cpuIsInitialized = false;
@@ -153,10 +155,64 @@ const tempProgress = Widget.CircularProgress({
     .catch(print);
 });
 
-const headerBox = Widget.Box({
+const hwProgressBox = Widget.Box({
   className: 'hardware-menu-header-box',
-  spacing: 32,
+  spacing: 2,
   children: [cpuProgress, ramProgress, batteryProgress, tempProgress],
+});
+
+const powerProfilesBox = Widget.Box({
+  className: 'hardware-menu-power-profile-box',
+  vertical: true,
+  children: [
+    Widget.Button({
+      className: 'power-profiles-box-btn',
+      on_clicked: () => (powerProfiles.active_profile = 'performance'),
+      child: Widget.Label({
+        label: '',
+        useMarkup: true,
+        tooltipMarkup: `<span weight='bold'>وضع الاداء العالي</span>`,
+      }),
+    }),
+    Widget.Button({
+      className: 'power-profiles-box-btn',
+      on_clicked: () => (powerProfiles.active_profile = 'balanced'),
+      child: Widget.Label({
+        label: '',
+        useMarkup: true,
+        tooltipMarkup: `<span weight='bold'>وضع الاداء المتزن</span>`,
+      }),
+    }),
+    Widget.Button({
+      className: 'power-profiles-box-btn',
+      on_clicked: () => (powerProfiles.active_profile = 'power-saver'),
+      child: Widget.Label({
+        label: '󰡳',
+        useMarkup: true,
+        tooltipMarkup: `<span weight='bold'>وضع حفظ الطاقة</span>`,
+      }),
+    }),
+  ],
+}).hook(powerProfiles, (self) => {
+  self.children[0].className = 'power-profiles-box-btn';
+  self.children[1].className = 'power-profiles-box-btn';
+  self.children[2].className = 'power-profiles-box-btn';
+
+  if (powerProfiles.active_profile == 'performance') {
+    self.children[0].className =
+      'power-profiles-box-btn power-profiles-box-btn-active';
+  } else if (powerProfiles.active_profile == 'balanced') {
+    self.children[1].className =
+      'power-profiles-box-btn power-profiles-box-btn-active';
+  } else if (powerProfiles.active_profile == 'power-saver') {
+    self.children[2].className =
+      'power-profiles-box-btn power-profiles-box-btn-active';
+  }
+});
+
+const headerBox = Widget.Box({
+  spacing: 3,
+  children: [powerProfilesBox, hwProgressBox],
 });
 
 const hardwareUsageTable = ({
