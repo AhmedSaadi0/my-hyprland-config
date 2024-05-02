@@ -1,4 +1,4 @@
-@import './themes/game.scss';
+@import './themes/colors.scss';
 
 .unset {
   all: unset;
@@ -945,7 +945,6 @@ window {
 /* ----------------------------------------- */
 /* -------------- Fuzzy clock -------------- */
 /* ----------------------------------------- */
-
 @if variable-exists(wd-fuzzy-day-box-bg) {
   // Day
   .wd-fuzzy-day-box {
@@ -1060,17 +1059,19 @@ window {
 
 .power-profiles-box-btn {
   margin: 0.3rem;
-  padding-left: 1.7rem;
-  padding-right: 1.7rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
   padding-top: 0.4rem;
   padding-bottom: 0.4rem;
   box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
+  // font-family: $icon-font-family;
 }
 
 .power-profiles-box-btn-active {
   background: $btn-hover-background;
   color: $btn-hover-color;
   box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
+  // font-family: $icon-font-family;
 }
 
 // --------- CPU ---------

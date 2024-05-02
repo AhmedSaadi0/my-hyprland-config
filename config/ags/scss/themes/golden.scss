@@ -280,8 +280,7 @@ $hardware-os-table-row-header-color: #f0eeda;
 $btn-background: $bg-two;
 $btn-color: $text-color;
 $btn-hover-background: $fg-one;
-$btn-hover-color: #b8c2b0;
-
+$btn-hover-color: $text-color;
 button {
   background: $btn-background;
   color: $btn-color;
@@ -444,4 +443,3 @@ $menuitem-disabled-fg: rgba($text-color, 0.5);
   padding-left: 0.4rem;
   padding-right: 0.4rem;
 }
-
