@@ -78,7 +78,7 @@ class ThemeService extends Service {
     this.showDesktopWidget(theme.desktop_widget);
 
     let hypr = theme.hypr;
-    this.steHyprland(
+    this.setHyprland(
       hypr.border_width,
       hypr.active_border,
       hypr.inactive_border,
@@ -276,7 +276,7 @@ class ThemeService extends Service {
     ]).catch(print);
   }
 
-  steHyprland(
+  setHyprland(
     border_width,
     active_border,
     inactive_border,
