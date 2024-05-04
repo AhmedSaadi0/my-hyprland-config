@@ -137,11 +137,15 @@
   border-top-left-radius: $border-radius;
 }
 
-.hardware-cpu-table-row {
+.hardware-table-row {
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.hardware-cpu-table-row {
+  @extend .hardware-table-row;
 }
 
 // --------- RAM Table ---------
@@ -161,10 +165,7 @@
 }
 
 .hardware-ram-table-row {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  @extend .hardware-table-row;
 }
 
 // --------- HW ---------
@@ -195,10 +196,7 @@
 }
 
 .hardware-bat-table-row {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  @extend .hardware-table-row;
 }
 
 // --------- OS Table ---------
@@ -220,8 +218,5 @@
 }
 
 .hardware-os-table-row {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  @extend .hardware-table-row;
 }
