@@ -58,16 +58,20 @@
   border-radius: $border-radius;
 }
 
-.selected-theme {
-  background: $selected-theme-background;
-  color: $selected-theme-color;
-  border-radius: $border-radius;
+.theme-button-father {
   padding-left: 0.6rem;
   padding-right: 0.6rem;
   transition:
     background 0.2s ease-in-out,
     color 0.2s ease-in-out;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.selected-theme {
+  @extend .theme-button-father;
+  background: $selected-theme-background;
+  color: $selected-theme-color;
+  border-radius: $border-radius;
 }
 
 .selected-theme:hover {
@@ -77,16 +81,11 @@
 }
 
 .theme-btn {
+  @extend .theme-button-father;
   border-radius: $border-radius;
   background: $menu-btn-background;
   border-color: $menu-btn-background;
   border-radius: $border-radius;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
-  transition:
-    background 0.2s ease-in-out,
-    color 0.2s ease-in-out;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .theme-btn:hover {

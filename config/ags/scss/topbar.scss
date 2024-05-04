@@ -105,6 +105,7 @@
 
 .bar-weather-icon {
   font-family: $icon-font-family;
+  font-size: 1.4rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
@@ -193,16 +194,16 @@
 
 .wifi-icon-strength {
   font-family: $icon-font-family;
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
   background: $wifi-icon-background;
   color: $wifi-icon-color;
 }
 
 .wifi-icon-strength:dir(rtl) {
-  margin-left: 0.2em;
-  padding-right: 0.5em;
-  padding-left: 0.6em;
+  margin-left: 0.2rem;
+  padding-right: 0.2rem;
+  padding-left: 0.6rem;
   border-top-left-radius: $border-radius;
   border-bottom-left-radius: $border-radius;
 }
@@ -210,7 +211,7 @@
 .wifi-icon-strength:dir(ltr) {
   margin-right: 0.2rem;
   padding-left: 0.2rem;
-  padding-right: 1rem;
+  padding-right: 0.6rem;
   border-top-right-radius: $border-radius;
   border-bottom-right-radius: $border-radius;
 }

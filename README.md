@@ -17,9 +17,7 @@
 - network-manager-applet
 - playerctl
 - polkit-kde-agent
-- ttf-font-awesome-5
-- ttf-jetbrains-mono-nerd
-- ttf-fantasque-nerd
+- [FantasqueSansM Nerd Font](https://www.nerdfonts.com/font-downloads)
 - qt5ct
 - qt6ct
 - Dolphin
@@ -186,8 +184,7 @@ nvim .ahmed-config.json
 - network-manager-applet
 - playerctl
 - polkit-kde-agent
-- ttf-font-awesome-5
-- ttf-jetbrains-mono-nerd
+- [FantasqueSansM Nerd Font](https://www.nerdfonts.com/font-downloads)
 - qt5ct
 - qt6ct
 - Dolphin
