@@ -3,28 +3,17 @@
 // -----------------------------
 $border-color: #e49f5c;
 $border-size: 2px;
-
 $bg-one: #191c21;
 $bg-two: #111316;
-// $bg-three: #2F3443;
 $bg-three: #2f3443;
-
 $fg-one: #f4a83d;
-// $fg-two: #92c7ff;
 $fg-two: #aaaaff;
 $fg-three: #ff557f;
-
 $text-color: #ceceff;
-
-// $icon-font-family: "FontAwesome";
-// $icon-font-family: "Font Awesome";
-$icon-font-family: 'Font Awesome 5 Free Solid';
-
+$icon-font-family: 'FantasqueSansM Nerd Font Propo';
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
-
 $border-radius: 0.5rem;
-
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
@@ -36,13 +25,11 @@ $workspace-focused-bottom: $workspace-focused;
 $workspace-has-windows: $workspace-focused;
 $workspace-hover-background: rgba($fg-two, 0.9);
 $workspace-hover-color: rgba($bg-two, 0.9);
-
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
 $clock-background: linear-gradient(to right, $fg-one, $fg-two);
 $clock-color: $bg-two;
-
 // --------------------------------
 // --------- prayer times ---------
 // --------------------------------

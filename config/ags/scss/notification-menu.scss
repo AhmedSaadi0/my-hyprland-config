@@ -1,0 +1,118 @@
+.notification-menu-header {
+  background-size: cover;
+  background-position: center;
+  // border-top-left-radius: $border-radius;
+  // border-top-right-radius: $border-radius;
+  padding: 1rem;
+  // min-width: 23rem;
+  // min-height: 30rem;
+  color: $text-color;
+}
+
+.horizontal-line {
+  background: $notifications-separator-background;
+  min-height: 1px;
+  min-width: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: $text-color;
+}
+
+.notification-center-button {
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin;
+  background: $notifications-bar-btn-bg;
+  color: $notifications-bar-btn-fg;
+  border-radius: $border-radius;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
+
+.notification-center-button:dir(ltr) {
+  padding-right: 0.7rem;
+  padding-left: 1rem;
+}
+
+.notification-center-button:dir(rtl) {
+  padding-left: 0.7rem;
+  padding-right: 1rem;
+}
+
+.notification-center-button:hover {
+  background-color: $notifications-bar-btn-hover-bg;
+  color: $notifications-bar-btn-hover-fg;
+}
+
+.notification-this-is-all {
+  color: $text-color;
+  margin-top: 10rem;
+  margin-bottom: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
+}
+
+.no-notification-icon {
+  margin-bottom: 0.5rem;
+  font-family: $icon-font-family;
+  font-size: 3rem;
+  padding-right: 0.7rem;
+}
+
+.no-notification-text {
+  min-width: 22.5rem;
+}
+
+.notification-header-box {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: $notifications-header-bg;
+  color: $notifications-header-fg;
+  border-top-right-radius: $border-radius;
+  border-top-left-radius: $border-radius;
+}
+
+.notification-center-header-text {
+  min-width: 7.7rem;
+}
+
+.notification-center-header-mute {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-family: $icon-font-family;
+  border-radius: $border-radius;
+  padding-left: 1rem;
+  padding-right: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+// .notification-center-header-mute:dir(rtl) {
+// }
+
+// .notification-center-header-mute:dir(ltr) {
+//     padding-right: 1rem;
+//     padding-left: 1.2rem;
+//     margin-left: 0.5rem;
+// }
+
+.notification-center-header-clear {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-family: $icon-font-family;
+  border-radius: $border-radius;
+  padding-left: 1rem;
+  padding-right: 1.2rem;
+}
+
+.notification-center-header-clear:dir(rtl) {
+  margin-right: 0.7rem;
+}
+
+.notification-center-header-clear:dir(ltr) {
+  margin-left: 1rem;
+}
+
+.notification-center-container {
+  // min-width: 25rem;
+  min-height: 30rem;
+  border-radius: $border-radius;
+}

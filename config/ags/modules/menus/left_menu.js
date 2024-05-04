@@ -219,7 +219,7 @@ const ThemesButtonsRowOne = () => {
     children: [
       ThemeButton({
         label: '',
-        icon: '',
+        icon: '󰖔',
         theme: DYNAMIC_M3_DARK,
         label_css: 'unset',
         icon_css: 'dynamic-theme-btn-icon',
@@ -227,7 +227,7 @@ const ThemesButtonsRowOne = () => {
       }),
       ThemeButton({
         label: '',
-        icon: '',
+        icon: '',
         theme: DYNAMIC_M3_LIGHT,
         label_css: 'unset',
         icon_css: 'dynamic-theme-btn-icon',

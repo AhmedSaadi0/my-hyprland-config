@@ -1,32 +1,13 @@
-// #411352
-// #722991
-// #e1d9f5
-// #8a49b3
-// #300c32
-// Lavender: #e6e6fa
-// Mauve: #e0b0ff
-// Violet: #8f00ff
-// Plum: #8e3179
-// Burgundy: #800020
-// Magenta: #ff00ff
-// -----------------------------
-// --------- Variables ---------
-// -----------------------------
 $border-color: #1ed4fd;
 $border-size: 2px;
-
 $bg-one: #352558;
-$bg-two: #1F1635;
+$bg-two: #1f1635;
 $bg-three: #154a63;
-
 $fg-one: #1ed4fd;
 $fg-two: #ff00ff;
-$fg-three: #C1C4EB;
-
+$fg-three: #c1c4eb;
 $text-color: #bdddee;
-
-$icon-font-family: "Font Awesome 5 Free Solid";
-
+$icon-font-family: 'FantasqueSansM Nerd Font Propo';
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
 
@@ -53,7 +34,7 @@ $clock-color: $bg-two;
 // -------------------------------
 // --------- Bar Weather ---------
 // -------------------------------
-$bar-weather-background: linear-gradient(to right, #25F7E2, #CDD4AF);
+$bar-weather-background: linear-gradient(to right, #25f7e2, #cdd4af);
 $bar-weather-color: $bg-two;
 $weather-menu-box-bg: $bg-one;
 $weather-menu-box-fg: $text-color;
@@ -67,7 +48,7 @@ $bar-color: $text-color;
 // --------------------------------
 // --------- prayer times ---------
 // --------------------------------
-$bar-prayer-times-box-background: linear-gradient(to right, #82D8D2, #478DD7);
+$bar-prayer-times-box-background: linear-gradient(to right, #82d8d2, #478dd7);
 $bar-prayer-times-box-color: $bg-two;
 
 // --------------------------------
@@ -75,7 +56,7 @@ $bar-prayer-times-box-color: $bg-two;
 // --------------------------------
 // $internet-box-background: linear-gradient(to right, #ffb92d, #0cdfff);
 // $internet-box-background: linear-gradient(to right, #EF96D3, #ff2176);
-$internet-box-background: linear-gradient(to right, #82D8D2, #478DD7);
+$internet-box-background: linear-gradient(to right, #82d8d2, #478dd7);
 $internet-box-color: $bar-background;
 $wifi-name-background: $bar-background;
 $wifi-name-color: $bar-color;
@@ -108,14 +89,12 @@ $cpu-background: $hardware-box-color;
 $cpu-color: #b18dff;
 $cpu-inner-color: $cpu-color;
 
-
 // ------------------------
 // --------- Temp ---------
 // ------------------------
 $temp-background: $hardware-box-color;
 $temp-color: $fg-two;
 $temp-inner-color: $temp-color;
-
 
 // -----------------------
 // --------- RAM ---------
@@ -124,20 +103,17 @@ $ram-background: $hardware-box-color;
 $ram-color: $fg-three;
 $ram-inner-color: $ram-color;
 
-
 // ---------------------------
 // --------- Vol osd ---------
 // ---------------------------
 $vol-osd-background: $bg-one;
 $vol-osd-border-color: $border-color;
 
-
 // -----------------------------
 // --------- GTK Scale ---------
 // -----------------------------
 $scale-highlight-background: $fg-one;
 $scale-slider-background: $fg-one;
-
 
 // ---------------------------------
 // --------- Notifications ---------
@@ -158,22 +134,27 @@ $notifications-separator-background: $text-color;
 // ----------------------------------
 // --------- desktop-widget ---------
 // ----------------------------------
-$desktop-wd-separator-background: linear-gradient(to bottom, $fg-two, #FFB431, $fg-one);
+$desktop-wd-separator-background: linear-gradient(
+  to bottom,
+  $fg-two,
+  #ffb431,
+  $fg-one
+);
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
 $wd-fuzzy-day-box-fg: $fg-two;
 
 $wd-fuzzy-day-text-font-size: 3rem;
-$wd-fuzzy-day-text-font-family: "VIP Rawy Regular";
+$wd-fuzzy-day-text-font-family: 'VIP Rawy Regular';
 $wd-fuzzy-day-icon-font-size: 2rem;
 $wd-fuzzy-day-icon-font-family: $icon-font-family;
 $wd-fuzzy-day-icon-margin: 0rem 1rem 0rem 1rem;
 $wd-fuzzy-day-icon-padding: 0.7rem 0rem 0rem 0rem;
 
 $wd-time-now-bg: rgba(#000000, 0);
-$wd-time-now-fg: #FFB431;
+$wd-time-now-fg: #ffb431;
 $wd-time-now-font-size: 2.3rem;
-$wd-time-now-font-family: "VEXA light R";
+$wd-time-now-font-family: 'VEXA light R';
 $wd-time-now-margin: 0rem 0rem 0.5rem 0rem;
 
 $wd-fuzzy-time-box-bg: rgba(#000000, 0);
@@ -182,19 +163,19 @@ $wd-fuzzy-time-icon-font-size: 1.5rem;
 $wd-fuzzy-time-icon-font-family: $icon-font-family;
 $wd-fuzzy-time-icon-margin: 0rem 1rem 0rem 1rem;
 $wd-fuzzy-time-text-font-size: 1.8rem;
-$wd-fuzzy-time-text-font-family: "VIP Rawy Regular";
+$wd-fuzzy-time-text-font-family: 'VIP Rawy Regular';
 
 $saying-wd-label-bg: rgba(#000000, 0);
 $saying-wd-label-fg: #31ff87;
 $saying-wd-label-font-size: 1.8rem;
 $saying-wd-label-min-width: 25rem;
-$saying-wd-label-font-family: "VIP Rawy Regular";
+$saying-wd-label-font-family: 'VIP Rawy Regular';
 $saying-wd-label-padding: 0rem;
 $saying-wd-label-margin: 0rem;
 $saying-wd-label-border-radius: 0rem;
 
 // Music Info
-$music-info-wd-font-family: "VIP Rawy Regular";
+$music-info-wd-font-family: 'VIP Rawy Regular';
 $music-info-wd-font-size: 1.5rem;
 $music-info-wd-min-width: 30rem;
 $music-info-wd-padding: 1rem 0rem 0rem 0rem;
@@ -217,20 +198,23 @@ $prayer-times-next-prayer-fg: $bg-two;
 $menu-box-background: $bg-one;
 $menu-box-borders: $fg-one;
 
-$profile-box-background: linear-gradient(to right, rgba(#a280ff, 0.8), rgba(#774cf0, 0.6));
+$profile-box-background: linear-gradient(
+  to right,
+  rgba(#a280ff, 0.8),
+  rgba(#774cf0, 0.6)
+);
 $profile-box-color: $bg-two;
 
 $theme-box-background: #241546;
 $power-box-background: $bg-two;
 
-$selected-theme-background: linear-gradient(to right, #9359ff, #FF00AA);
+$selected-theme-background: linear-gradient(to right, #9359ff, #ff00aa);
 $selected-theme-color: $bg-one;
 $selected-theme-hover-background: linear-gradient(to right, #ff9900, #ff6600);
 $selected-theme-hover-color: $bg-three;
 
 $menu-btn-background: $bg-one;
 $menu-btn-hover: $fg-one;
-
 
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
@@ -269,12 +253,12 @@ $hardware-cpu-box-color: $bg-two;
 $hardware-cpu-table-row-header-background: $fg-two;
 $hardware-cpu-table-row-header-color: $bg-two;
 
-$hardware-ram-box-background: linear-gradient(to top,  #8D52FF, #0088FF);
+$hardware-ram-box-background: linear-gradient(to top, #8d52ff, #0088ff);
 $hardware-ram-box-color: $bg-two;
 $hardware-ram-table-row-header-background: #017de9;
 $hardware-ram-table-row-header-color: $bg-two;
 
-$hardware-bat-box-background: rgba(#987FD6, 1);
+$hardware-bat-box-background: rgba(#987fd6, 1);
 $hardware-bat-box-color: #211008;
 $hardware-bat-table-row-header-background: #8b75c4;
 $hardware-bat-table-row-header-color: #211008;
@@ -293,15 +277,15 @@ $btn-hover-background: $fg-one;
 $btn-hover-color: $bg-three;
 
 button {
-    background-color: $btn-background;
-    color: $btn-color;
-    border-color: $btn-background;
+  background-color: $btn-background;
+  color: $btn-color;
+  border-color: $btn-background;
 }
 
 button:hover {
-    background-color: $btn-hover-background;
-    color: $btn-hover-color;
-    border-color: $btn-hover-background;
+  background-color: $btn-hover-background;
+  color: $btn-hover-color;
+  border-color: $btn-hover-background;
 }
 
 // --------- Menu ---------

@@ -34,9 +34,9 @@
 - systemsettings
 - acpi
 - fish
-- kde-powerdevil
 - gnome-bluetooth-3.0
 - power-profiles-daemon
+- lm_sensors
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 
 ### برامج اختيارية
@@ -196,13 +196,13 @@ nvim .ahmed-config.json
 - wl-clipboard
 - hyprpicker
 - sysstat
+- lm_sensors
 - bc
 - kitty
 - sassc
 - systemsettings
 - acpi
 - fish
-- kde-powerdevil
 - gnome-bluetooth-3.0
 - power-profiles-daemon
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)

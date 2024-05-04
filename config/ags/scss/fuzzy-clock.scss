@@ -1,0 +1,84 @@
+@if variable-exists(wd-fuzzy-day-box-bg) {
+  // Day
+  .wd-fuzzy-day-box {
+    background: $wd-fuzzy-day-box-bg;
+    color: $wd-fuzzy-day-box-fg;
+  }
+
+  .wd-fuzzy-day-icon {
+    font-size: $wd-fuzzy-day-icon-font-size;
+    margin: $wd-fuzzy-day-icon-margin;
+    font-family: $wd-fuzzy-day-icon-font-family;
+    padding: $wd-fuzzy-day-icon-padding;
+  }
+
+  .wd-fuzzy-day-text {
+    font-family: $wd-fuzzy-day-text-font-family;
+    font-size: $wd-fuzzy-day-text-font-size;
+  }
+
+  .wd-time-now {
+    font-size: $wd-time-now-font-size;
+    background: $wd-time-now-bg;
+    color: $wd-time-now-fg;
+    font-family: $wd-time-now-font-family;
+    margin: $wd-time-now-margin;
+  }
+
+  // Time
+  .wd-fuzzy-time-box {
+    background: $wd-fuzzy-time-box-bg;
+    color: $wd-fuzzy-time-box-fg;
+  }
+
+  .wd-fuzzy-time-icon {
+    font-size: $wd-fuzzy-time-icon-font-size;
+    margin: $wd-fuzzy-time-icon-margin;
+    font-family: $wd-fuzzy-time-icon-font-family;
+  }
+
+  .wd-fuzzy-time-text {
+    font-size: $wd-fuzzy-time-text-font-size;
+    font-family: $wd-fuzzy-time-text-font-family;
+  }
+
+  // .wd-fuzzy-clock-box {
+  //     // background: #1aa14e;
+  // }
+
+  .saying-wd-label {
+    min-width: $saying-wd-label-min-width;
+    font-size: $saying-wd-label-font-size;
+    color: $saying-wd-label-fg;
+    background: $saying-wd-label-bg;
+    font-family: $saying-wd-label-font-family;
+    padding: $saying-wd-label-padding;
+    margin: $saying-wd-label-margin;
+    border-radius: $saying-wd-label-border-radius;
+  }
+}
+@if variable-exists(desktop-wd-separator-background) {
+  .desktop-wd-separator {
+    background: $desktop-wd-separator-background;
+    // margin-top: 1rem;
+    min-height: 1px;
+    min-width: 1px;
+  }
+
+  .desktop-wd-music-player-box {
+    padding: $music-info-wd-padding;
+    min-width: $music-info-wd-min-width;
+    font-family: $music-info-wd-font-family;
+    font-size: $music-info-wd-font-size;
+  }
+
+  .desktop-wd-music-player-title {
+    // min-width: 20rem;
+    color: $music-info-wd-title-fg;
+  }
+
+  .desktop-wd-music-player-artist {
+    // min-width: 10rem;
+    color: $music-info-wd-artist-fg;
+  }
+}
