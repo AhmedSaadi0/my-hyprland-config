@@ -64,7 +64,7 @@ const PrayerTimes = () => {
     onClicked: () => showPrayerTimesMenu(),
     child: Label({
       className: 'bar-prayer-times-icon unset',
-      label: '',
+      label: '',
     }),
   });
 

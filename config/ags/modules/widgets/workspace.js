@@ -8,8 +8,8 @@ export const Workspaces = () =>
   }).hook(Hyprland, (box) => {
     // generate an array [1..10] then make buttons from the index
     const arr = Array.from({ length: 10 }, (_, i) => i + 1);
-    const inActiveIcons = ['', '󰿤', '󰂕', '󰉖', '󱙌', '󰆉', '󱍚', '󰺶', '󱋢', '󰤑'];
-    const activeIcons = ['', '󰿣', '󰂔', '󰉋', '󱙋', '󰆈', '󱍙', '󰺵', '󱋡', '󰙨'];
+    const inActiveIcons = ['', '󰿤', '󰂕', '󰉖', '󱙌', '󰆉', '󱍚', '󰺶', '󱋢', '󰤑'];
+    const activeIcons = ['󰋜', '󰿣', '󰂔', '󰉋', '󱙋', '󰆈', '󱍙', '󰺵', '󱋡', '󰙨'];
 
     box.children = arr.map((i) =>
       Button({

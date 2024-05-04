@@ -37,7 +37,7 @@ const ramProgress = Widget.CircularProgress({
   className: 'menu-ram',
   child: Widget.Label({
     className: 'menu-ram-icon',
-    label: '',
+    label: '',
   }),
   startAt: 0,
   rounded: false,
@@ -97,7 +97,7 @@ const tempProgress = Widget.CircularProgress({
   className: 'menu-temp',
   child: Widget.Label({
     className: 'menu-temp-icon',
-    label: '',
+    label: '󱤋',
   }),
   startAt: 0,
   rounded: false,
@@ -169,7 +169,7 @@ const powerProfilesBox = Widget.Box({
       className: 'power-profiles-box-btn',
       on_clicked: () => (powerProfiles.active_profile = 'performance'),
       child: TitleText({
-        title: 'مرتفع',
+        title: 'اداء مرتفع',
         text: '󰾆',
         vertical: false,
         titleXalign: 1,
@@ -186,7 +186,7 @@ const powerProfilesBox = Widget.Box({
       className: 'power-profiles-box-btn',
       on_clicked: () => (powerProfiles.active_profile = 'balanced'),
       child: TitleText({
-        title: 'معتدل',
+        title: 'اداء معتدل',
         text: '󰾅',
         vertical: false,
         titleXalign: 0,
@@ -203,7 +203,7 @@ const powerProfilesBox = Widget.Box({
       className: 'power-profiles-box-btn',
       on_clicked: () => (powerProfiles.active_profile = 'power-saver'),
       child: TitleText({
-        title: 'منخفظ',
+        title: 'اداء منخفظ',
         text: '󰓅',
         vertical: false,
         titleXalign: 0,

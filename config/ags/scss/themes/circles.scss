@@ -3,25 +3,17 @@
 // -----------------------------
 $border-color: #61afef;
 $border-size: 2px;
-
 $bg-one: #1e222a;
 $bg-two: #13161b;
 $bg-three: #13161b;
-
 $fg-one: #61afef;
 $fg-two: #7ec7a2;
 $fg-three: #e06c75;
-
 $text-color: #c8ccd4;
-
-// $icon-font-family: "Font Awesome";
-$icon-font-family: 'Font Awesome 5 Free Solid';
-
+$icon-font-family: 'FantasqueSansM Nerd Font Propo';
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
-
 $border-radius: 0.8rem;
-
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
@@ -443,4 +435,3 @@ $menuitem-disabled-fg: rgba($text-color, 0.5);
   color: $fg-two;
   background-color: #343842;
 }
-

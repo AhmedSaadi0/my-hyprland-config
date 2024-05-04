@@ -1,0 +1,143 @@
+.left-menu-box {
+  background: $menu-box-background;
+  border-radius: $border-radius;
+  border: $border-size solid $menu-box-borders;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  transition-property: background;
+  transition-duration: 1.5s;
+}
+
+.left-menu-box:dir(rtl) {
+  margin-left: 0.6rem;
+  margin-right: 1rem;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.left-menu-box:dir(ltr) {
+  margin-right: 0.6rem;
+  margin-left: 1rem;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+.left-menu-header {
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  min-width: 23rem;
+  min-height: 12rem;
+}
+
+.profile-box {
+  background: $profile-box-background;
+  color: $profile-box-color;
+  min-width: 20rem;
+  min-height: 8rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: -3rem;
+  border-radius: $border-radius;
+}
+
+.profile-icon {
+  margin-top: -3rem;
+}
+
+.profile-label {
+  margin-top: 1rem;
+  font-family: 'VIP Rawy Regular';
+  font-size: xx-large;
+}
+
+/* -------------- Theme Box -------------- */
+.themes-box {
+  background: $theme-box-background;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: $border-radius;
+}
+
+.selected-theme {
+  background: $selected-theme-background;
+  color: $selected-theme-color;
+  border-radius: $border-radius;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.selected-theme:hover {
+  background: $selected-theme-hover-background;
+  color: $selected-theme-hover-color;
+  border-radius: $border-radius;
+}
+
+.theme-btn {
+  border-radius: $border-radius;
+  background: $menu-btn-background;
+  border-color: $menu-btn-background;
+  border-radius: $border-radius;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn:hover {
+  color: $btn-hover-color;
+  border-color: $btn-hover-background;
+  border-radius: $border-radius;
+}
+
+.theme-btn-icon {
+  font-family: $icon-font-family;
+  min-width: 2rem;
+}
+
+.dynamic-theme-btn-icon {
+  font-family: $icon-font-family;
+  min-width: 1.93rem;
+}
+
+.theme-btn-label {
+  min-width: 3rem;
+}
+
+.menu-button {
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin;
+  border: 0px;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+
+  background: $menu-btn-background;
+  font-family: $icon-font-family;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+}
+
+.menu-button:dir(rtl) {
+  margin-left: $top-bar-widget-margins;
+}
+
+.menu-button:dir(ltr) {
+  margin-right: $top-bar-widget-margins;
+}
+
+.menu-button:hover {
+  background: $menu-btn-hover;
+}
+
+.power-box {
+  background: $power-box-background;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: $border-radius;
+}

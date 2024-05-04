@@ -40,7 +40,7 @@ const length = () =>
 const RowOne = () => {
   let playerName = Widget.Label({
     css: `
-      min-width: 5rem;
+      min-width: 6rem;
     `,
     label: '',
     justification: 'right',
@@ -64,7 +64,7 @@ const RowOne = () => {
   return Widget.Box({
     className: 'music-wd-row-one',
     // homogeneous: true,
-    spacing: 120,
+    spacing: 100,
     children: [length(), selectPlayerBtn],
   }).hook(Mpris, (self) => {
     let playersList = [];
@@ -204,7 +204,7 @@ const ButtonsRow = () => {
 
   return Widget.Box({
     className: 'music-wd-row-three',
-    spacing: 10,
+    spacing: 11,
     // homogeneous: true,
     children: [backBtn, playBtn, nextBtn, skipBackwardBtn, skipForwardBtn],
   }).hook(Mpris, (self) => {

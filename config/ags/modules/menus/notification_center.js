@@ -8,7 +8,7 @@ import {
 } from 'resource:///com/github/Aylur/ags/widget.js';
 import { Notifications } from '../utils/imports.js';
 import Notification from '../notifications/MenuNotification.js';
-import { local } from '../utils/helpers.js';
+import { TitleText, local } from '../utils/helpers.js';
 
 const NotificationsBox = () => {
   return Box({
@@ -114,7 +114,7 @@ const menuRevealer = Revealer({
 export const NotificationCenter = () =>
   Window({
     name: `notification_center`,
-    margins: [0, local === 'RTL' ? 500 : 400],
+    margins: [0, 380],
     // layer: 'overlay',
     anchor: ['top', local === 'RTL' ? 'left' : 'right'],
     child: Box({
@@ -136,15 +136,31 @@ export const NotificationCenterButton = () =>
   Button({
     className: 'notification-center-button unset',
     // child: Label({ label: "" }),
-    label: '',
+    // label: '',
+    child: TitleText({
+      title: '',
+      text: '',
+      textClass: 'unset',
+      vertical: false,
+      titleXalign: 1,
+      textXalign: 0,
+      spacing: 4,
+    }),
+
     onClicked: () => showNotificationCenter(),
   }).hook(Notifications, (self) => {
     if (Notifications.dnd) {
-      self.label = '󰂛';
+      // self.label = '󰂛';
+      self.child.children[0].label = '󰂛';
+      self.child.children[1].label = '';
     } else if (Notifications.notifications.length === 0) {
-      self.label = '󰂚';
+      // self.label = '󰂚';
+      self.child.children[0].label = '󰂚';
+      self.child.children[1].label = '';
       // self.label = "󱇥";
     } else if (Notifications.notifications.length > 0) {
-      self.label = `${Notifications.notifications.length} 󱅫`;
+      self.child.children[0].label = '󱅫';
+      self.child.children[1].label = Notifications.notifications.length + '';
+      // self.label = `${Notifications.notifications.length} 󱅫`;
     }
   });

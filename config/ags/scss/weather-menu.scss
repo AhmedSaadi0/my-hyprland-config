@@ -1,0 +1,108 @@
+.weather-menu-box {
+  min-width: 2rem;
+
+  @if variable-exists($name: weather-menu-box-bg) {
+    background: $weather-menu-box-bg;
+  }
+
+  @if variable-exists($name: weather-menu-box-fg) {
+    color: $weather-menu-box-fg;
+  }
+
+  padding: 1rem 1rem;
+  padding-top: 2rem;
+  border: $border-size solid $border-color;
+  border-radius: $border-radius;
+}
+
+.weather-menu-general-information-box {
+  margin: 0rem 1rem;
+}
+
+.weather-menu-detail-box {
+  margin: 0rem 1rem;
+}
+
+.weather-menu-today-box {
+  margin-top: 0.4rem;
+}
+
+.weather-row-two {
+  margin: 2rem 2rem;
+}
+
+.weather-menu-icon {
+  font-family: $icon-font-family;
+  font-size: 7rem;
+  margin: 0rem 1rem;
+}
+
+.weather-menu-city {
+  font-size: 2rem;
+  margin-top: 0.3rem;
+}
+
+.weather-menu-value {
+  font-size: 2.2rem;
+}
+
+.weather-menu-sunrise {
+  font-size: 1.1rem;
+}
+
+.weather-menu-sunrise-icon {
+  font-size: 1.1rem;
+  font-family: $icon-font-family;
+  margin: 0rem 0.5rem;
+}
+
+.weather-menu-sunset {
+  font-size: 1.1rem;
+}
+
+.weather-menu-sunset-icon {
+  font-size: 1.1rem;
+  font-family: $icon-font-family;
+  margin: 0rem 0.5rem;
+}
+
+.weather-menu-today-time {
+  font-size: 1.1rem;
+}
+.weather-menu-today-weather {
+  font-size: 1.1rem;
+  padding: 0rem 1.2rem;
+}
+
+.weather-menu-today-temp {
+  font-size: 1.3rem;
+  font-family: $icon-font-family;
+}
+
+.weather-menu-latest-update {
+  font-size: 1.1rem;
+}
+
+.weather-menu-feels-like {
+  font-size: 1.3rem;
+}
+
+.weather-menu-humidity {
+  font-size: 1.3rem;
+}
+
+.weather-menu-pressure {
+  font-size: 1.3rem;
+}
+
+.weather-menu-wind {
+  font-size: 1.3rem;
+}
+
+.weather-menu-clouds {
+  font-size: 1.3rem;
+}
+
+.weather-menu-min-max {
+  font-size: 1.3rem;
+}
