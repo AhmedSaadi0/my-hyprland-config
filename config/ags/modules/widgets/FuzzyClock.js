@@ -81,15 +81,15 @@ function setFuzzyDays(day, usedFuzzyDay, usedTimeNow) {
     usedTimeNow.label = 'استمر في السعي نحو أهدافك.';
   } else if (day == MONDAY) {
     usedFuzzyDay.children[0].label = 'نصف الأسبوع قد حان';
-    usedFuzzyDay.children[1].label = '';
+    usedFuzzyDay.children[1].label = '';
     usedTimeNow.label = 'حافظ على الزخم والإيجابية.';
   } else if (day == TUESDAY) {
     usedFuzzyDay.children[0].label = 'يوم مليء بالأعمال';
-    usedFuzzyDay.children[1].label = '';
+    usedFuzzyDay.children[1].label = '';
     usedTimeNow.label = 'قم بتجديد طاقتك وجهز نفسك لما هو قادم.';
   } else if (day == WEDNESDAY) {
     usedFuzzyDay.children[0].label = 'باقي يومين فقط';
-    usedFuzzyDay.children[1].label = '';
+    usedFuzzyDay.children[1].label = '󰃰';
     usedTimeNow.label = 'استمتع بالتحديات وابذل جهدك.';
   } else if (day == THURSDAY) {
     usedFuzzyDay.children[0].label = 'أرحب يا الخميس';

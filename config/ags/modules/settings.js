@@ -19,6 +19,7 @@ var lightM3WallpaperPath = '';
 var weatherLocation = '';
 var city = '';
 var country = '';
+var username = '';
 
 try {
   const configFile = JSON.parse(
@@ -32,11 +33,13 @@ try {
   country = configFile.country;
   networkTimeout = configFile.networkTimeout;
   networkInterval = configFile.networkInterval;
+  username = configFile.username;
 } catch (TypeError) {
   console.log('Error reading .ahmed-config.json file');
 }
 
 const settings = {
+  username: username,
   assets: {
     wallpapers: getAssets('wallpapers'),
     icons: {

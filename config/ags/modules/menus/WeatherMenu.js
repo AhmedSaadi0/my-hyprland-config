@@ -1,6 +1,5 @@
 import weatherService from '../services/WeatherService.js';
 import { local, TitleText } from '../utils/helpers.js';
-import { Widget } from '../utils/imports.js';
 
 const createWeatherDay = () => {
   const time = Widget.Label({
@@ -54,9 +53,16 @@ const MenuRevealer = () => {
 
   const latestUpdate = Widget.Button({
     className: 'weather-menu-latest-update',
+    child: Widget.Box({
+      children: [
+        Widget.Label(''),
+        Widget.Spinner({ visible: false, css: 'min-width:4.5rem;' }),
+      ],
+    }),
     onClicked: () => {
       weatherService.getWeather();
-      latestUpdate.label = ' ... ';
+      latestUpdate.child.children[0].visible = false;
+      latestUpdate.child.children[1].visible = true;
     },
   });
 
@@ -136,12 +142,15 @@ const MenuRevealer = () => {
       weatherCity.label = weatherService.areaName;
 
       sunrise.children[0].label = weatherService.sunrise;
-      sunrise.children[1].label = ``;
+      sunrise.children[1].label = ``;
 
       sunset.children[0].label = weatherService.sunset;
-      sunset.children[1].label = ``;
+      sunset.children[1].label = ``;
 
-      latestUpdate.label = `  ${weatherService.observation_time}`;
+      latestUpdate.child.children[0].label = `  ${weatherService.observation_time}`;
+
+      latestUpdate.child.children[0].visible = true;
+      latestUpdate.child.children[1].visible = false;
 
       feelsLike.label = `شعور وكانة : ${weatherService.feelsLike} C°`;
       humidity.label = `الرطوبة : ${weatherService.humidity}%`;

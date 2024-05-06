@@ -162,113 +162,113 @@ const fuzzyClockWidget = FuzzyClockWidget();
 
 const core1Widget = createCoreWindow(
   'desktop_core_1_widget',
-  [93, 407],
+  [95, 407],
   cpuNestedCircles1.innerCircle1
 );
 const core2Widget = createCoreWindow(
   'desktop_core_2_widget',
-  [77, 391],
+  [79, 391],
   cpuNestedCircles1.innerCircle2
 );
 const core3Widget = createCoreWindow(
   'desktop_core_3_widget',
-  [60, 374],
+  [62, 374],
   cpuNestedCircles1.innerCircle3
 );
 
 const core4Widget = createCoreWindow(
   'desktop_core_4_widget',
-  [93, 407],
+  [95, 407],
   cpuNestedCircles1.innerCircle4
 );
 const core5Widget = createCoreWindow(
   'desktop_core_5_widget',
-  [77, 391],
+  [79, 391],
   cpuNestedCircles1.innerCircle5
 );
 const core6Widget = createCoreWindow(
   'desktop_core_6_widget',
-  [60, 374],
+  [62, 374],
   cpuNestedCircles1.innerCircle6
 );
 
 const temp1Widget = createCoreWindow(
   'desktop_temp1_widget',
-  [51, 365],
+  [54, 365],
   cpuNestedCircles1.outerCircle1
 );
 
 const temp2Widget = createCoreWindow(
   'desktop_temp2_widget',
-  [44, 358],
+  [47, 358],
   cpuNestedCircles1.outerCircle2
 );
 
 const temp3Widget = createCoreWindow(
   'desktop_temp3_widget',
-  [35, 348],
+  [38, 348],
   cpuNestedCircles1.outerCircle3
 );
 
 const temp4Widget = createCoreWindow(
   'desktop_temp4_widget',
-  [28, 341],
+  [31, 341],
   cpuNestedCircles1.outerCircle4
 );
 
 const core7Widget = createCoreWindow(
   'desktop_core_7_widget',
-  [323, 407],
+  [326, 407],
   cpuNestedCircles2.innerCircle1
 );
 const core8Widget = createCoreWindow(
   'desktop_core_8_widget',
-  [307, 391],
+  [310, 391],
   cpuNestedCircles2.innerCircle2
 );
 const core9Widget = createCoreWindow(
   'desktop_core_9_widget',
-  [290, 374],
+  [293, 374],
   cpuNestedCircles2.innerCircle3
 );
 
 const core10Widget = createCoreWindow(
   'desktop_core_10_widget',
-  [323, 407],
+  [326, 407],
   cpuNestedCircles2.innerCircle4
 );
 const core11Widget = createCoreWindow(
   'desktop_core_11_widget',
-  [307, 391],
+  [310, 391],
   cpuNestedCircles2.innerCircle5
 );
 const core12Widget = createCoreWindow(
   'desktop_core_12_widget',
-  [290, 374],
+  [293, 374],
   cpuNestedCircles2.innerCircle6
 );
 
 const temp5Widget = createCoreWindow(
   'desktop_temp5_widget',
-  [281, 365],
+  [285, 365],
   cpuNestedCircles2.outerCircle1
 );
 
 const temp6Widget = createCoreWindow(
   'desktop_temp6_widget',
-  [274, 358],
+  [278, 358],
   cpuNestedCircles2.outerCircle2
 );
 
 const temp7Widget = createCoreWindow(
   'desktop_temp7_widget',
-  [265, 348],
+  [269, 348],
   cpuNestedCircles2.outerCircle3
 );
 
 const temp8Widget = createCoreWindow(
   'desktop_temp8_widget',
-  [258, 341],
+  [262, 341],
   cpuNestedCircles2.outerCircle4
 );
 

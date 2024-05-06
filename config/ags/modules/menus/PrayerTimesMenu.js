@@ -5,7 +5,7 @@ import { Widget } from '../utils/imports.js';
 const MenuRevealer = () => {
   const header = TitleText({
     title: 'اوقات الصلوات',
-    text: '',
+    text: '',
     titleClass: 'prayer-times-menu-header-title',
     textClass: 'prayer-times-menu-header-icon',
     vertical: false,
