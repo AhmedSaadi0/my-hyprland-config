@@ -40,7 +40,7 @@ const Profile = () => {
 
   const myName = Label({
     className: 'profile-label',
-    label: 'احمد الصعدي',
+    label: settings.username,
   });
 
   return Box({
