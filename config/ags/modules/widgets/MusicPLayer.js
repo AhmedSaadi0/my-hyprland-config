@@ -81,6 +81,13 @@ const RowOne = () => {
               playerName.label = `${PLAYER_MENU_ARROW} ${element.name}`;
               selectedMusicPlayer = element.name;
               Mpris.emit('changed');
+
+              Utils.execAsync([
+                'sed',
+                '-i',
+                `25s|.*|playerctl -p ${selectedMusicPlayer} "$command"|`,
+                `/home/${Utils.USER}/.config/hypr/scripts/playerctl.sh`,
+              ]);
             },
           })
         );

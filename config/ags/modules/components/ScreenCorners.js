@@ -5,8 +5,8 @@ const drawingarea = (position) =>
   Widget.DrawingArea({
     // class-name
     className: 'top-corner',
-    widthRequest: 50,
-    heightRequest: 50,
+    widthRequest: 30,
+    heightRequest: 30,
     drawFn: (self, cr, width, height) => {
       const background = self
         .get_style_context()
@@ -18,7 +18,7 @@ const drawingarea = (position) =>
           .get_property('border-radius', Gtk.StateFlags.NORMAL)
       );
 
-      const cornerRadius = borderRadius + 3;
+      const cornerRadius = borderRadius;
       const shadowWidth = 7;
 
       // Draw shadow
