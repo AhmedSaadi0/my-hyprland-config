@@ -251,13 +251,13 @@
 
 .bar-hardware-progress-circle {
   min-width: 1.55rem;
-  min-height: 1.31rem;
-  font-size: 0.16rem;
+  min-height: 1.5rem;
+  font-size: 0.1rem;
 }
 
 .bar-hardware-progress-inner-circle {
   font-family: $icon-font-family;
-  font-size: 0.3rem;
+  font-size: 0.9rem;
 }
 
 .battery {
@@ -342,10 +342,10 @@
 /* ------------------------------------------ */
 .hardware-box {
   background: $hardware-box-color;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   border-radius: $border-radius;
   margin-top: $bar-top-margin;
   margin-bottom: $bar-bottom-margin;
