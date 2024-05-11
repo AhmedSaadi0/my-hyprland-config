@@ -97,7 +97,7 @@ const tempProgress = Widget.CircularProgress({
   className: 'menu-temp',
   child: Widget.Label({
     className: 'menu-temp-icon',
-    label: '󱤋',
+    label: '',
   }),
   startAt: 0,
   rounded: false,
