@@ -29,26 +29,21 @@ export const BatteryWidget = () => {
 
     if (Battery.charging) {
       label.className = 'battery-inner-charging';
-      if (percentage <= 55) {
-        labelText = '󱊤';
-      } else if (percentage <= 70) {
-        labelText = '󱊥';
-      } else if (percentage > 70) {
-        labelText = '󱊦';
-      }
     } else {
       label.className = 'battery-inner';
-      if (percentage <= 55) {
-        labelText = '󱊡';
-      } else if (percentage <= 70) {
-        labelText = '󱊢';
-      } else if (percentage > 70) {
-        labelText = '󱊣';
-      }
     }
+
+    if (percentage <= 55) {
+      labelText = '󱊡';
+    } else if (percentage <= 70) {
+      labelText = '󱊢';
+    } else if (percentage > 70) {
+      labelText = '󱊣';
+    }
+
     batteryProgress.value = Battery.percent / 100;
     label.tooltipMarkup = `<span weight='bold' foreground='#FF8580'>نسبة البطارية (${Battery.percent}%)</span>`;
 
-    label.label = label;
+    label.label = labelText;
   });
 };

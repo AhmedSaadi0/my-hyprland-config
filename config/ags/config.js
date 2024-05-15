@@ -5,6 +5,7 @@ import { HardwareMenu } from './modules/menus/HardwareMenu.js';
 import { networkMenu } from './modules/menus/NetworkMenu.js';
 import { NotificationCenter } from './modules/menus/notification_center.js';
 import { VolumeOSD } from './modules/on-screen/volume.js';
+import { BrightnessOSD } from './modules/on-screen/brightness.js';
 import MyNotifications from './modules/notifications/OSDNotifications.js';
 import { PrayerTimesMenu } from './modules/menus/PrayerTimesMenu.js';
 import ColorWidget from './modules/widgets/desktop/ColorsWidget.js';
@@ -36,6 +37,7 @@ let windows = [
   // Bar({monitor : 1}),
   // Bar({ monitor: 0 }),
   VolumeOSD(),
+  BrightnessOSD(),
   MyNotifications(),
   NotificationCenter(),
   HardwareMenu(),

@@ -443,7 +443,8 @@ const tablesBox = () => {
 };
 
 const menuRevealer = Widget.Revealer({
-  transition: 'slide_down',
+  transition: settings.theme.menuTransitions.hardwareMenu,
+  transitionDuration: settings.theme.menuTransitions.hardwareMenuDuration,
   child: Widget.Box({
     className: 'hardware-menu-box',
     vertical: true,

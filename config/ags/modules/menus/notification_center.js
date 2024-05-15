@@ -10,6 +10,7 @@ import { Notifications } from '../utils/imports.js';
 import Notification from '../notifications/MenuNotification.js';
 import { TitleText, local } from '../utils/helpers.js';
 
+import settings from '../settings.js';
 const NotificationsBox = () => {
   return Box({
     className: 'notification-menu-header',
@@ -103,7 +104,8 @@ const notificationContainer = Scrollable({
 });
 
 const menuRevealer = Revealer({
-  transition: 'slide_down',
+  transition: settings.theme.menuTransitions.notificationMenu,
+  transitionDuration: settings.theme.menuTransitions.notificationMenuDuration,
   child: Box({
     className: 'left-menu-box',
     vertical: true,

@@ -1,6 +1,6 @@
 import weatherService from '../services/WeatherService.js';
 import { local, TitleText } from '../utils/helpers.js';
-
+import settings from '../settings.js';
 const createWeatherDay = () => {
   const time = Widget.Label({
     className: 'weather-menu-today-time',
@@ -131,7 +131,8 @@ const MenuRevealer = () => {
   });
 
   return Widget.Revealer({
-    transition: 'slide_down',
+    transition: settings.theme.menuTransitions.weatherMenu,
+    transitionDuration: settings.theme.menuTransitions.weatherMenuDuration,
     child: Widget.Box({
       className: 'weather-menu-box',
       vertical: true,

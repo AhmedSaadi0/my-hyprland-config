@@ -1,40 +1,44 @@
-/* This file is created by ThemeService written by ahmedsaadi0 */
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
-/* ------------------------------------------------------- */
-/* -------------- Material U Desktop Widget -------------- */
-/* ------------------------------------------------------- */
+button {
+  background-color: #17293f;
+  color: #ceceff;
+  border-color: #17293f;
+  border-radius: 1.5rem; }
+
+button:hover {
+  background-color: #fdc86a;
+  color: #28233d;
+  border-color: #fdc86a;
+  border-radius: 1.5rem; }
+
+/* -------------------------------------------- */
+/* -------------- Desktop Widget -------------- */
+/* -------------------------------------------- */
 .my-weather-wd-text {
-  font-size: medium; }
+  font-size: medium;
+  color: #254267; }
 
 .weather-wd-row-one {
-  background: rgba(231, 223, 248, 0.8);
-  color: #1d192b;
-  border-radius: 1.4rem;
-  margin: 1rem;
-  margin-bottom: 0.5rem; }
+  background: rgba(247, 76, 161, 0.7);
+  border-radius: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem; }
 
 .my-desktop-music-box {
-  background: rgba(255, 217, 230, 0.9);
-  color: #31101e;
-  border-radius: 1.4rem;
+  background: linear-gradient(to left, #17293f, #28233d);
+  border-radius: 1.5rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+  padding-right: 1.2rem;
+  padding-left: 1rem;
   min-width: 1rem;
   margin: 1rem;
   margin-top: 0.5rem; }
 
-.my-desktop-music-box:dir(rtl) {
-  padding-right: 1.2rem;
-  padding-left: 1rem; }
-
-.my-desktop-music-box:dir(ltr) {
-  padding-left: 1.2rem;
-  padding-right: 1rem; }
-
 .my-weather-wd-icon {
-  color: #1d192b;
+  color: #254267;
   font-size: xx-large;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -43,79 +47,69 @@
 .my-wd-user-icon {
   padding: 0.8rem;
   margin-right: 1rem;
-  border-radius: 1.4rem; }
-
-.my-wd-user-icon:dir(rtl) {
-  margin-right: 1rem; }
-
-.my-wd-user-icon:dir(ltr) {
-  margin-left: 1rem; }
+  border-radius: 1.5rem; }
 
 .my-weather-wd-title-text-box {
   min-width: 10.55rem;
   padding-top: 1rem;
-  color: #31101e;
+  color: #254267;
   font-size: x-large;
   font-family: "VIP Rawy Regular"; }
 
 .my-weather-wd-row-two {
-  background: rgba(232, 221, 255, 0.9);
-  color: #1f015f;
+  background: #254267;
   margin: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-right: 1rem;
   padding-left: 1rem;
-  border-radius: 1.4rem; }
+  border-radius: 1.5rem; }
 
 .my-fuzzy-clock-box {
-  background: rgba(255, 217, 230, 0.8);
+  background: rgba(255, 239, 176, 0.7);
   margin: 1rem;
+  margin-bottom: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  border-radius: 1.4rem; }
-
-.my-fuzzy-clock-box:dir(rtl) {
   padding-right: 1.5rem;
-  padding-left: 1rem; }
-
-.my-fuzzy-clock-box:dir(ltr) {
-  padding-left: 1.5rem;
-  padding-right: 1rem; }
-
-.my-weather-wd-day-box {
-  background: rgba(125, 82, 98, 0.6);
-  border-radius: 1.4rem;
-  padding-top: 0.4rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem; }
+  padding-left: 1rem;
+  border-radius: 1.5rem; }
 
 .my-wd-weather-day-name {
   font-family: "VIP Rawy Regular";
-  color: #ffffff; }
+  color: #254267; }
 
 .my-wd-weather-day-text {
   font-size: x-small;
   padding-bottom: 0rem;
-  color: #ffffff; }
+  color: #254267; }
 
 .my-weather-wd-day-icon {
-  background: rgba(125, 82, 98, 0.7);
-  color: #ffffff;
+  background: rgba(40, 35, 61, 0.7);
+  color: #ceceff;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   margin-bottom: 0.2rem;
   min-width: 3rem;
   min-height: 3.5rem;
   font-size: x-large;
   font-family: "FantasqueSansM Nerd Font Propo"; }
 
+.my-weather-wd-day-box {
+  background: #f74ca1;
+  border-radius: 1.5rem;
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem; }
+
 .unset {
   all: unset; }
 
 .workspaces button:active {
-  color: #1f015f;
+  color: #fdc86a;
   border-radius: 0px; }
 
 .workspaces {
@@ -123,8 +117,8 @@
   padding-left: 4px;
   margin-top: 0.3rem;
   margin-bottom: 0.4rem;
-  background: #e8ddff;
-  border-radius: 1.4rem;
+  background: #28233d;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
@@ -143,13 +137,13 @@
   margin-left: 0.4rem; }
 
 .workspaces button {
-  background: #e8ddff;
-  color: rgba(125, 82, 98, 0.5);
+  background: #28233d;
+  color: #ceceff;
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #6351a5;
-  color: #6351a5;
+  border-bottom: 1px solid #4f9dbe;
+  color: #4f9dbe;
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 0px;
   padding-top: 0px;
@@ -168,16 +162,16 @@
   font-size: large; }
 
 .workspaces button.has-windows {
-  color: #6351a5; }
+  color: #4f9dbe; }
 
 .workspaces button:hover {
-  background: rgba(96, 91, 112, 0.9);
-  color: rgba(255, 255, 255, 0.9); }
+  background: rgba(247, 76, 161, 0.9);
+  color: rgba(23, 41, 63, 0.9); }
 
 .clock {
-  background: linear-gradient(to right, #e8ddff, #ffd9e6);
-  color: #1f015f;
-  border-radius: 1.4rem;
+  background: linear-gradient(to right, #4f9dbe, #f74ca1, #f88a79, #f86782);
+  color: #17293f;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   padding-left: 1em;
@@ -185,9 +179,9 @@
 
 .bar-weather-box {
   font-size: 1em;
-  background: #ffd9e6;
-  color: #31101e;
-  border-radius: 1.4rem;
+  background: linear-gradient(to right, #f74ca1, #fdc86a);
+  color: #28233d;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -206,8 +200,8 @@
   padding-right: 0.5rem; }
 
 .top-corner {
-  background-color: rgba(255, 251, 255, 0.8);
-  border-radius: 1.4rem; }
+  background-color: #254267;
+  border-radius: 1.2rem; }
 
 .bar-bg {
   background: rgba(0, 0, 0, 0);
@@ -215,16 +209,16 @@
   border-radius: 0rem; }
 
 .bar {
-  background: rgba(255, 251, 255, 0.8);
-  color: #1c1b1e;
+  background: #254267;
+  color: #ceceff;
   min-height: 8px;
   margin-bottom: 0.5rem; }
 
 .internet-box {
-  background: linear-gradient(to right, #e8ddff, #e7dff8, rgba(255, 218, 212, 0.5));
-  color: #1f015f;
+  background: linear-gradient(to right, #4279b7, #a5b4a6);
+  color: #28233d;
   /* min-width: 100px; */
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -240,48 +234,48 @@
   /* margin-left: 0.7em; */
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  background: #fffbff;
-  color: #1c1b1e;
+  background: #254267;
+  color: #ceceff;
   font-weight: bold; }
 
 .wifi-name-label:dir(rtl) {
   padding-left: 0.5em;
   padding-right: 1em;
   margin-right: 0.2em;
-  border-top-right-radius: 1.4rem;
-  border-bottom-right-radius: 1.4rem; }
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
 
 .wifi-name-label:dir(ltr) {
   padding-right: 0.5em;
   padding-left: 1em;
   margin-left: 0.2em;
-  border-top-left-radius: 1.4rem;
-  border-bottom-left-radius: 1.4rem; }
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .wifi-icon-strength {
   font-family: "FantasqueSansM Nerd Font Propo";
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-  background: #fffbff;
-  color: #1c1b1e; }
+  background: #254267;
+  color: #ceceff; }
 
 .wifi-icon-strength:dir(rtl) {
   margin-left: 0.2rem;
   padding-right: 0.2rem;
   padding-left: 0.6rem;
-  border-top-left-radius: 1.4rem;
-  border-bottom-left-radius: 1.4rem; }
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .wifi-icon-strength:dir(ltr) {
   margin-right: 0.2rem;
   padding-left: 0.2rem;
   padding-right: 0.6rem;
-  border-top-right-radius: 1.4rem;
-  border-bottom-right-radius: 1.4rem; }
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
 
 .systray {
-  background: #e6e0ec;
-  border-radius: 1.4rem;
+  background: #28233d;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   min-height: 0.1rem; }
@@ -293,89 +287,105 @@
   margin-right: 0.5rem; }
 
 .systray button {
-  background: #e6e0ec;
-  border-radius: 1.4rem;
+  background: #28233d;
+  border-radius: 1.5rem;
   padding-right: 0.4rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background: #6351a5; }
+  background: #4f9dbe; }
 
 .tray-btn {
   border: 0rem; }
 
-.bar-hardware-progress-circle, .ram, .temp, .cpu, .battery {
-  min-width: 1.55rem;
-  min-height: 1.5rem;
+.bar-hardware-progress-circle, .brightness, .volume, .ram, .temp, .cpu, .battery {
+  min-width: 1.45rem;
+  min-height: 1.3rem;
   font-size: 0.1rem; }
 
-.bar-hardware-progress-inner-circle, .ram-inner, .temp-inner, .cpu-inner, .battery-inner-charging, .battery-inner {
+.bar-hardware-progress-inner-circle, .brightness-inner, .volume-inner, .temp-inner, .cpu-inner, .battery-inner-charging, .battery-inner {
   font-family: "FantasqueSansM Nerd Font Propo";
   font-size: 0.9rem; }
 
 .battery {
-  background: #e6e0ec;
-  color: #6351a5; }
+  background: #28233d;
+  color: #faab78; }
 
 @keyframes colorChange {
   0% {
-    color: #6351a5; }
+    color: #faab78; }
   50% {
-    color: #e6e0ec; }
+    color: #28233d; }
   100% {
-    color: #6351a5; } }
+    color: #faab78; } }
 
 .battery-inner {
-  color: #6351a5; }
+  color: #faab78; }
 
 .battery-inner-charging {
-  color: #6351a5;
+  color: #faab78;
   animation: colorChange 2s infinite; }
 
 /* --------------------------------- */
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: #e6e0ec;
-  color: #605b70; }
+  background: #28233d;
+  color: #f74ca1; }
 
 .cpu-inner {
-  color: #605b70; }
+  font-size: 0.6rem;
+  color: #f74ca1; }
 
 /* ---------------------------------- */
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: #e6e0ec;
-  color: #7d5262; }
+  background: #28233d;
+  color: #f6e2d9; }
 
 .no-hover:hover {
   all: unset; }
 
 .temp-inner {
-  color: #7d5262; }
+  color: #f6e2d9; }
 
 /* --------------------------------- */
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: #e6e0ec;
-  color: #ba1b1b; }
+  background: #28233d;
+  color: #4f9dbe; }
 
 .ram-inner {
-  color: #ba1b1b; }
+  font-family: "FantasqueSansM Nerd Font Propo";
+  font-size: 0.6rem;
+  color: #4f9dbe; }
+
+.volume {
+  background: #28233d;
+  color: #4f9dbe; }
+
+.volume-inner {
+  font-size: 0.8rem;
+  color: #4f9dbe; }
+
+.brightness {
+  background: #28233d;
+  color: #f74ca1; }
+
+.brightness-inner {
+  color: #f74ca1;
+  margin-top: 0.1rem; }
 
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: #e6e0ec;
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  border-radius: 1.4rem;
+  background: #28233d;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -397,20 +407,32 @@
 .bar-hw-cpu-box:dir(ltr) {
   margin-right: 0.5rem; }
 
+.bar-hw-brightness-box:dir(rtl) {
+  margin-right: 0.4rem; }
+
+.bar-hw-brightness-box:dir(ltr) {
+  margin-left: 0.4rem; }
+
+.hardware-box-separator {
+  min-height: 0.01rem;
+  min-width: 0.01rem;
+  background: rgba(246, 226, 217, 0.4);
+  margin: -0.2rem 0.5rem; }
+
 .hardware-menu-box {
-  background: #fffbff;
-  border-radius: 1.4rem;
-  border: 2px solid #6351a5;
+  background: #254267;
+  border-radius: 1.5rem;
+  border: 2px solid #fdc86a;
   padding: 1rem; }
 
 .hardware-menu-header-box {
-  background: #e6e0ec;
-  border-radius: 1.4rem;
+  background: #17293f;
+  border-radius: 1.5rem;
   padding: 0.5rem; }
 
 .hardware-menu-power-profile-box {
-  background: #ffd9e6;
-  border-radius: 1.4rem;
+  background: #17293f;
+  border-radius: 1.5rem;
   padding: 0.5rem;
   margin-left: 0.5rem; }
 
@@ -423,8 +445,8 @@
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .power-profiles-box-btn-active {
-  background: #7d5262;
-  color: #ffffff;
+  background: #fdc86a;
+  color: #28233d;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .hardware-menu-box-progress, .menu-temp, .menu-battery, .menu-ram, .menu-cpu {
@@ -438,32 +460,32 @@
   font-size: 2rem; }
 
 .menu-cpu {
-  color: #605b70; }
+  color: #f74ca1; }
 
 .menu-cpu-icon {
-  color: #605b70; }
+  color: #f74ca1; }
 
 .menu-ram {
-  color: #ba1b1b; }
+  color: #4f9dbe; }
 
 .menu-ram-icon {
-  color: #ba1b1b; }
+  color: #4f9dbe; }
 
 .menu-battery {
-  color: #6351a5; }
+  color: #faab78; }
 
 .menu-battery-icon {
-  color: #6351a5; }
+  color: #faab78; }
 
 .menu-battery-icon-charging {
-  color: #6351a5;
+  color: #faab78;
   animation: colorChange 2s infinite; }
 
 .menu-temp {
-  color: #7d5262; }
+  color: #f6e2d9; }
 
 .menu-temp-icon {
-  color: #7d5262; }
+  color: #f6e2d9; }
 
 .table-row-app-name-header {
   min-width: 6rem; }
@@ -478,17 +500,17 @@
   min-width: 3rem; }
 
 .hardware-cpu-box {
-  background: rgba(99, 81, 165, 0.7);
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: linear-gradient(to top, #fdc86a, #f74ca1);
+  color: #211008;
+  border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
-  background: rgba(99, 81, 165, 0.8);
-  color: #ffffff;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: #e75690;
+  color: #211008;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-table-row, .hardware-os-table-row, .hardware-bat-table-row, .hardware-ram-table-row, .hardware-cpu-table-row {
   padding-left: 1rem;
@@ -497,71 +519,71 @@
   padding-bottom: 0.5rem; }
 
 .hardware-ram-box {
-  background: rgba(96, 91, 112, 0.9);
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: linear-gradient(to top, #e952ed, #4f92b4);
+  color: #211008;
+  border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-ram-table-row-header {
   padding: 1rem;
-  background: rgba(96, 91, 112, 0.9);
-  color: #ffffff;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: #547aaa;
+  color: #211008;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-menu-tables-box {
-  background: #e8ddff;
+  background: #17293f;
   padding: 0.8rem;
   padding-top: 0rem;
   margin-top: 0.8rem;
-  border-radius: 1.4rem; }
+  border-radius: 1.5rem; }
 
 .hardware-bat-box {
-  background: rgba(125, 82, 98, 0.8);
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: #faab78;
+  color: #211008;
+  border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-bat-table-row-header {
   padding: 1rem;
-  background: #7d5262;
-  color: #ffffff;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: #db976a;
+  color: #211008;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-os-box {
-  background: rgba(255, 251, 255, 0.7);
-  color: #1c1b1e;
-  border-radius: 1.4rem;
+  background: rgba(237, 126, 179, 0.9);
+  color: #211008;
+  border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-os-table-row-header {
   padding: 1rem;
-  background: rgba(255, 251, 255, 0.7);
-  color: #1c1b1e;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: #cc6d9b;
+  color: #211008;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .volume {
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
   padding-right: 1em; }
 
 .vol-stack:dir(rtl) {
-  margin-left: 1em; }
+  margin-left: 1rem; }
 
 .vol-stack:dir(ltr) {
-  margin-right: 1em; }
+  margin-right: 1rem; }
 
 .vol-osd {
-  background: #fffbff;
+  background: #254267;
   padding: 1rem;
-  border-radius: 1.4rem;
-  border: 2px solid #1c1b1e;
+  border-radius: 1.5rem;
+  border: 2px solid #fdc86a;
   margin: 1.5rem; }
 
 .vol-osd:dir(rtl) {
@@ -571,17 +593,17 @@
   padding-right: 1.5rem; }
 
 scale trough highlight {
-  border-radius: 1.4rem;
-  background: #6351a5; }
+  border-radius: 1.5rem;
+  background: #fdc86a; }
 
 scale slider {
-  background: #6351a5; }
+  background: #fdc86a; }
 
 .notifications-revealer-box {
-  background: #e7dff8;
+  background: #28233d;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   background: #fff;
@@ -596,14 +618,14 @@ scale slider {
   margin-left: 0rem; }
 
 .notification-popups {
-  border: 2px solid #6351a5;
-  border-radius: 1.4rem;
+  border: 2px solid #fdc86a;
+  border-radius: 1.5rem;
   padding: 1rem;
-  background: #fffbff;
-  color: #1c1b1e; }
+  background: #254267;
+  color: #ceceff; }
 
 .notifications-popup-list {
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   background: rgba(0, 0, 0, 0); }
 
 .notification-close-button {
@@ -611,13 +633,13 @@ scale slider {
   padding-right: 0.7rem; }
 
 window {
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   background: rgba(0, 0, 0, 0); }
 
 .left-menu-box {
-  background: #fffbff;
-  border-radius: 1.4rem;
-  border: 2px solid #6351a5;
+  background: #254267;
+  border-radius: 1.5rem;
+  border: 2px solid #fdc86a;
   margin-top: 0.3rem;
   margin-bottom: 1rem;
   transition-property: background;
@@ -636,20 +658,20 @@ window {
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 1.4rem;
-  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   min-width: 23rem;
   min-height: 12rem; }
 
 .profile-box {
-  background: linear-gradient(to right, rgba(232, 221, 255, 0.8), rgba(231, 223, 248, 0.6));
-  color: #1f015f;
+  background: linear-gradient(to right, rgba(247, 76, 161, 0.9), rgba(79, 157, 190, 0.6));
+  color: #fdc86a;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: -3rem;
-  border-radius: 1.4rem; }
+  border-radius: 1.5rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -661,10 +683,10 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-  background: rgba(232, 221, 255, 0.5);
+  background: linear-gradient(to right, #17293f, #28233d);
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1.4rem; }
+  border-radius: 1.5rem; }
 
 .theme-button-father, .theme-btn, .selected-theme {
   padding-left: 0.6rem;
@@ -673,25 +695,25 @@ window {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .selected-theme {
-  background: linear-gradient(to right, #6351a5, #605b70);
-  color: #ffffff;
-  border-radius: 1.4rem; }
+  background: linear-gradient(to right, #f0afe1, #a4b9ef);
+  color: #254267;
+  border-radius: 1.5rem; }
 
 .selected-theme:hover {
-  background: linear-gradient(to right, #e8ddff, #e7dff8);
-  color: #1f015f;
-  border-radius: 1.4rem; }
+  background: linear-gradient(to right, #4f9dbe, #ff55ff);
+  color: #28233d;
+  border-radius: 1.5rem; }
 
 .theme-btn {
-  border-radius: 1.4rem;
-  background: #ffd9e6;
-  border-color: #ffd9e6;
-  border-radius: 1.4rem; }
+  border-radius: 1.5rem;
+  background: #254267;
+  border-color: #254267;
+  border-radius: 1.5rem; }
 
 .theme-btn:hover {
-  color: #ffffff;
-  border-color: #7d5262;
-  border-radius: 1.4rem; }
+  color: #28233d;
+  border-color: #fdc86a;
+  border-radius: 1.5rem; }
 
 .theme-btn-icon {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -705,13 +727,13 @@ window {
   min-width: 3rem; }
 
 .menu-button {
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
-  background: #ffd9e6;
+  background: #254267;
   font-family: "FantasqueSansM Nerd Font Propo";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
@@ -723,34 +745,34 @@ window {
   margin-right: 0.5rem; }
 
 .menu-button:hover {
-  background: #31101e; }
+  background: #fdc86a; }
 
 .power-box {
-  background: rgba(255, 217, 230, 0.5);
+  background: #17293f;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1.4rem; }
+  border-radius: 1.5rem; }
 
 .notification-menu-header {
   background-size: cover;
   background-position: center;
   padding: 1rem;
-  color: #1c1b1e; }
+  color: #ceceff; }
 
 .horizontal-line {
-  background: #1c1b1e;
+  background: #ceceff;
   min-height: 1px;
   min-width: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: #1c1b1e; }
+  color: #ceceff; }
 
 .notification-center-button {
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  background: #e6e0ec;
-  color: #48454f;
-  border-radius: 1.4rem;
+  background: #1e273e;
+  color: #fdc86a;
+  border-radius: 1.5rem;
   padding-top: 0rem;
   padding-bottom: 0rem; }
 
@@ -763,11 +785,11 @@ window {
   padding-right: 1rem; }
 
 .notification-center-button:hover {
-  background-color: #6351a5;
-  color: #ffffff; }
+  background-color: #fdc86a;
+  color: #254267; }
 
 .notification-this-is-all {
-  color: #1c1b1e;
+  color: #ceceff;
   margin-top: 10rem;
   margin-bottom: 1rem;
   min-width: 1rem;
@@ -785,10 +807,10 @@ window {
 .notification-header-box {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background: #ffd9e6;
-  color: #31101e;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: #17293f;
+  color: #ceceff;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .notification-center-header-text {
   min-width: 7.7rem; }
@@ -797,7 +819,7 @@ window {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1.2rem;
   margin-right: 0.5rem; }
@@ -806,7 +828,7 @@ window {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 1.4rem;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1.2rem; }
 
@@ -818,20 +840,20 @@ window {
 
 .notification-center-container {
   min-height: 30rem;
-  border-radius: 1.4rem; }
+  border-radius: 1.5rem; }
 
 .music-wd-box {
-  background: #e8ddff;
+  background: linear-gradient(to left, #17293f, #28233d);
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 1.4rem; }
+  border-radius: 1.5rem; }
 
 .music-wd-length {
   font-family: "FantasqueSansM Nerd Font Propo"; }
 
 .left-menu-music-wd {
-  background: #e8ddff;
-  border-radius: 1.4rem;
+  background: linear-gradient(to left, #17293f, #28233d);
+  border-radius: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-left: 1rem;
@@ -857,11 +879,11 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background: #605b70;
+  background: #17293f;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #ffffff;
-  border-radius: 1.4rem;
+  color: #4f9dbe;
+  border-radius: 1.5rem;
   min-width: 2rem; }
 
 .music-wd-player:dir(rtl) {
@@ -873,7 +895,7 @@ window {
   padding-left: 0.7rem; }
 
 .music-wd-title {
-  color: #7d5262;
+  color: #fdc86a;
   margin-bottom: 0.5rem; }
 
 .music-wd-title:dir(rtl) {
@@ -883,7 +905,7 @@ window {
   padding-right: 0.5rem; }
 
 .music-wd-file-name {
-  color: #1c1b1e;
+  color: #4f9dbe;
   font-size: x-small; }
 
 .music-wd-main-button, .music-wd-button-stop, .music-wd-button-play, .music-wd-button {
@@ -894,30 +916,30 @@ window {
 .music-wd-button {
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 50%;
-  background: #605b70;
-  color: #ffffff; }
+  background: linear-gradient(to right, #254267, #254267);
+  color: #4f9dbe; }
 
 .music-wd-button:hover {
-  background: #7d5262; }
+  background: linear-gradient(to top, #fdc86a, #f74ca1); }
 
 .music-wd-button-play {
-  background: #6351a5;
-  border-radius: 1.4rem;
-  color: #ffffff;
+  background: linear-gradient(to right, #f0afe1, #a4b9ef);
+  border-radius: 1.5rem;
+  color: #17293f;
   min-width: 80px; }
 
 .music-wd-button-play:hover {
-  background: #7d5262; }
+  background: linear-gradient(to top, #fdc86a, #f74ca1); }
 
 .music-wd-button-stop {
-  background: #605b70;
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: linear-gradient(to right, #254267, #254267);
+  color: #4f9dbe;
+  border-radius: 1.5rem;
   min-width: 80px; }
 
 .wd-fuzzy-day-box {
   background: rgba(0, 0, 0, 0);
-  color: #1f015f; }
+  color: #28233d; }
 
 .wd-fuzzy-day-icon {
   font-size: 1.5rem;
@@ -932,13 +954,13 @@ window {
 .wd-time-now {
   font-size: 1.5rem;
   background: rgba(0, 0, 0, 0);
-  color: #1d192b;
+  color: #432681;
   font-family: "VEXA light R";
-  margin: 0rem 0rem 0rem 0rem; }
+  margin: 0rem 0rem 0.5rem 0rem; }
 
 .wd-fuzzy-time-box {
   background: rgba(0, 0, 0, 0);
-  color: #31101e; }
+  color: #254267; }
 
 .wd-fuzzy-time-icon {
   font-size: 1.5rem;
@@ -952,35 +974,35 @@ window {
 .saying-wd-label {
   min-width: 1rem;
   font-size: 1.5rem;
-  color: #1f015f;
-  background: rgba(232, 221, 255, 0.8);
+  color: #254267;
+  background: rgba(79, 157, 190, 0.8);
   font-family: "VIP Rawy Regular";
   padding: 1rem;
-  margin: 0rem 1rem 1rem 1rem;
-  border-radius: 1.4rem; }
+  margin: 0rem 1rem;
+  border-radius: 1.5rem; }
 
 .desktop-wd-separator {
-  background: rgba(0, 0, 0, 0);
+  background: linear-gradient(to bottom, #f74ca1, #ea6220, #fdc86a);
   min-height: 1px;
   min-width: 1px; }
 
 .desktop-wd-music-player-box {
-  padding: 0rem 0rem 0rem 0rem;
+  padding: 1rem 0rem 0rem 0rem;
   min-width: 30rem;
   font-family: "VIP Rawy Regular";
   font-size: 1.5rem; }
 
 .desktop-wd-music-player-title {
-  color: #605b70; }
+  color: #fdc86a; }
 
 .desktop-wd-music-player-artist {
-  color: #31101e; }
+  color: #f74ca1; }
 
 .bar-prayer-times-box {
   font-size: 1em;
-  background: #ffd9e6;
-  color: #31101e;
-  border-radius: 1.4rem;
+  background: linear-gradient(to right, #f74ca1, #4f9dbe);
+  color: #28233d;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -998,16 +1020,16 @@ window {
   padding-right: 0.7rem; }
 
 .prayer-times-menu-box {
-  background: #fffbff;
-  border-radius: 1.4rem;
-  border: 2px solid #6351a5; }
+  background: #254267;
+  border-radius: 1.5rem;
+  border: 2px solid #fdc86a; }
 
 .prayer-times-menu-header {
-  background: #ffd9e6;
-  color: #31101e;
+  background: #17293f;
+  color: #ceceff;
   padding: 1rem;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .prayer-time-item-box-class {
   padding-top: 1.2rem;
@@ -1016,12 +1038,12 @@ window {
   padding-left: 1.5rem; }
 
 .isha-item {
-  border-bottom-right-radius: 1.4rem;
-  border-bottom-left-radius: 1.4rem; }
+  border-bottom-right-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .next-prayer {
-  background: #6351a5;
-  color: #ffffff; }
+  background: linear-gradient(to left, #f74ca1, #fdc86a);
+  color: #17293f; }
 
 .prayer-times-menu-header-icon {
   font-family: "FantasqueSansM Nerd Font Propo"; }
@@ -1037,12 +1059,12 @@ window {
 
 .weather-menu-box {
   min-width: 2rem;
-  background: #fffbff;
-  color: #1c1b1e;
+  background: #254267;
+  color: #ceceff;
   padding: 1rem 1rem;
   padding-top: 2rem;
-  border: 2px solid #6351a5;
-  border-radius: 1.4rem; }
+  border: 2px solid #fdc86a;
+  border-radius: 1.5rem; }
 
 .weather-menu-general-information-box {
   margin: 0rem 1rem; }
@@ -1143,10 +1165,10 @@ window {
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3); }
 
 button {
-  background: #e8ddff;
-  color: #1f015f;
-  border-color: #e8ddff;
-  border-radius: 1.4rem;
+  background: #17293f;
+  color: #ceceff;
+  border-color: #17293f;
+  border-radius: 1.5rem;
   padding: 4px 14px;
   border: none;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
@@ -1156,30 +1178,30 @@ button:active {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); }
 
 button:hover {
-  background: #7d5262;
-  color: #ffffff;
-  border-color: #7d5262;
-  border-radius: 1.4rem;
+  background: #fdc86a;
+  color: #28233d;
+  border-color: #fdc86a;
+  border-radius: 1.5rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
 
 menu {
-  border: 2px #6351a5 solid;
-  background: #fffbff;
-  color: #1c1b1e;
-  border-radius: 1.4rem;
+  border: 2px #fdc86a solid;
+  background: #254267;
+  color: #ceceff;
+  border-radius: 1.5rem;
   padding: 0.3rem;
   margin-top: 2rem; }
 
 menuitem {
-  border-radius: 1.4rem;
-  background: #fffbff;
-  color: #1c1b1e; }
+  border-radius: 1.5rem;
+  background: #254267;
+  color: #ceceff; }
 
 menuitem:disabled {
-  background: rgba(230, 224, 236, 0.5);
-  color: rgba(72, 69, 79, 0.5); }
+  background: rgba(206, 206, 255, 0.1);
+  color: rgba(206, 206, 255, 0.5); }
 
 menuitem:hover {
-  background: #e7dff8;
-  color: #1d192b; }
+  background: rgba(206, 206, 255, 0.2);
+  color: #ceceff; }
