@@ -1,12 +1,12 @@
 import ShowWindow from '../utils/ShowWindow.js';
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
-import {
-  Box,
-  Stack,
-  Icon,
-  Slider,
-  Window,
-} from 'resource:///com/github/Aylur/ags/widget.js';
+import brightness from '../services/BrightnessService.js';
+
+const Box = Widget.Box;
+const Stack = Widget.Stack;
+const Icon = Widget.Icon;
+const Slider = Widget.Slider;
+const Window = Widget.Window;
 
 var oldValue = 0;
 
@@ -54,6 +54,7 @@ export const Volume = () =>
           if (!Audio.speaker || oldValue === Audio.speaker.volume) {
             return;
           }
+          // App.closeWindow('brightness_osd');
           ShowWindow('vol_osd');
           oldValue = Audio.speaker.volume;
           slider.value = oldValue;

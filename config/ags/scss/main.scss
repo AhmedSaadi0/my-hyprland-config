@@ -1,4 +1,4 @@
-@import './themes/m3/dynamic.scss';
+@import './themes/newCat.scss';
 
 $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 
@@ -120,7 +120,3 @@ menuitem:hover {
   background: $menuitem-hover-bg;
   color: $menuitem-hover-fg;
 }
-
-// --------------------------
-// ------ weather menu ------
-// --------------------------

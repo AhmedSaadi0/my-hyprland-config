@@ -10,7 +10,7 @@ import { Utils } from '../../utils/imports.js';
 export const CpuWidget = () => {
   const label = Label({
     className: 'cpu-inner',
-    label: '',
+    label: '',
   });
 
   const button = Button({

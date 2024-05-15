@@ -4,7 +4,7 @@ import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
 export const Workspaces = () =>
   Box({
-    className: 'unset workspaces',
+    className: 'unset workspaces small-shadow',
   }).hook(Hyprland, (box) => {
     // generate an array [1..10] then make buttons from the index
     const arr = Array.from({ length: 10 }, (_, i) => i + 1);

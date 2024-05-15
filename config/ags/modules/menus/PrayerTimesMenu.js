@@ -1,6 +1,7 @@
 import prayerService from '../services/PrayerTimesService.js';
 import { local, TitleText } from '../utils/helpers.js';
 import { Widget } from '../utils/imports.js';
+import settings from '../settings.js';
 
 const MenuRevealer = () => {
   const header = TitleText({
@@ -59,7 +60,8 @@ const MenuRevealer = () => {
   });
 
   return Widget.Revealer({
-    transition: 'slide_down',
+    transition: settings.theme.menuTransitions.prayerTimesMenu,
+    transitionDuration: settings.theme.menuTransitions.prayerTimesMenuDuration,
     child: Widget.Box({
       className: 'prayer-times-menu-box',
       vertical: true,

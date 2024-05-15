@@ -131,7 +131,7 @@
 
 .top-corner {
   background-color: $bar-background;
-  border-radius: $border-radius;
+  border-radius: $border-radius - 0.3rem;
 }
 
 .bar-bg {
@@ -250,8 +250,8 @@
 }
 
 .bar-hardware-progress-circle {
-  min-width: 1.55rem;
-  min-height: 1.5rem;
+  min-width: 1.45rem;
+  min-height: 1.3rem;
   font-size: 0.1rem;
 }
 
@@ -302,6 +302,7 @@
 
 .cpu-inner {
   @extend .bar-hardware-progress-inner-circle;
+  font-size: 0.6rem;
   color: $cpu-inner-color;
 }
 
@@ -333,19 +334,40 @@
 }
 
 .ram-inner {
-  @extend .bar-hardware-progress-inner-circle;
+  font-family: $icon-font-family;
+  font-size: 0.6rem;
   color: $ram-inner-color;
 }
 
+.volume {
+  @extend .bar-hardware-progress-circle;
+  background: $ram-background;
+  color: $ram-color;
+}
+
+.volume-inner {
+  @extend .bar-hardware-progress-inner-circle;
+  font-size: 0.8rem;
+  color: $ram-inner-color;
+}
+
+.brightness {
+  @extend .bar-hardware-progress-circle;
+  background: $ram-background;
+  color: $cpu-color;
+}
+
+.brightness-inner {
+  @extend .bar-hardware-progress-inner-circle;
+  color: $cpu-inner-color;
+  margin-top: 0.1rem;
+}
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
   background: $hardware-box-color;
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0.2rem 0.5rem;
   border-radius: $border-radius;
   margin-top: $bar-top-margin;
   margin-bottom: $bar-bottom-margin;
@@ -373,4 +395,18 @@
 
 .bar-hw-cpu-box:dir(ltr) {
   margin-right: 0.5rem;
+}
+
+.bar-hw-brightness-box:dir(rtl) {
+  margin-right: 0.4rem;
+}
+.bar-hw-brightness-box:dir(ltr) {
+  margin-left: 0.4rem;
+}
+
+.hardware-box-separator {
+  min-height: 0.01rem;
+  min-width: 0.01rem;
+  background: rgba($temp-color, 0.4);
+  margin: -0.2rem 0.5rem;
 }

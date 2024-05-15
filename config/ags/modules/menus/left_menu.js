@@ -362,8 +362,9 @@ const widgets = Box({
 });
 
 const menuRevealer = Revealer({
-  transition: 'slide_down',
+  transition: settings.theme.menuTransitions.leftMenu,
   child: widgets,
+  transitionDuration: settings.theme.menuTransitions.leftMenuDuration,
 });
 
 export const LeftMenu = ({ monitor } = {}) =>
