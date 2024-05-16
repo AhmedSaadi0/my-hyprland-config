@@ -24,7 +24,6 @@ export const AudioWidget = () => {
   }).hook(audio, (box) => {
     const vol = audio.speaker.volume;
     progress.value = vol;
-    label.tooltipMarkup = `<span weight='bold'>مستوى الصوت (${vol * 100})</span>`;
 
     if (audio.speaker.is_muted) {
       label.label = '';
@@ -37,5 +36,6 @@ export const AudioWidget = () => {
     }
 
     box.show_all();
+    label.tooltipMarkup = `<span weight='bold'>مستوى الصوت (${parseInt(vol * 100)})</span>`;
   });
 };
