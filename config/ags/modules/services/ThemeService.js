@@ -63,6 +63,7 @@ class ThemeService extends Service {
     }
 
     this.changePlasmaColor(theme.plasma_color);
+    this.changePlasmaIcons(theme.qt_icon_theme);
 
     this.changeGTKTheme(
       theme.gtk_theme,
@@ -222,6 +223,19 @@ class ThemeService extends Service {
   changePlasmaColor(plasmaColor) {
     const plasmaCmd = `plasma-apply-colorscheme`;
     execAsync([plasmaCmd, plasmaColor.split('.')[0]]).catch(print);
+  }
+
+  changePlasmaIcons(plasmaIcons) {
+    execAsync([
+      'kwriteconfig5',
+      '--file',
+      `/home/${USER}/.config/kdeglobals`,
+      '--group',
+      'Icons',
+      '--key',
+      'Theme',
+      plasmaIcons,
+    ]);
   }
 
   changeGTKTheme(GTKTheme, gtkMode, iconTheme, fontName) {

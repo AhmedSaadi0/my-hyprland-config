@@ -412,3 +412,35 @@ nvim .ahmed-config.json
 ### Credits
 
 <a href="https://www.flaticon.com/free-icons/high-voltage" title="high voltage icons">High voltage icons created by Muhammad Atif - Flaticon</a>
+
+<a href="https://www.pling.com/p/2037657/" title="BeautySolar">BeautySolar Icons</a>
+
+<a href="https://www.pling.com/p/2090548/" title="Shades of purple Kvantum">Shades of purple Kvantum</a>
+
+<a href="https://www.pling.com/p/2074105/" title="Shades of purple GTK">Shades of purple GTK</a>
+
+<a href="https://www.pling.com/p/2110189/" title="Vivid-Dark-Icons">Vivid-Dark-Icons</a>
+
+<a href="https://www.pling.com/p/1326889/" title="Kimi">Kimi GTK Theme</a>
+
+<a href="https://www.pling.com/p/1956870/" title="Zafiro-Nord-Dark-Black">Zafiro-Nord-Dark-Black Icons</a>
+
+<a href="https://www.pling.com/p/1248852/" title="Cabinet">Cabinet GTK Theme</a>
+
+<a href="https://www.pling.com/p/1256209/" title="Kora">Kora Icons</a>
+
+<a href="https://www.pling.com/p/1148695/" title="La Capitaine">La Capitaine Icons</a>
+
+<a href="https://www.pling.com/p/1681315/" title="TokyoNight">TokyoNight GTK Theme</a>
+
+<a href="https://www.pling.com/p/1436570/" title="Infinity-Dark-Icons">Infinity-Dark-Icons</a>
+
+<a href="https://www.pling.com/p/1687249/" title="Dracula">Dracula GTK Theme</a>
+
+<a href="https://www.pling.com/p/2078427/" title="Gradient-Dark-Icons">Gradient-Dark-Icons</a>
+
+<a href="https://www.pling.com/p/1877058/" title="Rowaita icons">Rowaita icons</a>
+
+<a href="https://www.pling.com/p/1891521/" title="Jasper-gtk-theme">Jasper-gtk-theme</a>
+
+<a href="https://www.pling.com/p/1658156/" title="Victory-gtk-theme">Victory-gtk-theme</a>
