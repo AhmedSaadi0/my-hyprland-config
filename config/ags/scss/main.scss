@@ -1,4 +1,4 @@
-@import './themes/m3/dynamic.scss';
+@import './themes/win20.scss';
 
 $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 
@@ -16,6 +16,7 @@ $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 @import './fuzzy-clock.scss';
 @import './prayer-times.scss';
 @import './weather-menu.scss';
+@import './applications-menu.scss';
 
 // * {
 //     all: unset;

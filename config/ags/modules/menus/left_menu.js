@@ -53,9 +53,6 @@ const Profile = () => {
 const Header = () => {
   return Box({
     className: 'left-menu-header',
-    css: `
-        background-image: url("${settings.assets.wallpapers}/black-hole.png");
-    `,
     vertical: true,
   }).hook(themeService, (box) => {
     let wallpaper = ThemesDictionary[themeService.selectedTheme].wallpaper;

@@ -70,7 +70,7 @@ export const VolumeOSD = () =>
     focusable: false,
     margins: [0, 0, 140, 0],
     layer: 'overlay',
-    popup: true,
+    // popup: true,
     anchor: ['bottom'],
     child: Volume(),
   });
