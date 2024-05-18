@@ -21,6 +21,7 @@ import circlesMusicWidget from './modules/widgets/desktop/Circles.js';
 import whiteFlowerWidget from './modules/widgets/desktop/WhiteFlower.js';
 import { WeatherMenu } from './modules/menus/WeatherMenu.js';
 import settings from './modules/settings.js';
+import { applauncher } from './modules/menus/ApplicationsMenu.js';
 
 import {
   TopLeftCorner,
@@ -55,6 +56,7 @@ let windows = [
   deerWidget,
   circlesMusicWidget,
   whiteFlowerWidget,
+  applauncher,
 ];
 
 const screens = JSON.parse(Utils.exec('hyprctl monitors all -j'));
@@ -70,12 +72,12 @@ for (let i = 0; i < screens.length; i++) {
   windows.push(TopRightCorner({ monitor: screen.id }));
 }
 
-export default {
-  css: css,
-  // cacheNotificationActions: true,
-  windows: windows,
-};
 Notifications.cacheActions;
 globalThis.getNot = () => Notifications;
 
 Utils.execAsync([`paplay`, settings.assets.audio.desktop_login]).catch(print);
+
+App.config({
+  css: css,
+  windows: windows,
+});
