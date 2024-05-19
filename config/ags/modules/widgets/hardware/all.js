@@ -7,18 +7,18 @@ import { BrightnessWidget } from './brightness.js';
 import { Box } from 'resource:///com/github/Aylur/ags/widget.js';
 
 export const HardwareBox = () =>
-  Box({
-    className: 'hardware-box small-shadow unset',
-    children: [
-      CpuWidget(),
-      RamWidget(),
-      BatteryWidget(),
-      TempWidget(),
-      Widget.Separator({
-        className: 'hardware-box-separator',
-        // vertical: false,
-      }),
-      AudioWidget(),
-      BrightnessWidget(),
-    ],
-  });
+    Box({
+        className: 'hardware-box small-shadow unset',
+        children: [
+            CpuWidget(),
+            RamWidget(),
+            BatteryWidget(),
+            TempWidget(),
+            Widget.Separator({
+                className: 'hardware-box-separator',
+                // vertical: false,
+            }),
+            AudioWidget(),
+            BrightnessWidget(),
+        ],
+    });
