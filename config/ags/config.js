@@ -24,8 +24,8 @@ import settings from './modules/settings.js';
 import { applauncher } from './modules/menus/ApplicationsMenu.js';
 
 import {
-  TopLeftCorner,
-  TopRightCorner,
+    TopLeftCorner,
+    TopRightCorner,
 } from './modules/components/ScreenCorners.js';
 
 // in config.js
@@ -35,41 +35,41 @@ const css = App.configDir + '/style.css';
 Utils.exec(`sassc ${scss} ${css}`);
 
 let windows = [
-  // Bar({monitor : 1}),
-  // Bar({ monitor: 0 }),
-  VolumeOSD(),
-  BrightnessOSD(),
-  MyNotifications(),
-  NotificationCenter(),
-  HardwareMenu(),
-  PrayerTimesMenu(),
-  WeatherMenu(),
-  // ... Desktop widgets ... //
-  ColorWidget,
-  win20Widget,
-  materialWidget,
-  unicatWidget,
-  blackHoleWidget,
-  goldenWidget,
-  harmonyWidget,
-  newCatWidget,
-  deerWidget,
-  circlesMusicWidget,
-  whiteFlowerWidget,
-  applauncher,
+    // Bar({monitor : 1}),
+    // Bar({ monitor: 0 }),
+    VolumeOSD(),
+    BrightnessOSD(),
+    MyNotifications(),
+    NotificationCenter(),
+    HardwareMenu(),
+    PrayerTimesMenu(),
+    WeatherMenu(),
+    // ... Desktop widgets ... //
+    ColorWidget,
+    win20Widget,
+    materialWidget,
+    unicatWidget,
+    blackHoleWidget,
+    goldenWidget,
+    harmonyWidget,
+    newCatWidget,
+    deerWidget,
+    circlesMusicWidget,
+    whiteFlowerWidget,
+    applauncher,
 ];
 
 const screens = JSON.parse(Utils.exec('hyprctl monitors all -j'));
 
 for (let i = 0; i < screens.length; i++) {
-  const screen = screens[i];
+    const screen = screens[i];
 
-  windows.push(Bar({ monitor: screen.id }));
+    windows.push(Bar({ monitor: screen.id }));
 
-  const leftMene = LeftMenu({ monitor: screen.id });
-  windows.push(leftMene);
-  windows.push(TopLeftCorner({ monitor: screen.id }));
-  windows.push(TopRightCorner({ monitor: screen.id }));
+    const leftMene = LeftMenu({ monitor: screen.id });
+    windows.push(leftMene);
+    windows.push(TopLeftCorner({ monitor: screen.id }));
+    windows.push(TopRightCorner({ monitor: screen.id }));
 }
 
 Notifications.cacheActions;
@@ -77,7 +77,19 @@ globalThis.getNot = () => Notifications;
 
 Utils.execAsync([`paplay`, settings.assets.audio.desktop_login]).catch(print);
 
+Utils.execAsync([
+    'python',
+    settings.scripts.createThumbnail,
+    settings.theme.darkM3WallpaperPath,
+]).catch(print);
+
+Utils.execAsync([
+    'python',
+    settings.scripts.createThumbnail,
+    settings.theme.lightM3WallpaperPath,
+]).catch(print);
+
 App.config({
-  css: css,
-  windows: windows,
+    css: css,
+    windows: windows,
 });
