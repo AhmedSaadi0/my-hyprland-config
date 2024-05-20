@@ -444,3 +444,5 @@ nvim .ahmed-config.json
 <a href="https://www.pling.com/p/1891521/" title="Jasper-gtk-theme">Jasper-gtk-theme</a>
 
 <a href="https://www.pling.com/p/1658156/" title="Victory-gtk-theme">Victory-gtk-theme</a>
+
+<a href="https://store.kde.org/p/2106379" title="Windows11 icon theme">Windows11 icon theme</a>
