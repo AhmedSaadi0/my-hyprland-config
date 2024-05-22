@@ -64,6 +64,7 @@ class ThemeService extends Service {
 
         this.changePlasmaColor(theme.plasma_color);
         this.changePlasmaIcons(theme.qt_icon_theme);
+        this.changeKonsoleProfile(theme.hypr.konsole);
 
         this.changeGTKTheme(
             theme.gtk_theme,
@@ -84,9 +85,8 @@ class ThemeService extends Service {
             hypr.active_border,
             hypr.inactive_border,
             hypr.rounding,
-            hypr.drop_shadow,
-            hypr.kitty,
-            hypr.konsole
+            hypr.drop_shadow
+            // hypr.kitty
         );
 
         this.selectedTheme = selectedTheme;
@@ -303,40 +303,42 @@ class ThemeService extends Service {
         active_border,
         inactive_border,
         rounding,
-        drop_shadow,
-        kittyConfig,
-        konsoleTheme
+        drop_shadow
+        // kittyConfig
+        // konsoleTheme
     ) {
-        const kittyBind = `bind = $mainMod, Return, exec, kitty -c ${App.configDir}/modules/theme/kitty/${kittyConfig}`;
-        const konsoleBind = `bind = $mainMod, Return, exec, konsole --profile ${konsoleTheme}`;
+        // const kittyBind = `bind = $mainMod, Return, exec, kitty -c ${App.configDir}/modules/theme/kitty/${kittyConfig}`;
+        // const konsoleBind = `bind = $mainMod, Return, exec, konsole --profile ${konsoleTheme}`;
+        timeout(500, () => {
+            execAsync(`hyprctl keyword general:border_size ${border_width}`);
+            execAsync(
+                `hyprctl keyword general:col.active_border ${active_border}`
+            );
+            execAsync(
+                `hyprctl keyword general:col.inactive_border ${inactive_border}`
+            );
+            execAsync(
+                `hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`
+            );
+            execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
+            // execAsync(`hyprctl setcursor Bibata-Rainbow-Modern 24 `);
+        });
+    }
 
-        execAsync([
-            'sed',
-            '-i',
-            `42s|.*|${konsoleBind}|`,
-            `/home/${USER}/.config/hypr/binding.conf`,
-        ])
-            .then(() => {
-                timeout(1000, () => {
-                    execAsync(
-                        `hyprctl keyword general:border_size ${border_width}`
-                    );
-                    execAsync(
-                        `hyprctl keyword general:col.active_border ${active_border}`
-                    );
-                    execAsync(
-                        `hyprctl keyword general:col.inactive_border ${inactive_border}`
-                    );
-                    execAsync(
-                        `hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`
-                    );
-                    execAsync(
-                        `hyprctl keyword decoration:rounding ${rounding}`
-                    );
-                    // execAsync(`hyprctl setcursor Bibata-Rainbow-Modern 24 `);
-                });
-            })
-            .catch(print);
+    changeKonsoleProfile(konsoleProfile) {
+        const konsoleProfileData = `[Desktop Entry]
+DefaultProfile=${konsoleProfile}.profile
+
+[General]
+ConfigVersion=1
+
+[MainWindow]
+ToolBarsMovable=Disabled
+`;
+
+        Utils.writeFile(konsoleProfileData, `/home/${USER}/.config/konsolerc`)
+            // .then((file) => print('file is the Gio.File'))
+            .catch((err) => print(err));
     }
 
     changeQtStyle(qt5Style, qt6Style) {

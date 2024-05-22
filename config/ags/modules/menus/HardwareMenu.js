@@ -457,7 +457,7 @@ const menuRevealer = Widget.Revealer({
 export const HardwareMenu = () =>
     Widget.Window({
         name: `hardware_menu`,
-        margins: [4, 250],
+        margins: [2, 250],
         // layer: 'overlay',
         anchor: ['top', local === 'RTL' ? 'right' : 'left'],
         child: Widget.Box({

@@ -22,7 +22,7 @@ const menuRevealer = Widget.Revealer({
 
 export const networkMenu = Widget.Window({
     name: `network_menu`,
-    margins: [4, 250],
+    margins: [2, 250],
     // layer: 'overlay',
     anchor: ['top', local === 'RTL' ? 'left' : 'right'],
     child: Widget.Box({
