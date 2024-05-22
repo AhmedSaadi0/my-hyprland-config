@@ -28,8 +28,6 @@ class GradienceCLI:
             self.theme_type,
             "--tone",
             self.tone,
-            "--gtk",
-            self.gtk,
         ]
         try:
             result = subprocess.run(
@@ -42,7 +40,14 @@ class GradienceCLI:
             print(e.stderr.decode())
 
     def apply(self):
-        command = ["gradience-cli", "apply", "-n", self.theme_name]
+        command = [
+            "gradience-cli",
+            "apply",
+            "-n",
+            self.theme_name,
+            "--gtk",
+            self.gtk,
+        ]
         try:
             result = subprocess.run(
                 command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
