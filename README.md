@@ -36,6 +36,7 @@
 - power-profiles-daemon
 - lm_sensors
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
+- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
 ### برامج اختيارية
 
@@ -204,6 +205,7 @@ nvim .ahmed-config.json
 - gnome-bluetooth-3.0
 - power-profiles-daemon
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
+- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
 ### Optional dependencies:
 
