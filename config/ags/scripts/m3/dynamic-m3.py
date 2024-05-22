@@ -28,7 +28,7 @@ if __name__ == "__main__":
         wallpaper_path=args.image_path,
         theme_name=f"ahmed-config-{selected_color_mode}",
         theme_type=selected_color_mode,
-        tone="10",
+        tone="20",
     )
     gradience_cli.monet()
     gradience_cli.apply()
