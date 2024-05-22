@@ -2,11 +2,19 @@ import subprocess
 
 
 class GradienceCLI:
-    def __init__(self, wallpaper_path, theme_name="mat-d", theme_type="dark", tone=10):
+    def __init__(
+        self,
+        wallpaper_path,
+        theme_name="mat-d",
+        theme_type="dark",
+        tone="20",
+        gtk="both",
+    ):
         self.wallpaper_path = wallpaper_path
         self.theme_name = theme_name
         self.theme_type = theme_type
         self.tone = tone
+        self.gtk = gtk
 
     def monet(self):
         command = [
@@ -20,6 +28,8 @@ class GradienceCLI:
             self.theme_type,
             "--tone",
             self.tone,
+            "--gtk",
+            self.gtk,
         ]
         try:
             result = subprocess.run(
