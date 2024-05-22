@@ -365,7 +365,7 @@ const dynamicM3Dark = {
     qt_5_style_theme: 'Breeze',
     qt_6_style_theme: 'kvantum',
     kvantum_theme: 'Win10XOS-Concept', //
-    gtk_theme: 'Nordic-darker-standard-buttons',
+    gtk_theme: 'adw-gtk3',
 
     qt_icon_theme: 'BeautySolar',
     gtk_icon_theme: 'BeautySolar',
@@ -394,7 +394,7 @@ const dynamicM3Light = {
     qt_5_style_theme: 'Breeze',
     qt_6_style_theme: 'kvantum',
     kvantum_theme: 'Arc',
-    gtk_theme: 'Victory-black-light-compact',
+    gtk_theme: 'adw-gtk3',
 
     qt_icon_theme: 'BeautySolar', //-Dark",
     gtk_icon_theme: 'BeautySolar', //-Dark",
