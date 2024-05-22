@@ -116,7 +116,7 @@ const menuRevealer = Revealer({
 export const NotificationCenter = () =>
     Window({
         name: `notification_center`,
-        margins: [0, 380],
+        margins: [-2, 380],
         // layer: 'overlay',
         anchor: ['top', local === 'RTL' ? 'left' : 'right'],
         child: Box({

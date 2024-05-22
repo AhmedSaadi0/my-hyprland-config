@@ -201,7 +201,7 @@ const menuRevealer = MenuRevealer();
 export const WeatherMenu = () =>
     Widget.Window({
         name: `weather_menu`,
-        margins: [4, 210],
+        margins: [2, 210],
         anchor: ['top', local === 'RTL' ? 'left' : 'right'],
         child: Widget.Box({
             css: `

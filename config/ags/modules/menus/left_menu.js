@@ -376,7 +376,7 @@ const menuRevealer = Revealer({
 export const LeftMenu = ({ monitor } = {}) =>
     Window({
         name: `left_menu_${monitor}`,
-        margins: [0, 0, 0, 0],
+        margins: [-2, 0, 0, 0],
         // layer: 'overlay',
         anchor: ['top', local === 'RTL' ? 'left' : 'right'],
         child: Box({
