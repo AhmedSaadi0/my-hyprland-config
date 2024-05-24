@@ -1,3 +1,4 @@
+import argparse
 import subprocess
 
 
@@ -57,3 +58,26 @@ class GradienceCLI:
         except subprocess.CalledProcessError as e:
             print("Error executing apply command:")
             print(e.stderr.decode())
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generate material you  theme for gtk")
+    parser.add_argument("-p", type=str, help="Path of the image")
+    parser.add_argument(
+        "-m", type=str, help="Color mode (dark or light)", default="dark"
+    )
+    parser.add_argument("-t", type=str, help="Tone", default="20")
+    parser.add_argument("-n", type=str, help="Theme name", default="gtk-m3")
+
+    args = parser.parse_args()
+    print(args)
+
+    gradience_cli = GradienceCLI(
+        wallpaper_path=args.p,
+        theme_name=args.n,
+        theme_type=args.m,
+        tone=args.t,
+    )
+
+    gradience_cli.monet()
+    gradience_cli.apply()
