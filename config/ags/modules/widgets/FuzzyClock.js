@@ -39,7 +39,7 @@ const FuzzyTime = () =>
         vertical: false,
     });
 
-function setFuzzyTimes(hour, usedFuzzyTime) {
+function setFuzzyWeekdayTimes(hour, usedFuzzyTime) {
     if (hour >= 0 && hour < 4) {
         usedFuzzyTime.children[0].label = 'وقت البرمجة، حان وقت الإبداع';
         // usedFuzzyTime.children[1].label = "";
@@ -72,7 +72,67 @@ function setFuzzyTimes(hour, usedFuzzyTime) {
     }
 }
 
-function setFuzzyDays(day, usedFuzzyDay, usedTimeNow) {
+function setFuzzyWednesdayTimes(hour, usedFuzzyTime) {
+    if (hour >= 0 && hour < 4) {
+        usedFuzzyTime.children[0].label = 'وقت البرمجة، حان وقت الإبداع';
+        // usedFuzzyTime.children[1].label = "";
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 4 && hour < 9) {
+        usedFuzzyTime.children[0].label =
+            'صباح الخير! بداية جديدة ليوم مليء بالفرص';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 9 && hour < 12) {
+        usedFuzzyTime.children[0].label = 'بكوب من القهوة، دع الإنجازات تبدأ';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 12 && hour < 13) {
+        usedFuzzyTime.children[0].label =
+            'حان وقت الغداء، استرح واستعد للجولة الثانية';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 13 && hour < 16) {
+        usedFuzzyTime.children[0].label =
+            'حان وقت الإبداع، شغف وعمل خفيف ينتظرك';
+        usedFuzzyTime.children[1].label = '󱈹';
+    } else if (hour >= 16 && hour < 18) {
+        usedFuzzyTime.children[0].label =
+            'استمتع بكوب شاي واسترخِ مع كتاب خفيف';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 18 && hour < 20) {
+        usedFuzzyTime.children[0].label = 'العشاء جاهز، استمتع بوقتك مع أحبائك';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 20) {
+        usedFuzzyTime.children[0].label =
+            'حان الوقت لجلسة عائلية ممتعة بعد العشاء. استمتع بالوقت مع أحبائك!';
+        usedFuzzyTime.children[1].label = '󰠧';
+    }
+}
+function setFuzzyFridayTimes(hour, usedFuzzyTime) {
+    if (hour >= 0 && hour < 4) {
+        usedFuzzyTime.children[0].label = 'استمتع باللعب والمرح، إنها العطلة!';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 4 && hour < 9) {
+        usedFuzzyTime.children[0].label = 'وقت مثالي للأذكار وقراءة القرآن.';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 9 && hour < 12) {
+        usedFuzzyTime.children[0].label = 'استحم واستعد لصلاة الجمعة المباركة.';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 12 && hour < 13) {
+        usedFuzzyTime.children[0].label = 'حان وقت صلاة الجمعة.';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 13 && hour < 15) {
+        usedFuzzyTime.children[0].label = 'استمتع بالغداء مع العائلة واسترخِ.';
+        usedFuzzyTime.children[1].label = '󱜜';
+    } else if (hour >= 15 && hour < 21) {
+        usedFuzzyTime.children[0].label = 'اخرج مع الأصدقاء واستمتع بيومك.';
+        usedFuzzyTime.children[1].label = '';
+    } else if (hour >= 21) {
+        usedFuzzyTime.children[0].label =
+            'ليلة سعيدة! استرخِ واستعد ليوم جديد.';
+        usedFuzzyTime.children[1].label = '';
+    }
+}
+
+function setFuzzyDays(day, usedFuzzyDay, usedTimeNow, hour, usedFuzzyTime) {
+    setFuzzyWeekdayTimes(hour, usedFuzzyTime);
     if (day == SATURDAY) {
         usedFuzzyDay.children[0].label = 'مرحبًا بك في يوم جديد،';
         usedFuzzyDay.children[1].label = '';
@@ -97,10 +157,14 @@ function setFuzzyDays(day, usedFuzzyDay, usedTimeNow) {
         usedFuzzyDay.children[0].label = 'أرحب يا الخميس';
         usedFuzzyDay.children[1].label = '';
         usedTimeNow.label = 'الوقت للاستمتاع بالجهود المبذولة.';
+        usedFuzzyTime.children[0].label =
+            'يوم الخميس هو وقتك الخاص، استمتع بكل لحظة وافعل ما تشاء.';
+        usedFuzzyTime.children[1].label = '';
     } else if (day == FRIDAY) {
         usedFuzzyDay.children[0].label = 'يوم الجمعة';
         usedFuzzyDay.children[1].label = '';
         usedTimeNow.label = 'متعة واستراحة، استمتع بلحظات الهدوء.';
+        setFuzzyFridayTimes(hour, usedFuzzyTime);
     }
 }
 
@@ -120,8 +184,14 @@ export default (className) =>
                 let usedTimeNow = box.children[1];
                 let usedFuzzyTime = box.children[2];
 
-                setFuzzyDays(day, usedFuzzyDay, usedTimeNow);
-                setFuzzyTimes(hour, usedFuzzyTime);
+                setFuzzyDays(
+                    day,
+                    usedFuzzyDay,
+                    usedTimeNow,
+                    hour,
+                    usedFuzzyTime
+                );
+                // setFuzzyWeekDayTimes(hour, usedFuzzyTime);
 
                 // usedTimeNow.label = createFuzzyHour();
             })

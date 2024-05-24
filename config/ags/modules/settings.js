@@ -65,6 +65,7 @@ const settings = {
         dynamicM3Py: getPath('scripts/m3/dynamic-m3.py'),
         get_wallpapers: getPath('scripts/get_wallpapers.sh'),
         createThumbnail: getPath('scripts/m3/create_thumbnail.py'),
+        gtk_theme: getPath('scripts/m3/gtk_theme.py'),
     },
     theme: {
         scss: `${getPath('scss')}`,

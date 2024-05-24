@@ -1,14 +1,6 @@
-import ThemesDictionary, { WIN_20, UNICAT_THEME } from '../theme/themes.js';
-import {
-    timeout,
-    USER,
-    exec,
-    execAsync,
-} from 'resource:///com/github/Aylur/ags/utils.js';
-import App from 'resource:///com/github/Aylur/ags/app.js';
-import Service from 'resource:///com/github/Aylur/ags/service.js';
+import ThemesDictionary, { UNICAT_THEME } from '../theme/themes.js';
+import { USER } from 'resource:///com/github/Aylur/ags/utils.js';
 import prayerService from './PrayerTimesService.js';
-import { Utils } from '../utils/imports.js';
 import settings from '../settings.js';
 
 class ThemeService extends Service {
@@ -39,8 +31,7 @@ class ThemeService extends Service {
 
     constructor() {
         super();
-        // exec('swww init');
-        exec('swww-daemon');
+        Utils.exec('swww-daemon');
 
         this.getCachedVariables();
         this.changeTheme(this.selectedTheme);
@@ -72,11 +63,17 @@ class ThemeService extends Service {
             theme.gtk_icon_theme,
             theme.font_name
         );
+        if (!theme.dynamic) {
+            this.changeGtk4Theme(
+                theme.wallpaper,
+                'ahmed-config-gtk-theme',
+                theme.gtk_mode
+            );
+        }
 
         this.changeQtStyle(theme.qt_5_style_theme, theme.qt_6_style_theme);
         this.changeIcons(theme.qt_icon_theme);
         this.changeKvantumTheme(theme.kvantum_theme);
-        // this.changeRofiTheme(theme.rofi_theme);
         this.showDesktopWidget(theme.desktop_widget);
 
         let hypr = theme.hypr;
@@ -97,14 +94,14 @@ class ThemeService extends Service {
     }
 
     changeWallpaper(wallpaper) {
-        execAsync([
+        Utils.execAsync([
             'swww',
             'img',
             '--transition-type',
             // 'grow',
             'random',
             '--transition-pos',
-            exec('hyprctl cursorpos').replace(' ', ''),
+            Utils.exec('hyprctl cursorpos').replace(' ', ''),
             wallpaper,
         ]).catch(print);
     }
@@ -117,9 +114,9 @@ class ThemeService extends Service {
 
         const newTh = `@import './themes/${cssTheme}';`;
 
-        execAsync(['sed', '-i', `1s|.*|${newTh}|`, scss])
+        Utils.execAsync(['sed', '-i', `1s|.*|${newTh}|`, scss])
             .then(() => {
-                exec(`sassc ${scss} ${css}`);
+                Utils.exec(`sassc ${scss} ${css}`);
                 App.resetCss();
                 App.applyCss(css);
             })
@@ -215,7 +212,7 @@ class ThemeService extends Service {
     }
 
     createM3ColorSchema(wallpaper, mode) {
-        execAsync([
+        Utils.execAsync([
             'python',
             settings.scripts.dynamicM3Py,
             wallpaper,
@@ -230,11 +227,11 @@ class ThemeService extends Service {
 
     changePlasmaColor(plasmaColor) {
         const plasmaCmd = `plasma-apply-colorscheme`;
-        execAsync([plasmaCmd, plasmaColor.split('.')[0]]).catch(print);
+        Utils.execAsync([plasmaCmd, plasmaColor.split('.')[0]]).catch(print);
     }
 
     changePlasmaIcons(plasmaIcons) {
-        execAsync([
+        Utils.execAsync([
             'kwriteconfig5',
             '--file',
             `/home/${USER}/.config/kdeglobals`,
@@ -247,24 +244,24 @@ class ThemeService extends Service {
     }
 
     changeGTKTheme(GTKTheme, gtkMode, iconTheme, fontName) {
-        execAsync([
-            `gsettings`,
-            `set`,
-            `org.gnome.desktop.interface`,
-            `color-scheme`,
-            `prefer-${gtkMode}`,
-        ]).catch(print);
-
-        execAsync([
-            `gsettings`,
-            `set`,
-            `org.gnome.desktop.interface`,
-            `gtk-theme`,
-            `Adwaita`,
-        ]).catch(print);
+        // Utils.execAsync([
+        //     `gsettings`,
+        //     `set`,
+        //     `org.gnome.desktop.interface`,
+        //     `color-scheme`,
+        //     `prefer-${gtkMode}`,
+        // ]).catch(print);
+        //
+        // Utils.execAsync([
+        //     `gsettings`,
+        //     `set`,
+        //     `org.gnome.desktop.interface`,
+        //     `gtk-theme`,
+        //     `Adwaita`,
+        // ]).catch(print);
 
         setTimeout(() => {
-            execAsync([
+            Utils.execAsync([
                 `gsettings`,
                 `set`,
                 `org.gnome.desktop.interface`,
@@ -272,7 +269,7 @@ class ThemeService extends Service {
                 GTKTheme,
             ]).catch(print);
 
-            execAsync([
+            Utils.execAsync([
                 `gsettings`,
                 `set`,
                 `org.gnome.desktop.wm.preferences`,
@@ -281,7 +278,7 @@ class ThemeService extends Service {
             ]).catch(print);
         }, 2000);
 
-        execAsync([
+        Utils.execAsync([
             `gsettings`,
             `set`,
             `org.gnome.desktop.interface`,
@@ -289,12 +286,27 @@ class ThemeService extends Service {
             iconTheme,
         ]).catch(print);
 
-        execAsync([
+        Utils.execAsync([
             `gsettings`,
             `set`,
             `org.gnome.desktop.interface`,
             `font-name`,
             fontName,
+        ]).catch(print);
+    }
+
+    changeGtk4Theme(wallpaperPath, themeName, themeMode) {
+        Utils.execAsync([
+            'python',
+            settings.scripts.gtk_theme,
+            '-p',
+            wallpaperPath,
+            '-n',
+            themeName,
+            '-m',
+            themeMode,
+            '-t',
+            '20',
         ]).catch(print);
     }
 
@@ -307,21 +319,23 @@ class ThemeService extends Service {
         // kittyConfig
         // konsoleTheme
     ) {
-        // const kittyBind = `bind = $mainMod, Return, exec, kitty -c ${App.configDir}/modules/theme/kitty/${kittyConfig}`;
-        // const konsoleBind = `bind = $mainMod, Return, exec, konsole --profile ${konsoleTheme}`;
-        timeout(500, () => {
-            execAsync(`hyprctl keyword general:border_size ${border_width}`);
-            execAsync(
+        // const kittyBind = `bind = $mainMod, Return, Utils.exec, kitty -c ${App.configDir}/modules/theme/kitty/${kittyConfig}`;
+        // const konsoleBind = `bind = $mainMod, Return, Utils.exec, konsole --profile ${konsoleTheme}`;
+        Utils.timeout(500, () => {
+            Utils.execAsync(
+                `hyprctl keyword general:border_size ${border_width}`
+            );
+            Utils.execAsync(
                 `hyprctl keyword general:col.active_border ${active_border}`
             );
-            execAsync(
+            Utils.execAsync(
                 `hyprctl keyword general:col.inactive_border ${inactive_border}`
             );
-            execAsync(
+            Utils.execAsync(
                 `hyprctl keyword decoration:drop_shadow ${drop_shadow ? 'yes' : 'no'}`
             );
-            execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
-            // execAsync(`hyprctl setcursor Bibata-Rainbow-Modern 24 `);
+            Utils.execAsync(`hyprctl keyword decoration:rounding ${rounding}`);
+            // Utils.execAsync(`hyprctl setcursor Bibata-Rainbow-Modern 24 `);
         });
     }
 
@@ -342,14 +356,14 @@ ToolBarsMovable=Disabled
     }
 
     changeQtStyle(qt5Style, qt6Style) {
-        execAsync([
+        Utils.execAsync([
             'sed',
             '-i',
             `s/style=.*/style=${qt5Style}/g`,
             this.qt5FilePath,
         ]).catch(print);
 
-        execAsync([
+        Utils.execAsync([
             'sed',
             '-i',
             `s/style=.*/style=${qt6Style}/g`,
@@ -358,14 +372,14 @@ ToolBarsMovable=Disabled
     }
 
     changeIcons(icons) {
-        execAsync([
+        Utils.execAsync([
             'sed',
             '-i',
             `s/icon_theme=.*/icon_theme=${icons}/g`,
             this.qt5FilePath,
         ]).catch(print);
 
-        execAsync([
+        Utils.execAsync([
             'sed',
             '-i',
             `s/icon_theme=.*/icon_theme=${icons}/g`,
@@ -375,7 +389,7 @@ ToolBarsMovable=Disabled
 
     changeRofiTheme(rofiTheme) {
         const newTheme = `@import "${App.configDir}/modules/theme/rofi/${rofiTheme}"`;
-        execAsync([
+        Utils.execAsync([
             'sed',
             '-i',
             `11s|.*|${newTheme}|`,
@@ -384,7 +398,7 @@ ToolBarsMovable=Disabled
     }
 
     changeKvantumTheme(kvantumTheme) {
-        execAsync(['kvantummanager', '--set', kvantumTheme]).catch(print);
+        Utils.execAsync(['kvantummanager', '--set', kvantumTheme]).catch(print);
     }
 
     showDesktopWidget(widget) {
@@ -396,18 +410,18 @@ ToolBarsMovable=Disabled
             this.hideWidget(oldTheme.desktop_widget);
         }
         if (widget !== null) {
-            timeout(1000, () => {
+            Utils.timeout(1000, () => {
                 this.showWidget(widget);
             });
         }
     }
 
     hideWidget(functionName) {
-        execAsync(['ags', '-r', `Hide${functionName}()`]).catch(print);
+        Utils.execAsync(['ags', '-r', `Hide${functionName}()`]).catch(print);
     }
 
     showWidget(functionName) {
-        execAsync(['ags', '-r', `Show${functionName}()`]).catch(print);
+        Utils.execAsync(['ags', '-r', `Show${functionName}()`]).catch(print);
     }
 
     cacheVariables() {
