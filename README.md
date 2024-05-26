@@ -245,7 +245,7 @@ nvim .ahmed-config.json
 yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo
 ```
 
-### Fedora users
+### Fedora 40 users
 
 ```bash
 sudo dnf install network-manager-applet playerctl polkit-gnome brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors strawberry easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils ffmpeg gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld vlc-plugin-gstreamer vlc mpv polkit-gnome polkit-qt polkit-kde gstreamer1-libav
