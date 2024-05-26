@@ -60,7 +60,8 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 ### مستخدمي Fedora 40
 
 ```bash
-sudo dnf install network-manager-applet playerctl polkit-gnome brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors strawberry easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils ffmpeg gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld vlc-plugin-gstreamer vlc mpv polkit-gnome polkit-qt polkit-kde gstreamer1-libav
+# تثبيت البرامج المطلوبه معى برامج اخرى مثل دعم الصوتيات
+sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar
 
 # تفعيل مستودع هيبر لاند
 sudo dnf copr enable solopasha/hyprland
@@ -248,21 +249,22 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 ### Fedora 40 users
 
 ```bash
-sudo dnf install network-manager-applet playerctl polkit-gnome brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors strawberry easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils ffmpeg gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld vlc-plugin-gstreamer vlc mpv polkit-gnome polkit-qt polkit-kde gstreamer1-libav
+# Install needed apps with other supporing apps like media support
+sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar
 
-# enable Hyprland repository
+# Enable Hyprland repository
 sudo dnf copr enable solopasha/hyprland
 sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard
 
-# enable gradience repository
+# Enable gradience repository
 sudo dnf copr enable lyessaadi/gradience
 sudo dnf install gradience
 
-# enable kde-material-you-colors repository
+# Enable kde-material-you-colors repository
 sudo dnf copr enable luisbocanegra/kde-material-you-colors
 sudo dnf install kde-material-you-colors
 
-# install plasma-desktop for its apps
+# Install plasma-desktop for its apps
 sudo dnf install plasma-desktop
 ```
 
