@@ -13,21 +13,18 @@
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
 - [AGS](https://github.com/Aylur/ags/wiki/installation)
-- Wofi
 - network-manager-applet
 - playerctl
-- polkit-kde-agent
+- polkit-kde-agent or polkit-gnome
 - [FantasqueSansM Nerd Font](https://www.nerdfonts.com/font-downloads)
-- qt5ct
-- qt6ct
-- Dolphin
+- dolphin
+- konsole
 - brightnessctl
 - gammastep
 - wl-clipboard
 - hyprpicker
 - sysstat
 - bc
-- kitty
 - sassc
 - systemsettings
 - acpi
@@ -47,8 +44,10 @@
 - telegram-desktop
 - discord
 - kvantum
-- konsole
 - firefox
+- qt5ct
+- qt6ct
+- kitty
 
 ## التثبيت
 
@@ -58,12 +57,32 @@
 yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo
 ```
 
-**ملاحطة:** إذا كنت تستخدم نظام تشغيل آخر غير أرش فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
+### مستخدمي Fedora 40
+
+```bash
+sudo dnf install network-manager-applet playerctl polkit-gnome brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors strawberry easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils ffmpeg gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld vlc-plugin-gstreamer vlc mpv polkit-gnome polkit-qt polkit-kde gstreamer1-libav
+
+# تفعيل مستودع هيبر لاند
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard
+
+# تفعيل مستودع gradience
+sudo dnf copr enable lyessaadi/gradience
+sudo dnf install gradience
+
+# تفعيل مستودع material-you-colors
+sudo dnf copr enable luisbocanegra/kde-material-you-colors
+sudo dnf install kde-material-you-colors
+
+# تثبيت plasma-desktop
+sudo dnf install plasma-desktop
+```
+
+**ملاحطة:** إذا كنت تستخدم نظام تشغيل آخر غير أرش او فيدورا فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
 
 #### مثلا:
 
 - بالنسبة للتوزيعات القائمة على **دبيان/أوبونتو**، يمكنك تثبيت البرامج باستخدام `apt install` او البحث عن طريق `apt search hyprland`.
-- في **Fedora/RHEL**, استخدم `dnf install` او `yum install`
 - بالنسبة لبرامج ادارة الحزم الاخرى، قم بالبحث عن كل برنامج وتثبيته عبر مدير حزم نظامك.
 
 ### اعداد الملفات:
@@ -182,28 +201,25 @@ nvim .ahmed-config.json
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
 - [AGS](https://github.com/Aylur/ags/wiki/installation)
-- Wofi
 - network-manager-applet
 - playerctl
-- polkit-kde-agent
+- polkit-kde-agent or polkit-gnome
 - [FantasqueSansM Nerd Font](https://www.nerdfonts.com/font-downloads)
-- qt5ct
-- qt6ct
-- Dolphin
+- dolphin
+- konsole
 - brightnessctl
 - gammastep
 - wl-clipboard
 - hyprpicker
 - sysstat
-- lm_sensors
 - bc
-- kitty
 - sassc
 - systemsettings
 - acpi
 - fish
 - gnome-bluetooth-3.0
 - power-profiles-daemon
+- lm_sensors
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 - [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
@@ -216,23 +232,45 @@ nvim .ahmed-config.json
 - telegram-desktop
 - discord
 - kvantum
-- konsole
 - firefox
+- qt5ct
+- qt6ct
+- kitty
 
 ## Installing:
 
-### Installing dependencies for Arch Users:
+### Arch Users:
 
 ```bash
 yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo
 ```
 
-**Note:** If you use an operating system other than Arch, you will need to install all required dependencies. The specific steps may vary depending on your distro.
+### Fedora users
+
+```bash
+sudo dnf install network-manager-applet playerctl polkit-gnome brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors strawberry easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils ffmpeg gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld vlc-plugin-gstreamer vlc mpv polkit-gnome polkit-qt polkit-kde gstreamer1-libav
+
+# enable Hyprland repository
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard
+
+# enable gradience repository
+sudo dnf copr enable lyessaadi/gradience
+sudo dnf install gradience
+
+# enable kde-material-you-colors repository
+sudo dnf copr enable luisbocanegra/kde-material-you-colors
+sudo dnf install kde-material-you-colors
+
+# install plasma-desktop for its apps
+sudo dnf install plasma-desktop
+```
+
+**Note:** If you use an operating system other than Arch or Fedora, you will need to install all required dependencies. The specific steps may vary depending on your distro.
 
 #### Example:
 
 - For **Debian/Ubuntu-based** systems, you can install dependencies using `apt install` or search using `apt search hyprland`.
-- On **Fedora/RHEL**, use `dnf install` or `yum install`
 - For other package managers, search for each dependency and install using your system's package manager.
 
 ### Setting up files:
