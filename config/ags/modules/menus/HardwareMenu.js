@@ -169,8 +169,9 @@ const powerProfilesBox = Widget.Box({
             className: 'power-profiles-box-btn',
             on_clicked: () => (powerProfiles.active_profile = 'performance'),
             child: TitleText({
-                title: 'اداء مرتفع',
+                title: 'مرتفع',
                 text: '󰾆',
+                titleClass: 'power-profiles-title',
                 vertical: false,
                 titleXalign: 1,
                 textXalign: 0,
@@ -186,8 +187,9 @@ const powerProfilesBox = Widget.Box({
             className: 'power-profiles-box-btn',
             on_clicked: () => (powerProfiles.active_profile = 'balanced'),
             child: TitleText({
-                title: 'اداء معتدل',
+                title: 'معتدل',
                 text: '󰾅',
+                titleClass: 'power-profiles-title',
                 vertical: false,
                 titleXalign: 0,
                 textXalign: 1,
@@ -203,12 +205,13 @@ const powerProfilesBox = Widget.Box({
             className: 'power-profiles-box-btn',
             on_clicked: () => (powerProfiles.active_profile = 'power-saver'),
             child: TitleText({
-                title: 'اداء منخفظ',
+                title: 'منخفض',
                 text: '󰓅',
+                titleClass: 'power-profiles-title',
                 vertical: false,
                 titleXalign: 0,
                 textXalign: 1,
-                spacing: 10,
+                spacing: 3.5,
             }),
             // child: Widget.Label({
             //   label: 'منخفظ  󰓅',
