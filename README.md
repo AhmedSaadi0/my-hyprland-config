@@ -32,6 +32,7 @@
 - gnome-bluetooth-3.0
 - power-profiles-daemon
 - lm_sensors
+- copyq
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 - [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
@@ -61,7 +62,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 
 ```bash
 # تثبيت البرامج المطلوبه معى برامج اخرى مثل دعم الصوتيات
-sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar
+sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq
 
 # تفعيل مستودع هيبر لاند
 sudo dnf copr enable solopasha/hyprland
@@ -223,6 +224,7 @@ nvim .ahmed-config.json
 - lm_sensors
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 - [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
+- copyq
 
 ### Optional dependencies:
 
@@ -250,7 +252,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 
 ```bash
 # Install needed apps with other supporing apps like media support
-sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar
+sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq
 
 # Enable Hyprland repository
 sudo dnf copr enable solopasha/hyprland

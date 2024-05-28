@@ -22,9 +22,12 @@ class ColorExporter:
 
     def __init__(self, wallpaper_data, ncolor, theme_mode):
         material_you_colors = get_material_you_colors(
-            wallpaper_data,
+            wallpaper_data=wallpaper_data,
             ncolor=ncolor,
             source_type="image",
+            # scheme_variant=5,
+            # chroma_mult=1,
+            # tone_mult=1,
         )
 
         path = Path(wallpaper_data)

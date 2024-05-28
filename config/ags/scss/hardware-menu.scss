@@ -1,222 +1,227 @@
 .hardware-menu-box {
-  background: $hardware-menu-box-background;
-  border-radius: $border-radius;
-  border: $border-size solid $border-color;
-  padding: 1rem;
+    background: $hardware-menu-box-background;
+    border-radius: $border-radius;
+    border: $border-size solid $border-color;
+    padding: 1rem;
 }
 
 .hardware-menu-header-box {
-  background: $hardware-menu-header-box-background;
-  border-radius: $border-radius;
-  padding: 0.5rem;
+    background: $hardware-menu-header-box-background;
+    border-radius: $border-radius;
+    padding: 0.5rem;
 }
 
 .hardware-menu-power-profile-box {
-  @if variable-exists(hardware-menu-power-profile-box) {
-    background: $hardware-menu-power-profile-box;
-  } @else {
-    background: $hardware-menu-header-box-background;
-  }
+    @if variable-exists(hardware-menu-power-profile-box) {
+        background: $hardware-menu-power-profile-box;
+    } @else {
+        background: $hardware-menu-header-box-background;
+    }
 
-  border-radius: $border-radius;
-  padding: 0.5rem;
-  margin-left: 0.5rem;
+    border-radius: $border-radius;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 .power-profiles-box-btn {
-  margin: 0.3rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
-  box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
-  // font-family: $icon-font-family;
+    margin: 0.3rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
+    // font-family: $icon-font-family;
 }
 
 .power-profiles-box-btn-active {
-  background: $btn-hover-background;
-  color: $btn-hover-color;
-  box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
-  // font-family: $icon-font-family;
+    background: $btn-hover-background;
+    color: $btn-hover-color;
+    box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
+    // font-family: $icon-font-family;
 }
 
 // --------- CPU ---------
 .hardware-menu-box-progress {
-  font-size: 0.5rem;
-  min-width: 6.5rem;
-  min-height: 6.5rem;
-  margin: 1rem;
+    font-size: 0.5rem;
+    min-width: 6.5rem;
+    min-height: 6.5rem;
+    margin: 1rem;
 }
 
 .hardware-menu-box-icon {
-  font-family: $icon-font-family;
-  font-size: 2rem;
+    font-family: $icon-font-family;
+    font-size: 2rem;
 }
 
 .menu-cpu {
-  @extend .hardware-menu-box-progress;
-  color: $cpu-color;
+    @extend .hardware-menu-box-progress;
+    color: $cpu-color;
 }
 
 .menu-cpu-icon {
-  @extend .hardware-menu-box-icon;
-  color: $cpu-inner-color;
+    @extend .hardware-menu-box-icon;
+    color: $cpu-inner-color;
 }
 
 // --------- RAM ---------
 .menu-ram {
-  @extend .hardware-menu-box-progress;
-  color: $ram-color;
+    @extend .hardware-menu-box-progress;
+    color: $ram-color;
 }
 
 .menu-ram-icon {
-  @extend .hardware-menu-box-icon;
-  color: $ram-inner-color;
+    @extend .hardware-menu-box-icon;
+    color: $ram-inner-color;
 }
 
 // --------- Battery ---------
 .menu-battery {
-  @extend .hardware-menu-box-progress;
-  color: $battery-color;
+    @extend .hardware-menu-box-progress;
+    color: $battery-color;
 }
 
 .menu-battery-icon {
-  @extend .hardware-menu-box-icon;
-  color: $battery-inner-color;
+    @extend .hardware-menu-box-icon;
+    color: $battery-inner-color;
 }
 
 .menu-battery-icon-charging {
-  @extend .hardware-menu-box-icon;
-  color: $battery-inner-color;
-  animation: colorChange 2s infinite;
+    @extend .hardware-menu-box-icon;
+    color: $battery-inner-color;
+    animation: colorChange 2s infinite;
 }
 
 // --------- Temp ---------
 .menu-temp {
-  @extend .hardware-menu-box-progress;
-  color: $temp-color;
+    @extend .hardware-menu-box-progress;
+    color: $temp-color;
 }
 
 .menu-temp-icon {
-  @extend .hardware-menu-box-icon;
-  color: $temp-inner-color;
+    @extend .hardware-menu-box-icon;
+    color: $temp-inner-color;
 }
 
 // --------- Table rows ---------
 .table-row-app-name-header {
-  min-width: 6rem;
+    min-width: 6rem;
 }
 
 .table-row-app-percentage-header {
-  min-width: 3rem;
-  // margin-left: 0.5rem;
+    min-width: 3rem;
+    // margin-left: 0.5rem;
 }
 
 .table-row-app-name {
-  min-width: 6rem;
-  // font-family: $icon-font-family;
+    min-width: 6rem;
+    // font-family: $icon-font-family;
 }
 
 .table-row-app-percentage {
-  min-width: 3rem;
+    min-width: 3rem;
 }
 
 // --------- CPU Table ---------
 .hardware-cpu-box {
-  background: $hardware-cpu-box-background;
-  color: $hardware-cpu-box-color;
-  border-radius: $border-radius;
-  margin-top: 1rem;
+    background: $hardware-cpu-box-background;
+    color: $hardware-cpu-box-color;
+    border-radius: $border-radius;
+    margin-top: 1rem;
 }
 
 .hardware-cpu-table-row-header {
-  padding: 1rem;
-  background: $hardware-cpu-table-row-header-background;
-  color: $hardware-cpu-table-row-header-color;
-  border-top-right-radius: $border-radius;
-  border-top-left-radius: $border-radius;
+    padding: 1rem;
+    background: $hardware-cpu-table-row-header-background;
+    color: $hardware-cpu-table-row-header-color;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
 }
 
 .hardware-table-row {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .hardware-cpu-table-row {
-  @extend .hardware-table-row;
+    @extend .hardware-table-row;
 }
 
 // --------- RAM Table ---------
 .hardware-ram-box {
-  background: $hardware-ram-box-background;
-  color: $hardware-ram-box-color;
-  border-radius: $border-radius;
-  margin-top: 1rem;
+    background: $hardware-ram-box-background;
+    color: $hardware-ram-box-color;
+    border-radius: $border-radius;
+    margin-top: 1rem;
 }
 
 .hardware-ram-table-row-header {
-  padding: 1rem;
-  background: $hardware-ram-table-row-header-background;
-  color: $hardware-ram-table-row-header-color;
-  border-top-right-radius: $border-radius;
-  border-top-left-radius: $border-radius;
+    padding: 1rem;
+    background: $hardware-ram-table-row-header-background;
+    color: $hardware-ram-table-row-header-color;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
 }
 
 .hardware-ram-table-row {
-  @extend .hardware-table-row;
+    @extend .hardware-table-row;
 }
 
 // --------- HW ---------
 .hardware-menu-tables-box {
-  background: $hardware-menu-tables-box-background;
-  padding: 0.8rem;
-  padding-top: 0rem;
-  margin-top: 0.8rem;
-  border-radius: $border-radius;
+    background: $hardware-menu-tables-box-background;
+    padding: 0.8rem;
+    padding-top: 0rem;
+    margin-top: 0.8rem;
+    border-radius: $border-radius;
 }
 
 // --------- HW Table ---------
 .hardware-bat-box {
-  background: $hardware-bat-box-background;
-  color: $hardware-bat-box-color;
-  border-radius: $border-radius;
-  margin-top: 1rem;
-  min-height: 3rem;
+    background: $hardware-bat-box-background;
+    color: $hardware-bat-box-color;
+    border-radius: $border-radius;
+    margin-top: 1rem;
+    min-height: 3rem;
 }
 
 .hardware-bat-table-row-header {
-  padding: 1rem;
-  // min-width: 13rem;
-  background: $hardware-bat-table-row-header-background;
-  color: $hardware-bat-table-row-header-color;
-  border-top-right-radius: $border-radius;
-  border-top-left-radius: $border-radius;
+    padding: 1rem;
+    // min-width: 13rem;
+    background: $hardware-bat-table-row-header-background;
+    color: $hardware-bat-table-row-header-color;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
 }
 
 .hardware-bat-table-row {
-  @extend .hardware-table-row;
+    @extend .hardware-table-row;
 }
 
 // --------- OS Table ---------
 .hardware-os-box {
-  background: $hardware-os-box-background;
-  color: $hardware-os-box-color;
-  border-radius: $border-radius;
-  margin-top: 1rem;
-  min-height: 3rem;
+    background: $hardware-os-box-background;
+    color: $hardware-os-box-color;
+    border-radius: $border-radius;
+    margin-top: 1rem;
+    min-height: 3rem;
 }
 
 .hardware-os-table-row-header {
-  padding: 1rem;
-  // min-width: 13rem;
-  background: $hardware-os-table-row-header-background;
-  color: $hardware-os-table-row-header-color;
-  border-top-right-radius: $border-radius;
-  border-top-left-radius: $border-radius;
+    padding: 1rem;
+    // min-width: 13rem;
+    background: $hardware-os-table-row-header-background;
+    color: $hardware-os-table-row-header-color;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
 }
 
 .hardware-os-table-row {
-  @extend .hardware-table-row;
+    @extend .hardware-table-row;
+}
+
+.power-profiles-title {
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
