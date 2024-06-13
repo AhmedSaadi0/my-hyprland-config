@@ -66,7 +66,7 @@ yay -S base-devel strawberry brightnessctl network-manager-applet telegram-deskt
 ### مستخدمي Fedora 40
 
 ```bash
-# تثبيت البرامج المطلوبه معى برامج اخرى مثل دعم الصوتيات
+# تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
 sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq
 
 # تفعيل مستودع هيبر لاند
