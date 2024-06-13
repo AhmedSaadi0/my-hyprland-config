@@ -24,7 +24,7 @@ button:hover {
   margin-top: 0.3rem;
   margin-bottom: 0.4rem;
   background: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
@@ -77,7 +77,7 @@ button:hover {
 .clock {
   background: linear-gradient(to right, #ff00ff, #1ed4fd);
   color: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   padding-left: 1em;
@@ -87,7 +87,7 @@ button:hover {
   font-size: 1em;
   background: linear-gradient(to right, #25f7e2, #cdd4af);
   color: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -106,8 +106,8 @@ button:hover {
   padding-right: 0.5rem; }
 
 .top-corner {
-  background-color: #352558;
-  border-radius: 0.8rem; }
+  background-color: #352557;
+  border-radius: 1.5rem; }
 
 .bar-bg {
   background: rgba(0, 0, 0, 0);
@@ -115,16 +115,16 @@ button:hover {
   border-radius: 0rem; }
 
 .bar {
-  background: #352558;
+  background: #352557;
   color: #bdddee;
   min-height: 8px;
   margin-bottom: 0.5rem; }
 
 .internet-box {
   background: linear-gradient(to right, #82d8d2, #478dd7);
-  color: #352558;
+  color: #352557;
   /* min-width: 100px; */
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -140,7 +140,7 @@ button:hover {
   /* margin-left: 0.7em; */
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  background: #352558;
+  background: #352557;
   color: #bdddee;
   font-weight: bold; }
 
@@ -148,40 +148,40 @@ button:hover {
   padding-left: 0.5em;
   padding-right: 1em;
   margin-right: 0.2em;
-  border-top-right-radius: 0.8rem;
-  border-bottom-right-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
 
 .wifi-name-label:dir(ltr) {
   padding-right: 0.5em;
   padding-left: 1em;
   margin-left: 0.2em;
-  border-top-left-radius: 0.8rem;
-  border-bottom-left-radius: 0.8rem; }
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .wifi-icon-strength {
   font-family: "FantasqueSansM Nerd Font Propo";
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-  background: #352558;
+  background: #352557;
   color: #bdddee; }
 
 .wifi-icon-strength:dir(rtl) {
   margin-left: 0.2rem;
   padding-right: 0.2rem;
   padding-left: 0.6rem;
-  border-top-left-radius: 0.8rem;
-  border-bottom-left-radius: 0.8rem; }
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .wifi-icon-strength:dir(ltr) {
   margin-right: 0.2rem;
   padding-left: 0.2rem;
   padding-right: 0.6rem;
-  border-top-right-radius: 0.8rem;
-  border-bottom-right-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
 
 .systray {
   background: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   min-height: 0.1rem; }
@@ -194,7 +194,7 @@ button:hover {
 
 .systray button {
   background: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding-right: 0.4rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
@@ -291,7 +291,7 @@ button:hover {
 .hardware-box {
   background: #1f1635;
   padding: 0.2rem 0.5rem;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -326,19 +326,19 @@ button:hover {
   margin: -0.2rem 0.5rem; }
 
 .hardware-menu-box {
-  background: #352558;
-  border-radius: 0.8rem;
+  background: #352557;
+  border-radius: 1.5rem;
   border: 2px solid #1ed4fd;
   padding: 1rem; }
 
 .hardware-menu-header-box {
   background: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding: 0.5rem; }
 
 .hardware-menu-power-profile-box {
   background: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding: 0.5rem;
   margin-left: 0.5rem; }
 
@@ -408,15 +408,15 @@ button:hover {
 .hardware-cpu-box {
   background: linear-gradient(to top, #1ed4fd, #ff00ff);
   color: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
   background: #ff00ff;
   color: #1f1635;
-  border-top-right-radius: 0.8rem;
-  border-top-left-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-table-row, .hardware-os-table-row, .hardware-bat-table-row, .hardware-ram-table-row, .hardware-cpu-table-row {
   padding-left: 1rem;
@@ -427,27 +427,27 @@ button:hover {
 .hardware-ram-box {
   background: linear-gradient(to top, #8d52ff, #0088ff);
   color: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-ram-table-row-header {
   padding: 1rem;
   background: #017de9;
   color: #1f1635;
-  border-top-right-radius: 0.8rem;
-  border-top-left-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-menu-tables-box {
   background: #1f1635;
   padding: 0.8rem;
   padding-top: 0rem;
   margin-top: 0.8rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .hardware-bat-box {
   background: #987fd6;
   color: #211008;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
@@ -455,13 +455,13 @@ button:hover {
   padding: 1rem;
   background: #8b75c4;
   color: #211008;
-  border-top-right-radius: 0.8rem;
-  border-top-left-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-os-box {
   background: rgba(255, 0, 255, 0.9);
   color: #211008;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
@@ -469,15 +469,15 @@ button:hover {
   padding: 1rem;
   background: rgba(255, 0, 255, 0.8);
   color: #211008;
-  border-top-right-radius: 0.8rem;
-  border-top-left-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .power-profiles-title {
   margin-left: 1rem;
   margin-right: 1rem; }
 
 .volume {
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
@@ -490,9 +490,9 @@ button:hover {
   margin-right: 1rem; }
 
 .vol-osd {
-  background: #352558;
+  background: #352557;
   padding: 1rem;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   border: 2px solid #1ed4fd;
   margin: 1.5rem; }
 
@@ -503,17 +503,33 @@ button:hover {
   padding-right: 1.5rem; }
 
 scale trough highlight {
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   background: #1ed4fd; }
 
 scale slider {
   background: #1ed4fd; }
 
+.language-layout-label {
+  border-radius: 1.5rem;
+  padding: 0rem 1rem; }
+
+.language-layout-icon {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  font-size: 2rem; }
+
+.language-layout-box {
+  padding: 1rem;
+  border-radius: 1.5rem;
+  border: 2px solid #1ed4fd;
+  margin: 1.5rem;
+  background: #352557;
+  color: #bdddee; }
+
 .notifications-revealer-box {
   background: #154a63;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   background: #fff;
@@ -529,13 +545,13 @@ scale slider {
 
 .notification-popups {
   border: 2px solid #1ed4fd;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding: 1rem;
-  background: #352558;
+  background: #352557;
   color: #bdddee; }
 
 .notifications-popup-list {
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   background: rgba(0, 0, 0, 0); }
 
 .notification-close-button {
@@ -543,12 +559,12 @@ scale slider {
   padding-right: 0.7rem; }
 
 window {
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   background: rgba(0, 0, 0, 0); }
 
 .left-menu-box {
-  background: #352558;
-  border-radius: 0.8rem;
+  background: #352557;
+  border-radius: 1.5rem;
   border: 2px solid #1ed4fd;
   margin-top: 0.3rem;
   margin-bottom: 1rem;
@@ -568,8 +584,8 @@ window {
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 0.8rem;
-  border-top-right-radius: 0.8rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   min-width: 23rem;
   min-height: 12rem; }
 
@@ -581,7 +597,7 @@ window {
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: -3rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -596,7 +612,7 @@ window {
   background: #241546;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .theme-button-father, .theme-btn, .selected-theme {
   padding-left: 0.6rem;
@@ -606,24 +622,24 @@ window {
 
 .selected-theme {
   background: linear-gradient(to right, #9359ff, #ff00aa);
-  color: #352558;
-  border-radius: 0.8rem; }
+  color: #352557;
+  border-radius: 1.5rem; }
 
 .selected-theme:hover {
   background: linear-gradient(to right, #ff9900, #ff6600);
   color: #154a63;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .theme-btn {
-  border-radius: 0.8rem;
-  background: #352558;
-  border-color: #352558;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem;
+  background: #352557;
+  border-color: #352557;
+  border-radius: 1.5rem; }
 
 .theme-btn:hover {
   color: #154a63;
   border-color: #1ed4fd;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .theme-btn-icon {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -637,13 +653,13 @@ window {
   min-width: 3rem; }
 
 .menu-button {
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
-  background: #352558;
+  background: #352557;
   font-family: "FantasqueSansM Nerd Font Propo";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
@@ -661,7 +677,7 @@ window {
   background: #1f1635;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .notification-menu-header {
   background-size: cover;
@@ -682,7 +698,7 @@ window {
   margin-bottom: 0.3rem;
   background: #1f1635;
   color: #c1c4eb;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding-top: 0rem;
   padding-bottom: 0rem; }
 
@@ -696,7 +712,7 @@ window {
 
 .notification-center-button:hover {
   background-color: #1ed4fd;
-  color: #352558; }
+  color: #352557; }
 
 .notification-this-is-all {
   color: #bdddee;
@@ -719,8 +735,8 @@ window {
   padding-bottom: 1rem;
   background: #1f1635;
   color: #bdddee;
-  border-top-right-radius: 0.8rem;
-  border-top-left-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .notification-center-header-text {
   min-width: 7.7rem; }
@@ -729,7 +745,7 @@ window {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1.2rem;
   margin-right: 0.5rem; }
@@ -738,7 +754,7 @@ window {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1.2rem; }
 
@@ -750,20 +766,20 @@ window {
 
 .notification-center-container {
   min-height: 30rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .music-wd-box {
   background: linear-gradient(to right, #8e52ff, #0088ff);
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .music-wd-length {
   font-family: "FantasqueSansM Nerd Font Propo"; }
 
 .left-menu-music-wd {
   background: linear-gradient(to right, #8e52ff, #0088ff);
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-left: 1rem;
@@ -793,7 +809,7 @@ window {
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
   color: #c1c4eb;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   min-width: 2rem; }
 
 .music-wd-player:dir(rtl) {
@@ -826,7 +842,7 @@ window {
 .music-wd-button {
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 50%;
-  background: linear-gradient(to right, #352558, #352558);
+  background: linear-gradient(to right, #352557, #352557);
   color: #c1c4eb; }
 
 .music-wd-button:hover {
@@ -834,7 +850,7 @@ window {
 
 .music-wd-button-play {
   background: linear-gradient(to right, #9359ff, #ff00aa);
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   color: #1f1635;
   min-width: 80px; }
 
@@ -842,9 +858,9 @@ window {
   background: linear-gradient(to top, #1ed4fd, #ff00ff); }
 
 .music-wd-button-stop {
-  background: linear-gradient(to right, #352558, #352558);
+  background: linear-gradient(to right, #352557, #352557);
   color: #c1c4eb;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   min-width: 80px; }
 
 .wd-fuzzy-day-box {
@@ -912,7 +928,7 @@ window {
   font-size: 1em;
   background: linear-gradient(to right, #82d8d2, #478dd7);
   color: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -930,8 +946,8 @@ window {
   padding-right: 0.7rem; }
 
 .prayer-times-menu-box {
-  background: #352558;
-  border-radius: 0.8rem;
+  background: #352557;
+  border-radius: 1.5rem;
   border: 2px solid #1ed4fd;
   color: #bdddee; }
 
@@ -939,8 +955,8 @@ window {
   background: #1f1635;
   color: #bdddee;
   padding: 1rem;
-  border-top-right-radius: 0.8rem;
-  border-top-left-radius: 0.8rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .prayer-time-item-box-class {
   padding-top: 1.2rem;
@@ -949,8 +965,8 @@ window {
   padding-left: 1.5rem; }
 
 .isha-item {
-  border-bottom-right-radius: 0.8rem;
-  border-bottom-left-radius: 0.8rem; }
+  border-bottom-right-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .next-prayer {
   background: linear-gradient(to left, #ff00ff, #1ed4fd);
@@ -970,12 +986,12 @@ window {
 
 .weather-menu-box {
   min-width: 2rem;
-  background: #352558;
+  background: #352557;
   color: #bdddee;
   padding: 1rem 1rem;
   padding-top: 2rem;
   border: 2px solid #1ed4fd;
-  border-radius: 0.8rem; }
+  border-radius: 1.5rem; }
 
 .weather-menu-general-information-box {
   margin: 0rem 1rem; }
@@ -1050,16 +1066,16 @@ window {
   font-size: 1.3rem; }
 
 .applications-box {
-  background: #352558;
-  border-radius: 0.8rem; }
+  background: #352557;
+  border-radius: 1.5rem; }
 
 .app-search-box {
-  border-top-left-radius: 0.8rem;
-  border-top-right-radius: 0.8rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 0.8rem;
-  border-top-right-radius: 0.8rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   min-width: 23rem;
   min-height: 12rem;
   background-color: rgba(0, 0, 0, 0.1);
@@ -1076,6 +1092,24 @@ window {
   font-size: xx-large;
   color: #fffbff;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); }
+
+.information-widget-header {
+  font-size: 2rem;
+  margin-bottom: 1rem; }
+
+.information-widget-title {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem; }
+
+.information-widget-subtitle {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  min-width: 7rem; }
+
+.information-widget-subtext {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  min-width: 9.7rem; }
 
 .un-hover:hover {
   all: unset; }
@@ -1107,7 +1141,7 @@ button {
   background: #1f1635;
   color: #bdddee;
   border-color: #1f1635;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding: 4px 14px;
   border: none;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
@@ -1120,21 +1154,21 @@ button:hover {
   background: #1ed4fd;
   color: #154a63;
   border-color: #1ed4fd;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
 
 menu {
   border: 2px #1ed4fd solid;
-  background: #352558;
+  background: #352557;
   color: #bdddee;
-  border-radius: 0.8rem;
+  border-radius: 1.5rem;
   padding: 0.3rem;
   margin-top: 2rem; }
 
 menuitem {
-  border-radius: 0.8rem;
-  background: #352558;
+  border-radius: 1.5rem;
+  background: #352557;
   color: #bdddee; }
 
 menuitem:disabled {

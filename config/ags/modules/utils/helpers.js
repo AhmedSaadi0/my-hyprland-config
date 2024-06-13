@@ -9,27 +9,38 @@ export const TitleText = ({
     homogeneous = false,
     titleXalign = 0.5,
     textXalign = 0.5,
+    //titleMaxWidthChars = 100,
+    //textMaxWidthChars = 100,
+    titleTruncate = 'none',
+    textTruncate = 'none',
     vertical = true,
     spacing = 0,
+    ltr = false,
 }) => {
     const _title = Widget.Label({
         label: title,
         className: titleClass,
         xalign: titleXalign,
+        //maxWidthChars: titleMaxWidthChars,
+        truncate: titleTruncate,
     });
 
     const _text = Widget.Label({
         label: text,
         className: textClass,
         xalign: textXalign,
+        //maxWidthChars: textMaxWidthChars,
+        truncate: textTruncate,
     });
+
+    const children = ltr ? [_text, _title] : [_title, _text];
 
     return Widget.Box({
         className: boxClass,
         vertical: vertical,
         homogeneous: homogeneous,
         spacing: spacing,
-        children: [_title, _text],
+        children: children,
     });
 };
 

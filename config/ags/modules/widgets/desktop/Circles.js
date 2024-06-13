@@ -3,6 +3,8 @@ import Saying from '../Saying.js';
 import { Mpris, Utils, Widget } from '../../utils/imports.js';
 import { selectedMusicPlayer } from '../MusicPLayer.js';
 import NestedCircles from '../../components/NestedCircles.js';
+import { TitleText } from '../../utils/helpers.js';
+import settings from '../../settings.js';
 
 let cpuNestedCircles1 = NestedCircles({
     child: Widget.Label({
@@ -36,6 +38,76 @@ let cpuNestedCircles2 = NestedCircles({
     outerCircle2Css: 'desktop-core-circle',
     outerCircle3Css: 'desktop-core-circle',
     outerCircle4Css: 'desktop-core-circle',
+});
+const subTitleArgs = {
+    titleClass: 'information-widget-subtitle',
+    textClass: 'information-widget-subtext',
+    titleXalign: 0,
+    textXalign: 1,
+    vertical: false,
+    titleTruncate: 'end',
+    textTruncate: 'end',
+};
+
+const titleArgs = {
+    vertical: false,
+    spacing: 10,
+    boxClass: 'information-widget-title',
+};
+
+const informationBox = Widget.Box({
+    vertical: true,
+    children: [
+        TitleText({
+            title: 'لينكس',
+            text: '',
+            vertical: false,
+            spacing: 60,
+            boxClass: 'information-widget-header',
+        }),
+        TitleText({
+            title: 'النظام',
+            text: '',
+            ...titleArgs,
+        }),
+        TitleText({
+            title: 'الاسم',
+            text: '',
+            ...subTitleArgs,
+        }),
+        TitleText({
+            title: 'الهوست',
+            text: '',
+            ...subTitleArgs,
+        }),
+        TitleText({
+            title: 'وقت التشغيل',
+            text: '',
+            ...subTitleArgs,
+        }),
+        TitleText({
+            title: 'مدير الحزم',
+            text: '',
+            ...subTitleArgs,
+        }),
+        TitleText({
+            title: 'الحزم',
+            text: '',
+            ...subTitleArgs,
+        }),
+    ],
+}).poll(1000 * 60 * 6, (self) => {
+    Utils.execAsync(settings.scripts.systemInfo)
+        .then((val) => {
+            const data = JSON.parse(val);
+            self.children[2].children[1].label = data.kernel_version;
+            self.children[3].children[1].label = data.host_name;
+            self.children[4].children[1].label = data.uptime;
+            self.children[5].children[1].label = data.package_manager;
+            self.children[6].children[1].label =
+                data.installed_packages.toString();
+        })
+        .catch(print);
 });
 
 const MusicWidget = Widget.Box({
@@ -88,7 +160,7 @@ const MusicWidget = Widget.Box({
             cpuNestedCircles1.innerCircle4.value = data[4] / 100;
             cpuNestedCircles1.innerCircle5.value = data[5] / 100;
             cpuNestedCircles1.innerCircle6.value = data[6] / 100;
-
+            // Circle 2
             cpuNestedCircles2.innerCircle1.value = data[7] / 100;
             cpuNestedCircles2.innerCircle2.value = data[8] / 100;
             cpuNestedCircles2.innerCircle3.value = data[9] / 100;
@@ -105,7 +177,7 @@ const MusicWidget = Widget.Box({
             cpuNestedCircles1.outerCircle2.value = data.cpu_core1 / 100;
             cpuNestedCircles1.outerCircle3.value = data.cpu_core2 / 100;
             cpuNestedCircles1.outerCircle4.value = data.cpu_core3 / 100;
-
+            // Circle 2
             cpuNestedCircles2.outerCircle1.value = data.cpu_core4 / 100;
             cpuNestedCircles2.outerCircle2.value = data.cpu_core5 / 100;
             cpuNestedCircles2.outerCircle3.value = data.nvme_total / 100;
@@ -147,6 +219,17 @@ const FuzzyClockWidget = () =>
         child: FuzzyClock(),
     });
 
+const InformationWidget = () =>
+    Widget.Window({
+        name: `desktop_circles_information_widget`,
+        margins: [40, 40],
+        layer: 'background',
+        visible: false,
+        focusable: false,
+        anchor: ['top', 'right'],
+        child: informationBox,
+    });
+
 function createCoreWindow(name, margins, child) {
     return Widget.Window({
         name: name,
@@ -162,6 +245,7 @@ function createCoreWindow(name, margins, child) {
 const circlesMusicWidget = CircleMusicWidget();
 const circlesSayingWidget = SayingWidget();
 const fuzzyClockWidget = FuzzyClockWidget();
+const informationWidget = InformationWidget();
 
 const core1Widget = createCoreWindow(
     'desktop_core_1_widget',
@@ -279,6 +363,7 @@ globalThis.ShowCirclesWidget = () => {
     circlesMusicWidget.visible = true;
     circlesSayingWidget.visible = true;
     fuzzyClockWidget.visible = true;
+    informationWidget.visible = true;
     core1Widget.visible = true;
     core2Widget.visible = true;
     core3Widget.visible = true;
@@ -305,6 +390,7 @@ globalThis.HideCirclesWidget = () => {
     circlesMusicWidget.visible = false;
     circlesSayingWidget.visible = false;
     fuzzyClockWidget.visible = false;
+    informationWidget.visible = false;
     core1Widget.visible = false;
     core2Widget.visible = false;
     core3Widget.visible = false;

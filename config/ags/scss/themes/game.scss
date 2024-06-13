@@ -10,7 +10,7 @@ $text-color: #d4e4fb;
 $icon-font-family: 'FantasqueSansM Nerd Font Propo';
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
-$border-radius: 0.8rem;
+$border-radius: 1.5rem;
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
@@ -146,9 +146,9 @@ $menu-box-background: $bg-one;
 $menu-box-borders: $fg-one;
 
 $profile-box-background: linear-gradient(
-  to right,
-  rgba(#80d6d2, 0.8),
-  rgba(#539cd6, 0.6)
+    to right,
+    rgba(#80d6d2, 0.8),
+    rgba(#539cd6, 0.6)
 );
 $profile-box-color: $bg-two;
 
@@ -196,10 +196,10 @@ $hardware-menu-header-box-background: $bg-two;
 $hardware-menu-tables-box-background: $bg-two;
 
 $hardware-cpu-box-background: linear-gradient(
-  to top,
-  $fg-one,
-  $fg-two,
-  $fg-three
+    to top,
+    $fg-one,
+    $fg-two,
+    $fg-three
 );
 $hardware-cpu-box-color: $bg-one;
 $hardware-cpu-table-row-header-background: $fg-three;
@@ -229,15 +229,15 @@ $btn-hover-background: $fg-one;
 $btn-hover-color: $bg-three;
 
 button {
-  background-color: $btn-background;
-  color: $btn-color;
-  border-color: $btn-background;
+    background-color: $btn-background;
+    color: $btn-color;
+    border-color: $btn-background;
 }
 
 button:hover {
-  background-color: $btn-hover-background;
-  color: $btn-hover-color;
-  border-color: $btn-hover-background;
+    background-color: $btn-hover-background;
+    color: $btn-hover-color;
+    border-color: $btn-hover-background;
 }
 // --------- Menu ---------
 $menu-bg: $bg-one;

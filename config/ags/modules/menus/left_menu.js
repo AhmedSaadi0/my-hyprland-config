@@ -147,7 +147,7 @@ const ThemesButtonsRowOne = () => {
 
     const win20Theme = ThemeButton({
         label: 'ويندوز',
-        icon: '',
+        icon: '󰖳',
         theme: WIN_20,
         end: '',
     });

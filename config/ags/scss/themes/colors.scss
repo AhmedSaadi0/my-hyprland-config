@@ -1,6 +1,6 @@
 $border-color: #1ed4fd;
 $border-size: 2px;
-$bg-one: #352558;
+$bg-one: #352557;
 $bg-two: #1f1635;
 $bg-three: #154a63;
 $fg-one: #1ed4fd;
@@ -10,9 +10,7 @@ $text-color: #bdddee;
 $icon-font-family: 'FantasqueSansM Nerd Font Propo';
 $bar-top-margin: 0.3rem;
 $bar-bottom-margin: 0.3rem;
-
-$border-radius: 0.8rem;
-
+$border-radius: 1.5rem;
 // ------------------------------
 // --------- Workspaces ---------
 // ------------------------------
@@ -24,13 +22,11 @@ $workspace-focused-bottom: $workspace-focused;
 $workspace-has-windows: $workspace-focused;
 $workspace-hover-background: rgba($fg-two, 0.9);
 $workspace-hover-color: rgba($bg-two, 0.9);
-
 // --------------------------------
 // --------- Clock widget ---------
 // --------------------------------
 $clock-background: linear-gradient(to right, $fg-two, $fg-one);
 $clock-color: $bg-two;
-
 // -------------------------------
 // --------- Bar Weather ---------
 // -------------------------------
@@ -38,19 +34,16 @@ $bar-weather-background: linear-gradient(to right, #25f7e2, #cdd4af);
 $bar-weather-color: $bg-two;
 $weather-menu-box-bg: $bg-one;
 $weather-menu-box-fg: $text-color;
-
 // -----------------------
 // --------- bar ---------
 // -----------------------
 $bar-background: $bg-one;
 $bar-color: $text-color;
-
 // --------------------------------
 // --------- prayer times ---------
 // --------------------------------
 $bar-prayer-times-box-background: linear-gradient(to right, #82d8d2, #478dd7);
 $bar-prayer-times-box-color: $bg-two;
-
 // --------------------------------
 // --------- internet box ---------
 // --------------------------------
@@ -62,59 +55,50 @@ $wifi-name-background: $bar-background;
 $wifi-name-color: $bar-color;
 $wifi-icon-background: $wifi-name-background;
 $wifi-icon-color: $wifi-name-color;
-
 // ---------------------------
 // --------- systray ---------
 // ---------------------------
 $systray-background: $bg-two;
 $systray-btn-background: $systray-background;
 $systray-btn-hover-background: $workspace-focused;
-
 // --------------------------------
 // --------- hardware-box ---------
 // --------------------------------
 $hardware-box-color: $bg-two;
-
 // ---------------------------
 // --------- battery ---------
 // ---------------------------
 $battery-background: $hardware-box-color;
 $battery-color: $fg-one;
 $battery-inner-color: $battery-color;
-
 // -----------------------
 // --------- CPU ---------
 // -----------------------
 $cpu-background: $hardware-box-color;
 $cpu-color: #b18dff;
 $cpu-inner-color: $cpu-color;
-
 // ------------------------
 // --------- Temp ---------
 // ------------------------
 $temp-background: $hardware-box-color;
 $temp-color: $fg-two;
 $temp-inner-color: $temp-color;
-
 // -----------------------
 // --------- RAM ---------
 // -----------------------
 $ram-background: $hardware-box-color;
 $ram-color: $fg-three;
 $ram-inner-color: $ram-color;
-
 // ---------------------------
 // --------- Vol osd ---------
 // ---------------------------
 $vol-osd-background: $bg-one;
 $vol-osd-border-color: $border-color;
-
 // -----------------------------
 // --------- GTK Scale ---------
 // -----------------------------
 $scale-highlight-background: $fg-one;
 $scale-slider-background: $fg-one;
-
 // ---------------------------------
 // --------- Notifications ---------
 // ---------------------------------
@@ -135,10 +119,10 @@ $notifications-separator-background: $text-color;
 // --------- desktop-widget ---------
 // ----------------------------------
 $desktop-wd-separator-background: linear-gradient(
-  to bottom,
-  $fg-two,
-  #ffb431,
-  $fg-one
+    to bottom,
+    $fg-two,
+    #ffb431,
+    $fg-one
 );
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
@@ -199,9 +183,9 @@ $menu-box-background: $bg-one;
 $menu-box-borders: $fg-one;
 
 $profile-box-background: linear-gradient(
-  to right,
-  rgba(#a280ff, 0.8),
-  rgba(#774cf0, 0.6)
+    to right,
+    rgba(#a280ff, 0.8),
+    rgba(#774cf0, 0.6)
 );
 $profile-box-color: $bg-two;
 
@@ -277,15 +261,15 @@ $btn-hover-background: $fg-one;
 $btn-hover-color: $bg-three;
 
 button {
-  background-color: $btn-background;
-  color: $btn-color;
-  border-color: $btn-background;
+    background-color: $btn-background;
+    color: $btn-color;
+    border-color: $btn-background;
 }
 
 button:hover {
-  background-color: $btn-hover-background;
-  color: $btn-hover-color;
-  border-color: $btn-hover-background;
+    background-color: $btn-hover-background;
+    color: $btn-hover-color;
+    border-color: $btn-hover-background;
 }
 
 // --------- Menu ---------
