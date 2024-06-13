@@ -66,6 +66,7 @@ const settings = {
         get_wallpapers: getPath('scripts/get_wallpapers.sh'),
         createThumbnail: getPath('scripts/m3/create_thumbnail.py'),
         gtk_theme: getPath('scripts/m3/gtk_theme.py'),
+        systemInfo: getPath('scripts/system_info.sh'),
     },
     theme: {
         scss: `${getPath('scss')}`,

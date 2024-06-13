@@ -1,0 +1,18 @@
+.language-layout-label {
+    border-radius: $border-radius;
+    padding: 0rem 1rem;
+}
+
+.language-layout-icon {
+    font-family: $icon-font-family;
+    font-size: 2rem;
+}
+
+.language-layout-box {
+    padding: 1rem;
+    border-radius: $border-radius;
+    border: $border-size solid $vol-osd-border-color;
+    margin: 1.5rem;
+    background: $menu-bg;
+    color: $menu-fg;
+}

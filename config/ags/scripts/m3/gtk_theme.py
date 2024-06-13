@@ -39,6 +39,9 @@ class GradienceCLI:
         except subprocess.CalledProcessError as e:
             print("Error executing monet command:")
             print(e.stderr.decode())
+        except FileNotFoundError as err:
+            print("Make sure to install gradience on your device")
+            print("Full error : ", err)
 
     def apply(self):
         command = [
@@ -58,6 +61,9 @@ class GradienceCLI:
         except subprocess.CalledProcessError as e:
             print("Error executing apply command:")
             print(e.stderr.decode())
+        except FileNotFoundError as err:
+            print("Make sure to install gradience on your device")
+            print("Full error : ", err)
 
 
 if __name__ == "__main__":
@@ -70,7 +76,6 @@ if __name__ == "__main__":
     parser.add_argument("-n", type=str, help="Theme name", default="gtk-m3")
 
     args = parser.parse_args()
-    print(args)
 
     gradience_cli = GradienceCLI(
         wallpaper_path=args.p,

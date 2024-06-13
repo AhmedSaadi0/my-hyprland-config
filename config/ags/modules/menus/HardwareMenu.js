@@ -20,7 +20,7 @@ const cpuProgress = Widget.CircularProgress({
         label: '',
     }),
     startAt: 0,
-    rounded: false,
+    rounded: true,
 }).poll(1000, (self) => {
     if (menuIsOpen) {
         Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu.sh`)
@@ -40,7 +40,7 @@ const ramProgress = Widget.CircularProgress({
         label: '',
     }),
     startAt: 0,
-    rounded: false,
+    rounded: true,
 }).poll(1000, (self) => {
     if (menuIsOpen) {
         Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
@@ -60,7 +60,7 @@ const batteryProgress = Widget.CircularProgress({
         label: '',
     }),
     startAt: 0,
-    rounded: false,
+    rounded: true,
 }).hook(Battery, (self) => {
     let percentage = Battery.percent;
     self.value = percentage / 100;
@@ -100,7 +100,7 @@ const tempProgress = Widget.CircularProgress({
         label: '',
     }),
     startAt: 0,
-    rounded: false,
+    rounded: true,
 }).poll(30000, (self) => {
     Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/devices_temps.sh`)
         .then((val) => {

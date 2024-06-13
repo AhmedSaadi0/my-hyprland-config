@@ -5,7 +5,6 @@ import { HardwareMenu } from './modules/menus/HardwareMenu.js';
 import { networkMenu } from './modules/menus/NetworkMenu.js';
 import { NotificationCenter } from './modules/menus/notification_center.js';
 import { VolumeOSD } from './modules/on-screen/volume.js';
-import { BrightnessOSD } from './modules/on-screen/brightness.js';
 import MyNotifications from './modules/notifications/OSDNotifications.js';
 import { PrayerTimesMenu } from './modules/menus/PrayerTimesMenu.js';
 import ColorWidget from './modules/widgets/desktop/ColorsWidget.js';
@@ -27,6 +26,7 @@ import {
     TopLeftCorner,
     TopRightCorner,
 } from './modules/components/ScreenCorners.js';
+import { languageLayoutOSD } from './modules/on-screen/KeyboardLayout.js';
 
 // in config.js
 const scss = App.configDir + '/scss/main.scss';
@@ -35,15 +35,13 @@ const css = App.configDir + '/style.css';
 Utils.exec(`sassc ${scss} ${css}`);
 
 let windows = [
-    // Bar({monitor : 1}),
-    // Bar({ monitor: 0 }),
     VolumeOSD(),
-    BrightnessOSD(),
     MyNotifications(),
     NotificationCenter(),
     HardwareMenu(),
     PrayerTimesMenu(),
     WeatherMenu(),
+    languageLayoutOSD,
     // ... Desktop widgets ... //
     ColorWidget,
     win20Widget,

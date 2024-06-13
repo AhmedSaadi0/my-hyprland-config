@@ -9,6 +9,10 @@
 
 **ملاحظة:** هذه الإعدادات لا تزال في مرحلة التطوير، وسأقوم بإضافة المزيد من الميزات بصورة مستمرة عندما يتاح لدي وقت أكثر.
 
+### ملاحظة
+
+يُفضل استخدام هذا الإعداد مع تطبيقات KDE للحصول على أفضل تجربة. إذا اخترت استخدام تطبيقات أخرى، فلا بأس بذلك، ولكن ستحتاج إلى ضبط الإعدادات يدوياً إذا لم يكن لديها ثيم مشابه لبقية التطبيقات.
+
 ### برامج ضرورية
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
@@ -26,6 +30,7 @@
 - sysstat
 - bc
 - sassc
+- swww
 - systemsettings
 - acpi
 - fish
@@ -55,7 +60,7 @@
 ### تثبيت البرامج لمستخدمي Arch:
 
 ```bash
-yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq
 ```
 
 ### مستخدمي Fedora 40
@@ -112,7 +117,7 @@ sudo dnf install plasma-desktop
     # غير ضرورية لانه يتم استخدام nvidia.conf
     # استخدمها اذا كنت تعتقد انك تحتاجها فعلا
     sudo cp /etc/environment /etc/environmentOLD
-    echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
+    echo 'QT_QPA_PLATFORMTHEME=kde' | sudo tee -a /etc/environment
 
     # نسخ اعدادت easyeffects
     cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
@@ -199,6 +204,10 @@ nvim .ahmed-config.json
 
 **Note:** This configuration is a work in progress, and I will continue to add more features as time permits.
 
+### Note
+
+It is recommended to use this setup with KDE applications for the best experience. If you choose to use other applications, that is fine, but you will need to theme them manually if they do not have a theme similar to the rest of the applications.
+
 ### Required dependencies:
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
@@ -245,7 +254,7 @@ nvim .ahmed-config.json
 ### Arch Users:
 
 ```bash
-yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo
+yay -S base-devel strawberry brightnessctl network-manager-applet telegram-desktop wofi konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent ttf-font-awesome-5 jq gufw qt5ct tar gammastep wl-clipboard nwg-look-bin visual-studio-code-bin firefox easyeffects hyprpicker discord hyprshot-git bc sysstat kitty sassc systemsettings ttf-font-awesome-5 orchis-theme-git acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq
 ```
 
 ### Fedora 40 users
@@ -302,7 +311,7 @@ sudo dnf install plasma-desktop
     # Not needed anymore becuase we are using nvidia.conf
     # only use it if you think you realy need it
     sudo cp /etc/environment /etc/environmentOLD
-    echo 'QT_QPA_PLATFORMTHEME=qt5ct' | sudo tee -a /etc/environment
+    echo 'QT_QPA_PLATFORMTHEME=kde' | sudo tee -a /etc/environment
 
     # Copy easyeffects settings
     cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
