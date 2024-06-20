@@ -5,6 +5,7 @@ import Saying from '../Saying.js';
 import { TitleText, local } from '../../utils/helpers.js';
 import { Widget } from '../../utils/imports.js';
 import settings from '../../settings.js';
+import strings from '../../strings.js';
 
 const iconImage = Widget.Icon({
     icon: `${settings.assets.wallpapers}/image.png`,
@@ -23,7 +24,7 @@ const RowOne = () =>
         children: [],
     }).hook(WeatherService, (self) => {
         const tt = TitleText({
-            title: 'اليوم',
+            title: strings.today,
             // titleClass: "weather-wd-title",
             text: WeatherService.arValue,
             textClass: 'my-weather-wd-text',
@@ -70,20 +71,19 @@ const RowTwo = () => {
         self.children = [
             Insider({
                 icon: WeatherService.weatherCode1,
-                title: 'اليوم',
+                title: strings.today,
                 text: WeatherService.avgTempC1,
             }),
             Insider({
                 icon: WeatherService.weatherCode2,
-                title: 'غدا',
+                title: strings.tomorrow,
                 text: WeatherService.avgTempC2,
             }),
             Insider({
                 icon: WeatherService.weatherCode3,
-                title: 'ب غدا',
+                title: strings.dayAfterTomorrow,
                 text: WeatherService.avgTempC3,
-            }),
-            // Insider({
+            }), // Insider({
             //     icon: WeatherService.weatherCode4,
             //     title: "ب يومين",
             //     text: WeatherService.avgTempC4,

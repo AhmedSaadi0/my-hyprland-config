@@ -4,6 +4,7 @@ import {
     CircularProgress,
 } from 'resource:///com/github/Aylur/ags/widget.js';
 import Battery from 'resource:///com/github/Aylur/ags/service/battery.js';
+import strings from '../../strings.js';
 
 export const BatteryWidget = () => {
     const label = Label({
@@ -42,7 +43,7 @@ export const BatteryWidget = () => {
         }
 
         batteryProgress.value = Battery.percent / 100;
-        label.tooltipMarkup = `<span weight='bold' foreground='#FF8580'>نسبة البطارية (${Battery.percent}%)</span>`;
+        label.tooltipMarkup = `<span weight='bold' foreground='#FF8580'>${strings.batteryPercentage} (${Battery.percent}%)</span>`;
 
         label.label = labelText;
     });

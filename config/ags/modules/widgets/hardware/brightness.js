@@ -1,4 +1,5 @@
 import brightness from '../../services/BrightnessService.js';
+import strings from '../../strings.js';
 
 export const BrightnessWidget = () => {
     const label = Widget.Label({
@@ -25,7 +26,7 @@ export const BrightnessWidget = () => {
     }).hook(brightness, (box) => {
         const val = brightness.screen_value;
         progress.value = val;
-        label.tooltipMarkup = `<span weight='bold'>مستوى السطوع (${val * 100})</span>`;
+        label.tooltipMarkup = `<span weight='bold'>${strings.brightnessLevel} (${val * 100})</span>`;
 
         if (val === 1) {
             label.label = '󰃠';

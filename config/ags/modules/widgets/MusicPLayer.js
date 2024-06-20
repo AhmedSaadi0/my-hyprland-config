@@ -1,6 +1,7 @@
 import Gdk from 'gi://Gdk';
 import { Mpris, Utils, Widget } from '../utils/imports.js';
 import { local } from '../utils/helpers.js';
+import strings from '../strings.js';
 
 export var selectedMusicPlayer = null;
 const PLAYER_MENU_ARROW = '🞃';
@@ -141,8 +142,8 @@ const RowTwo = () => {
             title.label = player?.trackTitle;
             artist.label = player?.trackArtists[0];
         } else {
-            title.label = 'لا يوجد عنوان';
-            artist.label = 'لا يوجد فنان';
+            title.label = strings.musicPlayerNoTitle;
+            artist.label = strings.musicPlayerNoArtist;
         }
     });
 };

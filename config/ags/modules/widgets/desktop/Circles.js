@@ -5,6 +5,7 @@ import { selectedMusicPlayer } from '../MusicPLayer.js';
 import NestedCircles from '../../components/NestedCircles.js';
 import { TitleText } from '../../utils/helpers.js';
 import settings from '../../settings.js';
+import strings from '../../strings.js';
 
 let cpuNestedCircles1 = NestedCircles({
     child: Widget.Label({
@@ -59,39 +60,39 @@ const informationBox = Widget.Box({
     vertical: true,
     children: [
         TitleText({
-            title: 'لينكس',
-            text: '',
+            title: strings.linuxTitle,
+            text: '',
             vertical: false,
             spacing: 60,
             boxClass: 'information-widget-header',
         }),
         TitleText({
-            title: 'النظام',
+            title: strings.systemTitle,
             text: '',
             ...titleArgs,
         }),
         TitleText({
-            title: 'الاسم',
+            title: strings.nameTitle,
             text: '',
             ...subTitleArgs,
         }),
         TitleText({
-            title: 'الهوست',
+            title: strings.hostTitle,
             text: '',
             ...subTitleArgs,
         }),
         TitleText({
-            title: 'وقت التشغيل',
+            title: strings.runtimeTitle,
             text: '',
             ...subTitleArgs,
         }),
         TitleText({
-            title: 'مدير الحزم',
+            title: strings.packageManagerTitle,
             text: '',
             ...subTitleArgs,
         }),
         TitleText({
-            title: 'الحزم',
+            title: strings.packagesTitle,
             text: '',
             ...subTitleArgs,
         }),
@@ -145,8 +146,8 @@ const MusicWidget = Widget.Box({
                 box.children[1].label =
                     Mpris?.getPlayer(selectedMusicPlayer)?.trackArtists[0];
             } else {
-                box.children[0].label = 'لا توجد موسيقى قيد التشغبل';
-                box.children[1].label = 'لا توجد موسيقى قيد التشغبل';
+                box.children[0].label = strings.musicPlayerNoMusicPlaying;
+                box.children[1].label = strings.musicPlayerNoMusicPlaying;
             }
         }),
     ],

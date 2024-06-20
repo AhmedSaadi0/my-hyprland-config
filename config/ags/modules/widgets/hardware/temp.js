@@ -6,6 +6,7 @@ import {
 } from 'resource:///com/github/Aylur/ags/widget.js';
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import { Utils } from '../../utils/imports.js';
+import strings from '../../strings.js';
 
 export const TempWidget = () => {
     const label = Label({
@@ -41,7 +42,7 @@ export const TempWidget = () => {
                 }
                 total = parseInt(total / temps.length);
                 progress.value = total / 100;
-                label.tooltipMarkup = `<span weight='bold' foreground='#C78DF2'>اجمالي درجة حرارة الاجهزة (${total}%)</span>`;
+                label.tooltipMarkup = `<span weight='bold' foreground='#C78DF2'>${strings.hardwareTemperature} (${total}%)</span>`;
             })
             .catch(print);
         box.children = [progress];

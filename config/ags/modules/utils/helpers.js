@@ -67,6 +67,17 @@ export const notify = ({
         message,
     ]);
 };
+
+export function truncateString(str, maxLength) {
+    if (str === undefined) return '';
+
+    if (str.length <= maxLength) {
+        return str;
+    } else {
+        return str.substring(0, maxLength) + '...';
+    }
+}
+
 /**
 Widget({
     replacement for properties

@@ -1,6 +1,7 @@
 import tableRow from '../components/TableRow.js';
 import { TitleText, local, notify } from '../utils/helpers.js';
 import settings from '../settings.js';
+import strings from '../strings.js';
 
 const powerProfiles = await Service.import('powerprofiles');
 const Battery = await Service.import('battery');
@@ -26,7 +27,7 @@ const cpuProgress = Widget.CircularProgress({
         Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu.sh`)
             .then((val) => {
                 cpuProgress.value = val / 100;
-                self.child.tooltipMarkup = `<span weight='bold'>مستهلك من المعالج(${val}%)</span>`;
+                self.child.tooltipMarkup = `<span weight='bold'>${strings.cpuUsage} (${val}%)</span>`;
                 cpuUsage = val;
             })
             .catch(print);
@@ -46,7 +47,7 @@ const ramProgress = Widget.CircularProgress({
         Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
             .then((val) => {
                 self.value = val / 100;
-                self.child.tooltipMarkup = `<span weight='bold'>مستهلك من الرام (${val}%)</span>`;
+                self.child.tooltipMarkup = `<span weight='bold'>${strings.ramUsage} (${val}%)</span>`;
                 ramUsage = val;
             })
             .catch(print);
@@ -75,7 +76,6 @@ const batteryProgress = Widget.CircularProgress({
         } else if (percentage > 70) {
             label = '󱊦';
         }
-        // self.child.label = "";
         self.child.className = 'menu-battery-icon-charging';
     } else {
         if (percentage <= 55) {
@@ -85,12 +85,11 @@ const batteryProgress = Widget.CircularProgress({
         } else if (percentage > 70) {
             label = '󱊣';
         }
-        // self.child.label = "";
         self.child.className = 'menu-battery-icon';
     }
     self.child.label = label;
 
-    self.child.tooltipMarkup = `<span weight='bold'>نسبة البطارية (${percentage}%)</span>`;
+    self.child.tooltipMarkup = `<span weight='bold'>${strings.batteryPercentage} (${percentage}%)</span>`;
 });
 
 const tempProgress = Widget.CircularProgress({
@@ -117,8 +116,11 @@ const tempProgress = Widget.CircularProgress({
             if (wifiTemp >= CRITICAL_WIFI_TEMP) {
                 notify({
                     tonePath: settings.assets.audio.high_temp_warning,
-                    title: 'تحذير: درجة حرارة الواي فاي مرتفعة جداً',
-                    message: `درجة حرارة جهاز الواي فاي مرتفعة (${wifiTemp}°C) وقد تؤدي إلى أداء غير مستقر أو تلف الأجهزة. يرجى التحقق من تهوية الجهاز والتأكد من عدم وجود مشكلات في التبريد.`,
+                    title: strings.highWifiTempWarning,
+                    message: strings.highWifiTempMessage.replace(
+                        '${wifiTemp}',
+                        wifiTemp
+                    ),
                     icon: settings.assets.icons.high_temp_warning,
                     priority: 'critical',
                 });
@@ -127,8 +129,11 @@ const tempProgress = Widget.CircularProgress({
             if (nvmeTemp >= CRITICAL_NVME_TEMP) {
                 notify({
                     tonePath: settings.assets.audio.high_temp_warning,
-                    title: 'تحذير: درجة حرارة NVMe مرتفعة جداً',
-                    message: `درجة حرارة NVMe مرتفعة (${nvmeTemp}°C) وقد تؤدي إلى أداء غير مستقر أو تلف الأجهزة. يرجى التحقق من تهوية الجهاز والتأكد من عدم وجود مشكلات في التبريد.`,
+                    title: strings.highNVMeTempWarning,
+                    message: strings.highNVMeTempMessage.replace(
+                        '${nvmeTemp}',
+                        nvmeTemp
+                    ),
                     icon: settings.assets.icons.high_temp_warning,
                     priority: 'critical',
                 });
@@ -137,8 +142,11 @@ const tempProgress = Widget.CircularProgress({
             if (cpuTemp >= CRITICAL_CPU_TEMP) {
                 notify({
                     tonePath: settings.assets.audio.high_temp_warning,
-                    title: 'تحذير: درجة حرارة المعالج المركزي مرتفعة جداً',
-                    message: `درجة حرارة المعالج المركزي مرتفعة (${cpuTemp}°C) وقد تؤدي إلى أداء غير مستقر أو تلف الأجهزة. يرجى التحقق من تهوية الجهاز والتأكد من عدم وجود مشكلات في التبريد.`,
+                    title: strings.highCpuTempWarning,
+                    message: strings.highCpuTempMessage.replace(
+                        '${cpuTemp}',
+                        cpuTemp
+                    ),
                     icon: settings.assets.icons.high_temp_warning,
                     priority: 'critical',
                 });
@@ -169,7 +177,7 @@ const powerProfilesBox = Widget.Box({
             className: 'power-profiles-box-btn',
             on_clicked: () => (powerProfiles.active_profile = 'performance'),
             child: TitleText({
-                title: 'مرتفع',
+                title: strings.highPerformance,
                 text: '󰾆',
                 titleClass: 'power-profiles-title',
                 vertical: false,
@@ -187,7 +195,7 @@ const powerProfilesBox = Widget.Box({
             className: 'power-profiles-box-btn',
             on_clicked: () => (powerProfiles.active_profile = 'balanced'),
             child: TitleText({
-                title: 'معتدل',
+                title: strings.balanced,
                 text: '󰾅',
                 titleClass: 'power-profiles-title',
                 vertical: false,
@@ -205,7 +213,7 @@ const powerProfilesBox = Widget.Box({
             className: 'power-profiles-box-btn',
             on_clicked: () => (powerProfiles.active_profile = 'power-saver'),
             child: TitleText({
-                title: 'منخفض',
+                title: strings.powerSaver,
                 text: '󰓅',
                 titleClass: 'power-profiles-title',
                 vertical: false,
@@ -246,7 +254,7 @@ const hardwareUsageTable = ({
     scriptPath,
     deviceName,
     interval = 2000,
-    headerRightText = 'العملية',
+    headerRightText = strings.process,
     headerLeftText = '%',
 }) => {
     const table = Widget.Box({
@@ -338,8 +346,10 @@ const tablesBox = () => {
                 if (currentVoltage > highVoltage) {
                     notify({
                         tonePath: settings.assets.audio.high_voltage,
-                        title: 'تحذير: فولتية مرتفعة جداً',
-                        message: `جهازك يستخدم شاحن بفولتية (${data['Voltage']} V) أعلى من المتوقع (${highVoltage} V). قد يؤدي ذلك إلى تلف البطارية أو الدوائر الإلكترونية. يرجى استخدام شاحن مناسب لجهازك.`,
+                        title: strings.highVoltageWarning,
+                        message: strings.highVoltageMessage
+                            .replace('${voltage}', data['Voltage'])
+                            .replace('${highVoltage}', highVoltage),
                         icon: settings.assets.icons.high_voltage,
                         priority: 'critical',
                     });
@@ -348,7 +358,7 @@ const tablesBox = () => {
                 let children = [
                     // Header
                     tableRow({
-                        appName: 'البطارية',
+                        appName: strings.battery,
                         percentage: '',
                         header: true,
                         deviceName: batDeviceName,
@@ -395,7 +405,7 @@ const tablesBox = () => {
         let children = [
             // Header
             tableRow({
-                appName: 'حرارة الاجهزة',
+                appName: strings.devicesTemp,
                 percentage: parseInt(tempList['total']) + '%',
                 header: true,
                 rightTextXalign: 0,
@@ -403,17 +413,17 @@ const tablesBox = () => {
             }),
             // Body
             tableRow({
-                appName: 'الوايفاي  ',
+                appName: `${strings.wifiTemp}  `,
                 percentage: parseInt(tempList['wifi']) + ' C°',
                 deviceName: osClassName,
             }),
             tableRow({
-                appName: 'الهارد  󰋊',
+                appName: strings.nvmeTemp + '  󰋊',
                 percentage: parseInt(tempList['nvme_total']) + ' C°',
                 deviceName: osClassName,
             }),
             tableRow({
-                appName: 'المعالج  ',
+                appName: strings.cpuTemp + '  ',
                 percentage: parseInt(tempList['cpu_total']) + ' C°',
                 deviceName: osClassName,
             }),

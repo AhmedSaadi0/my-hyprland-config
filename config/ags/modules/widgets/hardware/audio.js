@@ -1,3 +1,5 @@
+import strings from '../../strings.js';
+
 const audio = await Service.import('audio');
 
 export const AudioWidget = () => {
@@ -36,6 +38,6 @@ export const AudioWidget = () => {
         }
 
         box.show_all();
-        label.tooltipMarkup = `<span weight='bold'>مستوى الصوت (${parseInt(vol * 100)})</span>`;
+        label.tooltipMarkup = `<span weight='bold'>${strings.volumeLevel} (${parseInt(vol * 100)})</span>`;
     });
 };

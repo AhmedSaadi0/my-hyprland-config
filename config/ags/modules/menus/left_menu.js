@@ -30,6 +30,7 @@ import MusicPLayer from '../widgets/MusicPLayer.js';
 import { local } from '../utils/helpers.js';
 import settings from '../settings.js';
 import { Widget } from '../utils/imports.js';
+import strings from '../strings.js';
 
 const Profile = () => {
     const userImage = Icon({
@@ -115,89 +116,89 @@ const ThemesButtonsRowOne = () => {
     // ---------- Theme Buttons ----------
     // -----------------------------------
     const blackHoleTheme = ThemeButton({
-        label: 'ثقب',
+        label: strings.blackHoleTheme,
         icon: '󰇩',
         theme: BLACK_HOLE_THEME,
     });
 
     const deerTheme = ThemeButton({
-        label: 'غزال',
+        label: strings.deerTheme,
         icon: '',
         theme: DEER_THEME,
     });
 
     const colorTheme = ThemeButton({
-        label: 'جمالي',
+        label: strings.colorTheme,
         icon: '',
         theme: COLOR_THEME,
         end: '',
     });
 
     const siberianTheme = ThemeButton({
-        label: 'تدرج',
+        label: strings.siberianTheme,
         icon: '󰚠',
         theme: SIBERIAN_THEME,
     });
 
     const materialYouTheme = ThemeButton({
-        label: 'مادي',
+        label: strings.materialYouTheme,
         icon: '󰦆',
         theme: MATERIAL_YOU,
     });
 
     const win20Theme = ThemeButton({
-        label: 'ويندوز',
+        label: strings.win20Theme,
         icon: '󰖳',
         theme: WIN_20,
         end: '',
     });
 
     const gameTheme = ThemeButton({
-        label: 'لعبة',
+        label: strings.gameTheme,
         icon: '',
         theme: GAME_THEME,
     });
 
     const darkTheme = ThemeButton({
-        label: 'مظلم',
+        label: strings.darkTheme,
         icon: '󱀝',
         theme: DARK_THEME,
     });
 
     const unicatTheme = ThemeButton({
-        label: 'قط',
+        label: strings.unicatTheme,
         icon: '󰄛',
         theme: UNICAT_THEME,
         end: '',
     });
 
     const newCatTheme = ThemeButton({
-        label: 'قط',
+        label: strings.newCatTheme,
         icon: '',
         theme: NEW_CAT_THEME,
     });
 
     const goldenTheme = ThemeButton({
-        label: 'ذهبي',
+        label: strings.goldenTheme,
         icon: '󰉊',
         theme: GOLDEN_THEME,
     });
 
     const harmonyTheme = ThemeButton({
-        label: 'تناغم',
+        label: strings.harmonyTheme,
         icon: '󰔉',
         theme: HARMONY_THEME,
         end: '',
     });
 
     const circlesTheme = ThemeButton({
-        label: 'دوائر',
+        label: strings.circlesTheme,
         icon: '',
         theme: CIRCLES_THEME,
     });
 
     const whiteFlower = ThemeButton({
-        label: 'ابيض',
+        label: strings.whiteFlower,
         icon: '',
         theme: WHITE_FLOWER,
     });
