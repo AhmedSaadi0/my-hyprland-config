@@ -11,6 +11,7 @@ import Notification from '../notifications/MenuNotification.js';
 import { TitleText, local } from '../utils/helpers.js';
 
 import settings from '../settings.js';
+import strings from '../strings.js';
 const NotificationsBox = () => {
     return Box({
         className: 'notification-menu-header',
@@ -45,7 +46,7 @@ const NotificationsBox = () => {
                 }),
                 Label({
                     className: 'no-notification-text',
-                    label: 'لا توجد اي اشعارات جديدة',
+                    label: strings.noNotifications,
                 }),
             ],
         });
@@ -78,7 +79,7 @@ const NotificationHeader = () => {
             }),
             Label({
                 className: 'notification-center-header-text',
-                label: 'مركز الاشعارات',
+                label: strings.notificationCenter,
             }),
             Button({
                 className: 'unset notification-center-header-mute',

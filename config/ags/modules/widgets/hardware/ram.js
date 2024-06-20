@@ -6,6 +6,7 @@ import {
 } from 'resource:///com/github/Aylur/ags/widget.js';
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import { Utils } from '../../utils/imports.js';
+import strings from '../../strings.js';
 
 export const RamWidget = () => {
     const label = Label({
@@ -33,7 +34,7 @@ export const RamWidget = () => {
         execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
             .then((val) => {
                 progress.value = val / 100;
-                label.tooltipMarkup = `<span weight='bold' foreground='#79A7EC'>نسبة الرام المستهلكة (${val}%)</span>`;
+                label.tooltipMarkup = `<span weight='bold' foreground='#79A7EC'>${strings.ramUsage} (${val}%)</span>`;
             })
             .catch(print);
 

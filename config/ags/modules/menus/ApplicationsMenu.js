@@ -1,5 +1,6 @@
 import themeService from '../services/ThemeService.js';
 import settings from '../settings.js';
+import strings from '../strings.js';
 import ThemesDictionary from '../theme/themes.js';
 
 const { query } = await Service.import('applications');
@@ -82,7 +83,7 @@ const Applauncher = ({ width = 500, height = 500, spacing = 12 }) => {
         vertical: true,
         children: [
             Widget.Label({
-                label: `مرحبا ${settings.username}`,
+                label: `${strings.hello} ${settings.username}`,
                 css: 'margin-top:1rem; margin-bottom:2;',
                 className: 'applications-header-title',
             }),

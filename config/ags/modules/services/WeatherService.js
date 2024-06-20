@@ -1,7 +1,8 @@
 // import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 // import Service from 'resource:///com/github/Aylur/ags/service.js';
 import settings from '../settings.js';
-import { notify } from '../utils/helpers.js';
+import strings from '../strings.js';
+import { notify, truncateString } from '../utils/helpers.js';
 import { Service, Utils } from '../utils/imports.js';
 
 class WeatherService extends Service {
@@ -12,6 +13,7 @@ class WeatherService extends Service {
             {
                 // TODAY
                 arValue: ['string', 'r'],
+                weatherValueMaxLength: ['float', 'rw'],
                 weatherCode: ['string', 'r'],
                 maxTempC: ['float', 'r'],
                 minTempC: ['float', 'r'],
@@ -55,6 +57,7 @@ class WeatherService extends Service {
 
     coldWeatherWarned = false;
     hotWeatherWarned = false;
+    #weatherValueMaxLength = 20;
 
     constructor() {
         super();
@@ -92,8 +95,8 @@ class WeatherService extends Service {
         if (parseInt(this.minTempC) <= 7 && !this.coldWeatherWarned) {
             notify({
                 tonePath: settings.assets.audio.cold_weather,
-                title: 'طقس بارد !',
-                message: `درجة الحرارة الصغرى اليوم ${this.minTempC}°`,
+                title: strings.coldWeather,
+                message: `${strings.minTemperature} ${this.minTempC}°`,
                 icon: settings.assets.icons.cold_weather,
                 priority: 'critical',
             });
@@ -101,8 +104,8 @@ class WeatherService extends Service {
         } else if (parseInt(this.maxTempC) > 30 && !this.hotWeatherWarned) {
             notify({
                 tonePath: settings.assets.audio.cold_weather,
-                title: 'طقس حار !',
-                message: `درجة الحرارة الكبرى اليوم ${this.maxTempC}°`,
+                title: strings.hotWeather,
+                message: `${strings.maxTemperature} ${this.maxTempC}°`,
                 icon: settings.assets.icons.hot_weather,
             });
             this.hotWeatherWarned = true;
@@ -143,11 +146,16 @@ class WeatherService extends Service {
 
     get arValue() {
         try {
-            return this.state?.current_condition?.[0]?.lang_ar[0].value;
+            return truncateString(
+                this.state?.current_condition?.[0]?.lang_ar[0].value,
+                this.#weatherValueMaxLength
+            );
         } catch (TypeError) {
             return (
-                this.state?.current_condition?.[0]?.weatherDesc?.[0]?.value ||
-                ''
+                truncateString(
+                    this.state?.current_condition?.[0]?.weatherDesc?.[0]?.value,
+                    this.#weatherValueMaxLength
+                ) || ''
             );
         }
     }
@@ -320,6 +328,13 @@ class WeatherService extends Service {
         return weatherData;
     }
 
+    get weatherValueMaxLength() {
+        return this.#weatherValueMaxLength;
+    }
+
+    set weatherValueMaxLength(value = 20) {
+        this.#weatherValueMaxLength = value;
+    }
     // get avgTempC4() {
     //     return `${this.state.weather[0].hourly[7].tempC} C°`;
     // }

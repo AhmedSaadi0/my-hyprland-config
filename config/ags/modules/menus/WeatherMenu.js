@@ -1,6 +1,7 @@
 import weatherService from '../services/WeatherService.js';
 import { local, TitleText } from '../utils/helpers.js';
 import settings from '../settings.js';
+import strings from '../strings.js';
 const createWeatherDay = () => {
     const time = Widget.Label({
         className: 'weather-menu-today-time',
@@ -139,7 +140,9 @@ const MenuRevealer = () => {
             children: [rowOne, rowTwo],
         }).hook(weatherService, (box) => {
             weatherIcon.label = weatherService.weatherCode;
+            weatherService.weatherValueMaxLength = 100;
             weatherValue.label = `${weatherService.arValue}, ${weatherService.tempC} C°`;
+            weatherService.weatherValueMaxLength = 20;
             weatherCity.label = weatherService.areaName;
 
             sunrise.children[0].label = weatherService.sunrise;
@@ -153,12 +156,12 @@ const MenuRevealer = () => {
             latestUpdate.child.children[0].visible = true;
             latestUpdate.child.children[1].visible = false;
 
-            feelsLike.label = `شعور وكانة : ${weatherService.feelsLike} C°`;
-            humidity.label = `الرطوبة : ${weatherService.humidity}%`;
-            pressure.label = `الضغط : ${weatherService.pressure}`;
-            wind.label = `الرياح : ${weatherService.windspeedKmph}`;
-            clouds.label = `السحب : ${weatherService.cloudcover}`;
-            minAndMax.label = `الصغرى والعلياء : ${weatherService.minTempC} - ${weatherService.maxTempC}`;
+            feelsLike.label = `${strings.feelsLike} : ${weatherService.feelsLike} C°`;
+            humidity.label = `${strings.humidity} : ${weatherService.humidity}%`;
+            pressure.label = `${strings.pressure} : ${weatherService.pressure}`;
+            wind.label = `${strings.wind} : ${weatherService.windspeedKmph}`;
+            clouds.label = `${strings.clouds} : ${weatherService.cloudcover}`;
+            minAndMax.label = `${strings.minAndMax} : ${weatherService.minTempC} - ${weatherService.maxTempC}`;
 
             today1.children[0].label = weatherService.hourly.hour1.time;
             today1.children[1].label = `${weatherService.hourly.hour1.weatherCode} ${weatherService.hourly.hour1.tempC} C°`;

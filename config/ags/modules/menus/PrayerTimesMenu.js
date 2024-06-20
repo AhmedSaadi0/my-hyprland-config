@@ -2,10 +2,11 @@ import prayerService from '../services/PrayerTimesService.js';
 import { local, TitleText } from '../utils/helpers.js';
 import { Widget } from '../utils/imports.js';
 import settings from '../settings.js';
+import strings from '../strings.js';
 
 const MenuRevealer = () => {
     const header = TitleText({
-        title: 'اوقات الصلوات',
+        title: strings.prayerTimes,
         text: '',
         titleClass: 'prayer-times-menu-header-title',
         textClass: 'prayer-times-menu-header-icon',
@@ -15,7 +16,7 @@ const MenuRevealer = () => {
     });
 
     const fajr = TitleText({
-        title: 'صلاة الفجر',
+        title: strings.fajrPrayer,
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class',
@@ -24,7 +25,7 @@ const MenuRevealer = () => {
     });
 
     const dhuhr = TitleText({
-        title: 'صلاة الظهر',
+        title: strings.dhuhrPrayer,
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class',
@@ -33,7 +34,7 @@ const MenuRevealer = () => {
     });
 
     const asr = TitleText({
-        title: 'صلاة العصر',
+        title: strings.asrPrayer,
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class',
@@ -42,7 +43,7 @@ const MenuRevealer = () => {
     });
 
     const maghrib = TitleText({
-        title: 'صلاة المغرب',
+        title: strings.maghribPrayer,
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class',
@@ -51,7 +52,7 @@ const MenuRevealer = () => {
     });
 
     const isha = TitleText({
-        title: 'صلاة العشاء',
+        title: strings.ishaPrayer,
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class isha-item',

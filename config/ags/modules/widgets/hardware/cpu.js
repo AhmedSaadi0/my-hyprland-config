@@ -6,6 +6,7 @@ import {
 } from 'resource:///com/github/Aylur/ags/widget.js';
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import { Utils } from '../../utils/imports.js';
+import strings from '../../strings.js';
 
 export const CpuWidget = () => {
     const label = Label({
@@ -33,7 +34,7 @@ export const CpuWidget = () => {
         execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu.sh`)
             .then((val) => {
                 progress.value = val / 100;
-                label.tooltipMarkup = `<span weight='bold' foreground='#FDC227'>يتم استخدام (${val}%) من المعالج</span>`;
+                label.tooltipMarkup = `<span weight='bold' foreground='#FDC227'>${strings.cpuUsage} (${val}%)</span>`;
             })
             .catch(print);
         box.children = [progress];
