@@ -288,7 +288,7 @@ sudo dnf install plasma-desktop
 
 ### Setting up files:
 
-    git clone git@github.com:AhmedSaadi0/my-hyprland-config.git
+    git clone https://github.com/AhmedSaadi0/my-hyprland-config.git
 
     # backup your files
     mv ~/.config/hypr/ ~/.config/hypr-old
