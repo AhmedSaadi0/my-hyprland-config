@@ -22,4 +22,4 @@ case $command in
 esac
 
 # Perform the action using playerctl
-playerctl -p G4Music "$command"
+playerctl -p strawberry "$command"
