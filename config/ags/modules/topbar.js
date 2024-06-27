@@ -16,6 +16,7 @@ import weatherService from './services/WeatherService.js';
 import prayerService from './services/PrayerTimesService.js';
 import { Widget } from './utils/imports.js';
 import themeService from './services/ThemeService.js';
+import strings from './strings.js';
 
 const Clock = () =>
     Label({
@@ -50,7 +51,7 @@ const Weather = () => {
                 text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.arValue}`;
                 icon.label = `${weatherService.weatherCode}`;
             } else {
-                text.label = `خدمة الطقس غير متاحة`;
+                text.label = strings.weatherNotAvailable;
             }
         }),
     });
@@ -86,10 +87,10 @@ const PrayerTimes = () => {
             if (!prayerService.prayerNow) {
                 text.child.label = `${prayerService.nextPrayerName} (${prayerService.nextPrayerTime})`;
             } else {
-                text.child.label = `حان الان وقت صلاة ${prayerService.prayerNow}`;
+                text.child.label = `${strings.prayerTimeNow} ${prayerService.prayerNow}`;
             }
         } else {
-            text.child.label = `غير متاحة`;
+            text.child.label = `-`;
         }
     });
 };

@@ -20,8 +20,9 @@ const MenuRevealer = () => {
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class',
-        spacing: 25,
+        // spacing: 25,
         titleXalign: 0,
+        homogeneous: true,
     });
 
     const dhuhr = TitleText({
@@ -29,8 +30,9 @@ const MenuRevealer = () => {
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class',
-        spacing: 25,
+        // spacing: 25,
         titleXalign: 0,
+        homogeneous: true,
     });
 
     const asr = TitleText({
@@ -38,8 +40,9 @@ const MenuRevealer = () => {
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class',
-        spacing: 25,
+        // spacing: 25,
         titleXalign: 0,
+        homogeneous: true,
     });
 
     const maghrib = TitleText({
@@ -47,8 +50,9 @@ const MenuRevealer = () => {
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class',
-        spacing: 14,
+        // spacing: 14,
         titleXalign: 0,
+        homogeneous: true,
     });
 
     const isha = TitleText({
@@ -56,8 +60,9 @@ const MenuRevealer = () => {
         text: '',
         vertical: false,
         boxClass: 'prayer-time-item-box-class isha-item',
-        spacing: 17,
+        // spacing: 17,
         titleXalign: 0,
+        homogeneous: true,
     });
 
     return Widget.Revealer({

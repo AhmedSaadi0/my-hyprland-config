@@ -42,6 +42,12 @@ const strings = {
         asrPrayer: 'صلاة العصر',
         maghribPrayer: 'صلاة المغرب',
         ishaPrayer: 'صلاة العشاء',
+        prayerTimeNow: 'حان الآن وقت صلاة',
+        fajr: 'الفجر',
+        isha: 'العشاء',
+        maghrib: 'المغرب',
+        asr: 'العصر',
+        dhuhr: 'الظهر',
 
         // Weather
         feelsLike: 'شعور وكانة',
@@ -54,6 +60,7 @@ const strings = {
         hotWeather: 'طقس حار !',
         minTemperature: 'درجة الحرارة الصغرى اليوم',
         maxTemperature: 'درجة الحرارة الكبرى اليوم',
+        weatherNotAvailable: 'خدمة الطقس غير متاحة',
 
         // Fuzzy Widget
         fuzzyClockThursday: 'أرحب يالخميس',
@@ -88,8 +95,8 @@ const strings = {
         usedTimeNowFriday: 'الاسترخاء والاستمتاع، استمتع بلحظات الهدوء.',
         fuzzyTimeThursday:
             'الخميس هو وقتك الخاص، استمتع بكل لحظة وافعل ما تريد.',
-        musicPlayerNoArtist: 'ﻻ ﻱﻮﺟﺩ ﻒﻧﺎﻧ',
-        musicPlayerNoTitle: 'ﻻ ﻱﻮﺟﺩ ﻊﻧﻭﺎﻧ',
+        musicPlayerNoArtist: 'لا يوجد فنان',
+        musicPlayerNoTitle: 'لا يوجد عنوان',
         musicPlayerNoMusicPlaying: 'لا توجد موسيقى قيد التشغيل',
 
         // Hardware
@@ -163,6 +170,7 @@ const strings = {
         runtimeTitle: 'Runtime',
         packageManagerTitle: 'Package Manager',
         packagesTitle: 'Packages',
+        weatherNotAvailable: 'Weather not available',
 
         // Prayers
         prayerTimes: 'Prayer Times',
@@ -171,6 +179,12 @@ const strings = {
         asrPrayer: 'Asr Prayer',
         maghribPrayer: 'Maghrib Prayer',
         ishaPrayer: 'Isha Prayer',
+        prayerTimeNow: 'It is now time for',
+        fajr: 'Fajr',
+        isha: 'Isha',
+        maghrib: 'Maghrib',
+        asr: 'Asr',
+        dhuhr: 'Dhuhr',
 
         // Weather
         feelsLike: 'Feels Like',
