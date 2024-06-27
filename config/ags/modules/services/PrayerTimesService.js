@@ -1,4 +1,5 @@
 import settings from '../settings.js';
+import strings from '../strings.js';
 import { notify } from '../utils/helpers.js';
 import { Service, Utils, App } from '../utils/imports.js';
 
@@ -114,8 +115,8 @@ class PrayerTimesService extends Service {
         this.source = setTimeout(
             () => {
                 notify({
-                    title: 'اوقات الصلوات !',
-                    message: `حان الان موعد صلاة (${prayerName})`,
+                    title: strings.prayerTimes,
+                    message: `${strings.prayerTimeNow} (${prayerName})`,
                     icon: settings.assets.icons.mosque,
                     tonePath: settings.assets.audio.prayer_time,
                 });
@@ -202,39 +203,39 @@ class PrayerTimesService extends Service {
         this.calculateTimes(json, now);
 
         if (now >= isha || now < fajr) {
-            this.notifyForCurrentPrayerTime(now, fajr, 'الفجر');
+            this.notifyForCurrentPrayerTime(now, fajr, strings.fajr);
             return {
-                name: 'الفجر',
+                name: strings.fajr,
                 time: this.getHoursMinutes(fajr),
             };
         }
 
         if (now >= maghrib && now < isha) {
-            this.notifyForCurrentPrayerTime(now, isha, 'العشاء');
+            this.notifyForCurrentPrayerTime(now, isha, strings.ish);
             return {
-                name: 'العشاء',
+                name: strings.isha,
                 time: this.getHoursMinutes(isha),
             };
         }
 
         if (now >= asr && now < maghrib) {
-            this.notifyForCurrentPrayerTime(now, maghrib, 'المغرب');
+            this.notifyForCurrentPrayerTime(now, maghrib, strings.maghri);
             return {
-                name: 'المغرب',
+                name: strings.maghrib,
                 time: this.getHoursMinutes(maghrib),
             };
         }
 
         if (now >= dhuhr && now < asr) {
-            this.notifyForCurrentPrayerTime(now, asr, 'العصر');
+            this.notifyForCurrentPrayerTime(now, asr, strings.as);
             return {
-                name: 'العصر',
+                name: strings.asr,
                 time: this.getHoursMinutes(asr),
             };
         } else {
-            this.notifyForCurrentPrayerTime(now, dhuhr, 'الظهر');
+            this.notifyForCurrentPrayerTime(now, dhuhr, strings.dhuh);
             return {
-                name: 'الظهر',
+                name: strings.dhuhr,
                 time: this.getHoursMinutes(dhuhr),
             };
         }
