@@ -81,12 +81,14 @@ const settings = {
             notificationMenu: 'slide_down',
             prayerTimesMenu: 'slide_down',
             hardwareMenu: 'slide_down',
+            audioMenu: 'slide_down',
 
             leftMenuDuration: 300,
             weatherMenuDuration: 300,
             notificationMenuDuration: 300,
             prayerTimesMenuDuration: 300,
             hardwareMenuDuration: 300,
+            audioMenuDuration: 300,
         },
     },
     weather: {

@@ -21,6 +21,8 @@ import whiteFlowerWidget from './modules/widgets/desktop/WhiteFlower.js';
 import { WeatherMenu } from './modules/menus/WeatherMenu.js';
 import settings from './modules/settings.js';
 import { applauncher } from './modules/menus/ApplicationsMenu.js';
+import { AudioMenu } from './modules/menus/AudioMenu.js';
+
 
 import {
     TopLeftCorner,
@@ -41,6 +43,7 @@ let windows = [
     HardwareMenu(),
     PrayerTimesMenu(),
     WeatherMenu(),
+    AudioMenu(),
     languageLayoutOSD,
     // ... Desktop widgets ... //
     ColorWidget,
