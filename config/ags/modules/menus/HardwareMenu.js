@@ -331,7 +331,7 @@ const tablesBox = () => {
                 const currentEnergyRate = parseFloat(data['Energy_Rate']);
                 const maxAllowedEnergyRate = 35; // Maximum allowed energy rate in W
                 const currentVoltage = parseFloat(data['Voltage']);
-                const highVoltage = 13; // High voltage in V
+                const highVoltage = 14; // High voltage in V
 
                 // if (currentEnergyRate > maxAllowedEnergyRate) {
                 //   notify({

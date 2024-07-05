@@ -136,6 +136,9 @@ const strings = {
         cpuUsage: 'يتم استخدام المعالج',
         ramUsage: 'نسبة الرام المستهلكة',
         hardwareTemperature: 'اجمالي درجة حرارة الاجهزة',
+
+        // audio 
+        volumeLevel: ' مستوى الصوت ',
     },
     en: {
         hello: 'Hello',
@@ -278,6 +281,9 @@ const strings = {
         cpuUsage: 'CPU Usage',
         ramUsage: 'RAM Usage',
         hardwareTemperature: 'Hardware Temperature',
+
+        // audio 
+        volumeLevel: ' Volume Level ',
     },
 };
 
