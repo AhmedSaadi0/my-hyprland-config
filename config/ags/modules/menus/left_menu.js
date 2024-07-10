@@ -174,7 +174,7 @@ const ThemesButtonsRowOne = () => {
 
     const newCatTheme = ThemeButton({
         label: strings.newCatTheme,
-        icon: '',
+        icon: '',
         theme: NEW_CAT_THEME,
     });
 
