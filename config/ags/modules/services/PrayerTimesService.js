@@ -211,7 +211,7 @@ class PrayerTimesService extends Service {
         }
 
         if (now >= maghrib && now < isha) {
-            this.notifyForCurrentPrayerTime(now, isha, strings.ish);
+            this.notifyForCurrentPrayerTime(now, isha, strings.isha);
             return {
                 name: strings.isha,
                 time: this.getHoursMinutes(isha),
@@ -219,7 +219,7 @@ class PrayerTimesService extends Service {
         }
 
         if (now >= asr && now < maghrib) {
-            this.notifyForCurrentPrayerTime(now, maghrib, strings.maghri);
+            this.notifyForCurrentPrayerTime(now, maghrib, strings.maghrib);
             return {
                 name: strings.maghrib,
                 time: this.getHoursMinutes(maghrib),
@@ -227,13 +227,13 @@ class PrayerTimesService extends Service {
         }
 
         if (now >= dhuhr && now < asr) {
-            this.notifyForCurrentPrayerTime(now, asr, strings.as);
+            this.notifyForCurrentPrayerTime(now, asr, strings.asr);
             return {
                 name: strings.asr,
                 time: this.getHoursMinutes(asr),
             };
         } else {
-            this.notifyForCurrentPrayerTime(now, dhuhr, strings.dhuh);
+            this.notifyForCurrentPrayerTime(now, dhuhr, strings.dhuhr);
             return {
                 name: strings.dhuhr,
                 time: this.getHoursMinutes(dhuhr),
