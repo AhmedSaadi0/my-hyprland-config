@@ -211,10 +211,10 @@ const uniCat = {
     plasma_color: 'Unicat.colors',
     qt_5_style_theme: 'Breeze',
     qt_6_style_theme: 'kvantum',
-    qt_icon_theme: 'Magma',
+    qt_icon_theme: 'Vivid-Dark-Icons',
     kvantum_theme: 'Win10XOS-Concept',
     gtk_theme: 'Dracula',
-    gtk_icon_theme: 'Magma',
+    gtk_icon_theme: 'Vivid-Dark-Icons',
     gtk_mode: 'dark',
     font_name: 'JF Flat 11',
     hypr: {
