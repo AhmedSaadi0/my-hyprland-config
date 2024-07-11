@@ -466,7 +466,7 @@ const menuRevealer = Widget.Revealer({
         children: [
             Widget.Label({
                 className: 'media-menu-header',
-                label: strings.mediaCenter,
+                label: strings.controlCenter,
             }),
             headerBox,
             tablesBox(),
