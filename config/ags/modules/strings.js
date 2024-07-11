@@ -20,7 +20,7 @@ const strings = {
         gameTheme: 'لعبة',
         darkTheme: 'مظلم',
         unicatTheme: 'قط',
-        newCatTheme: 'قط',
+        newCatTheme: 'قط 2',
         goldenTheme: 'ذهبي',
         harmonyTheme: 'تناغم',
         circlesTheme: 'دوائر',
