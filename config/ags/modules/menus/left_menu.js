@@ -26,7 +26,6 @@ import {
     Revealer,
 } from 'resource:///com/github/Aylur/ags/widget.js';
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
-import MusicPLayer from '../widgets/MusicPLayer.js';
 import { local } from '../utils/helpers.js';
 import settings from '../settings.js';
 import { Widget } from '../utils/imports.js';
@@ -363,7 +362,6 @@ const widgets = Box({
         Header(),
         Profile(),
         ThemesButtonsRowOne(),
-        MusicPLayer('left-menu-music-wd'),
         PowerButtonsRow(),
     ],
 });
