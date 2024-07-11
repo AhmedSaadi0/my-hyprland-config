@@ -138,8 +138,7 @@ const strings = {
         ramUsage: 'نسبة الرام المستهلكة',
         hardwareTemperature: 'اجمالي درجة حرارة الاجهزة',
 
-        // audio 
-        volumeLevel: ' مستوى الصوت ',
+        mediaCenter: 'مركز الوسائط',
     },
     en: {
         hello: 'Hello',
@@ -284,8 +283,8 @@ const strings = {
         ramUsage: 'RAM Usage',
         hardwareTemperature: 'Hardware Temperature',
 
-        // audio 
-        volumeLevel: ' Volume Level ',
+        // audio
+        mediaCenter: 'Media Center',
     },
 };
 

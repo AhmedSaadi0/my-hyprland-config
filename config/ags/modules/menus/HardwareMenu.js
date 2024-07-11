@@ -463,7 +463,14 @@ const menuRevealer = Widget.Revealer({
     child: Widget.Box({
         className: 'hardware-menu-box',
         vertical: true,
-        children: [headerBox, tablesBox()],
+        children: [
+            Widget.Label({
+                className: 'media-menu-header',
+                label: strings.mediaCenter,
+            }),
+            headerBox,
+            tablesBox(),
+        ],
     }),
 });
 
