@@ -139,6 +139,7 @@ const strings = {
         hardwareTemperature: 'اجمالي درجة حرارة الاجهزة',
 
         mediaCenter: 'مركز الوسائط',
+        controlCenter: 'مركز التحكم',
     },
     en: {
         hello: 'Hello',
@@ -285,6 +286,7 @@ const strings = {
 
         // audio
         mediaCenter: 'Media Center',
+        controlCenter: 'Media Center',
     },
 };
 
