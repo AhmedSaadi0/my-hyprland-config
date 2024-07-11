@@ -25,9 +25,9 @@ export const Volume = () =>
                     // brightness icons
                     b_100: Label({ css: margin, label: '󰃠' }),
                     b_67: Label({ css: margin, label: '󰃝' }),
-                    b_634: Label({ css: margin, label: '󰃟' }),
-                    b_61: Label({ css: margin, label: '󰃞' }),
-                    b_60: Label({ css: margin, label: '󰃞' }),
+                    b_34: Label({ css: margin, label: '󰃟' }),
+                    b_1: Label({ css: margin, label: '󰃞' }),
+                    b_0: Label({ css: margin, label: '󰃞' }),
 
                     // volume icons
                     v_101: Icon('audio-volume-overamplified-symbolic'),
