@@ -230,6 +230,7 @@ $left-menu-music-wd-padding-right: 1.8rem;
 // ---------------------------
 $hardware-menu-box-background: $bg-one;
 $hardware-menu-header-box-background: $bg-two;
+$hardware-menu-header-box-background: $bg-two;
 $hardware-menu-tables-box-background: $bg-two;
 
 $hardware-cpu-box-background: linear-gradient(to top, $fg-one, $fg-two);
@@ -251,6 +252,14 @@ $hardware-os-box-background: rgba($fg-two, 0.9);
 $hardware-os-box-color: #211008;
 $hardware-os-table-row-header-background: rgba($fg-two, 0.8);
 $hardware-os-table-row-header-color: #211008;
+
+// ---------------------------
+// --------- audio menu ---------
+// ---------------------------
+$audio-menu-box-background: $bg-one;
+$audio-menu-header-box-background: $bg-two;
+$audio-menu-header-box-background: $bg-two;
+$audio-menu-tables-box-background: $bg-two;
 
 // --------------------------------
 // --------- GTK elements ---------

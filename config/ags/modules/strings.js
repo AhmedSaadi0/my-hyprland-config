@@ -131,11 +131,15 @@ const strings = {
         process: 'العملية',
         percentage: '%',
         volumeLevel: 'مستوى الصوت',
+        brightnessLevel: 'مستوى السطوع',
         batteryPercentage: 'نسبة البطارية',
         brightnessLevel: 'مستوى السطوع',
         cpuUsage: 'يتم استخدام المعالج',
         ramUsage: 'نسبة الرام المستهلكة',
         hardwareTemperature: 'اجمالي درجة حرارة الاجهزة',
+
+        // audio 
+        volumeLevel: ' مستوى الصوت ',
     },
     en: {
         hello: 'Hello',
@@ -273,11 +277,15 @@ const strings = {
         process: 'Process',
         percentage: '%',
         volumeLevel: 'Volume Level',
+        brightnessLevel: 'Brightness Level',
         batteryPercentage: 'Battery Percentage',
         brightnessLevel: 'Brightness Level',
         cpuUsage: 'CPU Usage',
         ramUsage: 'RAM Usage',
         hardwareTemperature: 'Hardware Temperature',
+
+        // audio 
+        volumeLevel: ' Volume Level ',
     },
 };
 

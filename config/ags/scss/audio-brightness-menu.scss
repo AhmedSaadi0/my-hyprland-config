@@ -1,0 +1,76 @@
+.audio-menu-box {
+    background: $audio-menu-box-background;
+    border-radius: $border-radius;
+    border: $border-size solid $border-color;
+    padding: 1rem;
+}
+
+.audio-menu-header-box {
+    background: $audio-menu-header-box-background;
+    border-radius: $border-radius;
+    padding: 0.6rem;
+    margin: 0.8rem;
+}
+
+.audio-menu-power-profile-box {
+    @if variable-exists(audio-menu-power-profile-box) {
+        background: $audio-menu-power-profile-box;
+    } @else {
+        background: $audio-menu-header-box-background;
+    }
+
+    border-radius: $border-radius;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.power-profiles-box-btn {
+    margin: 0.3rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
+    // font-family: $icon-font-family;
+}
+
+.power-profiles-box-btn-active {
+    background: $btn-hover-background;
+    color: $btn-hover-color;
+    box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
+    // font-family: $icon-font-family;
+}
+
+// --------- audio ---------
+.audio-menu-box-progress {
+    font-size: 0.5rem;
+    min-width: 6.5rem;
+    min-height: 6.5rem;
+    margin: 1rem;
+}
+
+.audio-menu-box-icon {
+    font-family: $icon-font-family;
+    font-size: 2rem;
+}
+
+.menu-audio {
+    @extend .audio-menu-box-progress;
+    color: $ram-inner-color;
+}
+
+.menu-audio-icon {
+    @extend .audio-menu-box-icon;
+    color: $ram-inner-color;
+}
+
+// --------- Brightness ---------
+.menu-brightness {
+    @extend .audio-menu-box-progress;
+    color: $cpu-inner-color;
+}
+
+.menu-brightness-icon {
+    @extend .audio-menu-box-icon;
+    color: $cpu-inner-color;
+}

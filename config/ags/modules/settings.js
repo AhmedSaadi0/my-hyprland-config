@@ -78,15 +78,19 @@ const settings = {
         menuTransitions: {
             leftMenu: 'slide_down',
             weatherMenu: 'slide_down',
+            networkMenu: 'slide_down',
             notificationMenu: 'slide_down',
             prayerTimesMenu: 'slide_down',
             hardwareMenu: 'slide_down',
+            audioMenu: 'slide_down',
 
             leftMenuDuration: 300,
             weatherMenuDuration: 300,
+            networkMenuDuration: 300,
             notificationMenuDuration: 300,
             prayerTimesMenuDuration: 300,
             hardwareMenuDuration: 300,
+            audioMenuDuration: 300,
         },
     },
     weather: {

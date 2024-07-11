@@ -8,6 +8,7 @@ export const BrightnessWidget = () => {
     });
 
     const button = Widget.Button({
+        onClicked: () => showAudioMenu(),
         className: 'unset no-hover',
         child: label,
     });

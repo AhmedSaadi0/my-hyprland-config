@@ -72,39 +72,47 @@ const NetSpeedMeters = () => {
     });
 };
 
-export const NetworkInformation = () =>
-    Box({
-        className: 'internet-box small-shadow unset',
-    }).hook(Network, (box) => {
-        let internetLabel;
-
-        const ssidLabel = Label({
-            className: 'wifi-name-label unset',
-            label: `${Network.wifi.ssid}`,
-        });
-
-        if (Network.wifi?.internet === 'disconnected') {
-            internetLabel = '󰤮';
-        } else if (Network.connectivity === 'limited') {
-            internetLabel = '󰤩';
-        } else if (Network.wifi?.strength > 85) {
-            internetLabel = '󰤨';
-        } else if (Network.wifi?.strength > 70) {
-            internetLabel = '󰤥';
-        } else if (Network.wifi?.strength > 50) {
-            internetLabel = '󰤢';
-        } else if (Network.wifi?.strength > 20) {
-            internetLabel = '󰤟';
-        } else {
-            internetLabel = '󰤯';
-        }
-
-        const internetStatusLabel = Label({
-            className: 'wifi-icon-strength unset',
-            label: internetLabel,
-        });
-
-        box.children = [NetSpeedMeters(), ssidLabel, internetStatusLabel];
-
-        box.show_all();
+export const NetworkInformation = () =>{
+    let button = Widget.Button({
+        className: 'unset un-hover',
+        onClicked: () => showNetworkMenu(),
+        child: Box({
+            className: 'internet-box small-shadow unset',
+        }).hook(Network, (box) => {
+            let internetLabel;
+    
+            const ssidLabel = Label({
+                className: 'wifi-name-label unset',
+                label: `${Network.wifi.ssid}`,
+            });
+    
+            if (Network.wifi?.internet === 'disconnected') {
+                internetLabel = '󰤮';
+            } else if (Network.connectivity === 'limited') {
+                internetLabel = '󰤩';
+            } else if (Network.wifi?.strength > 85) {
+                internetLabel = '󰤨';
+            } else if (Network.wifi?.strength > 70) {
+                internetLabel = '󰤥';
+            } else if (Network.wifi?.strength > 50) {
+                internetLabel = '󰤢';
+            } else if (Network.wifi?.strength > 20) {
+                internetLabel = '󰤟';
+            } else {
+                internetLabel = '󰤯';
+            }
+    
+            const internetStatusLabel = Label({
+                className: 'wifi-icon-strength unset',
+                label: internetLabel,
+            });
+    
+            box.children = [NetSpeedMeters(), ssidLabel, internetStatusLabel];
+    
+            box.show_all();
+        })
     });
+
+    return button;
+}
+    
