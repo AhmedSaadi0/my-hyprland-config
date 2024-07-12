@@ -158,7 +158,7 @@ const tempProgress = Widget.CircularProgress({
             tempList['total'] = totalTemp;
 
             self.value = totalTemp / 100;
-            self.child.tooltipMarkup = `<span weight='bold'>اجمالي درجة حرارة الاجهزة (${parseInt(totalTemp)}%)</span>`;
+            self.child.tooltipMarkup = `<span weight='bold'>${strings.deviceTempTotal}(${parseInt(totalTemp)}%)</span>`;
         })
         .catch(print);
 });
