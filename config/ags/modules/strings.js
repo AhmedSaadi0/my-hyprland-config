@@ -140,6 +140,7 @@ const strings = {
 
         mediaCenter: 'مركز الوسائط',
         controlCenter: 'مركز التحكم',
+        hardwareCenter: 'مركز العتاد',
     },
     en: {
         hello: 'Hello',
@@ -287,6 +288,7 @@ const strings = {
         // audio
         mediaCenter: 'Media Center',
         controlCenter: 'Media Center',
+        hardwareCenter: 'Hardware Center',
     },
 };
 

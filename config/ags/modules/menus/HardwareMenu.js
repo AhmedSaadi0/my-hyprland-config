@@ -158,7 +158,7 @@ const tempProgress = Widget.CircularProgress({
             tempList['total'] = totalTemp;
 
             self.value = totalTemp / 100;
-            self.child.tooltipMarkup = `<span weight='bold'>${strings.deviceTempTotal}(${parseInt(totalTemp)}%)</span>`;
+            self.child.tooltipMarkup = `<span weight='bold'>${strings.deviceTempTotal} (${parseInt(totalTemp)}%)</span>`;
         })
         .catch(print);
 });
@@ -466,7 +466,7 @@ const menuRevealer = Widget.Revealer({
         children: [
             Widget.Label({
                 className: 'media-menu-header',
-                label: strings.controlCenter,
+                label: strings.hardwareCenter,
             }),
             headerBox,
             tablesBox(),
