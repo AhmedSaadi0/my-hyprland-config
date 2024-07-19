@@ -1,0 +1,34 @@
+.calendar-menu-box {
+  min-width: 2rem;
+
+  @if variable-exists($name: weather-menu-box-bg) {
+    background: $weather-menu-box-bg;
+  }
+
+  @if variable-exists($name: weather-menu-box-fg) {
+    color: $weather-menu-box-fg;
+  }
+
+  padding: 1rem 1rem;
+  border: $border-size solid $border-color;
+  border-radius: $border-radius;
+}
+
+.calendar-popup {
+  padding: 5px;
+  // background-color: $calendar-bg;
+  // color: $text-color;
+  border: $border-size solid $border-color;
+  border-radius: $border-radius;
+}
+
+.calendar-popup .today {
+  background-color: #17293f;  
+  color: #bbd1ec;
+}
+
+.time-popup {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px;
+}

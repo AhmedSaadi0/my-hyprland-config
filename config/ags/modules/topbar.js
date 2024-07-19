@@ -18,14 +18,26 @@ import { Widget } from './utils/imports.js';
 import themeService from './services/ThemeService.js';
 import strings from './strings.js';
 
-const Clock = () =>
-    Label({
+const Clock = () => {
+    let label = Label({
         className: 'clock small-shadow unset',
-    }).poll(1000, (self) =>
+    });
+
+    let button = Widget.Button({
+        className: 'unset un-hover',
+        onClicked: () => showCalendarMenu(),
+        child: label,
+    });
+
+    label.poll(1000, (self) =>
         execAsync(['date', '+(%I:%M) %A, %d %B'])
             .then((date) => (self.label = date))
             .catch(print)
     );
+
+    return button;
+};
+
 
 const Weather = () => {
     let icon = Label({
