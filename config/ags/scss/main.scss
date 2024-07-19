@@ -1,4 +1,4 @@
-@import './themes/m3/dynamic.scss';
+@import './themes/white-flower.scss';
 
 $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 
@@ -20,6 +20,8 @@ $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 @import './applications-menu.scss';
 @import './audio-brightness-menu.scss';
 @import './circle-theme-information.scss';
+@import './calendar-menu.scss';
+
 
 // * {
 //     all: unset;

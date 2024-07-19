@@ -83,6 +83,7 @@ const settings = {
             prayerTimesMenu: 'slide_down',
             hardwareMenu: 'slide_down',
             audioMenu: 'slide_down',
+            calendarMenu: 'slide_down',
 
             leftMenuDuration: 300,
             weatherMenuDuration: 300,
@@ -91,6 +92,7 @@ const settings = {
             prayerTimesMenuDuration: 300,
             hardwareMenuDuration: 300,
             audioMenuDuration: 300,
+            calendarMenuDuration: 300,
         },
     },
     weather: {
