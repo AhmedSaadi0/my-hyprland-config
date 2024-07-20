@@ -1,34 +1,49 @@
 .calendar-menu-box {
-  min-width: 2rem;
+    min-width: 2rem;
 
-  @if variable-exists($name: weather-menu-box-bg) {
-    background: $weather-menu-box-bg;
-  }
+    @if variable-exists($name: weather-menu-box-bg) {
+        background: $weather-menu-box-bg;
+    }
 
-  @if variable-exists($name: weather-menu-box-fg) {
-    color: $weather-menu-box-fg;
-  }
+    @if variable-exists($name: weather-menu-box-fg) {
+        color: $weather-menu-box-fg;
+    }
 
-  padding: 1rem 1rem;
-  border: $border-size solid $border-color;
-  border-radius: $border-radius;
+    border: $border-size solid $border-color;
+    border-radius: $border-radius;
 }
 
-.calendar-popup {
-  padding: 5px;
-  // background-color: $calendar-bg;
-  // color: $text-color;
-  border: $border-size solid $border-color;
-  border-radius: $border-radius;
+/* General calendar styling */
+.calendar {
+    all: unset;
+    padding: 0.5rem;
+
+    &.button {
+        background: black;
+        color: white;
+    }
+
+    &:selected {
+        background: red;
+        color: white;
+        border-radius: $border-radius * 0.6;
+    }
+
+    &.header {
+        background: blue;
+        border: none;
+        // color: transparentize(#0f0, 0.5);
+    }
+
+    &.highlight {
+        background: green;
+        color: transparentize(#f00, 0.5);
+    }
+
+    &:indeterminate {
+        color: yellow;
+    }
+
+    font-size: 1.1em;
 }
 
-.calendar-popup .today {
-  background-color: #17293f;  
-  color: #bbd1ec;
-}
-
-.time-popup {
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px;
-}
