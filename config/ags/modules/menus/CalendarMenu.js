@@ -3,14 +3,13 @@ import settings from '../settings.js';
 const { GLib, Gio } = imports.gi;
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
-
 const createCalendarAndTime = () => {
     const calendar = Widget.Calendar({
-        className: 'calendar-popup',
+        className: 'calendar',
     });
 
     const timeLabel = Widget.Label({
-        className: 'time-popup',
+        className: 'media-menu-header',
     });
 
     const updateTime = () => {
@@ -63,5 +62,6 @@ export const CalendarMenu = () =>
     });
 
 globalThis.showCalendarMenu = () => {
-    calendarMenuRevealer.revealChild = !calendarMenuRevealer.revealChild
+    calendarMenuRevealer.revealChild = !calendarMenuRevealer.revealChild;
 };
+
