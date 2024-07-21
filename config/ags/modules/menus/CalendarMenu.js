@@ -64,4 +64,3 @@ export const CalendarMenu = () =>
 globalThis.showCalendarMenu = () => {
     calendarMenuRevealer.revealChild = !calendarMenuRevealer.revealChild;
 };
-
