@@ -1,0 +1,53 @@
+.calendar-menu-box {
+    min-width: 2rem;
+
+    @if variable-exists($name: weather-menu-box-bg) {
+        background: $weather-menu-box-bg;
+    }
+
+    @if variable-exists($name: weather-menu-box-fg) {
+        color: $weather-menu-box-fg;
+    }
+
+    border: $border-size solid $border-color;
+    border-radius: $border-radius;
+}
+
+.calendar {
+    all: unset;
+    padding: 0.8rem 0.55rem 0rem;
+    font-size: 1.1rem;
+
+    &.button {
+        border-radius: $border-radius;
+    }
+
+    &.header {
+        border: none;
+        border-radius: $border-radius;
+        border-bottom-right-radius: 0rem;
+        border-bottom-left-radius: 0rem;
+    }
+
+    &.highlight {
+        color: transparentize($text-color, 0.5);
+    }
+
+    &:indeterminate {
+        color: transparentize($text-color, 0.5);
+    }
+
+    &:selected {
+        border-radius: $border-radius * 0.6;
+
+        @if variable-exists($name: primary-container) {
+            box-shadow:
+                inset 0 -8px 0 0 transparentize($primary, 0.5),
+                inset 0 0 0 1px $primary;
+        } @else {
+            box-shadow:
+                inset 0 -8px 0 0 transparentize($fg-one, 0.5),
+                inset 0 0 0 1px $fg-one;
+        }
+    }
+}
