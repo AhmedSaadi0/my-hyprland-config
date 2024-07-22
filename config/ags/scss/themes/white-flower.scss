@@ -41,9 +41,9 @@ $workspace-hover-color: rgba($on-secondary, 0.9);
 // --------- Clock widget ---------
 // --------------------------------
 $clock-background: linear-gradient(
-  to right,
-  $primary-container,
-  $secondary-container
+    to right,
+    $primary-container,
+    $secondary-container
 );
 $clock-color: $on-primary-container;
 
@@ -129,6 +129,14 @@ $vol-osd-border-color: $on-surface-variant;
 $scale-highlight-background: $primary;
 $scale-slider-background: $scale-highlight-background;
 
+// ---------------------------
+// --------- audio menu ------
+// ---------------------------
+$audio-menu-power-profile-box: $surface;
+$audio-menu-box-background: $surface;
+$audio-menu-header-box-background: $tertiary-container;
+$audio-menu-tables-box-background: $secondary-container;
+
 // ---------------------------------
 // --------- Notifications ---------
 // ---------------------------------
@@ -161,9 +169,9 @@ $menu-box-background: $surface;
 $menu-box-borders: $primary;
 
 $profile-box-background: linear-gradient(
-  to right,
-  rgba($primary-container, 0.8),
-  rgba($secondary-container, 0.6)
+    to right,
+    rgba($primary-container, 0.8),
+    rgba($secondary-container, 0.6)
 );
 $profile-box-color: $on-primary-container;
 
@@ -173,9 +181,9 @@ $power-box-background: $surface-variant;
 $selected-theme-background: linear-gradient(to right, $primary, $secondary);
 $selected-theme-color: $on-primary;
 $selected-theme-hover-background: linear-gradient(
-  to right,
-  $primary-container,
-  $secondary-container
+    to right,
+    $primary-container,
+    $secondary-container
 );
 $selected-theme-hover-color: $on-primary-container;
 
@@ -245,10 +253,10 @@ $btn-hover-color: $on-tertiary;
 // --------- desktop-widget ---------
 // ----------------------------------
 $desktop-wd-separator-background: linear-gradient(
-  to bottom,
-  $on-primary-container,
-  $on-secondary-container,
-  $on-tertiary-container
+    to bottom,
+    $on-primary-container,
+    $on-secondary-container,
+    $on-tertiary-container
 );
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);

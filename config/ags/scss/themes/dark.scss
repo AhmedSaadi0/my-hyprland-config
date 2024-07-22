@@ -34,9 +34,9 @@ $clock-color: $bg-two;
 // --------- prayer times ---------
 // --------------------------------
 $bar-prayer-times-box-background: linear-gradient(
-  to right,
-  $bg-three,
-  $bg-three
+    to right,
+    $bg-three,
+    $bg-three
 );
 $bar-prayer-times-box-color: $text-color;
 
@@ -136,10 +136,10 @@ $notifications-separator-background: $text-color;
 // --------- desktop-widget ---------
 // ----------------------------------
 $desktop-wd-separator-background: linear-gradient(
-  to bottom,
-  $fg-two,
-  $fg-three,
-  $fg-one
+    to bottom,
+    $fg-two,
+    $fg-three,
+    $fg-one
 );
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
@@ -201,9 +201,9 @@ $menu-box-borders: $fg-one;
 
 // $profile-box-background: linear-gradient(to right, rgba(#F59549, 0.6), rgba(#aaaaff, 0.6));
 $profile-box-background: linear-gradient(
-  to right,
-  rgba(#f59549, 0.6),
-  rgba($fg-three, 0.6)
+    to right,
+    rgba(#f59549, 0.6),
+    rgba($fg-three, 0.6)
 );
 $profile-box-color: $bg-one;
 
@@ -248,10 +248,10 @@ $hardware-menu-header-box-background: $bg-two;
 $hardware-menu-tables-box-background: $bg-two;
 
 $hardware-cpu-box-background: linear-gradient(
-  to top,
-  $fg-one,
-  $fg-two,
-  $fg-three
+    to top,
+    $fg-one,
+    $fg-two,
+    $fg-three
 );
 $hardware-cpu-box-color: $bg-one;
 $hardware-cpu-table-row-header-background: #d86293;
@@ -281,15 +281,15 @@ $btn-hover-background: $fg-one;
 $btn-hover-color: $bg-three;
 
 button {
-  background-color: $btn-background;
-  color: $btn-color;
-  border-color: $btn-background;
+    background-color: $btn-background;
+    color: $btn-color;
+    border-color: $btn-background;
 }
 
 button:hover {
-  background-color: $btn-hover-background;
-  color: $btn-hover-color;
-  border-color: $btn-hover-background;
+    background-color: $btn-hover-background;
+    color: $btn-hover-color;
+    border-color: $btn-hover-background;
 }
 
 // --------- Menu ---------
