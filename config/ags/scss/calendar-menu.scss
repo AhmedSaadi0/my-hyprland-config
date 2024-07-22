@@ -19,12 +19,12 @@
     font-size: 1.1rem;
 
     &.button {
-        border-radius: $border-radius - 1rem;
+        border-radius: $border-radius;
     }
 
     &.header {
         border: none;
-        border-radius: $border-radius - 1rem;
+        border-radius: $border-radius;
         border-bottom-right-radius: 0rem;
         border-bottom-left-radius: 0rem;
     }
