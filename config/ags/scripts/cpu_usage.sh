@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get the number of CPU cores
 num_cores=$(nproc)

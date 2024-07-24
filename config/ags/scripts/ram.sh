@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if the 'free' command is available
 if ! command -v free &> /dev/null; then
