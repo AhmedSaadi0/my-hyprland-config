@@ -196,7 +196,9 @@ nvim .ahmed-config.json
   "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
   "weatherLocation": "sanaa",
   "city": "sanaa",
-  "country": "yemen"
+  "country": "yemen",
+  "usePrayerTimes": true,
+  "changePlasmaColor": true
 }
 ```
 
@@ -386,7 +388,7 @@ nvim .ahmed-config.json
 
 ```json
 {
-  "username": "Ahmed Alsaadi",
+  "username": "احمد الصعدي",
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
@@ -394,7 +396,9 @@ nvim .ahmed-config.json
   "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
   "weatherLocation": "sanaa",
   "city": "sanaa",
-  "country": "yemen"
+  "country": "yemen",
+  "usePrayerTimes": true,
+  "changePlasmaColor": true
 }
 ```
 

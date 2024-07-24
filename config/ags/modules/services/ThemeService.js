@@ -53,8 +53,10 @@ class ThemeService extends Service {
             this.changeWallpaper(theme.wallpaper);
         }
 
-        this.changePlasmaColor(theme.plasma_color);
-        this.changePlasmaIcons(theme.qt_icon_theme);
+        if (settings.changePlasmaColor) {
+            this.changePlasmaColor(theme.plasma_color);
+            this.changePlasmaIcons(theme.qt_icon_theme);
+        }
         this.changeKonsoleProfile(theme.hypr.konsole);
 
         this.changeGTKTheme(

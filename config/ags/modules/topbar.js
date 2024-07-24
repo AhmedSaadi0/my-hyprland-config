@@ -17,6 +17,7 @@ import prayerService from './services/PrayerTimesService.js';
 import { Widget } from './utils/imports.js';
 import themeService from './services/ThemeService.js';
 import strings from './strings.js';
+import settings from './settings.js';
 
 const Clock = () => {
     let label = Label({
@@ -37,7 +38,6 @@ const Clock = () => {
 
     return button;
 };
-
 
 const Weather = () => {
     let icon = Label({
@@ -72,6 +72,10 @@ const Weather = () => {
 };
 
 const PrayerTimes = () => {
+    if (!settings.usePrayerTimes) {
+        return null;
+    }
+
     const iconButton = Widget.Button({
         className: 'unset un-hover unset',
         onClicked: () => showPrayerTimesMenu(),
