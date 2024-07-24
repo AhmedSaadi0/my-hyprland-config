@@ -48,7 +48,9 @@ class PrayerTimesService extends Service {
     constructor() {
         super();
         this.state = {};
-        this.initPrayerTimes();
+        if (settings.usePrayerTimes) {
+            this.initPrayerTimes();
+        }
     }
 
     initPrayerTimes() {

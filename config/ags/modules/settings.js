@@ -20,6 +20,8 @@ var weatherLocation = '';
 var city = '';
 var country = '';
 var username = '';
+var usePrayerTimes = false;
+var changePlasmaColor = true;
 
 try {
     const configFile = JSON.parse(
@@ -34,12 +36,16 @@ try {
     networkTimeout = configFile.networkTimeout;
     networkInterval = configFile.networkInterval;
     username = configFile.username;
+    usePrayerTimes = configFile.usePrayerTimes;
+    changePlasmaColor = configFile.changePlasmaColor;
 } catch (TypeError) {
     console.log('Error reading .ahmed-config.json file');
 }
 
 const settings = {
     username: username,
+    usePrayerTimes: usePrayerTimes,
+    changePlasmaColor: changePlasmaColor,
     assets: {
         wallpapers: getAssets('wallpapers'),
         icons: {
