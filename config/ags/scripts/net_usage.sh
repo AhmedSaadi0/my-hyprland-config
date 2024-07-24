@@ -1,5 +1,5 @@
 
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get all network connections and their associated PIDs (requires root privileges)
 sudo netstat -tulnp | awk 'NR > 2 {print $7}' | awk -F '/' '{print $1, $NF}' > /tmp/connections.txt

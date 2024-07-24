@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if lm-sensors is installed
 if ! command -v sensors &> /dev/null; then

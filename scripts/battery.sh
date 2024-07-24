@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get battery status
 battery_info=$(acpi -b)
