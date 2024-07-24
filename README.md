@@ -196,7 +196,9 @@ nvim .ahmed-config.json
   "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
   "weatherLocation": "sanaa",
   "city": "sanaa",
-  "country": "yemen"
+  "country": "yemen",
+  "usePrayerTimes": true,
+  "changePlasmaColor": true
 }
 ```
 
@@ -394,7 +396,9 @@ nvim .ahmed-config.json
   "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
   "weatherLocation": "sanaa",
   "city": "sanaa",
-  "country": "yemen"
+  "country": "yemen",
+  "usePrayerTimes": true,
+  "changePlasmaColor": true
 }
 ```
 
