@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get the top 10 processes using the most RAM
 top_processes=$(ps -eo pid,%mem,comm --sort=-%mem | head -n 11 | tail -n +2)
