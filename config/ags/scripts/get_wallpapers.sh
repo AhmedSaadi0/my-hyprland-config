@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 folder=$1 # Get the folder path from the first argument
 

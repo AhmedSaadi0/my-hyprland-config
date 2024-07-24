@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Get the CPU usage percentage for each core using 'mpstat'
 cpu_usages=($(mpstat -P ALL 1 1 | awk '/^Average:/ && $12 != "all" {print 100 - $NF}'))
