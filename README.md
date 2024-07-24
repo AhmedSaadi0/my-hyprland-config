@@ -388,7 +388,7 @@ nvim .ahmed-config.json
 
 ```json
 {
-  "username": "احمد الصعدي",
+  "username": "Ahmed Alsaadi",
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
