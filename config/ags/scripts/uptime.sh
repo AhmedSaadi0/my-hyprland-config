@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 uptime_seconds=$(cut -d ' ' -f 1 /proc/uptime)
 uptime_hours=$(echo "$uptime_seconds / 3600" | bc)
