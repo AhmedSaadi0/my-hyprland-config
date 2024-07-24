@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if upower is installed
 if ! command -v upower &> /dev/null; then
