@@ -23,6 +23,8 @@ var username = '';
 var usePrayerTimes = false;
 var changePlasmaColor = true;
 
+var scripts = {};
+
 try {
     const configFile = JSON.parse(
         Utils.readFile(`/home/${Utils.USER}/.ahmed-config.json`)
@@ -38,6 +40,24 @@ try {
     username = configFile.username;
     usePrayerTimes = configFile.usePrayerTimes;
     changePlasmaColor = configFile.changePlasmaColor;
+
+    scripts = {
+        dynamicM3Py: configFile.scripts.dynamicM3Py,
+        get_wallpapers: configFile.scripts.get_wallpapers,
+        createThumbnail: configFile.scripts.createThumbnail,
+        gtk_theme: configFile.scripts.gtk_theme,
+        systemInfo: configFile.scripts.systemInfo,
+        deviceLocal: configFile.scripts.deviceLocal,
+        cpu: configFile.scripts.cpu,
+        ram: configFile.scripts.ram,
+        deviceTemp: configFile.scripts.deviceTemp,
+        hardwareInfo: configFile.scripts.hardwareInfo,
+        cpuUsage: configFile.scripts.cpuUsage,
+        ramUsage: configFile.scripts.ramUsage,
+        cpuCores: configFile.scripts.cpuCores,
+        devicesTemp2: configFile.scripts.devicesTemp2,
+        playerctl: configFile.scripts.playerctl,
+    };
 } catch (TypeError) {
     console.log('Error reading .ahmed-config.json file');
 }
@@ -68,11 +88,27 @@ const settings = {
     },
     scripts: {
         scripts: getPath('scripts'),
-        dynamicM3Py: getPath('scripts/m3/dynamic-m3.py'),
-        get_wallpapers: getPath('scripts/get_wallpapers.sh'),
-        createThumbnail: getPath('scripts/m3/create_thumbnail.py'),
-        gtk_theme: getPath('scripts/m3/gtk_theme.py'),
-        systemInfo: getPath('scripts/system_info.sh'),
+        dynamicM3Py: scripts.dynamicM3Py ?? getPath('scripts/m3/dynamic-m3.py'),
+        get_wallpapers:
+            scripts.get_wallpapers ?? getPath('scripts/get_wallpapers.sh'),
+        createThumbnail:
+            scripts.createThumbnail ??
+            getPath('scripts/m3/create_thumbnail.py'),
+        gtk_theme: scripts.gtk_theme ?? getPath('scripts/m3/gtk_theme.py'),
+        systemInfo: scripts.systemInfo ?? getPath('scripts/system_info.sh'),
+        deviceLocal: scripts.deviceLocal ?? getPath('scripts/lang.sh'),
+        cpu: scripts.cpu ?? getPath('scripts/cpu.sh'),
+        ram: scripts.ram ?? getPath('scripts/ram.sh'),
+        deviceTemp: scripts.deviceTemp ?? getPath('scripts/devices_temps.sh'),
+        hardwareInfo:
+            scripts.hardwareInfo ?? getPath('scripts/hardware_info.sh'),
+        cpuUsage: scripts.cpuUsage ?? getPath('scripts/cpu_usage.sh'),
+        ramUsage: scripts.ramUsage ?? getPath('scripts/ram_usage.sh'),
+        cpuCores: scripts.cpuCores ?? getPath('scripts/cpu_cores.sh'),
+        devicesTemp2: scripts.devicesTemp2 ?? getPath('scripts/temp.sh'),
+        playerctl:
+            scripts.playerctl ??
+            `/home/${Utils.USER}/.config/hypr/scripts/playerctl.sh`,
     },
     theme: {
         scss: `${getPath('scss')}`,
@@ -103,7 +139,7 @@ const settings = {
     },
     weather: {
         // provider is 'ar.wttr.in'
-        language: 'ar', // Not implemented yot - only arabic is supported
+        language: 'ar', // Not implemented yet - only Arabic is supported
         location: weatherLocation,
         format: 'j1',
     },
