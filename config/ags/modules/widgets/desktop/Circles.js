@@ -152,7 +152,7 @@ const MusicWidget = Widget.Box({
         }),
     ],
 }).poll(3 * 1000, (self) => {
-    Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu_cores.sh`)
+    Utils.execAsync(settings.scripts.cpuUsage)
         .then((val) => {
             const data = JSON.parse(val);
             cpuNestedCircles1.innerCircle1.value = data[1] / 100;
@@ -171,7 +171,7 @@ const MusicWidget = Widget.Box({
         })
         .catch(print);
 
-    Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/devices_temps.sh`)
+    Utils.execAsync(settings.scripts.deviceTemp)
         .then((val) => {
             const data = JSON.parse(val);
             cpuNestedCircles1.outerCircle1.value = data.cpu_core0 / 100;

@@ -7,6 +7,7 @@ import {
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import { Utils } from '../../utils/imports.js';
 import strings from '../../strings.js';
+import settings from '../../settings.js';
 
 export const RamWidget = () => {
     const label = Label({
@@ -31,7 +32,7 @@ export const RamWidget = () => {
     return Box({
         className: 'bar-hw-ram-box',
     }).poll(30000, (box) => {
-        execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
+        execAsync(settings.scripts.ram)
             .then((val) => {
                 progress.value = val / 100;
                 label.tooltipMarkup = `<span weight='bold' foreground='#79A7EC'>${strings.ramUsage} (${val}%)</span>`;

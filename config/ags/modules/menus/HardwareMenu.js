@@ -24,7 +24,7 @@ const cpuProgress = Widget.CircularProgress({
     rounded: true,
 }).poll(1000, (self) => {
     if (menuIsOpen) {
-        Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/cpu.sh`)
+        Utils.execAsync(settings.scripts.cpu)
             .then((val) => {
                 cpuProgress.value = val / 100;
                 self.child.tooltipMarkup = `<span weight='bold'>${strings.cpuUsage} (${val}%)</span>`;
@@ -44,7 +44,7 @@ const ramProgress = Widget.CircularProgress({
     rounded: true,
 }).poll(1000, (self) => {
     if (menuIsOpen) {
-        Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/ram.sh`)
+        Utils.execAsync(settings.scripts.ram)
             .then((val) => {
                 self.value = val / 100;
                 self.child.tooltipMarkup = `<span weight='bold'>${strings.ramUsage} (${val}%)</span>`;
@@ -101,7 +101,7 @@ const tempProgress = Widget.CircularProgress({
     startAt: 0,
     rounded: true,
 }).poll(30000, (self) => {
-    Utils.execAsync(`/home/${Utils.USER}/.config/ags/scripts/devices_temps.sh`)
+    Utils.execAsync(settings.scripts.deviceTemp)
         .then((val) => {
             let temps = JSON.parse(val);
             tempList = temps;
@@ -322,9 +322,7 @@ const tablesBox = () => {
         scriptPath: '',
         deviceName: batDeviceName,
     }).hook(Battery, (self) => {
-        Utils.execAsync(
-            `/home/${Utils.USER}/.config/ags/scripts/hardware_info.sh`
-        )
+        Utils.execAsync(settings.scripts.hardwareInfo)
             .then((val) => {
                 let data = JSON.parse(val);
 
@@ -437,13 +435,13 @@ const tablesBox = () => {
         spacing: 13,
         children: [
             hardwareUsageTable({
-                scriptPath: `/home/${Utils.USER}/.config/ags/scripts/cpu_usage.sh`,
+                scriptPath: settings.scripts.cpuUsage,
                 deviceName: 'cpu',
                 headerRightText: 'CPU',
                 // headerLeftText: `${cpuUsage}`,
             }),
             hardwareUsageTable({
-                scriptPath: `/home/${Utils.USER}/.config/ags/scripts/ram_usage.sh`,
+                scriptPath: settings.scripts.ramUsage,
                 deviceName: 'ram',
                 headerRightText: 'RAM',
                 // headerLeftText: `${ramUsage}`,
