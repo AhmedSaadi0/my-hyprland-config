@@ -2,6 +2,7 @@ import Gdk from 'gi://Gdk';
 import { Mpris, Utils, Widget } from '../utils/imports.js';
 import { local } from '../utils/helpers.js';
 import strings from '../strings.js';
+import settings from '../settings.js';
 
 export var selectedMusicPlayer = null;
 const PLAYER_MENU_ARROW = '🞃';
@@ -87,7 +88,7 @@ const RowOne = () => {
                                 'sed',
                                 '-i',
                                 `24s|.*|playerctl -p ${selectedMusicPlayer} "$command"|`,
-                                `/home/${Utils.USER}/.config/hypr/scripts/playerctl.sh`,
+                                settings.scripts.playerctl,
                             ]);
                         },
                     })

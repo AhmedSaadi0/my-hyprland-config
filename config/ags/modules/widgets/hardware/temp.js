@@ -7,6 +7,7 @@ import {
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import { Utils } from '../../utils/imports.js';
 import strings from '../../strings.js';
+import settings from '../../settings.js';
 
 export const TempWidget = () => {
     const label = Label({
@@ -30,7 +31,7 @@ export const TempWidget = () => {
     return Box({
         className: 'bar-hw-temp-box',
     }).poll(30000, (box) => {
-        execAsync(`/home/${Utils.USER}/.config/ags/scripts/temp.sh`)
+        execAsync(settings.scripts.devicesTemp2)
             .then((val) => {
                 const temps = val.split('\n');
                 let total = 0;

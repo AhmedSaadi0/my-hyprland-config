@@ -198,7 +198,24 @@ nvim .ahmed-config.json
   "city": "sanaa",
   "country": "yemen",
   "usePrayerTimes": true,
-  "changePlasmaColor": true
+  "changePlasmaColor": true,
+  "scripts": {
+    "dynamicM3Py": null,
+    "get_wallpapers": null,
+    "createThumbnail": null,
+    "gtk_theme": null,
+    "systemInfo": null,
+    "deviceLocal": null,
+    "cpu": null,
+    "ram": null,
+    "deviceTemp": null,
+    "hardwareInfo": null,
+    "cpuUsage": null,
+    "ramUsage": null,
+    "cpuCores": null,
+    "devicesTemp2": null,
+    "playerctl": null
+  }
 }
 ```
 
@@ -398,7 +415,24 @@ nvim .ahmed-config.json
   "city": "sanaa",
   "country": "yemen",
   "usePrayerTimes": true,
-  "changePlasmaColor": true
+  "changePlasmaColor": true,
+  "scripts": {
+    "dynamicM3Py": null,
+    "get_wallpapers": null,
+    "createThumbnail": null,
+    "gtk_theme": null,
+    "systemInfo": null,
+    "deviceLocal": null,
+    "cpu": null,
+    "ram": null,
+    "deviceTemp": null,
+    "hardwareInfo": null,
+    "cpuUsage": null,
+    "ramUsage": null,
+    "cpuCores": null,
+    "devicesTemp2": null,
+    "playerctl": null
+  }
 }
 ```
 

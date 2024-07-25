@@ -1,3 +1,4 @@
+import settings from '../settings.js';
 import { Utils, Widget } from './imports.js';
 
 export const TitleText = ({
@@ -44,9 +45,7 @@ export const TitleText = ({
     });
 };
 
-export const local = Utils.exec(
-    `/home/${Utils.USER}/.config/ags/scripts/lang.sh`
-);
+export const local = Utils.exec(settings.scripts.deviceLocal);
 
 export const notify = ({
     tonePath,
