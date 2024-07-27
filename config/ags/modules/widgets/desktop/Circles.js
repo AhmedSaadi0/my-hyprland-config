@@ -152,7 +152,7 @@ const MusicWidget = Widget.Box({
         }),
     ],
 }).poll(3 * 1000, (self) => {
-    Utils.execAsync(settings.scripts.cpuUsage)
+    Utils.execAsync(settings.scripts.cpuCores)
         .then((val) => {
             const data = JSON.parse(val);
             cpuNestedCircles1.innerCircle1.value = data[1] / 100;
