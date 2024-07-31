@@ -1,9 +1,10 @@
 .audio-menu-header-box {
-    @if variable-exists($name: audio-menu-header-box-background) {
-        background: $audio-menu-header-box-background;
+    @if variable-exists($name: primary-container) {
+        background: rgba($primary-container, 0.8);
     } @else {
-        background: $bg-two;
+        background: rgba($bg-two, 0.8);
     }
+    color: $text-color;
     border-top-right-radius: $border-radius;
     border-top-left-radius: $border-radius;
     padding: 0.6rem;
