@@ -1,9 +1,10 @@
-import { local } from '../utils/helpers.js';
-import settings from '../settings.js';
-import strings from '../strings.js';
-import brightness from '../services/BrightnessService.js';
+import { local } from '../../utils/helpers.js';
+import settings from '../../settings.js';
+import strings from '../../strings.js';
+import brightness from '../../services/BrightnessService.js';
 const Audio = await Service.import('audio');
-import MusicPLayer from '../widgets/MusicPLayer.js';
+import MusicPLayer from '../../widgets/MusicPLayer.js';
+import { Widget } from '../../utils/imports.js';
 
 const margin = local === 'RTL' ? 'margin-right:0.5rem;' : 'margin-left:0.5rem;';
 
@@ -104,37 +105,10 @@ const audio_brightness = Widget.Box({
     children: [AudioSlider(), BrightnessSlider()],
 });
 
-const menuRevealer = Widget.Revealer({
-    transition: settings.theme.menuTransitions.audioMenu,
-    transitionDuration: settings.theme.menuTransitions.audioMenuDuration,
-    child: Widget.Box({
-        className: 'audio-menu-box',
+const MediaControl = () =>
+    Widget.Box({
         vertical: true,
-        children: [
-            Widget.Label({
-                className: 'media-menu-header',
-                label: strings.mediaCenter,
-            }),
-            audio_brightness,
-            MusicPLayer('left-menu-music-wd'),
-        ],
-    }),
-});
-
-export const AudioMenu = () =>
-    Widget.Window({
-        name: `Audio_menu`,
-        margins: [2, 400],
-        anchor: ['top', local === 'RTL' ? 'right' : 'left'],
-        child: Widget.Box({
-            css: `min-height: 2px;`,
-            children: [menuRevealer],
-        }),
+        children: [audio_brightness, MusicPLayer('left-menu-music-wd')],
     });
 
-let menuIsOpen = false;
-
-globalThis.showAudioMenu = () => {
-    menuRevealer.revealChild = !menuRevealer.revealChild;
-    menuIsOpen = menuRevealer.revealChild;
-};
+export default MediaControl;

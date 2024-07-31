@@ -1,22 +1,13 @@
-.audio-menu-box {
-    @if variable-exists($name: audio-menu-box-background) {
-        background: $audio-menu-box-background;
-    } @else {
-        background: $bg-one;
-    }
-    border-radius: $border-radius;
-    border: $border-size solid $border-color;
-}
-
 .audio-menu-header-box {
     @if variable-exists($name: audio-menu-header-box-background) {
         background: $audio-menu-header-box-background;
     } @else {
         background: $bg-two;
     }
-    border-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    border-top-left-radius: $border-radius;
     padding: 0.6rem;
-    margin: 0.8rem;
+    margin: 0rem 1rem;
 }
 
 // --------- audio ---------
@@ -34,24 +25,49 @@
 
 .audio-menu-slider {
     margin-top: 1rem;
+}
+
+.audio-menu-slider:dir(rtl) {
     margin-left: 1.5rem;
     margin-right: 1rem;
+}
+
+.audio-menu-slider:dir(ltr) {
+    margin-left: 1rem;
+    margin-right: 1.5rem;
 }
 
 .brightness-menu-slider {
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.brightness-menu-slider:dir(rtl) {
     margin-left: 1.5rem;
     margin-right: 1rem;
 }
 
-.media-menu-header {
-    padding: 1.5rem 1rem;
-    background: #fff;
-    background-size: cover;
-    background-position: center;
-    color: $text-color;
-    background: $notifications-header-bg;
-    color: $notifications-header-fg;
-    border-top-right-radius: $border-radius;
-    border-top-left-radius: $border-radius;
+.brightness-menu-slider:dir(ltr) {
+    margin-left: 1rem;
+    margin-right: 1.5rem;
+}
+
+.left-menu-music-wd {
+    background: $music-wd-box-bg;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.left-menu-music-wd:dir(rtl) {
+    padding-left: 1rem;
+    padding-right: $left-menu-music-wd-padding-right;
+}
+
+.left-menu-music-wd:dir(ltr) {
+    padding-right: 1rem;
+    padding-left: $left-menu-music-wd-padding-right;
 }
