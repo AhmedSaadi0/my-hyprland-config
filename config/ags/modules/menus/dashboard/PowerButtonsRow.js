@@ -1,5 +1,43 @@
 import settings from '../../settings.js';
 import { local } from '../../utils/helpers.js';
+import { Widget } from '../../utils/imports.js';
+
+var action = 'systemctl poweroff';
+
+const actionRevealer = Widget.Revealer({
+    revealChild: false,
+    className: 'power-action-revealer',
+    transitionDuration: 500,
+    transition: 'slide_down',
+    child: Widget.Box({
+        vertical: true,
+        spacing: 20,
+        children: [
+            Widget.Label({
+                label: 'هل تريد ايقاف التشغيل',
+            }),
+            Widget.Box({
+                homogeneous: true,
+                children: [
+                    Widget.Button({
+                        className: 'power-action-revealer-yes-btn',
+                        label: 'نعم',
+                        onClicked: () => {
+                            Utils.execAsync(action).catch(print);
+                        },
+                    }),
+                    Widget.Button({
+                        className: 'power-action-revealer-no-btn',
+                        label: 'لا',
+                        onClicked: (self, value) => {
+                            actionRevealer.reveal_child = false;
+                        },
+                    }),
+                ],
+            }),
+        ],
+    }),
+});
 
 const PowerButtonsRow = () => {
     const powerBtnMargin =
@@ -12,11 +50,14 @@ const PowerButtonsRow = () => {
             label: '',
         }),
         onClicked: () => {
-            Utils.execAsync([
-                `paplay`,
-                settings.assets.audio.desktop_logout,
-            ]).catch(print);
-            execAsync('systemctl poweroff').catch(print);
+            if (
+                !actionRevealer.reveal_child ||
+                action === 'systemctl poweroff'
+            ) {
+                actionRevealer.reveal_child = !actionRevealer.reveal_child;
+            }
+            action = 'systemctl poweroff';
+            actionRevealer.child.children[0].label = 'هل تريد ايقاف التشغيل';
         },
     });
 
@@ -27,11 +68,12 @@ const PowerButtonsRow = () => {
             label: '',
         }),
         onClicked: () => {
-            Utils.execAsync([
-                `paplay`,
-                settings.assets.audio.desktop_logout,
-            ]).catch(print);
-            execAsync('systemctl reboot').catch(print);
+            if (!actionRevealer.reveal_child || action === 'systemctl reboot') {
+                actionRevealer.reveal_child = !actionRevealer.reveal_child;
+            }
+            // actionRevealer.reveal_child = !actionRevealer.reveal_child;
+            action = 'systemctl reboot';
+            actionRevealer.child.children[0].label = 'هل تريد اعادة التشغيل';
         },
     });
 
@@ -42,11 +84,15 @@ const PowerButtonsRow = () => {
             label: '',
         }),
         onClicked: () => {
-            Utils.execAsync([
-                `paplay`,
-                settings.assets.audio.desktop_logout,
-            ]).catch(print);
-            execAsync('loginctl kill-session self').catch(print);
+            if (
+                !actionRevealer.reveal_child ||
+                action === 'loginctl kill-session self'
+            ) {
+                actionRevealer.reveal_child = !actionRevealer.reveal_child;
+            }
+            // actionRevealer.reveal_child = !actionRevealer.reveal_child;
+            action = 'loginctl kill-session self';
+            actionRevealer.child.children[0].label = 'هل تريد تسجيل الخروج';
         },
     });
 
@@ -58,7 +104,7 @@ const PowerButtonsRow = () => {
         className: 'power-box unset',
         css: `margin-top:0rem;`,
         vertical: true,
-        children: [row1],
+        children: [row1, actionRevealer],
     });
 };
 
