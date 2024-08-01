@@ -5,8 +5,6 @@
         background: rgba($bg-two, 0.8);
     }
     color: $text-color;
-    border-top-right-radius: $border-radius;
-    border-top-left-radius: $border-radius;
     padding: 0.6rem;
     margin: 0rem 1rem;
 }
@@ -71,4 +69,15 @@
 .left-menu-music-wd:dir(ltr) {
     padding-right: 1rem;
     padding-left: $left-menu-music-wd-padding-right;
+}
+
+.media-control-revaler-button {
+    margin: 0rem 1rem;
+    border-bottom-right-radius: 0rem;
+    border-bottom-left-radius: 0rem;
+}
+
+.media-control-revaler-button:hover {
+    border-bottom-right-radius: 0rem;
+    border-bottom-left-radius: 0rem;
 }
