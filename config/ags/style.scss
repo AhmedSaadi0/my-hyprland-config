@@ -2,20 +2,20 @@
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
 button {
-  background-color: #3b2163;
-  color: #71f1e8;
-  border-color: #3b2163; }
+  background-color: #1f1635;
+  color: #bdddee;
+  border-color: #1f1635; }
 
 button:hover {
-  background-color: #ff4bde;
-  color: #20004a;
-  border-color: #ff4bde; }
+  background-color: #1ed4fd;
+  color: #154a63;
+  border-color: #1ed4fd; }
 
 .unset {
   all: unset; }
 
 .workspaces button:active {
-  color: #ff4bde;
+  color: #1ed4fd;
   border-radius: 0px; }
 
 .workspaces {
@@ -23,8 +23,8 @@ button:hover {
   padding-left: 4px;
   margin-top: 0.3rem;
   margin-bottom: 0.4rem;
-  background: #0c0023;
-  border-radius: 1rem;
+  background: #1f1635;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
@@ -43,13 +43,13 @@ button:hover {
   margin-left: 0.4rem; }
 
 .workspaces button {
-  background: #0c0023;
-  color: #198bee;
+  background: #1f1635;
+  color: #bdddee;
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #ff4bde;
-  color: #ff4bde;
+  border-bottom: 1px solid #1ed4fd;
+  color: #1ed4fd;
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 0px;
   padding-top: 0px;
@@ -68,16 +68,16 @@ button:hover {
   font-size: large; }
 
 .workspaces button.has-windows {
-  color: #ff4bde; }
+  color: #1ed4fd; }
 
 .workspaces button:hover {
-  background: rgba(25, 139, 238, 0.9);
-  color: rgba(12, 0, 35, 0.9); }
+  background: rgba(255, 0, 255, 0.9);
+  color: rgba(31, 22, 53, 0.9); }
 
 .clock {
-  background: linear-gradient(to right, #198bee, #ff4bde);
-  color: #0c0023;
-  border-radius: 1rem;
+  background: linear-gradient(to right, #ff00ff, #1ed4fd);
+  color: #1f1635;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   padding-left: 1em;
@@ -85,9 +85,9 @@ button:hover {
 
 .bar-weather-box {
   font-size: 1em;
-  background: linear-gradient(to right, #26f7e1, #ff00aa);
-  color: #0c0023;
-  border-radius: 1rem;
+  background: linear-gradient(to right, #25f7e2, #cdd4af);
+  color: #1f1635;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -106,8 +106,8 @@ button:hover {
   padding-right: 0.5rem; }
 
 .top-corner {
-  background-color: #20004a;
-  border-radius: 1rem; }
+  background-color: #352557;
+  border-radius: 1.5rem; }
 
 .bar-bg {
   background: rgba(0, 0, 0, 0);
@@ -115,16 +115,16 @@ button:hover {
   border-radius: 0rem; }
 
 .bar {
-  background: #20004a;
-  color: #cecece;
+  background: #352557;
+  color: #bdddee;
   min-height: 8px;
   margin-bottom: 0.5rem; }
 
 .internet-box {
-  background: linear-gradient(to left, #3498fd, #ff4bde, #bb8256);
-  color: #20004a;
+  background: linear-gradient(to right, #82d8d2, #478dd7);
+  color: #352557;
   /* min-width: 100px; */
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -140,48 +140,48 @@ button:hover {
   /* margin-left: 0.7em; */
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  background: #20004a;
-  color: #cecece;
+  background: #352557;
+  color: #bdddee;
   font-weight: bold; }
 
 .wifi-name-label:dir(rtl) {
   padding-left: 0.5em;
   padding-right: 1em;
   margin-right: 0.2em;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem; }
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
 
 .wifi-name-label:dir(ltr) {
   padding-right: 0.5em;
   padding-left: 1em;
   margin-left: 0.2em;
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem; }
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .wifi-icon-strength {
   font-family: "FantasqueSansM Nerd Font Propo";
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-  background: #20004a;
-  color: #cecece; }
+  background: #352557;
+  color: #bdddee; }
 
 .wifi-icon-strength:dir(rtl) {
   margin-left: 0.2rem;
   padding-right: 0.2rem;
   padding-left: 0.6rem;
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem; }
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .wifi-icon-strength:dir(ltr) {
   margin-right: 0.2rem;
   padding-left: 0.2rem;
   padding-right: 0.6rem;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem; }
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
 
 .systray {
-  background: #3b2163;
-  border-radius: 1rem;
+  background: #1f1635;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   min-height: 0.1rem; }
@@ -193,14 +193,14 @@ button:hover {
   margin-right: 0.5rem; }
 
 .systray button {
-  background: #3b2163;
-  border-radius: 1rem;
+  background: #1f1635;
+  border-radius: 1.5rem;
   padding-right: 0.4rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background: #ff4bde; }
+  background: #1ed4fd; }
 
 .tray-btn {
   border: 0rem; }
@@ -212,86 +212,86 @@ button:hover {
 
 .bar-hardware-progress-inner-circle, .brightness-inner, .volume-inner, .temp-inner, .cpu-inner, .battery-inner-charging, .battery-inner {
   font-family: "FantasqueSansM Nerd Font Propo";
-  font-size: 0.9rem; }
+  font-size: 0.8rem; }
 
 .battery {
-  background: #0c0023;
-  color: #ff8580; }
+  background: #1f1635;
+  color: #1ed4fd; }
 
 @keyframes colorChange {
   0% {
-    color: #ff8580; }
+    color: #1ed4fd; }
   50% {
-    color: #0c0023; }
+    color: #1f1635; }
   100% {
-    color: #ff8580; } }
+    color: #1ed4fd; } }
 
 .battery-inner {
-  color: #ff8580; }
+  color: #1ed4fd; }
 
 .battery-inner-charging {
-  color: #ff8580;
+  color: #1ed4fd;
   animation: colorChange 2s infinite; }
 
 /* --------------------------------- */
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: #0c0023;
-  color: #fdc227; }
+  background: #1f1635;
+  color: #b18dff; }
 
 .cpu-inner {
   font-size: 0.6rem;
-  color: #fdc227; }
+  color: #b18dff; }
 
 /* ---------------------------------- */
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: #0c0023;
-  color: #198bee; }
+  background: #1f1635;
+  color: #ff00ff; }
 
 .no-hover:hover {
   all: unset; }
 
 .temp-inner {
-  color: #198bee; }
+  color: #ff00ff; }
 
 /* --------------------------------- */
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: #0c0023;
-  color: #71f1e8; }
+  background: #1f1635;
+  color: #c1c4eb; }
 
 .ram-inner {
   font-family: "FantasqueSansM Nerd Font Propo";
   font-size: 0.6rem;
-  color: #71f1e8; }
+  color: #c1c4eb; }
 
 .volume {
-  background: #0c0023;
-  color: #71f1e8; }
+  background: #1f1635;
+  color: #c1c4eb; }
 
 .volume-inner {
   font-size: 0.8rem;
-  color: #71f1e8; }
+  color: #c1c4eb; }
 
 .brightness {
-  background: #0c0023;
-  color: #fdc227; }
+  background: #1f1635;
+  color: #b18dff; }
 
 .brightness-inner {
-  color: #fdc227;
+  color: #b18dff;
   margin-top: 0.1rem; }
 
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: #0c0023;
+  background: #1f1635;
   padding: 0.2rem 0.5rem;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -322,24 +322,24 @@ button:hover {
 .hardware-box-separator {
   min-height: 0.01rem;
   min-width: 0.01rem;
-  background: rgba(25, 139, 238, 0.4);
+  background: rgba(255, 0, 255, 0.4);
   margin: -0.2rem 0.5rem; }
 
 .hardware-menu-box {
-  background: #20004a;
-  border-radius: 1rem;
-  border: 2px solid #ff4bde; }
+  background: #352557;
+  border-radius: 1.5rem;
+  border: 2px solid #1ed4fd; }
 
 .hardware-menu-header-box {
-  background: #0c0023;
-  border-radius: 1rem;
+  background: #1f1635;
+  border-radius: 1.5rem;
   padding: 0.5rem;
   margin-top: 1rem;
   margin-left: 1rem; }
 
 .hardware-menu-power-profile-box {
-  background: #0c0023;
-  border-radius: 1rem;
+  background: #1f1635;
+  border-radius: 1.5rem;
   padding: 0.5rem;
   margin-left: 0.5rem;
   margin-top: 1rem;
@@ -354,8 +354,8 @@ button:hover {
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .power-profiles-box-btn-active {
-  background: #ff4bde;
-  color: #20004a;
+  background: #1ed4fd;
+  color: #154a63;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .hardware-menu-box-progress, .menu-temp, .menu-battery, .menu-ram, .menu-cpu {
@@ -369,32 +369,32 @@ button:hover {
   font-size: 2rem; }
 
 .menu-cpu {
-  color: #fdc227; }
+  color: #b18dff; }
 
 .menu-cpu-icon {
-  color: #fdc227; }
+  color: #b18dff; }
 
 .menu-ram {
-  color: #71f1e8; }
+  color: #c1c4eb; }
 
 .menu-ram-icon {
-  color: #71f1e8; }
+  color: #c1c4eb; }
 
 .menu-battery {
-  color: #ff8580; }
+  color: #1ed4fd; }
 
 .menu-battery-icon {
-  color: #ff8580; }
+  color: #1ed4fd; }
 
 .menu-battery-icon-charging {
-  color: #ff8580;
+  color: #1ed4fd;
   animation: colorChange 2s infinite; }
 
 .menu-temp {
-  color: #198bee; }
+  color: #ff00ff; }
 
 .menu-temp-icon {
-  color: #198bee; }
+  color: #ff00ff; }
 
 .table-row-app-name-header {
   min-width: 6rem; }
@@ -409,17 +409,17 @@ button:hover {
   min-width: 3rem; }
 
 .hardware-cpu-box {
-  background: linear-gradient(to top, rgba(255, 75, 222, 0.8), rgba(25, 139, 238, 0.8), rgba(113, 241, 232, 0.8));
-  color: #20004a;
-  border-radius: 1rem;
+  background: linear-gradient(to top, #1ed4fd, #ff00ff);
+  color: #1f1635;
+  border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
-  background: #56b4d3;
-  color: #20004a;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem; }
+  background: #ff00ff;
+  color: #1f1635;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-table-row, .hardware-os-table-row, .hardware-bat-table-row, .hardware-ram-table-row, .hardware-cpu-table-row {
   padding-left: 1rem;
@@ -428,29 +428,29 @@ button:hover {
   padding-bottom: 0.5rem; }
 
 .hardware-ram-box {
-  background: linear-gradient(to top, rgba(113, 241, 232, 0.8), rgba(255, 75, 222, 0.8));
-  color: #20004a;
-  border-radius: 1rem;
+  background: linear-gradient(to top, #8d52ff, #0088ff);
+  color: #1f1635;
+  border-radius: 1.5rem;
   margin-top: 1rem; }
 
 .hardware-ram-table-row-header {
   padding: 1rem;
-  background: #da56d7;
-  color: #0c0023;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem; }
+  background: #017de9;
+  color: #1f1635;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-menu-tables-box {
-  background: #0c0023;
+  background: #1f1635;
   padding: 0.8rem;
   padding-top: 0rem;
   margin: 1rem;
-  border-radius: 1rem; }
+  border-radius: 1.5rem; }
 
 .hardware-bat-box {
   background: #987fd6;
   color: #211008;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
@@ -458,29 +458,29 @@ button:hover {
   padding: 1rem;
   background: #8b75c4;
   color: #211008;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .hardware-os-box {
-  background: rgba(25, 139, 238, 0.9);
+  background: rgba(255, 0, 255, 0.9);
   color: #211008;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-os-table-row-header {
   padding: 1rem;
-  background: rgba(25, 139, 238, 0.8);
+  background: rgba(255, 0, 255, 0.8);
   color: #211008;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .power-profiles-title {
   margin-left: 1rem;
   margin-right: 1rem; }
 
 .volume {
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
@@ -493,10 +493,10 @@ button:hover {
   margin-right: 1rem; }
 
 .vol-osd {
-  background: #20004a;
+  background: #352557;
   padding: 1rem;
-  border-radius: 1rem;
-  border: 2px solid #ff4bde;
+  border-radius: 1.5rem;
+  border: 2px solid #1ed4fd;
   margin: 1.5rem; }
 
 .vol-osd:dir(rtl) {
@@ -506,14 +506,14 @@ button:hover {
   padding-right: 1.5rem; }
 
 scale trough highlight {
-  border-radius: 1rem;
-  background: #ff4bde; }
+  border-radius: 1.5rem;
+  background: #1ed4fd; }
 
 scale slider {
-  background: #ff4bde; }
+  background: #1ed4fd; }
 
 .language-layout-label {
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding: 0rem 1rem; }
 
 .language-layout-icon {
@@ -522,17 +522,17 @@ scale slider {
 
 .language-layout-box {
   padding: 1rem;
-  border-radius: 1rem;
-  border: 2px solid #ff4bde;
+  border-radius: 1.5rem;
+  border: 2px solid #1ed4fd;
   margin: 1.5rem;
-  background: #20004a;
-  color: #cecece; }
+  background: #352557;
+  color: #bdddee; }
 
 .notifications-revealer-box {
-  background: #3b2163;
+  background: #154a63;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   background: #fff;
@@ -547,14 +547,14 @@ scale slider {
   margin-left: 0rem; }
 
 .notification-popups {
-  border: 2px solid #ff4bde;
-  border-radius: 1rem;
+  border: 2px solid #1ed4fd;
+  border-radius: 1.5rem;
   padding: 1rem;
-  background: #20004a;
-  color: #cecece; }
+  background: #352557;
+  color: #bdddee; }
 
 .notifications-popup-list {
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   background: rgba(0, 0, 0, 0); }
 
 .notification-close-button {
@@ -562,13 +562,13 @@ scale slider {
   padding-right: 0.7rem; }
 
 window {
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   background: rgba(0, 0, 0, 0); }
 
 .left-menu-box {
-  background: #20004a;
-  border-radius: 1rem;
-  border: 2px solid #ff4bde;
+  background: #352557;
+  border-radius: 1.5rem;
+  border: 2px solid #1ed4fd;
   margin-top: 0.3rem;
   margin-bottom: 1rem;
   transition-property: background;
@@ -587,20 +587,20 @@ window {
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   min-width: 23rem;
   min-height: 12rem; }
 
 .profile-box {
-  background: linear-gradient(to right, rgba(147, 89, 255, 0.8), rgba(255, 0, 170, 0.6));
-  color: #20004a;
+  background: linear-gradient(to right, rgba(162, 128, 255, 0.8), rgba(119, 76, 240, 0.6));
+  color: #1f1635;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: -3rem;
-  border-radius: 1rem; }
+  border-radius: 1.5rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -612,10 +612,10 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-  background: #0c0023;
+  background: #241546;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1rem; }
+  border-radius: 1.5rem; }
 
 .theme-button-father, .theme-btn, .selected-theme {
   padding-left: 0.6rem;
@@ -625,24 +625,24 @@ window {
 
 .selected-theme {
   background: linear-gradient(to right, #9359ff, #ff00aa);
-  color: #20004a;
-  border-radius: 1rem; }
+  color: #352557;
+  border-radius: 1.5rem; }
 
 .selected-theme:hover {
   background: linear-gradient(to right, #ff9900, #ff6600);
-  color: #3b2163;
-  border-radius: 1rem; }
+  color: #154a63;
+  border-radius: 1.5rem; }
 
 .theme-btn {
-  border-radius: 1rem;
-  background: #20004a;
-  border-color: #20004a;
-  border-radius: 1rem; }
+  border-radius: 1.5rem;
+  background: #352557;
+  border-color: #352557;
+  border-radius: 1.5rem; }
 
 .theme-btn:hover {
-  color: #20004a;
-  border-color: #ff4bde;
-  border-radius: 1rem; }
+  color: #154a63;
+  border-color: #1ed4fd;
+  border-radius: 1.5rem; }
 
 .theme-btn-icon {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -656,13 +656,13 @@ window {
   min-width: 3rem; }
 
 .menu-button {
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
-  background: #20004a;
+  background: #352557;
   font-family: "FantasqueSansM Nerd Font Propo";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
@@ -674,34 +674,53 @@ window {
   margin-right: 0.5rem; }
 
 .menu-button:hover {
-  background: #ff4bde; }
+  background: #1ed4fd; }
 
 .power-box {
-  background: #0c0023;
+  background: #1f1635;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1rem; }
+  border-radius: 1.5rem; }
+
+.power-action-revealer {
+  padding-top: 1rem; }
+
+.power-action-revealer-yes-btn:dir(rtl) {
+  border-top-left-radius: 0rem;
+  border-bottom-left-radius: 0rem; }
+
+.power-action-revealer-yes-btn:dir(ltr) {
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem; }
+
+.power-action-revealer-no-btn:dir(rtl) {
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem; }
+
+.power-action-revealer-no-btn:dir(ltr) {
+  border-top-left-radius: 0rem;
+  border-bottom-left-radius: 0rem; }
 
 .notification-menu-header {
   background-size: cover;
   background-position: center;
   padding: 1rem;
-  color: #cecece; }
+  color: #bdddee; }
 
 .horizontal-line {
-  background: #cecece;
+  background: #bdddee;
   min-height: 1px;
   min-width: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: #cecece; }
+  color: #bdddee; }
 
 .notification-center-button {
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  background: #3b2163;
-  color: #198bee;
-  border-radius: 1rem;
+  background: #1f1635;
+  color: #c1c4eb;
+  border-radius: 1.5rem;
   padding-top: 0rem;
   padding-bottom: 0rem; }
 
@@ -714,11 +733,11 @@ window {
   padding-right: 1rem; }
 
 .notification-center-button:hover {
-  background-color: #ff4bde;
-  color: #20004a; }
+  background-color: #1ed4fd;
+  color: #352557; }
 
 .notification-this-is-all {
-  color: #cecece;
+  color: #bdddee;
   margin-top: 10rem;
   margin-bottom: 1rem;
   min-width: 1rem;
@@ -736,10 +755,10 @@ window {
 .notification-header-box {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background: #0c0023;
-  color: #cecece;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem; }
+  background: #1f1635;
+  color: #bdddee;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .notification-center-header-text {
   min-width: 7.7rem; }
@@ -748,7 +767,7 @@ window {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1.2rem;
   margin-right: 0.5rem; }
@@ -757,7 +776,7 @@ window {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding-left: 1rem;
   padding-right: 1.2rem; }
 
@@ -769,13 +788,13 @@ window {
 
 .notification-center-container {
   min-height: 30rem;
-  border-radius: 1rem; }
+  border-radius: 1.5rem; }
 
 .music-wd-box {
-  background: linear-gradient(to right, #5812db, #8f1767);
+  background: linear-gradient(to right, #8e52ff, #0088ff);
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 1rem; }
+  border-radius: 1.5rem; }
 
 .music-wd-length {
   font-family: "FantasqueSansM Nerd Font Propo"; }
@@ -791,11 +810,11 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background: #0c0023;
+  background: #1f1635;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #71f1e8;
-  border-radius: 1rem;
+  color: #c1c4eb;
+  border-radius: 1.5rem;
   min-width: 2rem; }
 
 .music-wd-player:dir(rtl) {
@@ -807,7 +826,7 @@ window {
   padding-left: 0.7rem; }
 
 .music-wd-title {
-  color: #0c0023;
+  color: #1f1635;
   margin-bottom: 0.5rem; }
 
 .music-wd-title:dir(rtl) {
@@ -817,7 +836,7 @@ window {
   padding-right: 0.5rem; }
 
 .music-wd-file-name {
-  color: #71f1e8;
+  color: #c1c4eb;
   font-size: x-small; }
 
 .music-wd-main-button, .music-wd-button-stop, .music-wd-button-play, .music-wd-button {
@@ -828,30 +847,30 @@ window {
 .music-wd-button {
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 50%;
-  background: linear-gradient(to right, #20004a, #20004a);
-  color: #71f1e8; }
+  background: linear-gradient(to right, #352557, #352557);
+  color: #c1c4eb; }
 
 .music-wd-button:hover {
-  background: linear-gradient(to top, #ff4bde, #198bee); }
+  background: linear-gradient(to top, #1ed4fd, #ff00ff); }
 
 .music-wd-button-play {
   background: linear-gradient(to right, #9359ff, #ff00aa);
-  border-radius: 1rem;
-  color: #0c0023;
+  border-radius: 1.5rem;
+  color: #1f1635;
   min-width: 80px; }
 
 .music-wd-button-play:hover {
-  background: linear-gradient(to top, #ff4bde, #198bee); }
+  background: linear-gradient(to top, #1ed4fd, #ff00ff); }
 
 .music-wd-button-stop {
-  background: linear-gradient(to right, #20004a, #20004a);
-  color: #71f1e8;
-  border-radius: 1rem;
+  background: linear-gradient(to right, #352557, #352557);
+  color: #c1c4eb;
+  border-radius: 1.5rem;
   min-width: 80px; }
 
 .wd-fuzzy-day-box {
   background: rgba(0, 0, 0, 0);
-  color: #198bee; }
+  color: #ff00ff; }
 
 .wd-fuzzy-day-icon {
   font-size: 2rem;
@@ -872,7 +891,7 @@ window {
 
 .wd-fuzzy-time-box {
   background: rgba(0, 0, 0, 0);
-  color: #ff4bde; }
+  color: #1ed4fd; }
 
 .wd-fuzzy-time-icon {
   font-size: 1.5rem;
@@ -885,8 +904,8 @@ window {
 
 .saying-wd-label {
   min-width: 25rem;
-  font-size: 1.5rem;
-  color: #ffb431;
+  font-size: 1.8rem;
+  color: #31ff87;
   background: rgba(0, 0, 0, 0);
   font-family: "VIP Rawy Regular";
   padding: 0rem;
@@ -894,27 +913,27 @@ window {
   border-radius: 0rem; }
 
 .desktop-wd-separator {
-  background: linear-gradient(to right, #198bee, #ffb431, #ff4bde);
+  background: linear-gradient(to bottom, #ff00ff, #ffb431, #1ed4fd);
   min-height: 1px;
   min-width: 1px; }
 
 .desktop-wd-music-player-box {
-  padding: 0rem 0rem 0rem 0rem;
+  padding: 1rem 0rem 0rem 0rem;
   min-width: 30rem;
   font-family: "VIP Rawy Regular";
   font-size: 1.5rem; }
 
 .desktop-wd-music-player-title {
-  color: #ff4bde; }
+  color: #1ed4fd; }
 
 .desktop-wd-music-player-artist {
-  color: #198bee; }
+  color: #ff00ff; }
 
 .bar-prayer-times-box {
   font-size: 1em;
-  background: linear-gradient(to right, #3599ff, #6457f0);
-  color: #0c0023;
-  border-radius: 1rem;
+  background: linear-gradient(to right, #82d8d2, #478dd7);
+  color: #1f1635;
+  border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -932,17 +951,17 @@ window {
   padding-right: 0.7rem; }
 
 .prayer-times-menu-box {
-  background: #20004a;
-  border-radius: 1rem;
-  border: 2px solid #ff4bde;
-  color: #cecece; }
+  background: #352557;
+  border-radius: 1.5rem;
+  border: 2px solid #1ed4fd;
+  color: #bdddee; }
 
 .prayer-times-menu-header {
-  background: #0c0023;
-  color: #cecece;
+  background: #1f1635;
+  color: #bdddee;
   padding: 1rem;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem; }
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem; }
 
 .prayer-time-item-box-class {
   padding-top: 1.2rem;
@@ -950,12 +969,12 @@ window {
   padding-right: 1.5rem; }
 
 .isha-item {
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem; }
+  border-bottom-right-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
 
 .next-prayer {
-  background: linear-gradient(to left, #198bee, #ff4bde);
-  color: #0c0023; }
+  background: linear-gradient(to left, #ff00ff, #1ed4fd);
+  color: #1f1635; }
 
 .prayer-times-menu-header-icon {
   font-family: "FantasqueSansM Nerd Font Propo"; }
@@ -971,12 +990,12 @@ window {
 
 .weather-menu-box {
   min-width: 2rem;
-  background: #20004a;
-  color: #cecece;
+  background: #352557;
+  color: #bdddee;
   padding: 1rem 1rem;
   padding-top: 2rem;
-  border: 2px solid #ff4bde;
-  border-radius: 1rem; }
+  border: 2px solid #1ed4fd;
+  border-radius: 1.5rem; }
 
 .weather-menu-general-information-box {
   margin: 0rem 1rem; }
@@ -1051,16 +1070,16 @@ window {
   font-size: 1.3rem; }
 
 .applications-box {
-  background: #20004a;
-  border-radius: 1rem; }
+  background: #352557;
+  border-radius: 1.5rem; }
 
 .app-search-box {
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   min-width: 23rem;
   min-height: 12rem;
   background-color: rgba(0, 0, 0, 0.1);
@@ -1079,9 +1098,8 @@ window {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); }
 
 .audio-menu-header-box {
-  background: #0c0023;
-  border-top-right-radius: 1rem;
-  border-top-left-radius: 1rem;
+  background: rgba(31, 22, 53, 0.8);
+  color: #bdddee;
   padding: 0.6rem;
   margin: 0rem 1rem; }
 
@@ -1118,9 +1136,9 @@ window {
   margin-right: 1.5rem; }
 
 .left-menu-music-wd {
-  background: linear-gradient(to right, #5812db, #8f1767);
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
+  background: linear-gradient(to right, #8e52ff, #0088ff);
+  border-bottom-right-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-left: 1rem;
@@ -1134,6 +1152,16 @@ window {
 .left-menu-music-wd:dir(ltr) {
   padding-right: 1rem;
   padding-left: 1.8rem; }
+
+.media-control-revaler-button {
+  margin: 0rem 1rem;
+  padding: 0.3rem;
+  border-bottom-right-radius: 0rem;
+  border-bottom-left-radius: 0rem; }
+
+.media-control-revaler-button:hover {
+  border-bottom-right-radius: 0rem;
+  border-bottom-left-radius: 0rem; }
 
 .information-widget-header {
   font-size: 2rem;
@@ -1155,29 +1183,29 @@ window {
 
 .calendar-menu-box {
   min-width: 2rem;
-  background: #20004a;
-  color: #cecece;
-  border: 2px solid #ff4bde;
-  border-radius: 1rem; }
+  background: #352557;
+  color: #bdddee;
+  border: 2px solid #1ed4fd;
+  border-radius: 1.5rem; }
 
 .calendar {
   all: unset;
   padding: 0.8rem 0.55rem 0rem;
   font-size: 1.1rem; }
   .calendar.button {
-    border-radius: 1rem; }
+    border-radius: 1.5rem; }
   .calendar.header {
     border: none;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     border-bottom-right-radius: 0rem;
     border-bottom-left-radius: 0rem; }
   .calendar.highlight {
-    color: rgba(206, 206, 206, 0.5); }
+    color: rgba(189, 221, 238, 0.5); }
   .calendar:indeterminate {
-    color: rgba(206, 206, 206, 0.5); }
+    color: rgba(189, 221, 238, 0.5); }
   .calendar:selected {
-    border-radius: 0.6rem;
-    box-shadow: inset 0 -8px 0 0 rgba(255, 75, 222, 0.5), inset 0 0 0 1px #ff4bde; }
+    border-radius: 0.9rem;
+    box-shadow: inset 0 -8px 0 0 rgba(30, 212, 253, 0.5), inset 0 0 0 1px #1ed4fd; }
 
 .un-hover:hover {
   all: unset; }
@@ -1206,10 +1234,10 @@ window {
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3); }
 
 button {
-  background: #3b2163;
-  color: #71f1e8;
-  border-color: #3b2163;
-  border-radius: 1rem;
+  background: #1f1635;
+  color: #bdddee;
+  border-color: #1f1635;
+  border-radius: 1.5rem;
   padding: 4px 14px;
   border: none;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
@@ -1219,30 +1247,30 @@ button:active {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); }
 
 button:hover {
-  background: #ff4bde;
-  color: #20004a;
-  border-color: #ff4bde;
-  border-radius: 1rem;
+  background: #1ed4fd;
+  color: #154a63;
+  border-color: #1ed4fd;
+  border-radius: 1.5rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
 
 menu {
-  border: 2px #ff4bde solid;
-  background: #20004a;
-  color: #cecece;
-  border-radius: 1rem;
+  border: 2px #1ed4fd solid;
+  background: #352557;
+  color: #bdddee;
+  border-radius: 1.5rem;
   padding: 0.3rem;
   margin-top: 2rem; }
 
 menuitem {
-  border-radius: 1rem;
-  background: #20004a;
-  color: #cecece; }
+  border-radius: 1.5rem;
+  background: #352557;
+  color: #bdddee; }
 
 menuitem:disabled {
-  background: rgba(206, 206, 206, 0.1);
-  color: rgba(206, 206, 206, 0.5); }
+  background: rgba(189, 221, 238, 0.1);
+  color: rgba(189, 221, 238, 0.5); }
 
 menuitem:hover {
-  background: rgba(206, 206, 206, 0.2);
-  color: #cecece; }
+  background: rgba(189, 221, 238, 0.2);
+  color: #bdddee; }

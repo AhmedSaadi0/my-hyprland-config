@@ -1,4 +1,4 @@
-@import './themes/win20.scss';
+@import './themes/colors.scss';
 
 $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 
@@ -21,7 +21,6 @@ $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 @import './audio-brightness-menu.scss';
 @import './circle-theme-information.scss';
 @import './calendar-menu.scss';
-
 
 // * {
 //     all: unset;

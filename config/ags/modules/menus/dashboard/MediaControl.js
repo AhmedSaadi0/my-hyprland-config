@@ -28,7 +28,7 @@ export const AudioSlider = () =>
                     if (!Audio.speaker) return;
 
                     if (Audio.speaker.isMuted) {
-                        stack.shown = '0';
+                        stack.shown = 'v_0';
                         return;
                     }
 
@@ -122,8 +122,8 @@ const MediaControl = () =>
                     title: strings.musicPlayer,
                     text: '',
                     vertical: false,
-                    textXalign: 0.95,
-                    titleXalign: 0.05,
+                    textXalign: 0.93,
+                    titleXalign: 0.18,
                     homogeneous: true,
                 }),
                 onClicked: (self, value) => {

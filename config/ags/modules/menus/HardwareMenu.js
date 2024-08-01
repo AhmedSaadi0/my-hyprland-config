@@ -66,28 +66,62 @@ const batteryProgress = Widget.CircularProgress({
     let percentage = Battery.percent;
     self.value = percentage / 100;
 
-    var label = '';
+    var labelText = '';
+
+    const adapterIsOn = Utils.exec('acpi -a').includes('on-line');
+
+    if (adapterIsOn) {
+        if (percentage <= 10) {
+            labelText = '󰢜';
+        } else if (percentage <= 20) {
+            labelText = '󰂆';
+        } else if (percentage <= 30) {
+            labelText = '󰂇';
+        } else if (percentage <= 40) {
+            labelText = '󰂈';
+        } else if (percentage <= 50) {
+            labelText = '󰢝';
+        } else if (percentage <= 60) {
+            labelText = '󰂉';
+        } else if (percentage <= 70) {
+            labelText = '󰢞';
+        } else if (percentage <= 80) {
+            labelText = '󰂊';
+        } else if (percentage <= 90) {
+            labelText = '󰂋';
+        } else if (percentage <= 98) {
+            labelText = '󰂅';
+        }
+    } else {
+        if (percentage <= 10) {
+            labelText = '󰁺';
+        } else if (percentage <= 20) {
+            labelText = '󰁻';
+        } else if (percentage <= 30) {
+            labelText = '󰁼';
+        } else if (percentage <= 40) {
+            labelText = '󰁽';
+        } else if (percentage <= 50) {
+            labelText = '󰁾';
+        } else if (percentage <= 60) {
+            labelText = '󰁿';
+        } else if (percentage <= 70) {
+            labelText = '󰂀';
+        } else if (percentage <= 80) {
+            labelText = '󰂁';
+        } else if (percentage <= 90) {
+            labelText = '󰂂';
+        } else if (percentage <= 98) {
+            labelText = '󰁹';
+        }
+    }
 
     if (Battery.charging) {
-        if (percentage <= 55) {
-            label = '󱊤';
-        } else if (percentage <= 70) {
-            label = '󱊥';
-        } else if (percentage > 70) {
-            label = '󱊦';
-        }
         self.child.className = 'menu-battery-icon-charging';
     } else {
-        if (percentage <= 55) {
-            label = '󱊡';
-        } else if (percentage <= 70) {
-            label = '󱊢';
-        } else if (percentage > 70) {
-            label = '󱊣';
-        }
         self.child.className = 'menu-battery-icon';
     }
-    self.child.label = label;
+    self.child.label = labelText;
 
     self.child.tooltipMarkup = `<span weight='bold'>${strings.batteryPercentage} (${percentage}%)</span>`;
 });
