@@ -89,7 +89,7 @@ const batteryProgress = Widget.CircularProgress({
             labelText = '󰂊';
         } else if (percentage <= 90) {
             labelText = '󰂋';
-        } else if (percentage <= 98) {
+        } else {
             labelText = '󰂅';
         }
     } else {
@@ -111,7 +111,7 @@ const batteryProgress = Widget.CircularProgress({
             labelText = '󰂁';
         } else if (percentage <= 90) {
             labelText = '󰂂';
-        } else if (percentage <= 98) {
+        } else {
             labelText = '󰁹';
         }
     }
