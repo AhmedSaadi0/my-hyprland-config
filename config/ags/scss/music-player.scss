@@ -10,26 +10,6 @@
     font-family: $icon-font-family;
 }
 
-.left-menu-music-wd {
-    background: $music-wd-box-bg;
-    border-radius: $border-radius;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-}
-
-.left-menu-music-wd:dir(rtl) {
-    padding-left: 1rem;
-    padding-right: $left-menu-music-wd-padding-right;
-}
-
-.left-menu-music-wd:dir(ltr) {
-    padding-right: 1rem;
-    padding-left: $left-menu-music-wd-padding-right;
-}
-
 .music-wd-row-one {
     padding-right: 8px;
 }
