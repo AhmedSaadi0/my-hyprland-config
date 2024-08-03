@@ -95,6 +95,7 @@ const strings = {
         usedTimeNowFriday: 'الاسترخاء والاستمتاع، استمتع بلحظات الهدوء.',
         fuzzyTimeThursday:
             'الخميس هو وقتك الخاص، استمتع بكل لحظة وافعل ما تريد.',
+        musicPlayer: 'مشغل الموسيقى',
         musicPlayerNoArtist: 'لا يوجد فنان',
         musicPlayerNoTitle: 'لا يوجد عنوان',
         musicPlayerNoMusicPlaying: 'لا توجد موسيقى قيد التشغيل',
@@ -242,6 +243,7 @@ const strings = {
             'Relaxation and enjoyment, enjoy the moments of calm.',
         fuzzyTimeThursday:
             'Thursday is your special time, enjoy every moment and do what you want.',
+        musicPlayer: 'Music Player',
         musicPlayerNoArtist: 'No artist',
         musicPlayerNoTitle: 'No title',
         musicPlayerNoMusicPlaying: 'There is no music currently playing.',

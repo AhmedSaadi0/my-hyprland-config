@@ -1,3 +1,4 @@
+import themeService from '../services/ThemeService.js';
 import settings from '../settings.js';
 import { Utils, Widget } from './imports.js';
 
@@ -77,19 +78,46 @@ export function truncateString(str, maxLength) {
     }
 }
 
-/**
-Widget({
-    replacement for properties
-    attribute: {
-        'custom-prop': 123,
-        'another': 'xyz',
-    },
+export const ThemeButton = ({
+    label,
+    icon,
+    theme,
+    label_css = 'theme-btn-label',
+    icon_css = 'theme-btn-icon',
+    end = local === 'RTL' ? 'margin-left: 1.1rem;' : 'margin-right: 1.1rem;',
+    css = `
+    min-width: 5rem;
+    min-height: 2rem;
+    ${end}
+    border-radius: 1rem;
+`,
+}) => {
+    const _label = Widget.Label({
+        className: `unset ${label_css}`,
+        label: label,
+    });
 
-    setup: self => self
-        .on('some-signal-on-this', self => { }) // replacement for connections
-        .hook(gobject, self => { }, 'event') // replacement for connections
-        .poll(1000, self => { }) // replacement connections
-        .bind('prop', gobject, 'target_prop', v => v) // replacement for binds
-    })
- * 
- */
+    const _icon = Widget.Label({
+        className: `unset ${icon_css}`,
+        label: icon,
+        xalign: 0.5,
+    });
+
+    const box = Widget.Box({
+        className: 'unset theme-btn-box',
+        children: [_label, _icon],
+    });
+
+    const button = Widget.Button({
+        css: css,
+        child: box,
+        onClicked: () => themeService.changeTheme(theme),
+    }).hook(themeService, (btn) => {
+        btn.className = 'theme-btn';
+        if (themeService.selectedTheme === theme) {
+            btn.className = 'selected-theme';
+        }
+    });
+
+    return button;
+};

@@ -1,6 +1,8 @@
 .applications-box {
     background: $bar-background;
     border-radius: $border-radius;
+    border-radius: $border-radius;
+    border: $border-size solid $menu-box-borders;
 }
 
 .app-search-box {

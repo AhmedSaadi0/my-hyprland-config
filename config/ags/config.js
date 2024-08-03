@@ -21,7 +21,6 @@ import { WeatherMenu } from './modules/menus/WeatherMenu.js';
 import { CalendarMenu } from './modules/menus/CalendarMenu.js';
 import settings from './modules/settings.js';
 import { applauncher } from './modules/menus/ApplicationsMenu.js';
-import { AudioMenu } from './modules/menus/AudioBrightnessMenu.js';
 
 import {
     TopLeftCorner,
@@ -43,7 +42,6 @@ let windows = [
     PrayerTimesMenu(),
     WeatherMenu(),
     CalendarMenu(),
-    AudioMenu(),
     languageLayoutOSD,
     // ... Desktop widgets ... //
     ColorWidget,
