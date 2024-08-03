@@ -133,10 +133,10 @@ $notifications-separator-background: $text-color;
 // --------- desktop-widget ---------
 // ----------------------------------
 $desktop-wd-separator-background: linear-gradient(
-  to right,
-  $fg-two,
-  #ffb431,
-  $fg-one
+    to right,
+    $fg-two,
+    #ffb431,
+    $fg-one
 );
 
 // Fuzzy widget
@@ -200,9 +200,9 @@ $menu-box-background: $bg-one;
 $menu-box-borders: $border-color;
 
 $profile-box-background: linear-gradient(
-  to right,
-  rgba(#9359ff, 0.8),
-  rgba(#ff00aa, 0.6)
+    to right,
+    rgba(#9359ff, 0.8),
+    rgba(#ff00aa, 0.6)
 );
 $profile-box-color: $bg-one;
 
@@ -237,7 +237,7 @@ $music-wd-button-play-fg: $bg-two;
 $music-wd-button-stop-bg: $music-wd-button-bg;
 $music-wd-button-stop-fg: $music-wd-button-fg;
 
-$left-menu-music-wd-padding-right: 1.8rem;
+$left-menu-music-wd-padding-right: 1.5rem;
 
 // ---------------------------
 // --------- HW menu ---------
@@ -247,19 +247,19 @@ $hardware-menu-header-box-background: $bg-two;
 $hardware-menu-tables-box-background: $bg-two;
 
 $hardware-cpu-box-background: linear-gradient(
-  to top,
-  rgba($fg-one, 0.8),
-  rgba($fg-two, 0.8),
-  rgba($fg-three, 0.8)
+    to top,
+    rgba($fg-one, 0.8),
+    rgba($fg-two, 0.8),
+    rgba($fg-three, 0.8)
 );
 $hardware-cpu-box-color: $bg-one;
 $hardware-cpu-table-row-header-background: rgba(#56b4d3, 1);
 $hardware-cpu-table-row-header-color: $bg-one;
 
 $hardware-ram-box-background: linear-gradient(
-  to top,
-  rgba($fg-three, 0.8),
-  rgba($fg-one, 0.8)
+    to top,
+    rgba($fg-three, 0.8),
+    rgba($fg-one, 0.8)
 );
 $hardware-ram-box-color: $bg-one;
 $hardware-ram-table-row-header-background: #da56d7;
@@ -284,15 +284,15 @@ $btn-hover-background: $fg-one;
 $btn-hover-color: $bg-one;
 
 button {
-  background-color: $btn-background;
-  color: $btn-color;
-  border-color: $btn-background;
+    background-color: $btn-background;
+    color: $btn-color;
+    border-color: $btn-background;
 }
 
 button:hover {
-  background-color: $btn-hover-background;
-  color: $btn-hover-color;
-  border-color: $btn-hover-background;
+    background-color: $btn-hover-background;
+    color: $btn-hover-color;
+    border-color: $btn-hover-background;
 }
 
 // --------- Menu ---------

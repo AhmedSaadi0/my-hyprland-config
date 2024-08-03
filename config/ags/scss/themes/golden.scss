@@ -132,10 +132,10 @@ $notifications-separator-background: $text-color;
 // --------- desktop-widget ---------
 // ----------------------------------
 $desktop-wd-separator-background: linear-gradient(
-  to bottom,
-  $fg-two,
-  #ea6220,
-  $fg-one
+    to bottom,
+    $fg-two,
+    #ea6220,
+    $fg-one
 );
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
@@ -197,9 +197,9 @@ $menu-box-background: $bg-one;
 $menu-box-borders: $border-color;
 
 $profile-box-background: linear-gradient(
-  to right,
-  rgba($fg-two, 0.9),
-  rgba($fg-three, 0.6)
+    to right,
+    rgba($fg-two, 0.9),
+    rgba($fg-three, 0.6)
 );
 $profile-box-color: $text-color;
 
@@ -235,7 +235,7 @@ $music-wd-button-play-fg: $text-color;
 $music-wd-button-stop-bg: $music-wd-button-bg;
 $music-wd-button-stop-fg: $music-wd-button-fg;
 
-$left-menu-music-wd-padding-right: 1.9rem;
+$left-menu-music-wd-padding-right: 1.5rem;
 
 // ---------------------------
 // --------- HW menu ---------
@@ -272,17 +272,17 @@ $btn-color: $text-color;
 $btn-hover-background: $fg-one;
 $btn-hover-color: $text-color;
 button {
-  background: $btn-background;
-  color: $btn-color;
-  border-color: $btn-background;
-  border-radius: $border-radius;
+    background: $btn-background;
+    color: $btn-color;
+    border-color: $btn-background;
+    border-radius: $border-radius;
 }
 
 button:hover {
-  background: $btn-hover-background;
-  color: $btn-hover-color;
-  border-color: $btn-hover-background;
-  border-radius: $border-radius;
+    background: $btn-hover-background;
+    color: $btn-hover-color;
+    border-color: $btn-hover-background;
+    border-radius: $border-radius;
 }
 
 // --------- Menu ---------
@@ -298,138 +298,138 @@ $menuitem-disabled-fg: rgba($text-color, 0.5);
 /* -------------- Desktop Widget -------------- */
 /* -------------------------------------------- */
 .my-weather-wd-text {
-  font-size: medium;
-  color: $text-color;
+    font-size: medium;
+    color: $text-color;
 }
 
 .weather-wd-row-one {
-  background: $fg-one;
-  border-radius: 3rem;
-  margin: 1rem;
-  margin-bottom: 0.5rem;
-  // margin-left: 11.4rem;
+    background: $fg-one;
+    border-radius: 3rem;
+    margin: 1rem;
+    margin-bottom: 0.5rem;
+    // margin-left: 11.4rem;
 }
 
 .my-desktop-music-box {
-  background: $fg-two;
-  border-radius: 3rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  min-width: 1rem;
-  margin: 1rem;
-  margin-top: 0.5rem;
-  // margin-left: 11.3rem;
+    background: $fg-two;
+    border-radius: 3rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    min-width: 1rem;
+    margin: 1rem;
+    margin-top: 0.5rem;
+    // margin-left: 11.3rem;
 }
 
 .my-desktop-music-box:dir(rtl) {
-  padding-right: 1.2rem;
-  padding-left: 1rem;
+    padding-right: 1.2rem;
+    padding-left: 1rem;
 }
 
 .my-desktop-music-box:dir(ltr) {
-  padding-left: 1.2rem;
-  padding-right: 1rem;
+    padding-left: 1.2rem;
+    padding-right: 1rem;
 }
 
 .my-weather-wd-icon {
-  color: $text-color;
-  font-size: xx-large;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  font-family: $icon-font-family;
+    color: $text-color;
+    font-size: xx-large;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-family: $icon-font-family;
 }
 
 .my-wd-user-icon {
-  padding: 0.8rem;
-  margin-right: 1rem;
-  border-radius: 3rem;
+    padding: 0.8rem;
+    margin-right: 1rem;
+    border-radius: 3rem;
 }
 
 .my-wd-user-icon:dir(rtl) {
-  margin-right: 1rem;
+    margin-right: 1rem;
 }
 
 .my-wd-user-icon:dir(ltr) {
-  margin-left: 1rem;
+    margin-left: 1rem;
 }
 
 .my-weather-wd-title-text-box {
-  min-width: 10.55rem;
-  padding-top: 1rem;
-  color: $text-color;
-  font-size: x-large;
-  font-family: $saying-wd-label-font-family;
+    min-width: 10.55rem;
+    padding-top: 1rem;
+    color: $text-color;
+    font-size: x-large;
+    font-family: $saying-wd-label-font-family;
 }
 
 // Desktop M-U Weather Days
 .my-weather-wd-row-two {
-  background: #f38e31;
-  margin: 1rem;
+    background: #f38e31;
+    margin: 1rem;
 
-  // margin-right: 2.5rem;
-  // margin-left: 2.5rem;
+    // margin-right: 2.5rem;
+    // margin-left: 2.5rem;
 
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
 
-  // margin-left: 6.4rem;
+    // margin-left: 6.4rem;
 
-  border-radius: 3rem;
+    border-radius: 3rem;
 }
 
 .my-fuzzy-clock-box {
-  background: rgba(#b9c4b5, 0.5);
+    background: rgba(#b9c4b5, 0.5);
 
-  margin: 1rem;
+    margin: 1rem;
 
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
-  // margin-left: 6.4rem;
+    // margin-left: 6.4rem;
 
-  border-radius: 3rem;
+    border-radius: 3rem;
 }
 
 .my-fuzzy-clock-box:dir(rtl) {
-  padding-right: 1.5rem;
-  padding-left: 1rem;
+    padding-right: 1.5rem;
+    padding-left: 1rem;
 }
 
 .my-fuzzy-clock-box:dir(ltr) {
-  padding-left: 1.5rem;
-  padding-right: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1rem;
 }
 
 .my-wd-weather-day-name {
-  font-family: $saying-wd-label-font-family;
-  color: $text-color;
+    font-family: $saying-wd-label-font-family;
+    color: $text-color;
 }
 
 .my-wd-weather-day-text {
-  font-size: x-small;
-  padding-bottom: 0rem;
-  color: $text-color;
+    font-size: x-small;
+    padding-bottom: 0rem;
+    color: $text-color;
 }
 
 .my-weather-wd-day-icon {
-  background: rgba($color: $text-color, $alpha: 1);
-  color: $fg-one;
-  padding-right: 0.3rem;
-  padding-left: 0.3rem;
-  border-radius: 10rem;
-  margin-bottom: 0.2rem;
-  min-width: 3rem;
-  min-height: 3.5rem;
-  font-size: x-large;
-  font-family: $icon-font-family;
+    background: rgba($color: $text-color, $alpha: 1);
+    color: $fg-one;
+    padding-right: 0.3rem;
+    padding-left: 0.3rem;
+    border-radius: 10rem;
+    margin-bottom: 0.2rem;
+    min-width: 3rem;
+    min-height: 3.5rem;
+    font-size: x-large;
+    font-family: $icon-font-family;
 }
 
 .my-weather-wd-day-box {
-  background: $fg-two;
-  border-radius: 3rem;
-  padding-top: 0.4rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
+    background: $fg-two;
+    border-radius: 3rem;
+    padding-top: 0.4rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
 }
