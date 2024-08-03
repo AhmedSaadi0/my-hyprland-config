@@ -55,7 +55,7 @@ export const BatteryWidget = () => {
                 labelText = '󰂊';
             } else if (percentage <= 90) {
                 labelText = '󰂋';
-            } else if (percentage <= 98) {
+            } else {
                 labelText = '󰂅';
             }
         } else {
@@ -77,7 +77,7 @@ export const BatteryWidget = () => {
                 labelText = '󰂁';
             } else if (percentage <= 90) {
                 labelText = '󰂂';
-            } else if (percentage <= 98) {
+            } else {
                 labelText = '󰁹';
             }
         }

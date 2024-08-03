@@ -131,10 +131,10 @@ $notifications-separator-background: $text-color;
 // --------- desktop-widget ---------
 // ----------------------------------
 $desktop-wd-separator-background: linear-gradient(
-  to bottom,
-  $fg-two,
-  $fg-three,
-  $fg-one
+    to bottom,
+    $fg-two,
+    $fg-three,
+    $fg-one
 );
 
 $wd-fuzzy-day-box-bg: rgba(#000000, 0);
@@ -196,9 +196,9 @@ $menu-box-borders: $border-color;
 
 // $profile-box-background: linear-gradient(to right, rgba(#F59549, 0.6), rgba(#aaaaff, 0.6));
 $profile-box-background: linear-gradient(
-  to right,
-  rgba($fg-two, 0.9),
-  rgba($fg-three, 0.6)
+    to right,
+    rgba($fg-two, 0.9),
+    rgba($fg-three, 0.6)
 );
 $profile-box-color: $bg-one;
 
@@ -233,7 +233,7 @@ $music-wd-button-play-fg: $bg-two;
 $music-wd-button-stop-bg: $music-wd-button-bg;
 $music-wd-button-stop-fg: $music-wd-button-fg;
 
-$left-menu-music-wd-padding-right: 1.8rem;
+$left-menu-music-wd-padding-right: 1.5rem;
 
 // ---------------------------
 // --------- HW menu ---------
@@ -271,17 +271,17 @@ $btn-hover-background: $fg-one;
 $btn-hover-color: $bg-three;
 
 button {
-  background-color: $btn-background;
-  color: $btn-color;
-  border-color: $btn-background;
-  border-radius: $border-radius;
+    background-color: $btn-background;
+    color: $btn-color;
+    border-color: $btn-background;
+    border-radius: $border-radius;
 }
 
 button:hover {
-  background-color: $btn-hover-background;
-  color: $btn-hover-color;
-  border-color: $btn-hover-background;
-  border-radius: $border-radius;
+    background-color: $btn-hover-background;
+    color: $btn-hover-color;
+    border-color: $btn-hover-background;
+    border-radius: $border-radius;
 }
 
 // --------- Menu ---------
