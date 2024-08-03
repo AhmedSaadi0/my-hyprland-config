@@ -1,9 +1,10 @@
-import { local } from '../utils/helpers.js';
-import settings from '../settings.js';
-import strings from '../strings.js';
-import brightness from '../services/BrightnessService.js';
+import { TitleText, local } from '../../utils/helpers.js';
+import settings from '../../settings.js';
+import strings from '../../strings.js';
+import brightness from '../../services/BrightnessService.js';
 const Audio = await Service.import('audio');
-import MusicPLayer from '../widgets/MusicPLayer.js';
+import MusicPLayer from '../../widgets/MusicPLayer.js';
+import { Widget } from '../../utils/imports.js';
 
 const margin = local === 'RTL' ? 'margin-right:0.5rem;' : 'margin-left:0.5rem;';
 
@@ -27,7 +28,7 @@ export const AudioSlider = () =>
                     if (!Audio.speaker) return;
 
                     if (Audio.speaker.isMuted) {
-                        stack.shown = '0';
+                        stack.shown = 'v_0';
                         return;
                     }
 
@@ -104,37 +105,40 @@ const audio_brightness = Widget.Box({
     children: [AudioSlider(), BrightnessSlider()],
 });
 
-const menuRevealer = Widget.Revealer({
-    transition: settings.theme.menuTransitions.audioMenu,
-    transitionDuration: settings.theme.menuTransitions.audioMenuDuration,
-    child: Widget.Box({
-        className: 'audio-menu-box',
-        vertical: true,
-        children: [
-            Widget.Label({
-                className: 'media-menu-header',
-                label: strings.mediaCenter,
-            }),
-            audio_brightness,
-            MusicPLayer('left-menu-music-wd'),
-        ],
-    }),
+const mediaControlRevaler = Widget.Revealer({
+    revealChild: false,
+    transitionDuration: 500,
+    transition: 'slide_down',
+    child: audio_brightness,
 });
 
-export const AudioMenu = () =>
-    Widget.Window({
-        name: `Audio_menu`,
-        margins: [2, 400],
-        anchor: ['top', local === 'RTL' ? 'right' : 'left'],
-        child: Widget.Box({
-            css: `min-height: 2px;`,
-            children: [menuRevealer],
-        }),
+const MediaControl = () =>
+    Widget.Box({
+        vertical: true,
+        children: [
+            Widget.Button({
+                className: 'media-control-revaler-button',
+                child: TitleText({
+                    title: strings.musicPlayer,
+                    text: '',
+                    vertical: false,
+                    textXalign: 0.93,
+                    titleXalign: 0.18,
+                    homogeneous: true,
+                }),
+                onClicked: (self, value) => {
+                    mediaControlRevaler.reveal_child =
+                        !mediaControlRevaler.reveal_child;
+
+                    self.child.children[1].label = '';
+                    if (mediaControlRevaler.reveal_child) {
+                        self.child.children[1].label = '';
+                    }
+                },
+            }),
+            mediaControlRevaler,
+            MusicPLayer('left-menu-music-wd'),
+        ],
     });
 
-let menuIsOpen = false;
-
-globalThis.showAudioMenu = () => {
-    menuRevealer.revealChild = !menuRevealer.revealChild;
-    menuIsOpen = menuRevealer.revealChild;
-};
+export default MediaControl;
