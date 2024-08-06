@@ -55,10 +55,7 @@ const Applauncher = ({ width = 500, height = 500, spacing = 12 }) => {
         hexpand: true,
         // css: `margin-bottom: 2rem;`,
         className: 'app-search',
-        css: `
-      margin: 1.2rem;
-      margin-top: 5rem;
-    `,
+        css: `margin: 1.2rem; margin-top: 5rem;`,
         // to launch the first item on Enter
         on_accept: () => {
             // make sure we only consider visible (searched for) applications
