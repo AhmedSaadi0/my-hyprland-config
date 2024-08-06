@@ -1,4 +1,5 @@
 import settings from '../../settings.js';
+import strings from '../../strings.js';
 import { local } from '../../utils/helpers.js';
 import { Widget } from '../../utils/imports.js';
 
@@ -14,21 +15,21 @@ const actionRevealer = Widget.Revealer({
         spacing: 20,
         children: [
             Widget.Label({
-                label: 'هل تريد ايقاف التشغيل',
+                label: strings.doYouWantToPoweroff,
             }),
             Widget.Box({
                 homogeneous: true,
                 children: [
                     Widget.Button({
                         className: 'power-action-revealer-yes-btn',
-                        label: 'نعم',
+                        label: strings.yes,
                         onClicked: () => {
                             Utils.execAsync(action).catch(print);
                         },
                     }),
                     Widget.Button({
                         className: 'power-action-revealer-no-btn',
-                        label: 'لا',
+                        label: strings.no,
                         onClicked: (self, value) => {
                             actionRevealer.reveal_child = false;
                         },
@@ -57,7 +58,8 @@ const PowerButtonsRow = () => {
                 actionRevealer.reveal_child = !actionRevealer.reveal_child;
             }
             action = 'systemctl poweroff';
-            actionRevealer.child.children[0].label = 'هل تريد ايقاف التشغيل';
+            actionRevealer.child.children[0].label =
+                strings.doYouWantToPoweroff;
         },
     });
 
@@ -73,7 +75,7 @@ const PowerButtonsRow = () => {
             }
             // actionRevealer.reveal_child = !actionRevealer.reveal_child;
             action = 'systemctl reboot';
-            actionRevealer.child.children[0].label = 'هل تريد اعادة التشغيل';
+            actionRevealer.child.children[0].label = strings.doYouWantToRestart;
         },
     });
 
@@ -92,7 +94,7 @@ const PowerButtonsRow = () => {
             }
             // actionRevealer.reveal_child = !actionRevealer.reveal_child;
             action = 'loginctl kill-session self';
-            actionRevealer.child.children[0].label = 'هل تريد تسجيل الخروج';
+            actionRevealer.child.children[0].label = strings.doYouWantToLogout;
         },
     });
 
@@ -102,7 +104,7 @@ const PowerButtonsRow = () => {
 
     return Widget.Box({
         className: 'power-box unset',
-        css: `margin-top:0rem;`,
+        // css: `margin-top:0rem;`,
         vertical: true,
         children: [row1, actionRevealer],
     });

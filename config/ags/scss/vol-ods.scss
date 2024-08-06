@@ -4,7 +4,6 @@
     margin-bottom: 6px;
     padding-left: 1em;
     padding-right: 1em;
-    color: $text-color;
 }
 
 .vol-stack:dir(rtl) {
@@ -21,6 +20,7 @@
     border-radius: $border-radius;
     border: $border-size solid $vol-osd-border-color;
     margin: 1.5rem;
+    color: $text-color;
 }
 
 .vol-osd:dir(rtl) {
