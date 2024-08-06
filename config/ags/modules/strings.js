@@ -142,6 +142,12 @@ const strings = {
         mediaCenter: 'مركز الوسائط',
         controlCenter: 'مركز التحكم',
         hardwareCenter: 'مركز العتاد',
+
+        doYouWantToPoweroff: 'هل تريد ايقاف التشغيل ؟',
+        doYouWantToRestart: 'هل تريد اعادة التشغيل ؟',
+        doYouWantToLogout: 'هل تريد تسجيل الخروج ؟',
+        yes: 'نعم',
+        no: 'لا',
     },
     en: {
         hello: 'Hello',
@@ -291,6 +297,12 @@ const strings = {
         mediaCenter: 'Media Center',
         controlCenter: 'Media Center',
         hardwareCenter: 'Hardware Center',
+
+        doYouWantToPoweroff: 'Do you want to power off ?',
+        doYouWantToRestart: 'Do you want to restart ?',
+        doYouWantToLogout: 'Do you want to logout ?',
+        yes: 'Yes',
+        no: 'No',
     },
 };
 

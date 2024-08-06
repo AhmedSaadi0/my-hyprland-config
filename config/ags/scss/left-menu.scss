@@ -8,6 +8,15 @@
     transition-duration: 1.5s;
 }
 
+.toolbar-icons-box {
+    background: $theme-box-background;
+    border-radius: $border-radius;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    padding: 0rem 2.6rem;
+}
+
 .left-menu-box:dir(rtl) {
     margin-left: 0.6rem;
     margin-right: 1rem;
@@ -139,6 +148,7 @@
     margin: 1rem;
     padding: 1rem;
     border-radius: $border-radius;
+    margin-top: 0rem;
 }
 
 .power-action-revealer {
@@ -164,4 +174,38 @@
 .power-action-revealer-no-btn:dir(ltr) {
     border-top-left-radius: 0rem;
     border-bottom-left-radius: 0rem;
+}
+
+.toolbar-button {
+    all: unset;
+    padding: 0.3rem 0.8rem;
+    margin: 0.5rem 0rem;
+    color: $text-color;
+}
+
+.toolbar-button:hover {
+    @extend .toolbar-button;
+}
+
+.toolbar-button-selected {
+    @extend .toolbar-button;
+    // min-width: 8.8rem;
+    transition:
+        background 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    background: $btn-hover-background;
+    color: $btn-hover-color;
+    border-radius: $border-radius;
+}
+
+.toolbar-button-selected:dir(rtl) {
+    margin-left: 0.8rem;
+}
+
+.toolbar-button-selected:dir(ltr) {
+    margin-left: 0.8rem;
+}
+
+.toolbar-button-selected:hover {
+    @extend .toolbar-button-selected;
 }

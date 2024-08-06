@@ -5,8 +5,140 @@ import Header from './dashboard/Header.js';
 import ThemesButtonsRowOne from './dashboard/ThemesButtonsRowOne.js';
 import PowerButtonsRow from './dashboard/PowerButtonsRow.js';
 import settings from '../settings.js';
-import { local } from '../utils/helpers.js';
+import { TitleTextRevealer, local, truncateString } from '../utils/helpers.js';
 import MediaControl from './dashboard/MediaControl.js';
+import weatherService from '../services/WeatherService.js';
+
+const sharedTabAttrs = {
+    spacing: 7,
+    vertical: false,
+    buttonClass: 'toolbar-button small-shadow',
+    onHover: null,
+    onHoverLost: null,
+};
+
+const dashboardTab = TitleTextRevealer({
+    ...sharedTabAttrs,
+    title: '󰨝',
+    text: truncateString('التحكم', 7),
+    buttonClass: 'toolbar-button-selected small-shadow',
+    onClicked: (btn) => {
+        selectDashboard();
+    },
+});
+
+function selectDashboard() {
+    notificationTab.className = 'toolbar-button';
+    weatherTab.className = 'toolbar-button';
+    calenderTab.className = 'toolbar-button';
+    hardwareTab.className = 'toolbar-button';
+
+    notificationTab.child.children[1].reveal_child = false;
+    weatherTab.child.children[1].reveal_child = false;
+    calenderTab.child.children[1].reveal_child = false;
+    hardwareTab.child.children[1].reveal_child = false;
+
+    dashboardTab.className = 'toolbar-button-selected small-shadow';
+    dashboardTab.child.children[1].reveal_child = true;
+}
+
+const notificationTab = TitleTextRevealer({
+    ...sharedTabAttrs,
+    title: '󰂞',
+    text: truncateString('اشعارات', 7),
+    onClicked: (btn) => {
+        dashboardTab.className = 'toolbar-button';
+        weatherTab.className = 'toolbar-button';
+        calenderTab.className = 'toolbar-button';
+        hardwareTab.className = 'toolbar-button';
+
+        dashboardTab.child.children[1].reveal_child = false;
+        weatherTab.child.children[1].reveal_child = false;
+        calenderTab.child.children[1].reveal_child = false;
+        hardwareTab.child.children[1].reveal_child = false;
+
+        btn.className = 'toolbar-button-selected small-shadow';
+        btn.child.children[1].reveal_child = true;
+    },
+});
+
+const weatherTab = TitleTextRevealer({
+    ...sharedTabAttrs,
+    title: '󰖐',
+    text: truncateString('الطقس', 7),
+    onClicked: (btn) => {
+        dashboardTab.className = 'toolbar-button';
+        notificationTab.className = 'toolbar-button';
+        calenderTab.className = 'toolbar-button';
+        hardwareTab.className = 'toolbar-button';
+
+        dashboardTab.child.children[1].reveal_child = false;
+        notificationTab.child.children[1].reveal_child = false;
+        calenderTab.child.children[1].reveal_child = false;
+        hardwareTab.child.children[1].reveal_child = false;
+
+        btn.className = 'toolbar-button-selected small-shadow';
+        btn.child.children[1].reveal_child = true;
+    },
+}).hook(weatherService, (self) => {
+    self.child.children[0].label = '󰖐';
+    if (weatherService.weatherCode != '') {
+        self.child.children[0].label = weatherService.weatherCode;
+    }
+});
+
+const hardwareTab = TitleTextRevealer({
+    ...sharedTabAttrs,
+    title: '',
+    text: truncateString('العتاد', 7),
+    onClicked: (btn) => {
+        dashboardTab.className = 'toolbar-button';
+        notificationTab.className = 'toolbar-button';
+        weatherTab.className = 'toolbar-button';
+        calenderTab.className = 'toolbar-button';
+
+        dashboardTab.child.children[1].reveal_child = false;
+        weatherTab.child.children[1].reveal_child = false;
+        notificationTab.child.children[1].reveal_child = false;
+        calenderTab.child.children[1].reveal_child = false;
+
+        btn.className = 'toolbar-button-selected small-shadow';
+        btn.child.children[1].reveal_child = true;
+    },
+});
+
+const calenderTab = TitleTextRevealer({
+    ...sharedTabAttrs,
+    title: '󰸗',
+    text: truncateString('التقويم', 7),
+    onClicked: (btn) => {
+        dashboardTab.className = 'toolbar-button';
+        weatherTab.className = 'toolbar-button';
+        hardwareTab.className = 'toolbar-button';
+        notificationTab.className = 'toolbar-button';
+
+        dashboardTab.child.children[1].reveal_child = false;
+        weatherTab.child.children[1].reveal_child = false;
+        hardwareTab.child.children[1].reveal_child = false;
+        notificationTab.child.children[1].reveal_child = false;
+
+        btn.className = 'toolbar-button-selected small-shadow';
+        btn.child.children[1].reveal_child = true;
+    },
+});
+
+const toolbarIconsBox = Widget.Box({
+    className: 'toolbar-icons-box',
+    children: [
+        dashboardTab,
+        notificationTab,
+        weatherTab,
+        hardwareTab,
+        calenderTab,
+    ],
+}).hook(themeService, (box) => {
+    box.children[0].child.children[1].revealChild = true;
+});
 
 const widgets = Widget.Box({
     className: 'left-menu-box unset',
@@ -14,10 +146,19 @@ const widgets = Widget.Box({
     children: [
         Header(),
         Profile(),
+        toolbarIconsBox,
         ThemesButtonsRowOne(),
         MediaControl(),
         PowerButtonsRow(),
     ],
+});
+
+const stack = Widget.Stack({
+    children: {
+        child1: Widget.Label('first child'),
+        child2: Widget.Label('second child'),
+    },
+    shown: 'child2',
 });
 
 const menuRevealer = Widget.Revealer({
@@ -52,6 +193,7 @@ export const MenuButton = () =>
 globalThis.showLeftMenu = () => {
     menuRevealer.revealChild = !menuRevealer.revealChild;
     changeMenuBtn();
+    selectDashboard();
 };
 
 function changeMenuBtn() {
