@@ -1,4 +1,4 @@
-import { local } from './utils/helpers.js';
+import { local, truncateString } from './utils/helpers.js';
 
 const strings = {
     ar: {
@@ -148,6 +148,14 @@ const strings = {
         doYouWantToLogout: 'هل تريد تسجيل الخروج ؟',
         yes: 'نعم',
         no: 'لا',
+
+        controlTab: 'التحكم',
+        notificationsTab: 'اشعارات',
+        weatherTab: 'الطقس',
+        monitorsTab: 'مؤشرات',
+        calenderTab: 'التقويم',
+        deleteAll: 'حذف الكل',
+        notificationCountText: 'اشعار',
     },
     en: {
         hello: 'Hello',
@@ -303,6 +311,14 @@ const strings = {
         doYouWantToLogout: 'Do you want to logout ?',
         yes: 'Yes',
         no: 'No',
+
+        controlTab: 'Control',
+        notificationsTab: truncateString('Notifications', 6),
+        weatherTab: truncateString('Weather', 5),
+        monitorsTab: truncateString('Monitors', 5),
+        calenderTab: truncateString('Calender', 6),
+        deleteAll: 'Delete all',
+        notificationCountText: 'Notification',
     },
 };
 
