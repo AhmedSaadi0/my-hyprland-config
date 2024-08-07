@@ -128,9 +128,6 @@ export const NotificationCenter = () =>
         }),
     });
 
-globalThis.showNotificationCenter = () =>
-    (menuRevealer.revealChild = !menuRevealer.revealChild);
-
 // Notification muted  |  | 󰂛 |  | 
 // Notification 󰂜 | 󰂚 |  | 
 // Notification Broadcast 󰂞 | 󰂟 | 󰪒 | 

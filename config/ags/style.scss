@@ -1,34 +1,24 @@
+/* This file is created by ThemeService written by ahmedsaadi0 */
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
-button {
-  background-color: #e9c7c6;
-  color: #454061;
-  border-color: #e9c7c6;
-  border-radius: 2rem; }
-
-button:hover {
-  background-color: #775653;
-  color: #fec2a6;
-  border-color: #775653;
-  border-radius: 1rem; }
-
 /* ------------------------------------------------------- */
 /* -------------- Material U Desktop Widget -------------- */
 /* ------------------------------------------------------- */
 .my-weather-wd-text {
-  font-size: medium;
-  color: #2d293d; }
+  font-size: medium; }
 
 .weather-wd-row-one {
-  background: #dfdce7;
-  border-radius: 3rem;
+  background: rgba(93, 63, 56, 0.8);
+  color: #ffdad0;
+  border-radius: 1.4rem;
   margin: 1rem;
   margin-bottom: 0.5rem; }
 
 .my-desktop-music-box {
-  background: #97a9ad;
-  border-radius: 3rem;
+  background: rgba(83, 69, 25, 0.9);
+  color: #f8e1a7;
+  border-radius: 1.4rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   min-width: 1rem;
@@ -44,7 +34,7 @@ button:hover {
   padding-right: 1rem; }
 
 .my-weather-wd-icon {
-  color: #2d293d;
+  color: #ffdad0;
   font-size: xx-large;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -53,7 +43,7 @@ button:hover {
 .my-wd-user-icon {
   padding: 0.8rem;
   margin-right: 1rem;
-  border-radius: 3rem; }
+  border-radius: 1.4rem; }
 
 .my-wd-user-icon:dir(rtl) {
   margin-right: 1rem; }
@@ -64,25 +54,26 @@ button:hover {
 .my-weather-wd-title-text-box {
   min-width: 10.55rem;
   padding-top: 1rem;
-  color: #3f3a57;
+  color: #f8e1a7;
   font-size: x-large;
   font-family: "VIP Rawy Regular"; }
 
 .my-weather-wd-row-two {
-  background: #e9c7c6;
+  background: rgba(125, 45, 25, 0.9);
+  color: #ffdad0;
   margin: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-right: 1rem;
   padding-left: 1rem;
-  border-radius: 3rem; }
+  border-radius: 1.4rem; }
 
 .my-fuzzy-clock-box {
-  background: #e9c7c6;
+  background: rgba(83, 69, 25, 0.8);
   margin: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  border-radius: 3rem; }
+  border-radius: 1.4rem; }
 
 .my-fuzzy-clock-box:dir(rtl) {
   padding-right: 1.5rem;
@@ -92,39 +83,104 @@ button:hover {
   padding-left: 1.5rem;
   padding-right: 1rem; }
 
+.my-weather-wd-day-box {
+  background: rgba(218, 197, 140, 0.6);
+  border-radius: 1.4rem;
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem; }
+
 .my-wd-weather-day-name {
   font-family: "VIP Rawy Regular";
-  color: #2d2a41; }
+  color: #3c2f04; }
 
 .my-wd-weather-day-text {
   font-size: x-small;
   padding-bottom: 0rem;
-  color: #2d2a41; }
+  color: #3c2f04; }
 
 .my-weather-wd-day-icon {
-  background: rgba(255, 179, 183, 0.7);
-  color: #2d2a41;
+  background: rgba(218, 197, 140, 0.7);
+  color: #3c2f04;
   padding-right: 0.3rem;
   padding-left: 0.3rem;
-  border-radius: 10rem;
+  border-radius: 1.4rem;
   margin-bottom: 0.2rem;
   min-width: 3rem;
   min-height: 3.5rem;
   font-size: x-large;
   font-family: "FantasqueSansM Nerd Font Propo"; }
 
-.my-weather-wd-day-box {
-  background: #97a9ad;
-  border-radius: 3rem;
-  padding-top: 0.4rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem; }
-
 .unset {
   all: unset; }
 
+.icon-font {
+  font-family: "FantasqueSansM Nerd Font Propo"; }
+
+.small-shadow {
+  transition-property: background;
+  transition-duration: 0.5s; }
+
+.shadow {
+  transition-property: background;
+  transition-duration: 0.5s; }
+
+.small-shadow:dir(rtl) {
+  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1); }
+
+.small-shadow:dir(ltr) {
+  box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.1); }
+
+.shadow:dir(rtl) {
+  box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.3); }
+
+.shadow:dir(ltr) {
+  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3); }
+
+button {
+  background: #7d2d19;
+  color: #ffdad0;
+  border-color: #7d2d19;
+  border-radius: 1.4rem;
+  padding: 4px 14px;
+  border: none;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
+
+/* Shadow when clicking */
+button:active {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); }
+
+button:hover {
+  background: #dac58c;
+  color: #3c2f04;
+  border-color: #dac58c;
+  border-radius: 1.4rem;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
+
+menu {
+  border: 2px #ffb4a0 solid;
+  background: #201a19;
+  color: #ede0dd;
+  border-radius: 1.4rem;
+  padding: 0.3rem;
+  margin-top: 2rem; }
+
+menuitem {
+  border-radius: 1.4rem;
+  background: #201a19;
+  color: #ede0dd; }
+
+menuitem:disabled {
+  background: rgba(83, 67, 64, 0.5);
+  color: rgba(216, 194, 189, 0.5); }
+
+menuitem:hover {
+  background: #5d3f38;
+  color: #ffdad0; }
+
 .workspaces button:active {
-  color: #775653;
+  color: #ffdad0;
   border-radius: 0px; }
 
 .workspaces {
@@ -132,8 +188,8 @@ button:hover {
   padding-left: 4px;
   margin-top: 0.3rem;
   margin-bottom: 0.4rem;
-  background: #e9c7c6;
-  border-radius: 2rem;
+  background: #7d2d19;
+  border-radius: 1.4rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
@@ -152,13 +208,13 @@ button:hover {
   margin-left: 0.4rem; }
 
 .workspaces button {
-  background: #e9c7c6;
-  color: #7786a3;
+  background: #7d2d19;
+  color: rgba(218, 197, 140, 0.5);
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #775653;
-  color: #775653;
+  border-bottom: 1px solid #ffb4a0;
+  color: #ffb4a0;
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 0px;
   padding-top: 0px;
@@ -177,16 +233,16 @@ button:hover {
   font-size: large; }
 
 .workspaces button.has-windows {
-  color: #775653; }
+  color: #ffb4a0; }
 
 .workspaces button:hover {
-  background: rgba(89, 83, 128, 0.9);
-  color: rgba(233, 199, 198, 0.9); }
+  background: rgba(231, 189, 179, 0.9);
+  color: rgba(68, 42, 35, 0.9); }
 
 .clock {
-  background: linear-gradient(to right, #595380, #775653);
-  color: #e9c7c6;
-  border-radius: 2rem;
+  background: linear-gradient(to right, #7d2d19, #534519);
+  color: #ffdad0;
+  border-radius: 1.4rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   padding-left: 1em;
@@ -194,9 +250,9 @@ button:hover {
 
 .bar-weather-box {
   font-size: 1em;
-  background: linear-gradient(to right, #fec2a6, #fec2a6);
-  color: #595380;
-  border-radius: 2rem;
+  background: #534519;
+  color: #f8e1a7;
+  border-radius: 1.4rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -215,8 +271,8 @@ button:hover {
   padding-right: 0.5rem; }
 
 .top-corner {
-  background-color: #ffdad9;
-  border-radius: 2rem; }
+  background-color: #201a19;
+  border-radius: 1.4rem; }
 
 .bar-bg {
   background: rgba(0, 0, 0, 0);
@@ -224,16 +280,16 @@ button:hover {
   border-radius: 0rem; }
 
 .bar {
-  background: #ffdad9;
-  color: #454061;
+  background: #201a19;
+  color: #ede0dd;
   min-height: 8px;
   margin-bottom: 0.5rem; }
 
 .internet-box {
-  background: linear-gradient(to right, #78d8db, #75afb1);
-  color: #454061;
+  background: linear-gradient(to right, #7d2d19, #5d3f38, rgba(147, 0, 6, 0.5));
+  color: #ffdad0;
   /* min-width: 100px; */
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -249,48 +305,48 @@ button:hover {
   /* margin-left: 0.7em; */
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  background: #ffc4cb;
-  color: #4c566a;
+  background: #201a19;
+  color: #ede0dd;
   font-weight: bold; }
 
 .wifi-name-label:dir(rtl) {
   padding-left: 0.5em;
   padding-right: 1em;
   margin-right: 0.2em;
-  border-top-right-radius: 2rem;
-  border-bottom-right-radius: 2rem; }
+  border-top-right-radius: 1.4rem;
+  border-bottom-right-radius: 1.4rem; }
 
 .wifi-name-label:dir(ltr) {
   padding-right: 0.5em;
   padding-left: 1em;
   margin-left: 0.2em;
-  border-top-left-radius: 2rem;
-  border-bottom-left-radius: 2rem; }
+  border-top-left-radius: 1.4rem;
+  border-bottom-left-radius: 1.4rem; }
 
 .wifi-icon-strength {
   font-family: "FantasqueSansM Nerd Font Propo";
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-  background: #ffc4cb;
-  color: #4c566a; }
+  background: #201a19;
+  color: #ede0dd; }
 
 .wifi-icon-strength:dir(rtl) {
   margin-left: 0.2rem;
   padding-right: 0.2rem;
   padding-left: 0.6rem;
-  border-top-left-radius: 2rem;
-  border-bottom-left-radius: 2rem; }
+  border-top-left-radius: 1.4rem;
+  border-bottom-left-radius: 1.4rem; }
 
 .wifi-icon-strength:dir(ltr) {
   margin-right: 0.2rem;
   padding-left: 0.2rem;
   padding-right: 0.6rem;
-  border-top-right-radius: 2rem;
-  border-bottom-right-radius: 2rem; }
+  border-top-right-radius: 1.4rem;
+  border-bottom-right-radius: 1.4rem; }
 
 .systray {
-  background: #e9c7c6;
-  border-radius: 2rem;
+  background: #534340;
+  border-radius: 1.4rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   min-height: 0.1rem; }
@@ -302,14 +358,14 @@ button:hover {
   margin-right: 0.5rem; }
 
 .systray button {
-  background: #e9c7c6;
-  border-radius: 2rem;
+  background: #534340;
+  border-radius: 1.4rem;
   padding-right: 0.4rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background: #775653; }
+  background: #ffb4a0; }
 
 .tray-btn {
   border: 0rem; }
@@ -324,83 +380,83 @@ button:hover {
   font-size: 0.8rem; }
 
 .battery {
-  background: #e9c7c6;
-  color: #995860; }
+  background: #534340;
+  color: #ffb4a0; }
 
 @keyframes colorChange {
   0% {
-    color: #995860; }
+    color: #ffb4a0; }
   50% {
-    color: #e9c7c6; }
+    color: #534340; }
   100% {
-    color: #995860; } }
+    color: #ffb4a0; } }
 
 .battery-inner {
-  color: #995860; }
+  color: #ffb4a0; }
 
 .battery-inner-charging {
-  color: #995860;
+  color: #ffb4a0;
   animation: colorChange 2s infinite; }
 
 /* --------------------------------- */
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: #e9c7c6;
-  color: #805673; }
+  background: #534340;
+  color: #e7bdb3; }
 
 .cpu-inner {
   font-size: 0.6rem;
-  color: #805673; }
+  color: #e7bdb3; }
 
 /* ---------------------------------- */
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: #e9c7c6;
-  color: #5c4c4d; }
+  background: #534340;
+  color: #dac58c; }
 
 .no-hover:hover {
   all: unset; }
 
 .temp-inner {
-  color: #5c4c4d; }
+  color: #dac58c; }
 
 /* --------------------------------- */
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: #e9c7c6;
-  color: #3f6e79; }
+  background: #534340;
+  color: #ffb4a9; }
 
 .ram-inner {
   font-family: "FantasqueSansM Nerd Font Propo";
   font-size: 0.6rem;
-  color: #3f6e79; }
+  color: #ffb4a9; }
 
 .volume {
-  background: #e9c7c6;
-  color: #3f6e79; }
+  background: #534340;
+  color: #ffb4a9; }
 
 .volume-inner {
   font-size: 0.8rem;
-  color: #3f6e79; }
+  color: #ffb4a9; }
 
 .brightness {
-  background: #e9c7c6;
-  color: #805673; }
+  background: #534340;
+  color: #e7bdb3; }
 
 .brightness-inner {
-  color: #805673;
+  color: #e7bdb3;
   margin-top: 0.1rem; }
 
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: #e9c7c6;
+  background: #534340;
   padding: 0.2rem 0.5rem;
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -431,24 +487,24 @@ button:hover {
 .hardware-box-separator {
   min-height: 0.01rem;
   min-width: 0.01rem;
-  background: rgba(92, 76, 77, 0.4);
+  background: rgba(218, 197, 140, 0.4);
   margin: -0.2rem 0.5rem; }
 
 .hardware-menu-box {
-  background: #ffdad9;
-  border-radius: 2rem;
-  border: 2px solid #5d484c; }
+  background: #201a19;
+  border-radius: 1.4rem;
+  border: 2px solid #ffb4a0; }
 
 .hardware-menu-header-box {
-  background: #e9c7c6;
-  border-radius: 2rem;
+  background: #534340;
+  border-radius: 1.4rem;
   padding: 0.5rem;
   margin-top: 1rem;
   margin-left: 1rem; }
 
 .hardware-menu-power-profile-box {
-  background: #e9c7c6;
-  border-radius: 2rem;
+  background: #534519;
+  border-radius: 1.4rem;
   padding: 0.5rem;
   margin-left: 0.5rem;
   margin-top: 1rem;
@@ -463,8 +519,8 @@ button:hover {
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .power-profiles-box-btn-active {
-  background: #775653;
-  color: #fec2a6;
+  background: #dac58c;
+  color: #3c2f04;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .hardware-menu-box-progress, .menu-temp, .menu-battery, .menu-ram, .menu-cpu {
@@ -478,32 +534,32 @@ button:hover {
   font-size: 2rem; }
 
 .menu-cpu {
-  color: #805673; }
+  color: #e7bdb3; }
 
 .menu-cpu-icon {
-  color: #805673; }
+  color: #e7bdb3; }
 
 .menu-ram {
-  color: #3f6e79; }
+  color: #ffb4a9; }
 
 .menu-ram-icon {
-  color: #3f6e79; }
+  color: #ffb4a9; }
 
 .menu-battery {
-  color: #995860; }
+  color: #ffb4a0; }
 
 .menu-battery-icon {
-  color: #995860; }
+  color: #ffb4a0; }
 
 .menu-battery-icon-charging {
-  color: #995860;
+  color: #ffb4a0;
   animation: colorChange 2s infinite; }
 
 .menu-temp {
-  color: #5c4c4d; }
+  color: #dac58c; }
 
 .menu-temp-icon {
-  color: #5c4c4d; }
+  color: #dac58c; }
 
 .table-row-app-name-header {
   min-width: 6rem; }
@@ -518,17 +574,17 @@ button:hover {
   min-width: 3rem; }
 
 .hardware-cpu-box {
-  background: rgba(128, 86, 115, 0.4);
-  color: #454061;
-  border-radius: 2rem;
+  background: rgba(255, 180, 160, 0.7);
+  color: #5e1605;
+  border-radius: 1.4rem;
   margin-top: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
-  background: rgba(128, 86, 115, 0.5);
-  color: #454061;
-  border-top-right-radius: 2rem;
-  border-top-left-radius: 2rem; }
+  background: rgba(255, 180, 160, 0.8);
+  color: #5e1605;
+  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1.4rem; }
 
 .hardware-table-row, .hardware-os-table-row, .hardware-bat-table-row, .hardware-ram-table-row, .hardware-cpu-table-row {
   padding-left: 1rem;
@@ -537,59 +593,59 @@ button:hover {
   padding-bottom: 0.5rem; }
 
 .hardware-ram-box {
-  background: rgba(146, 185, 184, 0.7);
-  color: #454061;
-  border-radius: 2rem;
+  background: rgba(231, 189, 179, 0.9);
+  color: #442a23;
+  border-radius: 1.4rem;
   margin-top: 1rem; }
 
 .hardware-ram-table-row-header {
   padding: 1rem;
-  background: rgba(132, 167, 165, 0.7);
-  color: #454061;
-  border-top-right-radius: 2rem;
-  border-top-left-radius: 2rem; }
+  background: rgba(231, 189, 179, 0.9);
+  color: #442a23;
+  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1.4rem; }
 
 .hardware-menu-tables-box {
-  background: #e9c7c6;
+  background: #7d2d19;
   padding: 0.8rem;
   padding-top: 0rem;
   margin: 1rem;
-  border-radius: 2rem; }
+  border-radius: 1.4rem; }
 
 .hardware-bat-box {
-  background: rgba(236, 163, 172, 0.8);
-  color: #454061;
-  border-radius: 2rem;
+  background: rgba(218, 197, 140, 0.8);
+  color: #3c2f04;
+  border-radius: 1.4rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-bat-table-row-header {
   padding: 1rem;
-  background: #e49fa7;
-  color: #454061;
-  border-top-right-radius: 2rem;
-  border-top-left-radius: 2rem; }
+  background: #dac58c;
+  color: #3c2f04;
+  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1.4rem; }
 
 .hardware-os-box {
-  background: rgba(254, 194, 166, 0.7);
-  color: #454061;
-  border-radius: 2rem;
+  background: rgba(32, 26, 25, 0.7);
+  color: #ede0dd;
+  border-radius: 1.4rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-os-table-row-header {
   padding: 1rem;
-  background: rgba(221, 171, 147, 0.7);
-  color: #454061;
-  border-top-right-radius: 2rem;
-  border-top-left-radius: 2rem; }
+  background: rgba(32, 26, 25, 0.7);
+  color: #ede0dd;
+  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1.4rem; }
 
 .power-profiles-title {
   margin-left: 1rem;
   margin-right: 1rem; }
 
 .volume {
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
@@ -602,12 +658,12 @@ button:hover {
   margin-right: 1rem; }
 
 .vol-osd {
-  background: #ffdad9;
+  background: #201a19;
   padding: 1rem;
-  border-radius: 2rem;
-  border: 2px solid #5d484c;
+  border-radius: 1.4rem;
+  border: 2px solid #ede0dd;
   margin: 1.5rem;
-  color: #454061; }
+  color: #ede0dd; }
 
 .vol-osd:dir(rtl) {
   padding-left: 1.5rem; }
@@ -616,14 +672,14 @@ button:hover {
   padding-right: 1.5rem; }
 
 scale trough highlight {
-  border-radius: 2rem;
-  background: #775653; }
+  border-radius: 1.4rem;
+  background: #ffb4a0; }
 
 scale slider {
-  background: #775653; }
+  background: #ffb4a0; }
 
 .language-layout-label {
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   padding: 0rem 1rem; }
 
 .language-layout-icon {
@@ -632,17 +688,17 @@ scale slider {
 
 .language-layout-box {
   padding: 1rem;
-  border-radius: 2rem;
-  border: 2px solid #5d484c;
+  border-radius: 1.4rem;
+  border: 2px solid #ede0dd;
   margin: 1.5rem;
-  background: #ffdad9;
-  color: #454061; }
+  background: #201a19;
+  color: #ede0dd; }
 
 .notifications-revealer-box {
-  background: #fec2a6;
+  background: #5d3f38;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   background: #fff;
@@ -657,14 +713,14 @@ scale slider {
   margin-left: 0rem; }
 
 .notification-popups {
-  border: 2px solid #775653;
-  border-radius: 2rem;
+  border: 2px solid #ffb4a0;
+  border-radius: 1.4rem;
   padding: 1rem;
-  background: #ffdad9;
-  color: #454061; }
+  background: #201a19;
+  color: #ede0dd; }
 
 .notifications-popup-list {
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   background: rgba(0, 0, 0, 0); }
 
 .notification-close-button {
@@ -672,25 +728,17 @@ scale slider {
   padding-right: 0.7rem; }
 
 window {
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   background: rgba(0, 0, 0, 0); }
 
 .left-menu-box {
-  background: #ffdad9;
-  border-radius: 2rem;
-  border: 2px solid #5d484c;
+  background: #201a19;
+  border-radius: 1.4rem;
+  border: 2px solid #ffb4a0;
   margin-top: 0.3rem;
   margin-bottom: 1rem;
   transition-property: background;
   transition-duration: 1.5s; }
-
-.toolbar-icons-box {
-  background: #b8bbbb;
-  border-radius: 2rem;
-  margin-top: 1rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
-  padding: 0rem 2.6rem; }
 
 .left-menu-box:dir(rtl) {
   margin-left: 0.6rem;
@@ -705,20 +753,20 @@ window {
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem;
+  border-top-left-radius: 1.4rem;
+  border-top-right-radius: 1.4rem;
   min-width: 23rem;
   min-height: 12rem; }
 
 .profile-box {
-  background: linear-gradient(to right, rgba(255, 179, 182, 0.8), rgba(224, 224, 255, 0.6));
-  color: #454061;
+  background: linear-gradient(to right, rgba(125, 45, 25, 0.8), rgba(93, 63, 56, 0.6));
+  color: #ffdad0;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-top: -3rem;
-  border-radius: 2rem; }
+  border-radius: 1.4rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -730,10 +778,10 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-  background: #b8bbbb;
+  background: rgba(125, 45, 25, 0.5);
   margin: 1rem;
   padding: 1rem;
-  border-radius: 2rem; }
+  border-radius: 1.4rem; }
 
 .theme-button-father, .theme-btn, .selected-theme {
   padding-left: 0.6rem;
@@ -742,25 +790,25 @@ window {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .selected-theme {
-  background: linear-gradient(to right, #ffb3b6, #c2c3eb);
-  color: #454061;
-  border-radius: 2rem; }
+  background: linear-gradient(to right, #ffb4a0, #e7bdb3);
+  color: #5e1605;
+  border-radius: 1.4rem; }
 
 .selected-theme:hover {
-  background: linear-gradient(to right, #c2c3eb, #ffb3b6);
-  color: #454061;
-  border-radius: 2rem; }
+  background: linear-gradient(to right, #7d2d19, #5d3f38);
+  color: #ffdad0;
+  border-radius: 1.4rem; }
 
 .theme-btn {
-  border-radius: 2rem;
-  background: #ffdad9;
-  border-color: #ffdad9;
-  border-radius: 2rem; }
+  border-radius: 1.4rem;
+  background: #534519;
+  border-color: #534519;
+  border-radius: 1.4rem; }
 
 .theme-btn:hover {
-  color: #fec2a6;
-  border-color: #775653;
-  border-radius: 2rem; }
+  color: #3c2f04;
+  border-color: #dac58c;
+  border-radius: 1.4rem; }
 
 .theme-btn-icon {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -774,13 +822,13 @@ window {
   min-width: 3rem; }
 
 .menu-button {
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
-  background: #ffdad9;
+  background: #534519;
   font-family: "FantasqueSansM Nerd Font Propo";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
@@ -792,18 +840,18 @@ window {
   margin-right: 0.5rem; }
 
 .menu-button:hover {
-  background: #775653; }
+  background: #f8e1a7; }
 
 .power-box {
-  background: #e9c7c6;
+  background: rgba(83, 69, 25, 0.5);
   margin: 1rem;
   padding: 1rem;
-  border-radius: 2rem;
+  border-radius: 1.4rem;
   margin-top: 0rem; }
 
 .power-action-revealer {
   padding-top: 1rem;
-  color: #454061; }
+  color: #ede0dd; }
 
 .power-action-revealer-yes-btn:dir(rtl) {
   border-top-left-radius: 0rem;
@@ -821,44 +869,60 @@ window {
   border-top-left-radius: 0rem;
   border-bottom-left-radius: 0rem; }
 
+.toolbar-icons-box {
+  background: rgba(125, 45, 25, 0.5);
+  border-radius: 1.4rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  padding: 0rem 0.3rem; }
+
 .toolbar-button, .toolbar-button-selected, .toolbar-button:hover, .toolbar-button-selected:hover {
   all: unset;
-  padding: 0.3rem 0.8rem;
-  margin: 0.5rem 0rem;
-  color: #454061; }
+  padding: 0.3rem;
+  padding-right: 1.1rem;
+  margin: 0.5rem 0.65rem;
+  color: #ede0dd; }
+
+.toolbar-button:hover, .toolbar-button-selected:hover {
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+  background: #dac58c;
+  color: #3c2f04;
+  border-radius: 1.4rem; }
 
 .toolbar-button-selected, .toolbar-button-selected:hover {
-  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-  background: #775653;
-  color: #fec2a6;
-  border-radius: 2rem; }
+  background: #dac58c;
+  color: #3c2f04;
+  border-radius: 1.4rem;
+  margin: 0.5rem 0.4rem;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
 .toolbar-button-selected:dir(rtl) {
-  margin-left: 0.8rem; }
+  padding-left: 0.8rem; }
 
 .toolbar-button-selected:dir(ltr) {
-  margin-left: 0.8rem; }
+  padding-right: 0.8rem; }
 
 .notification-menu-header {
   background-size: cover;
   background-position: center;
   padding: 1rem;
-  color: #454061; }
+  color: #ede0dd; }
 
 .horizontal-line {
-  background: #454061;
+  background: #ede0dd;
   min-height: 1px;
   min-width: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: #454061; }
+  color: #ede0dd; }
 
 .notification-center-button {
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  background: #e9c7c6;
-  color: #454061;
-  border-radius: 2rem;
+  background: #534340;
+  color: #d8c2bd;
+  border-radius: 1.4rem;
   padding-top: 0rem;
   padding-bottom: 0rem; }
 
@@ -871,11 +935,11 @@ window {
   padding-right: 1rem; }
 
 .notification-center-button:hover {
-  background-color: #775653;
-  color: #ffdad9; }
+  background-color: #ffb4a0;
+  color: #5e1605; }
 
 .notification-this-is-all {
-  color: #454061;
+  color: #ede0dd;
   margin-top: 10rem;
   margin-bottom: 1rem;
   min-width: 1rem;
@@ -887,52 +951,60 @@ window {
   font-size: 3rem;
   padding-right: 0.7rem; }
 
-.no-notification-text {
-  min-width: 22.5rem; }
-
 .notification-header-box {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background: #e9c7c6;
-  color: #454061;
-  border-top-right-radius: 2rem;
-  border-top-left-radius: 2rem; }
-
-.notification-center-header-text {
-  min-width: 7.7rem; }
+  margin: 0rem 1rem;
+  background: rgba(125, 45, 25, 0.5);
+  border-radius: 1.4rem;
+  border-bottom-left-radius: 0rem;
+  border-bottom-right-radius: 0rem;
+  margin-top: 1rem;
+  padding: 0.7rem 1rem; }
 
 .notification-center-header-mute {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
   font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 2rem;
-  padding-left: 1rem;
-  padding-right: 1.2rem;
-  margin-right: 0.5rem; }
-
-.notification-center-header-clear {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 2rem;
-  padding-left: 1rem;
-  padding-right: 1.2rem; }
+  border-radius: 1.4rem;
+  padding: 0rem 0.7rem; }
 
 .notification-center-header-clear:dir(rtl) {
-  margin-right: 0.7rem; }
+  border-top-left-radius: 0rem;
+  border-bottom-left-radius: 0rem; }
 
 .notification-center-header-clear:dir(ltr) {
-  margin-left: 1rem; }
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem; }
+
+.notification-center-header-mute:dir(rtl) {
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem; }
+
+.notification-center-header-mute:dir(ltr) {
+  border-top-left-radius: 0rem;
+  border-bottom-left-radius: 0rem; }
 
 .notification-center-container {
-  min-height: 30rem;
-  border-radius: 2rem; }
+  min-height: 33.5rem;
+  border-radius: 1.4rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  background: rgba(125, 45, 25, 0.5);
+  border-radius: 1.4rem;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem; }
+
+.notification-header-label {
+  color: #ede0dd; }
+
+.notification-header-label:dir(rtl) {
+  margin-right: 4.5rem; }
+
+.notification-header-label:dir(ltr) {
+  margin-right: 3rem; }
 
 .music-wd-box {
-  background: linear-gradient(to right, #ecb3ba, #ecb3ba);
+  background: #7d2d19;
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 2rem; }
+  border-radius: 1.4rem; }
 
 .music-wd-length {
   font-family: "FantasqueSansM Nerd Font Propo"; }
@@ -948,11 +1020,11 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background: #e9c7c6;
+  background: #e7bdb3;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #4b5569;
-  border-radius: 2rem;
+  color: #442a23;
+  border-radius: 1.4rem;
   min-width: 2rem; }
 
 .music-wd-player:dir(rtl) {
@@ -964,7 +1036,7 @@ window {
   padding-left: 0.7rem; }
 
 .music-wd-title {
-  color: #595380;
+  color: #dac58c;
   margin-bottom: 0.5rem; }
 
 .music-wd-title:dir(rtl) {
@@ -974,7 +1046,7 @@ window {
   padding-right: 0.5rem; }
 
 .music-wd-file-name {
-  color: #4b5569;
+  color: #ede0dd;
   font-size: x-small; }
 
 .music-wd-main-button, .music-wd-button-stop, .music-wd-button-play, .music-wd-button {
@@ -985,36 +1057,36 @@ window {
 .music-wd-button {
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 50%;
-  background: linear-gradient(to right, #ffdad9, #ffdad9);
-  color: #4b5569; }
+  background: #e7bdb3;
+  color: #442a23; }
 
 .music-wd-button:hover {
-  background: linear-gradient(to top, #775653, #595380); }
+  background: #dac58c; }
 
 .music-wd-button-play {
-  background: linear-gradient(to right, #ffb3b6, #c2c3eb);
-  border-radius: 2rem;
-  color: #595380;
+  background: #ffb4a0;
+  border-radius: 1.4rem;
+  color: #5e1605;
   min-width: 80px; }
 
 .music-wd-button-play:hover {
-  background: linear-gradient(to top, #775653, #595380); }
+  background: #dac58c; }
 
 .music-wd-button-stop {
-  background: linear-gradient(to right, #ffdad9, #ffdad9);
-  color: #4b5569;
-  border-radius: 2rem;
+  background: #e7bdb3;
+  color: #442a23;
+  border-radius: 1.4rem;
   min-width: 80px; }
 
 .wd-fuzzy-day-box {
   background: rgba(0, 0, 0, 0);
-  color: #595380; }
+  color: #ffdad0; }
 
 .wd-fuzzy-day-icon {
   font-size: 1.5rem;
   margin: 0rem 1rem 0rem 1rem;
   font-family: "FantasqueSansM Nerd Font Propo";
-  padding: 0rem 0rem 0rem 0rem; }
+  padding: 0.7rem 0rem 0rem 0rem; }
 
 .wd-fuzzy-day-text {
   font-family: "VIP Rawy Regular";
@@ -1023,13 +1095,13 @@ window {
 .wd-time-now {
   font-size: 1.5rem;
   background: rgba(0, 0, 0, 0);
-  color: #ea6220;
+  color: #ffdad0;
   font-family: "VEXA light R";
   margin: 0rem 0rem 0rem 0rem; }
 
 .wd-fuzzy-time-box {
   background: rgba(0, 0, 0, 0);
-  color: #775653; }
+  color: #f8e1a7; }
 
 .wd-fuzzy-time-icon {
   font-size: 1.5rem;
@@ -1043,35 +1115,35 @@ window {
 .saying-wd-label {
   min-width: 1rem;
   font-size: 1.5rem;
-  color: #3f3a57;
-  background: #eca3ac;
+  color: #ffdad0;
+  background: rgba(125, 45, 25, 0.8);
   font-family: "VIP Rawy Regular";
   padding: 1rem;
-  margin: 1rem;
-  border-radius: 3rem; }
+  margin: 0rem 1rem 1rem 1rem;
+  border-radius: 1.4rem; }
 
 .desktop-wd-separator {
-  background: linear-gradient(to bottom, #595380, #ea6220, #775653);
+  background: rgba(0, 0, 0, 0);
   min-height: 1px;
   min-width: 1px; }
 
 .desktop-wd-music-player-box {
-  padding: 1rem 0rem 0rem 0rem;
+  padding: 0rem 0rem 0rem 0rem;
   min-width: 30rem;
   font-family: "VIP Rawy Regular";
   font-size: 1.5rem; }
 
 .desktop-wd-music-player-title {
-  color: #775653; }
+  color: #e7bdb3; }
 
 .desktop-wd-music-player-artist {
-  color: #595380; }
+  color: #f8e1a7; }
 
 .bar-prayer-times-box {
   font-size: 1em;
-  background: #eca3ac;
-  color: #454061;
-  border-radius: 2rem;
+  background: #534519;
+  color: #f8e1a7;
+  border-radius: 1.4rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -1089,17 +1161,17 @@ window {
   padding-right: 0.7rem; }
 
 .prayer-times-menu-box {
-  background: #ffdad9;
-  border-radius: 2rem;
-  border: 2px solid #5d484c;
-  color: #454061; }
+  background: #201a19;
+  border-radius: 1.4rem;
+  border: 2px solid #ffb4a0;
+  color: #ede0dd; }
 
 .prayer-times-menu-header {
-  background: #e9c7c6;
-  color: #454061;
+  background: #534519;
+  color: #f8e1a7;
   padding: 1rem;
-  border-top-right-radius: 2rem;
-  border-top-left-radius: 2rem; }
+  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1.4rem; }
 
 .prayer-time-item-box-class {
   padding-top: 1.2rem;
@@ -1107,12 +1179,12 @@ window {
   padding-right: 1.5rem; }
 
 .isha-item {
-  border-bottom-right-radius: 2rem;
-  border-bottom-left-radius: 2rem; }
+  border-bottom-right-radius: 1.4rem;
+  border-bottom-left-radius: 1.4rem; }
 
 .next-prayer {
-  background: linear-gradient(to left, #595380, #775653);
-  color: #e9c7c6; }
+  background: #ffb4a0;
+  color: #5e1605; }
 
 .prayer-times-menu-header-icon {
   font-family: "FantasqueSansM Nerd Font Propo"; }
@@ -1128,12 +1200,12 @@ window {
 
 .weather-menu-box {
   min-width: 2rem;
-  background: #ffdad9;
-  color: #454061;
+  background: #201a19;
+  color: #ede0dd;
   padding: 1rem 1rem;
   padding-top: 2rem;
-  border: 2px solid #5d484c;
-  border-radius: 2rem; }
+  border: 2px solid #ffb4a0;
+  border-radius: 1.4rem; }
 
 .weather-menu-general-information-box {
   margin: 0rem 1rem; }
@@ -1208,18 +1280,18 @@ window {
   font-size: 1.3rem; }
 
 .applications-box {
-  background: #ffdad9;
-  border-radius: 2rem;
-  border-radius: 2rem;
-  border: 2px solid #5d484c; }
+  background: #201a19;
+  border-radius: 1.4rem;
+  border-radius: 1.4rem;
+  border: 2px solid #ffb4a0; }
 
 .app-search-box {
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem;
+  border-top-left-radius: 1.4rem;
+  border-top-right-radius: 1.4rem;
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem;
+  border-top-left-radius: 1.4rem;
+  border-top-right-radius: 1.4rem;
   min-width: 23rem;
   min-height: 12rem;
   background-color: rgba(0, 0, 0, 0.1);
@@ -1238,8 +1310,8 @@ window {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); }
 
 .audio-menu-header-box {
-  background: rgba(233, 199, 198, 0.8);
-  color: #454061;
+  background: rgba(125, 45, 25, 0.8);
+  color: #ede0dd;
   padding: 0.6rem;
   margin: 0rem 1rem; }
 
@@ -1276,9 +1348,9 @@ window {
   margin-right: 1.5rem; }
 
 .left-menu-music-wd {
-  background: linear-gradient(to right, #ecb3ba, #ecb3ba);
-  border-bottom-right-radius: 2rem;
-  border-bottom-left-radius: 2rem;
+  background: #7d2d19;
+  border-bottom-right-radius: 1.4rem;
+  border-bottom-left-radius: 1.4rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-left: 1rem;
@@ -1294,10 +1366,11 @@ window {
   padding-left: 1.5rem; }
 
 .media-control-revaler-button {
-  background: linear-gradient(to right, #ecb3ba, #ecb3ba);
+  background: #7d2d19;
   margin: 0rem 1rem;
   padding: 0.3rem;
   border-bottom-right-radius: 0rem;
+  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0);
   border-bottom-left-radius: 0rem; }
 
 .media-control-revaler-button:hover {
@@ -1324,94 +1397,29 @@ window {
 
 .calendar-menu-box {
   min-width: 2rem;
-  background: #ffdad9;
-  color: #454061;
-  border: 2px solid #5d484c;
-  border-radius: 2rem; }
+  background: #201a19;
+  color: #ede0dd;
+  border: 2px solid #ffb4a0;
+  border-radius: 1.4rem; }
 
 .calendar {
   all: unset;
   padding: 0.8rem 0.55rem 0rem;
   font-size: 1.1rem; }
   .calendar.button {
-    border-radius: 2rem; }
+    border-radius: 1.4rem; }
   .calendar.header {
     border: none;
-    border-radius: 2rem;
+    border-radius: 1.4rem;
     border-bottom-right-radius: 0rem;
     border-bottom-left-radius: 0rem; }
   .calendar.highlight {
-    color: rgba(69, 64, 97, 0.5); }
+    color: rgba(237, 224, 221, 0.5); }
   .calendar:indeterminate {
-    color: rgba(69, 64, 97, 0.5); }
+    color: rgba(237, 224, 221, 0.5); }
   .calendar:selected {
-    border-radius: 1.2rem;
-    box-shadow: inset 0 -8px 0 0 rgba(119, 86, 83, 0.5), inset 0 0 0 1px #775653; }
+    border-radius: 0.84rem;
+    box-shadow: inset 0 -8px 0 0 rgba(255, 180, 160, 0.5), inset 0 0 0 1px #ffb4a0; }
 
 .un-hover:hover {
   all: unset; }
-
-.icon-font {
-  font-family: "FantasqueSansM Nerd Font Propo"; }
-
-.small-shadow {
-  transition-property: background;
-  transition-duration: 0.5s; }
-
-.shadow {
-  transition-property: background;
-  transition-duration: 0.5s; }
-
-.small-shadow:dir(rtl) {
-  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1); }
-
-.small-shadow:dir(ltr) {
-  box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.1); }
-
-.shadow:dir(rtl) {
-  box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.3); }
-
-.shadow:dir(ltr) {
-  box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3); }
-
-button {
-  background: #e9c7c6;
-  color: #454061;
-  border-color: #e9c7c6;
-  border-radius: 2rem;
-  padding: 4px 14px;
-  border: none;
-  transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
-
-/* Shadow when clicking */
-button:active {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); }
-
-button:hover {
-  background: #775653;
-  color: #fec2a6;
-  border-color: #775653;
-  border-radius: 2rem;
-  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
-
-menu {
-  border: 2px #5d484c solid;
-  background: #ffdad9;
-  color: #454061;
-  border-radius: 2rem;
-  padding: 0.3rem;
-  margin-top: 2rem; }
-
-menuitem {
-  border-radius: 2rem;
-  background: #ffdad9;
-  color: #454061; }
-
-menuitem:disabled {
-  background: rgba(69, 64, 97, 0.1);
-  color: rgba(69, 64, 97, 0.5); }
-
-menuitem:hover {
-  background: rgba(69, 64, 97, 0.2);
-  color: #454061; }
