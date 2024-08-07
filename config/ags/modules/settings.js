@@ -156,6 +156,13 @@ const settings = {
             interval: networkInterval,
         },
     },
+    menuTabs: {
+        dashboard: 'dashboard',
+        notifications: 'notifications',
+        weather: 'weather',
+        monitor: 'monitor',
+        calender: 'calender',
+    },
 };
 
 export default settings;

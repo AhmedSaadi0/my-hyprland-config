@@ -1,32 +1,8 @@
-@import './themes/material-you.scss';
+@import './themes/m3/dynamic.scss';
 
 $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 
 .unset {
-    all: unset;
-}
-
-@import './topbar.scss';
-@import './hardware-menu.scss';
-@import './vol-ods.scss';
-@import './layout-ods.scss';
-@import './notifications.scss';
-@import './left-menu.scss';
-@import './notification-menu.scss';
-@import './music-player.scss';
-@import './fuzzy-clock.scss';
-@import './prayer-times.scss';
-@import './weather-menu.scss';
-@import './applications-menu.scss';
-@import './audio-brightness-menu.scss';
-@import './circle-theme-information.scss';
-@import './calendar-menu.scss';
-
-// * {
-//     all: unset;
-// }
-
-.un-hover:hover {
     all: unset;
 }
 
@@ -124,4 +100,28 @@ menuitem:disabled {
 menuitem:hover {
     background: $menuitem-hover-bg;
     color: $menuitem-hover-fg;
+}
+
+@import './topbar.scss';
+@import './hardware-menu.scss';
+@import './vol-ods.scss';
+@import './layout-ods.scss';
+@import './notifications.scss';
+@import './left-menu.scss';
+@import './notification-menu.scss';
+@import './music-player.scss';
+@import './fuzzy-clock.scss';
+@import './prayer-times.scss';
+@import './weather-menu.scss';
+@import './applications-menu.scss';
+@import './audio-brightness-menu.scss';
+@import './circle-theme-information.scss';
+@import './calendar-menu.scss';
+
+// * {
+//     all: unset;
+// }
+
+.un-hover:hover {
+    all: unset;
 }

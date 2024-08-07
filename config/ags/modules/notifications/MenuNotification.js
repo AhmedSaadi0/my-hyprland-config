@@ -22,8 +22,8 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
               background-size: contain;
               background-repeat: no-repeat;
               background-position: center;
-              min-width: 78px;
-              min-height: 78px;
+              min-width: 4rem;
+              min-height: 4rem;
               ${margin}
               border-radius: 1rem;
           `,
@@ -74,7 +74,7 @@ export default (notification) => {
     }
 
     const content = Box({
-        css: `min-width: 330px;`,
+        css: `min-width: 300px;`,
         children: [
             NotificationIcon(notification),
             Box({
