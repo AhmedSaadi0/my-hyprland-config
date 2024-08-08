@@ -46,6 +46,68 @@ export const TitleText = ({
     });
 };
 
+export const TitleTextRevealer = ({
+    title,
+    titleClass = '',
+    text,
+    textClass = '',
+    boxClass = '',
+    buttonClass = '',
+    revealerClass = '',
+    homogeneous = false,
+    titleXalign = 0.5,
+    textXalign = 0.5,
+    titleTruncate = 'none',
+    textTruncate = 'none',
+    vertical = true,
+    spacing = 0,
+    onHover = (btn) => (btn.child.children[1].reveal_child = true),
+    onHoverLost = (btn) => (btn.child.children[1].reveal_child = false),
+    onClicked = null,
+}) => {
+    const _title = Widget.Label({
+        label: title,
+        className: titleClass,
+        xalign: titleXalign,
+        truncate: titleTruncate,
+    });
+
+    const _text = Widget.Label({
+        label: text,
+        className: textClass,
+        xalign: textXalign,
+        truncate: textTruncate,
+    });
+
+    const revealedText = Widget.Revealer({
+        revealChild: false,
+        className: revealerClass,
+        transitionDuration: 500,
+        transition: vertical
+            ? 'slide_down'
+            : vertical
+              ? 'slide_left'
+              : 'slide_right',
+        child: _text,
+    });
+
+    const box = Widget.Box({
+        className: boxClass,
+        vertical: vertical,
+        homogeneous: homogeneous,
+        spacing: spacing,
+        children: [_title, revealedText],
+    });
+
+    return Widget.Button({
+        child: box,
+        className: buttonClass,
+        onHover: onHover,
+        onHoverLost: onHoverLost,
+        onClicked: onClicked,
+    });
+};
+
 export const local = Utils.exec(settings.scripts.deviceLocal);
 
 export const notify = ({

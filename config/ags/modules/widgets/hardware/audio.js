@@ -9,7 +9,7 @@ export const AudioWidget = () => {
     });
 
     const button = Widget.Button({
-        onClicked: () => showAudioMenu(),
+        // onClicked: () => showAudioMenu(),
         className: 'unset no-hover',
         child: label,
     });

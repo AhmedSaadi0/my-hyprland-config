@@ -1,4 +1,4 @@
-import { local } from './utils/helpers.js';
+import { local, truncateString } from './utils/helpers.js';
 
 const strings = {
     ar: {
@@ -142,6 +142,20 @@ const strings = {
         mediaCenter: 'مركز الوسائط',
         controlCenter: 'مركز التحكم',
         hardwareCenter: 'مركز العتاد',
+
+        doYouWantToPoweroff: 'هل تريد ايقاف التشغيل ؟',
+        doYouWantToRestart: 'هل تريد اعادة التشغيل ؟',
+        doYouWantToLogout: 'هل تريد تسجيل الخروج ؟',
+        yes: 'نعم',
+        no: 'لا',
+
+        controlTab: 'التحكم',
+        notificationsTab: 'اشعارات',
+        weatherTab: 'الطقس',
+        monitorsTab: 'مؤشرات',
+        calenderTab: 'التقويم',
+        deleteAll: 'حذف الكل',
+        notificationCountText: 'اشعار',
     },
     en: {
         hello: 'Hello',
@@ -291,6 +305,20 @@ const strings = {
         mediaCenter: 'Media Center',
         controlCenter: 'Media Center',
         hardwareCenter: 'Hardware Center',
+
+        doYouWantToPoweroff: 'Do you want to power off ?',
+        doYouWantToRestart: 'Do you want to restart ?',
+        doYouWantToLogout: 'Do you want to logout ?',
+        yes: 'Yes',
+        no: 'No',
+
+        controlTab: 'Control',
+        notificationsTab: truncateString('Notifications', 6),
+        weatherTab: truncateString('Weather', 5),
+        monitorsTab: truncateString('Monitors', 5),
+        calenderTab: truncateString('Calender', 6),
+        deleteAll: 'Delete all',
+        notificationCountText: 'Notification',
     },
 };
 
