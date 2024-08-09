@@ -183,7 +183,18 @@ const ThemesButtonsRowOne = () => {
     return Widget.Box({
         className: 'themes-box',
         vertical: true,
-        children: [row1, row2, row3, row4, row5],
+        children: [
+            Widget.Label({
+                className: 'themes-buttons-title',
+                label: strings.themes,
+                xalign: 0,
+            }),
+            row1,
+            row2,
+            row3,
+            row4,
+            row5,
+        ],
     });
 };
 

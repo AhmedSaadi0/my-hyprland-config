@@ -53,6 +53,8 @@ const strings = {
         feelsLike: 'شعور وكانة',
         humidity: 'الرطوبة',
         pressure: 'الضغط',
+        maxTemp: 'العليا',
+        minTemp: 'الصغرى',
         wind: 'الرياح',
         clouds: 'السحب',
         minAndMax: 'الصغرى والعلياء',
@@ -61,6 +63,8 @@ const strings = {
         minTemperature: 'درجة الحرارة الصغرى اليوم',
         maxTemperature: 'درجة الحرارة الكبرى اليوم',
         weatherNotAvailable: 'خدمة الطقس غير متاحة',
+        sunset: 'الغروب',
+        sunrise: 'الشروق',
 
         // Fuzzy Widget
         fuzzyClockThursday: 'أرحب يالخميس',
@@ -156,6 +160,7 @@ const strings = {
         calenderTab: 'التقويم',
         deleteAll: 'حذف الكل',
         notificationCountText: 'اشعار',
+        themes: 'السمات',
     },
     en: {
         hello: 'Hello',
@@ -209,14 +214,18 @@ const strings = {
         // Weather
         feelsLike: 'Feels Like',
         humidity: 'Humidity',
+        maxTemp: 'Max temp',
+        minTemp: 'Min temp',
         pressure: 'Pressure',
         wind: 'Wind',
         clouds: 'Clouds',
         minAndMax: 'Min and Max',
         coldWeather: 'Cold Weather!',
         hotWeather: 'Hot Weather!',
-        minTemperature: `oday's minimum temperature`,
+        minTemperature: `Today's minimum temperature`,
         maxTemperature: `Today's maximum temperature`,
+        sunset: 'Sunset',
+        sunrise: 'Sunrise',
 
         // Fuzzy Widget
         fuzzyClockThursday: 'Welcome Thursday!',
@@ -319,6 +328,7 @@ const strings = {
         calenderTab: truncateString('Calender', 6),
         deleteAll: 'Delete all',
         notificationCountText: 'Notification',
+        themes: 'Themes',
     },
 };
 
