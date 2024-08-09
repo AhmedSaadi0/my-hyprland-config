@@ -1,115 +1,15 @@
-/* This file is created by ThemeService written by ahmedsaadi0 */
 /* ------------------------------------------ */
 /* -------------- Music Player -------------- */
 /* ------------------------------------------ */
-/* ------------------------------------------------------- */
-/* -------------- Material U Desktop Widget -------------- */
-/* ------------------------------------------------------- */
-.my-weather-wd-text {
-  font-size: medium; }
+button {
+  background-color: #3b2163;
+  color: #71f1e8;
+  border-color: #3b2163; }
 
-.weather-wd-row-one {
-  background: rgba(204, 232, 229, 0.8);
-  color: #051f1d;
-  border-radius: 1.4rem;
-  margin: 1rem;
-  margin-bottom: 0.5rem; }
-
-.my-desktop-music-box {
-  background: rgba(207, 229, 255, 0.9);
-  color: #001d34;
-  border-radius: 1.4rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  min-width: 1rem;
-  margin: 1rem;
-  margin-top: 0.5rem; }
-
-.my-desktop-music-box:dir(rtl) {
-  padding-right: 1.2rem;
-  padding-left: 1rem; }
-
-.my-desktop-music-box:dir(ltr) {
-  padding-left: 1.2rem;
-  padding-right: 1rem; }
-
-.my-weather-wd-icon {
-  color: #051f1d;
-  font-size: xx-large;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  font-family: "FantasqueSansM Nerd Font Propo"; }
-
-.my-wd-user-icon {
-  padding: 0.8rem;
-  margin-right: 1rem;
-  border-radius: 1.4rem; }
-
-.my-wd-user-icon:dir(rtl) {
-  margin-right: 1rem; }
-
-.my-wd-user-icon:dir(ltr) {
-  margin-left: 1rem; }
-
-.my-weather-wd-title-text-box {
-  min-width: 10.55rem;
-  padding-top: 1rem;
-  color: #001d34;
-  font-size: x-large;
-  font-family: "VIP Rawy Regular"; }
-
-.my-weather-wd-row-two {
-  background: rgba(113, 247, 238, 0.9);
-  color: #00201e;
-  margin: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  border-radius: 1.4rem; }
-
-.my-fuzzy-clock-box {
-  background: rgba(207, 229, 255, 0.8);
-  margin: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-radius: 1.4rem; }
-
-.my-fuzzy-clock-box:dir(rtl) {
-  padding-right: 1.5rem;
-  padding-left: 1rem; }
-
-.my-fuzzy-clock-box:dir(ltr) {
-  padding-left: 1.5rem;
-  padding-right: 1rem; }
-
-.my-weather-wd-day-box {
-  background: rgba(72, 96, 122, 0.6);
-  border-radius: 1.4rem;
-  padding-top: 0.4rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem; }
-
-.my-wd-weather-day-name {
-  font-family: "VIP Rawy Regular";
-  color: #ffffff; }
-
-.my-wd-weather-day-text {
-  font-size: x-small;
-  padding-bottom: 0rem;
-  color: #ffffff; }
-
-.my-weather-wd-day-icon {
-  background: rgba(72, 96, 122, 0.7);
-  color: #ffffff;
-  padding-right: 0.3rem;
-  padding-left: 0.3rem;
-  border-radius: 1.4rem;
-  margin-bottom: 0.2rem;
-  min-width: 3rem;
-  min-height: 3.5rem;
-  font-size: x-large;
-  font-family: "FantasqueSansM Nerd Font Propo"; }
+button:hover {
+  background-color: #ff4bde;
+  color: #20004a;
+  border-color: #ff4bde; }
 
 .unset {
   all: unset; }
@@ -138,10 +38,10 @@
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3); }
 
 button {
-  background: #71f7ee;
-  color: #00201e;
-  border-color: #71f7ee;
-  border-radius: 1.4rem;
+  background: #3b2163;
+  color: #71f1e8;
+  border-color: #3b2163;
+  border-radius: 1rem;
   padding: 4px 14px;
   border: none;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
@@ -151,36 +51,36 @@ button:active {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); }
 
 button:hover {
-  background: #48607a;
-  color: #ffffff;
-  border-color: #48607a;
-  border-radius: 1.4rem;
+  background: #ff4bde;
+  color: #20004a;
+  border-color: #ff4bde;
+  border-radius: 1rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
 
 menu {
-  border: 2px #006a64 solid;
-  background: #fbfdfc;
-  color: #191c1c;
-  border-radius: 1.4rem;
+  border: 2px #ff4bde solid;
+  background: #20004a;
+  color: #cecece;
+  border-radius: 1rem;
   padding: 0.3rem;
   margin-top: 2rem; }
 
 menuitem {
-  border-radius: 1.4rem;
-  background: #fbfdfc;
-  color: #191c1c; }
+  border-radius: 1rem;
+  background: #20004a;
+  color: #cecece; }
 
 menuitem:disabled {
-  background: rgba(218, 228, 226, 0.5);
-  color: rgba(63, 73, 71, 0.5); }
+  background: rgba(206, 206, 206, 0.1);
+  color: rgba(206, 206, 206, 0.5); }
 
 menuitem:hover {
-  background: #cce8e5;
-  color: #051f1d; }
+  background: rgba(206, 206, 206, 0.2);
+  color: #cecece; }
 
 .workspaces button:active {
-  color: #00201e;
+  color: #ff4bde;
   border-radius: 0px; }
 
 .workspaces {
@@ -188,8 +88,8 @@ menuitem:hover {
   padding-left: 4px;
   margin-top: 0.3rem;
   margin-bottom: 0.4rem;
-  background: #71f7ee;
-  border-radius: 1.4rem;
+  background: #0c0023;
+  border-radius: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.1rem; }
@@ -208,13 +108,13 @@ menuitem:hover {
   margin-left: 0.4rem; }
 
 .workspaces button {
-  background: #71f7ee;
-  color: rgba(72, 96, 122, 0.5);
+  background: #0c0023;
+  color: #198bee;
   border: 0rem; }
 
 .workspaces button.focused {
-  border-bottom: 1px solid #006a64;
-  color: #006a64;
+  border-bottom: 1px solid #ff4bde;
+  color: #ff4bde;
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 0px;
   padding-top: 0px;
@@ -233,16 +133,16 @@ menuitem:hover {
   font-size: large; }
 
 .workspaces button.has-windows {
-  color: #006a64; }
+  color: #ff4bde; }
 
 .workspaces button:hover {
-  background: rgba(74, 99, 97, 0.9);
-  color: rgba(255, 255, 255, 0.9); }
+  background: rgba(25, 139, 238, 0.9);
+  color: rgba(12, 0, 35, 0.9); }
 
 .clock {
-  background: linear-gradient(to right, #71f7ee, #cfe5ff);
-  color: #00201e;
-  border-radius: 1.4rem;
+  background: linear-gradient(to right, #198bee, #ff4bde);
+  color: #0c0023;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   padding-left: 1em;
@@ -250,9 +150,9 @@ menuitem:hover {
 
 .bar-weather-box {
   font-size: 1em;
-  background: #cfe5ff;
-  color: #001d34;
-  border-radius: 1.4rem;
+  background: linear-gradient(to right, #26f7e1, #ff00aa);
+  color: #0c0023;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -271,8 +171,8 @@ menuitem:hover {
   padding-right: 0.5rem; }
 
 .top-corner {
-  background-color: #fbfdfc;
-  border-radius: 1.4rem; }
+  background-color: #20004a;
+  border-radius: 1rem; }
 
 .bar-bg {
   background: rgba(0, 0, 0, 0);
@@ -280,16 +180,16 @@ menuitem:hover {
   border-radius: 0rem; }
 
 .bar {
-  background: #fbfdfc;
-  color: #191c1c;
+  background: #20004a;
+  color: #cecece;
   min-height: 8px;
   margin-bottom: 0.5rem; }
 
 .internet-box {
-  background: linear-gradient(to right, #71f7ee, #cce8e5, rgba(255, 218, 212, 0.5));
-  color: #00201e;
+  background: linear-gradient(to left, #3498fd, #ff4bde, #bb8256);
+  color: #20004a;
   /* min-width: 100px; */
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -305,48 +205,48 @@ menuitem:hover {
   /* margin-left: 0.7em; */
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  background: #fbfdfc;
-  color: #191c1c;
+  background: #20004a;
+  color: #cecece;
   font-weight: bold; }
 
 .wifi-name-label:dir(rtl) {
   padding-left: 0.5em;
   padding-right: 1em;
   margin-right: 0.2em;
-  border-top-right-radius: 1.4rem;
-  border-bottom-right-radius: 1.4rem; }
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem; }
 
 .wifi-name-label:dir(ltr) {
   padding-right: 0.5em;
   padding-left: 1em;
   margin-left: 0.2em;
-  border-top-left-radius: 1.4rem;
-  border-bottom-left-radius: 1.4rem; }
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem; }
 
 .wifi-icon-strength {
   font-family: "FantasqueSansM Nerd Font Propo";
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-  background: #fbfdfc;
-  color: #191c1c; }
+  background: #20004a;
+  color: #cecece; }
 
 .wifi-icon-strength:dir(rtl) {
   margin-left: 0.2rem;
   padding-right: 0.2rem;
   padding-left: 0.6rem;
-  border-top-left-radius: 1.4rem;
-  border-bottom-left-radius: 1.4rem; }
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem; }
 
 .wifi-icon-strength:dir(ltr) {
   margin-right: 0.2rem;
   padding-left: 0.2rem;
   padding-right: 0.6rem;
-  border-top-right-radius: 1.4rem;
-  border-bottom-right-radius: 1.4rem; }
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem; }
 
 .systray {
-  background: #dae4e2;
-  border-radius: 1.4rem;
+  background: #3b2163;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   min-height: 0.1rem; }
@@ -358,14 +258,14 @@ menuitem:hover {
   margin-right: 0.5rem; }
 
 .systray button {
-  background: #dae4e2;
-  border-radius: 1.4rem;
+  background: #3b2163;
+  border-radius: 1rem;
   padding-right: 0.4rem;
   padding-left: 0.4rem;
   min-height: 0.1rem; }
 
 .systray button:hover {
-  background: #006a64; }
+  background: #ff4bde; }
 
 .tray-btn {
   border: 0rem; }
@@ -380,83 +280,83 @@ menuitem:hover {
   font-size: 0.8rem; }
 
 .battery {
-  background: #dae4e2;
-  color: #006a64; }
+  background: #0c0023;
+  color: #ff8580; }
 
 @keyframes colorChange {
   0% {
-    color: #006a64; }
+    color: #ff8580; }
   50% {
-    color: #dae4e2; }
+    color: #0c0023; }
   100% {
-    color: #006a64; } }
+    color: #ff8580; } }
 
 .battery-inner {
-  color: #006a64; }
+  color: #ff8580; }
 
 .battery-inner-charging {
-  color: #006a64;
+  color: #ff8580;
   animation: colorChange 2s infinite; }
 
 /* --------------------------------- */
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: #dae4e2;
-  color: #4a6361; }
+  background: #0c0023;
+  color: #fdc227; }
 
 .cpu-inner {
   font-size: 0.6rem;
-  color: #4a6361; }
+  color: #fdc227; }
 
 /* ---------------------------------- */
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: #dae4e2;
-  color: #48607a; }
+  background: #0c0023;
+  color: #198bee; }
 
 .no-hover:hover {
   all: unset; }
 
 .temp-inner {
-  color: #48607a; }
+  color: #198bee; }
 
 /* --------------------------------- */
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: #dae4e2;
-  color: #ba1b1b; }
+  background: #0c0023;
+  color: #71f1e8; }
 
 .ram-inner {
   font-family: "FantasqueSansM Nerd Font Propo";
   font-size: 0.6rem;
-  color: #ba1b1b; }
+  color: #71f1e8; }
 
 .volume {
-  background: #dae4e2;
-  color: #ba1b1b; }
+  background: #0c0023;
+  color: #71f1e8; }
 
 .volume-inner {
   font-size: 0.8rem;
-  color: #ba1b1b; }
+  color: #71f1e8; }
 
 .brightness {
-  background: #dae4e2;
-  color: #4a6361; }
+  background: #0c0023;
+  color: #fdc227; }
 
 .brightness-inner {
-  color: #4a6361;
+  color: #fdc227;
   margin-top: 0.1rem; }
 
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: #dae4e2;
+  background: #0c0023;
   padding: 0.2rem 0.5rem;
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem; }
 
@@ -487,24 +387,24 @@ menuitem:hover {
 .hardware-box-separator {
   min-height: 0.01rem;
   min-width: 0.01rem;
-  background: rgba(72, 96, 122, 0.4);
+  background: rgba(25, 139, 238, 0.4);
   margin: -0.2rem 0.5rem; }
 
 .hardware-menu-box {
-  background: #fbfdfc;
-  border-radius: 1.4rem;
-  border: 2px solid #006a64; }
+  background: #20004a;
+  border-radius: 1rem;
+  border: 2px solid #ff4bde; }
 
 .hardware-menu-header-box {
-  background: #dae4e2;
-  border-radius: 1.4rem;
+  background: #0c0023;
+  border-radius: 1rem;
   padding: 0.5rem;
   margin-top: 1rem;
   margin-left: 1rem; }
 
 .hardware-menu-power-profile-box {
-  background: #cfe5ff;
-  border-radius: 1.4rem;
+  background: #0c0023;
+  border-radius: 1rem;
   padding: 0.5rem;
   margin-left: 0.5rem;
   margin-top: 1rem;
@@ -519,8 +419,8 @@ menuitem:hover {
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .power-profiles-box-btn-active {
-  background: #48607a;
-  color: #ffffff;
+  background: #ff4bde;
+  color: #20004a;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .hardware-menu-box-progress, .menu-temp, .menu-battery, .menu-ram, .menu-cpu {
@@ -534,32 +434,32 @@ menuitem:hover {
   font-size: 2rem; }
 
 .menu-cpu {
-  color: #4a6361; }
+  color: #fdc227; }
 
 .menu-cpu-icon {
-  color: #4a6361; }
+  color: #fdc227; }
 
 .menu-ram {
-  color: #ba1b1b; }
+  color: #71f1e8; }
 
 .menu-ram-icon {
-  color: #ba1b1b; }
+  color: #71f1e8; }
 
 .menu-battery {
-  color: #006a64; }
+  color: #ff8580; }
 
 .menu-battery-icon {
-  color: #006a64; }
+  color: #ff8580; }
 
 .menu-battery-icon-charging {
-  color: #006a64;
+  color: #ff8580;
   animation: colorChange 2s infinite; }
 
 .menu-temp {
-  color: #48607a; }
+  color: #198bee; }
 
 .menu-temp-icon {
-  color: #48607a; }
+  color: #198bee; }
 
 .table-row-app-name-header {
   min-width: 6rem; }
@@ -574,17 +474,17 @@ menuitem:hover {
   min-width: 3rem; }
 
 .hardware-cpu-box {
-  background: rgba(0, 106, 100, 0.7);
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: linear-gradient(to top, rgba(255, 75, 222, 0.8), rgba(25, 139, 238, 0.8), rgba(113, 241, 232, 0.8));
+  color: #20004a;
+  border-radius: 1rem;
   margin-top: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
-  background: rgba(0, 106, 100, 0.8);
-  color: #ffffff;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: #56b4d3;
+  color: #20004a;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .hardware-table-row, .hardware-os-table-row, .hardware-bat-table-row, .hardware-ram-table-row, .hardware-cpu-table-row {
   padding-left: 1rem;
@@ -593,59 +493,59 @@ menuitem:hover {
   padding-bottom: 0.5rem; }
 
 .hardware-ram-box {
-  background: rgba(74, 99, 97, 0.9);
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: linear-gradient(to top, rgba(113, 241, 232, 0.8), rgba(255, 75, 222, 0.8));
+  color: #20004a;
+  border-radius: 1rem;
   margin-top: 1rem; }
 
 .hardware-ram-table-row-header {
   padding: 1rem;
-  background: rgba(74, 99, 97, 0.9);
-  color: #ffffff;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: #da56d7;
+  color: #0c0023;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .hardware-menu-tables-box {
-  background: #71f7ee;
+  background: #0c0023;
   padding: 0.8rem;
   padding-top: 0rem;
   margin: 1rem;
-  border-radius: 1.4rem; }
+  border-radius: 1rem; }
 
 .hardware-bat-box {
-  background: rgba(72, 96, 122, 0.8);
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: #987fd6;
+  color: #211008;
+  border-radius: 1rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-bat-table-row-header {
   padding: 1rem;
-  background: #48607a;
-  color: #ffffff;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: #8b75c4;
+  color: #211008;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .hardware-os-box {
-  background: rgba(251, 253, 252, 0.7);
-  color: #191c1c;
-  border-radius: 1.4rem;
+  background: rgba(25, 139, 238, 0.9);
+  color: #211008;
+  border-radius: 1rem;
   margin-top: 1rem;
   min-height: 3rem; }
 
 .hardware-os-table-row-header {
   padding: 1rem;
-  background: rgba(251, 253, 252, 0.7);
-  color: #191c1c;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  background: rgba(25, 139, 238, 0.8);
+  color: #211008;
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .power-profiles-title {
   margin-left: 1rem;
   margin-right: 1rem; }
 
 .volume {
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   margin-top: 6px;
   margin-bottom: 6px;
   padding-left: 1em;
@@ -658,12 +558,12 @@ menuitem:hover {
   margin-right: 1rem; }
 
 .vol-osd {
-  background: #fbfdfc;
+  background: #20004a;
   padding: 1rem;
-  border-radius: 1.4rem;
-  border: 2px solid #191c1c;
+  border-radius: 1rem;
+  border: 2px solid #ff4bde;
   margin: 1.5rem;
-  color: #191c1c; }
+  color: #cecece; }
 
 .vol-osd:dir(rtl) {
   padding-left: 1.5rem; }
@@ -672,14 +572,14 @@ menuitem:hover {
   padding-right: 1.5rem; }
 
 scale trough highlight {
-  border-radius: 1.4rem;
-  background: #006a64; }
+  border-radius: 1rem;
+  background: #ff4bde; }
 
 scale slider {
-  background: #006a64; }
+  background: #ff4bde; }
 
 .language-layout-label {
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   padding: 0rem 1rem; }
 
 .language-layout-icon {
@@ -688,17 +588,17 @@ scale slider {
 
 .language-layout-box {
   padding: 1rem;
-  border-radius: 1.4rem;
-  border: 2px solid #191c1c;
+  border-radius: 1rem;
+  border: 2px solid #ff4bde;
   margin: 1.5rem;
-  background: #fbfdfc;
-  color: #191c1c; }
+  background: #20004a;
+  color: #cecece; }
 
 .notifications-revealer-box {
-  background: #cce8e5;
+  background: #3b2163;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   background: #fff;
@@ -713,14 +613,14 @@ scale slider {
   margin-left: 0rem; }
 
 .notification-popups {
-  border: 2px solid #006a64;
-  border-radius: 1.4rem;
+  border: 2px solid #ff4bde;
+  border-radius: 1rem;
   padding: 1rem;
-  background: #fbfdfc;
-  color: #191c1c; }
+  background: #20004a;
+  color: #cecece; }
 
 .notifications-popup-list {
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   background: rgba(0, 0, 0, 0); }
 
 .notification-close-button {
@@ -728,13 +628,13 @@ scale slider {
   padding-right: 0.7rem; }
 
 window {
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   background: rgba(0, 0, 0, 0); }
 
 .left-menu-box {
-  background: #fbfdfc;
-  border-radius: 1.4rem;
-  border: 2px solid #006a64;
+  background: #20004a;
+  border-radius: 1rem;
+  border: 2px solid #ff4bde;
   margin-top: 0.3rem;
   margin-bottom: 1rem;
   transition-property: background;
@@ -753,20 +653,20 @@ window {
 .left-menu-header {
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 1.4rem;
-  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   min-width: 23rem;
   min-height: 12rem; }
 
 .profile-box {
-  background: linear-gradient(to right, rgba(113, 247, 238, 0.8), rgba(204, 232, 229, 0.6));
-  color: #00201e;
+  background: linear-gradient(to right, rgba(147, 89, 255, 0.8), rgba(255, 0, 170, 0.6));
+  color: #20004a;
   min-width: 20rem;
   min-height: 8rem;
   margin-left: 1rem;
   margin-right: 1rem;
-  margin-top: -3rem;
-  border-radius: 1.4rem; }
+  margin-top: -4rem;
+  border-radius: 1rem; }
 
 .profile-icon {
   margin-top: -3rem; }
@@ -778,10 +678,10 @@ window {
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-  background: rgba(113, 247, 238, 0.5);
+  background: #0c0023;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1.4rem; }
+  border-radius: 1rem; }
 
 .theme-button-father, .theme-btn, .selected-theme {
   padding-left: 0.6rem;
@@ -790,25 +690,25 @@ window {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
 
 .selected-theme {
-  background: linear-gradient(to right, #006a64, #4a6361);
-  color: #ffffff;
-  border-radius: 1.4rem; }
+  background: linear-gradient(to right, #9359ff, #ff00aa);
+  color: #20004a;
+  border-radius: 1rem; }
 
 .selected-theme:hover {
-  background: linear-gradient(to right, #71f7ee, #cce8e5);
-  color: #00201e;
-  border-radius: 1.4rem; }
+  background: linear-gradient(to right, #ff9900, #ff6600);
+  color: #3b2163;
+  border-radius: 1rem; }
 
 .theme-btn {
-  border-radius: 1.4rem;
-  background: #cfe5ff;
-  border-color: #cfe5ff;
-  border-radius: 1.4rem; }
+  border-radius: 1rem;
+  background: #20004a;
+  border-color: #20004a;
+  border-radius: 1rem; }
 
 .theme-btn:hover {
-  color: #ffffff;
-  border-color: #48607a;
-  border-radius: 1.4rem; }
+  color: #20004a;
+  border-color: #ff4bde;
+  border-radius: 1rem; }
 
 .theme-btn-icon {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -822,13 +722,13 @@ window {
   min-width: 3rem; }
 
 .menu-button {
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   border: 0px;
   padding-top: 0rem;
   padding-bottom: 0rem;
-  background: #cfe5ff;
+  background: #20004a;
   font-family: "FantasqueSansM Nerd Font Propo";
   padding-left: 0.8rem;
   padding-right: 0.8rem; }
@@ -840,18 +740,18 @@ window {
   margin-right: 0.5rem; }
 
 .menu-button:hover {
-  background: #001d34; }
+  background: #ff4bde; }
 
 .power-box {
-  background: rgba(207, 229, 255, 0.5);
+  background: #0c0023;
   margin: 1rem;
   padding: 1rem;
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   margin-top: 0rem; }
 
 .power-action-revealer {
   padding-top: 1rem;
-  color: #191c1c; }
+  color: #cecece; }
 
 .power-action-revealer-yes-btn:dir(rtl) {
   border-top-left-radius: 0rem;
@@ -870,8 +770,8 @@ window {
   border-bottom-left-radius: 0rem; }
 
 .toolbar-icons-box {
-  background: rgba(113, 247, 238, 0.5);
-  border-radius: 1.4rem;
+  background: #0c0023;
+  border-radius: 1rem;
   margin-top: 1rem;
   margin-right: 1rem;
   margin-left: 1rem;
@@ -882,18 +782,18 @@ window {
   padding: 0.3rem;
   padding-right: 1.1rem;
   margin: 0.5rem 0.65rem;
-  color: #191c1c; }
+  color: #cecece; }
 
 .toolbar-button:hover, .toolbar-button-selected:hover {
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
-  background: #48607a;
-  color: #ffffff;
-  border-radius: 1.4rem; }
+  background: #ff4bde;
+  color: #20004a;
+  border-radius: 1rem; }
 
 .toolbar-button-selected, .toolbar-button-selected:hover {
-  background: #48607a;
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: #ff4bde;
+  color: #20004a;
+  border-radius: 1rem;
   margin: 0.5rem 0.4rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
 
@@ -903,26 +803,32 @@ window {
 .toolbar-button-selected:dir(ltr) {
   padding-right: 0.8rem; }
 
+.themes-buttons-title {
+  padding-bottom: 1.2rem;
+  padding-top: 0.3rem;
+  margin: 0rem 0.3rem;
+  font-size: 1.4rem; }
+
 .notification-menu-header {
   background-size: cover;
   background-position: center;
   padding: 1rem;
-  color: #191c1c; }
+  color: #cecece; }
 
 .horizontal-line {
-  background: #191c1c;
+  background: #cecece;
   min-height: 1px;
   min-width: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: #191c1c; }
+  color: #cecece; }
 
 .notification-center-button {
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  background: #dae4e2;
-  color: #3f4947;
-  border-radius: 1.4rem;
+  background: #3b2163;
+  color: #198bee;
+  border-radius: 1rem;
   padding-top: 0rem;
   padding-bottom: 0rem; }
 
@@ -935,11 +841,11 @@ window {
   padding-right: 1rem; }
 
 .notification-center-button:hover {
-  background-color: #006a64;
-  color: #ffffff; }
+  background-color: #ff4bde;
+  color: #20004a; }
 
 .notification-this-is-all {
-  color: #191c1c;
+  color: #cecece;
   margin-top: 10rem;
   margin-bottom: 1rem;
   min-width: 1rem;
@@ -953,8 +859,8 @@ window {
 
 .notification-header-box {
   margin: 0rem 1rem;
-  background: rgba(113, 247, 238, 0.5);
-  border-radius: 1.4rem;
+  background: #0c0023;
+  border-radius: 1rem;
   border-bottom-left-radius: 0rem;
   border-bottom-right-radius: 0rem;
   margin-top: 1rem;
@@ -962,7 +868,7 @@ window {
 
 .notification-center-header-mute {
   font-family: "FantasqueSansM Nerd Font Propo";
-  border-radius: 1.4rem;
+  border-radius: 1rem;
   padding: 0rem 0.7rem; }
 
 .notification-center-header-clear:dir(rtl) {
@@ -982,29 +888,29 @@ window {
   border-bottom-left-radius: 0rem; }
 
 .notification-center-container {
-  min-height: 33.5rem;
-  border-radius: 1.4rem;
+  min-height: 37rem;
+  border-radius: 1rem;
   margin-left: 1rem;
   margin-right: 1rem;
-  background: rgba(113, 247, 238, 0.5);
-  border-radius: 1.4rem;
+  background: #0c0023;
+  border-radius: 1rem;
   border-top-left-radius: 0rem;
   border-top-right-radius: 0rem; }
 
 .notification-header-label {
-  color: #191c1c; }
+  color: #cecece; }
 
 .notification-header-label:dir(rtl) {
-  margin-right: 3rem; }
+  margin-right: 4.5rem; }
 
 .notification-header-label:dir(ltr) {
-  margin-right: 5rem; }
+  margin-right: 3rem; }
 
 .music-wd-box {
-  background: #71f7ee;
+  background: linear-gradient(to right, #5812db, #8f1767);
   padding: 1rem;
   margin: 0.5rem;
-  border-radius: 1.4rem; }
+  border-radius: 1rem; }
 
 .music-wd-length {
   font-family: "FantasqueSansM Nerd Font Propo"; }
@@ -1020,11 +926,11 @@ window {
   padding-top: 10px; }
 
 .music-wd-player {
-  background: #4a6361;
+  background: #0c0023;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  color: #ffffff;
-  border-radius: 1.4rem;
+  color: #71f1e8;
+  border-radius: 1rem;
   min-width: 2rem; }
 
 .music-wd-player:dir(rtl) {
@@ -1036,7 +942,7 @@ window {
   padding-left: 0.7rem; }
 
 .music-wd-title {
-  color: #48607a;
+  color: #0c0023;
   margin-bottom: 0.5rem; }
 
 .music-wd-title:dir(rtl) {
@@ -1046,7 +952,7 @@ window {
   padding-right: 0.5rem; }
 
 .music-wd-file-name {
-  color: #191c1c;
+  color: #71f1e8;
   font-size: x-small; }
 
 .music-wd-main-button, .music-wd-button-stop, .music-wd-button-play, .music-wd-button {
@@ -1057,51 +963,51 @@ window {
 .music-wd-button {
   font-family: "FantasqueSansM Nerd Font Propo";
   border-radius: 50%;
-  background: #4a6361;
-  color: #ffffff; }
+  background: linear-gradient(to right, #20004a, #20004a);
+  color: #71f1e8; }
 
 .music-wd-button:hover {
-  background: #48607a; }
+  background: linear-gradient(to top, #ff4bde, #198bee); }
 
 .music-wd-button-play {
-  background: #006a64;
-  border-radius: 1.4rem;
-  color: #ffffff;
+  background: linear-gradient(to right, #9359ff, #ff00aa);
+  border-radius: 1rem;
+  color: #0c0023;
   min-width: 80px; }
 
 .music-wd-button-play:hover {
-  background: #48607a; }
+  background: linear-gradient(to top, #ff4bde, #198bee); }
 
 .music-wd-button-stop {
-  background: #4a6361;
-  color: #ffffff;
-  border-radius: 1.4rem;
+  background: linear-gradient(to right, #20004a, #20004a);
+  color: #71f1e8;
+  border-radius: 1rem;
   min-width: 80px; }
 
 .wd-fuzzy-day-box {
   background: rgba(0, 0, 0, 0);
-  color: #00201e; }
+  color: #198bee; }
 
 .wd-fuzzy-day-icon {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 0rem 1rem 0rem 1rem;
   font-family: "FantasqueSansM Nerd Font Propo";
   padding: 0.7rem 0rem 0rem 0rem; }
 
 .wd-fuzzy-day-text {
   font-family: "VIP Rawy Regular";
-  font-size: 1.8rem; }
+  font-size: 3rem; }
 
 .wd-time-now {
-  font-size: 1.5rem;
+  font-size: 2.3rem;
   background: rgba(0, 0, 0, 0);
-  color: #051f1d;
+  color: #ffb431;
   font-family: "VEXA light R";
-  margin: 0rem 0rem 0rem 0rem; }
+  margin: 0rem 0rem 0.5rem 0rem; }
 
 .wd-fuzzy-time-box {
   background: rgba(0, 0, 0, 0);
-  color: #001d34; }
+  color: #ff4bde; }
 
 .wd-fuzzy-time-icon {
   font-size: 1.5rem;
@@ -1113,17 +1019,17 @@ window {
   font-family: "VIP Rawy Regular"; }
 
 .saying-wd-label {
-  min-width: 1rem;
+  min-width: 25rem;
   font-size: 1.5rem;
-  color: #00201e;
-  background: rgba(113, 247, 238, 0.8);
+  color: #ffb431;
+  background: rgba(0, 0, 0, 0);
   font-family: "VIP Rawy Regular";
-  padding: 1rem;
-  margin: 0rem 1rem 1rem 1rem;
-  border-radius: 1.4rem; }
+  padding: 0rem;
+  margin: 0rem;
+  border-radius: 0rem; }
 
 .desktop-wd-separator {
-  background: rgba(0, 0, 0, 0);
+  background: linear-gradient(to right, #198bee, #ffb431, #ff4bde);
   min-height: 1px;
   min-width: 1px; }
 
@@ -1134,16 +1040,16 @@ window {
   font-size: 1.5rem; }
 
 .desktop-wd-music-player-title {
-  color: #4a6361; }
+  color: #ff4bde; }
 
 .desktop-wd-music-player-artist {
-  color: #001d34; }
+  color: #198bee; }
 
 .bar-prayer-times-box {
   font-size: 1em;
-  background: #cfe5ff;
-  color: #001d34;
-  border-radius: 1.4rem;
+  background: linear-gradient(to right, #3599ff, #6457f0);
+  color: #0c0023;
+  border-radius: 1rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
   margin-left: 0.5rem;
@@ -1161,17 +1067,17 @@ window {
   padding-right: 0.7rem; }
 
 .prayer-times-menu-box {
-  background: #fbfdfc;
-  border-radius: 1.4rem;
-  border: 2px solid #006a64;
-  color: #191c1c; }
+  background: #20004a;
+  border-radius: 1rem;
+  border: 2px solid #ff4bde;
+  color: #cecece; }
 
 .prayer-times-menu-header {
-  background: #cfe5ff;
-  color: #001d34;
+  background: #0c0023;
+  color: #cecece;
   padding: 1rem;
-  border-top-right-radius: 1.4rem;
-  border-top-left-radius: 1.4rem; }
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem; }
 
 .prayer-time-item-box-class {
   padding-top: 1.2rem;
@@ -1179,12 +1085,12 @@ window {
   padding-right: 1.5rem; }
 
 .isha-item {
-  border-bottom-right-radius: 1.4rem;
-  border-bottom-left-radius: 1.4rem; }
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem; }
 
 .next-prayer {
-  background: #006a64;
-  color: #ffffff; }
+  background: linear-gradient(to left, #198bee, #ff4bde);
+  color: #0c0023; }
 
 .prayer-times-menu-header-icon {
   font-family: "FantasqueSansM Nerd Font Propo"; }
@@ -1200,12 +1106,12 @@ window {
 
 .weather-menu-box {
   min-width: 2rem;
-  background: #fbfdfc;
-  color: #191c1c;
+  background: #20004a;
+  color: #cecece;
   padding: 1rem 1rem;
   padding-top: 2rem;
-  border: 2px solid #006a64;
-  border-radius: 1.4rem; }
+  border: 2px solid #ff4bde;
+  border-radius: 1rem; }
 
 .weather-menu-general-information-box {
   margin: 0rem 1rem; }
@@ -1280,18 +1186,18 @@ window {
   font-size: 1.3rem; }
 
 .applications-box {
-  background: #fbfdfc;
-  border-radius: 1.4rem;
-  border-radius: 1.4rem;
-  border: 2px solid #006a64; }
+  background: #20004a;
+  border-radius: 1rem;
+  border-radius: 1rem;
+  border: 2px solid #ff4bde; }
 
 .app-search-box {
-  border-top-left-radius: 1.4rem;
-  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   background-size: cover;
   background-position: center;
-  border-top-left-radius: 1.4rem;
-  border-top-right-radius: 1.4rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   min-width: 23rem;
   min-height: 12rem;
   background-color: rgba(0, 0, 0, 0.1);
@@ -1310,8 +1216,8 @@ window {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); }
 
 .audio-menu-header-box {
-  background: rgba(113, 247, 238, 0.8);
-  color: #191c1c;
+  background: rgba(12, 0, 35, 0.8);
+  color: #cecece;
   padding: 0.6rem;
   margin: 0rem 1rem; }
 
@@ -1348,9 +1254,9 @@ window {
   margin-right: 1.5rem; }
 
 .left-menu-music-wd {
-  background: #71f7ee;
-  border-bottom-right-radius: 1.4rem;
-  border-bottom-left-radius: 1.4rem;
+  background: linear-gradient(to right, #5812db, #8f1767);
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-left: 1rem;
@@ -1366,12 +1272,13 @@ window {
   padding-left: 1.5rem; }
 
 .media-control-revaler-button {
-  background: #71f7ee;
+  background: linear-gradient(to right, #5812db, #8f1767);
   margin: 0rem 1rem;
-  padding: 0.3rem;
+  padding: 0.5rem;
   border-bottom-right-radius: 0rem;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0);
-  border-bottom-left-radius: 0rem; }
+  border-bottom-left-radius: 0rem;
+  font-size: 1.1rem; }
 
 .media-control-revaler-button:hover {
   border-bottom-right-radius: 0rem;
@@ -1397,29 +1304,78 @@ window {
 
 .calendar-menu-box {
   min-width: 2rem;
-  background: #fbfdfc;
-  color: #191c1c;
-  border: 2px solid #006a64;
-  border-radius: 1.4rem; }
+  background: #20004a;
+  color: #cecece;
+  border: 2px solid #ff4bde;
+  border-radius: 1rem; }
 
 .calendar {
   all: unset;
   padding: 0.8rem 0.55rem 0rem;
   font-size: 1.1rem; }
   .calendar.button {
-    border-radius: 1.4rem; }
+    border-radius: 1rem; }
   .calendar.header {
     border: none;
-    border-radius: 1.4rem;
+    border-radius: 1rem;
     border-bottom-right-radius: 0rem;
     border-bottom-left-radius: 0rem; }
   .calendar.highlight {
-    color: rgba(25, 28, 28, 0.5); }
+    color: rgba(206, 206, 206, 0.5); }
   .calendar:indeterminate {
-    color: rgba(25, 28, 28, 0.5); }
+    color: rgba(206, 206, 206, 0.5); }
   .calendar:selected {
-    border-radius: 0.84rem;
-    box-shadow: inset 0 -8px 0 0 rgba(0, 106, 100, 0.5), inset 0 0 0 1px #006a64; }
+    border-radius: 0.6rem;
+    box-shadow: inset 0 -8px 0 0 rgba(255, 75, 222, 0.5), inset 0 0 0 1px #ff4bde; }
+
+.weather-header-card {
+  padding: 1.3rem;
+  margin: 1rem;
+  margin-bottom: 0rem;
+  border-radius: 1rem;
+  background: #0c0023; }
+
+.weather-feels-like {
+  font-size: 1.2rem;
+  margin: 0rem 1rem; }
+
+.weather-temperature {
+  font-size: 3rem; }
+
+.weather-city-name {
+  font-size: 1.7rem; }
+
+.weather-icon {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  font-size: 2rem; }
+
+.weather-icon:dir(rtl) {
+  margin-right: 2rem; }
+
+.weather-card-title {
+  font-size: 1rem; }
+
+.weather-card-text {
+  font-size: 1rem; }
+
+.weather-card-icon {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  font-size: 1.9rem;
+  min-width: 2.8rem;
+  background: #ffffff;
+  color: #000;
+  border-radius: 5rem; }
+
+.weather-card {
+  padding: 0.9rem 1.3rem;
+  margin: 0rem 0.5rem;
+  min-width: 8.15rem;
+  border-radius: 1rem;
+  background: #0c0023; }
+
+.weather-row {
+  padding: 0rem 0.5rem;
+  padding-top: 1rem; }
 
 .un-hover:hover {
   all: unset; }

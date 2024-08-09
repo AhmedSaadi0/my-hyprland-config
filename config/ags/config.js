@@ -1,6 +1,6 @@
 import { Utils, App, Notifications } from './modules/utils/imports.js';
 import { Bar } from './modules/topbar.js';
-import { LeftMenu } from './modules/menus/left_menu.js';
+import { LeftMenu } from './modules/menus/LeftMenu.js';
 import { HardwareMenu } from './modules/menus/HardwareMenu.js';
 import { VolumeOSD } from './modules/on-screen/volume.js';
 import MyNotifications from './modules/notifications/OSDNotifications.js';

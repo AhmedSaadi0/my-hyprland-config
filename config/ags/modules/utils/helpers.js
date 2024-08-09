@@ -10,7 +10,9 @@ export const TitleText = ({
     boxClass = '',
     homogeneous = false,
     titleXalign = 0.5,
+    titleYalign = 0.5,
     textXalign = 0.5,
+    textYalign = 0.5,
     //titleMaxWidthChars = 100,
     //textMaxWidthChars = 100,
     titleTruncate = 'none',
@@ -23,6 +25,7 @@ export const TitleText = ({
         label: title,
         className: titleClass,
         xalign: titleXalign,
+        yalign: titleYalign,
         //maxWidthChars: titleMaxWidthChars,
         truncate: titleTruncate,
     });
@@ -31,6 +34,7 @@ export const TitleText = ({
         label: text,
         className: textClass,
         xalign: textXalign,
+        yalign: textYalign,
         //maxWidthChars: textMaxWidthChars,
         truncate: textTruncate,
     });
@@ -173,7 +177,12 @@ export const ThemeButton = ({
     const button = Widget.Button({
         css: css,
         child: box,
-        onClicked: () => themeService.changeTheme(theme),
+        onClicked: () => {
+            themeService.changeTheme(theme);
+            setTimeout(() => {
+                hideLeftMenu();
+            }, 700);
+        },
     }).hook(themeService, (btn) => {
         btn.className = 'theme-btn';
         if (themeService.selectedTheme === theme) {
