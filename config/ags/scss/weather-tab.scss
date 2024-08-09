@@ -17,6 +17,7 @@
 }
 .weather-city-name {
     font-size: 1.7rem;
+    font-weight: 600;
 }
 .weather-icon {
     font-family: $icon-font-family;
@@ -41,13 +42,15 @@
     min-width: 2.8rem;
 
     @if variable-exists($name: bg-two) {
-        background: $bg-three;
-    }
-    @if variable-exists($name: primary) {
-        background: $primary-container;
+        background: $fg-three;
+        color: $bg-three;
     }
 
-    color: $text-color;
+    @if variable-exists($name: primary) {
+        background: $primary-container;
+        color: $on-primary-container;
+    }
+
     border-radius: 5rem;
 }
 
@@ -61,6 +64,9 @@
 }
 
 .weather-row {
-    padding: 0rem 0.5rem;
+    padding: 0rem 0.4rem;
     padding-top: 1rem;
+}
+.weather-max-min {
+    margin-top: 0.5rem;
 }

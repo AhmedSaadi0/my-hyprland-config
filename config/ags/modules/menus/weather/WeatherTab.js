@@ -56,11 +56,20 @@ const weatherDetails = Widget.Box({
 const weatherHeaderCard = Widget.Box({
     vertical: true,
     className: 'weather-header-card',
-    children: [weatherLocation, weatherDetails],
+    children: [
+        weatherLocation,
+        Widget.Label({
+            className: 'weather-max-min',
+            label: '',
+            xalign: 0,
+        }),
+        weatherDetails,
+    ],
 }).hook(weatherService, (box) => {
     weatherLocation.label = `${weatherService.areaName}, ${settings.prayerTimes.country}`;
     temperatureAndFeelsLike.children[0].label = `${weatherService.tempC}°`;
     temperatureAndFeelsLike.children[1].label = `${strings.feelsLike} ${weatherService.feelsLike}°`;
+    box.children[1].label = `${weatherService.value} (${weatherService.maxTempC}°-${weatherService.minTempC}°)`;
 
     icon.label = weatherService.weatherCode;
 });
@@ -143,5 +152,5 @@ const rowThree = Widget.Box({
 
 export default Widget.Box({
     vertical: true,
-    children: [weatherHeaderCard, rowOne, rowTwo, rowThree, rowFour],
+    children: [weatherHeaderCard, rowFour, rowTwo, rowThree],
 });

@@ -2,7 +2,7 @@
 // import Service from 'resource:///com/github/Aylur/ags/service.js';
 import settings from '../settings.js';
 import strings from '../strings.js';
-import { notify, truncateString } from '../utils/helpers.js';
+import { local, notify, truncateString } from '../utils/helpers.js';
 import { Service, Utils } from '../utils/imports.js';
 
 class WeatherService extends Service {
@@ -12,7 +12,9 @@ class WeatherService extends Service {
             {},
             {
                 // TODAY
+                value: ['string', 'r'],
                 arValue: ['string', 'r'],
+                enValue: ['string', 'r'],
                 weatherValueMaxLength: ['float', 'rw'],
                 weatherCode: ['string', 'r'],
                 maxTempC: ['float', 'r'],
@@ -143,6 +145,13 @@ class WeatherService extends Service {
 
         return currentTime > sunrise && currentTime < sunset;
     }
+    get value() {
+        if (local === 'RTL') {
+            return this.arValue;
+        }
+
+        return this.enValue;
+    }
 
     get arValue() {
         try {
@@ -158,6 +167,15 @@ class WeatherService extends Service {
                 ) || ''
             );
         }
+    }
+
+    get enValue() {
+        return (
+            truncateString(
+                this.state?.current_condition?.[0]?.weatherDesc?.[0]?.value,
+                this.#weatherValueMaxLength
+            ) || ''
+        );
     }
 
     get weatherCode() {

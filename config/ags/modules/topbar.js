@@ -50,7 +50,7 @@ const Weather = () => {
 
     let button = Widget.Button({
         className: 'unset un-hover',
-        onClicked: () => showWeatherMenu(),
+        onClicked: () => toggleWeather(),
         child: Box({
             className: 'bar-weather-box small-shadow unset',
             children: [icon, text],
@@ -149,9 +149,9 @@ const Left = () =>
         hpack: 'end',
         children: [
             // Volume(),
-            NotificationCenterButton(),
             Weather(),
             NetworkInformation(),
+            NotificationCenterButton(),
             SysTrayBox(),
             MenuButton(),
         ],

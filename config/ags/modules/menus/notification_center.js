@@ -147,7 +147,7 @@ export const NotificationCenterButton = () =>
             spacing: 4,
         }),
 
-        onClicked: () => showNotificationCenter(),
+        onClicked: () => ToggleNotificationCenter(),
     }).hook(Notifications, (self) => {
         if (Notifications.dnd) {
             // self.label = '󰂛';
