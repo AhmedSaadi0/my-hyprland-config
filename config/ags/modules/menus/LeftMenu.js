@@ -218,6 +218,10 @@ globalThis.hideLeftMenu = () => {
     menuRevealer.revealChild = false;
 };
 
-globalThis.showNotificationCenter = () => {
+globalThis.ToggleNotificationCenter = () => {
     openMenu(settings.menuTabs.notifications);
+};
+
+globalThis.toggleWeather = () => {
+    openMenu(settings.menuTabs.weather);
 };
