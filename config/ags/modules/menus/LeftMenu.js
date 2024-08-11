@@ -2,16 +2,17 @@ import themeService from '../services/ThemeService.js';
 
 import Profile from './header/Profile.js';
 import Header from './header/Header.js';
-import ThemesButtonsRowOne from './dashboard/ThemesButtonsRowOne.js';
-import PowerButtonsRow from './dashboard/PowerButtonsRow.js';
+import ThemesButtonsRowOne from './dashboard/ThemesButtons.js';
+import PowerButtonsRow from './dashboard/PowerButtons.js';
 import settings from '../settings.js';
 import { TitleTextRevealer, local, truncateString } from '../utils/helpers.js';
 import MediaControl from './dashboard/MediaControl.js';
 import weatherService from '../services/WeatherService.js';
 import notificationContainer from './notifications/Notifications.js';
-import dashboardTabMenu from './dashboard/DashboardMenu.js';
+import dashboardTabMenu from './dashboard/DashboardTab.js';
 import strings from '../strings.js';
 import notificationHeader from './notifications/NotificationHeader.js';
+import weatherHeaderCard from './weather/WeatherTab.js';
 
 const sharedTabAttrs = {
     spacing: 7,
@@ -155,7 +156,7 @@ const stack = Widget.Stack({
     children: {
         dashboard: dashboardTabMenu,
         notifications: notificationTabMenu,
-        weather: Widget.Label('Weather here'),
+        weather: weatherHeaderCard,
         monitor: Widget.Label('Monitor here'),
         calender: Widget.Label('Calender here'),
     },
@@ -209,10 +210,18 @@ export const MenuButton = () =>
         },
     });
 
-globalThis.showLeftMenu = () => {
+globalThis.toggleLeftMenu = () => {
     openMenu(settings.menuTabs.dashboard);
 };
 
-globalThis.showNotificationCenter = () => {
+globalThis.hideLeftMenu = () => {
+    menuRevealer.revealChild = false;
+};
+
+globalThis.ToggleNotificationCenter = () => {
     openMenu(settings.menuTabs.notifications);
+};
+
+globalThis.toggleWeather = () => {
+    openMenu(settings.menuTabs.weather);
 };

@@ -1,4 +1,4 @@
-@import './themes/m3/dynamic.scss';
+@import './themes/colors.scss';
 
 $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 
@@ -117,6 +117,7 @@ menuitem:hover {
 @import './audio-brightness-menu.scss';
 @import './circle-theme-information.scss';
 @import './calendar-menu.scss';
+@import './weather-tab.scss';
 
 // * {
 //     all: unset;

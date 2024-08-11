@@ -31,7 +31,7 @@ const NotificationsBox = () => {
                 line = null;
             }
 
-            notificationList.push(Notification(element), line);
+            notificationList.push(Notification(element, true), line);
         }
 
         let noNotifications = Box({

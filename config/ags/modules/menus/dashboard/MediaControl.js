@@ -119,10 +119,20 @@ const MediaControl = () =>
             Widget.Button({
                 className: 'media-control-revaler-button',
                 child: TitleText({
-                    title: strings.musicPlayer,
+                    titleWidget: TitleText({
+                        titleClass: 'icon-font',
+                        title: '',
+                        // titleClass: 'themes-buttons-icon',
+                        text: strings.musicPlayer,
+                        // textClass: 'themes-buttons-title',
+                        vertical: false,
+                        spacing: 10,
+                        titleYalign: 0.5,
+                        textYalign: 0.5,
+                    }),
                     text: '',
                     vertical: false,
-                    textXalign: 0.93,
+                    textXalign: 0.9,
                     titleXalign: 0.18,
                     homogeneous: true,
                 }),

@@ -1,6 +1,6 @@
 import MediaControl from './MediaControl.js';
-import PowerButtonsRow from './PowerButtonsRow.js';
-import ThemesButtonsRowOne from './ThemesButtonsRowOne.js';
+import PowerButtonsRow from './PowerButtons.js';
+import ThemesButtonsRowOne from './ThemesButtons.js';
 
 const dashboardTab = Widget.Box({
     vertical: true,
