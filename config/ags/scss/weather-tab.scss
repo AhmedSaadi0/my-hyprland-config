@@ -70,3 +70,23 @@
 .weather-max-min {
     margin-top: 0.5rem;
 }
+
+.weather-latest-update-btn {
+    background: $theme-box-background;
+    padding: 0.2rem 0.5rem;
+    // font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.weather-latest-update-btn:hover {
+    padding: 0.2rem 0.5rem;
+    // font-size: 0.8rem;
+}
+
+.weather-latest-update-btn:dir(rtl) {
+    margin-right: 2rem;
+}
+
+.weather-latest-update-btn:dir(ltr) {
+    margin-left: 2rem;
+}

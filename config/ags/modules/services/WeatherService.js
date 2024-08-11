@@ -19,6 +19,7 @@ class WeatherService extends Service {
                 weatherCode: ['string', 'r'],
                 maxTempC: ['float', 'r'],
                 minTempC: ['float', 'r'],
+                avgChangeOfRain: ['float', 'r'],
 
                 feelsLike: ['float', 'r'],
                 tempC: ['float', 'r'],
@@ -58,12 +59,14 @@ class WeatherService extends Service {
     }
 
     coldWeatherWarned = false;
+    changeOfRainWarned = false;
     hotWeatherWarned = false;
     #weatherValueMaxLength = 20;
 
     constructor() {
         super();
         this.state = {};
+        console.log('Starting weather service');
         this.initWeather();
     }
 
@@ -82,6 +85,7 @@ class WeatherService extends Service {
                 const jsonData = JSON.parse(val);
                 this.state = jsonData;
                 this.checkColdWeather();
+                this.checkChanceOfRain();
                 this.emit('changed');
             })
             .catch(() => {
@@ -145,6 +149,26 @@ class WeatherService extends Service {
 
         return currentTime > sunrise && currentTime < sunset;
     }
+
+    checkChanceOfRain() {
+        const chanceOfRain = this.avgChangeOfRain;
+        if (chanceOfRain > 40 && !this.coldWeatherWarned) {
+            notify({
+                title: strings.rainyWeatherTitle,
+                message: `${strings.rainyWeatherText} ${parseInt(chanceOfRain)}%`,
+                icon: 'weather-showers',
+                priority: 'normal',
+            });
+
+            // Utils.notify({
+            //     summary: 'جو ممطر',
+            //     body: `من المتوقع نزول الامطار اليوم بنسبة ${parseInt(chanceOfRain)}%`,
+            //     iconName: 'weather-showers',
+            // });
+            this.coldWeatherWarned = true;
+        }
+    }
+
     get value() {
         if (local === 'RTL') {
             return this.arValue;
@@ -241,6 +265,19 @@ class WeatherService extends Service {
 
     get moonset() {
         return this.state?.weather?.[0].astronomy[0].moonset || '';
+    }
+
+    get avgChangeOfRain() {
+        var avg = 0;
+        const hourly = this.state?.weather?.[0].hourly;
+
+        for (let index = 0; index < hourly?.length; index++) {
+            const element = hourly[index];
+            avg += parseInt(element.chanceofrain);
+        }
+
+        avg = avg / hourly.length;
+        return avg;
     }
 
     // -------------------------------------------

@@ -20,6 +20,8 @@ export const TitleText = ({
     vertical = true,
     spacing = 0,
     ltr = false,
+    titleWidget = null,
+    textWidget = null,
 }) => {
     const _title = Widget.Label({
         label: title,
@@ -39,7 +41,9 @@ export const TitleText = ({
         truncate: textTruncate,
     });
 
-    const children = ltr ? [_text, _title] : [_title, _text];
+    const children = ltr
+        ? [textWidget ? textWidget : _text, titleWidget ? titleWidget : _title]
+        : [titleWidget ? titleWidget : _title, textWidget ? textWidget : _text];
 
     return Widget.Box({
         className: boxClass,
@@ -115,7 +119,7 @@ export const TitleTextRevealer = ({
 export const local = Utils.exec(settings.scripts.deviceLocal);
 
 export const notify = ({
-    tonePath,
+    tonePath = settings.assets.audio.notificationAlert,
     title,
     message,
     icon,

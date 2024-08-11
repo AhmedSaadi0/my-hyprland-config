@@ -60,6 +60,8 @@ const strings = {
         minAndMax: 'الصغرى والعلياء',
         coldWeather: 'طقس بارد !',
         hotWeather: 'طقس حار !',
+        rainyWeatherTitle: 'جو ممطر',
+        rainyWeatherText: 'من المتوقع هطول الامطار اليوم بنسبة',
         minTemperature: 'درجة الحرارة الصغرى اليوم',
         maxTemperature: 'درجة الحرارة الكبرى اليوم',
         weatherNotAvailable: 'خدمة الطقس غير متاحة',
@@ -222,6 +224,9 @@ const strings = {
         minAndMax: 'Min and Max',
         coldWeather: 'Cold Weather!',
         hotWeather: 'Hot Weather!',
+        rainyWeatherTitle: 'Rainy weather',
+        rainyWeatherText: 'Chance of rain is',
+
         minTemperature: `Today's minimum temperature`,
         maxTemperature: `Today's maximum temperature`,
         sunset: 'Sunset',

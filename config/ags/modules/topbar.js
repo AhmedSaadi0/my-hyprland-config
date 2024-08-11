@@ -55,10 +55,10 @@ const Weather = () => {
             className: 'bar-weather-box small-shadow unset',
             children: [icon, text],
         }).hook(weatherService, (self) => {
-            if (weatherService.arValue != '') {
+            if (weatherService.value != '') {
                 const max = weatherService.maxTempC;
                 const min = weatherService.minTempC;
-                text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.arValue}`;
+                text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.value}`;
                 icon.label = `${weatherService.weatherCode}`;
             } else {
                 text.label = strings.weatherNotAvailable;

@@ -74,7 +74,7 @@
 .media-control-revaler-button {
     background: $music-wd-box-bg;
     margin: 0rem 1rem;
-    padding: 0.5rem;
+    padding: 0.3rem;
     border-bottom-right-radius: 0rem;
     box-shadow: 1px 1px 2px 2px rgba(#000000, 0);
     border-bottom-left-radius: 0rem;
@@ -85,4 +85,12 @@
 .media-control-revaler-button:hover {
     border-bottom-right-radius: 0rem;
     border-bottom-left-radius: 0rem;
+}
+
+.media-control-revaler-button:dir(rtl) {
+    padding-right: 1.3rem;
+}
+
+.media-control-revaler-button:dir(ltr) {
+    padding-left: 1.3rem;
 }
