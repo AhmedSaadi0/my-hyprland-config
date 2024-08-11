@@ -221,8 +221,18 @@
 .themes-buttons-title {
     padding-bottom: 1.2rem;
     padding-top: 0.3rem;
+    margin: 0rem 0.8rem;
+    font-size: 1.4rem;
+    color: $text-color;
+    font-weight: bold;
+}
+
+.themes-buttons-icon {
+    padding-bottom: 1.2rem;
+    padding-top: 0.3rem;
     margin: 0rem 0.3rem;
     font-size: 1.4rem;
     color: $text-color;
     font-weight: bold;
+    font-family: $icon-font-family;
 }

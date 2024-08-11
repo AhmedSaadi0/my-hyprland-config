@@ -31,6 +31,7 @@ class ThemeService extends Service {
 
     constructor() {
         super();
+        console.log('Starting theme service');
         Utils.exec('swww-daemon');
 
         this.getCachedVariables();

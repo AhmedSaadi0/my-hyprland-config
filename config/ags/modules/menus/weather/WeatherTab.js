@@ -34,6 +34,30 @@ const weatherLocation = Widget.Label({
     xalign: 0,
 });
 
+const latestUpdate = Widget.Button({
+    className: 'weather-latest-update-btn',
+    child: Widget.Stack({
+        transition: 'crossfade',
+        children: {
+            text: Widget.Label('󰑓'),
+            spinner: Widget.Spinner({ visible: true }),
+        },
+        shown: 'text',
+    }),
+    onClicked: (self) => {
+        weatherService.getWeather();
+
+        self.child.shown = 'spinner';
+    },
+}).hook(weatherService, (self) => {
+    self.child.shown = 'text';
+    if (weatherService.observation_time === '') {
+        self.child.children.text.label = '󰑓';
+        return;
+    }
+    self.child.children.text.label = weatherService.observation_time;
+});
+
 const temperatureAndFeelsLike = TitleText({
     vertical: false,
     title: '',
@@ -57,7 +81,10 @@ const weatherHeaderCard = Widget.Box({
     vertical: true,
     className: 'weather-header-card',
     children: [
-        weatherLocation,
+        Widget.Box({
+            className: '',
+            children: [weatherLocation, latestUpdate],
+        }),
         Widget.Label({
             className: 'weather-max-min',
             label: '',
