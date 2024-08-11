@@ -1,6 +1,6 @@
 import { Utils, App, Notifications } from './modules/utils/imports.js';
 import { Bar } from './modules/topbar.js';
-import { LeftMenu } from './modules/menus/left_menu.js';
+import { LeftMenu } from './modules/menus/LeftMenu.js';
 import { HardwareMenu } from './modules/menus/HardwareMenu.js';
 import { VolumeOSD } from './modules/on-screen/volume.js';
 import MyNotifications from './modules/notifications/OSDNotifications.js';
@@ -16,7 +16,6 @@ import newCatWidget from './modules/widgets/desktop/NewCat.js';
 import deerWidget from './modules/widgets/desktop/DeerWidget.js';
 import circlesMusicWidget from './modules/widgets/desktop/Circles.js';
 import whiteFlowerWidget from './modules/widgets/desktop/WhiteFlower.js';
-import { WeatherMenu } from './modules/menus/WeatherMenu.js';
 import { CalendarMenu } from './modules/menus/CalendarMenu.js';
 import settings from './modules/settings.js';
 import { applauncher } from './modules/menus/ApplicationsMenu.js';
@@ -38,7 +37,6 @@ let windows = [
     MyNotifications(),
     HardwareMenu(),
     PrayerTimesMenu(),
-    WeatherMenu(),
     CalendarMenu(),
     languageLayoutOSD,
     // ... Desktop widgets ... //
