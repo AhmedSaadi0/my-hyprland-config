@@ -20,6 +20,15 @@
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
+.left-menu-insider-box {
+    padding: 1.3rem;
+    margin: 1rem;
+    margin-bottom: 0rem;
+    border-radius: $border-radius;
+    background: $theme-box-background;
+    color: $text-color;
+}
+
 .left-menu-header {
     background-size: cover;
     background-position: center;
@@ -235,4 +244,8 @@
     color: $text-color;
     font-weight: bold;
     font-family: $icon-font-family;
+}
+
+.monitor-progress-title {
+    padding-bottom: 0.8rem;
 }

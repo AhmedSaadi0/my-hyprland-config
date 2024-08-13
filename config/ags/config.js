@@ -1,7 +1,6 @@
 import { Utils, App, Notifications } from './modules/utils/imports.js';
 import { Bar } from './modules/topbar.js';
 import { LeftMenu } from './modules/menus/LeftMenu.js';
-import { HardwareMenu } from './modules/menus/HardwareMenu.js';
 import { VolumeOSD } from './modules/on-screen/volume.js';
 import MyNotifications from './modules/notifications/OSDNotifications.js';
 import { PrayerTimesMenu } from './modules/menus/PrayerTimesMenu.js';
@@ -35,7 +34,6 @@ Utils.exec(`sassc ${scss} ${css}`);
 let windows = [
     VolumeOSD(),
     MyNotifications(),
-    HardwareMenu(),
     PrayerTimesMenu(),
     CalendarMenu(),
     languageLayoutOSD,

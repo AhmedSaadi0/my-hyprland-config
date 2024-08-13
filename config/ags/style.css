@@ -425,28 +425,30 @@ menuitem:hover {
 
 .hardware-menu-box-progress, .menu-temp, .menu-battery, .menu-ram, .menu-cpu {
   font-size: 0.5rem;
-  min-width: 6.5rem;
-  min-height: 6.5rem;
-  margin: 1rem; }
+  min-width: 4.5rem;
+  min-height: 4.5rem; }
 
 .hardware-menu-box-icon, .menu-temp-icon, .menu-battery-icon-charging, .menu-battery-icon, .menu-ram-icon, .menu-cpu-icon {
   font-family: "FantasqueSansM Nerd Font Propo";
   font-size: 2rem; }
 
 .menu-cpu {
-  color: #b18dff; }
+  color: #b18dff;
+  background-color: rgba(177, 141, 255, 0.2); }
 
 .menu-cpu-icon {
   color: #b18dff; }
 
 .menu-ram {
-  color: #c1c4eb; }
+  color: #c1c4eb;
+  background-color: rgba(193, 196, 235, 0.2); }
 
 .menu-ram-icon {
   color: #c1c4eb; }
 
 .menu-battery {
-  color: #1ed4fd; }
+  color: #1ed4fd;
+  background-color: rgba(30, 212, 253, 0.2); }
 
 .menu-battery-icon {
   color: #1ed4fd; }
@@ -456,21 +458,16 @@ menuitem:hover {
   animation: colorChange 2s infinite; }
 
 .menu-temp {
-  color: #ff00ff; }
+  color: #ff00ff;
+  background-color: rgba(255, 0, 255, 0.2); }
 
 .menu-temp-icon {
   color: #ff00ff; }
 
-.table-row-app-name-header {
-  min-width: 6rem; }
+.table-row-app-name-header, .table-row-app-name {
+  min-width: 5.88rem; }
 
-.table-row-app-percentage-header {
-  min-width: 3rem; }
-
-.table-row-app-name {
-  min-width: 6rem; }
-
-.table-row-app-percentage {
+.table-row-app-percentage-header, .table-row-app-percentage {
   min-width: 3rem; }
 
 .hardware-cpu-box {
@@ -478,6 +475,12 @@ menuitem:hover {
   color: #1f1635;
   border-radius: 1.5rem;
   margin-top: 1rem; }
+
+.hardware-cpu-box:dir(rtl) {
+  margin-right: 1rem; }
+
+.hardware-cpu-box:dir(ltr) {
+  margin-left: 1rem; }
 
 .hardware-cpu-table-row-header {
   padding: 1rem;
@@ -505,19 +508,18 @@ menuitem:hover {
   border-top-right-radius: 1.5rem;
   border-top-left-radius: 1.5rem; }
 
-.hardware-menu-tables-box {
-  background: #1f1635;
-  padding: 0.8rem;
-  padding-top: 0rem;
-  margin: 1rem;
-  border-radius: 1.5rem; }
-
 .hardware-bat-box {
   background: #987fd6;
   color: #211008;
   border-radius: 1.5rem;
   margin-top: 1rem;
   min-height: 3rem; }
+
+.hardware-bat-box:dir(rtl) {
+  margin-right: 1rem; }
+
+.hardware-bat-box:dir(ltr) {
+  margin-left: 1rem; }
 
 .hardware-bat-table-row-header {
   padding: 1rem;
@@ -649,6 +651,14 @@ window {
   margin-right: 0.6rem;
   margin-left: 1rem;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3); }
+
+.left-menu-insider-box, .progresses-box {
+  padding: 1.3rem;
+  margin: 1rem;
+  margin-bottom: 0rem;
+  border-radius: 1.5rem;
+  background: #241546;
+  color: #bdddee; }
 
 .left-menu-header {
   background-size: cover;
@@ -819,6 +829,9 @@ window {
   color: #bdddee;
   font-weight: bold;
   font-family: "FantasqueSansM Nerd Font Propo"; }
+
+.monitor-progress-title {
+  padding-bottom: 0.8rem; }
 
 .notification-menu-header {
   background-size: cover;
