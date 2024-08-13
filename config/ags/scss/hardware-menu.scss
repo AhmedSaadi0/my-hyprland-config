@@ -1,31 +1,3 @@
-.hardware-menu-box {
-    background: $hardware-menu-box-background;
-    border-radius: $border-radius;
-    border: $border-size solid $border-color;
-}
-
-.hardware-menu-header-box {
-    background: $hardware-menu-header-box-background;
-    border-radius: $border-radius;
-    padding: 0.5rem;
-    margin-top: 1rem;
-    margin-left: 1rem;
-}
-
-.hardware-menu-power-profile-box {
-    @if variable-exists(hardware-menu-power-profile-box) {
-        background: $hardware-menu-power-profile-box;
-    } @else {
-        background: $hardware-menu-header-box-background;
-    }
-
-    border-radius: $border-radius;
-    padding: 0.5rem;
-    margin-left: 0.5rem;
-    margin-top: 1rem;
-    margin-right: 1rem;
-}
-
 .power-profiles-box-btn {
     margin: 0.3rem;
     padding-left: 0.4rem;
@@ -46,9 +18,9 @@
 // --------- CPU ---------
 .hardware-menu-box-progress {
     font-size: 0.5rem;
-    min-width: 6.5rem;
-    min-height: 6.5rem;
-    margin: 1rem;
+    min-width: 4.5rem;
+    min-height: 4.5rem;
+    // margin: 1rem;
 }
 
 .hardware-menu-box-icon {
@@ -59,6 +31,7 @@
 .menu-cpu {
     @extend .hardware-menu-box-progress;
     color: $cpu-color;
+    background-color: rgba($cpu-color, 0.2);
 }
 
 .menu-cpu-icon {
@@ -70,6 +43,7 @@
 .menu-ram {
     @extend .hardware-menu-box-progress;
     color: $ram-color;
+    background-color: rgba($ram-color, 0.2);
 }
 
 .menu-ram-icon {
@@ -81,6 +55,7 @@
 .menu-battery {
     @extend .hardware-menu-box-progress;
     color: $battery-color;
+    background-color: rgba($battery-color, 0.2);
 }
 
 .menu-battery-icon {
@@ -98,6 +73,7 @@
 .menu-temp {
     @extend .hardware-menu-box-progress;
     color: $temp-color;
+    background-color: rgba($temp-color, 0.2);
 }
 
 .menu-temp-icon {
@@ -107,7 +83,7 @@
 
 // --------- Table rows ---------
 .table-row-app-name-header {
-    min-width: 6rem;
+    min-width: 5.88rem;
 }
 
 .table-row-app-percentage-header {
@@ -116,12 +92,11 @@
 }
 
 .table-row-app-name {
-    min-width: 6rem;
-    // font-family: $icon-font-family;
+    @extend .table-row-app-name-header;
 }
 
 .table-row-app-percentage {
-    min-width: 3rem;
+    @extend .table-row-app-percentage-header;
 }
 
 // --------- CPU Table ---------
@@ -130,6 +105,14 @@
     color: $hardware-cpu-box-color;
     border-radius: $border-radius;
     margin-top: 1rem;
+}
+
+.hardware-cpu-box:dir(rtl) {
+    margin-right: 1rem;
+}
+
+.hardware-cpu-box:dir(ltr) {
+    margin-left: 1rem;
 }
 
 .hardware-cpu-table-row-header {
@@ -171,15 +154,6 @@
     @extend .hardware-table-row;
 }
 
-// --------- HW ---------
-.hardware-menu-tables-box {
-    background: $hardware-menu-tables-box-background;
-    padding: 0.8rem;
-    padding-top: 0rem;
-    margin: 1rem;
-    border-radius: $border-radius;
-}
-
 // --------- HW Table ---------
 .hardware-bat-box {
     background: $hardware-bat-box-background;
@@ -187,6 +161,14 @@
     border-radius: $border-radius;
     margin-top: 1rem;
     min-height: 3rem;
+}
+
+.hardware-bat-box:dir(rtl) {
+    margin-right: 1rem;
+}
+
+.hardware-bat-box:dir(ltr) {
+    margin-left: 1rem;
 }
 
 .hardware-bat-table-row-header {
@@ -227,4 +209,9 @@
 .power-profiles-title {
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+// New Box
+.progresses-box {
+    @extend .left-menu-insider-box;
 }
