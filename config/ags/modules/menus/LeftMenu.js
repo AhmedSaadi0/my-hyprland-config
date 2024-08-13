@@ -13,6 +13,7 @@ import dashboardTabMenu from './dashboard/DashboardTab.js';
 import strings from '../strings.js';
 import notificationHeader from './notifications/NotificationHeader.js';
 import weatherHeaderCard from './weather/WeatherTab.js';
+import MonitorsTab from './monitor/MonitorsTab.js';
 
 const sharedTabAttrs = {
     spacing: 7,
@@ -157,7 +158,7 @@ const stack = Widget.Stack({
         dashboard: dashboardTabMenu,
         notifications: notificationTabMenu,
         weather: weatherHeaderCard,
-        monitor: Widget.Label('Monitor here'),
+        monitor: MonitorsTab,
         calender: Widget.Label('Calender here'),
     },
     shown: settings.menuTabs.dashboard,
@@ -210,6 +211,10 @@ export const MenuButton = () =>
         },
     });
 
+globalThis.getMenuStatus = () => {
+    return menuRevealer.revealChild;
+};
+
 globalThis.toggleLeftMenu = () => {
     openMenu(settings.menuTabs.dashboard);
 };
@@ -224,4 +229,8 @@ globalThis.ToggleNotificationCenter = () => {
 
 globalThis.toggleWeather = () => {
     openMenu(settings.menuTabs.weather);
+};
+
+globalThis.toggleMonitors = () => {
+    openMenu(settings.menuTabs.monitor);
 };

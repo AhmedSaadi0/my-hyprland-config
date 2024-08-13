@@ -163,6 +163,11 @@ const strings = {
         deleteAll: 'حذف الكل',
         notificationCountText: 'اشعار',
         themes: 'السمات',
+
+        cpu: 'المعالجة',
+        ram: 'الذاكرة',
+        battery: 'البطارية',
+        temp: 'الحرارة',
     },
     en: {
         hello: 'Hello',
@@ -334,6 +339,11 @@ const strings = {
         deleteAll: 'Delete all',
         notificationCountText: 'Notification',
         themes: 'Themes',
+
+        cpu: 'CPU',
+        ram: 'RAM',
+        battery: 'BATTERY',
+        temp: 'TEMP',
     },
 };
 
