@@ -196,3 +196,13 @@ export const ThemeButton = ({
 
     return button;
 };
+
+export function getMinutesBetweenDates(date1, date2) {
+    // Calculate the difference in milliseconds
+    const differenceInMilliseconds = date2 - date1;
+
+    // Convert milliseconds to minutes
+    const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+
+    return Math.abs(differenceInMinutes); // Return the absolute value of the difference
+}

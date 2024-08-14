@@ -18,7 +18,7 @@ export const RamWidget = () => {
     const button = Button({
         className: 'unset no-hover',
         child: label,
-        onClicked: () => showHardwareMenu(),
+        onClicked: () => toggleMonitors(),
     });
 
     const progress = CircularProgress({
