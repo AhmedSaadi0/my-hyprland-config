@@ -3,7 +3,7 @@ const Battery = await Service.import('battery');
 import tableRow from '../../components/TableRow.js';
 import settings from '../../settings.js';
 import strings from '../../strings.js';
-import { local } from '../../utils/helpers.js';
+import { getMinutesBetweenDates, local, notify } from '../../utils/helpers.js';
 import { cpuUsage, menuIsOpen, ramUsage, tempList } from './Progresses.js';
 
 let batDeviceName = 'bat';
@@ -11,6 +11,10 @@ let osClassName = 'os';
 
 var cpuIsInitialized = false;
 var ramIsInitialized = false;
+
+var cpuHighUsageWarned = new Map();
+const HIGH_CPU_USAGE_PERCENTAGE = 30;
+const HIGH_CPU_USAGE_CHECK_INTERVEL = 3; // In minutes
 
 const hardwareUsageTable = ({
     scriptPath,
@@ -46,6 +50,7 @@ const hardwareUsageTable = ({
                             deviceName: deviceName,
                         })
                     );
+                    checkHighCpuUsage(element);
                 }
                 self.children = children;
             })
@@ -66,8 +71,8 @@ const hardwareUsageTable = ({
             } catch (ReferenceError) {}
 
             // Calling only if menu is open
+            callWidgetScripts(self);
             if (!cpuIsInitialized || !ramIsInitialized || menuIsOpen) {
-                callWidgetScripts(self);
                 if (deviceName === 'cpu' && !cpuIsInitialized) {
                     cpuIsInitialized = true;
                 }
@@ -80,6 +85,33 @@ const hardwareUsageTable = ({
 
     return table;
 };
+
+function checkHighCpuUsage(element) {
+    if (parseInt(element['%']) > HIGH_CPU_USAGE_PERCENTAGE) {
+        const processLatestWarning = cpuHighUsageWarned.has(element['pid'])
+            ? cpuHighUsageWarned.get(element['pid'])
+            : new Date();
+
+        if (
+            getMinutesBetweenDates(
+                processLatestWarning,
+                new Date() > HIGH_CPU_USAGE_CHECK_INTERVEL
+            )
+        ) {
+            cpuHighUsageWarned.set(element['pid'], {
+                date: new Date(),
+                process: element,
+            });
+
+            notify({
+                tonePath: settings.assets.audio.warning,
+                icon: 'cpu',
+                title: 'High cpu usage',
+                message: `The process ${element['process']} is using ${element['%']}% of total CPU`,
+            });
+        }
+    }
+}
 
 let batteryTable = hardwareUsageTable({
     scriptPath: '',

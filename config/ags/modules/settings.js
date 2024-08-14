@@ -82,6 +82,7 @@ const settings = {
             desktop_login: `${getAssets('audio')}/desktop-login.mp3`,
             desktop_logout: `${getAssets('audio')}/desktop-logout.mp3`,
             high_energy_rate: `${getAssets('audio')}/warning-sound.mp3`,
+            warning: `${getAssets('audio')}/warning-sound.mp3`,
             high_voltage: `${getAssets('audio')}/warning-sound.mp3`,
             high_temp_warning: `${getAssets('audio')}/warning-sound.mp3`,
             notificationAlert: `${getAssets('audio')}/notification_alert.mp3`,
