@@ -1,4 +1,4 @@
-import { ThemeButton, local } from '../../utils/helpers.js';
+import { ThemeButton, TitleText, local } from '../../utils/helpers.js';
 import ThemesDictionary, {
     CIRCLES_THEME,
     GOLDEN_THEME,
@@ -183,7 +183,27 @@ const ThemesButtonsRowOne = () => {
     return Widget.Box({
         className: 'themes-box',
         vertical: true,
-        children: [row1, row2, row3, row4, row5],
+        children: [
+            TitleText({
+                title: '',
+                titleClass: 'themes-buttons-icon',
+                text: strings.themes,
+                textClass: 'themes-buttons-title',
+                vertical: false,
+                titleYalign: 0,
+                textYalign: 0,
+            }),
+            // Widget.Label({
+            //     className: 'themes-buttons-title',
+            //     label: `  ${strings.themes}`,
+            //     xalign: 0,
+            // }),
+            row1,
+            row2,
+            row3,
+            row4,
+            row5,
+        ],
     });
 };
 

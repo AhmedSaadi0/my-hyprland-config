@@ -10,7 +10,9 @@ export const TitleText = ({
     boxClass = '',
     homogeneous = false,
     titleXalign = 0.5,
+    titleYalign = 0.5,
     textXalign = 0.5,
+    textYalign = 0.5,
     //titleMaxWidthChars = 100,
     //textMaxWidthChars = 100,
     titleTruncate = 'none',
@@ -18,11 +20,14 @@ export const TitleText = ({
     vertical = true,
     spacing = 0,
     ltr = false,
+    titleWidget = null,
+    textWidget = null,
 }) => {
     const _title = Widget.Label({
         label: title,
         className: titleClass,
         xalign: titleXalign,
+        yalign: titleYalign,
         //maxWidthChars: titleMaxWidthChars,
         truncate: titleTruncate,
     });
@@ -31,11 +36,14 @@ export const TitleText = ({
         label: text,
         className: textClass,
         xalign: textXalign,
+        yalign: textYalign,
         //maxWidthChars: textMaxWidthChars,
         truncate: textTruncate,
     });
 
-    const children = ltr ? [_text, _title] : [_title, _text];
+    const children = ltr
+        ? [textWidget ? textWidget : _text, titleWidget ? titleWidget : _title]
+        : [titleWidget ? titleWidget : _title, textWidget ? textWidget : _text];
 
     return Widget.Box({
         className: boxClass,
@@ -111,7 +119,7 @@ export const TitleTextRevealer = ({
 export const local = Utils.exec(settings.scripts.deviceLocal);
 
 export const notify = ({
-    tonePath,
+    tonePath = settings.assets.audio.notificationAlert,
     title,
     message,
     icon,
@@ -173,7 +181,12 @@ export const ThemeButton = ({
     const button = Widget.Button({
         css: css,
         child: box,
-        onClicked: () => themeService.changeTheme(theme),
+        onClicked: () => {
+            themeService.changeTheme(theme);
+            setTimeout(() => {
+                hideLeftMenu();
+            }, 700);
+        },
     }).hook(themeService, (btn) => {
         btn.className = 'theme-btn';
         if (themeService.selectedTheme === theme) {

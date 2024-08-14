@@ -45,6 +45,7 @@ class BrightnessService extends Service {
 
     constructor() {
         super();
+        console.log('starting brightness service');
 
         // setup monitor
         const brightness = `/sys/class/backlight/${this.#interface}/brightness`;

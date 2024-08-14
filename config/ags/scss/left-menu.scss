@@ -20,6 +20,15 @@
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
+.left-menu-insider-box {
+    padding: 1.3rem;
+    margin: 1rem;
+    margin-bottom: 0rem;
+    border-radius: $border-radius;
+    background: $theme-box-background;
+    color: $text-color;
+}
+
 .left-menu-header {
     background-size: cover;
     background-position: center;
@@ -36,7 +45,7 @@
     min-height: 8rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    margin-top: -3rem;
+    margin-top: -4rem;
     border-radius: $border-radius;
 }
 
@@ -216,4 +225,27 @@
 }
 .toolbar-button-selected:hover {
     @extend .toolbar-button-selected;
+}
+
+.themes-buttons-title {
+    padding-bottom: 1.2rem;
+    padding-top: 0.3rem;
+    margin: 0rem 0.8rem;
+    font-size: 1.4rem;
+    color: $text-color;
+    font-weight: bold;
+}
+
+.themes-buttons-icon {
+    padding-bottom: 1.2rem;
+    padding-top: 0.3rem;
+    margin: 0rem 0.3rem;
+    font-size: 1.4rem;
+    color: $text-color;
+    font-weight: bold;
+    font-family: $icon-font-family;
+}
+
+.monitor-progress-title {
+    padding-bottom: 0.8rem;
 }
