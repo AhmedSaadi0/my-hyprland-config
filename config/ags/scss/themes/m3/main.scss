@@ -203,30 +203,27 @@ $left-menu-music-wd-padding-right: 1.5rem;
 // ---------------------------
 // --------- HW menu ---------
 // ---------------------------
-$hardware-menu-box-background: $surface;
-$hardware-menu-header-box-background: $surface-variant;
 $hardware-menu-power-profile-box: $tertiary-container;
-$hardware-menu-tables-box-background: $primary-container;
 
-$hardware-cpu-box-background: rgba($primary, 0.7);
-$hardware-cpu-box-color: $on-primary;
-$hardware-cpu-table-row-header-background: rgba($primary, 0.8);
-$hardware-cpu-table-row-header-color: $on-primary;
+$hardware-cpu-box-background: rgba($primary-container, 0.7);
+$hardware-cpu-box-color: $on-primary-container;
+$hardware-cpu-table-row-header-background: rgba($primary-container, 0.8);
+$hardware-cpu-table-row-header-color: $on-primary-container;
 
-$hardware-ram-box-background: rgba($secondary, 0.9);
-$hardware-ram-box-color: $on-secondary;
-$hardware-ram-table-row-header-background: rgba($secondary, 0.9);
-$hardware-ram-table-row-header-color: $on-secondary;
+$hardware-ram-box-background: rgba($secondary-container, 0.9);
+$hardware-ram-box-color: $on-secondary-container;
+$hardware-ram-table-row-header-background: rgba($secondary-container, 0.9);
+$hardware-ram-table-row-header-color: $on-secondary-container;
 
-$hardware-bat-box-background: rgba($tertiary, 0.8);
-$hardware-bat-box-color: $on-tertiary;
-$hardware-bat-table-row-header-background: $tertiary;
-$hardware-bat-table-row-header-color: $on-tertiary;
+$hardware-bat-box-background: rgba($tertiary-container, 0.8);
+$hardware-bat-box-color: $on-tertiary-container;
+$hardware-bat-table-row-header-background: $tertiary-container;
+$hardware-bat-table-row-header-color: $on-tertiary-container;
 
-$hardware-os-box-background: rgba($surface, 0.7);
-$hardware-os-box-color: $on-surface;
-$hardware-os-table-row-header-background: rgba($surface, 0.7);
-$hardware-os-table-row-header-color: $on-surface;
+$hardware-os-box-background: rgba($surface-variant, 0.7);
+$hardware-os-box-color: $on-surface-variant;
+$hardware-os-table-row-header-background: rgba($surface-variant, 0.7);
+$hardware-os-table-row-header-color: $on-surface-variant;
 
 // --------------------------------
 // --------- GTK elements ---------

@@ -84,6 +84,7 @@ const settings = {
             high_energy_rate: `${getAssets('audio')}/warning-sound.mp3`,
             high_voltage: `${getAssets('audio')}/warning-sound.mp3`,
             high_temp_warning: `${getAssets('audio')}/warning-sound.mp3`,
+            notificationAlert: `${getAssets('audio')}/notification_alert.mp3`,
         },
     },
     scripts: {

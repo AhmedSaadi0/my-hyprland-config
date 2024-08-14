@@ -49,6 +49,7 @@ class PrayerTimesService extends Service {
         super();
         this.state = {};
         if (settings.usePrayerTimes) {
+            console.log('Starting prayer times service');
             this.initPrayerTimes();
         }
     }

@@ -3,21 +3,19 @@ import { Workspaces } from './widgets/workspace.js';
 import { HardwareBox } from './widgets/hardware/all.js';
 import { SysTrayBox } from './widgets/systray.js';
 import { NotificationCenterButton } from './menus/notification_center.js';
-import { MenuButton } from './menus/left_menu.js';
+import { MenuButton } from './menus/LeftMenu.js';
 
-import {
-    Window,
-    CenterBox,
-    Box,
-    Label,
-} from 'resource:///com/github/Aylur/ags/widget.js';
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import weatherService from './services/WeatherService.js';
 import prayerService from './services/PrayerTimesService.js';
-import { Widget } from './utils/imports.js';
 import themeService from './services/ThemeService.js';
 import strings from './strings.js';
 import settings from './settings.js';
+
+const Window = Widget.Window;
+const CenterBox = Widget.CenterBox;
+const Box = Widget.Box;
+const Label = Widget.Label;
 
 const Clock = () => {
     let label = Label({
@@ -52,15 +50,15 @@ const Weather = () => {
 
     let button = Widget.Button({
         className: 'unset un-hover',
-        onClicked: () => showWeatherMenu(),
+        onClicked: () => toggleWeather(),
         child: Box({
             className: 'bar-weather-box small-shadow unset',
             children: [icon, text],
         }).hook(weatherService, (self) => {
-            if (weatherService.arValue != '') {
+            if (weatherService.value != '') {
                 const max = weatherService.maxTempC;
                 const min = weatherService.minTempC;
-                text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.arValue}`;
+                text.label = `(${min} - ${max}) ${weatherService.feelsLike} ${weatherService.value}`;
                 icon.label = `${weatherService.weatherCode}`;
             } else {
                 text.label = strings.weatherNotAvailable;
@@ -151,9 +149,9 @@ const Left = () =>
         hpack: 'end',
         children: [
             // Volume(),
-            NotificationCenterButton(),
             Weather(),
             NetworkInformation(),
+            NotificationCenterButton(),
             SysTrayBox(),
             MenuButton(),
         ],

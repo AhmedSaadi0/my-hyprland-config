@@ -29,13 +29,15 @@
 }
 
 .notification-center-button:dir(ltr) {
-    padding-right: 0.7rem;
+    padding-right: 0.6rem;
     padding-left: 1rem;
+    margin-right: 0.5rem;
 }
 
 .notification-center-button:dir(rtl) {
-    padding-left: 0.7rem;
+    padding-left: 0.6rem;
     padding-right: 1rem;
+    margin-left: 0.5rem;
 }
 
 .notification-center-button:hover {
@@ -45,8 +47,8 @@
 
 .notification-this-is-all {
     color: $text-color;
-    margin-top: 10rem;
-    margin-bottom: 1rem;
+    margin-top: 13rem;
+    margin-bottom: 0rem;
     min-width: 1rem;
     min-height: 1rem;
 }
@@ -96,7 +98,7 @@
 
 .notification-center-container {
     // min-width: 10rem;
-    min-height: 33.5rem;
+    min-height: 37rem;
     border-radius: $border-radius;
     // margin-top: 1rem;
     margin-left: 1rem;
@@ -110,6 +112,7 @@
 
 .notification-header-label {
     color: $text-color;
+    font-weight: bold;
 }
 
 .notification-header-label:dir(rtl) {

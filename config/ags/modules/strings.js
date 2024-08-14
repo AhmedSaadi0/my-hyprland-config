@@ -53,14 +53,20 @@ const strings = {
         feelsLike: 'شعور وكانة',
         humidity: 'الرطوبة',
         pressure: 'الضغط',
+        maxTemp: 'العليا',
+        minTemp: 'الصغرى',
         wind: 'الرياح',
         clouds: 'السحب',
         minAndMax: 'الصغرى والعلياء',
         coldWeather: 'طقس بارد !',
         hotWeather: 'طقس حار !',
+        rainyWeatherTitle: 'جو ممطر',
+        rainyWeatherText: 'من المتوقع هطول الامطار اليوم بنسبة',
         minTemperature: 'درجة الحرارة الصغرى اليوم',
         maxTemperature: 'درجة الحرارة الكبرى اليوم',
         weatherNotAvailable: 'خدمة الطقس غير متاحة',
+        sunset: 'الغروب',
+        sunrise: 'الشروق',
 
         // Fuzzy Widget
         fuzzyClockThursday: 'أرحب يالخميس',
@@ -156,6 +162,12 @@ const strings = {
         calenderTab: 'التقويم',
         deleteAll: 'حذف الكل',
         notificationCountText: 'اشعار',
+        themes: 'السمات',
+
+        cpu: 'المعالجة',
+        ram: 'الذاكرة',
+        battery: 'البطارية',
+        temp: 'الحرارة',
     },
     en: {
         hello: 'Hello',
@@ -209,14 +221,21 @@ const strings = {
         // Weather
         feelsLike: 'Feels Like',
         humidity: 'Humidity',
+        maxTemp: 'Max temp',
+        minTemp: 'Min temp',
         pressure: 'Pressure',
         wind: 'Wind',
         clouds: 'Clouds',
         minAndMax: 'Min and Max',
         coldWeather: 'Cold Weather!',
         hotWeather: 'Hot Weather!',
-        minTemperature: `oday's minimum temperature`,
+        rainyWeatherTitle: 'Rainy weather',
+        rainyWeatherText: 'Chance of rain is',
+
+        minTemperature: `Today's minimum temperature`,
         maxTemperature: `Today's maximum temperature`,
+        sunset: 'Sunset',
+        sunrise: 'Sunrise',
 
         // Fuzzy Widget
         fuzzyClockThursday: 'Welcome Thursday!',
@@ -319,6 +338,12 @@ const strings = {
         calenderTab: truncateString('Calender', 6),
         deleteAll: 'Delete all',
         notificationCountText: 'Notification',
+        themes: 'Themes',
+
+        cpu: 'CPU',
+        ram: 'RAM',
+        battery: 'BATTERY',
+        temp: 'TEMP',
     },
 };
 

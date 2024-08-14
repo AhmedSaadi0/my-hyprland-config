@@ -2,6 +2,7 @@ import weatherService from '../services/WeatherService.js';
 import { local, TitleText } from '../utils/helpers.js';
 import settings from '../settings.js';
 import strings from '../strings.js';
+
 const createWeatherDay = () => {
     const time = Widget.Label({
         className: 'weather-menu-today-time',

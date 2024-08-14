@@ -56,7 +56,7 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
     });
 };
 
-export default (notification) => {
+export default (notification, disableMenuOnClick = false) => {
     const bodyLabel = Label({
         css: `margin-top: 1rem;`,
         className: 'notification-description',
@@ -130,7 +130,12 @@ export default (notification) => {
                 // onHover: hover,
                 css: `margin-bottom: 0.5rem; margin-top: 1rem; margin-left: 0.5rem; margin-right: 0.5rem`,
                 className: 'action-button',
-                onClicked: () => notification.invoke(action.id),
+                onClicked: () => {
+                    notification.invoke(action.id);
+                    if (disableMenuOnClick) {
+                        hideLeftMenu();
+                    }
+                },
                 hexpand: true,
                 child: Label(action.label),
             })
