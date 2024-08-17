@@ -159,21 +159,25 @@ const sunset = WeatherCard({ icon: '', title: strings.sunset }).hook(
 
 const rowOne = Widget.Box({
     className: 'weather-row',
+    homogeneous: true,
     children: [maxTemperature, minTemperature],
 });
 
 const rowFour = Widget.Box({
     className: 'weather-row',
+    homogeneous: true,
     children: [sunrise, sunset],
 });
 
 const rowTwo = Widget.Box({
     className: 'weather-row',
+    homogeneous: true,
     children: [windSpeed, pressure],
 });
 
 const rowThree = Widget.Box({
     className: 'weather-row',
+    homogeneous: true,
     children: [humidity, cloudcover],
 });
 
