@@ -72,6 +72,8 @@ export const TitleTextRevealer = ({
     onHover = (btn) => (btn.child.children[1].reveal_child = true),
     onHoverLost = (btn) => (btn.child.children[1].reveal_child = false),
     onClicked = null,
+    titleWidget = null,
+    textWidget = null,
 }) => {
     const _title = Widget.Label({
         label: title,
@@ -96,7 +98,7 @@ export const TitleTextRevealer = ({
             : vertical
               ? 'slide_left'
               : 'slide_right',
-        child: _text,
+        child: textWidget ? textWidget : _text,
     });
 
     const box = Widget.Box({
@@ -104,7 +106,7 @@ export const TitleTextRevealer = ({
         vertical: vertical,
         homogeneous: homogeneous,
         spacing: spacing,
-        children: [_title, revealedText],
+        children: [titleWidget ? titleWidget : _title, revealedText],
     });
 
     return Widget.Button({

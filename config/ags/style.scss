@@ -391,11 +391,6 @@ menuitem:hover {
   margin: -0.2rem 0.5rem; }
 
 .power-profiles-box-btn {
-  margin: 0.3rem;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0); }
 
 .power-profiles-box-btn-active {
@@ -522,9 +517,8 @@ menuitem:hover {
   border-top-right-radius: 1.5rem;
   border-top-left-radius: 1.5rem; }
 
-.power-profiles-title {
-  margin-left: 1rem;
-  margin-right: 1rem; }
+.progresses-box {
+  padding: 1rem; }
 
 .volume {
   border-radius: 1.5rem;
@@ -632,8 +626,8 @@ window {
   margin-left: 1rem;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3); }
 
-.left-menu-insider-box, .progresses-box {
-  padding: 1.3rem;
+.left-menu-insider-box, .themes-box, .progresses-box {
+  padding: 1rem;
   margin: 1rem;
   margin-bottom: 0rem;
   border-radius: 1.5rem;
@@ -667,12 +661,6 @@ window {
   font-size: xx-large; }
 
 /* -------------- Theme Box -------------- */
-.themes-box {
-  background: #3e4759;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 1.5rem; }
-
 .theme-button-father, .theme-btn, .selected-theme {
   padding-left: 0.6rem;
   padding-right: 0.6rem;
@@ -797,7 +785,7 @@ window {
   padding-bottom: 1.2rem;
   padding-top: 0.3rem;
   margin: 0rem 0.8rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #d8dee9;
   font-weight: bold; }
 
@@ -805,13 +793,25 @@ window {
   padding-bottom: 1.2rem;
   padding-top: 0.3rem;
   margin: 0rem 0.3rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #d8dee9;
   font-weight: bold;
   font-family: "FantasqueSansM Nerd Font Propo"; }
 
 .monitor-progress-title {
   padding-bottom: 0.8rem; }
+
+.view-all-themes-btn {
+  margin: -1rem;
+  margin-top: 1rem;
+  background: #3e4759;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0); }
+
+.view-all-themes-btn:hover {
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem; }
 
 .notification-menu-header {
   background-size: cover;
@@ -894,7 +894,7 @@ window {
   border-bottom-left-radius: 0rem; }
 
 .notification-center-container {
-  min-height: 37rem;
+  min-height: 36rem;
   border-radius: 1.5rem;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -1111,87 +1111,6 @@ window {
 .prayer-times-menu-header-title:dir(rtl) {
   margin-left: 1.7rem; }
 
-.weather-menu-box {
-  min-width: 2rem;
-  background: #2e3440;
-  color: #bf616b;
-  padding: 1rem 1rem;
-  padding-top: 2rem;
-  border: 2px solid #bf616b;
-  border-radius: 1.5rem; }
-
-.weather-menu-general-information-box {
-  margin: 0rem 1rem; }
-
-.weather-menu-detail-box {
-  margin: 0rem 1rem; }
-
-.weather-menu-today-box {
-  margin-top: 0.4rem; }
-
-.weather-row-two {
-  margin: 2rem 2rem; }
-
-.weather-menu-icon {
-  font-family: "FantasqueSansM Nerd Font Propo";
-  font-size: 7rem;
-  margin: 0rem 1rem; }
-
-.weather-menu-city {
-  font-size: 2rem;
-  margin-top: 0.3rem; }
-
-.weather-menu-value {
-  font-size: 2.2rem; }
-
-.weather-menu-sunrise {
-  font-size: 1.1rem; }
-
-.weather-menu-sunrise-icon {
-  font-size: 1.1rem;
-  font-family: "FantasqueSansM Nerd Font Propo";
-  margin: 0rem 0.5rem; }
-
-.weather-menu-sunset {
-  font-size: 1.1rem; }
-
-.weather-menu-sunset-icon {
-  font-size: 1.1rem;
-  font-family: "FantasqueSansM Nerd Font Propo";
-  margin: 0rem 0.5rem; }
-
-.weather-menu-today-time {
-  font-size: 1.1rem; }
-
-.weather-menu-today-weather {
-  font-size: 1.1rem;
-  padding: 0rem 1.2rem; }
-
-.weather-menu-today-temp {
-  font-size: 1.3rem;
-  font-family: "FantasqueSansM Nerd Font Propo"; }
-
-.weather-menu-latest-update {
-  font-size: 1.1rem; }
-
-.weather-menu-feels-like {
-  font-size: 1.3rem; }
-
-.weather-menu-humidity {
-  font-size: 1.3rem; }
-
-.weather-menu-pressure {
-  font-size: 1.3rem; }
-
-.weather-menu-wind {
-  font-size: 1.3rem; }
-
-.weather-menu-clouds {
-  font-size: 1.3rem; }
-
-.weather-menu-min-max {
-  font-size: 1.3rem; }
-
 .applications-box {
   background: #2e3440;
   border-radius: 1.5rem;
@@ -1391,7 +1310,7 @@ window {
   color: #d8dee9; }
 
 .weather-row {
-  padding: 0rem 0.4rem;
+  padding: 0rem 0.5rem;
   padding-top: 1rem; }
 
 .weather-max-min {

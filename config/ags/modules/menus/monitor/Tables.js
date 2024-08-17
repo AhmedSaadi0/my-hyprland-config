@@ -72,7 +72,7 @@ const hardwareUsageTable = ({
 
             // Calling only if menu is open
             callWidgetScripts(self);
-            if (!cpuIsInitialized || !ramIsInitialized || menuIsOpen) {
+            if (!cpuIsInitialized || !ramIsInitialized) {
                 if (deviceName === 'cpu' && !cpuIsInitialized) {
                     cpuIsInitialized = true;
                 }
@@ -104,10 +104,12 @@ function checkHighCpuUsage(element) {
             });
 
             notify({
-                tonePath: settings.assets.audio.warning,
+                tonePath: settings.assets.audio.cpuHighUsage,
                 icon: 'cpu',
-                title: 'High cpu usage',
-                message: `The process ${element['process']} is using ${element['%']}% of total CPU`,
+                title: strings.highCpuUsageTitle,
+                message: strings.highCpuUsageMessage
+                    .replace('${process}', element['process'])
+                    .replace('${percentage}', element['%']),
             });
         }
     }
@@ -230,6 +232,7 @@ export default Widget.Box({
     children: [
         Widget.Box({
             spacing: 13,
+            // homogeneous: true,
             children: [
                 hardwareUsageTable({
                     scriptPath: settings.scripts.cpuUsage,

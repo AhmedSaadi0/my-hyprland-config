@@ -85,7 +85,8 @@ const settings = {
             warning: `${getAssets('audio')}/warning-sound.mp3`,
             high_voltage: `${getAssets('audio')}/warning-sound.mp3`,
             high_temp_warning: `${getAssets('audio')}/warning-sound.mp3`,
-            notificationAlert: `${getAssets('audio')}/notification_alert.mp3`,
+            notificationAlert: `${getAssets('audio')}/mixkit-positive-notification.wav`,
+            cpuHighUsage: `${getAssets('audio')}/cpu_high_usage.wav`,
         },
     },
     scripts: {
