@@ -6,8 +6,10 @@
     background: $theme-box-background;
     color: $text-color;
 }
+
 .weather-details {
 }
+
 .weather-feels-like {
     font-size: 1.2rem;
     margin: 0rem 1rem;
@@ -64,7 +66,7 @@
 }
 
 .weather-row {
-    padding: 0rem 0.4rem;
+    padding: 0rem 0.5rem;
     padding-top: 1rem;
 }
 .weather-max-min {
