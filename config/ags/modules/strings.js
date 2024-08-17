@@ -128,9 +128,10 @@ const strings = {
         highVoltageWarning: 'تحذير: فولتية مرتفعة جداً',
         highVoltageMessage:
             'جهازك يستخدم شاحن بفولتية (${voltage} V) أعلى من المتوقع (${highVoltage} V). قد يؤدي ذلك إلى تلف البطارية أو الدوائر الإلكترونية. يرجى استخدام شاحن مناسب لجهازك.',
-        highPerformance: 'مرتفع',
-        balanced: 'معتدل',
+        highPerformance: 'عالي',
+        balanced: 'متوازن',
         powerSaver: 'منخفض',
+        powerProfile: 'وضع الاداء',
         devicesTemp: 'حرارة الاجهزة',
         wifiTemp: 'الوايفاي',
         nvmeTemp: 'الهارد',
@@ -168,6 +169,9 @@ const strings = {
         ram: 'الذاكرة',
         battery: 'البطارية',
         temp: 'الحرارة',
+        highCpuUsageTitle: 'استخدام عالي للمعالج',
+        highCpuUsageMessage:
+            'العملية ${process} تستخدم ${percentage}% من المعالج',
     },
     en: {
         hello: 'Hello',
@@ -303,9 +307,10 @@ const strings = {
         highVoltageWarning: 'Warning: High Voltage',
         highVoltageMessage:
             'Your device is using a charger with voltage (${voltage} V) higher than expected (${highVoltage} V). This could lead to battery or circuitry damage. Please use a compatible charger for your device.',
-        highPerformance: 'High-P',
-        balanced: 'Balance',
-        powerSaver: 'P-Saver',
+        highPerformance: 'High',
+        balanced: 'Balanced',
+        powerSaver: 'Low',
+        powerProfile: 'Power Profile',
         devicesTemp: 'Devices Temperature',
         wifiTemp: 'Wi-Fi',
         nvmeTemp: 'NVMe',
@@ -344,6 +349,9 @@ const strings = {
         ram: 'RAM',
         battery: 'BATTERY',
         temp: 'TEMP',
+        highCpuUsageTitle: 'High CPU usage',
+        highCpuUsageMessage:
+            'The process ${process} is using ${percentage}% of total CPU',
     },
 };
 

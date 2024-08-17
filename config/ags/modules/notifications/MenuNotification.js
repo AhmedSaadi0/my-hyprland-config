@@ -22,8 +22,8 @@ const NotificationIcon = ({ appEntry, appIcon, image }) => {
               background-size: contain;
               background-repeat: no-repeat;
               background-position: center;
-              min-width: 4rem;
-              min-height: 4rem;
+              min-width: 3rem;
+              min-height: 3rem;
               ${margin}
               border-radius: 1rem;
           `,
