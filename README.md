@@ -189,6 +189,7 @@ nvim .ahmed-config.json
 ```json
 {
   "username": "احمد الصعدي",
+  "profilePicture": "/home/ahmed/wallpapers/profile.png",
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
@@ -406,6 +407,7 @@ nvim .ahmed-config.json
 ```json
 {
   "username": "Ahmed Alsaadi",
+  "profilePicture": "/home/ahmed/wallpapers/profile.png",
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
