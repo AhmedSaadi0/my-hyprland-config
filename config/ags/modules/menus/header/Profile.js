@@ -3,7 +3,7 @@ import settings from '../../settings.js';
 const Profile = () => {
     const userImage = Widget.Icon({
         className: 'profile-icon',
-        icon: `${settings.assets.wallpapers}/image.png`,
+        icon: `${settings.profilePicture}`,
         size: 80,
     });
 
