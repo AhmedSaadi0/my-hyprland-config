@@ -20,6 +20,7 @@ var weatherLocation = '';
 var city = '';
 var country = '';
 var username = '';
+var profilePicture = '';
 var usePrayerTimes = false;
 var changePlasmaColor = true;
 
@@ -38,6 +39,7 @@ try {
     networkTimeout = configFile.networkTimeout;
     networkInterval = configFile.networkInterval;
     username = configFile.username;
+    profilePicture = configFile.profilePicture;
     usePrayerTimes = configFile.usePrayerTimes;
     changePlasmaColor = configFile.changePlasmaColor;
 
@@ -64,6 +66,7 @@ try {
 
 const settings = {
     username: username,
+    profilePicture: profilePicture,
     usePrayerTimes: usePrayerTimes,
     changePlasmaColor: changePlasmaColor,
     assets: {
