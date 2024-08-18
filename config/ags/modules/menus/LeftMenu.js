@@ -2,11 +2,8 @@ import themeService from '../services/ThemeService.js';
 
 import Profile from './header/Profile.js';
 import Header from './header/Header.js';
-import ThemesButtonsRowOne from './dashboard/ThemesButtons.js';
-import PowerButtonsRow from './dashboard/PowerButtons.js';
 import settings from '../settings.js';
-import { TitleTextRevealer, local, truncateString } from '../utils/helpers.js';
-import MediaControl from './dashboard/MediaControl.js';
+import { TitleTextRevealer, local } from '../utils/helpers.js';
 import weatherService from '../services/WeatherService.js';
 import notificationContainer from './notifications/Notifications.js';
 import dashboardTabMenu from './dashboard/DashboardTab.js';
@@ -91,6 +88,9 @@ function switchToTab(menuTabs) {
     toggleWeatherTab();
     toggleMonitorsTab();
     toggleCalenderTab();
+    revealMediaControls(false);
+    revealPowerButtons(false);
+    revealAllThemes(false);
 }
 
 const notificationTabIcon = TitleTextRevealer({
@@ -190,6 +190,10 @@ export const LeftMenu = ({ monitor } = {}) =>
     });
 
 function openMenu(menuTab) {
+    revealMediaControls(false);
+    revealPowerButtons(false);
+    revealAllThemes(false);
+
     if (menuRevealer.revealChild && stack.shown.toString() === menuTab) {
         menuRevealer.revealChild = false;
         return;

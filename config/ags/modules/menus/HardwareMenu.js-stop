@@ -521,7 +521,7 @@ export const HardwareMenu = () =>
         }),
     });
 
-globalThis.showHardwareMenu = () => {
+globalThis.toggleMonitors = () => {
     menuRevealer.revealChild = !menuRevealer.revealChild;
     menuIsOpen = menuRevealer.revealChild;
 };
