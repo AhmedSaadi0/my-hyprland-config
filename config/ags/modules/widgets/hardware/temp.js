@@ -18,7 +18,7 @@ export const TempWidget = () => {
     const button = Button({
         className: 'unset no-hover',
         child: label,
-        onClicked: () => showHardwareMenu(),
+        onClicked: () => toggleMonitors(),
     });
 
     const progress = CircularProgress({

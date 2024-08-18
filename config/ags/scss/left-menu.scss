@@ -21,7 +21,7 @@
 }
 
 .left-menu-insider-box {
-    padding: 1.3rem;
+    padding: 1rem;
     margin: 1rem;
     margin-bottom: 0rem;
     border-radius: $border-radius;
@@ -61,10 +61,12 @@
 
 /* -------------- Theme Box -------------- */
 .themes-box {
-    background: $theme-box-background;
-    margin: 1rem;
-    padding: 1rem;
-    border-radius: $border-radius;
+    @extend .left-menu-insider-box;
+    // background: $theme-box-background;
+    // margin: 1rem;
+    // padding: 1rem;
+    // margin-bottom: 0rem;
+    // border-radius: $border-radius;
 }
 
 .theme-button-father {
@@ -231,7 +233,7 @@
     padding-bottom: 1.2rem;
     padding-top: 0.3rem;
     margin: 0rem 0.8rem;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: $text-color;
     font-weight: bold;
 }
@@ -240,7 +242,7 @@
     padding-bottom: 1.2rem;
     padding-top: 0.3rem;
     margin: 0rem 0.3rem;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: $text-color;
     font-weight: bold;
     font-family: $icon-font-family;
@@ -248,4 +250,17 @@
 
 .monitor-progress-title {
     padding-bottom: 0.8rem;
+}
+
+.view-all-themes-btn {
+    margin: -1rem;
+    margin-top: 1rem;
+    background: $theme-box-background;
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+.view-all-themes-btn:hover {
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
 }
