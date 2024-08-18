@@ -164,6 +164,7 @@ sudo dnf install plasma-desktop
     tar xvf ~/.config/hypr/config/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
     tar xvf ~/.config/hypr/config/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
     tar xvf ~/.config/hypr/config/gtk-themes/Dracula.tar.gz -C ~/.themes
+    tar xvf ~/.config/hypr/config/gtk-themes/adw-gtk3.tar.gz -C ~/.themes
 
 ### بامكانك تغير خط الجهاز الى 'JF Flat' اذا اردت ان تحصل على نفس الخط الذي لدي
 
@@ -189,6 +190,7 @@ nvim .ahmed-config.json
 ```json
 {
   "username": "احمد الصعدي",
+  "profilePicture": "/home/ahmed/wallpapers/profile.png",
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
@@ -381,6 +383,7 @@ sudo dnf install plasma-desktop
     tar xvf ~/.config/hypr/config/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
     tar xvf ~/.config/hypr/config/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
     tar xvf ~/.config/hypr/config/gtk-themes/Dracula.tar.gz -C ~/.themes
+    tar xvf ~/.config/hypr/config/gtk-themes/adw-gtk3.tar.gz -C ~/.themes
 
 ### You can change system fonts if you want to 'JF Flat' to have the same font I had
 
@@ -406,6 +409,7 @@ nvim .ahmed-config.json
 ```json
 {
   "username": "Ahmed Alsaadi",
+  "profilePicture": "/home/ahmed/wallpapers/profile.png",
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
