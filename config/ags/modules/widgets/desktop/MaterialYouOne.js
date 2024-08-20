@@ -8,7 +8,7 @@ import settings from '../../settings.js';
 import strings from '../../strings.js';
 
 const iconImage = Widget.Icon({
-    icon: `${settings.assets.wallpapers}/image.png`,
+    icon: `${settings.profilePicture}`,
     size: 70,
     className: 'my-wd-user-icon',
 });
