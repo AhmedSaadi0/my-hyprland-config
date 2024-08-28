@@ -51,6 +51,7 @@
 
 .profile-icon {
     margin-top: -3rem;
+    border-radius: 5rem;
 }
 
 .profile-label {
@@ -191,9 +192,16 @@
 .toolbar-button {
     all: unset;
     padding: 0.3rem;
-    padding-right: 1.1rem;
     margin: 0.5rem 0.65rem;
     color: $text-color;
+}
+
+.toolbar-button:dir(rtl) {
+    padding-right: 1.1rem;
+}
+
+.toolbar-button:dir(ltr) {
+    padding-left: 1.1rem;
 }
 
 .toolbar-button:hover {
