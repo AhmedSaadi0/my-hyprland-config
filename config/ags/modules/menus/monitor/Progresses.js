@@ -204,7 +204,7 @@ const tempProgress = Widget.CircularProgress({
 
 const ramAndCpu = Widget.Box({
     homogeneous: true,
-    spacing: 10,
+    spacing: 12,
     className: '',
     children: [
         TitleText({
@@ -223,7 +223,7 @@ const ramAndCpu = Widget.Box({
 const batAndTemp = Widget.Box({
     className: '',
     homogeneous: true,
-    spacing: 10,
+    spacing: 12,
     children: [
         TitleText({
             title: strings.battery,

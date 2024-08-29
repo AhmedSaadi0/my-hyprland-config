@@ -18,6 +18,7 @@ import ThemesDictionary, {
     DYNAMIC_M3_LIGHT,
 } from '../../theme/themes.js';
 import strings from '../../strings.js';
+import themeService from '../../services/ThemeService.js';
 
 const blackHoleTheme = ThemeButton({
     label: strings.blackHoleTheme,
@@ -175,13 +176,41 @@ const row3 = Widget.Box({
     children: [circlesTheme, whiteFlower, unicatTheme],
 });
 
+const separator = Widget.Separator({
+    className: 'themes-settings-separator',
+    vertical: false,
+});
+
+const showDesktopWidgets = TitleText({
+    title: strings.showDesktopWidgets,
+    titleClass: 'theme-button-toggle-title',
+    titleXalign: 0.1,
+    vertical: false,
+    spacing: 25,
+    textWidget: Widget.Switch({
+        active: true,
+        onActivate: ({ active }) => {
+            const selectedTheme = ThemesDictionary[themeService.selectedTheme];
+            if (active) {
+                themeService.showWidget(selectedTheme.desktop_widget);
+            } else {
+                themeService.hideWidget(selectedTheme.desktop_widget);
+            }
+            themeService.showDesktopWidgetStatus = active;
+            themeService.cacheVariables();
+        },
+    }).hook(themeService, (self) => {
+        self.active = themeService.showDesktopWidgetStatus;
+    }),
+});
+
 const otherThemesRevealer = Widget.Revealer({
     revealChild: false,
     transitionDuration: 500,
     transition: 'slide_down',
     child: Widget.Box({
         vertical: true,
-        children: [row1, row2, row3],
+        children: [row1, row2, row3, separator, showDesktopWidgets],
     }),
 });
 
