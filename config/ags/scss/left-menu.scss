@@ -268,7 +268,17 @@
     border-top-right-radius: 0rem;
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
 }
+
 .view-all-themes-btn:hover {
     border-top-left-radius: 0rem;
     border-top-right-radius: 0rem;
+}
+
+.theme-button-toggle-title {
+    min-width: 15rem;
+}
+
+.themes-settings-separator {
+    margin: 1rem 0rem;
+    min-height: 0.1rem;
 }

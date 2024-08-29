@@ -172,6 +172,8 @@ const strings = {
         highCpuUsageTitle: 'استخدام عالي للمعالج',
         highCpuUsageMessage:
             'العملية ${process} تستخدم ${percentage}% من المعالج',
+
+        showDesktopWidgets: 'عرض ادوات سطح المكتب',
     },
     en: {
         hello: 'Hello',
@@ -352,6 +354,7 @@ const strings = {
         highCpuUsageTitle: 'High CPU usage',
         highCpuUsageMessage:
             'The process ${process} is using ${percentage}% of total CPU',
+        showDesktopWidgets: 'Show Desktop Widgets',
     },
 };
 
