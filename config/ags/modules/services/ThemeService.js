@@ -28,6 +28,7 @@ class ThemeService extends Service {
     selectedLightWallpaper = 0;
     selectedDarkWallpaper = 0;
     dynamicWallpaperStatus = true;
+    showDesktopWidgetStatus = true;
 
     constructor() {
         super();
@@ -35,7 +36,6 @@ class ThemeService extends Service {
         Utils.exec('swww-daemon');
 
         this.getCachedVariables();
-        this.changeTheme(this.selectedTheme);
     }
 
     changeTheme(selectedTheme) {
@@ -77,7 +77,10 @@ class ThemeService extends Service {
         this.changeQtStyle(theme.qt_5_style_theme, theme.qt_6_style_theme);
         this.changeIcons(theme.qt_icon_theme);
         this.changeKvantumTheme(theme.kvantum_theme);
-        this.showDesktopWidget(theme.desktop_widget);
+
+        if (this.showDesktopWidgetStatus) {
+            this.showDesktopWidget(theme.desktop_widget);
+        }
 
         let hypr = theme.hypr;
         this.setHyprland(
@@ -103,8 +106,8 @@ class ThemeService extends Service {
             '--transition-type',
             // 'grow',
             'random',
-            '--transition-pos',
-            Utils.exec('hyprctl cursorpos').replace(' ', ''),
+            // '--transition-pos',
+            // Utils.exec('hyprctl cursorpos').replace(' ', ''),
             wallpaper,
         ]).catch(print);
     }
@@ -433,6 +436,7 @@ ToolBarsMovable=Disabled
             selected_dark_wallpaper: this.selectedDarkWallpaper,
             selected_light_wallpaper: this.selectedLightWallpaper,
             dynamic_wallpaper_status: this.dynamicWallpaperStatus,
+            show_desktop_widget: this.showDesktopWidgetStatus,
         };
         Utils.writeFile(
             JSON.stringify(newData, null, 2),
@@ -447,13 +451,15 @@ ToolBarsMovable=Disabled
             this.selectedDarkWallpaper = cachedData.selected_dark_wallpaper;
             this.selectedLightWallpaper = cachedData.selected_light_wallpaper;
             this.dynamicWallpaperStatus = cachedData.dynamic_wallpaper_status;
+            this.showDesktopWidgetStatus = cachedData.show_desktop_widget;
 
-            if (!this.selectedTheme) {
+            if (!this.selectedTheme && this.selectedTheme !== 0) {
                 this.selectedTheme = UNICAT_THEME;
             }
         } catch (TypeError) {
             this.cacheVariables();
         }
+        this.changeTheme(this.selectedTheme);
     }
 }
 
