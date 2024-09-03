@@ -16,6 +16,7 @@ const sharedTabAttrs = {
     spacing: 7,
     vertical: false,
     buttonClass: 'toolbar-button',
+    titleClass: 'icon-font',
     onHover: null,
     onHoverLost: null,
 };
