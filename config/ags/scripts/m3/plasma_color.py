@@ -71,8 +71,8 @@ class ColorExporter:
             light=theme_mode == "light",
             pywal_light=theme_mode == "light",
             schemes=schemes,
-            konsole_opacity=80,
-            konsole_opacity_dark=80,
+            konsole_opacity=70,
+            konsole_opacity_dark=70,
             dark_light=theme_mode != "light",
         )
         konsole_utils.apply_color_scheme()

@@ -766,7 +766,8 @@ window {
   padding-right: 1.1rem; }
 
 .toolbar-button:dir(ltr), .toolbar-button-selected:dir(ltr) {
-  padding-left: 1.1rem; }
+  padding-right: 0.5rem;
+  padding-left: 0.7rem; }
 
 .toolbar-button:hover, .toolbar-button-selected:hover {
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
