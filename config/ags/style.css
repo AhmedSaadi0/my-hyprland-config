@@ -271,7 +271,7 @@ menuitem:hover {
   border: 0rem; }
 
 .bar-hardware-progress-circle, .brightness, .volume, .ram, .temp, .cpu, .battery {
-  min-width: 1.45rem;
+  min-width: 1.4rem;
   min-height: 1.3rem;
   font-size: 0.1rem; }
 
@@ -347,8 +347,7 @@ menuitem:hover {
   color: #b18dff; }
 
 .brightness-inner {
-  color: #b18dff;
-  margin-top: 0.1rem; }
+  color: #b18dff; }
 
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
@@ -763,7 +762,7 @@ window {
   color: #bdddee; }
 
 .toolbar-button:dir(rtl), .toolbar-button-selected:dir(rtl) {
-  padding-right: 1.1rem; }
+  padding-right: 0.7rem; }
 
 .toolbar-button:dir(ltr), .toolbar-button-selected:dir(ltr) {
   padding-right: 0.5rem;

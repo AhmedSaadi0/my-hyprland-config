@@ -133,7 +133,7 @@ export default (notification, disableMenuOnClick = false) => {
                 onClicked: () => {
                     notification.invoke(action.id);
                     if (disableMenuOnClick) {
-                        hideLeftMenu();
+                        hideMainMenu();
                     }
                 },
                 hexpand: true,

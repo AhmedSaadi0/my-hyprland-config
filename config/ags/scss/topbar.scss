@@ -250,7 +250,7 @@
 }
 
 .bar-hardware-progress-circle {
-    min-width: 1.45rem;
+    min-width: 1.4rem;
     min-height: 1.3rem;
     font-size: 0.1rem;
 }
@@ -360,7 +360,7 @@
 .brightness-inner {
     @extend .bar-hardware-progress-inner-circle;
     color: $cpu-inner-color;
-    margin-top: 0.1rem;
+    // margin-top: 0.1rem;
 }
 /* ------------------------------------------ */
 /* -------------- Hardware box -------------- */
