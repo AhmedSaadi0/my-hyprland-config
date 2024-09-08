@@ -1,6 +1,6 @@
 import { Utils, App, Notifications } from './modules/utils/imports.js';
 import { Bar } from './modules/topbar.js';
-import { LeftMenu } from './modules/menus/LeftMenu.js';
+import { MainMenu } from './modules/menus/MainMenu.js';
 import { VolumeOSD } from './modules/on-screen/volume.js';
 import MyNotifications from './modules/notifications/OSDNotifications.js';
 import { PrayerTimesMenu } from './modules/menus/PrayerTimesMenu.js';
@@ -59,7 +59,7 @@ for (let i = 0; i < screens.length; i++) {
 
     windows.push(Bar({ monitor: screen.id }));
 
-    const leftMene = LeftMenu({ monitor: screen.id });
+    const leftMene = MainMenu({ monitor: screen.id });
     windows.push(leftMene);
     windows.push(TopLeftCorner({ monitor: screen.id }));
     windows.push(TopRightCorner({ monitor: screen.id }));

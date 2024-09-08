@@ -3,7 +3,7 @@ import { Workspaces } from './widgets/workspace.js';
 import { HardwareBox } from './widgets/hardware/all.js';
 import { SysTrayBox } from './widgets/systray.js';
 import { NotificationCenterButton } from './menus/notification_center.js';
-import { MenuButton } from './menus/LeftMenu.js';
+import { MenuButton } from './menus/MainMenu.js';
 
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import weatherService from './services/WeatherService.js';

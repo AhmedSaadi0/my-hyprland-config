@@ -71,13 +71,13 @@ function toggleMonitorsTab() {
     }
 }
 
-function toggleCalenderTab() {
-    if (stack.shown === settings.menuTabs.calender) {
-        calenderTabIcon.className = 'toolbar-button-selected small-shadow';
-        calenderTabIcon.child.children[1].reveal_child = true;
+function toggleNetworkTab() {
+    if (stack.shown === settings.menuTabs.network) {
+        networkTabIcon.className = 'toolbar-button-selected small-shadow';
+        networkTabIcon.child.children[1].reveal_child = true;
     } else {
-        calenderTabIcon.className = 'toolbar-button';
-        calenderTabIcon.child.children[1].reveal_child = false;
+        networkTabIcon.className = 'toolbar-button';
+        networkTabIcon.child.children[1].reveal_child = false;
     }
 }
 
@@ -88,7 +88,7 @@ function switchToTab(menuTabs) {
     toggleNotificationTab();
     toggleWeatherTab();
     toggleMonitorsTab();
-    toggleCalenderTab();
+    toggleNetworkTab();
     revealMediaControls(false);
     revealPowerButtons(false);
     revealAllThemes(false);
@@ -126,12 +126,12 @@ const hardwareTabIcon = TitleTextRevealer({
     },
 });
 
-const calenderTabIcon = TitleTextRevealer({
+const networkTabIcon = TitleTextRevealer({
     ...sharedTabAttrs,
     title: '󰸗',
-    text: strings.calenderTab,
+    text: strings.networkTab,
     onClicked: (btn) => {
-        switchToTab(settings.menuTabs.calender);
+        switchToTab(settings.menuTabs.network);
     },
 });
 
@@ -142,7 +142,7 @@ const toolbarIconsBox = Widget.Box({
         notificationTabIcon,
         weatherTabIcon,
         hardwareTabIcon,
-        calenderTabIcon,
+        networkTabIcon,
     ],
 }).hook(themeService, (box) => {
     box.children[0].child.children[1].revealChild = true;
@@ -160,7 +160,7 @@ const stack = Widget.Stack({
         notifications: notificationTabMenu,
         weather: weatherHeaderCard,
         monitor: MonitorsTab,
-        calender: Widget.Label('Calender here'),
+        network: Widget.Label('network here'),
     },
     shown: settings.menuTabs.dashboard,
 });
@@ -172,12 +172,12 @@ const widgets = Widget.Box({
 });
 
 const menuRevealer = Widget.Revealer({
-    transition: settings.theme.menuTransitions.leftMenu,
+    transition: settings.theme.menuTransitions.mainMenu,
     child: widgets,
-    transitionDuration: settings.theme.menuTransitions.leftMenuDuration,
+    transitionDuration: settings.theme.menuTransitions.mainMenuDuration,
 });
 
-export const LeftMenu = ({ monitor } = {}) =>
+export const MainMenu = ({ monitor } = {}) =>
     Widget.Window({
         name: `left_menu_${monitor}`,
         margins: [-2, 0, 0, 0],
@@ -220,11 +220,11 @@ globalThis.getMenuStatus = () => {
     return menuRevealer.revealChild;
 };
 
-globalThis.toggleLeftMenu = () => {
+globalThis.toggleMainMenu = () => {
     openMenu(settings.menuTabs.dashboard);
 };
 
-globalThis.hideLeftMenu = () => {
+globalThis.hideMainMenu = () => {
     menuRevealer.revealChild = false;
 };
 

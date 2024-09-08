@@ -186,7 +186,7 @@ export const ThemeButton = ({
         onClicked: () => {
             themeService.changeTheme(theme);
             setTimeout(() => {
-                hideLeftMenu();
+                hideMainMenu();
             }, 700);
         },
     }).hook(themeService, (btn) => {
