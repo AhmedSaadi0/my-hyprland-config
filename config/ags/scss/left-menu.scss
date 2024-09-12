@@ -189,20 +189,21 @@
     padding: 0rem 0.3rem;
 }
 
+.toolbar-button-icon {
+    font-family: $icon-font-family;
+    min-width: 2rem;
+}
+
+.toolbar-button-text {
+    min-width: 4.8rem;
+}
+
 .toolbar-button {
     all: unset;
-    padding: 0.3rem;
-    margin: 0.5rem 0.65rem;
+    padding: 0.3rem 0rem;
+    margin: 0.5rem;
     color: $text-color;
-}
-
-.toolbar-button:dir(rtl) {
-    padding-right: 0.7rem;
-}
-
-.toolbar-button:dir(ltr) {
-    padding-right: 0.5rem;
-    padding-left: 0.7rem;
+    // min-width: 1.5rem;
 }
 
 .toolbar-button:hover {
@@ -217,7 +218,7 @@
 
 .toolbar-button-selected {
     @extend .toolbar-button;
-    // min-width: 4.8rem;
+    // min-width: 6.6rem;
     background: $btn-hover-background;
     color: $btn-hover-color;
     border-radius: $border-radius;
@@ -227,13 +228,6 @@
         color 0.2s ease-in-out;
 }
 
-.toolbar-button-selected:dir(rtl) {
-    padding-left: 0.8rem;
-}
-
-.toolbar-button-selected:dir(ltr) {
-    padding-right: 0.8rem;
-}
 .toolbar-button-selected:hover {
     @extend .toolbar-button-selected;
 }
