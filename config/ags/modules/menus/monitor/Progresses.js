@@ -70,10 +70,20 @@ const batteryProgress = Widget.CircularProgress({
     let percentage = Battery.percent;
     self.value = percentage / 100;
 
-    var labelText = '';
-
     const adapterIsOn = Utils.exec('acpi -a').includes('on-line');
 
+    if (Battery.charging) {
+        self.child.className = 'menu-battery-icon-charging';
+    } else {
+        self.child.className = 'menu-battery-icon';
+    }
+    self.child.label = setBatteryIcon(adapterIsOn, percentage);
+
+    self.child.tooltipMarkup = `<span weight='bold'>${strings.batteryPercentage} (${percentage}%)</span>`;
+});
+
+function setBatteryIcon(adapterIsOn, percentage) {
+    var labelText = '';
     if (adapterIsOn) {
         if (percentage <= 10) {
             labelText = '󰢜';
@@ -119,16 +129,8 @@ const batteryProgress = Widget.CircularProgress({
             labelText = '󰁹';
         }
     }
-
-    if (Battery.charging) {
-        self.child.className = 'menu-battery-icon-charging';
-    } else {
-        self.child.className = 'menu-battery-icon';
-    }
-    self.child.label = labelText;
-
-    self.child.tooltipMarkup = `<span weight='bold'>${strings.batteryPercentage} (${percentage}%)</span>`;
-});
+    return labelText;
+}
 
 const tempProgress = Widget.CircularProgress({
     className: 'menu-temp',
@@ -152,47 +154,20 @@ const tempProgress = Widget.CircularProgress({
             const cpuTemp = parseInt(temps['cpu_total']);
             const CRITICAL_CPU_TEMP = 100;
 
-            if (wifiTemp >= CRITICAL_WIFI_TEMP) {
-                notify({
-                    tonePath: settings.assets.audio.high_temp_warning,
-                    title: strings.highWifiTempWarning,
-                    message: strings.highWifiTempMessage.replace(
-                        '${wifiTemp}',
-                        wifiTemp
-                    ),
-                    icon: settings.assets.icons.high_temp_warning,
-                    priority: 'critical',
-                });
-            }
-
-            if (nvmeTemp >= CRITICAL_NVME_TEMP) {
-                notify({
-                    tonePath: settings.assets.audio.high_temp_warning,
-                    title: strings.highNVMeTempWarning,
-                    message: strings.highNVMeTempMessage.replace(
-                        '${nvmeTemp}',
-                        nvmeTemp
-                    ),
-                    icon: settings.assets.icons.high_temp_warning,
-                    priority: 'critical',
-                });
-            }
-
-            if (cpuTemp >= CRITICAL_CPU_TEMP) {
-                notify({
-                    tonePath: settings.assets.audio.high_temp_warning,
-                    title: strings.highCpuTempWarning,
-                    message: strings.highCpuTempMessage.replace(
-                        '${cpuTemp}',
-                        cpuTemp
-                    ),
-                    icon: settings.assets.icons.high_temp_warning,
-                    priority: 'critical',
-                });
-            }
+            notifyCriticalWifi(wifiTemp, CRITICAL_WIFI_TEMP);
+            notifyCriticalNvme(nvmeTemp, CRITICAL_NVME_TEMP);
+            notifyCriticalCpu(cpuTemp, CRITICAL_CPU_TEMP);
 
             var totalTemp = wifiTemp + nvmeTemp + cpuTemp;
             totalTemp = totalTemp / 3;
+
+            if (totalTemp <= 60) {
+                self.child.label = '';
+            } else if (totalTemp <= 80) {
+                self.child.label = '';
+            } else {
+                self.child.label = '';
+            }
 
             tempList['total'] = totalTemp;
 
@@ -201,6 +176,48 @@ const tempProgress = Widget.CircularProgress({
         })
         .catch(print);
 });
+
+function notifyCriticalWifi(wifiTemp, CRITICAL_WIFI_TEMP) {
+    if (wifiTemp >= CRITICAL_WIFI_TEMP) {
+        notify({
+            tonePath: settings.assets.audio.high_temp_warning,
+            title: strings.highWifiTempWarning,
+            message: strings.highWifiTempMessage.replace(
+                '${wifiTemp}',
+                wifiTemp
+            ),
+            icon: settings.assets.icons.high_temp_warning,
+            priority: 'critical',
+        });
+    }
+}
+
+function notifyCriticalNvme(nvmeTemp, CRITICAL_NVME_TEMP) {
+    if (nvmeTemp >= CRITICAL_NVME_TEMP) {
+        notify({
+            tonePath: settings.assets.audio.high_temp_warning,
+            title: strings.highNVMeTempWarning,
+            message: strings.highNVMeTempMessage.replace(
+                '${nvmeTemp}',
+                nvmeTemp
+            ),
+            icon: settings.assets.icons.high_temp_warning,
+            priority: 'critical',
+        });
+    }
+}
+
+function notifyCriticalCpu(cpuTemp, CRITICAL_CPU_TEMP) {
+    if (cpuTemp >= CRITICAL_CPU_TEMP) {
+        notify({
+            tonePath: settings.assets.audio.high_temp_warning,
+            title: strings.highCpuTempWarning,
+            message: strings.highCpuTempMessage.replace('${cpuTemp}', cpuTemp),
+            icon: settings.assets.icons.high_temp_warning,
+            priority: 'critical',
+        });
+    }
+}
 
 const ramAndCpu = Widget.Box({
     homogeneous: true,

@@ -1,16 +1,11 @@
 import Notification from '../../notifications/MenuNotification.js';
-import { TitleText, local } from '../../utils/helpers.js';
 
-import settings from '../../settings.js';
 import strings from '../../strings.js';
 import { Notifications } from '../../utils/imports.js';
 
 const Scrollable = Widget.Scrollable;
 const Label = Widget.Label;
 const Box = Widget.Box;
-const Window = Widget.Window;
-const Button = Widget.Button;
-const Revealer = Widget.Revealer;
 
 const NotificationsBox = () => {
     return Box({

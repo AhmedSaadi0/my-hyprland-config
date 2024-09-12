@@ -62,6 +62,7 @@ export const TitleTextRevealer = ({
     boxClass = '',
     buttonClass = '',
     revealerClass = '',
+    transitionDuration = 300,
     homogeneous = false,
     titleXalign = 0.5,
     textXalign = 0.5,
@@ -92,7 +93,7 @@ export const TitleTextRevealer = ({
     const revealedText = Widget.Revealer({
         revealChild: false,
         className: revealerClass,
-        transitionDuration: 500,
+        transitionDuration: transitionDuration,
         transition: vertical
             ? 'slide_down'
             : vertical
@@ -115,6 +116,72 @@ export const TitleTextRevealer = ({
         onHover: onHover,
         onHoverLost: onHoverLost,
         onClicked: onClicked,
+    });
+};
+
+export const TitleTextRevealer2 = ({
+    title,
+    titleClass = '',
+    text,
+    textClass = '',
+    boxClass = '',
+    buttonClass = '',
+    revealerClass = '',
+    homogeneous = false,
+    titleXalign = 0.5,
+    textXalign = 0.5,
+    titleTruncate = 'none',
+    textTruncate = 'none',
+    vertical = true,
+    spacing = 0,
+    onHover = (btn) => (btn.get_parent().children[1].reveal_child = true),
+    onHoverLost = (btn) => (btn.get_parent().children[1].reveal_child = false),
+    onClicked = null,
+    titleWidget = null,
+    textWidget = null,
+}) => {
+    const _title = Widget.Label({
+        label: title,
+        className: titleClass,
+        xalign: titleXalign,
+        truncate: titleTruncate,
+    });
+
+    const _text = Widget.Label({
+        label: text,
+        className: textClass,
+        xalign: textXalign,
+        truncate: textTruncate,
+    });
+
+    const revealedText = Widget.Revealer({
+        revealChild: false,
+        className: revealerClass,
+        transitionDuration: 500,
+        transition: vertical
+            ? 'slide_down'
+            : vertical
+              ? 'slide_left'
+              : 'slide_right',
+        child: textWidget ? textWidget : _text,
+    });
+
+    return Widget.Box({
+        vertical: vertical,
+        homogeneous: homogeneous,
+        spacing: spacing,
+        vertical: vertical,
+        className: boxClass,
+        children: [
+            Widget.Button({
+                child: titleWidget ? titleWidget : _title,
+                className: buttonClass,
+                onHover: onHover,
+                onHoverLost: onHoverLost,
+                onClicked: onClicked,
+            }),
+            revealedText,
+        ],
     });
 };
 

@@ -72,7 +72,7 @@ const NetSpeedMeters = () => {
     });
 };
 
-export const NetworkInformation = () =>{
+export const NetworkInformation = () => {
     let button = Widget.Button({
         className: 'unset un-hover',
         onClicked: () => showNetworkMenu(),
@@ -80,12 +80,12 @@ export const NetworkInformation = () =>{
             className: 'internet-box small-shadow unset',
         }).hook(Network, (box) => {
             let internetLabel;
-    
+
             const ssidLabel = Label({
                 className: 'wifi-name-label unset',
                 label: `${Network.wifi.ssid}`,
             });
-    
+
             if (Network.wifi?.internet === 'disconnected') {
                 internetLabel = '󰤮';
             } else if (Network.connectivity === 'limited') {
@@ -101,18 +101,17 @@ export const NetworkInformation = () =>{
             } else {
                 internetLabel = '󰤯';
             }
-    
+
             const internetStatusLabel = Label({
                 className: 'wifi-icon-strength unset',
                 label: internetLabel,
             });
-    
+
             box.children = [NetSpeedMeters(), ssidLabel, internetStatusLabel];
-    
+
             box.show_all();
-        })
+        }),
     });
 
     return button;
-}
-    
+};
