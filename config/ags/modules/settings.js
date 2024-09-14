@@ -124,7 +124,7 @@ const settings = {
         darkM3WallpaperPath: darkM3WallpaperPath,
         lightM3WallpaperPath: lightM3WallpaperPath,
         menuTransitions: {
-            leftMenu: 'slide_down',
+            mainMenu: 'slide_down',
             weatherMenu: 'slide_down',
             networkMenu: 'slide_down',
             notificationMenu: 'slide_down',
@@ -133,7 +133,7 @@ const settings = {
             audioMenu: 'slide_down',
             calendarMenu: 'slide_down',
 
-            leftMenuDuration: 300,
+            mainMenuDuration: 300,
             weatherMenuDuration: 300,
             networkMenuDuration: 300,
             notificationMenuDuration: 300,
@@ -168,6 +168,7 @@ const settings = {
         weather: 'weather',
         monitor: 'monitor',
         calender: 'calender',
+        network: 'network',
     },
 };
 

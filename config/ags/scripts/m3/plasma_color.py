@@ -65,14 +65,14 @@ class ColorExporter:
         kitty = KittyThemeExporter(color_schema)
         kitty.write_new_kitty_theme()
 
-    def export_konsole_theme(self, schemes, theme_mode):
+    def export_konsole_theme(self, schemes, theme_mode="dark"):
         ksyntax_utils.export_schemes(schemes)
         konsole_utils.export_scheme(
             light=theme_mode == "light",
             pywal_light=theme_mode == "light",
             schemes=schemes,
-            konsole_opacity=80,
-            konsole_opacity_dark=80,
+            konsole_opacity=70,
+            konsole_opacity_dark=70,
             dark_light=theme_mode != "light",
         )
         konsole_utils.apply_color_scheme()
