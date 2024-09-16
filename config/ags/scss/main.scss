@@ -1,4 +1,4 @@
-@import './themes/newCat.scss';
+@import './themes/m3/dynamic.scss';
 
 $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 
@@ -125,4 +125,10 @@ menuitem:hover {
 
 .un-hover:hover {
     all: unset;
+}
+
+.separator {
+    min-height: 0.01rem;
+    min-width: 0.01rem;
+    background: rgba($border-color, 0.4);
 }

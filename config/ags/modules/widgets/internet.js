@@ -75,7 +75,7 @@ const NetSpeedMeters = () => {
 export const NetworkInformation = () => {
     let button = Widget.Button({
         className: 'unset un-hover',
-        onClicked: () => showNetworkMenu(),
+        onClicked: () => toggleNetwork(),
         child: Box({
             className: 'internet-box small-shadow unset',
         }).hook(Network, (box) => {
