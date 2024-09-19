@@ -449,70 +449,25 @@ nvim .ahmed-config.json
 
 # Screenshots - لقطات
 
-<p align='center'>
-	<img alt='screenshot 1' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/1.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 10' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/10.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 2' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/2.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 3' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/3.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 4' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/4.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 5' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/5.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 6' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/6.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 11' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/11.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 7' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/7.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 8' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/8.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 9' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/9.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 12' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/12.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 13' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/13.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 14' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/14.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 15' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/15.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 16' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/16.png'/>
-</p>
-<p align='center'>
-	<img alt='screenshot 17' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/17.png'/>
-</p>
+| Category | Wallpapers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dark     | <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_1.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_2.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_3.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_4.png" width="200" />                                                                                                                                                                                                                                             |
+| Light    | <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/light_1.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/light_2.png" width="200"/> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/light_3.png" width="200" />                                                                                                                                                                                                                                                                                                                                                        |
+| Neutral  | <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/neutral_1.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/neutral_2.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/neutral_3.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/neutral_4.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/neutral_5.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/neutral_6.png" width="200" /> |
+| Menu     | <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dashboard.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/notifications.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/weather.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/monitors.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/network.png" width="200" />                                                                                                                  |
 
 ### Material 3
 
 #### Dark
 
 <p align='center'>
-	<img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/18.png'/>
+	<img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_m.png'/>
 </p>
 
 #### Light
 
 <p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/19.png'/>
+	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/light_m.png'/>
 </p>
 
 <hr />
