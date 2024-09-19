@@ -13,6 +13,8 @@
 
 يُفضل استخدام هذا الإعداد مع تطبيقات KDE للحصول على أفضل تجربة. إذا اخترت استخدام تطبيقات أخرى، فلا بأس بذلك، ولكن ستحتاج إلى ضبط الإعدادات يدوياً إذا لم يكن لديها ثيم مشابه لبقية التطبيقات.
 
+> 💡 **مهم:** للحصول على الوظائف الكاملة للشبكة، يرجى استخدام **[الفورك الخاص بي](https://github.com/AhmedSaadi0/ags)** من (AGS)، حيث أن النسخة الأصلية لا تحتوي على هذه التحسينات.
+
 ### برامج ضرورية
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
@@ -235,6 +237,8 @@ nvim .ahmed-config.json
 
 It is recommended to use this setup with KDE applications for the best experience. If you choose to use other applications, that is fine, but you will need to theme them manually if they do not have a theme similar to the rest of the applications.
 
+> 💡 **Important:** For full network functionality, please compile **[my fork](https://github.com/AhmedSaadi0/ags)** of (AGS), as the original version does not include these enhancements.
+
 ### Required dependencies:
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
@@ -449,7 +453,7 @@ nvim .ahmed-config.json
 
 # Screenshots - لقطات
 
-| Category | Wallpapers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Category | Screenshots                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Dark     | <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_1.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_2.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_3.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark_4.png" width="200" />                                                                                                                                                                                                                                             |
 | Light    | <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/light_1.png" width="200" /> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/light_2.png" width="200"/> <img src="https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/light_3.png" width="200" />                                                                                                                                                                                                                                                                                                                                                        |
