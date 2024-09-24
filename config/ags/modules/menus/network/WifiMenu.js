@@ -1,4 +1,8 @@
-import { TitleText, TitleTextRevealer2 } from '../../utils/helpers.js';
+import {
+    TitleText,
+    TitleTextRevealer2,
+    truncateString,
+} from '../../utils/helpers.js';
 
 const network = await Service.import('network');
 
@@ -12,7 +16,7 @@ const connectedWifiIcon = TitleText({
     vertical: false,
     spacing: 20,
 }).hook(network, (self) => {
-    self.children[1].label = network.wifi.ssid;
+    self.children[1].label = truncateString(network.wifi.ssid, 5);
     self.children[0].label = setConnectedWifiIcon(network);
 });
 
@@ -59,7 +63,6 @@ const connectedWifi = Widget.Box({
             const selectedWifi = network.wifi.access_points.find(
                 (network) => network.active
             ).bssid;
-
             self.children[0].label = `${selectedWifi}`;
         }),
     ],
@@ -129,12 +132,8 @@ const WifiItem = ({
 
                     network.wifi
                         .connectToAP(ssid, password)
-                        .then((val) => {
-                            console.log('sss');
-                        })
-                        .catch((val) => {
-                            console.log('Failed');
-                        });
+                        .then((val) => {})
+                        .catch((val) => {});
 
                     allowRefresh = true;
                 },
@@ -172,7 +171,7 @@ const connectedWifiDetailsBox = Widget.Box({
         if (!element.active && !element.hidden)
             children.push(
                 WifiItem({
-                    ssid: element.ssid,
+                    ssid: truncateString(element.ssid, 20),
                     strength: element.strength,
                     requiresPassword:
                         !element.saved && element.requiresPassword,
@@ -189,7 +188,7 @@ const connectedWifiDetailsBox = Widget.Box({
         Widget.Scrollable({
             hscroll: 'never',
             vscroll: 'automatic',
-            css: 'min-height:33.0rem;',
+            css: 'min-height:31.8rem;',
             child: Widget.Box({
                 vertical: true,
                 children: [
