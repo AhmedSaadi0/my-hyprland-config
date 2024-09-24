@@ -22,8 +22,12 @@ export const TitleText = ({
     ltr = false,
     titleWidget = null,
     textWidget = null,
+    titleCss = '',
+    textCss = '',
+    boxCss = '',
 }) => {
     const _title = Widget.Label({
+        css: titleCss,
         label: title,
         className: titleClass,
         xalign: titleXalign,
@@ -33,6 +37,7 @@ export const TitleText = ({
     });
 
     const _text = Widget.Label({
+        css: textCss,
         label: text,
         className: textClass,
         xalign: textXalign,
@@ -46,6 +51,7 @@ export const TitleText = ({
         : [titleWidget ? titleWidget : _title, textWidget ? textWidget : _text];
 
     return Widget.Box({
+        css: boxCss,
         className: boxClass,
         vertical: vertical,
         homogeneous: homogeneous,
@@ -60,6 +66,7 @@ export const TitleTextRevealer = ({
     text,
     textClass = '',
     boxClass = '',
+    buttonCss = '',
     buttonClass = '',
     revealerClass = '',
     transitionDuration = 300,
@@ -111,6 +118,7 @@ export const TitleTextRevealer = ({
     });
 
     return Widget.Button({
+        css: buttonCss,
         child: box,
         className: buttonClass,
         onHover: onHover,
@@ -139,6 +147,7 @@ export const TitleTextRevealer2 = ({
     onClicked = null,
     titleWidget = null,
     textWidget = null,
+    boxCss = '',
 }) => {
     const _title = Widget.Label({
         label: title,
@@ -167,6 +176,7 @@ export const TitleTextRevealer2 = ({
     });
 
     return Widget.Box({
+        css: boxCss,
         vertical: vertical,
         homogeneous: homogeneous,
         spacing: spacing,
