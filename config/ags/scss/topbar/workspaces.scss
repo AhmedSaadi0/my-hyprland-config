@@ -1,0 +1,71 @@
+.workspaces button:active {
+    color: $active-workspace-btn;
+    border-radius: 0px;
+}
+
+.workspaces {
+    padding-right: 4px;
+    padding-left: 4px;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-bottom-margin + 0.1rem;
+    background: $workspace-background;
+    border-radius: $border-radius;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1.1rem;
+}
+
+.dynamic-wallpaper {
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-bottom-margin;
+    padding: 0rem 1rem;
+}
+
+// .workspaces:dir(rtl) {
+//     margin-right: 0.4rem;
+//     margin-left: $top-bar-widget-margins;
+// }
+//
+// .workspaces:dir(ltr) {
+//     margin-right: $top-bar-widget-margins;
+//     margin-left: 0.4rem;
+// }
+
+.workspaces button {
+    background: $workspace-background;
+    color: $workspace-btn;
+    border: 0rem;
+}
+
+.workspaces button.focused {
+    border-bottom: 1px solid $workspace-focused-bottom;
+    color: $workspace-focused;
+    font-family: $icon-font-family;
+    border-radius: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+    font-size: large;
+    // min-width: 1em;
+}
+
+.workspaces button.unfocused {
+    font-family: $icon-font-family;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+    // min-width: 1em;
+    border-radius: 0px;
+    font-size: large;
+}
+
+.workspaces button.has-windows {
+    color: $workspace-has-windows;
+}
+
+.workspaces button:hover {
+    background: $workspace-hover-background;
+    color: $workspace-hover-color;
+}
