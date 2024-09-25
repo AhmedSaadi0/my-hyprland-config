@@ -1,8 +1,7 @@
-@import './themes/newCat.scss';
+@import 'themes/colors.scss';
+@import 'topbar/topbar.scss';
 
-$top-bar-widget-margins: $bar-top-margin + 0.2rem;
-
-.unset {
+* {
     all: unset;
 }
 
@@ -18,111 +17,4 @@ $top-bar-widget-margins: $bar-top-margin + 0.2rem;
 .shadow {
     transition-property: background;
     transition-duration: 0.5s;
-}
-
-.small-shadow:dir(rtl) {
-    box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
-}
-
-.small-shadow:dir(ltr) {
-    box-shadow: 1px 2px 2px 1px rgba(#000000, 0.1);
-}
-
-.shadow:dir(rtl) {
-    box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
-}
-
-.shadow:dir(ltr) {
-    box-shadow: 1px 2px 3px 1px rgba(#000000, 0.3);
-}
-
-button {
-    background: $btn-background;
-    color: $btn-color;
-    border-color: $btn-background;
-    border-radius: $border-radius;
-
-    padding: 4px 14px;
-    // font-size: 16px;
-    // font-weight: bold;
-
-    border: none;
-    // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    transition:
-        background 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-}
-
-/* Shadow when clicking */
-button:active {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    // transform: translateY(1px);
-}
-
-button:hover {
-    background: $btn-hover-background;
-    color: $btn-hover-color;
-    border-color: $btn-hover-background;
-    border-radius: $border-radius;
-    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
-    @if variable-exists(btn-hover-border-radius) {
-        border-radius: $btn-hover-border-radius;
-    }
-
-    transition:
-        background 0.2s ease-in-out,
-        color 0.2s ease-in-out;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-menu {
-    border: $border-size $border-color solid;
-    background: $menu-bg;
-    color: $menu-fg;
-    border-radius: $border-radius;
-    padding: 0.3rem;
-    margin-top: 2rem;
-}
-
-menuitem {
-    border-radius: $border-radius;
-    background: $menu-bg;
-    color: $menu-fg;
-    // padding: 1rem 0.5rem;
-}
-
-menuitem:disabled {
-    background: $menuitem-disabled-bg;
-    color: $menuitem-disabled-fg;
-}
-
-menuitem:hover {
-    background: $menuitem-hover-bg;
-    color: $menuitem-hover-fg;
-}
-
-@import './topbar.scss';
-@import './hardware-menu.scss';
-@import './vol-ods.scss';
-@import './layout-ods.scss';
-@import './notifications.scss';
-@import './left-menu.scss';
-@import './notification-menu.scss';
-@import './music-player.scss';
-@import './fuzzy-clock.scss';
-@import './prayer-times.scss';
-// @import './weather-menu.scss';
-@import './applications-menu.scss';
-@import './audio-brightness-menu.scss';
-@import './circle-theme-information.scss';
-@import './calendar-menu.scss';
-@import './weather-tab.scss';
-
-// * {
-//     all: unset;
-// }
-
-.un-hover:hover {
-    all: unset;
 }
