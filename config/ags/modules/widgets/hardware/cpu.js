@@ -5,7 +5,6 @@ import {
     CircularProgress,
 } from 'resource:///com/github/Aylur/ags/widget.js';
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
-import { Utils } from '../../utils/imports.js';
 import strings from '../../strings.js';
 import settings from '../../settings.js';
 

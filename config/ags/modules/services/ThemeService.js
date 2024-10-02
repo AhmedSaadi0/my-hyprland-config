@@ -1,4 +1,7 @@
-import ThemesDictionary, { UNICAT_THEME } from '../theme/themes.js';
+import ThemesDictionary, {
+    DYNAMIC_M3_LIGHT,
+    UNICAT_THEME,
+} from '../theme/themes.js';
 import { USER } from 'resource:///com/github/Aylur/ags/utils.js';
 import prayerService from './PrayerTimesService.js';
 import settings from '../settings.js';
@@ -173,6 +176,11 @@ class ThemeService extends Service {
     stopDynamicWallpaper() {
         this.dynamicWallpaperStatus = false;
         this.clearDynamicWallpaperInterval();
+        if (ThemesDictionary[this.selectedTheme] == DYNAMIC_M3_LIGHT) {
+            this.selectedLightWallpaper-- % this.wallpapersList.length;
+        } else {
+            this.selectedDarkWallpaper-- % this.wallpapersList.length;
+        }
         this.cacheVariables();
         this.emit('changed');
     }
