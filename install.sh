@@ -157,7 +157,7 @@ mkdir -p ~/.fonts
 cp -r ~/.config/hypr/config/.fonts/* ~/.fonts
 
 mkdir -p ~/.local/share/icons
-for icon in BeautySolar Delight-brown-dark Gradient-Dark-Icons Infinity-Dark-Icons kora-grey-light-panel Magma NeonIcons la-capitaine-icon-theme oomox-aesthetic-dark Vivid-Dark-Icons Windows11-red-dark Zafiro-Nord-Dark-Black; do
+for icon in BeautySolar Delight-brown-dark Gradient-Dark-Icons Infinity-Dark-Icons kora-grey-light-panel Magma NeonIcons la-capitaine-icon-theme oomox-aesthetic-dark Vivid-Dark-Icons Windows11-red Zafiro-Nord-Dark-Black; do
     tar xvf ~/.config/hypr/config/icons/$icon.tar.gz -C ~/.local/share/icons
 done
 
