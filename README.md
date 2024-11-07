@@ -63,7 +63,7 @@
 
 ```bash
 # تثبيت البرامج المطلوبة
-yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq
+yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww
 
 # تثبيت البرامج الاختيارية
 yay -S orchis-theme-git discord firefox visual-studio-code-bin nwg-look-bin qt5ct telegram-desktop strawberry
@@ -72,9 +72,13 @@ yay -S orchis-theme-git discord firefox visual-studio-code-bin nwg-look-bin qt5c
 ### مستخدمي Fedora 40
 
 ```bash
+# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
 # تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
 sudo dnf install ffmpeg --allowerasing
-sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq
+sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq swww
 
 # تفعيل مستودع هيبر لاند
 sudo dnf copr enable solopasha/hyprland
@@ -89,7 +93,7 @@ sudo dnf copr enable luisbocanegra/kde-material-you-colors
 sudo dnf install kde-material-you-colors
 
 # تثبيت plasma-desktop
-sudo dnf install plasma-desktop
+sudo dnf install plasma-desktop ark kate dolphin
 ```
 
 **ملاحطة:** إذا كنت تستخدم نظام تشغيل آخر غير أرش او فيدورا فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
@@ -295,9 +299,13 @@ yay -S orchis-theme-git discord firefox visual-studio-code-bin nwg-look-bin qt5c
 ### Fedora 40 users
 
 ```bash
-# Install needed apps with other supporing apps like media support
+# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# Install needed apps with other supporting apps like media support
 sudo dnf install ffmpeg --allowerasing
-sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq
+sudo dnf install network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth power-profiles-daemon lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-gnome polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq swww
 
 # Enable Hyprland repository
 sudo dnf copr enable solopasha/hyprland
@@ -312,7 +320,7 @@ sudo dnf copr enable luisbocanegra/kde-material-you-colors
 sudo dnf install kde-material-you-colors
 
 # Install plasma-desktop for its apps
-sudo dnf install plasma-desktop
+sudo dnf install plasma-desktop ark kate dolphin
 ```
 
 **Note:** If you use an operating system other than Arch or Fedora, you will need to install all required dependencies. The specific steps may vary depending on your distro.
