@@ -128,7 +128,7 @@ mv ~/.config/easyeffects ~/.config/easyeffects-old
 cp ~/.config/fish/config.fish ~/.config/fish/config.back.fish
 
 # Copy files
-cp -r my-hyprland-config ~/.config/hypr
+cp -r "$(dirname "$0")/.." ~/.config/hypr
 cp -r ~/.config/hypr/config/ags ~/.config/ags
 cp -r ~/.config/hypr/config/wofi ~/.config/wofi
 cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
