@@ -44,7 +44,7 @@ create_config() {
     changePlasmaColor="${input:-true}"
 
     # Create JSON file
-    cat <<EOF >~/.ahmed-config-test.json
+    cat <<EOF >~/.ahmed-config.json
 {
   "username": "$username",
   "profilePicture": "$profilePicture",
@@ -128,7 +128,7 @@ mv ~/.config/easyeffects ~/.config/easyeffects-old
 cp ~/.config/fish/config.fish ~/.config/fish/config.back.fish
 
 # Copy files
-cp -r "$(dirname "$0")/.." ~/.config/hypr
+cp -r "../my-hyprland-config/" ~/.config/hypr
 cp -r ~/.config/hypr/config/ags ~/.config/ags
 cp -r ~/.config/hypr/config/wofi ~/.config/wofi
 cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
