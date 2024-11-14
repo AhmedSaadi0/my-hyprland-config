@@ -1,0 +1,169 @@
+/* we can use webcss variables, fabric compiles that to gtk css.
+   global variables can be stored in :vars */
+:vars {
+    --background: #150d16;
+    --foreground: #f5dbc4;
+    --color0: #150d16;
+    --color1: #72448D;
+    --color2: #9C5995;
+    --color3: #D5719F;
+    --color4: #9A62F3;
+    --color5: #E075DF;
+    --color6: #F98F9F;
+    --color7: #f5dbc4;
+    --color8: #ab9989;
+    --color9: #72448D;
+    --color10: #9C5995;
+    --color11: #D5719F;
+    --color12: #9A62F3;
+    --color13: #E075DF;
+    --color14: #F98F9F;
+    --color15: #f5dbc4;
+    --window-bg: alpha(var(--background), 0.6);
+    --module-bg: alpha(var(--background), 0.4);
+    --border-color: var(--color11);
+    --ws-active: var(--color9);
+    --ws-inactive: var(--color3);
+    --ws-empty: var(--color8);
+    --ws-hover: var(--color1);
+    --ws-urgent: var(--color12);
+}
+
+/* unset so we can style everything from the ground up. */
+* {
+    all: unset;
+    color: var(--foreground);
+    font-size: 16px;
+    font-family: "Jost*", sans-serif;
+    border-radius: 100px;
+}
+
+button {
+    background-size: 400% 400%;
+}
+
+#bar-inner {
+    padding: 4px;
+    border: solid 2px;
+    border-color: var(--border-color);
+    background-color: var(--window-bg);
+    min-height: 28px;
+}
+
+#workspaces {
+    padding: 6px;
+    min-width: 0px;
+    background-color: var(--module-bg);
+}
+
+#workspaces>button {
+    padding: 0px 8px;
+    transition: padding 0.05s steps(8);
+    background-color: var(--ws-inactive);
+}
+
+#workspaces>button>label {
+    font-size: 0px;
+}
+
+#workspaces>button:hover {
+    background-color: var(--ws-hover);
+}
+
+#workspaces>button.urgent {
+    background-color: var(--ws-urgent);
+}
+
+#workspaces>button.active {
+    padding: 0px 32px;
+    background-color: var(--ws-active);
+}
+
+#workspaces>button.empty {
+    background-color: var(--ws-empty);
+}
+
+
+#date-time,
+#hyprland-language,
+#hyprland-window {
+    background-color: var(--module-bg);
+    padding: 0px 8px;
+}
+
+menu>menuitem>label,
+#date-time>label,
+#hyprland-language>label,
+#hyprland-window>label {
+    font-weight: 900;
+}
+
+/* system tray */
+#system-tray {
+    padding: 2px 4px;
+    background-color: var(--module-bg);
+}
+
+/* menu and menu items (written for the system tray) */
+menu {
+    border: solid 2px;
+    border-radius: 10px;
+    border-color: var(--border-color);
+    background-color: var(--window-bg);
+}
+
+menu>menuitem {
+    border-radius: 0px;
+    background-color: var(--module-bg);
+    padding: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+menu>menuitem:first-child {
+    margin-top: 1px;
+    border-radius: 8px 8px 0px 0px;
+}
+
+menu>menuitem:last-child {
+    margin-bottom: 1px;
+    border-radius: 0px 0px 8px 8px;
+}
+
+menu>menuitem:hover {
+    background-color: var(--border-color);
+}
+
+
+#cpu-progress-bar,
+#ram-progress-bar,
+#volume-progress-bar {
+    color: transparent;
+    background-color: transparent
+}
+
+
+#cpu-progress-bar {
+    border: solid 0px alpha(var(--color9), 0.8);
+}
+
+#ram-progress-bar,
+#volume-progress-bar {
+    border: solid 0px var(--border-color);
+}
+
+
+#widgets-container {
+    background-color: var(--module-bg);
+    padding: 2px;
+}
+
+tooltip {
+    border: solid 2px;
+    border-color: var(--border-color);
+    background-color: var(--window-bg);
+}
+
+tooltip>* {
+    padding: 2px 4px
+}
