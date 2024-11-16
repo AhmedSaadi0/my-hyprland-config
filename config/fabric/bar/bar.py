@@ -1,7 +1,6 @@
 import psutil
 
-from fabric.hyprland.widgets import (ActiveWindow, Language, WorkspaceButton,
-                                     Workspaces)
+from fabric.hyprland.widgets import ActiveWindow, Language
 from fabric.system_tray.widgets import SystemTray
 from fabric.utils import FormattedString, bulk_replace, invoke_repeater
 from fabric.widgets.box import Box
@@ -12,6 +11,9 @@ from fabric.widgets.eventbox import EventBox
 from fabric.widgets.label import Label
 from fabric.widgets.overlay import Overlay
 from fabric.widgets.wayland import WaylandWindow as Window
+
+from .widgets.monitors import BatteryMonitor, CPUMonitor, RAMMonitor, TemperatureMonitor
+from .widgets.workspaces import WorkspaceBox
 
 AUDIO_WIDGET = True
 
@@ -66,9 +68,7 @@ class VolumeWidget(Box):
 
 
 class StatusBar(Window):
-    def __init__(
-        self,
-    ):
+    def __init__(self):
         super().__init__(
             name="bar",
             layer="top",
@@ -78,11 +78,7 @@ class StatusBar(Window):
             visible=False,
             all_visible=False,
         )
-        self.workspaces = Workspaces(
-            name="workspaces",
-            spacing=4,
-            buttons_factory=lambda ws_id: WorkspaceButton(id=ws_id, label=None),
-        )
+        self.workspaces = WorkspaceBox()
         self.active_window = ActiveWindow(name="hyprland-window")
         self.language = Language(
             formatter=FormattedString(
@@ -119,7 +115,9 @@ class StatusBar(Window):
             orientation="h",
             children=self.progress_bars_overlay,
         )
+        monitor = CPUMonitor()
         self.status_container.add(VolumeWidget()) if AUDIO_WIDGET is True else None
+        self.status_container.add(monitor.get_widget())
 
         self.children = CenterBox(
             name="bar-inner",
