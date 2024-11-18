@@ -1,0 +1,35 @@
+$top-bar-widget-margins: 0.2rem;
+
+.unset {
+  all: unset;
+}
+
+.icon-font {
+  // font-family: $icon-font-family;
+}
+
+.small-shadow {
+  transition-property: background;
+  transition-duration: 0.5s;
+}
+
+.shadow {
+  transition-property: background;
+  transition-duration: 0.5s;
+}
+
+.small-shadow:dir(rtl) {
+  box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
+}
+
+.small-shadow:dir(ltr) {
+  box-shadow: 1px 2px 2px 1px rgba(#000000, 0.1);
+}
+
+.shadow:dir(rtl) {
+  box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
+}
+
+.shadow:dir(ltr) {
+  box-shadow: 1px 2px 3px 1px rgba(#000000, 0.3);
+}
