@@ -1,4 +1,5 @@
 import threading
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 import requests
@@ -38,32 +39,42 @@ class PrayerTimesService(Service):
         self._prayer_now = None
         self._hijri_date = ""
         self.state = {}
-        self._polling_timer = None  # Timer for periodic updates
+
+        # Thread pool for non-blocking calls
+        self.executor = ThreadPoolExecutor(max_workers=1)
+
+        # Start polling in the background
         self.start_polling()
 
     def start_polling(self):
-        """Start periodic fetching of prayer times."""
-        self.update_prayer_times()
-        self._schedule_next_update(self.polling_interval)
+        """Schedule the periodic fetching of prayer times."""
+        self._schedule_next_update(0)  # Start immediately
 
     def _schedule_next_update(self, delay: int):
-        """Schedule the next update using a timer."""
-        if self._polling_timer:
-            self._polling_timer.cancel()  # Cancel any existing timer
-        self._polling_timer = threading.Timer(delay, self.update_prayer_times)
-        self._polling_timer.start()
+        """Schedule the next update."""
+        threading.Timer(delay, self._fetch_prayer_times_background).start()
+
+    def _fetch_prayer_times_background(self):
+        """Fetch prayer times in the background using a thread pool."""
+        self.executor.submit(self.update_prayer_times)
 
     def update_prayer_times(self):
         """Fetch prayer times from the API."""
         try:
             current_date = datetime.now().strftime("%d-%m-%Y")
             url = f"https://api.aladhan.com/v1/timingsByCity/{current_date}?city={self.city}&country={self.country}"
-            response = requests.get(url)
+
+            # Perform the API call
+            response = requests.get(url, timeout=10)
             response.raise_for_status()
+
+            # Update state and process data
             self.state = response.json()
             self._process_prayer_times()
             self.emit("changed")
-            print(self.state)
+
+            # Schedule the next update
+            self._schedule_next_update(self.polling_interval)
         except Exception as e:
             print(f"Error fetching prayer times: {e}")
             # Retry after 15 minutes on failure
@@ -102,6 +113,7 @@ class PrayerTimesService(Service):
         """Send a notification for the current prayer."""
         self._prayer_now = prayer_name
         self.emit("changed")
+
         # Clear prayer after 20 minutes
         threading.Timer(20 * 60, self._clear_current_prayer).start()
 

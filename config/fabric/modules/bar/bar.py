@@ -18,6 +18,7 @@ from .widgets.monitors import (
     TemperatureMonitor,
     VolumeMonitor,
 )
+from .widgets.network import NetworkBarWidget
 from .widgets.prayer_times import PrayerTimeDisplay
 from .widgets.workspaces import WorkspaceBox
 
@@ -75,11 +76,13 @@ class StatusBar(Window):
         temp = TemperatureMonitor()
         ram = RAMMonitor()
         bat = BatteryMonitor()
+        network = NetworkBarWidget()
         self.status_container.add(monitor.get_widget())
         self.status_container.add(vol_monitor.get_widget())
         self.status_container.add(temp.get_widget())
         self.status_container.add(ram.get_widget())
         self.status_container.add(bat.get_widget())
+        self.status_container.add(network.get_widget())
 
         prayer_display = PrayerTimeDisplay(city="Sanaa", country="Yemen").get_widget()
 
