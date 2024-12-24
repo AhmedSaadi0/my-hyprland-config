@@ -1,5 +1,6 @@
 import json
 
+from fabric.hyprland.service import HyprlandEvent
 from fabric.hyprland.widgets import WorkspaceButton, Workspaces
 from fabric.utils import FormattedString
 from fabric.utils.helpers import FormattedString
@@ -18,6 +19,28 @@ class CustomWorkspaceButton(WorkspaceButton):
 
 
 class CustomWorkspaces(Workspaces):
+    def on_workspace(self, _, event: HyprlandEvent):
+        if len(event.data) < 1:
+            return
+
+        active_workspace = int(event.data[0])
+        if active_workspace == self._active_workspace:
+            return
+
+        if self._active_workspace is not None and (
+            old_btn := self._buttons.get(self._active_workspace)
+        ):
+            old_btn.active = False
+
+        self._active_workspace = active_workspace
+        if not (btn := self.lookup_or_bake_button(active_workspace)):
+            return
+
+        btn.urgent = False
+        btn.active = True
+
+        return
+
     def on_ready(self, _):
         open_workspaces: tuple[int, ...] = tuple(
             workspace["id"]
@@ -47,6 +70,12 @@ class CustomWorkspaces(Workspaces):
 
             self.insert_button(btn)
         return
+
+    def on_createworkspace(self, _, event: HyprlandEvent):
+        pass
+
+    def on_destroyworkspace(self, _, event: HyprlandEvent):
+        pass
 
 
 class WorkspaceBox(Box):
@@ -80,7 +109,7 @@ class WorkspaceBox(Box):
         workspaces = CustomWorkspaces(
             name=name,
             orientation=orientation,
-            # spacing=spacing,
+            spacing=spacing,
             # invert_scroll=True,
             # empty_scroll=True,
             buttons=buttons,

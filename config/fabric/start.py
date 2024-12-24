@@ -6,8 +6,18 @@ from fabric import Application
 from fabric.utils import get_relative_path
 from modules.bar.bar import StatusBar
 from modules.services.prayer_times import PrayerTimesService
+from notifications import notification_window
 
 prayer_service = PrayerTimesService(city="Sanaa", country="Yemen")
+
+import psutil
+
+battery = psutil.sensors_battery()
+if battery:
+    print(f"Battery percentage: {battery.percent}%")
+    print(f"Charging: {'Yes' if battery.power_plugged else 'No'}")
+else:
+    print("Battery information not available.")
 
 
 def compile_scss_to_css(scss_file: str, css_file: str):
@@ -28,6 +38,7 @@ def compile_scss_to_css(scss_file: str, css_file: str):
 if __name__ == "__main__":
     bar = StatusBar()
     app = Application("bar", bar)
+    notification = Application("notifications", notification_window)
 
     scss_path = get_relative_path("scss/main.scss")
     css_path = get_relative_path("main.css")
@@ -41,6 +52,7 @@ if __name__ == "__main__":
     app.set_stylesheet_from_file(css_path)
 
     app.run()
+    notification.run()
 
 
 def on_prayer_changed():

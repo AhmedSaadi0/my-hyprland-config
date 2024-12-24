@@ -26,14 +26,14 @@ class MetricMonitor:
 
 class CPUMonitor(MetricMonitor):
     def __init__(self):
-        super().__init__("cpu", psutil.cpu_percent)
+        super().__init__("cpu", lambda *args: psutil.cpu_percent(interval=0.1))
 
 
 class RAMMonitor(MetricMonitor):
     def __init__(self):
         super().__init__(
             "ram",
-            lambda: psutil.virtual_memory().percent,
+            lambda *args: psutil.virtual_memory().percent,
             1000 * 60 * 3,
         )
 
@@ -42,7 +42,9 @@ class BatteryMonitor(MetricMonitor):
     def __init__(self):
         super().__init__(
             "battery",
-            lambda: psutil.sensors_battery().percent if psutil.sensors_battery() else 0,
+            lambda *args: (
+                psutil.sensors_battery().percent if psutil.sensors_battery() else 0
+            ),
             1000 * 60 * 5,
         )
 
@@ -51,7 +53,7 @@ class TemperatureMonitor(MetricMonitor):
     def __init__(self):
         super().__init__(
             "temperature",
-            self.get_device_temperature,
+            lambda *args: self.get_device_temperature(),
             1000 * 60 * 1,
         )
 

@@ -71,7 +71,7 @@ class NetworkBarWidget:
                     return interface
         return None
 
-    def get_network_speed(self):
+    def get_network_speed(self, *args):
         return psutil.net_io_counters(pernic=True).get(self.interface)
 
     def update_widget(self, _, value):
