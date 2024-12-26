@@ -1,5 +1,9 @@
+/* Material 3 Dark Mode Colors */
 .unset {
   all: unset; }
+
+.icon-font {
+  font-family: "FantasqueSansM Nerd Font Propo"; }
 
 .small-shadow {
   transition-property: background;
@@ -20,3 +24,207 @@
 
 .shadow:dir(ltr) {
   box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.3); }
+
+.separator {
+  min-height: 0.01rem;
+  min-width: 0.01rem;
+  background: rgba(239, 184, 200, 0.4);
+  margin: 0rem 0.25rem; }
+
+.workspaces {
+  background: #4f378b;
+  color: #eaddff;
+  padding-left: 0rem;
+  padding-right: 0rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  border-radius: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1.1rem; }
+
+.workspaces:dir(rtl) {
+  margin-right: 0.4rem;
+  margin-left: 0.5rem; }
+
+.workspaces:dir(ltr) {
+  margin-right: 0.5rem;
+  margin-left: 0.4rem; }
+
+.workspaces button {
+  all: unset;
+  padding: 0rem 0.6rem;
+  font-family: "FantasqueSansM Nerd Font Propo"; }
+
+.workspaces button.active {
+  border-bottom: 1px solid #eaddff;
+  color: #eaddff;
+  border-radius: 1px;
+  font-family: "FantasqueSansM Nerd Font Propo"; }
+
+.workspaces button.has-windows {
+  color: #eaddff; }
+
+.workspaces button:active {
+  color: #eaddff;
+  background: #4a4458;
+  border-radius: 1px;
+  font-family: "FantasqueSansM Nerd Font Propo"; }
+
+.workspaces button:hover {
+  color: #4f378b;
+  background: #eaddff; }
+
+.wifi-name-label {
+  /* margin-left: 0.7em; */
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  background: #1c1b1f;
+  color: #e6e1e5;
+  font-weight: bold; }
+
+.wifi-name-label:dir(rtl) {
+  padding-left: 0.5em;
+  padding-right: 1em;
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
+
+.wifi-name-label:dir(ltr) {
+  padding-right: 0.5em;
+  padding-left: 1em;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
+
+.wifi-icon-strength {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  background: #1c1b1f;
+  color: #e6e1e5; }
+
+.wifi-icon-strength:dir(rtl) {
+  margin-left: 0.2rem;
+  padding-right: 0.2rem;
+  padding-left: 0.6rem;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem; }
+
+.wifi-icon-strength:dir(ltr) {
+  margin-right: 0.2rem;
+  padding-left: 0.2rem;
+  padding-right: 0.6rem;
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem; }
+
+.bar-hardware-progress-circle, .brightness, .volume, .ram, .temp, .cpu, .battery {
+  min-width: 1.4rem;
+  min-height: 1.3rem;
+  font-size: 0.1rem; }
+
+.bar-hardware-progress-inner-circle, .brightness-inner, .volume label, .temp label, .cpu label, .battery-inner-charging, .battery label {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  font-size: 0.8rem; }
+
+.battery {
+  background: #49454e;
+  color: #d0bcff; }
+
+@keyframes colorChange {
+  0% {
+    color: #d0bcff; }
+  50% {
+    color: #49454e; }
+  100% {
+    color: #d0bcff; } }
+
+.battery label {
+  color: #d0bcff; }
+
+.battery-inner-charging {
+  color: #d0bcff;
+  animation: colorChange 2s infinite; }
+
+/* --------------------------------- */
+/* -------------- CPU -------------- */
+/* --------------------------------- */
+.cpu {
+  background: #49454e;
+  color: #cbc2db; }
+
+.cpu label {
+  font-size: 0.6rem;
+  color: #cbc2db; }
+
+/* ---------------------------------- */
+/* -------------- TEMP -------------- */
+/* ---------------------------------- */
+.temp {
+  background: #49454e;
+  color: #efb8c8; }
+
+.no-hover:hover {
+  all: unset; }
+
+.temp label {
+  color: #efb8c8; }
+
+/* --------------------------------- */
+/* -------------- RAM -------------- */
+/* --------------------------------- */
+.ram {
+  background: #49454e;
+  color: #f2b8b5; }
+
+.ram label {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  font-size: 0.6rem;
+  color: #f2b8b5; }
+
+/* --------------------------------- */
+/* -------------- VOL -------------- */
+/* --------------------------------- */
+.volume {
+  background: #49454e;
+  color: #f2b8b5; }
+
+.volume label {
+  font-size: 0.8rem;
+  color: #f2b8b5; }
+
+/* --------------------------------- */
+/* ----------- BRIGHTNESS ---------- */
+/* --------------------------------- */
+.brightness {
+  background: #49454e;
+  color: #cbc2db; }
+
+.brightness-inner {
+  color: #cbc2db; }
+
+/* ------------------------------------------ */
+/* -------------- Hardware box -------------- */
+/* ------------------------------------------ */
+.hardware-box {
+  background: linear-gradient(to right, #4f378b, #4a4458, rgba(140, 29, 24, 0.5));
+  border-radius: 1.5rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  padding: 0rem 0.25rem; }
+
+.top-bar {
+  background: #1c1b1f;
+  color: #e6e1e5;
+  margin-bottom: 0.5rem; }
+
+.top-corner {
+  background-color: #1c1b1f;
+  border-radius: 1.5rem; }
+
+.clock {
+  background: linear-gradient(to right, #4f378b, #633b48);
+  color: #eaddff;
+  border-radius: 1.5rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  padding-left: 1em;
+  padding-right: 1em; }

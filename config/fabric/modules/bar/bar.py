@@ -1,9 +1,19 @@
-import psutil
+import os
 
-from fabric.hyprland.widgets import ActiveWindow, Language
+import psutil
+import sass
+
+from fabric import Application
+from fabric.hyprland.widgets import Language
 from fabric.system_tray.widgets import SystemTray
-from fabric.utils import FormattedString, bulk_replace, invoke_repeater
+from fabric.utils import (
+    FormattedString,
+    bulk_replace,
+    get_relative_path,
+    invoke_repeater,
+)
 from fabric.widgets.box import Box
+from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.datetime import DateTime
@@ -23,19 +33,53 @@ from .widgets.prayer_times import PrayerTimeDisplay
 from .widgets.workspaces import WorkspaceBox
 
 
+def update_css(application: Application):
+    scss_path = get_relative_path("../../scss/main.scss")
+    css_path = get_relative_path("../../main.css")
+
+    try:
+
+        with open(scss_path, "r") as scss:
+            compiled_css = sass.compile(string=scss.read())
+
+        with open(css_path, "w") as css:
+            css.write(compiled_css)
+            css.flush()
+            os.fsync(css.fileno())
+
+        if os.path.exists(css_path):
+            with open(css_path, "r") as file:
+                css_data = file.read().strip()
+                if not css_data:
+                    print(f"CSS file {css_path} is empty!")
+                    return  # Skip if the file is empty
+        else:
+            print(f"Error: {css_path} does not exist.")
+            return  # Exit if the file does not exist
+
+        application.set_stylesheet_from_file(css_path)
+
+    except FileNotFoundError:
+        print(f"Error: {scss_path} not found.")
+    except sass.CompileError as e:
+        print(f"Error compiling SCSS: {e}")
+
+
 class StatusBar(Window):
+
     def __init__(self):
         super().__init__(
             name="bar",
             layer="top",
             anchor="left top right",
-            margin="10px 10px -2px 10px",
+            # margin="10px 10px -2px 10px",
             exclusivity="auto",
             visible=False,
             all_visible=False,
+            style_classes=["top-bar"],
         )
         self.workspaces = WorkspaceBox()
-        self.active_window = ActiveWindow(name="hyprland-window")
+        # self.active_window = ActiveWindow(name="hyprland-window")
         self.language = Language(
             formatter=FormattedString(
                 "{replace_lang(language)}",
@@ -48,28 +92,23 @@ class StatusBar(Window):
             ),
             name="hyprland-window",
         )
-        self.date_time = DateTime(name="date-time")
+        self.date_time = DateTime(
+            name="date-time",
+            style_classes=["unset", "clock"],
+            formatters="(%I:%M) %A, %d %B",
+        )
         self.system_tray = SystemTray(name="system-tray", spacing=4)
-
-        self.ram_progress_bar = CircularProgressBar(
-            name="ram-progress-bar", pie=True, size=24
-        )
-        self.cpu_progress_bar = CircularProgressBar(
-            name="cpu-progress-bar", pie=True, size=24
-        )
-        self.progress_bars_overlay = Overlay(
-            child=self.ram_progress_bar,
-            overlays=[
-                self.cpu_progress_bar,
-                Label("", style="margin: 0px 6px 0px 0px; font-size: 12px"),
-            ],
+        self.update_css = Button(
+            label="update",
+            on_clicked=lambda *args: update_css(self.application),
         )
 
         self.status_container = Box(
             name="widgets-container",
             spacing=4,
             orientation="h",
-            children=self.progress_bars_overlay,
+            # children=self.progress_bars_overlay,
+            style_classes=["hardware-box"],
         )
         monitor = CPUMonitor()
         vol_monitor = VolumeMonitor()
@@ -77,12 +116,13 @@ class StatusBar(Window):
         ram = RAMMonitor()
         bat = BatteryMonitor()
         network = NetworkBarWidget()
+        self.status_container.add(network.get_widget())
+        self.status_container.add(Box(style_classes="separator"))
         self.status_container.add(monitor.get_widget())
         self.status_container.add(vol_monitor.get_widget())
         self.status_container.add(temp.get_widget())
         self.status_container.add(ram.get_widget())
         self.status_container.add(bat.get_widget())
-        self.status_container.add(network.get_widget())
 
         prayer_display = PrayerTimeDisplay(city="Sanaa", country="Yemen").get_widget()
 
@@ -94,6 +134,7 @@ class StatusBar(Window):
                 orientation="h",
                 children=[
                     self.workspaces,
+                    self.update_css,
                     prayer_display,
                 ],
             ),
@@ -101,26 +142,20 @@ class StatusBar(Window):
                 name="center-container",
                 spacing=4,
                 orientation="h",
-                children=self.active_window,
+                children=[
+                    self.date_time,
+                ],
             ),
             end_children=Box(
                 name="end-container",
                 spacing=4,
                 orientation="h",
                 children=[
-                    self.status_container,
                     self.system_tray,
-                    self.date_time,
+                    self.status_container,
                     self.language,
                 ],
             ),
         )
 
-        invoke_repeater(1000, self.update_progress_bars)
-
         self.show_all()
-
-    def update_progress_bars(self):
-        self.ram_progress_bar.value = psutil.virtual_memory().percent / 100
-        self.cpu_progress_bar.value = psutil.cpu_percent() / 100
-        return True

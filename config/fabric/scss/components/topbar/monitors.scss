@@ -1,0 +1,136 @@
+.bar-hardware-progress-circle {
+  min-width: 1.4rem;
+  min-height: 1.3rem;
+  font-size: 0.1rem;
+}
+
+.bar-hardware-progress-inner-circle {
+  font-family: $icon-font-family;
+  font-size: 0.8rem;
+}
+
+.battery {
+  @extend .bar-hardware-progress-circle;
+  background: rgba($surface-variant, 1);
+  color: $primary;
+}
+
+@keyframes colorChange {
+  0% {
+    color: $primary;
+  }
+
+  50% {
+    color: rgba($surface-variant, 1);
+  }
+
+  100% {
+    color: $primary;
+  }
+}
+
+.battery label {
+  @extend .bar-hardware-progress-inner-circle;
+  color: $primary;
+}
+
+.battery-inner-charging {
+  @extend .bar-hardware-progress-inner-circle;
+  color: $primary;
+  animation: colorChange 2s infinite;
+}
+
+/* --------------------------------- */
+/* -------------- CPU -------------- */
+/* --------------------------------- */
+.cpu {
+  @extend .bar-hardware-progress-circle;
+  background: rgba($surface-variant, 1);
+  color: $secondary;
+}
+
+.cpu label {
+  @extend .bar-hardware-progress-inner-circle;
+  font-size: 0.6rem;
+  color: $secondary;
+}
+
+/* ---------------------------------- */
+/* -------------- TEMP -------------- */
+/* ---------------------------------- */
+.temp {
+  @extend .bar-hardware-progress-circle;
+  background: rgba($surface-variant, 1);
+  color: $tertiary;
+}
+
+.no-hover:hover {
+  all: unset;
+}
+
+.temp label {
+  @extend .bar-hardware-progress-inner-circle;
+  color: $tertiary;
+}
+
+/* --------------------------------- */
+/* -------------- RAM -------------- */
+/* --------------------------------- */
+.ram {
+  @extend .bar-hardware-progress-circle;
+  background: rgba($surface-variant, 1);
+  color: $error;
+}
+
+.ram label {
+  font-family: $icon-font-family;
+  font-size: 0.6rem;
+  color: $error;
+}
+
+/* --------------------------------- */
+/* -------------- VOL -------------- */
+/* --------------------------------- */
+.volume {
+  @extend .bar-hardware-progress-circle;
+  background: rgba($surface-variant, 1);
+  color: $error;
+}
+
+.volume label {
+  @extend .bar-hardware-progress-inner-circle;
+  font-size: 0.8rem;
+  color: $error;
+}
+
+/* --------------------------------- */
+/* ----------- BRIGHTNESS ---------- */
+/* --------------------------------- */
+.brightness {
+  @extend .bar-hardware-progress-circle;
+  background: rgba($surface-variant, 1);
+  color: $secondary;
+}
+
+.brightness-inner {
+  @extend .bar-hardware-progress-inner-circle;
+  color: $secondary;
+  // margin-top: 0.1rem;
+}
+
+/* ------------------------------------------ */
+/* -------------- Hardware box -------------- */
+/* ------------------------------------------ */
+.hardware-box {
+  background: linear-gradient(
+    to right,
+    $primary-container,
+    $secondary-container,
+    rgba($error-container, 0.5)
+  );
+  // padding: 0.2rem 0.5rem;
+  border-radius: $border-radius;
+  margin-top: $bar-top-margin;
+  margin-bottom: $bar-bottom-margin;
+  padding: 0rem 0.25rem;
+}

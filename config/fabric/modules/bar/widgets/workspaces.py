@@ -3,7 +3,6 @@ import json
 from fabric.hyprland.service import HyprlandEvent
 from fabric.hyprland.widgets import WorkspaceButton, Workspaces
 from fabric.utils import FormattedString
-from fabric.utils.helpers import FormattedString
 from fabric.widgets.box import Box
 
 
@@ -113,5 +112,6 @@ class WorkspaceBox(Box):
             # invert_scroll=True,
             # empty_scroll=True,
             buttons=buttons,
+            style_classes=["icon-font", "workspaces"],
         )
         return workspaces

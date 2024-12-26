@@ -12,15 +12,29 @@ from fabric.widgets.label import Label
 class NetworkBarWidget:
     _old_value = None
 
-    def __init__(self, interval=1000):
+    def __init__(self, interval=1000, style_classes=["unset"]):
         self.name = "network-widget"
         self.interval = interval
         self.interface = self.get_active_interface()
         self.current_ssid = self.get_network_ssid()
 
-        self.ssid_label = Label(label=self.current_ssid, style="font-weight: bold;")
+        self.ssid_label = Label(
+            label=self.current_ssid,
+            style="font-weight: bold;",
+            style_classes=["unset", "wifi-name-label"],
+        )
+        self.wifi_icon = Label(
+            label="-",
+            style="font-weight: bold;",
+            style_classes=["unset", "wifi-icon-strength"],
+        )
         self.meter = self.create_speed_meter()
-        self.widget = EventBox(child=Box(children=[self.ssid_label, self.meter]))
+        self.widget = EventBox(
+            child=Box(
+                children=[self.ssid_label, self.wifi_icon, self.meter],
+                style_classes=style_classes,
+            ),
+        )
         self.widget.connect("button-press-event", self.on_click)
 
         self.fabricator = Fabricator(self.get_network_speed, interval=interval)

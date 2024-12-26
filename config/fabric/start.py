@@ -1,5 +1,6 @@
 import os
 
+import psutil
 import sass
 
 from fabric import Application
@@ -10,7 +11,6 @@ from notifications import notification_window
 
 prayer_service = PrayerTimesService(city="Sanaa", country="Yemen")
 
-import psutil
 
 battery = psutil.sensors_battery()
 if battery:
@@ -22,9 +22,9 @@ else:
 
 def compile_scss_to_css(scss_file: str, css_file: str):
     try:
-        with open(scss_file, "r") as scss:
+        with open(scss_file, "r", encoding="utf-8") as scss:
             compiled_css = sass.compile(string=scss.read())
-        with open(css_file, "w") as css:
+        with open(css_file, "w", encoding="utf-8") as css:
             css.write(compiled_css)
         print(f"Compiled {scss_file} to {css_file}")
     except FileNotFoundError:
