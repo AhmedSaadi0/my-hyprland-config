@@ -1,24 +1,15 @@
 import os
 
-import psutil
 import sass
 
 from fabric import Application
 from fabric.hyprland.widgets import Language
 from fabric.system_tray.widgets import SystemTray
-from fabric.utils import (
-    FormattedString,
-    bulk_replace,
-    get_relative_path,
-    invoke_repeater,
-)
+from fabric.utils import FormattedString, bulk_replace, get_relative_path
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
-from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.datetime import DateTime
-from fabric.widgets.label import Label
-from fabric.widgets.overlay import Overlay
 from fabric.widgets.wayland import WaylandWindow as Window
 
 from .widgets.monitors import (
@@ -110,7 +101,7 @@ class StatusBar(Window):
             # children=self.progress_bars_overlay,
             style_classes=["hardware-box"],
         )
-        monitor = CPUMonitor()
+        cpu_monitor = CPUMonitor()
         vol_monitor = VolumeMonitor()
         temp = TemperatureMonitor()
         ram = RAMMonitor()
@@ -118,11 +109,11 @@ class StatusBar(Window):
         network = NetworkBarWidget()
         self.status_container.add(network.get_widget())
         self.status_container.add(Box(style_classes="separator"))
-        self.status_container.add(monitor.get_widget())
-        self.status_container.add(vol_monitor.get_widget())
-        self.status_container.add(temp.get_widget())
+        self.status_container.add(cpu_monitor.get_widget())
         self.status_container.add(ram.get_widget())
         self.status_container.add(bat.get_widget())
+        self.status_container.add(temp.get_widget())
+        self.status_container.add(vol_monitor.get_widget())
 
         prayer_display = PrayerTimeDisplay(city="Sanaa", country="Yemen").get_widget()
 

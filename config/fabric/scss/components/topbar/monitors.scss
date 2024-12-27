@@ -1,7 +1,8 @@
 .bar-hardware-progress-circle {
-  min-width: 1.4rem;
-  min-height: 1.3rem;
-  font-size: 0.1rem;
+  // min-width: 1.4rem;
+  // min-height: 1.3rem;
+  // font-size: 0.1rem;
+  border: solid 0px rgba($surface-variant, 0.8);
 }
 
 .bar-hardware-progress-inner-circle {
@@ -11,8 +12,8 @@
 
 .battery {
   @extend .bar-hardware-progress-circle;
-  background: rgba($surface-variant, 1);
-  color: $primary;
+  color: rgba($primary, 0.2);
+  border: solid 0px rgba($primary, 1);
 }
 
 @keyframes colorChange {
@@ -36,7 +37,8 @@
 
 .battery-inner-charging {
   @extend .bar-hardware-progress-inner-circle;
-  color: $primary;
+  color: rgba($primary, 0.2);
+  border: solid 0px rgba($primary, 1);
   animation: colorChange 2s infinite;
 }
 
@@ -45,14 +47,15 @@
 /* --------------------------------- */
 .cpu {
   @extend .bar-hardware-progress-circle;
-  background: rgba($surface-variant, 1);
-  color: $secondary;
+  color: rgba($secondary, 0.2);
+  border: solid 0px rgba($secondary, 1);
 }
 
 .cpu label {
   @extend .bar-hardware-progress-inner-circle;
-  font-size: 0.6rem;
+  // font-size: 0.6rem;
   color: $secondary;
+  border: solid 0px rgba($secondary, 1);
 }
 
 /* ---------------------------------- */
@@ -60,8 +63,8 @@
 /* ---------------------------------- */
 .temp {
   @extend .bar-hardware-progress-circle;
-  background: rgba($surface-variant, 1);
-  color: $tertiary;
+  color: rgba($tertiary, 0.2);
+  border: solid 0px rgba($tertiary, 1);
 }
 
 .no-hover:hover {
@@ -78,8 +81,8 @@
 /* --------------------------------- */
 .ram {
   @extend .bar-hardware-progress-circle;
-  background: rgba($surface-variant, 1);
-  color: $error;
+  color: rgba($error, 0.2);
+  border: solid 0px rgba($error, 1);
 }
 
 .ram label {
@@ -93,8 +96,8 @@
 /* --------------------------------- */
 .volume {
   @extend .bar-hardware-progress-circle;
-  background: rgba($surface-variant, 1);
-  color: $error;
+  color: rgba($error, 0.2);
+  border: solid 0px rgba($error, 1);
 }
 
 .volume label {
@@ -108,8 +111,8 @@
 /* --------------------------------- */
 .brightness {
   @extend .bar-hardware-progress-circle;
-  background: rgba($surface-variant, 1);
-  color: $secondary;
+  color: rgba($secondary, 0.2);
+  border: solid 0px rgba($secondary, 1);
 }
 
 .brightness-inner {

@@ -117,17 +117,15 @@
   border-bottom-right-radius: 1.5rem; }
 
 .bar-hardware-progress-circle, .brightness, .volume, .ram, .temp, .cpu, .battery {
-  min-width: 1.4rem;
-  min-height: 1.3rem;
-  font-size: 0.1rem; }
+  border: solid 0px rgba(73, 69, 78, 0.8); }
 
 .bar-hardware-progress-inner-circle, .brightness-inner, .volume label, .temp label, .cpu label, .battery-inner-charging, .battery label {
   font-family: "FantasqueSansM Nerd Font Propo";
   font-size: 0.8rem; }
 
 .battery {
-  background: #49454e;
-  color: #d0bcff; }
+  color: rgba(208, 188, 255, 0.2);
+  border: solid 0px #d0bcff; }
 
 @keyframes colorChange {
   0% {
@@ -141,26 +139,27 @@
   color: #d0bcff; }
 
 .battery-inner-charging {
-  color: #d0bcff;
+  color: rgba(208, 188, 255, 0.2);
+  border: solid 0px #d0bcff;
   animation: colorChange 2s infinite; }
 
 /* --------------------------------- */
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: #49454e;
-  color: #cbc2db; }
+  color: rgba(203, 194, 219, 0.2);
+  border: solid 0px #cbc2db; }
 
 .cpu label {
-  font-size: 0.6rem;
-  color: #cbc2db; }
+  color: #cbc2db;
+  border: solid 0px #cbc2db; }
 
 /* ---------------------------------- */
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: #49454e;
-  color: #efb8c8; }
+  color: rgba(239, 184, 200, 0.2);
+  border: solid 0px #efb8c8; }
 
 .no-hover:hover {
   all: unset; }
@@ -172,8 +171,8 @@
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: #49454e;
-  color: #f2b8b5; }
+  color: rgba(242, 184, 181, 0.2);
+  border: solid 0px #f2b8b5; }
 
 .ram label {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -184,8 +183,8 @@
 /* -------------- VOL -------------- */
 /* --------------------------------- */
 .volume {
-  background: #49454e;
-  color: #f2b8b5; }
+  color: rgba(242, 184, 181, 0.2);
+  border: solid 0px #f2b8b5; }
 
 .volume label {
   font-size: 0.8rem;
@@ -195,8 +194,8 @@
 /* ----------- BRIGHTNESS ---------- */
 /* --------------------------------- */
 .brightness {
-  background: #49454e;
-  color: #cbc2db; }
+  color: rgba(203, 194, 219, 0.2);
+  border: solid 0px #cbc2db; }
 
 .brightness-inner {
   color: #cbc2db; }
