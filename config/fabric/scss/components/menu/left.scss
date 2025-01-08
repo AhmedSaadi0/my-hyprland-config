@@ -1,4 +1,6 @@
 .left-menu {
+  background: $surface;
+  color: $on-surface;
   border-radius: $border-radius;
   border: $border-size solid $primary;
 }
@@ -21,3 +23,5 @@
   margin-top: -4rem;
   border-radius: $border-radius;
 }
+
+@import "scss/components/menu/topbar.scss";

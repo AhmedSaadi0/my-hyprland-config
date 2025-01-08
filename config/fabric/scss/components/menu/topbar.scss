@@ -1,0 +1,52 @@
+.topbar-icons-box {
+  background: $primary-container;
+  border-radius: $border-radius;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  padding: 0rem 0.3rem;
+}
+
+.topbar-button {
+  all: unset;
+  padding: 0.3rem 0rem;
+  margin: 0.5rem;
+  color: $on-primary-container;
+  // min-width: 1.5rem;
+}
+
+.topbar-button:hover {
+  @extend .topbar-button;
+  transition:
+    background 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+  background: $primary;
+  color: $on-primary;
+  border-radius: $border-radius;
+}
+
+.topbar-button-icon {
+  font-family: $icon-font-family;
+  min-width: 2rem;
+}
+
+.topbar-button-text {
+  min-width: 5.5rem;
+}
+
+.topbar-button-selected {
+  @extend .topbar-button;
+  // min-width: 6.6rem;
+  background: $primary;
+  color: $on-primary;
+  border-radius: $border-radius;
+  margin: 0.5rem 0.4rem;
+  padding-left: 1rem;
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+.topbar-button-selected:hover {
+  @extend .topbar-button-selected;
+}
