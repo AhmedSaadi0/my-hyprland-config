@@ -15,7 +15,8 @@ class PrayerTimeDisplay:
     def update_ui(self, *_args):
         """Update the label with current and next prayer times."""
         self.prayer_time_label.set_property(
-            "label", self.prayer_service.next_prayer_name
+            "label",
+            self.prayer_service.next_prayer_name,
         )
 
     def get_widget(self):

@@ -1,0 +1,23 @@
+.left-menu {
+  border-radius: $border-radius;
+  border: $border-size solid $primary;
+}
+
+.left-menu-header-background {
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  min-width: 23rem;
+  min-height: 12rem;
+  margin: $border-size;
+}
+
+.left-menu-header-profile {
+  background: rgba($primary-container, 0.7);
+  color: $on-primary-container;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: -4rem;
+  border-radius: $border-radius;
+}

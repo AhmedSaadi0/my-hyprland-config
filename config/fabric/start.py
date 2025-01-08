@@ -6,6 +6,7 @@ import sass
 from fabric import Application
 from fabric.utils import get_relative_path
 from modules.bar.bar import StatusBar
+from modules.menu.left import LeftMenu
 from modules.services.prayer_times import PrayerTimesService
 from notifications import notification_window
 
@@ -36,9 +37,11 @@ def compile_scss_to_css(scss_file: str, css_file: str):
 
 
 if __name__ == "__main__":
-    bar = StatusBar()
-    app = Application("bar", bar)
-    notification = Application("notifications", notification_window)
+    # bar = StatusBar()
+    left_menu = LeftMenu()
+
+    app = Application("left-menu", left_menu)
+    # app.add_window(left_menu)
 
     scss_path = get_relative_path("scss/main.scss")
     css_path = get_relative_path("main.css")
@@ -50,9 +53,7 @@ if __name__ == "__main__":
         exit(1)
 
     app.set_stylesheet_from_file(css_path)
-
     app.run()
-    notification.run()
 
 
 def on_prayer_changed():
