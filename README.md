@@ -18,7 +18,7 @@
 ### برامج ضرورية
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
-- [AGS](https://github.com/AhmedSaadi0/ags)
+- [AGS](https://github.com/Aylur/ags/wiki/installation)
 - network-manager-applet
 - playerctl
 - polkit-kde-agent or polkit-gnome
@@ -41,21 +41,17 @@
 - lm_sensors
 - copyq
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
-- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
 ### برامج اختيارية
 
 - strawberry
 - easyeffects
-- nwg-look
 - blueman
 - telegram-desktop
 - discord
 - kvantum
 - firefox
-- qt5ct
-- qt6ct
-- kitty
+- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
 ## التثبيت
 
@@ -63,7 +59,7 @@
 
 ```bash
 # تثبيت البرامج المطلوبة
-yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww
+yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww
 
 # تثبيت البرامج الاختيارية
 yay -S orchis-theme-git discord firefox visual-studio-code-bin nwg-look-bin qt5ct telegram-desktop strawberry
@@ -82,11 +78,7 @@ sudo dnf install network-manager-applet playerctl brightnessctl gammastep syssta
 
 # تفعيل مستودع هيبر لاند
 sudo dnf copr enable solopasha/hyprland
-sudo dnf install hyprland hyprshot hyprpicker wl-clipboard
-
-# تفعيل مستودع gradience
-sudo dnf copr enable lyessaadi/gradience
-sudo dnf install gradience
+sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard
 
 # تفعيل مستودع material-you-colors
 sudo dnf copr enable luisbocanegra/kde-material-you-colors
@@ -96,16 +88,35 @@ sudo dnf install kde-material-you-colors
 sudo dnf install plasma-desktop ark kate dolphin
 ```
 
+### مستخدمي Fedora 41
+
+```bash
+# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
+sudo dnf install ffmpeg --allowerasing
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh
+
+# تفعيل مستودع هيبر لاند
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard swww
+
+# تفعيل مستودع material-you-colors
+sudo dnf copr enable luisbocanegra/kde-material-you-colors
+sudo dnf install kde-material-you-colors
+
+# تثبيت plasma-desktop - غير الزامي
+sudo dnf install plasma-desktop ark kate dolphin
+```
+
 **ملاحطة:** إذا كنت تستخدم نظام تشغيل آخر غير أرش او فيدورا فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.
 
 #### مثلا:
 
 - بالنسبة للتوزيعات القائمة على **دبيان/أوبونتو**، يمكنك تثبيت البرامج باستخدام `apt install` او البحث عن طريق `apt search hyprland`.
 - بالنسبة لبرامج ادارة الحزم الاخرى، قم بالبحث عن كل برنامج وتثبيته عبر مدير حزم نظامك.
-
-### تثبيت AGS
-
-[ادخل هنا](https://github.com/AhmedSaadi0/ags?tab=readme-ov-file#install)
 
 ### اعداد الملفات:
 
@@ -250,7 +261,7 @@ It is recommended to use this setup with KDE applications for the best experienc
 ### Required dependencies:
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
-- [AGS](https://github.com/AhmedSaadi0/ags)
+- [AGS](https://github.com/Aylur/ags/wiki/installation)
 - network-manager-applet
 - playerctl
 - polkit-kde-agent or polkit-gnome
@@ -270,23 +281,19 @@ It is recommended to use this setup with KDE applications for the best experienc
 - gnome-bluetooth-3.0
 - power-profiles-daemon
 - lm_sensors
-- [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
-- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 - copyq
+- [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 
 ### Optional dependencies:
 
 - strawberry
 - easyeffects
-- nwg-look
 - blueman
 - telegram-desktop
 - discord
 - kvantum
 - firefox
-- qt5ct
-- qt6ct
-- kitty
+- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
 ## Installing:
 
@@ -294,7 +301,7 @@ It is recommended to use this setup with KDE applications for the best experienc
 
 ```bash
 # Install required applications
-yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq
+yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 aylurs-gtk-shell-git ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq
 
 # Install optional applications
 yay -S orchis-theme-git discord firefox visual-studio-code-bin nwg-look-bin qt5ct telegram-desktop strawberry
@@ -313,11 +320,7 @@ sudo dnf install network-manager-applet playerctl brightnessctl gammastep syssta
 
 # Enable Hyprland repository
 sudo dnf copr enable solopasha/hyprland
-sudo dnf install hyprland hyprshot hyprpicker wl-clipboard
-
-# Enable gradience repository
-sudo dnf copr enable lyessaadi/gradience
-sudo dnf install gradience
+sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard
 
 # Enable kde-material-you-colors repository
 sudo dnf copr enable luisbocanegra/kde-material-you-colors
@@ -327,16 +330,35 @@ sudo dnf install kde-material-you-colors
 sudo dnf install plasma-desktop ark kate dolphin
 ```
 
+### Fedora 41
+
+```bash
+# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# Install needed apps with other supporting apps like media support
+sudo dnf install ffmpeg --allowerasing
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh
+
+# Enable Hyprland repository
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard swww
+
+# material-you-colors
+sudo dnf copr enable luisbocanegra/kde-material-you-colors
+sudo dnf install kde-material-you-colors
+
+# Install plasma-desktop for its apps - Optional
+sudo dnf install plasma-desktop ark kate dolphin
+```
+
 **Note:** If you use an operating system other than Arch or Fedora, you will need to install all required dependencies. The specific steps may vary depending on your distro.
 
 #### Example:
 
 - For **Debian/Ubuntu-based** systems, you can install dependencies using `apt install` or search using `apt search hyprland`.
 - For other package managers, search for each dependency and install using your system's package manager.
-
-### Install AGS
-
-[Go here](https://github.com/AhmedSaadi0/ags?tab=readme-ov-file#install)
 
 ### Setting up files:
 
