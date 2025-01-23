@@ -41,21 +41,17 @@
 - lm_sensors
 - copyq
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
-- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
 ### برامج اختيارية
 
 - strawberry
 - easyeffects
-- nwg-look
 - blueman
 - telegram-desktop
 - discord
 - kvantum
 - firefox
-- qt5ct
-- qt6ct
-- kitty
+- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
 ## التثبيت
 
@@ -84,15 +80,34 @@ sudo dnf install network-manager-applet playerctl brightnessctl gammastep syssta
 sudo dnf copr enable solopasha/hyprland
 sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard
 
-# تفعيل مستودع gradience
-sudo dnf copr enable lyessaadi/gradience
-sudo dnf install gradience
-
 # تفعيل مستودع material-you-colors
 sudo dnf copr enable luisbocanegra/kde-material-you-colors
 sudo dnf install kde-material-you-colors
 
 # تثبيت plasma-desktop
+sudo dnf install plasma-desktop ark kate dolphin
+```
+
+### مستخدمي Fedora 41
+
+```bash
+# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
+sudo dnf install ffmpeg --allowerasing
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap
+
+# تفعيل مستودع هيبر لاند
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard swww
+
+# تفعيل مستودع material-you-colors
+sudo dnf copr enable luisbocanegra/kde-material-you-colors
+sudo dnf install kde-material-you-colors
+
+# تثبيت plasma-desktop - غير الزامي
 sudo dnf install plasma-desktop ark kate dolphin
 ```
 
@@ -266,23 +281,19 @@ It is recommended to use this setup with KDE applications for the best experienc
 - gnome-bluetooth-3.0
 - power-profiles-daemon
 - lm_sensors
-- [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
-- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 - copyq
+- [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
 
 ### Optional dependencies:
 
 - strawberry
 - easyeffects
-- nwg-look
 - blueman
 - telegram-desktop
 - discord
 - kvantum
 - firefox
-- qt5ct
-- qt6ct
-- kitty
+- [Gradience](https://github.com/GradienceTeam/Gradience?tab=readme-ov-file) for gtk4 Material you themes
 
 ## Installing:
 
@@ -311,15 +322,34 @@ sudo dnf install network-manager-applet playerctl brightnessctl gammastep syssta
 sudo dnf copr enable solopasha/hyprland
 sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard
 
-# Enable gradience repository
-sudo dnf copr enable lyessaadi/gradience
-sudo dnf install gradience
-
 # Enable kde-material-you-colors repository
 sudo dnf copr enable luisbocanegra/kde-material-you-colors
 sudo dnf install kde-material-you-colors
 
 # Install plasma-desktop for its apps
+sudo dnf install plasma-desktop ark kate dolphin
+```
+
+### Fedora 41
+
+```bash
+# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# Install needed apps with other supporting apps like media support
+sudo dnf install ffmpeg --allowerasing
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap
+
+# Enable Hyprland repository
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install aylurs-gtk-shell hyprland hyprshot hyprpicker wl-clipboard swww
+
+# material-you-colors
+sudo dnf copr enable luisbocanegra/kde-material-you-colors
+sudo dnf install kde-material-you-colors
+
+# Install plasma-desktop for its apps - Optional
 sudo dnf install plasma-desktop ark kate dolphin
 ```
 
