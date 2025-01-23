@@ -1,5 +1,5 @@
 import themeService from '../../services/ThemeService.js';
-import settings from '../../settings.js';
+// import settings from '../../settings.js';
 import ThemesDictionary from '../../theme/themes.js';
 
 const Header = () => {

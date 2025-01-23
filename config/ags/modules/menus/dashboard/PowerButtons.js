@@ -52,6 +52,7 @@ const powerOff = Widget.Button({
     className: 'theme-btn',
     css: `min-width: 5rem; min-height: 2rem;border-radius: 1rem;${powerBtnMargin}`,
     child: Widget.Label({
+        className: 'theme-btn-icon',
         label: '',
     }),
     onClicked: () => {
@@ -69,6 +70,7 @@ const reboot = Widget.Button({
     className: 'theme-btn',
     css: `min-width: 5rem;	min-height: 2rem;border-radius: 1rem;${powerBtnMargin}`,
     child: Widget.Label({
+        className: 'theme-btn-icon',
         label: '',
     }),
     onClicked: () => {
@@ -87,6 +89,7 @@ const logout = Widget.Button({
     className: 'theme-btn',
     css: `min-width: 5rem;min-height: 2rem;border-radius: 1rem;`,
     child: Widget.Label({
+        className: 'theme-btn-icon',
         label: '',
     }),
     onClicked: () => {

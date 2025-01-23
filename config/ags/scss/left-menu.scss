@@ -209,8 +209,8 @@
 .toolbar-button:hover {
     @extend .toolbar-button;
     transition:
-        background 0.2s ease-in-out,
-        color 0.2s ease-in-out;
+        background 0.3s ease-in-out,
+        color 0.3s ease-in-out;
     background: $btn-hover-background;
     color: $btn-hover-color;
     border-radius: $border-radius;
