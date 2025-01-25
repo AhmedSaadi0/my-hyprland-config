@@ -224,13 +224,13 @@
   padding-left: 1em;
   padding-right: 1em; }
 
-.left-menu {
+.main-menu {
   background: #1c1b1f;
   color: #e6e1e5;
   border-radius: 1.5rem;
   border: 0.15rem solid #d0bcff; }
 
-.left-menu-header-background {
+.main-menu-header-background {
   background-size: cover;
   background-position: center;
   border-top-left-radius: 1.5rem;
@@ -239,7 +239,7 @@
   min-height: 12rem;
   margin: 0.15rem; }
 
-.left-menu-header-profile {
+.main-menu-header-profile {
   background: rgba(79, 55, 139, 0.7);
   color: #eaddff;
   margin-left: 1rem;
