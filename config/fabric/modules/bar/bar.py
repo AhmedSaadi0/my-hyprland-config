@@ -11,6 +11,7 @@ from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
+from modules.menu.main import MainMenu
 
 from .widgets.monitors import (
     BatteryMonitor,
@@ -57,21 +58,36 @@ def update_css(application: Application):
 
 
 class StatusBar(Window):
-
-    def __init__(self):
+    def __init__(self, menu=MainMenu()):
         super().__init__(
             name="bar",
             layer="top",
             anchor="left top right",
-            # margin="10px 10px -2px 10px",
             exclusivity="auto",
             visible=False,
             all_visible=False,
             style_classes=["top-bar"],
         )
+        self.menu = menu
+
+        # عناصر الواجهة
         self.workspaces = WorkspaceBox()
-        # self.active_window = ActiveWindow(name="hyprland-window")
-        self.language = Language(
+        self.language = self.create_language_widget()
+        self.open_menu = self.create_open_menu_button()
+        self.date_time = self.create_date_time_widget()
+        self.system_tray = SystemTray(name="system-tray", spacing=4)
+        self.update_css = self.create_update_button()
+        self.status_container = self.create_status_container()
+        self.prayer_display = self.create_prayer_display()
+
+        # إعداد الواجهة
+        self.children = self.create_layout(self.prayer_display)
+
+        self.show_all()
+
+    def create_language_widget(self):
+        """إنشاء عنصر اللغة."""
+        return Language(
             formatter=FormattedString(
                 "{replace_lang(language)}",
                 replace_lang=lambda lang: bulk_replace(
@@ -82,42 +98,63 @@ class StatusBar(Window):
                 ),
             ),
             name="hyprland-window",
+            # style_classes="topbar-btn",
+            style_classes=["unset", "clock"],
         )
-        self.date_time = DateTime(
+
+    def create_open_menu_button(self):
+        """إنشاء زر فتح القائمة."""
+        return Button(
+            label="menu",
+            on_clicked=lambda *args: self.menu.toggle(),
+            # style_classes="topbar-btn",
+            style_classes=["unset", "clock"],
+        )
+
+    def create_date_time_widget(self):
+        """إنشاء عنصر التاريخ والوقت."""
+        return DateTime(
             name="date-time",
             style_classes=["unset", "clock"],
             formatters="(%I:%M) %A, %d %B",
         )
-        self.system_tray = SystemTray(name="system-tray", spacing=4)
-        self.update_css = Button(
+
+    def create_update_button(self):
+        """إنشاء زر تحديث CSS."""
+        return Button(
             label="update",
             on_clicked=lambda *args: update_css(self.application),
+            style_classes=["unset", "clock"],
         )
 
-        self.status_container = Box(
+    def create_prayer_display(self):
+        """إنشاء عنصر عرض أوقات الصلاة."""
+        return PrayerTimeDisplay(city="Sanaa", country="Yemen").get_widget()
+
+    def create_status_container(self):
+        """إنشاء حاوية لعناصر الحالة (CPU، RAM، إلخ)."""
+        container = Box(
             name="widgets-container",
             spacing=4,
             orientation="h",
-            # children=self.progress_bars_overlay,
             style_classes=["hardware-box"],
         )
-        cpu_monitor = CPUMonitor()
-        vol_monitor = VolumeMonitor()
-        temp = TemperatureMonitor()
-        ram = RAMMonitor()
-        bat = BatteryMonitor()
-        network = NetworkBarWidget()
-        self.status_container.add(network.get_widget())
-        self.status_container.add(Box(style_classes="separator"))
-        self.status_container.add(cpu_monitor.get_widget())
-        self.status_container.add(ram.get_widget())
-        self.status_container.add(bat.get_widget())
-        self.status_container.add(temp.get_widget())
-        self.status_container.add(vol_monitor.get_widget())
+        widgets = [
+            NetworkBarWidget().get_widget(),
+            Box(style_classes="separator"),
+            CPUMonitor().get_widget(),
+            RAMMonitor().get_widget(),
+            BatteryMonitor().get_widget(),
+            TemperatureMonitor().get_widget(),
+            VolumeMonitor().get_widget(),
+        ]
+        for widget in widgets:
+            container.add(widget)
+        return container
 
-        prayer_display = PrayerTimeDisplay(city="Sanaa", country="Yemen").get_widget()
-
-        self.children = CenterBox(
+    def create_layout(self, prayer_display):
+        """إنشاء التخطيط الرئيسي لشريط الحالة."""
+        return CenterBox(
             name="bar-inner",
             start_children=Box(
                 name="start-container",
@@ -125,8 +162,7 @@ class StatusBar(Window):
                 orientation="h",
                 children=[
                     self.workspaces,
-                    self.update_css,
-                    prayer_display,
+                    self.status_container,
                 ],
             ),
             center_children=Box(
@@ -142,11 +178,11 @@ class StatusBar(Window):
                 spacing=4,
                 orientation="h",
                 children=[
-                    self.system_tray,
-                    self.status_container,
+                    prayer_display,
+                    self.update_css,
                     self.language,
+                    self.system_tray,
+                    self.open_menu,
                 ],
             ),
         )
-
-        self.show_all()

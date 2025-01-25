@@ -45,10 +45,10 @@
 
 .workspaces:dir(rtl) {
   margin-right: 0.4rem;
-  margin-left: 0.5rem; }
+  margin-left: 0.3rem; }
 
 .workspaces:dir(ltr) {
-  margin-right: 0.5rem;
+  margin-right: 0.3rem;
   margin-left: 0.4rem; }
 
 .workspaces button {
@@ -77,15 +77,13 @@
 
 .wifi-name-label {
   /* margin-left: 0.7em; */
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
   background: #1c1b1f;
   color: #e6e1e5;
   font-weight: bold; }
 
 .wifi-name-label:dir(rtl) {
-  padding-left: 0.5em;
-  padding-right: 1em;
+  padding-left: 0.5rem;
+  padding-right: 1rem;
   border-top-right-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem; }
 
@@ -97,8 +95,6 @@
 
 .wifi-icon-strength {
   font-family: "FantasqueSansM Nerd Font Propo";
-  margin-top: 0.2rem;
-  margin-bottom: 0.2rem;
   background: #1c1b1f;
   color: #e6e1e5; }
 
@@ -118,10 +114,10 @@
 
 .bar-hardware-progress-inner-circle, .brightness-inner, .volume label, .temp label, .cpu label, .battery-inner-charging, .battery label {
   font-family: "FantasqueSansM Nerd Font Propo";
-  font-size: 0.9rem; }
+  font-size: 0.7rem; }
 
 .battery {
-  color: rgba(208, 188, 255, 0.2);
+  color: rgba(208, 188, 255, 0);
   border: solid 2px #d0bcff; }
 
 @keyframes colorChange {
@@ -145,6 +141,7 @@
 /* --------------------------------- */
 .cpu {
   background: rgba(203, 194, 219, 0.4);
+  color: rgba(203, 194, 219, 0);
   border: solid 2px #cbc2db; }
 
 .cpu label {
@@ -155,7 +152,8 @@
 /* ---------------------------------- */
 .temp {
   background: rgba(239, 184, 200, 0.2);
-  border: solid 2px #efb8c8; }
+  border: solid 2px #efb8c8;
+  color: rgba(208, 188, 255, 0); }
 
 .no-hover:hover {
   all: unset; }
@@ -168,7 +166,8 @@
 /* --------------------------------- */
 .ram {
   background: rgba(242, 184, 181, 0.2);
-  border: solid 2px #f2b8b5; }
+  border: solid 2px #f2b8b5;
+  color: rgba(208, 188, 255, 0); }
 
 .ram label {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -180,10 +179,11 @@
 /* --------------------------------- */
 .volume {
   background: rgba(242, 184, 181, 0.2);
-  border: solid 2px #f2b8b5; }
+  border: solid 2px #f2b8b5;
+  color: rgba(208, 188, 255, 0); }
 
 .volume label {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #f2b8b5; }
 
 /* --------------------------------- */
@@ -191,7 +191,8 @@
 /* --------------------------------- */
 .brightness {
   background: rgba(203, 194, 219, 0.2);
-  border: solid 2px #cbc2db; }
+  border: solid 2px #cbc2db;
+  color: rgba(208, 188, 255, 0); }
 
 .brightness-inner {
   color: #cbc2db; }
@@ -204,7 +205,7 @@
   border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  padding: 0rem 0.25rem; }
+  padding: 0.2rem 0.25rem; }
 
 .top-bar {
   background: #1c1b1f;
@@ -221,8 +222,8 @@
   border-radius: 1.5rem;
   margin-top: 0.3rem;
   margin-bottom: 0.3rem;
-  padding-left: 1em;
-  padding-right: 1em; }
+  padding-left: 1rem;
+  padding-right: 1rem; }
 
 .main-menu {
   background: #1c1b1f;

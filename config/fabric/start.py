@@ -6,7 +6,7 @@ import sass
 from fabric import Application
 from fabric.utils import get_relative_path
 from modules.bar.bar import StatusBar
-from modules.menu.main import MainMenu
+
 # from modules.services.power_profile import PowerProfile
 from modules.services.prayer_times import PrayerTimesService
 from modules.utils.settings import config
@@ -40,7 +40,6 @@ def compile_scss_to_css(scss_file: str, css_file: str):
 
 if __name__ == "__main__":
     bar = StatusBar()
-    main_menu = MainMenu()
 
     # print(config)
     # power_service = PowerProfile()
@@ -54,8 +53,8 @@ if __name__ == "__main__":
     # power_service.switch_to_performance()
     # print("Changed to:", power_service.active_profile)
 
-    app = Application("ahmeds-fabric-config", main_menu)
-    app.add_window(bar)
+    app = Application(bar)
+    app.add_window(bar.menu)
 
     scss_path = get_relative_path("scss/main.scss")
     css_path = get_relative_path("main.css")

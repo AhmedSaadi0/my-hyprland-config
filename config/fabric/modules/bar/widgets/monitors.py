@@ -5,6 +5,8 @@ from fabric.audio.service import Audio
 from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.label import Label
 
+WIDGET_SIZE = 20
+
 
 class MetricMonitor:
     def __init__(
@@ -17,18 +19,19 @@ class MetricMonitor:
         initial_value=0.1,
         tooltip_text=None,
         child=None,
+        size=WIDGET_SIZE,
     ):
         self.name = name
         self.tooltip_text = tooltip_text
         self.widget = CircularProgressBar(
             # pie=True,
-            size=24,
+            size=size,
             line_width=1,
             name=name,
             style_classes=style_classes,
-            value=initial_value,
+            value=initial_value / 100,
             line_style="round",
-            tooltip_text=f"{tooltip_text} ({initial_value})",
+            tooltip_text=f"{tooltip_text} ({initial_value:.2f})",
             child=child,
             # start_at=0,
             # end_at=0.5,
@@ -47,7 +50,7 @@ class MetricMonitor:
         else:
             self.widget.value = 0
 
-        self.widget.set_property("tooltip_text", f"{self.tooltip_text} ({value})")
+        self.widget.set_property("tooltip_text", f"{self.tooltip_text} ({value:.2f})")
 
     def get_widget(self):
         return self.widget
@@ -71,7 +74,7 @@ class RAMMonitor(MetricMonitor):
             lambda *args: psutil.virtual_memory().percent,
             1000 * 60 * 3,
             style_classes=["ram"],
-            initial_value=psutil.virtual_memory().percent / 100,
+            initial_value=psutil.virtual_memory().percent,
             tooltip_text="RAM",
             child=Label(""),
         )
@@ -88,8 +91,7 @@ class BatteryMonitor(MetricMonitor):
             style_classes=["battery"],
             initial_value=(
                 psutil.sensors_battery().percent if psutil.sensors_battery() else 0
-            )
-            / 100,
+            ),
             tooltip_text="Battery",
             child=Label("󰁹"),
         )
@@ -102,7 +104,7 @@ class TemperatureMonitor(MetricMonitor):
             lambda *args: self.get_device_temperature(),
             1000 * 60 * 1,
             style_classes=["temp"],
-            initial_value=self.get_device_temperature() / 100,
+            initial_value=self.get_device_temperature(),
             tooltip_text="Temperature",
             child=Label(""),
         )
@@ -125,7 +127,7 @@ class VolumeMonitor:
         self.name = "volume"
         self.widget = CircularProgressBar(
             # pie=True,
-            size=24,
+            size=WIDGET_SIZE,
             line_width=1,
             name=self.name,
             style_classes=["volume"],
