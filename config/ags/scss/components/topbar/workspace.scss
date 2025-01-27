@@ -1,0 +1,80 @@
+.workspaces {
+    background: $primary-container;
+    color: $on-primary-container;
+    padding-left: 0rem;
+    padding-right: 0rem;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-bottom-margin;
+    border-radius: $border-radius;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1.1rem;
+    // font-size: 0.1rem;
+}
+
+.workspaces:dir(rtl) {
+    margin-right: 0.4rem;
+    margin-left: $top-bar-widget-margins;
+}
+
+.workspaces:dir(ltr) {
+    margin-right: $top-bar-widget-margins;
+    margin-left: 0.4rem;
+}
+
+.workspaces button {
+    all: unset;
+    // background: $primary-container;
+    // color: $on-surface;
+    // border: 1rem;
+    padding: 0rem 0.6rem;
+    font-family: $icon-font-family;
+}
+
+.workspaces button.active {
+    border-bottom: 1px solid $on-primary-container;
+    color: $on-primary-container;
+    // background: $secondary-container;
+    border-radius: 1px;
+    font-family: $icon-font-family;
+}
+
+.workspaces button.has-windows {
+    color: $tertiary;
+}
+
+// When icon is clicked
+.workspaces button:active {
+    color: $on-primary-container;
+    background: $secondary-container;
+    border-radius: 1px;
+    font-family: $icon-font-family;
+}
+
+.workspaces button:hover {
+    color: $primary-container;
+    background: $on-primary-container;
+}
+
+.workspaces button.focused {
+    border-bottom: 1px solid $on-primary-container;
+    color: $on-primary-container;
+    font-family: $icon-font-family;
+    border-radius: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+    font-size: large;
+}
+
+.workspaces button.unfocused {
+    font-family: $icon-font-family;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+    // min-width: 1em;
+    border-radius: 0px;
+    font-size: large;
+}

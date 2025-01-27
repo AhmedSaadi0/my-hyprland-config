@@ -18,16 +18,19 @@ function workspaceIcon(workspace: Hyprland.Workspace) {
         `
     );
 
-    const workspaceIcon = focusedWorkspace.as((val) =>
-        val === workspace
-            ? activeIcons[workspace.id - 1] || ''
-            : inActiveIcons[workspace.id - 1] || ''
-    );
+    const workspaceIcon = focusedWorkspace.as((val) => {
+        const newVal =
+            val === workspace
+                ? activeIcons[workspace.id - 1] || ''
+                : inActiveIcons[workspace.id - 1] || '';
+
+        return newVal;
+    });
 
     return (
         <button
             onClick={() => workspace.focus()}
-            className={`unset ${className()}`}
+            className={`unset ${className()} `}
         >
             {workspaceIcon}
         </button>

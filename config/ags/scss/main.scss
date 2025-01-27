@@ -1,7 +1,14 @@
-@import 'themes/colors.scss';
-@import 'topbar/topbar.scss';
+@import 'base/variables.scss';
+$top-bar-widget-margins: 0.2rem;
 
-* {
+$bar-top-margin: 0.3rem;
+$bar-bottom-margin: 0.3rem;
+$border-radius: 1.5rem;
+$border-size: 0.15rem;
+$icon-font-family: 'FantasqueSansM Nerd Font Propo';
+$top-bar-widget-margins: $bar-top-margin;
+
+.unset {
     all: unset;
 }
 
@@ -18,3 +25,29 @@
     transition-property: background;
     transition-duration: 0.5s;
 }
+
+.small-shadow:dir(rtl) {
+    box-shadow: 1px 1px 2px 2px rgba(#000000, 0.1);
+}
+
+.small-shadow:dir(ltr) {
+    box-shadow: 1px 2px 2px 1px rgba(#000000, 0.1);
+}
+
+.shadow:dir(rtl) {
+    box-shadow: 1px 1px 3px 2px rgba(#000000, 0.3);
+}
+
+.shadow:dir(ltr) {
+    box-shadow: 1px 2px 3px 1px rgba(#000000, 0.3);
+}
+
+.separator {
+    min-height: 0.01rem;
+    min-width: 0.01rem;
+    background: rgba($tertiary, 0.4);
+    margin: 0rem 0.25rem;
+}
+
+@import 'components/topbar/main.scss';
+@import 'components/menu/main.scss';

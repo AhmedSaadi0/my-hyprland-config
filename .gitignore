@@ -1,6 +1,8 @@
 .VSCodeCounter/*
 .vscode/*
 __pycache__/*
+config/ags/@girs
+config/ags/node_modules
 */__pycache__/*
 */*/__pycache__/*
 */*/*/__pycache__/*

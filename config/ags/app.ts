@@ -1,14 +1,16 @@
-import { App, exec } from 'astal';
-import Bar from './modules/bars/Top';
+import { App } from 'astal/gtk3';
+// import style from './style.scss';
+import Bar from './widget/Bar';
+import { exec } from 'astal';
 
 const scss = '/home/ahmed/.config/ags_v2/scss/main.scss';
-const style = '/home/ahmed/.cache/ags_v2_style.css';
+const style = '/home/ahmed/.cache/ahmed_config_style.css';
 
 exec(`sassc ${scss} ${style}`);
 
 App.start({
     css: style,
     main() {
-        Bar(0);
+        App.get_monitors().map(Bar);
     },
 });
