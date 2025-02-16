@@ -1,10 +1,9 @@
-"""side panel example, contains info about the system"""
-
 from fabric.widgets.box import Box
 from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.stack import Stack
 from fabric.widgets.wayland import WaylandWindow as Window
+from modules.menu.power_profile import PowerProfileWidget
 from modules.utils.helper import TitleTextRevealer
 
 
@@ -26,7 +25,7 @@ class MainMenu(Window):
             "title": "󰨝",
             "text": "التحكم",
             "stack_name": "control",
-            "stack": Label(label="Content for 1"),
+            "stack": PowerProfileWidget(),
         },
         {
             "title": "󰂞",

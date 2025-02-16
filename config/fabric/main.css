@@ -248,6 +248,46 @@
   margin-top: -4rem;
   border-radius: 1.5rem; }
 
+.theme-button-father, .theme-btn, .active-power-profiles {
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  min-width: 5rem; }
+
+.themes-buttons-title {
+  padding-bottom: 1.2rem;
+  padding-top: 0.3rem;
+  margin: 0rem 0.8rem;
+  font-size: 1.2rem;
+  font-weight: bold; }
+
+.themes-buttons-icon {
+  padding-bottom: 1.2rem;
+  padding-top: 0.3rem;
+  margin: 0rem 0.3rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: "FantasqueSansM Nerd Font Propo"; }
+
+.theme-btn, .active-power-profiles {
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 1.5rem; }
+
+.theme-btn:hover, .active-power-profiles:hover {
+  background: #d0bcff;
+  color: #381e72; }
+
+.theme-btn-icon {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  min-width: 2rem; }
+
+.left-menu-insider-box, .power-profile-box {
+  padding: 1rem;
+  margin: 1rem;
+  margin-bottom: 0rem;
+  border-radius: 1.5rem; }
+
 .topbar-icons-box {
   background: #4f378b;
   border-radius: 1.5rem;
@@ -282,3 +322,11 @@
   margin: 0.5rem 0.4rem;
   padding-left: 1rem;
   transition: background 0.2s ease-in-out, color 0.2s ease-in-out; }
+
+.power-profile-box {
+  background: #4a4458;
+  color: #e8def8; }
+
+.active-power-profiles {
+  background: #d0bcff;
+  color: #381e72; }

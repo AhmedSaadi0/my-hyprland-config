@@ -24,4 +24,59 @@
   border-radius: $border-radius;
 }
 
-@import "scss/components/menu/topbar.scss";
+.theme-button-father {
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  transition:
+    background 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  min-width: 5rem;
+}
+
+.themes-buttons-title {
+  padding-bottom: 1.2rem;
+  padding-top: 0.3rem;
+  margin: 0rem 0.8rem;
+  font-size: 1.2rem;
+  // color: $text-color;
+  font-weight: bold;
+}
+
+.themes-buttons-icon {
+  padding-bottom: 1.2rem;
+  padding-top: 0.3rem;
+  margin: 0rem 0.3rem;
+  font-size: 1.2rem;
+  // color: $text-color;
+  font-weight: bold;
+  font-family: $icon-font-family;
+}
+
+.theme-btn {
+  @extend .theme-button-father;
+  // background: $menu-btn-background;
+  // border-color: $menu-btn-background;
+  border-color: rgba($color: #000000, $alpha: 0);
+  border-radius: $border-radius;
+}
+
+.theme-btn:hover {
+  background: $primary;
+  color: $on-primary;
+  // border-radius: $border-radius;
+}
+
+.theme-btn-icon {
+  font-family: $icon-font-family;
+  min-width: 2rem;
+}
+
+.left-menu-insider-box {
+  padding: 1rem;
+  margin: 1rem;
+  margin-bottom: 0rem;
+  border-radius: $border-radius;
+}
+
+@import "scss/components/menu/dashboard.scss";

@@ -1,35 +1,65 @@
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
+from modules.services.power_profile import (
+    BALANCED,
+    PERFORMANCE,
+    POWER_SAVER,
+    PowerProfile,
+)
 from modules.utils.helper import TitleText
-from modules.utils.strings import strings
+from modules.utils.strings import get_string
 
 
 class PowerProfileWidget(Box):
+    def change_css_class(self, emitter):
+        active_profile = emitter.active_profile
+
+        if active_profile == PERFORMANCE:
+            self.buttons_row.children[0].set_property(
+                "style_classes", "active-power-profiles"
+            )
+            self.buttons_row.children[1].set_property("style_classes", "theme-btn")
+            self.buttons_row.children[2].set_property("style_classes", "theme-btn")
+        elif active_profile == BALANCED:
+            self.buttons_row.children[0].set_property("style_classes", "theme-btn")
+            self.buttons_row.children[1].set_property(
+                "style_classes", "active-power-profiles"
+            )
+            self.buttons_row.children[2].set_property("style_classes", "theme-btn")
+        elif active_profile == POWER_SAVER:
+            self.buttons_row.children[0].set_property("style_classes", "theme-btn")
+            self.buttons_row.children[1].set_property("style_classes", "theme-btn")
+            self.buttons_row.children[2].set_property(
+                "style_classes", "active-power-profiles"
+            )
+
     def __init__(self, **kwargs):
         super().__init__(
             style="margin-bottom: 1rem;",
-            style_classes="left-menu-insider-box",
-            vertical=True,
+            style_classes="power-profile-box",
+            orientation="v",
             **kwargs,
         )
 
         # Create title and buttons row
         self.title = self.create_title()
         self.buttons_row = self.create_buttons_row()
+        self.power_profiles_service = PowerProfile()
 
         # Add widgets to the box
-        self.add_children([self.title, self.buttons_row])
+        self.children = [self.title, self.buttons_row]
+
+        self.power_profiles_service.connect("changed", self.change_css_class)
+        self.change_css_class(self.power_profiles_service)
 
     @staticmethod
     def create_title():
-        """
-        Create the title widget.
-        """
         return TitleText(
             title="󰎓",
-            title_class="themes-buttons-icon",
-            text=strings.power_profile,
+            text=get_string("power_profile"),
             text_class="themes-buttons-title",
+            title_class="themes-buttons-icon",
+            button_class="unset",
             vertical=False,
             title_y_align=0,
             text_y_align=0,
@@ -38,35 +68,30 @@ class PowerProfileWidget(Box):
     def create_buttons_row(self):
         high_performance = Button(
             style_classes="theme-btn",
-            style="min-height: 2rem; border-radius: 1rem;",
-            label=strings.high_performance,
-            on_clicked=lambda _: setattr(
-                self.power_profiles_service, "active_profile", "performance"
-            ),
+            style="min-height: 1.5rem; border-radius: 1rem;",
+            label=get_string("high_performance"),
+            on_clicked=lambda _: self.power_profiles_service.switch_to_performance(),
         )
 
         normal_performance = Button(
             style_classes="theme-btn",
-            style="min-height: 2rem; border-radius: 1rem;",
-            label=strings.balanced,
-            on_clicked=lambda _: setattr(
-                self.power_profiles_service, "active_profile", "balanced"
-            ),
+            style="min-height: 1.5rem; border-radius: 1rem;",
+            label=get_string("balanced"),
+            on_clicked=lambda _: self.power_profiles_service.switch_to_balanced(),
         )
 
         low_performance = Button(
             style_classes="theme-btn",
-            style="min-height: 2rem; border-radius: 1rem;",
-            label=strings.power_saver,
-            on_clicked=lambda _: setattr(
-                self.power_profiles_service, "active_profile", "power-saver"
-            ),
+            style="min-height: 1.5rem; border-radius: 1rem;",
+            label=get_string("power_saver"),
+            on_clicked=lambda _: self.power_profiles_service.switch_to_power_saver(),
         )
 
         return Box(
-            homogeneous=True,
             spacing=15,
             children=[high_performance, normal_performance, low_performance],
+            h_align="center",
+            v_align="center",
         )
 
     def update_button_classes(self, _):

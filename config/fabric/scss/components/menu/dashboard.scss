@@ -50,3 +50,15 @@
 .topbar-button-selected:hover {
   @extend .topbar-button-selected;
 }
+
+.power-profile-box {
+  @extend .left-menu-insider-box;
+  background: rgba($secondary-container, 1);
+  color: $on-secondary-container;
+}
+
+.active-power-profiles {
+  @extend .theme-btn;
+  background: $primary;
+  color: $on-primary;
+}
