@@ -1,4 +1,4 @@
-import { bind, Variable } from 'astal';
+import { bind } from 'astal';
 import Hyprland from 'gi://AstalHyprland';
 
 const hyprland = Hyprland.get_default();
@@ -9,29 +9,29 @@ const activeIcons = ['󰋜', '󰿣', '󰂔', '󰉋', '󱙋', '󰆈', '󱍙', '�
 
 function workspaceIcon(workspace: Hyprland.Workspace) {
     const focusedWorkspace = bind(hyprland, 'focusedWorkspace');
+    const clients = bind(workspace, 'clients');
 
-    const className = Variable.derive(
-        [focusedWorkspace, bind(workspace, 'clients')],
-        (focused, clients) => `
-            ${focused === workspace ? 'focused' : 'unfocused'}
-            ${clients.length > 0 ? 'has-windows' : 'empty'}
-        `
-    );
+    const hasWindows = clients.as((val) => {
+        const newVal = val.length > 0 ? 'has-windows' : 'empty';
+        return newVal;
+    });
+
+    const className = focusedWorkspace.as((val) => {
+        let newVal = val === workspace ? 'unset focused ' : 'unset unfocused ';
+        newVal += hasWindows.get();
+        return newVal;
+    });
 
     const workspaceIcon = focusedWorkspace.as((val) => {
         const newVal =
             val === workspace
                 ? activeIcons[workspace.id - 1] || ''
                 : inActiveIcons[workspace.id - 1] || '';
-
         return newVal;
     });
 
     return (
-        <button
-            onClick={() => workspace.focus()}
-            className={`unset ${className()} `}
-        >
+        <button onClick={() => workspace.focus()} className={className}>
             {workspaceIcon}
         </button>
     );

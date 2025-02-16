@@ -1,6 +1,6 @@
 import { App, Astal, Gdk } from 'astal/gtk3';
 import { Variable } from 'astal';
-import Workspaces from './widgets/Workspaces2';
+import Workspaces from './widgets/Workspaces';
 
 const time = Variable('').poll(1000, 'date');
 
