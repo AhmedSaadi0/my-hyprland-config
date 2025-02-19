@@ -1,7 +1,6 @@
 import os
 
 import sass
-
 from fabric import Application
 from fabric.hyprland.widgets import Language
 from fabric.system_tray.widgets import SystemTray
@@ -50,6 +49,7 @@ def update_css(application: Application):
             return  # Exit if the file does not exist
 
         application.set_stylesheet_from_file(css_path)
+        print("css Updated")
 
     except FileNotFoundError:
         print(f"Error: {scss_path} not found.")

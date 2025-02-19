@@ -4,7 +4,8 @@
 }
 
 .battery {
-  color: rgba($primary, 0);
+  background: rgba($color: #000000, $alpha: 0.3);
+  // color: rgba($primary, 0);
   border: solid 2px rgba($primary, 1);
 }
 
@@ -38,8 +39,8 @@
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: rgba($color: $secondary, $alpha: 0.4);
-  color: rgba($secondary, 0);
+  background: rgba($color: #000000, $alpha: 0.3);
+  // color: rgba($secondary, 0.7);
   border: solid 2px rgba($secondary, 1);
 }
 
@@ -53,9 +54,10 @@
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: rgba($tertiary, 0.2);
+  background: rgba($color: #000000, $alpha: 0.3);
+  // background: rgba($tertiary, 0.2);
+  // color: rgba($primary, 0);
   border: solid 2px rgba($tertiary, 1);
-  color: rgba($primary, 0);
 }
 
 .no-hover:hover {
@@ -71,9 +73,10 @@
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: rgba($error, 0.2);
+  background: rgba($color: #000000, $alpha: 0.3);
+  // background: rgba($error, 0.2);
+  // color: rgba($primary, 0);
   border: solid 2px rgba($error, 1);
-  color: rgba($primary, 0);
 }
 
 .ram label {
@@ -86,9 +89,10 @@
 /* -------------- VOL -------------- */
 /* --------------------------------- */
 .volume {
-  background: rgba($error, 0.2);
+  background: rgba($color: #000000, $alpha: 0.3);
+  // background: rgba($error, 0.2);
+  // color: rgba($primary, 0);
   border: solid 2px rgba($error, 1);
-  color: rgba($primary, 0);
 }
 
 .volume label {
@@ -101,9 +105,10 @@
 /* ----------- BRIGHTNESS ---------- */
 /* --------------------------------- */
 .brightness {
-  background: rgba($secondary, 0.2);
+  background: rgba($color: #000000, $alpha: 0.3);
+  // background: rgba($secondary, 0.2);
+  // color: rgba($primary, 0);
   border: solid 2px rgba($secondary, 1);
-  color: rgba($primary, 0);
 }
 
 .brightness-inner {

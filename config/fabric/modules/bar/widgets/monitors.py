@@ -1,9 +1,8 @@
 import psutil
-
 from fabric import Fabricator
 from fabric.audio.service import Audio
-from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.label import Label
+from modules.widgets.circularprogressbar import MyCircularProgressBar
 
 WIDGET_SIZE = 20
 
@@ -23,7 +22,7 @@ class MetricMonitor:
     ):
         self.name = name
         self.tooltip_text = tooltip_text
-        self.widget = CircularProgressBar(
+        self.widget = MyCircularProgressBar(
             # pie=True,
             size=size,
             line_width=1,
@@ -33,8 +32,8 @@ class MetricMonitor:
             line_style="round",
             tooltip_text=f"{tooltip_text} ({initial_value:.2f})",
             child=child,
-            # start_at=0,
-            # end_at=0.5,
+            start_at=0.4,
+            end_at=0.1,
         )
         self.widget.START_ANGLE = 0.5
         self.fabricator = Fabricator(
@@ -125,7 +124,7 @@ class TemperatureMonitor(MetricMonitor):
 class VolumeMonitor:
     def __init__(self, audio_service: Audio = Audio()):
         self.name = "volume"
-        self.widget = CircularProgressBar(
+        self.widget = MyCircularProgressBar(
             # pie=True,
             size=WIDGET_SIZE,
             line_width=1,
@@ -133,6 +132,9 @@ class VolumeMonitor:
             style_classes=["volume"],
             tooltip_text="Volume",
             child=Label(""),
+            start_at=0.4,
+            end_at=0.1,
+            inverted=True,
         )
         self.audio_service = audio_service
         self.audio_service.connect("speaker-changed", self.update_widget)

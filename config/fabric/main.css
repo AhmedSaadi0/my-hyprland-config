@@ -117,7 +117,7 @@
   font-size: 0.7rem; }
 
 .battery {
-  color: rgba(208, 188, 255, 0);
+  background: rgba(0, 0, 0, 0.3);
   border: solid 2px #d0bcff; }
 
 @keyframes colorChange {
@@ -140,8 +140,7 @@
 /* -------------- CPU -------------- */
 /* --------------------------------- */
 .cpu {
-  background: rgba(203, 194, 219, 0.4);
-  color: rgba(203, 194, 219, 0);
+  background: rgba(0, 0, 0, 0.3);
   border: solid 2px #cbc2db; }
 
 .cpu label {
@@ -151,9 +150,8 @@
 /* -------------- TEMP -------------- */
 /* ---------------------------------- */
 .temp {
-  background: rgba(239, 184, 200, 0.2);
-  border: solid 2px #efb8c8;
-  color: rgba(208, 188, 255, 0); }
+  background: rgba(0, 0, 0, 0.3);
+  border: solid 2px #efb8c8; }
 
 .no-hover:hover {
   all: unset; }
@@ -165,9 +163,8 @@
 /* -------------- RAM -------------- */
 /* --------------------------------- */
 .ram {
-  background: rgba(242, 184, 181, 0.2);
-  border: solid 2px #f2b8b5;
-  color: rgba(208, 188, 255, 0); }
+  background: rgba(0, 0, 0, 0.3);
+  border: solid 2px #f2b8b5; }
 
 .ram label {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -178,9 +175,8 @@
 /* -------------- VOL -------------- */
 /* --------------------------------- */
 .volume {
-  background: rgba(242, 184, 181, 0.2);
-  border: solid 2px #f2b8b5;
-  color: rgba(208, 188, 255, 0); }
+  background: rgba(0, 0, 0, 0.3);
+  border: solid 2px #f2b8b5; }
 
 .volume label {
   font-size: 0.7rem;
@@ -190,9 +186,8 @@
 /* ----------- BRIGHTNESS ---------- */
 /* --------------------------------- */
 .brightness {
-  background: rgba(203, 194, 219, 0.2);
-  border: solid 2px #cbc2db;
-  color: rgba(208, 188, 255, 0); }
+  background: rgba(0, 0, 0, 0.3);
+  border: solid 2px #cbc2db; }
 
 .brightness-inner {
   color: #cbc2db; }
