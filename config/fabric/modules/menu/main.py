@@ -4,7 +4,7 @@ from fabric.widgets.label import Label
 from fabric.widgets.stack import Stack
 from fabric.widgets.wayland import WaylandWindow as Window
 from modules.menu.power_profile import PowerProfileWidget
-from modules.utils.helper import TitleTextRevealer
+from modules.widgets.titletext import TitleTextRevealer
 
 
 class MainMenu(Window):

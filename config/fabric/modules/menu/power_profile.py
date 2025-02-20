@@ -6,8 +6,8 @@ from modules.services.power_profile import (
     POWER_SAVER,
     PowerProfile,
 )
-from modules.utils.helper import TitleText
 from modules.utils.strings import get_string
+from modules.widgets.titletext import TitleText
 
 
 class PowerProfileWidget(Box):

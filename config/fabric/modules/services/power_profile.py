@@ -4,7 +4,6 @@ from typing import Literal
 import dbus
 import dbus.mainloop.glib
 from cachetools import TTLCache, cached
-from gi.repository import GLib
 from loguru import logger
 
 from fabric.core.service import Property, Service, Signal

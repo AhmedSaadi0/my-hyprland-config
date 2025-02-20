@@ -6,7 +6,7 @@
 .battery {
   background: rgba($color: #000000, $alpha: 0.3);
   // color: rgba($primary, 0);
-  border: solid 2px rgba($primary, 1);
+  border: solid 3px rgba($primary, 1);
 }
 
 @keyframes colorChange {
@@ -31,7 +31,7 @@
 .battery-inner-charging {
   @extend .bar-hardware-progress-inner-circle;
   color: rgba($primary, 0.2);
-  border: solid 2px rgba($primary, 1);
+  border: solid 3px rgba($primary, 1);
   animation: colorChange 2s infinite;
 }
 
@@ -41,7 +41,7 @@
 .cpu {
   background: rgba($color: #000000, $alpha: 0.3);
   // color: rgba($secondary, 0.7);
-  border: solid 2px rgba($secondary, 1);
+  border: solid 3px rgba($secondary, 1);
 }
 
 .cpu label {
@@ -57,7 +57,7 @@
   background: rgba($color: #000000, $alpha: 0.3);
   // background: rgba($tertiary, 0.2);
   // color: rgba($primary, 0);
-  border: solid 2px rgba($tertiary, 1);
+  border: solid 3px rgba($tertiary, 1);
 }
 
 .no-hover:hover {
@@ -76,7 +76,7 @@
   background: rgba($color: #000000, $alpha: 0.3);
   // background: rgba($error, 0.2);
   // color: rgba($primary, 0);
-  border: solid 2px rgba($error, 1);
+  border: solid 3px rgba($error, 1);
 }
 
 .ram label {
@@ -92,7 +92,7 @@
   background: rgba($color: #000000, $alpha: 0.3);
   // background: rgba($error, 0.2);
   // color: rgba($primary, 0);
-  border: solid 2px rgba($error, 1);
+  border: solid 3px rgba($error, 1);
 }
 
 .volume label {
@@ -108,7 +108,7 @@
   background: rgba($color: #000000, $alpha: 0.3);
   // background: rgba($secondary, 0.2);
   // color: rgba($primary, 0);
-  border: solid 2px rgba($secondary, 1);
+  border: solid 3px rgba($secondary, 1);
 }
 
 .brightness-inner {

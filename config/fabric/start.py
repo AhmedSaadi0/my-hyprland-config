@@ -9,8 +9,8 @@ from modules.bar.bar import StatusBar
 
 # from modules.services.power_profile import PowerProfile
 from modules.services.prayer_times import PrayerTimesService
-from modules.utils.settings import config
-from notifications import notification_window
+from modules.services.theme import ThemeService
+from modules.utils.themes import DEER_THEME, ThemesDictionary
 
 prayer_service = PrayerTimesService(city="Sanaa", country="Yemen")
 
@@ -41,20 +41,11 @@ def compile_scss_to_css(scss_file: str, css_file: str):
 if __name__ == "__main__":
     bar = StatusBar()
 
-    # print(config)
-    # power_service = PowerProfile()
-    # List available profiles
-    # print("Available Profiles:", power_service.available_profiles)
-
-    # Get the current profile
-    # print("Active Profile:", power_service.active_profile)
-
-    # Change to performance profile
-    # power_service.switch_to_performance()
-    # print("Changed to:", power_service.active_profile)
-
     app = Application(bar)
     app.add_window(bar.menu)
+
+    theme = ThemeService()
+    theme.change_theme(DEER_THEME)
 
     scss_path = get_relative_path("scss/main.scss")
     css_path = get_relative_path("main.css")

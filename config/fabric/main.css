@@ -118,7 +118,7 @@
 
 .battery {
   background: rgba(0, 0, 0, 0.3);
-  border: solid 2px #d0bcff; }
+  border: solid 3px #d0bcff; }
 
 @keyframes colorChange {
   0% {
@@ -133,7 +133,7 @@
 
 .battery-inner-charging {
   color: rgba(208, 188, 255, 0.2);
-  border: solid 2px #d0bcff;
+  border: solid 3px #d0bcff;
   animation: colorChange 2s infinite; }
 
 /* --------------------------------- */
@@ -141,7 +141,7 @@
 /* --------------------------------- */
 .cpu {
   background: rgba(0, 0, 0, 0.3);
-  border: solid 2px #cbc2db; }
+  border: solid 3px #cbc2db; }
 
 .cpu label {
   color: #cbc2db; }
@@ -151,7 +151,7 @@
 /* ---------------------------------- */
 .temp {
   background: rgba(0, 0, 0, 0.3);
-  border: solid 2px #efb8c8; }
+  border: solid 3px #efb8c8; }
 
 .no-hover:hover {
   all: unset; }
@@ -164,7 +164,7 @@
 /* --------------------------------- */
 .ram {
   background: rgba(0, 0, 0, 0.3);
-  border: solid 2px #f2b8b5; }
+  border: solid 3px #f2b8b5; }
 
 .ram label {
   font-family: "FantasqueSansM Nerd Font Propo";
@@ -176,7 +176,7 @@
 /* --------------------------------- */
 .volume {
   background: rgba(0, 0, 0, 0.3);
-  border: solid 2px #f2b8b5; }
+  border: solid 3px #f2b8b5; }
 
 .volume label {
   font-size: 0.7rem;
@@ -187,7 +187,7 @@
 /* --------------------------------- */
 .brightness {
   background: rgba(0, 0, 0, 0.3);
-  border: solid 2px #cbc2db; }
+  border: solid 3px #cbc2db; }
 
 .brightness-inner {
   color: #cbc2db; }

@@ -1,197 +1,372 @@
 import json
 import os
+from typing import TypedDict
+
+
+class Utils:
+    USER = os.environ.get("USER") or os.environ.get("USERNAME")
+
+    @staticmethod
+    def readFile(path):
+        try:
+            with open(path, "r") as f:
+                return f.read()
+        except FileNotFoundError:
+            return None
+        except Exception as e:
+            print(f"Error reading file {path}: {e}")
+            return None
+
+    @staticmethod
+    def get_user_config_path(filename=".ahmed-config.json"):
+        return os.path.join(os.path.expanduser("~"), filename)
+
+
+class IconSettings(TypedDict):
+    hot_weather: str
+    cold_weather: str
+    mosque: str
+    high_energy_rate: str
+    high_voltage: str
+    high_temp_warning: str
+
+
+class AudioSettings(TypedDict):
+    cold_weather: str
+    prayer_time: str
+    desktop_login: str
+    desktop_logout: str
+    high_energy_rate: str
+    warning: str
+    high_voltage: str
+    high_temp_warning: str
+    notificationAlert: str
+    cpuHighUsage: str
+
+
+class AssetsSettings(TypedDict):
+    wallpapers: str
+    icons: IconSettings
+    audio: AudioSettings
+
+
+class ScriptsSettings(TypedDict):
+    scripts: str
+    dynamicM3Py: str
+    get_wallpapers: str
+    createThumbnail: str
+    gtk_theme: str
+    systemInfo: str
+    deviceLocal: str
+    cpu: str
+    ram: str
+    deviceTemp: str
+    hardwareInfo: str
+    cpuUsage: str
+    ramUsage: str
+    cpuCores: str
+    devicesTemp2: str
+    playerctl: str
+
+
+class MenuTransitionsSettings(TypedDict):
+    mainMenu: str
+    weatherMenu: str
+    networkMenu: str
+    notificationMenu: str
+    prayerTimesMenu: str
+    hardwareMenu: str
+    audioMenu: str
+    calendarMenu: str
+    mainMenuDuration: int
+    weatherMenuDuration: int
+    networkMenuDuration: int
+    notificationMenuDuration: int
+    prayerTimesMenuDuration: int
+    hardwareMenuDuration: int
+    audioMenuDuration: int
+    calendarMenuDuration: int
+
+
+class ThemeSettings(TypedDict):
+    scss: str
+    absoluteDynamicM3Scss: str
+    mainCss: str
+    styleCss: str
+    darkM3WallpaperPath: str
+    lightM3WallpaperPath: str
+    menuTransitions: MenuTransitionsSettings
+
+
+class WeatherSettings(TypedDict):
+    language: str
+    location: str
+    format: str
+
+
+class PrayerTimesSettings(TypedDict):
+    city: str
+    country: str
+
+
+class HardwareNetworkSettings(TypedDict):
+    rx_path: str
+    tx_path: str
+    timeout: str
+    interval: str
+
+
+class HardwareSettings(TypedDict):
+    network: HardwareNetworkSettings
+
+
+class MenuTabsSettings(TypedDict):
+    dashboard: str
+    notifications: str
+    weather: str
+    monitor: str
+    calender: str  # Note: "calender" likely should be "calendar"
+    network: str
 
 
 class Settings:
-    MAIN_PATH = f"{os.getenv('HOME')}/.config/ahmed"
-    ASSETS_PATH = f"{MAIN_PATH}/assets"
+    username: str
+    profile_picture: str
+    use_prayer_times: bool
+    changePlasmaColor: bool
+    assets: AssetsSettings
+    scripts: ScriptsSettings
+    theme: ThemeSettings
+    weather: WeatherSettings
+    prayerTimes: PrayerTimesSettings
+    hardware: HardwareSettings
+    menuTabs: MenuTabsSettings
 
-    @staticmethod
-    def get_assets(path: str) -> str:
-        return f"{Settings.ASSETS_PATH}/{path}"
-
-    @staticmethod
-    def get_path(path: str) -> str:
-        return f"{Settings.MAIN_PATH}/{path}"
+    MAIN_PATH = os.path.expanduser("~/.config/fabric/")
+    ASSETS_PATH = os.path.join(MAIN_PATH, "assets")
 
     def __init__(self):
-        self.network_monitor = ""
-        self.network_timeout = ""
-        self.network_interval = ""
-        self.dark_m3_wallpaper_path = ""
-        self.light_m3_wallpaper_path = ""
-        self.weather_location = ""
-        self.city = ""
-        self.country = ""
-        self.username = ""
-        self.profile_picture = ""
-        self.use_prayer_times = False
-        self.change_plasma_color = True
+        self._load_config()
+        self._initialize_paths()
+        self._initialize_settings()
 
-        self.scripts = {}
+    def _get_assets_path(self, path: str) -> str:
+        return os.path.join(self.ASSETS_PATH, path)
 
-        self.load_config()
+    def _get_path(self, path: str) -> str:
+        return os.path.join(self.MAIN_PATH, path)
 
-    def load_config(self):
-        try:
-            config_path = f"{os.getenv('HOME')}/.ahmed-config.json"
-            with open(config_path, "r") as file:
-                config_file = json.load(file)
+    def _load_config(self):
+        config_file_path = Utils.get_user_config_path()
+        config_content = Utils.readFile(config_file_path)
+        if config_content:
+            try:
+                self.config_data = json.loads(config_content)
+            except json.JSONDecodeError as e:
+                print(f"Error parsing JSON from {config_file_path}: {e}")
+                self.config_data = {}  # Initialize as empty dict to avoid errors later
+        else:
+            print(f"Could not read config file: {config_file_path}")
+            self.config_data = {}  # Initialize as empty dict
 
-            self.network_monitor = config_file.get("networkMonitor", "")
-            self.dark_m3_wallpaper_path = config_file.get("darkM3WallpaperPath", "")
-            self.light_m3_wallpaper_path = config_file.get("lightM3WallpaperPath", "")
-            self.weather_location = config_file.get("weatherLocation", "")
-            self.city = config_file.get("city", "")
-            self.country = config_file.get("country", "")
-            self.network_timeout = config_file.get("networkTimeout", "")
-            self.network_interval = config_file.get("networkInterval", "")
-            self.username = config_file.get("username", "")
-            self.profile_picture = config_file.get("profilePicture", "")
-            self.use_prayer_times = config_file.get("usePrayerTimes", False)
-            self.change_plasma_color = config_file.get("changePlasmaColor", True)
-
-            self.scripts = config_file.get("scripts", {})
-        except (FileNotFoundError, json.JSONDecodeError) as e:
-            print(f"Error reading .ahmed-config.json file: {e}")
-
-    @property
-    def settings(self):
-        return {
-            "username": self.username,
-            "profile_picture": self.profile_picture,
-            "use_prayer_times": self.use_prayer_times,
-            "change_plasma_color": self.change_plasma_color,
-            "assets": {
-                "wallpapers": self.get_assets("wallpapers"),
-                "icons": {
-                    "hot_weather": self.get_assets("icons/hot-weather.png"),
-                    "cold_weather": self.get_assets("icons/cold-weather.png"),
-                    "mosque": self.get_assets("icons/mosque.png"),
-                    "high_energy_rate": self.get_assets(
-                        "icons/electrical-danger-sign.png"
-                    ),
-                    "high_voltage": self.get_assets("icons/electrical-danger-sign.png"),
-                    "high_temp_warning": self.get_assets(
-                        "icons/electrical-danger-sign.png"
-                    ),
-                },
-                "audio": {
-                    "cold_weather": self.get_assets("audio/cold-weather.mp3"),
-                    "prayer_time": self.get_assets("audio/prayer-notification.ogg"),
-                    "desktop_login": self.get_assets("audio/desktop-login.mp3"),
-                    "desktop_logout": self.get_assets("audio/desktop-logout.mp3"),
-                    "high_energy_rate": self.get_assets("audio/warning-sound.mp3"),
-                    "warning": self.get_assets("audio/warning-sound.mp3"),
-                    "high_voltage": self.get_assets("audio/warning-sound.mp3"),
-                    "high_temp_warning": self.get_assets("audio/warning-sound.mp3"),
-                    "notification_alert": self.get_assets(
-                        "audio/mixkit-positive-notification.wav"
-                    ),
-                    "cpu_high_usage": self.get_assets("audio/cpu_high_usage.wav"),
-                },
-            },
-            "scripts": {
-                "scripts": self.get_path("scripts"),
-                "dynamic_m3_py": self.scripts.get(
-                    "dynamicM3Py", self.get_path("scripts/m3/dynamic-m3.py")
-                ),
-                "get_wallpapers": self.scripts.get(
-                    "get_wallpapers", self.get_path("scripts/get_wallpapers.sh")
-                ),
-                "create_thumbnail": self.scripts.get(
-                    "createThumbnail", self.get_path("scripts/m3/create_thumbnail.py")
-                ),
-                "gtk_theme": self.scripts.get(
-                    "gtk_theme", self.get_path("scripts/m3/gtk_theme.py")
-                ),
-                "system_info": self.scripts.get(
-                    "systemInfo", self.get_path("scripts/system_info.sh")
-                ),
-                "device_local": self.scripts.get(
-                    "deviceLocal", self.get_path("scripts/lang.sh")
-                ),
-                "cpu": self.scripts.get("cpu", self.get_path("scripts/cpu.sh")),
-                "ram": self.scripts.get("ram", self.get_path("scripts/ram.sh")),
-                "device_temp": self.scripts.get(
-                    "deviceTemp", self.get_path("scripts/devices_temps.sh")
-                ),
-                "hardware_info": self.scripts.get(
-                    "hardwareInfo", self.get_path("scripts/hardware_info.sh")
-                ),
-                "cpu_usage": self.scripts.get(
-                    "cpuUsage", self.get_path("scripts/cpu_usage.sh")
-                ),
-                "ram_usage": self.scripts.get(
-                    "ramUsage", self.get_path("scripts/ram_usage.sh")
-                ),
-                "cpu_cores": self.scripts.get(
-                    "cpuCores", self.get_path("scripts/cpu_cores.sh")
-                ),
-                "devices_temp2": self.scripts.get(
-                    "devicesTemp2", self.get_path("scripts/temp.sh")
-                ),
-                "playerctl": self.scripts.get(
-                    "playerctl",
-                    f"{os.getenv('HOME')}/.config/hypr/scripts/playerctl.sh",
-                ),
-            },
-            "theme": {
-                "scss": self.get_path("scss"),
-                "absolute_dynamic_m3_scss": self.get_path(
-                    "scss/themes/m3/dynamic.scss"
-                ),
-                "main_css": self.get_path("/scss/main.scss"),
-                "style_css": self.get_path("/style.scss"),
-                "dark_m3_wallpaper_path": self.dark_m3_wallpaper_path,
-                "light_m3_wallpaper_path": self.light_m3_wallpaper_path,
-                "menu_transitions": {
-                    "main_menu": "slide_down",
-                    "weather_menu": "slide_down",
-                    "network_menu": "slide_down",
-                    "notification_menu": "slide_down",
-                    "prayer_times_menu": "slide_down",
-                    "hardware_menu": "slide_down",
-                    "audio_menu": "slide_down",
-                    "calendar_menu": "slide_down",
-                    "main_menu_duration": 300,
-                    "weather_menu_duration": 300,
-                    "network_menu_duration": 300,
-                    "notification_menu_duration": 300,
-                    "prayer_times_menu_duration": 300,
-                    "hardware_menu_duration": 300,
-                    "audio_menu_duration": 300,
-                    "calendar_menu_duration": 300,
-                },
-            },
-            "weather": {
-                "language": "ar",
-                "location": self.weather_location,
-                "format": "j1",
-            },
-            "prayer_times": {
-                "city": self.city,
-                "country": self.country,
-            },
-            # "hardware": {
-            #     "network": {
-            #         "rx_path": f"/sys/class/net/{self.network_monitor}/statistics/rx_bytes",
-            #         "tx_path": f"/sys/class/net/{self.network_monitor}/statistics/tx_bytes",
-            #         "timeout": self.network_timeout,
-            #         "interval": self.network_interval,
-            #     },
-            # },
-            # "menu_tabs": {
-            #     "dashboard": "dashboard",
-            #     "notifications": "notifications",
-            #     "weather": "weather",
-            #     "monitor": "monitor",
-            #     "calendar": "calendar",
-            #     "network": "network",
-            # },
+    def _initialize_paths(self):
+        self.scripts_paths = {
+            "scripts": self._get_path("scripts"),
+            "dynamicM3Py": self.config_data.get("scripts", {}).get("dynamicM3Py")
+            or self._get_path("scripts/m3/dynamic-m3.py"),
+            "get_wallpapers": self.config_data.get("scripts", {}).get("get_wallpapers")
+            or self._get_path("scripts/get_wallpapers.sh"),
+            "createThumbnail": self.config_data.get("scripts", {}).get(
+                "createThumbnail"
+            )
+            or self._get_path("scripts/m3/create_thumbnail.py"),
+            "gtk_theme": self.config_data.get("scripts", {}).get("gtk_theme")
+            or self._get_path("scripts/m3/gtk_theme.py"),
+            "systemInfo": self.config_data.get("scripts", {}).get("systemInfo")
+            or self._get_path("scripts/system_info.sh"),
+            "deviceLocal": self.config_data.get("scripts", {}).get("deviceLocal")
+            or self._get_path("scripts/lang.sh"),
+            "cpu": self.config_data.get("scripts", {}).get("cpu")
+            or self._get_path("scripts/cpu.sh"),
+            "ram": self.config_data.get("scripts", {}).get("ram")
+            or self._get_path("scripts/ram.sh"),
+            "deviceTemp": self.config_data.get("scripts", {}).get("deviceTemp")
+            or self._get_path("scripts/devices_temps.sh"),
+            "hardwareInfo": self.config_data.get("scripts", {}).get("hardwareInfo")
+            or self._get_path("scripts/hardware_info.sh"),
+            "cpuUsage": self.config_data.get("scripts", {}).get("cpuUsage")
+            or self._get_path("scripts/cpu_usage.sh"),
+            "ramUsage": self.config_data.get("scripts", {}).get("ramUsage")
+            or self._get_path("scripts/ram_usage.sh"),
+            "cpuCores": self.config_data.get("scripts", {}).get("cpuCores")
+            or self._get_path("scripts/cpu_cores.sh"),
+            "devicesTemp2": self.config_data.get("scripts", {}).get("devicesTemp2")
+            or self._get_path("scripts/temp.sh"),
+            "playerctl": self.config_data.get("scripts", {}).get("playerctl")
+            or os.path.join(
+                os.path.expanduser("~"), ".config/hypr/scripts/playerctl.sh"
+            ),
         }
 
+        self.assets_paths = {
+            "wallpapers": self._get_assets_path("wallpapers"),
+            "icons": {
+                "hot_weather": os.path.join(
+                    self._get_assets_path("icons"), "hot-weather.png"
+                ),
+                "cold_weather": os.path.join(
+                    self._get_assets_path("icons"), "cold-weather.png"
+                ),
+                "mosque": os.path.join(self._get_assets_path("icons"), "mosque.png"),
+                "high_energy_rate": os.path.join(
+                    self._get_assets_path("icons"), "electrical-danger-sign.png"
+                ),
+                "high_voltage": os.path.join(
+                    self._get_assets_path("icons"), "electrical-danger-sign.png"
+                ),
+                "high_temp_warning": os.path.join(
+                    self._get_assets_path("icons"), "electrical-danger-sign.png"
+                ),
+            },
+            "audio": {
+                "cold_weather": os.path.join(
+                    self._get_assets_path("audio"), "cold-weather.mp3"
+                ),
+                "prayer_time": os.path.join(
+                    self._get_assets_path("audio"), "prayer-notification.ogg"
+                ),
+                "desktop_login": os.path.join(
+                    self._get_assets_path("audio"), "desktop-login.mp3"
+                ),
+                "desktop_logout": os.path.join(
+                    self._get_assets_path("audio"), "desktop-logout.mp3"
+                ),
+                "high_energy_rate": os.path.join(
+                    self._get_assets_path("audio"), "warning-sound.mp3"
+                ),
+                "warning": os.path.join(
+                    self._get_assets_path("audio"), "warning-sound.mp3"
+                ),
+                "high_voltage": os.path.join(
+                    self._get_assets_path("audio"), "warning-sound.mp3"
+                ),
+                "high_temp_warning": os.path.join(
+                    self._get_assets_path("audio"), "warning-sound.mp3"
+                ),
+                "notificationAlert": os.path.join(
+                    self._get_assets_path("audio"), "mixkit-positive-notification.wav"
+                ),
+                "cpuHighUsage": os.path.join(
+                    self._get_assets_path("audio"), "cpu_high_usage.wav"
+                ),
+            },
+        }
 
-# Usage
-settings = Settings()
-config = settings.settings
+        self.theme_paths = {
+            "scss": self._get_path("scss"),
+            "absoluteDynamicM3Scss": self._get_path("scss/themes/m3/dynamic.scss"),
+            "mainCss": self._get_path("/scss/main.scss"),
+            "styleCss": self._get_path("/style.scss"),
+        }
+
+    def _initialize_settings(self):
+        config_data = self.config_data  # For easier access
+
+        self.username = config_data.get("username", "")
+        self.profile_picture = config_data.get("profilePicture", "")
+        self.use_prayer_times = config_data.get("usePrayerTimes", False)
+        self.change_plasma_color = config_data.get("changePlasmaColor", True)
+
+        self.assets = AssetsSettings(self.assets_paths)
+        self.scripts = ScriptsSettings(self.scripts_paths)
+
+        self.theme = ThemeSettings(
+            {  # Construct ThemeSettingsDict directly
+                "scss": self.theme_paths["scss"],
+                "absoluteDynamicM3Scss": self.theme_paths["absoluteDynamicM3Scss"],
+                "mainCss": self.theme_paths["mainCss"],
+                "styleCss": self.theme_paths["styleCss"],
+                "darkM3WallpaperPath": config_data.get("darkM3WallpaperPath", ""),
+                "lightM3WallpaperPath": config_data.get("lightM3WallpaperPath", ""),
+                "menuTransitions": MenuTransitionsSettings(
+                    {  # Nested TypedDict construction
+                        "mainMenu": "slide_down",
+                        "weatherMenu": "slide_down",
+                        "networkMenu": "slide_down",
+                        "notificationMenu": "slide_down",
+                        "prayerTimesMenu": "slide_down",
+                        "hardwareMenu": "slide_down",
+                        "audioMenu": "slide_down",
+                        "calendarMenu": "slide_down",
+                        "mainMenuDuration": config_data.get("theme", {})
+                        .get("menuTransitions", {})
+                        .get("mainMenuDuration", 300),
+                        "weatherMenuDuration": config_data.get("theme", {})
+                        .get("menuTransitions", {})
+                        .get("weatherMenuDuration", 300),
+                        "networkMenuDuration": config_data.get("theme", {})
+                        .get("menuTransitions", {})
+                        .get("networkMenuDuration", 300),
+                        "notificationMenuDuration": config_data.get("theme", {}).get(
+                            "notificationMenuDuration", 300
+                        ),
+                        "prayerTimesMenuDuration": config_data.get("theme", {}).get(
+                            "prayerTimesMenuDuration", 300
+                        ),
+                        "hardwareMenuDuration": config_data.get("theme", {}).get(
+                            "hardwareMenuDuration", 300
+                        ),
+                        "audioMenuDuration": config_data.get("theme", {}).get(
+                            "audioMenuDuration", 300
+                        ),
+                        "calendarMenuDuration": config_data.get("theme", {}).get(
+                            "calendarMenuDuration", 300
+                        ),
+                    }
+                ),
+            }
+        )
+
+        self.weather = WeatherSettings(
+            {  # Construct WeatherSettingsDict
+                "language": "ar",
+                "location": config_data.get("weatherLocation", ""),
+                "format": "j1",
+            }
+        )
+
+        self.prayerTimes = PrayerTimesSettings(
+            {  # Construct PrayerTimesSettingsDict
+                "city": config_data.get("city", ""),
+                "country": config_data.get("country", ""),
+            }
+        )
+
+        self.hardware = HardwareSettings(
+            {  # Construct HardwareSettingsDict
+                "network": HardwareNetworkSettings(
+                    {  # Nested TypedDict construction
+                        "rx_path": f"/sys/class/net/{config_data.get('networkMonitor', '')}/statistics/rx_bytes",
+                        "tx_path": f"/sys/class/net/{config_data.get('networkMonitor', '')}/statistics/tx_bytes",
+                        "timeout": config_data.get("networkTimeout", ""),
+                        "interval": config_data.get("networkInterval", ""),
+                    }
+                )
+            }
+        )
+
+        self.menuTabs = MenuTabsSettings(
+            {  # Construct MenuTabsSettingsDict
+                "dashboard": "dashboard",
+                "notifications": "notifications",
+                "weather": "weather",
+                "monitor": "monitor",
+                "calender": "calender",  # Note: "calender" likely should be "calendar"
+                "network": "network",
+            }
+        )
+
+
+def get_settings():
+    settings = Settings()
+    return settings
