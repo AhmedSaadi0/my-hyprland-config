@@ -10,7 +10,7 @@ from modules.bar.bar import StatusBar
 # from modules.services.power_profile import PowerProfile
 from modules.services.prayer_times import PrayerTimesService
 from modules.services.theme import ThemeService
-from modules.utils.themes import DEER_THEME, ThemesDictionary
+from modules.utils.themes import COLOR_THEME, DEER_THEME, ThemesDictionary
 
 prayer_service = PrayerTimesService(city="Sanaa", country="Yemen")
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     app.add_window(bar.menu)
 
     theme = ThemeService()
-    theme.change_theme(DEER_THEME)
+    theme.change_theme(COLOR_THEME)
 
     scss_path = get_relative_path("scss/main.scss")
     css_path = get_relative_path("main.css")

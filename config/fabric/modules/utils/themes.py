@@ -17,7 +17,6 @@ class HyprConfig:
         active_border (str): لون الحدود النشطة (صيغة rgba أو زاوية تدرج).
         inactive_border (str): لون الحدود غير النشطة.
         rounding (int): مقدار زوايا النوافذ الدائرية.
-        drop_shadow (str): تفعيل/تعطيل الظل المنسدل ('yes' أو 'no').
         kitty (str): اسم ملف تكوين Kitty المستخدم مع هذه السمة.
         konsole (str): اسم ملف تعريف Konsole المستخدم مع هذه السمة.
     """
@@ -26,7 +25,6 @@ class HyprConfig:
     active_border: str
     inactive_border: str
     rounding: int
-    drop_shadow: str
     kitty: str
     konsole: str
 
@@ -92,7 +90,6 @@ black_hole_theme = Theme(
         active_border="rgba(FDBBC4ff) rgba(ff00ffff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=15,
-        drop_shadow="no",
         kitty="black_hole.conf",
         konsole="pinky",
     ),
@@ -115,7 +112,6 @@ win_20_theme = Theme(
         active_border="rgba(EB08FBff) rgba(16D7BAff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=12,
-        drop_shadow="no",
         kitty="win_20.conf",
         konsole="pinky",
     ),
@@ -138,7 +134,6 @@ deer_theme = Theme(
         active_border="rgba(FDB4B7ff) rgba(A2E8FFff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=19,
-        drop_shadow="no",
         kitty="deer.conf",
         konsole="game",
     ),
@@ -161,7 +156,6 @@ colors_theme = Theme(
         active_border="rgba(FD02FFff) rgba(1ed4fdff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=19,
-        drop_shadow="no",
         kitty="colors.conf",
         konsole="pinky",
     ),
@@ -184,7 +178,6 @@ siberian_theme = Theme(
         active_border="rgba(FDB4B7ff) rgba(A2E8FFff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=19,
-        drop_shadow="no",
         kitty="siberian.conf",
         konsole="game",
     ),
@@ -207,7 +200,6 @@ material_you_theme = Theme(
         active_border="rgba(678382ff) rgba(9d6c73ff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=30,
-        drop_shadow="no",
         kitty="materialYou.conf",
         konsole="material-you",
     ),
@@ -230,7 +222,6 @@ game_theme = Theme(
         active_border="rgba(ffff7fff) rgba(ffaa7fff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=19,
-        drop_shadow="no",
         kitty="game.conf",
         konsole="game",
     ),
@@ -253,7 +244,6 @@ dark_theme = Theme(
         active_border="rgba(ff9a4cff) rgba(0080ffff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=8,
-        drop_shadow="no",
         kitty="dark.conf",
         konsole="dark",
     ),
@@ -276,7 +266,6 @@ uniCat_theme = Theme(
         active_border="rgba(C6AAE8ff) rgba(F0AFE1ff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=17,
-        drop_shadow="no",
         kitty="unicat.conf",
         konsole="unicat",
     ),
@@ -299,7 +288,6 @@ newCat_theme = Theme(
         active_border="rgba(ECBFBDff) rgba(F0AFE1ff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=17,
-        drop_shadow="no",
         kitty="new_cat.conf",
         konsole="NewCat",
     ),
@@ -322,7 +310,6 @@ golden_theme = Theme(
         active_border="rgba(2C3041ff) rgba(611a15ff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=17,
-        drop_shadow="no",
         kitty="golden.conf",
         konsole="material-you",
     ),
@@ -345,7 +332,6 @@ harmony_theme = Theme(
         active_border="rgba(BF616Bff) rgba(BF616Bff) 0deg",
         inactive_border="rgba(2E3440ff) 0deg",
         rounding=19,
-        drop_shadow="no",
         kitty="harmony.conf",
         konsole="harmony",
     ),
@@ -368,7 +354,6 @@ circles_theme = Theme(
         active_border="rgba(61AFEFff) rgba(7EC7A2ff) 0deg",
         inactive_border="rgba(00000000) 0deg",
         rounding=10,
-        drop_shadow="no",
         kitty="circles.conf",
         konsole="Circles",
     ),
@@ -391,7 +376,6 @@ white_flower_theme = Theme(
         active_border="rgba(678382ff) rgba(9d6c73ff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=8,
-        drop_shadow="no",
         kitty="white_flower.conf",
         konsole="light",
     ),
@@ -417,7 +401,6 @@ dynamic_m3_dark_theme = Theme(
         active_border="rgba(678382ff) rgba(9d6c73ff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=17,
-        drop_shadow="no",
         kitty="material-you.conf",
         konsole="MaterialYouAlt",
     ),
@@ -442,7 +425,6 @@ dynamic_m3_light_theme = Theme(
         active_border="rgba(678382ff) rgba(9d6c73ff) 0deg",
         inactive_border="rgba(59595900) 0deg",
         rounding=17,
-        drop_shadow="no",
         kitty="material-you.conf",
         konsole="MaterialYouAlt",
     ),

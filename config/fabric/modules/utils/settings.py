@@ -164,7 +164,9 @@ class Settings:
                 self.config_data = json.loads(config_content)
             except json.JSONDecodeError as e:
                 print(f"Error parsing JSON from {config_file_path}: {e}")
-                self.config_data = {}  # Initialize as empty dict to avoid errors later
+                self.config_data = (
+                    {}
+                )  # Initialize as empty dict to avoid errors later
         else:
             print(f"Could not read config file: {config_file_path}")
             self.config_data = {}  # Initialize as empty dict
@@ -172,9 +174,13 @@ class Settings:
     def _initialize_paths(self):
         self.scripts_paths = {
             "scripts": self._get_path("scripts"),
-            "dynamicM3Py": self.config_data.get("scripts", {}).get("dynamicM3Py")
+            "dynamicM3Py": self.config_data.get("scripts", {}).get(
+                "dynamicM3Py"
+            )
             or self._get_path("scripts/m3/dynamic-m3.py"),
-            "get_wallpapers": self.config_data.get("scripts", {}).get("get_wallpapers")
+            "get_wallpapers": self.config_data.get("scripts", {}).get(
+                "get_wallpapers"
+            )
             or self._get_path("scripts/get_wallpapers.sh"),
             "createThumbnail": self.config_data.get("scripts", {}).get(
                 "createThumbnail"
@@ -184,7 +190,9 @@ class Settings:
             or self._get_path("scripts/m3/gtk_theme.py"),
             "systemInfo": self.config_data.get("scripts", {}).get("systemInfo")
             or self._get_path("scripts/system_info.sh"),
-            "deviceLocal": self.config_data.get("scripts", {}).get("deviceLocal")
+            "deviceLocal": self.config_data.get("scripts", {}).get(
+                "deviceLocal"
+            )
             or self._get_path("scripts/lang.sh"),
             "cpu": self.config_data.get("scripts", {}).get("cpu")
             or self._get_path("scripts/cpu.sh"),
@@ -192,7 +200,9 @@ class Settings:
             or self._get_path("scripts/ram.sh"),
             "deviceTemp": self.config_data.get("scripts", {}).get("deviceTemp")
             or self._get_path("scripts/devices_temps.sh"),
-            "hardwareInfo": self.config_data.get("scripts", {}).get("hardwareInfo")
+            "hardwareInfo": self.config_data.get("scripts", {}).get(
+                "hardwareInfo"
+            )
             or self._get_path("scripts/hardware_info.sh"),
             "cpuUsage": self.config_data.get("scripts", {}).get("cpuUsage")
             or self._get_path("scripts/cpu_usage.sh"),
@@ -200,7 +210,9 @@ class Settings:
             or self._get_path("scripts/ram_usage.sh"),
             "cpuCores": self.config_data.get("scripts", {}).get("cpuCores")
             or self._get_path("scripts/cpu_cores.sh"),
-            "devicesTemp2": self.config_data.get("scripts", {}).get("devicesTemp2")
+            "devicesTemp2": self.config_data.get("scripts", {}).get(
+                "devicesTemp2"
+            )
             or self._get_path("scripts/temp.sh"),
             "playerctl": self.config_data.get("scripts", {}).get("playerctl")
             or os.path.join(
@@ -217,15 +229,20 @@ class Settings:
                 "cold_weather": os.path.join(
                     self._get_assets_path("icons"), "cold-weather.png"
                 ),
-                "mosque": os.path.join(self._get_assets_path("icons"), "mosque.png"),
+                "mosque": os.path.join(
+                    self._get_assets_path("icons"), "mosque.png"
+                ),
                 "high_energy_rate": os.path.join(
-                    self._get_assets_path("icons"), "electrical-danger-sign.png"
+                    self._get_assets_path("icons"),
+                    "electrical-danger-sign.png",
                 ),
                 "high_voltage": os.path.join(
-                    self._get_assets_path("icons"), "electrical-danger-sign.png"
+                    self._get_assets_path("icons"),
+                    "electrical-danger-sign.png",
                 ),
                 "high_temp_warning": os.path.join(
-                    self._get_assets_path("icons"), "electrical-danger-sign.png"
+                    self._get_assets_path("icons"),
+                    "electrical-danger-sign.png",
                 ),
             },
             "audio": {
@@ -254,7 +271,8 @@ class Settings:
                     self._get_assets_path("audio"), "warning-sound.mp3"
                 ),
                 "notificationAlert": os.path.join(
-                    self._get_assets_path("audio"), "mixkit-positive-notification.wav"
+                    self._get_assets_path("audio"),
+                    "mixkit-positive-notification.wav",
                 ),
                 "cpuHighUsage": os.path.join(
                     self._get_assets_path("audio"), "cpu_high_usage.wav"
@@ -264,7 +282,9 @@ class Settings:
 
         self.theme_paths = {
             "scss": self._get_path("scss"),
-            "absoluteDynamicM3Scss": self._get_path("scss/themes/m3/dynamic.scss"),
+            "absoluteDynamicM3Scss": self._get_path(
+                "scss/themes/m3/dynamic.scss"
+            ),
             "mainCss": self._get_path("/scss/main.scss"),
             "styleCss": self._get_path("/style.scss"),
         }
@@ -275,7 +295,7 @@ class Settings:
         self.username = config_data.get("username", "")
         self.profile_picture = config_data.get("profilePicture", "")
         self.use_prayer_times = config_data.get("usePrayerTimes", False)
-        self.change_plasma_color = config_data.get("changePlasmaColor", True)
+        self.change_plasma_theme = config_data.get("changePlasmaTheme", True)
 
         self.assets = AssetsSettings(self.assets_paths)
         self.scripts = ScriptsSettings(self.scripts_paths)
@@ -283,11 +303,17 @@ class Settings:
         self.theme = ThemeSettings(
             {  # Construct ThemeSettingsDict directly
                 "scss": self.theme_paths["scss"],
-                "absoluteDynamicM3Scss": self.theme_paths["absoluteDynamicM3Scss"],
+                "absoluteDynamicM3Scss": self.theme_paths[
+                    "absoluteDynamicM3Scss"
+                ],
                 "mainCss": self.theme_paths["mainCss"],
                 "styleCss": self.theme_paths["styleCss"],
-                "darkM3WallpaperPath": config_data.get("darkM3WallpaperPath", ""),
-                "lightM3WallpaperPath": config_data.get("lightM3WallpaperPath", ""),
+                "darkM3WallpaperPath": config_data.get(
+                    "darkM3WallpaperPath", ""
+                ),
+                "lightM3WallpaperPath": config_data.get(
+                    "lightM3WallpaperPath", ""
+                ),
                 "menuTransitions": MenuTransitionsSettings(
                     {  # Nested TypedDict construction
                         "mainMenu": "slide_down",
@@ -307,21 +333,21 @@ class Settings:
                         "networkMenuDuration": config_data.get("theme", {})
                         .get("menuTransitions", {})
                         .get("networkMenuDuration", 300),
-                        "notificationMenuDuration": config_data.get("theme", {}).get(
-                            "notificationMenuDuration", 300
-                        ),
-                        "prayerTimesMenuDuration": config_data.get("theme", {}).get(
-                            "prayerTimesMenuDuration", 300
-                        ),
-                        "hardwareMenuDuration": config_data.get("theme", {}).get(
-                            "hardwareMenuDuration", 300
-                        ),
+                        "notificationMenuDuration": config_data.get(
+                            "theme", {}
+                        ).get("notificationMenuDuration", 300),
+                        "prayerTimesMenuDuration": config_data.get(
+                            "theme", {}
+                        ).get("prayerTimesMenuDuration", 300),
+                        "hardwareMenuDuration": config_data.get(
+                            "theme", {}
+                        ).get("hardwareMenuDuration", 300),
                         "audioMenuDuration": config_data.get("theme", {}).get(
                             "audioMenuDuration", 300
                         ),
-                        "calendarMenuDuration": config_data.get("theme", {}).get(
-                            "calendarMenuDuration", 300
-                        ),
+                        "calendarMenuDuration": config_data.get(
+                            "theme", {}
+                        ).get("calendarMenuDuration", 300),
                     }
                 ),
             }
