@@ -1,11 +1,13 @@
 import json
 import logging
+import os
 import subprocess
 from pathlib import Path
 from threading import Timer
 
 import dbus
 import dbus.mainloop.glib
+import sass
 from gi.repository import Gio
 
 from fabric.core.service import Property, Service, Signal
@@ -27,7 +29,7 @@ class ThemeService(Service):
     including wallpapers, CSS, and various desktop settings.
     """
 
-    CACHE_FILE_PATH: Path = Path.home() / ".cache" / "ahmed-hyprland-conf.temp"
+    CACHE_FILE_PATH = settings.get_cache_file()
 
     @Signal
     def changed(self) -> None:
@@ -35,11 +37,7 @@ class ThemeService(Service):
         Signal emitted when the theme is changed.
         """
 
-    def __init__(self) -> None:
-        """
-        Initialize the ThemeService,
-        set up the DBus main loop and load cached theme variables.
-        """
+    def __init__(self, application) -> None:
         super().__init__()
         logging.info("Starting theme service")
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
@@ -47,6 +45,7 @@ class ThemeService(Service):
 
         self.selected_theme: str = COLOR_THEME
         self.wallpapers_list: list = []
+        self.application = application
 
         self.wallpaper_interval_id: Timer | None = None
         self.selected_light_wallpaper: int = 0
@@ -69,9 +68,7 @@ class ThemeService(Service):
         """
         Returns True if the current theme is dynamic.
         """
-        return ThemesDictionary.get(self.selected_theme, {}).get(
-            "dynamic", False
-        )
+        return ThemesDictionary.get(self.selected_theme, {}).dynamic
 
     def change_theme(self, selected_theme: str) -> None:
         """
@@ -80,6 +77,7 @@ class ThemeService(Service):
         :param selected_theme: The key of the theme to apply.
         """
         theme = ThemesDictionary.get(selected_theme)
+
         if not theme:
             logging.warning(
                 "Theme '%s' not found in ThemesDictionary.", selected_theme
@@ -87,9 +85,8 @@ class ThemeService(Service):
             return
 
         self._clear_dynamic_wallpaper_interval()
-        is_dynamic = theme.dynamic
 
-        if is_dynamic:
+        if theme.dynamic:
             self._set_dynamic_wallpapers(
                 theme.wallpaper_path,
                 theme.gtk_mode,
@@ -132,6 +129,7 @@ class ThemeService(Service):
         """
         Changes the desktop wallpaper.
         """
+        logging.info("Changing wallpaper")
         try:
             subprocess.run(
                 ["swww", "img", "--transition-type", "random", wallpaper],
@@ -144,14 +142,35 @@ class ThemeService(Service):
         """
         Updates the CSS theme.
         """
-        scss = settings.theme.get("mainCss")
-        css = settings.theme.get("styleCss")
-        new_th = f"@import './themes/{css_theme}';"
+        logging.info("Changing css")
+        scss_path = settings.theme.get("mainCss")
+        compiled_css_path = settings.theme.get("styleCss")
         try:
-            subprocess.run(["sed", "-i", f"1s|.*|{new_th}|", scss], check=True)
-            subprocess.run(["sassc", scss, css], check=True)
-        except subprocess.CalledProcessError as e:
-            logging.exception("Error changing CSS: %s", e)
+            with open(scss_path, "r") as scss:
+                compiled_css = sass.compile(string=scss.read())
+
+            with open(compiled_css_path, "w") as css:
+                css.write(compiled_css)
+                css.flush()
+                os.fsync(css.fileno())
+
+            if os.path.exists(compiled_css_path):
+                with open(compiled_css_path, "r") as file:
+                    css_data = file.read().strip()
+                    if not css_data:
+                        logging.error("CSS file %s is empty!", scss_path)
+                        return  # Skip if the file is empty
+            else:
+                logging.error("Error: %s not found.", scss_path)
+                return  # Exit if the file does not exist
+
+            self.application.set_stylesheet_from_file(compiled_css_path)
+            logging.info("css updated")
+
+        except FileNotFoundError:
+            logging.error("Error: %s not found.", scss_path)
+        except sass.CompileError as e:
+            logging.error("Error compiling SCSS: %s", e)
 
     def _set_dynamic_wallpapers(
         self,
@@ -166,6 +185,7 @@ class ThemeService(Service):
         :param theme_mode: The mode (e.g., 'dark' or 'light').
         :param interval: The interval in milliseconds between wallpaper changes.
         """
+        logging.info("Setting dynamic wallpaper")
         try:
             result = subprocess.run(
                 [settings.scripts.get("get_wallpapers"), path],
@@ -202,6 +222,7 @@ class ThemeService(Service):
         """
         Clears the current dynamic wallpaper timer.
         """
+        logging.info("Clear dynamic wallpaper interval")
         if self.wallpaper_interval_id:
             self.wallpaper_interval_id.cancel()
             self.wallpaper_interval_id = None
@@ -210,6 +231,7 @@ class ThemeService(Service):
         """
         Stops the dynamic wallpaper feature.
         """
+        logging.info("dynamic wallpaper is off")
         self._dynamic_wallpaper_status = False
         self._clear_dynamic_wallpaper_interval()
         theme = ThemesDictionary.get(self.selected_theme)
@@ -232,13 +254,14 @@ class ThemeService(Service):
         """
         Starts the dynamic wallpaper feature.
         """
+        logging.info("dynamic wallpaper is on")
         theme = ThemesDictionary.get(self.selected_theme)
         self._dynamic_wallpaper_status = True
         self._clear_dynamic_wallpaper_interval()
         self._set_dynamic_wallpapers(
-            theme.get("wallpaper_path", ""),
-            theme.get("gtk_mode", ""),
-            theme.get("interval", 30000),
+            theme.wallpaper_path,
+            theme.gtk_mode,
+            theme.interval,
         )
         self._cache_variables()
         self.emit("changed")
@@ -249,6 +272,7 @@ class ThemeService(Service):
 
         :param theme_mode: Either 'dark' or 'light'.
         """
+        logging.info("Call next wallpaper")
         selected_wallpaper_index = 0
         if theme_mode == "dark":
             selected_wallpaper_index = self.selected_dark_wallpaper
@@ -287,11 +311,13 @@ class ThemeService(Service):
         :param mode: The current mode ('dark' or 'light').
         """
         # TODO: Implement schema creation logic
+        logging.info("Creating m3 color schemas")
 
     def change_plasma_color(self, plasma_color: str) -> None:
         """
         Changes the plasma color scheme.
         """
+        logging.info("Changing plasma color")
         plasma_cmd = "plasma-apply-colorscheme"
         try:
             subprocess.run(
@@ -304,6 +330,7 @@ class ThemeService(Service):
         """
         Changes the plasma icons theme.
         """
+        logging.info("Changing plasma icons")
         try:
             subprocess.run(
                 [
@@ -331,6 +358,8 @@ class ThemeService(Service):
         """
         Changes the GTK theme and its related settings.
         """
+
+        logging.info("Changing gtk theme")
 
         def set_gtk_settings() -> None:
             try:
@@ -375,6 +404,8 @@ class ThemeService(Service):
         """
         Sets Hyprland configuration.
         """
+
+        logging.info("Changing hyprland config")
 
         def hyprctl_commands() -> None:
             try:
@@ -423,6 +454,7 @@ class ThemeService(Service):
         """
         Changes the Konsole profile.
         """
+        logging.info("Changing konsole profile")
         konsole_profile_data = f"""[Desktop Entry]
 DefaultProfile={konsole_profile}.profile
 
@@ -442,6 +474,7 @@ ToolBarsMovable=Disabled
         """
         Changes the Kvantum theme.
         """
+        logging.info("Changing kvantum theme")
         try:
             subprocess.run(
                 ["kvantummanager", "--set", kvantum_theme], check=True
@@ -453,10 +486,9 @@ ToolBarsMovable=Disabled
         """
         Shows the desktop widget.
         """
+        logging.info("Show desktop widget")
         old_theme = ThemesDictionary.get(self.selected_theme)
-        old_widget = (
-            old_theme.get("desktop_widget", None) if old_theme else None
-        )
+        old_widget = old_theme.desktop_widget if old_theme else None
 
         if old_widget and old_widget != widget:
             self.hide_widget(old_widget)
@@ -468,6 +500,7 @@ ToolBarsMovable=Disabled
         """
         Hides the specified widget.
         """
+        logging.info("Hide widget")
         try:
             # TODO: Implement widget hiding logic here if needed.
             pass
@@ -478,6 +511,7 @@ ToolBarsMovable=Disabled
         """
         Shows the specified widget.
         """
+        logging.info("Show widget")
         try:
             # TODO: Implement widget showing logic here if needed.
             pass
@@ -488,6 +522,7 @@ ToolBarsMovable=Disabled
         """
         Caches the current theme variables to a file.
         """
+        logging.info("Cache variables")
         new_data = {
             "selected_theme": self.selected_theme,
             "selected_dark_wallpaper": self.selected_dark_wallpaper,
@@ -505,6 +540,7 @@ ToolBarsMovable=Disabled
         """
         Loads cached theme variables from a file.
         """
+        logging.info("Load cached variables")
         try:
             with open(self.CACHE_FILE_PATH, "r") as f:
                 cached_data = json.load(f)
@@ -531,4 +567,5 @@ ToolBarsMovable=Disabled
         """
         Applies the theme based on the cached variables.
         """
+        logging.info("Applies cached theme")
         self.change_theme(self.selected_theme)

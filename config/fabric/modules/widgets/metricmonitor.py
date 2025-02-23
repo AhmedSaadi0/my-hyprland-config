@@ -1,7 +1,7 @@
 from fabric import Fabricator
 from modules.widgets.circularprogressbar import MyCircularProgressBar
 
-WIDGET_SIZE = 20
+WIDGET_SIZE = 22
 
 
 # TODO: -> Make it a widget

@@ -90,7 +90,6 @@ class MenuTransitionsSettings(TypedDict):
 
 class ThemeSettings(TypedDict):
     scss: str
-    absoluteDynamicM3Scss: str
     mainCss: str
     styleCss: str
     darkM3WallpaperPath: str
@@ -156,6 +155,19 @@ class Settings:
     def _get_path(self, path: str) -> str:
         return os.path.join(self.MAIN_PATH, path)
 
+    @staticmethod
+    def get_cache_path() -> str:
+        path = os.path.expanduser("~/.cache/ahmed-config/")
+        if not os.path.exists(path):
+            os.makedirs(path, exist_ok=True)
+        return path
+
+    @staticmethod
+    def get_cache_file() -> str:
+        return os.path.join(
+            Settings.get_cache_path(), "ahmed-hyprland-conf.json"
+        )
+
     def _load_config(self):
         config_file_path = Utils.get_user_config_path()
         config_content = Utils.readFile(config_file_path)
@@ -172,49 +184,42 @@ class Settings:
             self.config_data = {}  # Initialize as empty dict
 
     def _initialize_paths(self):
+        scripts = self.config_data.get("scripts", {})
         self.scripts_paths = {
             "scripts": self._get_path("scripts"),
-            "dynamicM3Py": self.config_data.get("scripts", {}).get(
-                "dynamicM3Py"
-            )
-            or self._get_path("scripts/m3/dynamic-m3.py"),
-            "get_wallpapers": self.config_data.get("scripts", {}).get(
-                "get_wallpapers"
-            )
+            # ---------------------------------------------------- #
+            "get_wallpapers": scripts.get("get_wallpapers")
             or self._get_path("scripts/get_wallpapers.sh"),
-            "createThumbnail": self.config_data.get("scripts", {}).get(
-                "createThumbnail"
-            )
-            or self._get_path("scripts/m3/create_thumbnail.py"),
-            "gtk_theme": self.config_data.get("scripts", {}).get("gtk_theme")
-            or self._get_path("scripts/m3/gtk_theme.py"),
-            "systemInfo": self.config_data.get("scripts", {}).get("systemInfo")
+            # ---------------------------------------------------- #
+            "systemInfo": scripts.get("systemInfo")
             or self._get_path("scripts/system_info.sh"),
-            "deviceLocal": self.config_data.get("scripts", {}).get(
-                "deviceLocal"
-            )
+            # ---------------------------------------------------- #
+            "deviceLocal": scripts.get("deviceLocal")
             or self._get_path("scripts/lang.sh"),
-            "cpu": self.config_data.get("scripts", {}).get("cpu")
-            or self._get_path("scripts/cpu.sh"),
-            "ram": self.config_data.get("scripts", {}).get("ram")
-            or self._get_path("scripts/ram.sh"),
-            "deviceTemp": self.config_data.get("scripts", {}).get("deviceTemp")
+            # ---------------------------------------------------- #
+            "cpu": scripts.get("cpu") or self._get_path("scripts/cpu.sh"),
+            # ---------------------------------------------------- #
+            "ram": scripts.get("ram") or self._get_path("scripts/ram.sh"),
+            # ---------------------------------------------------- #
+            "deviceTemp": scripts.get("deviceTemp")
             or self._get_path("scripts/devices_temps.sh"),
-            "hardwareInfo": self.config_data.get("scripts", {}).get(
-                "hardwareInfo"
-            )
+            # ---------------------------------------------------- #
+            "hardwareInfo": scripts.get("hardwareInfo")
             or self._get_path("scripts/hardware_info.sh"),
-            "cpuUsage": self.config_data.get("scripts", {}).get("cpuUsage")
+            # ---------------------------------------------------- #
+            "cpuUsage": scripts.get("cpuUsage")
             or self._get_path("scripts/cpu_usage.sh"),
-            "ramUsage": self.config_data.get("scripts", {}).get("ramUsage")
+            # ---------------------------------------------------- #
+            "ramUsage": scripts.get("ramUsage")
             or self._get_path("scripts/ram_usage.sh"),
-            "cpuCores": self.config_data.get("scripts", {}).get("cpuCores")
+            # ---------------------------------------------------- #
+            "cpuCores": scripts.get("cpuCores")
             or self._get_path("scripts/cpu_cores.sh"),
-            "devicesTemp2": self.config_data.get("scripts", {}).get(
-                "devicesTemp2"
-            )
+            # ---------------------------------------------------- #
+            "devicesTemp2": scripts.get("devicesTemp2")
             or self._get_path("scripts/temp.sh"),
-            "playerctl": self.config_data.get("scripts", {}).get("playerctl")
+            # ---------------------------------------------------- #
+            "playerctl": scripts.get("playerctl")
             or os.path.join(
                 os.path.expanduser("~"), ".config/hypr/scripts/playerctl.sh"
             ),
@@ -282,11 +287,9 @@ class Settings:
 
         self.theme_paths = {
             "scss": self._get_path("scss"),
-            "absoluteDynamicM3Scss": self._get_path(
-                "scss/themes/m3/dynamic.scss"
-            ),
             "mainCss": self._get_path("/scss/main.scss"),
-            "styleCss": self._get_path("/style.scss"),
+            "variables": self._get_path("/scss/base/variables.scss"),
+            "styleCss": os.path.join(Settings.get_cache_path(), "main.css"),
         }
 
     def _initialize_settings(self):
@@ -303,9 +306,6 @@ class Settings:
         self.theme = ThemeSettings(
             {  # Construct ThemeSettingsDict directly
                 "scss": self.theme_paths["scss"],
-                "absoluteDynamicM3Scss": self.theme_paths[
-                    "absoluteDynamicM3Scss"
-                ],
                 "mainCss": self.theme_paths["mainCss"],
                 "styleCss": self.theme_paths["styleCss"],
                 "darkM3WallpaperPath": config_data.get(
@@ -315,39 +315,11 @@ class Settings:
                     "lightM3WallpaperPath", ""
                 ),
                 "menuTransitions": MenuTransitionsSettings(
-                    {  # Nested TypedDict construction
+                    {
                         "mainMenu": "slide_down",
-                        "weatherMenu": "slide_down",
-                        "networkMenu": "slide_down",
-                        "notificationMenu": "slide_down",
-                        "prayerTimesMenu": "slide_down",
-                        "hardwareMenu": "slide_down",
-                        "audioMenu": "slide_down",
-                        "calendarMenu": "slide_down",
                         "mainMenuDuration": config_data.get("theme", {})
                         .get("menuTransitions", {})
                         .get("mainMenuDuration", 300),
-                        "weatherMenuDuration": config_data.get("theme", {})
-                        .get("menuTransitions", {})
-                        .get("weatherMenuDuration", 300),
-                        "networkMenuDuration": config_data.get("theme", {})
-                        .get("menuTransitions", {})
-                        .get("networkMenuDuration", 300),
-                        "notificationMenuDuration": config_data.get(
-                            "theme", {}
-                        ).get("notificationMenuDuration", 300),
-                        "prayerTimesMenuDuration": config_data.get(
-                            "theme", {}
-                        ).get("prayerTimesMenuDuration", 300),
-                        "hardwareMenuDuration": config_data.get(
-                            "theme", {}
-                        ).get("hardwareMenuDuration", 300),
-                        "audioMenuDuration": config_data.get("theme", {}).get(
-                            "audioMenuDuration", 300
-                        ),
-                        "calendarMenuDuration": config_data.get(
-                            "theme", {}
-                        ).get("calendarMenuDuration", 300),
                     }
                 ),
             }
