@@ -143,8 +143,9 @@ class ThemeService(Service):
         Updates the CSS theme.
         """
         logging.info("Changing css")
-        scss_path = settings.theme.get("mainCss")
-        compiled_css_path = settings.theme.get("styleCss")
+        self._update_css_main_file()
+        scss_path = settings.theme.styles_scss
+        compiled_css_path = settings.theme.styles_css
         try:
             with open(scss_path, "r") as scss:
                 compiled_css = sass.compile(string=scss.read())
@@ -172,6 +173,14 @@ class ThemeService(Service):
         except sass.CompileError as e:
             logging.error("Error compiling SCSS: %s", e)
 
+    def _update_css_main_file(self, css_theme="variables.scss"):
+        file_path = settings.theme.styles_scss
+        with open(file_path, "r", encoding="utf-8") as file:
+            lines = file.readlines()
+        lines[0] = f"""@import "scss/base/{css_theme}";\n"""
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.writelines(lines)
+
     def _set_dynamic_wallpapers(
         self,
         path: str,
@@ -188,7 +197,7 @@ class ThemeService(Service):
         logging.info("Setting dynamic wallpaper")
         try:
             result = subprocess.run(
-                [settings.scripts.get("get_wallpapers"), path],
+                [settings.scripts.get_wallpapers, path],
                 capture_output=True,
                 text=True,
                 check=True,

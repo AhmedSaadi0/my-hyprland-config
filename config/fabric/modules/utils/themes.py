@@ -4,7 +4,7 @@ from typing import Optional
 from modules.utils.settings import get_settings
 
 settings = get_settings()
-WALLPAPER_PATH = settings.assets.get("wallpapers")
+WALLPAPER_PATH = settings.assets.wallpapers
 
 
 @dataclass
@@ -385,8 +385,8 @@ white_flower_theme = Theme(
 
 dynamic_m3_dark_theme = Theme(
     wallpaper=None,
-    css_theme=None,
-    wallpaper_path="/path/to/dark/m3/wallpapers",  # Set your dark M3 wallpaper path
+    css_theme="variables.scss",
+    wallpaper_path=settings.theme.dark_m3_wallpaper_path,
     dynamic=True,
     interval=15 * 60 * 1000,
     gtk_mode="dark",
@@ -409,8 +409,8 @@ dynamic_m3_dark_theme = Theme(
 
 dynamic_m3_light_theme = Theme(
     wallpaper=None,
-    css_theme=None,
-    wallpaper_path="/path/to/light/m3/wallpapers",
+    css_theme="variables.scss",
+    wallpaper_path=settings.theme.light_m3_wallpaper_path,
     dynamic=True,
     interval=15 * 60 * 1000,
     gtk_mode="light",
