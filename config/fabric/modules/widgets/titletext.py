@@ -24,7 +24,7 @@ class TitleText(Button):
         on_hover_lost=None,
         on_clicked=None,
         title_widget=None,
-        # text_widget=None,
+        text_widget=None,
         title_h_align="center",
         title_v_align="center",
         text_h_align="center",
@@ -55,7 +55,7 @@ class TitleText(Button):
             orientation="vertical" if vertical else "horizontal",
             children=[
                 title_widget or _title,
-                title_widget or _text,
+                text_widget or _text,
             ],
             style_classes=box_class,
         )
@@ -73,7 +73,9 @@ class TitleText(Button):
             self.connect("enter-notify-event", lambda btn, _: on_hover(btn))
 
         if on_hover_lost:
-            self.connect("leave-notify-event", lambda btn, _: on_hover_lost(btn))
+            self.connect(
+                "leave-notify-event", lambda btn, _: on_hover_lost(btn)
+            )
 
         if on_clicked:
             self.connect("clicked", lambda btn: on_clicked(btn))
@@ -158,7 +160,9 @@ class TitleTextRevealer(Button):
             self.connect("enter-notify-event", lambda btn, _: on_hover(btn))
 
         if on_hover_lost:
-            self.connect("leave-notify-event", lambda btn, _: on_hover_lost(btn))
+            self.connect(
+                "leave-notify-event", lambda btn, _: on_hover_lost(btn)
+            )
 
         if on_clicked:
             self.connect("clicked", lambda btn: on_clicked(btn))

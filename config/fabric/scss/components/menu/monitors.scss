@@ -1,0 +1,86 @@
+.menu-battery {
+  background: rgba($color: #000000, $alpha: 0.3);
+  // color: rgba($primary, 0);
+  border: solid 0.5rem rgba($primary, 1);
+}
+
+.menu-hardware-progress-inner-circle {
+  font-family: $icon-font-family;
+  font-size: 1.7rem;
+}
+
+@keyframes colorChange {
+  0% {
+    color: $primary;
+  }
+
+  50% {
+    color: rgba($surface-variant, 1);
+  }
+
+  100% {
+    color: $primary;
+  }
+}
+
+.menu-battery label {
+  @extend .menu-hardware-progress-inner-circle;
+  color: $primary;
+}
+
+/* --------------------------------- */
+/* -------------- CPU -------------- */
+/* --------------------------------- */
+.menu-cpu {
+  background: rgba($color: #000000, $alpha: 0.3);
+  // color: rgba($secondary, 0.7);
+  border: solid 0.5rem rgba($secondary, 1);
+}
+
+.menu-cpu label {
+  @extend .menu-hardware-progress-inner-circle;
+  // font-size: 0.6rem;
+  color: $secondary;
+}
+
+/* ---------------------------------- */
+/* -------------- TEMP -------------- */
+/* ---------------------------------- */
+.menu-temp {
+  background: rgba($color: #000000, $alpha: 0.3);
+  // background: rgba($tertiary, 0.2);
+  // color: rgba($primary, 0);
+  border: solid 0.5rem rgba($tertiary, 1);
+}
+
+.no-hover:hover {
+  all: unset;
+}
+
+.menu-temp label {
+  @extend .menu-hardware-progress-inner-circle;
+  color: $tertiary;
+}
+
+/* --------------------------------- */
+/* -------------- RAM -------------- */
+/* --------------------------------- */
+.menu-ram {
+  background: rgba($color: #000000, $alpha: 0.3);
+  // background: rgba($error, 0.2);
+  // color: rgba($primary, 0);
+  border: solid 0.5rem rgba($error, 1);
+}
+
+.menu-ram label {
+  font-family: $icon-font-family;
+  font-size: 1.7rem;
+  color: $error;
+}
+/* ------------------------------------------ */
+/* -------------- Hardware box -------------- */
+/* ------------------------------------------ */
+.menu-monitors-box {
+  @extend .left-menu-insider-box;
+  padding: 1rem;
+}

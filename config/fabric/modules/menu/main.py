@@ -3,6 +3,7 @@ from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.stack import Stack
 from fabric.widgets.wayland import WaylandWindow as Window
+from modules.menu.monitors import MonitorsHeaderBox
 from modules.menu.power_profile import PowerProfileWidget
 from modules.widgets.titletext import TitleTextRevealer
 
@@ -43,7 +44,7 @@ class MainMenu(Window):
             "title": "",
             "text": "مؤشرات",
             "stack_name": "monitors",
-            "stack": Label(label="Content for 4"),
+            "stack": MonitorsHeaderBox(),
         },
         {
             "title": "",
@@ -80,7 +81,9 @@ class MainMenu(Window):
     def build_ui(self):
         """Builds the complete UI for the MainMenu."""
         # Initialize the stack
-        self.stack = Stack(transition_type="slide-left-right", transition_duration=300)
+        self.stack = Stack(
+            transition_type="slide-left-right", transition_duration=300
+        )
 
         # Define tabs and corresponding stack pages
 

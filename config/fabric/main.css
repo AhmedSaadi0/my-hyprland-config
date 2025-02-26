@@ -220,6 +220,14 @@
   padding-left: 1rem;
   padding-right: 1rem; }
 
+.left-menu-insider-box, .menu-monitors-box, .power-profile-box {
+  padding: 1rem;
+  margin: 1rem;
+  margin-bottom: 0rem;
+  border-radius: 1.5rem;
+  background: rgba(79, 55, 139, 0.7);
+  color: #eaddff; }
+
 .main-menu {
   background: #1c1b1f;
   color: #e6e1e5;
@@ -277,7 +285,7 @@
   font-family: "FantasqueSansM Nerd Font Propo";
   min-width: 2rem; }
 
-.left-menu-insider-box, .power-profile-box {
+.left-menu-insider-box, .menu-monitors-box, .power-profile-box {
   padding: 1rem;
   margin: 1rem;
   margin-bottom: 0rem;
@@ -325,3 +333,63 @@
 .active-power-profiles {
   background: #d0bcff;
   color: #381e72; }
+
+.menu-battery {
+  background: rgba(0, 0, 0, 0.3);
+  border: solid 0.5rem #d0bcff; }
+
+.menu-hardware-progress-inner-circle, .menu-temp label, .menu-cpu label, .menu-battery label {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  font-size: 1.7rem; }
+
+@keyframes colorChange {
+  0% {
+    color: #d0bcff; }
+  50% {
+    color: #49454e; }
+  100% {
+    color: #d0bcff; } }
+
+.menu-battery label {
+  color: #d0bcff; }
+
+/* --------------------------------- */
+/* -------------- CPU -------------- */
+/* --------------------------------- */
+.menu-cpu {
+  background: rgba(0, 0, 0, 0.3);
+  border: solid 0.5rem #cbc2db; }
+
+.menu-cpu label {
+  color: #cbc2db; }
+
+/* ---------------------------------- */
+/* -------------- TEMP -------------- */
+/* ---------------------------------- */
+.menu-temp {
+  background: rgba(0, 0, 0, 0.3);
+  border: solid 0.5rem #efb8c8; }
+
+.no-hover:hover {
+  all: unset; }
+
+.menu-temp label {
+  color: #efb8c8; }
+
+/* --------------------------------- */
+/* -------------- RAM -------------- */
+/* --------------------------------- */
+.menu-ram {
+  background: rgba(0, 0, 0, 0.3);
+  border: solid 0.5rem #f2b8b5; }
+
+.menu-ram label {
+  font-family: "FantasqueSansM Nerd Font Propo";
+  font-size: 1.7rem;
+  color: #f2b8b5; }
+
+/* ------------------------------------------ */
+/* -------------- Hardware box -------------- */
+/* ------------------------------------------ */
+.menu-monitors-box {
+  padding: 1rem; }

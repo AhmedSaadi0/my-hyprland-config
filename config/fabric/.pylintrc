@@ -26,7 +26,6 @@ argument-naming-style = snake_case
 attr-naming-style = snake_case
 bad-names = foo, bar, baz, toto, tutu, tata
 good-names = i, j, k, ex, Run, _
-# باقي الإعدادات كما هي...
 
 [CLASSES]
 check-protected-access-in-special-methods = no
@@ -39,7 +38,7 @@ valid-metaclass-classmethod-first-arg = mcs
 exclude-too-few-public-methods =
 ignored-parents =
 max-args = 5
-max-attributes = 7
+max-attributes = 10
 max-bool-expr = 5
 max-branches = 12
 max-locals = 15

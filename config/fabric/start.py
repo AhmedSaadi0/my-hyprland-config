@@ -44,8 +44,8 @@ if __name__ == "__main__":
     app = Application(bar)
     app.add_window(bar.menu)
 
-    theme = ThemeService(app)
-    theme.change_theme(COLOR_THEME)
+    # theme = ThemeService(app)
+    # theme.change_theme(COLOR_THEME)
 
     scss_path = get_relative_path("scss/main.scss")
     css_path = get_relative_path("main.css")

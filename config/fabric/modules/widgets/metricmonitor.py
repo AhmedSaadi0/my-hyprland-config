@@ -17,6 +17,9 @@ class MetricMonitor:
         tooltip_text=None,
         child=None,
         size=WIDGET_SIZE,
+        start_at=0.4,
+        end_at=0.1,
+        inverted=True,
     ):
         self.name = name
         self.tooltip_text = tooltip_text
@@ -30,9 +33,9 @@ class MetricMonitor:
             line_style="round",
             tooltip_text=f"{tooltip_text} ({initial_value:.2f})",
             child=child,
-            start_at=0.4,
-            end_at=0.1,
-            inverted=True,
+            start_at=start_at,
+            end_at=end_at,
+            inverted=inverted,
         )
         self.widget.START_ANGLE = 0.5
         self.fabricator = Fabricator(
