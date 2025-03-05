@@ -1,6 +1,6 @@
 import { App } from 'astal/gtk3';
 // import style from './style.scss';
-import Bar from './widget/Bar';
+import Bar from './src/topbar/Topbar';
 import { exec } from 'astal';
 
 const scss = '/home/ahmed/.config/ags_v2/scss/main.scss';
