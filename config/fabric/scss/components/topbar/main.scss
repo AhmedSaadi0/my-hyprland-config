@@ -5,27 +5,34 @@
 .top-bar {
   background: $background;
   color: $on-background;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .top-corner {
-  background-color: $background;
+  // background-color: $background;
   border-radius: $border-radius;
 }
 
-.clock {
-  // font-size: 1em;
-  // font-family: "VEXA light R";
-  // font-family: "ae_Ostorah";
-  background: linear-gradient(
-    to right,
-    $primary-container,
-    $tertiary-container
-  );
-  color: $on-primary-container;
+.topbar-box {
   border-radius: $border-radius;
   margin-top: $bar-top-margin;
   margin-bottom: $bar-top-margin;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.clock {
+  @extend .topbar-box;
+  background: linear-gradient(to right, $primary, $secondary);
+  color: $on-primary;
+}
+
+.prayer-time-box {
+  @extend .topbar-box;
+  background: linear-gradient(
+    to right,
+    $primary-container,
+    $secondary-container
+  );
+  color: $on-primary-container;
 }

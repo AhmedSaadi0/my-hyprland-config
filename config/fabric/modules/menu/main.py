@@ -3,7 +3,7 @@ from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.stack import Stack
 from fabric.widgets.wayland import WaylandWindow as Window
-from modules.menu.monitors import MonitorsHeaderBox
+from modules.menu.monitors import MonitorsHeaderBox, MonitorsTables
 from modules.menu.power_profile import PowerProfileWidget
 from modules.widgets.titletext import TitleTextRevealer
 
@@ -44,7 +44,10 @@ class MainMenu(Window):
             "title": "",
             "text": "مؤشرات",
             "stack_name": "monitors",
-            "stack": MonitorsHeaderBox(),
+            "stack": Box(
+                orientation="v",
+                children=[MonitorsHeaderBox(), MonitorsTables()],
+            ),
         },
         {
             "title": "",

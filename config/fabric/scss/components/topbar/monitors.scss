@@ -121,12 +121,13 @@
 /* -------------- Hardware box -------------- */
 /* ------------------------------------------ */
 .hardware-box {
-  background: linear-gradient(
-    to right,
-    $primary-container,
-    $secondary-container,
-    rgba($error-container, 0.5)
-  );
+  // background: linear-gradient(
+  //   to right,
+  //   $primary-container,
+  //   $secondary-container,
+  //   rgba($error-container, 0.5)
+  // );
+  background: $primary-container;
   // padding: 0.2rem 0.5rem;
   border-radius: $border-radius;
   margin-top: $bar-top-margin;

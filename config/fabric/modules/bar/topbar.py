@@ -1,16 +1,11 @@
-import os
-
-import sass
-from fabric import Application
 from fabric.hyprland.widgets import Language
-from fabric.system_tray.widgets import SystemTray
-from fabric.utils import FormattedString, bulk_replace, get_relative_path
+from fabric.utils import FormattedString, bulk_replace
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
-from modules.menu.main import MainMenu
+from modules.utils.themes import COLOR_THEME
 
 from .widgets.monitors import (
     BatteryMonitor,
@@ -24,41 +19,12 @@ from .widgets.prayer_times import PrayerTimeDisplay
 from .widgets.workspaces import WorkspaceBox
 
 
-def update_css(application: Application):
-    scss_path = get_relative_path("../../scss/main.scss")
-    css_path = get_relative_path("../../main.css")
-
-    try:
-
-        with open(scss_path, "r") as scss:
-            compiled_css = sass.compile(string=scss.read())
-
-        with open(css_path, "w") as css:
-            css.write(compiled_css)
-            css.flush()
-            os.fsync(css.fileno())
-
-        if os.path.exists(css_path):
-            with open(css_path, "r") as file:
-                css_data = file.read().strip()
-                if not css_data:
-                    print(f"CSS file {css_path} is empty!")
-                    return  # Skip if the file is empty
-        else:
-            print(f"Error: {css_path} does not exist.")
-            return  # Exit if the file does not exist
-
-        application.set_stylesheet_from_file(css_path)
-        print("css Updated")
-
-    except FileNotFoundError:
-        print(f"Error: {scss_path} not found.")
-    except sass.CompileError as e:
-        print(f"Error compiling SCSS: {e}")
+def update_theme(theme_service):
+    theme_service.change_theme(COLOR_THEME)
 
 
-class StatusBar(Window):
-    def __init__(self, menu=MainMenu()):
+class TopBar(Window):
+    def __init__(self, theme_service, menu):
         super().__init__(
             name="bar",
             layer="top",
@@ -69,13 +35,14 @@ class StatusBar(Window):
             style_classes=["top-bar"],
         )
         self.menu = menu
+        self.theme_service = theme_service
 
         # عناصر الواجهة
         self.workspaces = WorkspaceBox()
         self.language = self.create_language_widget()
         self.open_menu = self.create_open_menu_button()
         self.date_time = self.create_date_time_widget()
-        self.system_tray = SystemTray(name="system-tray", spacing=4)
+        # self.system_tray = SystemTray(name="system-tray", spacing=4)
         self.update_css = self.create_update_button()
         self.status_container = self.create_status_container()
         self.prayer_display = self.create_prayer_display()
@@ -99,7 +66,7 @@ class StatusBar(Window):
             ),
             name="hyprland-window",
             # style_classes="topbar-btn",
-            style_classes=["unset", "clock"],
+            style_classes=["unset", "prayer-time-box"],
         )
 
     def create_open_menu_button(self):
@@ -108,7 +75,7 @@ class StatusBar(Window):
             label="menu",
             on_clicked=lambda *args: self.menu.toggle(),
             # style_classes="topbar-btn",
-            style_classes=["unset", "clock"],
+            style_classes=["unset", "prayer-time-box"],
         )
 
     def create_date_time_widget(self):
@@ -123,8 +90,8 @@ class StatusBar(Window):
         """إنشاء زر تحديث CSS."""
         return Button(
             label="update",
-            on_clicked=lambda *args: update_css(self.application),
-            style_classes=["unset", "clock"],
+            on_clicked=lambda *args: update_theme(self.theme_service),
+            style_classes=["unset", "prayer-time-box"],
         )
 
     def create_prayer_display(self):
@@ -181,7 +148,7 @@ class StatusBar(Window):
                     prayer_display,
                     self.update_css,
                     self.language,
-                    self.system_tray,
+                    # self.system_tray,
                     self.open_menu,
                 ],
             ),

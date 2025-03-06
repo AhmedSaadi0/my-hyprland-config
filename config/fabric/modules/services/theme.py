@@ -70,7 +70,7 @@ class ThemeService(Service):
         """
         return ThemesDictionary.get(self.selected_theme, {}).dynamic
 
-    def change_theme(self, selected_theme: str) -> None:
+    def change_theme(self, selected_theme: int) -> None:
         """
         Changes the system theme to the specified theme.
 
@@ -143,7 +143,7 @@ class ThemeService(Service):
         Updates the CSS theme.
         """
         logging.info("Changing css")
-        self._update_css_main_file()
+        self._update_css_main_file(css_theme)
         scss_path = settings.theme.styles_scss
         compiled_css_path = settings.theme.styles_css
         try:
@@ -168,6 +168,8 @@ class ThemeService(Service):
             self.application.set_stylesheet_from_file(compiled_css_path)
             logging.info("css updated")
 
+            self._apply_new_css(compiled_css_path)
+
         except FileNotFoundError:
             logging.error("Error: %s not found.", scss_path)
         except sass.CompileError as e:
@@ -180,6 +182,9 @@ class ThemeService(Service):
         lines[0] = f"""@import "scss/base/{css_theme}";\n"""
         with open(file_path, "w", encoding="utf-8") as file:
             file.writelines(lines)
+
+    def _apply_new_css(self, css_file_path):
+        self.application.set_stylesheet_from_file(css_file_path)
 
     def _set_dynamic_wallpapers(
         self,

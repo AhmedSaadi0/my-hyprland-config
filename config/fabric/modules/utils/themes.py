@@ -67,13 +67,27 @@ class Theme:
     interval: Optional[int] = None  # For dynamic themes
 
 
-"""
-وحدة تعريفات السمات.
-
-تحتوي على dataclasses لتمثيل تكوينات Hyprland والسمات الكاملة،
-بالإضافة إلى قاموس `ThemesDictionary` الذي يربط ثوابت السمات بكائنات `Theme`.
-"""
-
+colors_theme = Theme(
+    wallpaper=f"{WALLPAPER_PATH}/colors.png",
+    css_theme="colors.scss",
+    plasma_color="AColors.colors",
+    qt_icon_theme="Vivid-Dark-Icons",
+    kvantum_theme="Shades-of-purple",
+    gtk_theme="Shades-of-purple",
+    gtk_icon_theme="Vivid-Dark-Icons",
+    gtk_mode="dark",
+    font_name="JF Flat 11",
+    hypr=HyprConfig(
+        border_width=2,
+        active_border="rgba(FD02FFff) rgba(1ed4fdff) 0deg",
+        inactive_border="rgba(59595900) 0deg",
+        rounding=19,
+        kitty="colors.conf",
+        konsole="pinky",
+    ),
+    desktop_widget="ColorWidget",
+    dynamic=False,
+)
 
 black_hole_theme = Theme(
     wallpaper=f"{WALLPAPER_PATH}/black-hole.png",
@@ -141,27 +155,6 @@ deer_theme = Theme(
     dynamic=False,
 )
 
-colors_theme = Theme(
-    wallpaper=f"{WALLPAPER_PATH}/colors.png",
-    css_theme="colors.scss",
-    plasma_color="AColors.colors",
-    qt_icon_theme="Vivid-Dark-Icons",
-    kvantum_theme="Shades-of-purple",
-    gtk_theme="Shades-of-purple",
-    gtk_icon_theme="Vivid-Dark-Icons",
-    gtk_mode="dark",
-    font_name="JF Flat 11",
-    hypr=HyprConfig(
-        border_width=2,
-        active_border="rgba(FD02FFff) rgba(1ed4fdff) 0deg",
-        inactive_border="rgba(59595900) 0deg",
-        rounding=19,
-        kitty="colors.conf",
-        konsole="pinky",
-    ),
-    desktop_widget="ColorWidget",
-    dynamic=False,
-)
 
 siberian_theme = Theme(
     wallpaper=f"{WALLPAPER_PATH}/tapet_Siberian.png",

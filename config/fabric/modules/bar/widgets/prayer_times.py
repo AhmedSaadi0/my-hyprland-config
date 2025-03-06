@@ -7,7 +7,11 @@ from ...services.prayer_times import PrayerTimesService
 class PrayerTimeDisplay:
     def __init__(self, city: str, country: str):
         self.prayer_time_label = Label(label="")
-        self.container = Box(orientation="h", children=[self.prayer_time_label])
+        self.container = Box(
+            orientation="h",
+            children=[self.prayer_time_label],
+            style_classes=["prayer-time-box"],
+        )
         self.prayer_service = PrayerTimesService(city=city, country=country)
         self.update_ui()
         self.prayer_service.connect("changed", self.update_ui)

@@ -29,7 +29,13 @@ class PrayerTimesService(Service):
     def hijri_date(self) -> str:
         return self._hijri_date
 
-    def __init__(self, city: str, country: str, interval: int = 3600, **kwargs):
+    def __init__(
+        self,
+        city: str,
+        country: str,
+        interval: int = 3600,
+        **kwargs,
+    ):
         super().__init__(**kwargs)
         self.city = city
         self.country = country
@@ -84,7 +90,10 @@ class PrayerTimesService(Service):
         """Process fetched prayer times and calculate the next prayer."""
         timings = self.state.get("data", {}).get("timings", {})
         hijri_date = (
-            self.state.get("data", {}).get("date", {}).get("hijri", {}).get("date", "")
+            self.state.get("data", {})
+            .get("date", {})
+            .get("hijri", {})
+            .get("date", "")
         )
 
         self._hijri_date = hijri_date
@@ -102,7 +111,9 @@ class PrayerTimesService(Service):
             self._next_prayer_time = next_prayer[1].strftime("%H:%M")
             self._set_notification(now, next_prayer[1], next_prayer[0])
 
-    def _set_notification(self, now: datetime, prayer_time: datetime, prayer_name: str):
+    def _set_notification(
+        self, now: datetime, prayer_time: datetime, prayer_name: str
+    ):
         """Set a timer to notify when the next prayer starts."""
         time_until_prayer = (prayer_time - now).total_seconds()
         threading.Timer(

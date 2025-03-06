@@ -30,27 +30,27 @@
   font-family: $icon-font-family;
 }
 
-.workspaces button.active {
-  border-bottom: 1px solid $on-primary-container;
-  color: $on-primary-container;
-  // background: $secondary-container;
-  border-radius: 1px;
-  font-family: $icon-font-family;
-}
+// .workspaces button.active {
+//   border-bottom: 1px solid $secondary;
+//   color: $secondary;
+//   // background: $secondary-container;
+//   border-radius: 1px;
+//   font-family: $icon-font-family;
+// }
 
 .workspaces button.has-windows {
-  color: $on-primary-container;
+  color: $secondary;
 }
 
 // When icon is clicked
 .workspaces button:active {
-  color: $on-primary-container;
+  color: $tertiary;
   background: $secondary-container;
   border-radius: 1px;
   font-family: $icon-font-family;
 }
 
 .workspaces button:hover {
-  color: $primary-container;
-  background: $on-primary-container;
+  background: $primary;
+  color: $on-primary;
 }

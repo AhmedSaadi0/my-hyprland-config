@@ -78,7 +78,7 @@ logging-format-style = old
 logging-modules = logging
 
 [MESSAGES CONTROL]
-disable = not-context-manager
+disable = not-context-manager,C0301
 
 [METHOD_ARGS]
 timeout-methods = requests.api.delete,requests.api.get,requests.api.head,requests.api.options,requests.api.patch,requests.api.post,requests.api.put,requests.api.request

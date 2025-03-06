@@ -14,6 +14,9 @@ class CustomWorkspaceButton(WorkspaceButton):
 
     def do_bake_label(self):
         label = self._label if self.active else self._inactive_label
+        self.style_classes = ""
+        if not self.empty:
+            self.style_classes = "has-windows"
         self.set_label(label.format(button=self))
 
 
@@ -44,11 +47,17 @@ class CustomWorkspaces(Workspaces):
         open_workspaces: tuple[int, ...] = tuple(
             workspace["id"]
             for workspace in json.loads(
-                str(self.connection.send_command("j/workspaces").reply.decode())
+                str(
+                    self.connection.send_command("j/workspaces").reply.decode()
+                )
             )
         )
         self._active_workspace = json.loads(
-            str(self.connection.send_command("j/activeworkspace").reply.decode())
+            str(
+                self.connection.send_command(
+                    "j/activeworkspace"
+                ).reply.decode()
+            )
         )["id"]
 
         for btn in self._buttons_preset:
@@ -71,10 +80,15 @@ class CustomWorkspaces(Workspaces):
         return
 
     def on_createworkspace(self, _, event: HyprlandEvent):
-        pass
+        button = self._buttons.get(int(event.data[0]))
+
+        if button:
+            button.style_classes = "has-windows"
 
     def on_destroyworkspace(self, _, event: HyprlandEvent):
-        pass
+        button = self._buttons.get(int(event.data[0]))
+        if button:
+            button.style_classes = ""
 
 
 class WorkspaceBox(Box):
@@ -90,7 +104,9 @@ class WorkspaceBox(Box):
         self.add(self.workspaces)
 
     @staticmethod
-    def _create_workspaces(name: str, orientation: str, spacing: int) -> Workspaces:
+    def _create_workspaces(
+        name: str, orientation: str, spacing: int
+    ) -> Workspaces:
         inactive_icons = ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰆉", "󱍚", "󰺶", "󱋢", "󰤑"]
         active_icons = ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰆈", "󱍙", "󰺵", "󱋡", "󰙨"]
 
