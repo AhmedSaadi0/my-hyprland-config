@@ -1,0 +1,64 @@
+.toolbar-icons-box {
+    background: $primary-container;
+    border-radius: $border-radius;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    padding: 0rem 0.3rem;
+}
+
+.toolbar-button {
+    all: unset;
+    padding: 0.3rem 0rem;
+    margin: 0.5rem;
+    color: $on-primary-container;
+    // min-width: 1.5rem;
+}
+
+.toolbar-button:hover {
+    @extend .toolbar-button;
+    transition:
+        background 0.3s ease-in-out,
+        color 0.3s ease-in-out;
+    background: $primary;
+    color: $on-primary;
+    border-radius: $border-radius;
+}
+
+.toolbar-button-icon {
+    font-family: $icon-font-family;
+    min-width: 1.8rem;
+}
+
+.toolbar-button-text {
+    min-width: 5rem;
+}
+
+.toolbar-button-selected {
+    @extend .toolbar-button;
+    // min-width: 6.6rem;
+    background: $primary;
+    color: $on-primary;
+    border-radius: $border-radius;
+    margin: 0.5rem 0.4rem;
+    padding-left: 1rem;
+    transition:
+        background 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+}
+
+.toolbar-button-selected:hover {
+    @extend .toolbar-button-selected;
+}
+
+.power-profile-box {
+    // @extend .left-menu-insider-box;
+    background: rgba($secondary-container, 1);
+    color: $on-secondary-container;
+}
+
+.active-power-profiles {
+    // @extend .theme-btn;
+    background: $primary;
+    color: $on-primary;
+}

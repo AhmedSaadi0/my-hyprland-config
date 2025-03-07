@@ -1,4 +1,23 @@
+import { Gtk } from 'astal/gtk3';
 import { Box, Button, Label, Revealer } from 'astal/gtk3/widget';
+import Pango from 'gi://Pango?version=1.0';
+
+/**
+ * Helper to map truncation mode strings to Pango.EllipsizeMode values.
+ */
+const mapEllipsize = (mode: string) => {
+    switch (mode) {
+        case 'start':
+            return Pango.EllipsizeMode.START;
+        case 'middle':
+            return Pango.EllipsizeMode.MIDDLE;
+        case 'end':
+            return Pango.EllipsizeMode.END;
+        case 'none':
+        default:
+            return Pango.EllipsizeMode.NONE;
+    }
+};
 
 interface TitleTextProps {
     title: string;
@@ -51,7 +70,7 @@ export const TitleText = ({
         className: titleClass,
         xalign: titleXalign,
         yalign: titleYalign,
-        truncate: titleTruncate,
+        ellipsize: mapEllipsize(titleTruncate),
     });
 
     const _text = new Label({
@@ -60,7 +79,7 @@ export const TitleText = ({
         className: textClass,
         xalign: textXalign,
         yalign: textYalign,
-        truncate: textTruncate,
+        ellipsize: mapEllipsize(textTruncate),
     });
 
     const children = ltr
@@ -70,7 +89,10 @@ export const TitleText = ({
     return new Box({
         css: boxCss,
         className: boxClass,
-        vertical,
+        // Use GTK3 orientation property instead of a simple boolean
+        orientation: vertical
+            ? Gtk.Orientation.VERTICAL
+            : Gtk.Orientation.HORIZONTAL,
         homogeneous,
         spacing,
         children,
@@ -85,6 +107,7 @@ interface TitleTextRevealerProps extends TitleTextProps {
     onHover?: (btn: any) => void;
     onHoverLost?: (btn: any) => void;
     onClicked?: (() => void) | null;
+    reveal_child?: boolean;
 }
 
 export const TitleTextRevealer = ({
@@ -119,31 +142,39 @@ export const TitleTextRevealer = ({
     onClicked = null,
     titleWidget = null,
     textWidget = null,
+    reveal_child = false,
 }: TitleTextRevealerProps) => {
     const _title = new Label({
         label: title,
         className: titleClass,
         xalign: titleXalign,
-        truncate: titleTruncate,
+        ellipsize: mapEllipsize(titleTruncate),
     });
     const _text = new Label({
         label: text,
         className: textClass,
         xalign: textXalign,
-        truncate: textTruncate,
+        ellipsize: mapEllipsize(textTruncate),
     });
 
     const revealedText = new Revealer({
-        revealChild: false,
+        // Use proper GTK naming for the property
+        reveal_child: reveal_child,
         className: revealerClass,
-        transitionDuration,
-        transition: vertical ? 'slide_down' : 'slide_right',
+        transition_duration: transitionDuration,
+        // Use the GTK enum for the transition type:
+        transition_type: vertical
+            ? Gtk.RevealerTransitionType.SLIDE_DOWN
+            : Gtk.RevealerTransitionType.SLIDE_LEFT,
         child: textWidget || _text,
     });
 
     const box = new Box({
         className: boxClass,
-        vertical,
+        // Use orientation instead of a boolean "vertical"
+        orientation: vertical
+            ? Gtk.Orientation.VERTICAL
+            : Gtk.Orientation.HORIZONTAL,
         homogeneous,
         spacing,
         children: [titleWidget || _title, revealedText],
@@ -159,6 +190,7 @@ export const TitleTextRevealer = ({
     });
 };
 
+// TODO: -> Rename to a better name
 export const TitleTextRevealer2 = ({
     title,
     titleClass = '',
@@ -180,31 +212,37 @@ export const TitleTextRevealer2 = ({
     titleWidget = null,
     textWidget = null,
     boxCss = '',
+    reveal_child = false,
 }: TitleTextRevealerProps) => {
     const _title = new Label({
         label: title,
         className: titleClass,
         xalign: titleXalign,
-        truncate: titleTruncate,
+        ellipsize: mapEllipsize(titleTruncate),
     });
     const _text = new Label({
         label: text,
         className: textClass,
         xalign: textXalign,
-        truncate: textTruncate,
+        ellipsize: mapEllipsize(textTruncate),
     });
 
     const revealedText = new Revealer({
-        revealChild: false,
+        reveal_child: reveal_child,
         className: revealerClass,
-        transitionDuration: 500,
-        transition: vertical ? 'slide_down' : 'slide_right',
+        transition_duration: 500,
+        transition_type: vertical
+            ? Gtk.RevealerTransitionType.SLIDE_DOWN
+            : Gtk.RevealerTransitionType.SLIDE_LEFT,
         child: textWidget || _text,
     });
 
     return new Box({
         css: boxCss,
-        vertical,
+        // Use GTK3 orientation property
+        orientation: vertical
+            ? Gtk.Orientation.VERTICAL
+            : Gtk.Orientation.HORIZONTAL,
         homogeneous,
         spacing,
         className: boxClass,

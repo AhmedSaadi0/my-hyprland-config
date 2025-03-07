@@ -3,143 +3,132 @@ import settings from '../utils/settings';
 import strings from '../utils/strings';
 import { TitleTextRevealer } from '../widgets/TitleText';
 import { Astal, Gtk } from 'astal/gtk3';
+import Header from './profile/Header';
+import Profile from './profile/Profile';
 
 const sharedTabAttrs = {
     spacing: 7,
     vertical: false,
     buttonClass: 'toolbar-button',
     titleXalign: 0.7,
-    textXalign: 0,
+    textXalign: 0.3,
     titleClass: 'toolbar-button-icon',
     textClass: 'toolbar-button-text',
     onHover: (btn: Button) => {},
     onHoverLost: (btn: Button) => {},
 };
 
-const dashboardTabIcon = TitleTextRevealer({
-    ...sharedTabAttrs,
-    title: '󰨝',
-    text: strings.controlTab,
-    buttonClass: 'toolbar-button-selected small-shadow',
-    onClicked: () => {
-        switchToTab(settings.menuTabs.dashboard);
-    },
-});
+const dashboardTabIcon = (
+    <TitleTextRevealer
+        {...sharedTabAttrs}
+        title="󰨝"
+        text={strings.controlTab}
+        buttonClass="toolbar-button-selected small-shadow"
+        onClicked={() => switchToTab(settings.menuTabs.dashboard)}
+    />
+);
 
-const notificationTabIcon = TitleTextRevealer({
-    ...sharedTabAttrs,
-    title: '󰂞',
-    text: strings.notificationsTab,
-    onClicked: () => {
-        switchToTab(settings.menuTabs.notifications);
-    },
-});
+const notificationTabIcon = (
+    <TitleTextRevealer
+        {...sharedTabAttrs}
+        title="󰂞"
+        text={strings.notificationsTab}
+        onClicked={() => switchToTab(settings.menuTabs.notifications)}
+    />
+);
 
-const weatherTabIcon = TitleTextRevealer({
-    ...sharedTabAttrs,
-    title: '󰖐',
-    text: strings.weatherTab,
-    onClicked: () => {
-        switchToTab(settings.menuTabs.weather);
-    },
-});
+const weatherTabIcon = (
+    <TitleTextRevealer
+        {...sharedTabAttrs}
+        title="󰖐"
+        text={strings.weatherTab}
+        onClicked={() => switchToTab(settings.menuTabs.weather)}
+    />
+);
 
-const hardwareTabIcon = TitleTextRevealer({
-    ...sharedTabAttrs,
-    title: '',
-    text: strings.monitorsTab,
-    onClicked: () => {
-        switchToTab(settings.menuTabs.monitor);
-    },
-});
+const hardwareTabIcon = (
+    <TitleTextRevealer
+        {...sharedTabAttrs}
+        title=""
+        text={strings.monitorsTab}
+        onClicked={() => switchToTab(settings.menuTabs.monitor)}
+    />
+);
 
-const networkTabIcon = TitleTextRevealer({
-    ...sharedTabAttrs,
-    title: '',
-    text: strings.networkTab,
-    onClicked: () => {
-        switchToTab(settings.menuTabs.network);
-    },
-});
+const networkTabIcon = (
+    <TitleTextRevealer
+        {...sharedTabAttrs}
+        title=""
+        text={strings.networkTab}
+        onClicked={() => switchToTab(settings.menuTabs.network)}
+    />
+);
 
-// إنشاء صندوق الأيقونات (ToolbarIconsBox) باستخدام new Box
-const toolbarIconsBox = new Box({
-    className: 'toolbar-icons-box',
-    children: [
-        dashboardTabIcon,
-        notificationTabIcon,
-        weatherTabIcon,
-        hardwareTabIcon,
-        networkTabIcon,
-    ],
-});
+const toolbarIconsBox = (
+    <Box className="toolbar-icons-box">
+        {dashboardTabIcon}
+        {notificationTabIcon}
+        {weatherTabIcon}
+        {hardwareTabIcon}
+        {networkTabIcon}
+    </Box>
+);
 
-const stack = new Stack({
-    transition_type: Gtk.StackTransitionType.SLIDE_LEFT_RIGHT,
-    children: [
-        new Label({
-            label: 'dashboard',
-            name: settings.menuTabs.dashboard,
-        }),
-        new Label({
-            label: 'notifications',
-            name: settings.menuTabs.notifications,
-        }),
-        new Label({
-            label: 'weather',
-            name: settings.menuTabs.weather,
-        }),
-        new Label({
-            label: 'monitor',
-            name: settings.menuTabs.monitor,
-        }),
-        new Label({
-            label: 'network',
-            name: settings.menuTabs.network,
-        }),
-    ],
-    shown: settings.menuTabs.dashboard,
-});
+const stack = (
+    <Stack
+        transition_type={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
+        transition_duration={300}
+        shown={settings.menuTabs.dashboard}
+    >
+        <Label label="dashboard" name={settings.menuTabs.dashboard} />
+        <Label label="notifications" name={settings.menuTabs.notifications} />
+        <Label label="weather" name={settings.menuTabs.weather} />
+        <Label label="monitor" name={settings.menuTabs.monitor} />
+        <Label label="network" name={settings.menuTabs.network} />
+    </Stack>
+);
 
-// تجميع الودجات معًا في صندوق رئيسي
-const widgets = new Box({
-    className: 'left-menu-box unset',
-    vertical: true,
-    children: [toolbarIconsBox, stack],
-});
+const widgets = (
+    <Box css="min-width:24.5rem;" vertical>
+        <Header />
+        <Profile />
+        {toolbarIconsBox}
+        {stack}
+    </Box>
+);
 
-// إنشاء Revealer للقائمة باستخدام new Revealer
-const menuRevealer = new Revealer({
-    transition: settings.theme.menuTransitions.mainMenu,
-    child: widgets,
-    transitionDuration: settings.theme.menuTransitions.mainMenuDuration,
-    revealChild: true,
-});
+const menuRevealer = (
+    <Revealer
+        transition={settings.theme.menuTransitions.mainMenu}
+        transitionDuration={settings.theme.menuTransitions.mainMenuDuration}
+        revealChild
+    >
+        {widgets}
+    </Revealer>
+);
 
-// تعريف المكون الرئيسي للقائمة (MainMenu) باستخدام new Window
 export function MainMenu({ monitor }: { monitor?: any } = {}) {
-    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
+    const { TOP, LEFT } = Astal.WindowAnchor;
 
-    return new Window({
-        name: `left_menu_${monitor}`,
-        margins: [-2, 0, 0, 0],
-        keymode: 'on-demand',
-        anchor: [TOP | LEFT],
-        child: new Box({
-            css: 'min-height: 2px;',
-            children: [menuRevealer],
-        }),
-    });
+    return (
+        <Window
+            name={`left_menu_${monitor}`}
+            className="main-menu"
+            keymode="on-demand"
+            anchor={[TOP | LEFT]}
+        >
+            <Box css="min-height: 1px;">{menuRevealer}</Box>
+        </Window>
+    );
 }
 
-// تعريف زر القائمة (MenuButton) باستخدام new Button
-export const MenuButton = new Button({
-    className: 'menu-button unset',
-    label: '',
-    onClicked: () => {
-        openMenu(settings.menuTabs.dashboard);
-    },
-});
+export const MenuButton = (
+    <Button
+        className="menu-button unset"
+        label=""
+        onClicked={() => openMenu(settings.menuTabs.dashboard)}
+    />
+);
 
 function toggleDashboardTab() {
     if (stack.shown === settings.menuTabs.dashboard) {
@@ -199,16 +188,9 @@ function switchToTab(menuTabs: String) {
     toggleWeatherTab();
     toggleMonitorsTab();
     toggleNetworkTab();
-    // revealMediaControls(false);
-    // revealPowerButtons(false);
-    // revealAllThemes(false);
 }
 
 function openMenu(menuTab: String) {
-    // revealMediaControls(false);
-    // revealPowerButtons(false);
-    // revealAllThemes(false);
-
     if (menuRevealer.revealChild && stack.shown.toString() === menuTab) {
         menuRevealer.revealChild = false;
         return;
@@ -220,31 +202,3 @@ function openMenu(menuTab: String) {
 
     switchToTab(menuTab);
 }
-
-// globalThis.getMenuStatus = () => {
-//     return menuRevealer.revealChild;
-// };
-//
-// globalThis.toggleMainMenu = () => {
-//     openMenu(settings.menuTabs.dashboard);
-// };
-//
-// globalThis.hideMainMenu = () => {
-//     menuRevealer.revealChild = false;
-// };
-//
-// globalThis.ToggleNotificationCenter = () => {
-//     openMenu(settings.menuTabs.notifications);
-// };
-//
-// globalThis.toggleWeather = () => {
-//     openMenu(settings.menuTabs.weather);
-// };
-//
-// globalThis.toggleMonitors = () => {
-//     openMenu(settings.menuTabs.monitor);
-// };
-//
-// globalThis.toggleNetwork = () => {
-//     openMenu(settings.menuTabs.network);
-// };

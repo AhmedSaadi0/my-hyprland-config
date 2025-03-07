@@ -24,4 +24,23 @@
     border-radius: $border-radius;
 }
 
-@import 'topbar.scss';
+.profile-icon {
+    margin-top: -3rem;
+    border-radius: 5rem;
+    font-size: 80px;
+}
+
+.profile-title {
+    margin-top: 1rem;
+    font-family: 'VIP Rawy Regular';
+    font-size: xx-large;
+}
+
+.profile-sub-title {
+    margin-top: -0.3rem;
+    font-family: 'VIP Rawy Regular';
+    font-size: large;
+    margin-bottom: 1.5rem;
+}
+
+@import 'dashboard.scss';
