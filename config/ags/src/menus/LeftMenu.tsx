@@ -5,6 +5,7 @@ import { TitleTextRevealer } from '../widgets/TitleText';
 import { Astal, Gtk } from 'astal/gtk3';
 import Header from './profile/Header';
 import Profile from './profile/Profile';
+import HardwareBox from './monitors/MonitorsTab';
 
 const sharedTabAttrs = {
     spacing: 7,
@@ -83,7 +84,7 @@ const stack = (
         <Label label="dashboard" name={settings.menuTabs.dashboard} />
         <Label label="notifications" name={settings.menuTabs.notifications} />
         <Label label="weather" name={settings.menuTabs.weather} />
-        <Label label="monitor" name={settings.menuTabs.monitor} />
+        <HardwareBox name={settings.menuTabs.monitor} />
         <Label label="network" name={settings.menuTabs.network} />
     </Stack>
 );
@@ -101,7 +102,7 @@ const menuRevealer = (
     <Revealer
         transition={settings.theme.menuTransitions.mainMenu}
         transitionDuration={settings.theme.menuTransitions.mainMenuDuration}
-        revealChild
+        revealChild={false}
     >
         {widgets}
     </Revealer>
@@ -125,7 +126,17 @@ export function MainMenu({ monitor }: { monitor?: any } = {}) {
 export const MenuButton = (
     <Button
         className="menu-button unset"
-        label=""
+        child={
+            // Using stack to animate arrow
+            <Stack
+                transition_type={Gtk.StackTransitionType.SLIDE_UP_DOWN}
+                transition_duration={300}
+                shown="down"
+            >
+                <Label label="" name="up" />
+                <Label label="" name="down" />
+            </Stack>
+        }
         onClicked={() => openMenu(settings.menuTabs.dashboard)}
     />
 );
@@ -193,11 +204,13 @@ function switchToTab(menuTabs: String) {
 function openMenu(menuTab: String) {
     if (menuRevealer.revealChild && stack.shown.toString() === menuTab) {
         menuRevealer.revealChild = false;
+        MenuButton.get_child().shown = 'down';
         return;
     }
 
     if (!menuRevealer.revealChild) {
         menuRevealer.revealChild = true;
+        MenuButton.get_child().shown = 'up';
     }
 
     switchToTab(menuTab);

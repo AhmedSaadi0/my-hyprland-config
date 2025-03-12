@@ -36,3 +36,37 @@
     );
     color: $on-primary-container;
 }
+
+.menu-button {
+    border-radius: $border-radius;
+    margin-top: $bar-top-margin;
+    margin-bottom: $bar-bottom-margin;
+    border: 0px;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+
+    background: $primary-container;
+    color: $on-primary-container;
+    font-family: $icon-font-family;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+}
+
+.menu-button:dir(rtl) {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.menu-button:dir(ltr) {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.menu-button:hover {
+    transition:
+        background 0.3s ease-in-out,
+        transform 0.8s,
+        color 0.3s ease-in-out;
+    background: $primary;
+    color: $on-primary;
+}

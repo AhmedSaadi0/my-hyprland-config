@@ -1,6 +1,14 @@
 {
     "name": "astal-shell",
     "dependencies": {
-        "astal": "/usr/share/astal/gjs"
+        "@girs/gdk-3.0": "^3.24.48-4.0.0-beta.21",
+        "@girs/gjs": "^4.0.0-beta.21",
+        "@girs/gtk-3.0": "^3.24.48-4.0.0-beta.21",
+        "astal": "/usr/share/astal/gjs",
+        "ts-for-gir": "^1.0.1"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^8.26.1",
+        "@typescript-eslint/parser": "^8.26.1"
     }
 }

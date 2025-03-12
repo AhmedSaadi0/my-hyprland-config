@@ -1,10 +1,14 @@
 import Battery from 'gi://AstalBattery';
 import { bind } from 'astal';
-import { CIRCULAR_PROGRESS_CONFIG } from '../../../utils/const';
+import { CIRCULAR_PROGRESS_CONFIG } from '../utils/const';
 
 const battery = Battery.get_default();
 
-export default function BatteryWidget() {
+export default function BatteryWidget({
+    progressClass = 'battery',
+    buttonClassName = 'unset no-hover',
+    labelClassName = 'battery-inner',
+}) {
     const percentage = bind(battery, 'percentage');
     const charging = bind(battery, 'charging');
     // const powerSupply = bind(battery, 'power-supply');
@@ -37,12 +41,12 @@ export default function BatteryWidget() {
     });
     return (
         <circularprogress
-            className="battery"
+            className={progressClass}
             {...CIRCULAR_PROGRESS_CONFIG}
             value={percentage}
         >
-            <button className="unset no-hover">
-                <label className="battery-inner" label={batteryIcon} />
+            <button className={buttonClassName}>
+                <label className={labelClassName} label={batteryIcon} />
             </button>
         </circularprogress>
     );

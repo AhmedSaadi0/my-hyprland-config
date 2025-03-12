@@ -3,7 +3,7 @@
     "compilerOptions": {
         "experimentalDecorators": true,
         "strict": true,
-        "target": "ES2023",
+        "target": "ES2022",
         "module": "ES2022",
         "moduleResolution": "Bundler",
         "skipLibCheck": true,
@@ -11,13 +11,23 @@
         "allowJs": true,
         "jsx": "react-jsx",
         "jsxImportSource": "astal/gtk3",
-        "paths": {
-            "astal": [
-                "/usr/share/astal/gjs"
-            ],
-            "astal/*": [
-                "/usr/share/astal/gjs/src/*"
-            ]
-        }
+        // "include": ["types", "src/**/*"],
+        // "paths": {
+        //     "astal": [
+        //         "/usr/share/astal/gjs"
+        //     ],
+        //     "astal/*": [
+        //         "/usr/share/astal/gjs/src/*"
+        //     ]
+        // },
+        // "typeRoots": [
+        //   "types",
+        //   "./node_modules/@types"
+        // ],
+        // "types": [
+        //   "Gtk-3.0"
+        // ]
     }
 }
+
+

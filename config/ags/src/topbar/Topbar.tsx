@@ -1,8 +1,8 @@
-import { App, Astal, Gdk } from 'astal/gtk3';
+import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
 import { Variable } from 'astal';
 import Workspaces from './widgets/Workspaces';
-import HardwareBox from './widgets/hardware/All';
-import { MainMenu } from '../menus/LeftMenu';
+import HardwareBox from './widgets/Hardware';
+import { MenuButton } from '../menus/LeftMenu';
 
 const time = Variable('').poll(1000, ['date', '+(%I:%M) %A, %d %B']);
 
@@ -23,7 +23,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
                     {HardwareBox()}
                 </box>
                 <label label={time()} className="unset clock" />
-                <box></box>
+                <box halign={Gtk.Align.END}>{MenuButton}</box>
             </centerbox>
         </window>
     );
