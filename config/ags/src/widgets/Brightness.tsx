@@ -9,6 +9,8 @@ export default function BrightnessWidget({
         <circularprogress
             className={progressClass}
             {...CIRCULAR_PROGRESS_CONFIG}
+            startAt={0.41}
+            endAt={0.1}
         >
             <button className={buttonClassName}>
                 <label className={labelClassName} label="󰃠" />

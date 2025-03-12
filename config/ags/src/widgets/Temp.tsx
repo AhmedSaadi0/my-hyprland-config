@@ -15,6 +15,8 @@ export default function TempWidget({
             className={progressClass}
             value={usage}
             {...CIRCULAR_PROGRESS_CONFIG}
+            startAt={0.41}
+            endAt={0.1}
         >
             <button className={buttonClassName}>
                 <label

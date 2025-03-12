@@ -8,20 +8,22 @@ export default function CpuWidget({
     buttonClassName = 'unset no-hover',
     labelClassName = 'cpu-inner',
 }) {
-    const usage = bind(cpuUsage).as(value => (value / 100).toFixed(2));
+    const usage = bind(cpuUsage).as((value) => (value / 100).toFixed(2));
 
     return (
         <circularprogress
             className={progressClass}
             value={usage}
             {...CIRCULAR_PROGRESS_CONFIG}
+            startAt={0.41}
+            endAt={0.1}
         >
             <button className={buttonClassName}>
                 <label
                     className={labelClassName}
                     label=""
                     tooltipMarkup={bind(cpuUsage).as(
-                        value => `${strings.cpuUsage}: ${value.toFixed(2)}%`
+                        (value) => `${strings.cpuUsage}: ${value.toFixed(2)}%`
                     )}
                 />
             </button>

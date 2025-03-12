@@ -15,6 +15,8 @@ export default function RamWidget({
             className={progressClass}
             {...CIRCULAR_PROGRESS_CONFIG}
             value={usage}
+            startAt={0.41}
+            endAt={0.1}
         >
             <button className={buttonClassName}>
                 <label

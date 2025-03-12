@@ -44,6 +44,8 @@ export default function BatteryWidget({
             className={progressClass}
             {...CIRCULAR_PROGRESS_CONFIG}
             value={percentage}
+            startAt={0.41}
+            endAt={0.1}
         >
             <button className={buttonClassName}>
                 <label className={labelClassName} label={batteryIcon} />
