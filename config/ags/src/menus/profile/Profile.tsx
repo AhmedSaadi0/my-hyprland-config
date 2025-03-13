@@ -1,12 +1,11 @@
-import { Box, Icon, Label } from 'astal/gtk3/widget';
 import settings from '../../utils/settings';
 
 const Profile = (): any => (
-    <Box className="main-menu-header-profile" vertical>
-        <Icon className="profile-icon" icon={settings.profilePicture} />
-        <Label className="profile-title" label={settings.username} />
-        <Label className="profile-sub-title" label="Software Engineer" />
-    </Box>
+    <box className="main-menu-header-profile" vertical>
+        <icon className="profile-icon" icon={settings.profilePicture} />
+        <label className="profile-title" label={settings.username} />
+        <label className="profile-sub-title" label="Software Engineer" />
+    </box>
 );
 
 export default Profile;

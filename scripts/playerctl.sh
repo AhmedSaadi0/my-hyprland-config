@@ -21,4 +21,4 @@ play | stop | next | play-pause | pause | previous) ;;
 esac
 
 # Perform the action using playerctl
-playerctl -p firefox "$command"
+playerctl -p strawberry "$command"

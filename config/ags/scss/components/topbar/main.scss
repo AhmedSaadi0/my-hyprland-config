@@ -17,14 +17,14 @@
     border-radius: $border-radius;
     margin-top: $bar-top-margin;
     margin-bottom: $bar-top-margin;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 .clock {
     @extend .topbar-box;
     background: linear-gradient(to right, $primary, $secondary);
     color: $on-primary;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .prayer-time-box {

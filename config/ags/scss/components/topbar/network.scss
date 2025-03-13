@@ -1,42 +1,52 @@
 .wifi-name-label {
-  /* margin-left: 0.7em; */
-  background: $surface;
-  color: $on-surface;
-  font-weight: bold;
+    /* margin-left: 0.7em; */
+    font-weight: bold;
+    background: $tertiary-container;
+    color: $on-tertiary-container;
+    margin: 0.25rem 0rem;
 }
 
 .wifi-name-label:dir(rtl) {
-  padding-left: 0.5rem;
-  padding-right: 1rem;
-  border-top-right-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
+    padding-left: 0.5rem;
+    padding-right: 1rem;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
 }
 
 .wifi-name-label:dir(ltr) {
-  padding-right: 0.5em;
-  padding-left: 1em;
-  border-top-left-radius: $border-radius;
-  border-bottom-left-radius: $border-radius;
+    padding-right: 0.5em;
+    padding-left: 1em;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
 }
 
 .wifi-icon-strength {
-  font-family: $icon-font-family;
-  background: $surface;
-  color: $on-surface;
+    font-family: $icon-font-family;
+    background: $tertiary-container;
+    color: $on-tertiary-container;
+    margin: 0.25rem 0rem;
 }
 
 .wifi-icon-strength:dir(rtl) {
-  margin-left: 0.2rem;
-  padding-right: 0.2rem;
-  padding-left: 0.6rem;
-  border-top-left-radius: $border-radius;
-  border-bottom-left-radius: $border-radius;
+    margin-left: 0.2rem;
+    padding-right: 0.2rem;
+    padding-left: 0.6rem;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
 }
 
 .wifi-icon-strength:dir(ltr) {
-  margin-right: 0.2rem;
-  padding-left: 0.2rem;
-  padding-right: 0.6rem;
-  border-top-right-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
+    margin-right: 0.2rem;
+    padding-left: 0.2rem;
+    padding-right: 0.6rem;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+}
+
+.topbar-network-box {
+    @extend .topbar-box;
+    background: rgba($primary-container, 0.7);
+    color: $on-primary-container;
+    padding-left: 0.1rem;
+    padding-right: 0.7rem;
 }
