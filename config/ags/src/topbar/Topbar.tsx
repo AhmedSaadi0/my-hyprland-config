@@ -13,13 +13,13 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
 
     return (
         <window
-            className="top-bar"
+            className="unset"
             gdkmonitor={gdkmonitor}
             exclusivity={Astal.Exclusivity.EXCLUSIVE}
             anchor={TOP | LEFT | RIGHT}
             application={App}
         >
-            <centerbox>
+            <centerbox className="top-bar">
                 <box>
                     {Workspaces()}
                     {HardwareBox()}

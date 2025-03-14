@@ -1,4 +1,3 @@
-import { Box, Button, Label, Revealer, Stack, Window } from 'astal/gtk3/widget';
 import settings from '../utils/settings';
 import strings from '../utils/strings';
 import { TitleTextRevealer } from '../widgets/TitleText';
@@ -6,6 +5,7 @@ import { Astal, Gtk } from 'astal/gtk3';
 import Header from './profile/Header';
 import Profile from './profile/Profile';
 import HardwareBox from './monitors/MonitorsTab';
+import { Button } from 'astal/gtk3/widget';
 
 const sharedTabAttrs = {
     spacing: 7,
@@ -66,76 +66,77 @@ const networkTabIcon = (
 );
 
 const toolbarIconsBox = (
-    <Box className="toolbar-icons-box">
+    <box className="toolbar-icons-box">
         {dashboardTabIcon}
         {notificationTabIcon}
         {weatherTabIcon}
         {hardwareTabIcon}
         {networkTabIcon}
-    </Box>
+    </box>
 );
 
 const stack = (
-    <Stack
+    <stack
         transition_type={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
         transition_duration={300}
         shown={settings.menuTabs.dashboard}
     >
-        <Label label="dashboard" name={settings.menuTabs.dashboard} />
-        <Label label="notifications" name={settings.menuTabs.notifications} />
-        <Label label="weather" name={settings.menuTabs.weather} />
+        <label label="dashboard" name={settings.menuTabs.dashboard} />
+        <label label="notifications" name={settings.menuTabs.notifications} />
+        <label label="weather" name={settings.menuTabs.weather} />
         <HardwareBox name={settings.menuTabs.monitor} />
-        <Label label="network" name={settings.menuTabs.network} />
-    </Stack>
+        <label label="network" name={settings.menuTabs.network} />
+    </stack>
 );
 
 const widgets = (
-    <Box css="min-width:24.5rem;" vertical>
+    <box className="main-menu" css="min-width:24.5rem;" vertical>
         <Header />
         <Profile />
         {toolbarIconsBox}
         {stack}
-    </Box>
+    </box>
 );
 
 const menuRevealer = (
-    <Revealer
+    <revealer
         transition={settings.theme.menuTransitions.mainMenu}
         transitionDuration={settings.theme.menuTransitions.mainMenuDuration}
         revealChild={false}
     >
         {widgets}
-    </Revealer>
+    </revealer>
 );
 
 export function MainMenu({ monitor }: { monitor?: any } = {}) {
     const { TOP, LEFT } = Astal.WindowAnchor;
 
     return (
-        <Window
+        <window
             name={`left_menu_${monitor}`}
-            className="main-menu"
-            keymode="on-demand"
+            className="unset"
+            keymode={Astal.Keymode.ON_DEMAND}
             anchor={[TOP | LEFT]}
+            // exclusivity={Astal.Exclusivity.EXCLUSIVE}
         >
-            <Box css="min-height: 1px;">{menuRevealer}</Box>
-        </Window>
+            {menuRevealer}
+        </window>
     );
 }
 
 export const MenuButton = (
-    <Button
+    <button
         className="menu-button unset"
         child={
             // Using stack to animate arrow
-            <Stack
+            <stack
                 transition_type={Gtk.StackTransitionType.SLIDE_UP_DOWN}
                 transition_duration={300}
                 shown="down"
             >
-                <Label label="" name="up" />
-                <Label label="" name="down" />
-            </Stack>
+                <label label="" name="up" />
+                <label label="" name="down" />
+            </stack>
         }
         onClicked={() => openMenu(settings.menuTabs.dashboard)}
     />
