@@ -30,11 +30,12 @@ export const Table = ({
             <box className={headerClass}>{header}</box>
 
             {/* الصفوف */}
-            {rows.map((row, index) => (
-                <box key={`row-${index}`} className={rowClass}>
-                    {row}
-                </box>
-            ))}
+            {rows}
+            {/* {rows.map((row, index) => ( */}
+            {/*     <box key={`row-${index}`} className={rowClass}> */}
+            {/*         {row} */}
+            {/*     </box> */}
+            {/* ))} */}
         </box>
     );
 };

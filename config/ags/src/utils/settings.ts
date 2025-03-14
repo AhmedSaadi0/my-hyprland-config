@@ -94,17 +94,8 @@ const settings = {
         createThumbnail:
             scripts.createThumbnail ??
             getPath('scripts/m3/create_thumbnail.py'),
-        gtk_theme: scripts.gtk_theme ?? getPath('scripts/m3/gtk_theme.py'),
-        systemInfo: scripts.systemInfo ?? getPath('scripts/system_info.sh'),
         deviceLocal: scripts.deviceLocal ?? getPath('scripts/lang.sh'),
-        cpu: scripts.cpu ?? getPath('scripts/cpu.sh'),
-        ram: scripts.ram ?? getPath('scripts/ram.sh'),
-        deviceTemp: scripts.deviceTemp ?? getPath('scripts/devices_temps.sh'),
-        hardwareInfo:
-            scripts.hardwareInfo ?? getPath('scripts/hardware_info.sh'),
-        cpuUsage: scripts.cpuUsage ?? getPath('scripts/cpu_usage.sh'),
-        ramUsage: scripts.ramUsage ?? getPath('scripts/ram_usage.sh'),
-        cpuCores: scripts.cpuCores ?? getPath('scripts/cpu_cores.sh'),
+        topCpu: scripts.cpuCores ?? getPath('scripts/top_cpu.sh'),
         devicesTemp2: scripts.devicesTemp2 ?? getPath('scripts/temp.sh'),
         playerctl:
             scripts.playerctl ??

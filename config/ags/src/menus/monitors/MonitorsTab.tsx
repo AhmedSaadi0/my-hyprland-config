@@ -4,6 +4,9 @@ import RamWidget from '../../widgets/Ram';
 import TempWidget from '../../widgets/Temp';
 import { Table } from '../../widgets/Table';
 import { Gtk } from 'astal/gtk3';
+import { bind, execAsync, interval } from 'astal';
+import settings from '../../utils/settings';
+import { topCPUProcesses } from '../../utils/top-cpu';
 
 export default function HardwareBox({ name = 'monitors' }) {
     const fakeProcesses = [
@@ -13,6 +16,8 @@ export default function HardwareBox({ name = 'monitors' }) {
         { name: 'systemd', cpu: '4.2%' },
         { name: 'code', cpu: '3.1%' },
     ];
+
+    const topCpu = bind(topCPUProcesses).as((val) => val);
 
     return (
         <box name={name} spacing={10} orientation={Gtk.Orientation.VERTICAL}>
@@ -32,12 +37,17 @@ export default function HardwareBox({ name = 'monitors' }) {
                         <label label="%" css="font-weight: bold;" />
                     </box>
                 }
-                rows={fakeProcesses.map((proc) => (
-                    <box>
-                        <label label={proc.name} css="min-width: 150px;" />
-                        <label label={proc.cpu} />
-                    </box>
-                ))}
+                rows={bind(topCPUProcesses).as((val) => {
+                    return val.map((proc) => (
+                        <box>
+                            <label
+                                label={proc.process}
+                                css="min-width: 150px;"
+                            />
+                            <label label={proc.usage} />
+                        </box>
+                    ));
+                })}
                 boxClass="table-box"
                 headerClass="table-header"
                 rowClass="table-row"
