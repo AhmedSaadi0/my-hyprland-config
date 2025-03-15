@@ -1,9 +1,11 @@
+import { Binding } from 'astal';
+import { Gtk } from 'astal/gtk3';
+
 interface TableProps {
     header: JSX.Element; // مكون الهيدر
-    rows: JSX.Element[]; // قائمة الصفوف
+    rows: Binding<JSX.Element[]> | Gtk.Widget[];
     boxClass?: string; // كلاس CSS للجدول
     headerClass?: string; // كلاس CSS للهيدر
-    rowClass?: string; // كلاس CSS لكل صف
     spacing?: number; // التباعد بين العناصر
     vertical?: boolean; // هل يكون الجدول عموديًا؟
     homogeneous?: boolean; // هل تكون العناصر بنفس الحجم؟
@@ -14,7 +16,6 @@ export const Table = ({
     rows,
     boxClass = '',
     headerClass = '',
-    rowClass = '',
     spacing = 5,
     vertical = true,
     homogeneous = false,
@@ -31,11 +32,6 @@ export const Table = ({
 
             {/* الصفوف */}
             {rows}
-            {/* {rows.map((row, index) => ( */}
-            {/*     <box key={`row-${index}`} className={rowClass}> */}
-            {/*         {row} */}
-            {/*     </box> */}
-            {/* ))} */}
         </box>
     );
 };

@@ -3,11 +3,14 @@ import { App } from 'astal/gtk3';
 import Bar from './src/topbar/Topbar';
 import { exec } from 'astal';
 import { MainMenu } from './src/menus/LeftMenu';
+import { selectedTheme } from './src/utils/theme-manager';
 
 const scss = '/home/ahmed/.config/ags_v2/scss/main.scss';
 const style = '/home/ahmed/.cache/ahmed_config_style.css';
 
 exec(`sassc ${scss} ${style}`);
+
+selectedTheme;
 
 App.start({
     css: style,

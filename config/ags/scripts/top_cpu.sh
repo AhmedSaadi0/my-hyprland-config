@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # الحصول على العمليات مرتبة حسب استهلاك CPU
-ps -eo pid,comm:20,pcpu --sort=-pcpu | head -n 10 | awk '
+ps -eo pid,comm:20,pcpu --sort=-pcpu | head -n 7 | awk '
 BEGIN {
     printf "["
     first=1

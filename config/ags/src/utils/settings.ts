@@ -1,8 +1,10 @@
-// TODO: -> get current user, config dir
 import { readFile } from 'astal';
 
-const MAIN_PATH = `/home/ahmed/.config/ags_v2/`;
+const HOME_PATH = `/home/ahmed`;
+const MAIN_PATH = `${HOME_PATH}/.config/ags_v2`;
 const ASSETS_PATH = `${MAIN_PATH}/assets`;
+const CACHE_PATH = `${HOME_PATH}/.cache/ahmed-config`;
+const CACHE_FILE_PATH = `${CACHE_PATH}/ahmed-hyprland-conf.json`;
 
 const getAssets = (path: string): string => `${ASSETS_PATH}/${path}`;
 const getPath = (path: string): string => `${MAIN_PATH}/${path}`;
@@ -23,7 +25,7 @@ var changePlasmaColor = true;
 var scripts: any = {};
 
 try {
-    const configFile = JSON.parse(readFile(`/home/ahmed/.ahmed-config.json`));
+    const configFile = JSON.parse(readFile(`${HOME_PATH}/.ahmed-config.json`));
     networkMonitor = configFile.networkMonitor;
     darkM3WallpaperPath = configFile.darkM3WallpaperPath;
     lightM3WallpaperPath = configFile.lightM3WallpaperPath;
@@ -59,29 +61,32 @@ try {
 }
 
 const settings = {
+    homePath: HOME_PATH,
     username: username,
     profilePicture: profilePicture,
     usePrayerTimes: usePrayerTimes,
     changePlasmaColor: changePlasmaColor,
+    cachePath: CACHE_PATH,
+    cacheFilePath: CACHE_FILE_PATH,
     assets: {
         wallpapers: getAssets('wallpapers'),
         icons: {
-            hot_weather: `${getAssets('icons')}/hot-weather.png`,
-            cold_weather: `${getAssets('icons')}/cold-weather.png`,
+            hotWeather: `${getAssets('icons')}/hot-weather.png`,
+            coldWeather: `${getAssets('icons')}/cold-weather.png`,
             mosque: `${getAssets('icons')}/mosque.png`,
-            high_energy_rate: `${getAssets('icons')}/electrical-danger-sign.png`,
-            high_voltage: `${getAssets('icons')}/electrical-danger-sign.png`,
-            high_temp_warning: `${getAssets('icons')}/electrical-danger-sign.png`,
+            highEnergyRate: `${getAssets('icons')}/electrical-danger-sign.png`,
+            highVoltage: `${getAssets('icons')}/electrical-danger-sign.png`,
+            highTempWarning: `${getAssets('icons')}/electrical-danger-sign.png`,
         },
         audio: {
-            cold_weather: `${getAssets('audio')}/cold-weather.mp3`,
-            prayer_time: `${getAssets('audio')}/prayer-notification.ogg`,
-            desktop_login: `${getAssets('audio')}/desktop-login.mp3`,
-            desktop_logout: `${getAssets('audio')}/desktop-logout.mp3`,
-            high_energy_rate: `${getAssets('audio')}/warning-sound.mp3`,
+            coldWeather: `${getAssets('audio')}/cold-weather.mp3`,
+            prayerTime: `${getAssets('audio')}/prayer-notification.ogg`,
+            desktopLogin: `${getAssets('audio')}/desktop-login.mp3`,
+            desktopLogout: `${getAssets('audio')}/desktop-logout.mp3`,
+            highEnergyRate: `${getAssets('audio')}/warning-sound.mp3`,
             warning: `${getAssets('audio')}/warning-sound.mp3`,
-            high_voltage: `${getAssets('audio')}/warning-sound.mp3`,
-            high_temp_warning: `${getAssets('audio')}/warning-sound.mp3`,
+            highVoltage: `${getAssets('audio')}/warning-sound.mp3`,
+            highTempWarning: `${getAssets('audio')}/warning-sound.mp3`,
             notificationAlert: `${getAssets('audio')}/mixkit-positive-notification.wav`,
             cpuHighUsage: `${getAssets('audio')}/cpu_high_usage.wav`,
         },
@@ -89,13 +94,14 @@ const settings = {
     scripts: {
         scripts: getPath('scripts'),
         dynamicM3Py: scripts.dynamicM3Py ?? getPath('scripts/m3/dynamic-m3.py'),
-        get_wallpapers:
-            scripts.get_wallpapers ?? getPath('scripts/get_wallpapers.sh'),
+        getWallpapers:
+            scripts.getWallpapers ?? getPath('scripts/get_wallpapers.sh'),
         createThumbnail:
             scripts.createThumbnail ??
             getPath('scripts/m3/create_thumbnail.py'),
         deviceLocal: scripts.deviceLocal ?? getPath('scripts/lang.sh'),
         topCpu: scripts.cpuCores ?? getPath('scripts/top_cpu.sh'),
+        topRam: scripts.cpuCores ?? getPath('scripts/top_ram.sh'),
         devicesTemp2: scripts.devicesTemp2 ?? getPath('scripts/temp.sh'),
         playerctl:
             scripts.playerctl ??
@@ -104,8 +110,8 @@ const settings = {
     theme: {
         scss: `${getPath('scss')}`,
         absoluteDynamicM3Scss: `${getPath('scss/themes/m3/dynamic.scss')}`,
-        mainCss: `${getPath('/scss/main.scss')}`,
-        styleCss: `${getPath('/style.scss')}`,
+        mainCss: `${getPath('scss/main.scss')}`,
+        styleCss: `${CACHE_PATH}/style.css`,
         darkM3WallpaperPath: darkM3WallpaperPath,
         lightM3WallpaperPath: lightM3WallpaperPath,
         menuTransitions: {
@@ -141,8 +147,8 @@ const settings = {
     },
     hardware: {
         network: {
-            rx_path: `/sys/class/net/${networkMonitor}/statistics/rx_bytes`,
-            tx_path: `/sys/class/net/${networkMonitor}/statistics/tx_bytes`,
+            rxPath: `/sys/class/net/${networkMonitor}/statistics/rx_bytes`,
+            txPath: `/sys/class/net/${networkMonitor}/statistics/tx_bytes`,
             timeout: networkTimeout,
             interval: networkInterval,
         },
