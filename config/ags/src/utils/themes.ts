@@ -24,7 +24,7 @@ interface ThemeDefinition {
     kvantumTheme: string;
     gtkTheme: string;
     gtkIconTheme: string;
-    gtkMode: 'dark' | 'light';
+    themeMode: 'dark' | 'light';
     fontName: string;
     hypr: ThemeHyprConfig;
     desktopWidget: string | null; // Can be null
@@ -42,7 +42,7 @@ const blackHole: ThemeDefinition = {
     kvantumTheme: 'Shades-of-purple',
     gtkTheme: 'Shades-of-purple',
     gtkIconTheme: 'BeautySolar',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -67,7 +67,7 @@ const win_20: ThemeDefinition = {
     kvantumTheme: 'Shades-of-purple',
     gtkTheme: 'Shades-of-purple',
     gtkIconTheme: 'BeautySolar',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -92,7 +92,7 @@ const deer: ThemeDefinition = {
     kvantumTheme: 'Tellgo',
     gtkTheme: 'Kimi-dark',
     gtkIconTheme: 'Vivid-Dark-Icons',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -117,7 +117,7 @@ const colors: ThemeDefinition = {
     kvantumTheme: 'Shades-of-purple',
     gtkIconTheme: 'Vivid-Dark-Icons',
     gtkTheme: 'Shades-of-purple',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -142,7 +142,7 @@ const siberian: ThemeDefinition = {
     kvantumTheme: 'Tellgo',
     gtkTheme: 'Shades-of-purple',
     gtkIconTheme: 'NeonIcons',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -167,7 +167,7 @@ const materialYou: ThemeDefinition = {
     kvantumTheme: 'a-m-you',
     gtkTheme: 'Cabinet-Light-Orange',
     gtkIconTheme: 'kora-grey-light-panel',
-    gtkMode: 'light',
+    themeMode: 'light',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -192,7 +192,7 @@ const game: ThemeDefinition = {
     kvantumTheme: 'Gradient-Dark-Kvantum',
     gtkTheme: 'Tokyonight-Dark-BL',
     gtkIconTheme: 'la-capitaine-icon-theme',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -217,7 +217,7 @@ const dark: ThemeDefinition = {
     kvantumTheme: 'WinSur-dark',
     gtkTheme: 'Tokyonight-Dark-BL',
     gtkIconTheme: 'Infinity-Dark-Icons',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -242,7 +242,7 @@ const uniCat: ThemeDefinition = {
     kvantumTheme: 'Win10XOS-Concept',
     gtkTheme: 'Dracula',
     gtkIconTheme: 'Vivid-Dark-Icons',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -267,7 +267,7 @@ const newCat: ThemeDefinition = {
     kvantumTheme: 'Vivid-Dark-Kvantum',
     gtkTheme: 'Tokyonight-Dark-BL',
     gtkIconTheme: 'Gradient-Dark-Icons',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -292,7 +292,7 @@ const golden: ThemeDefinition = {
     kvantumTheme: 'Canta-light',
     gtkTheme: 'Cabinet-Light-Orange',
     gtkIconTheme: 'kora-grey-light-panel',
-    gtkMode: 'light',
+    themeMode: 'light',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -317,7 +317,7 @@ const harmony: ThemeDefinition = {
     kvantumTheme: 'Sweet-Mars',
     gtkTheme: 'Nordic-darker-standard-buttons',
     gtkIconTheme: 'Windows11-red-dark',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -342,7 +342,7 @@ const circles: ThemeDefinition = {
     qtIconTheme: 'Vivid-Dark-Icons',
     gtkTheme: 'Nordic-darker-standard-buttons',
     gtkIconTheme: 'Vivid-Dark-Icons',
-    gtkMode: 'dark',
+    themeMode: 'dark',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -367,7 +367,7 @@ const whiteFlower: ThemeDefinition = {
     kvantumTheme: 'Mkos-BigSur-Transparent',
     gtkTheme: 'Jasper-Light-Dracula',
     gtkIconTheme: 'Rowaita-Pink-Light',
-    gtkMode: 'light',
+    themeMode: 'light',
     fontName: 'JF Flat 11',
     hypr: {
         borderWidth: 2,
@@ -386,7 +386,7 @@ const dynamicM3Dark: ThemeDefinition = {
     wallpaperPath: settings.theme.darkM3WallpaperPath,
     dynamic: true,
     interval: 15 * 60 * 1000,
-    gtkMode: 'dark',
+    themeMode: 'dark',
     cssTheme: 'dynamic-m3-dark.scss', // Add cssTheme for dynamic themes, if needed - placeholder name
     plasmaColor: 'MateriaYaruDark.colors',
     qt5styleTheme: 'Breeze',
@@ -412,7 +412,7 @@ const dynamicM3Light: ThemeDefinition = {
     wallpaperPath: settings.theme.lightM3WallpaperPath,
     dynamic: true,
     interval: 15 * 60 * 1000,
-    gtkMode: 'light',
+    themeMode: 'light',
     cssTheme: 'dynamic-m3-light.scss', // Add cssTheme for dynamic themes, if needed - placeholder name
     plasmaColor: 'MateriaYaruDark.colors', // Note: Using 'MateriaYaruDark.colors' for light too - verify if this is intended
     qt5styleTheme: 'Breeze',

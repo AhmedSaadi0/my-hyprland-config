@@ -1,3 +1,4 @@
+import { interval, timeout, idle } from 'astal/time';
 import { exec, execAsync } from 'astal/process';
 import ThemesDictionary, { COLOR_THEME } from './themes';
 import type { Subscribable } from 'astal/binding';
@@ -21,6 +22,8 @@ class ThemeManager {
     private selectedDarkWallpaper = Variable<number>(0);
     private dynamicWallpaperStatus = Variable<boolean>(true);
     private showDesktopWidgetStatus = Variable<boolean>(true);
+    private dynamicWallpaperInterval: any;
+    private themeModel = Variable<String>('dark');
 
     getSelectedTheme(): Subscribable<number> {
         print('Changed');
@@ -35,15 +38,6 @@ class ThemeManager {
         this.applyCachedTheme();
     }
 
-    get dynamicWallpaperIsOn(): Subscribable<boolean> {
-        return this.dynamicWallpaperStatus;
-    }
-
-    get isDynamicTheme(): Subscribable<boolean> {
-        // TODO:
-        return Variable(false);
-    }
-
     changeTheme(selectedTheme: number) {
         const theme = ThemesDictionary[selectedTheme];
 
@@ -52,14 +46,11 @@ class ThemeManager {
             return;
         }
 
+        this.themeModel.set(theme.themeMode);
         this.clearDynamicWallpaperInterval();
 
         if (theme.dynamic && theme.wallpaperPath && theme.interval) {
-            this.setDynamicWallpapers(
-                theme.wallpaperPath,
-                theme.gtkMode,
-                theme.interval
-            );
+            this.setDynamicWallpapers(theme.wallpaperPath, theme.interval);
         } else {
             this.changeCss(theme.cssTheme);
             if (theme.wallpaper) this.changeWallpaper(theme.wallpaper);
@@ -69,12 +60,7 @@ class ThemeManager {
         this.changePlasmaColor(theme.plasmaColor);
         this.changePlasmaIcons(theme.qtIconTheme);
         this.changeKonsoleProfile(theme.hypr.konsole);
-        this.changeGtkTheme(
-            theme.gtkTheme,
-            theme.gtkMode,
-            theme.qtIconTheme,
-            theme.fontName
-        );
+        this.changeGtkTheme(theme.gtkTheme, theme.qtIconTheme, theme.fontName);
         this.changeKvantumTheme(theme.kvantumTheme);
         this.setHyprland(
             theme.hypr.borderWidth,
@@ -84,11 +70,13 @@ class ThemeManager {
         );
 
         if (this.showDesktopWidgetStatus.get()) {
-            this.showDesktopWidget(theme.desktopWidget);
         }
 
+        this.showDesktopWidget(theme.desktopWidget);
         this.selectedTheme.set(selectedTheme);
         this.cacheVariables();
+
+        this.setDynamicWallpapers('/home/ahmed/wallpapers/dark/', 5000);
     }
 
     private changeWallpaper(wallpaper: string) {
@@ -117,55 +105,50 @@ class ThemeManager {
             .catch(print);
     }
 
-    private setDynamicWallpapers(
-        path: string,
-        themeMode: string,
-        interval: number
-    ) {
+    private setDynamicWallpapers(path: string, interval: number) {
         execAsync([settings.scripts.getWallpapers, path]).then((result) => {
             this.wallpapersList = JSON.parse(result);
-            this.callNextWallpaper(themeMode);
 
-            if (this.dynamicWallpaperStatus.get()) {
-                // this.wallpaperIntervalId = Timer.repeat(interval, () =>
-                //     this.callNextWallpaper(themeMode)
-                // );
-            }
+            this.clearDynamicWallpaperInterval();
+            this.setDynamicWallpapersInterval(interval);
         });
     }
 
-    private callNextWallpaper(themeMode: string) {
+    private setDynamicWallpapersInterval(intervalValue: number) {
+        this.dynamicWallpaperInterval = interval(intervalValue, () => {
+            this.callNextWallpaper();
+        });
+    }
+
+    private callNextWallpaper() {
         print('Calling next wallpaper');
         let selectedIndex = 0;
+        const themeMode = this.themeModel.get();
 
         if (themeMode === 'dark') {
             selectedIndex = this.selectedDarkWallpaper.get();
-            if (this.dynamicWallpaperStatus.get()) {
-                this.selectedDarkWallpaper.set(
-                    (selectedIndex + 1) % this.wallpapersList.length
-                );
-            }
-        } else {
+            this.selectedDarkWallpaper.set(
+                (selectedIndex + 1) % this.wallpapersList.length
+            );
+        } else if (themeMode === 'light') {
             selectedIndex = this.selectedLightWallpaper.get();
-            if (this.dynamicWallpaperStatus.get()) {
-                this.selectedLightWallpaper.set(
-                    (selectedIndex + 1) % this.wallpapersList.length
-                );
-            }
+            this.selectedLightWallpaper.set(
+                (selectedIndex + 1) % this.wallpapersList.length
+            );
+        } else {
+            // TODO: -> Handle this
         }
 
         const wallpaper = this.wallpapersList[selectedIndex];
         if (wallpaper) {
             this.changeWallpaper(wallpaper);
-            this.createM3ColorSchema(wallpaper, themeMode);
+            this.createM3ColorSchema(wallpaper);
             this.cacheVariables();
         }
     }
 
-    private async createM3ColorSchema(
-        wallpaper: string,
-        mode: string
-    ): Promise<void> {
+    private async createM3ColorSchema(wallpaper: string): Promise<void> {
+        // TODO:
         print('Creating M3 color schema');
         // Implement color schema creation
     }
@@ -194,10 +177,10 @@ class ThemeManager {
 
     private changeGtkTheme(
         gtkTheme: string,
-        gtkMode: string,
         iconTheme: string,
         fontName: string
     ) {
+        // TODO:
         print('Changing GTK theme');
         // Implement GTK theme changes
     }
@@ -260,15 +243,16 @@ ToolBarsMovable=Disabled
     }
 
     private showDesktopWidget(widget: string | null): void {
+        // TODO:
         print('Showing desktop widget');
         // Implement widget showing logic
     }
 
     private clearDynamicWallpaperInterval(): void {
-        // if (this.wallpaperIntervalId) {
-        //     this.wallpaperIntervalId.stop();
-        //     this.wallpaperIntervalId = null;
-        // }
+        if (this.dynamicWallpaperInterval) {
+            this.dynamicWallpaperInterval.cancel();
+            this.dynamicWallpaperInterval = null;
+        }
     }
 
     private cacheVariables() {
