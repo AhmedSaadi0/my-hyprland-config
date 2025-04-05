@@ -93,7 +93,7 @@ const settings = {
     },
     scripts: {
         scripts: getPath('scripts'),
-        dynamicM3Py: scripts.dynamicM3Py ?? getPath('scripts/m3/dynamic-m3.py'),
+        dynamicM3Py: scripts.dynamicM3Py ?? getPath('scripts/m3/dynamic_m3.py'),
         getWallpapers:
             scripts.getWallpapers ?? getPath('scripts/get_wallpapers.sh'),
         createThumbnail:
@@ -109,7 +109,7 @@ const settings = {
     },
     theme: {
         scss: `${getPath('scss')}`,
-        absoluteDynamicM3Scss: `${getPath('scss/themes/m3/dynamic.scss')}`,
+        absoluteDynamicM3Scss: `${getPath('scss/themes/m3.scss')}`,
         mainCss: `${getPath('scss/main.scss')}`,
         styleCss: `${CACHE_PATH}/style.css`,
         darkM3WallpaperPath: darkM3WallpaperPath,

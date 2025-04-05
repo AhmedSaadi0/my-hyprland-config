@@ -387,7 +387,7 @@ const dynamicM3Dark: ThemeDefinition = {
     dynamic: true,
     interval: 15 * 60 * 1000,
     themeMode: 'dark',
-    cssTheme: 'dynamic-m3-dark.scss', // Add cssTheme for dynamic themes, if needed - placeholder name
+    cssTheme: 'm3.scss', // Add cssTheme for dynamic themes, if needed - placeholder name
     plasmaColor: 'MateriaYaruDark.colors',
     qt5styleTheme: 'Breeze',
     qt6styleTheme: 'kvantum',
@@ -413,7 +413,7 @@ const dynamicM3Light: ThemeDefinition = {
     dynamic: true,
     interval: 15 * 60 * 1000,
     themeMode: 'light',
-    cssTheme: 'dynamic-m3-light.scss', // Add cssTheme for dynamic themes, if needed - placeholder name
+    cssTheme: 'm3.scss', // Add cssTheme for dynamic themes, if needed - placeholder name
     plasmaColor: 'MateriaYaruDark.colors', // Note: Using 'MateriaYaruDark.colors' for light too - verify if this is intended
     qt5styleTheme: 'Breeze',
     qt6styleTheme: 'kvantum',

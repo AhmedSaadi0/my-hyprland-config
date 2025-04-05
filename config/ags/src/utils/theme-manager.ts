@@ -1,6 +1,6 @@
-import { interval, timeout, idle } from 'astal/time';
+import { interval } from 'astal/time';
 import { exec, execAsync } from 'astal/process';
-import ThemesDictionary, { COLOR_THEME } from './themes';
+import ThemesDictionary, { COLOR_THEME, DYNAMIC_M3_DARK } from './themes';
 import type { Subscribable } from 'astal/binding';
 import { readFileAsync, Variable, writeFileAsync } from 'astal';
 import settings from './settings';
@@ -35,7 +35,6 @@ class ThemeManager {
         this.selectedTheme = Variable(COLOR_THEME);
 
         this.loadCachedVariables();
-        this.applyCachedTheme();
     }
 
     changeTheme(selectedTheme: number) {
@@ -75,8 +74,6 @@ class ThemeManager {
         this.showDesktopWidget(theme.desktopWidget);
         this.selectedTheme.set(selectedTheme);
         this.cacheVariables();
-
-        this.setDynamicWallpapers('/home/ahmed/wallpapers/dark/', 5000);
     }
 
     private changeWallpaper(wallpaper: string) {
@@ -147,10 +144,22 @@ class ThemeManager {
         }
     }
 
-    private async createM3ColorSchema(wallpaper: string): Promise<void> {
-        // TODO:
+    private createM3ColorSchema(wallpaper: string) {
         print('Creating M3 color schema');
-        // Implement color schema creation
+        print(wallpaper);
+        execAsync([
+            'python',
+            settings.scripts.dynamicM3Py,
+            wallpaper,
+            settings.theme.absoluteDynamicM3Scss,
+            '-m',
+            this.themeModel.get(),
+        ])
+            .then(() => {
+                const theme = ThemesDictionary[this.selectedTheme.get()];
+                this.changeCss(theme.cssTheme);
+            })
+            .catch(print);
     }
 
     private changePlasmaColor(plasmaColor: string) {
@@ -281,6 +290,8 @@ ToolBarsMovable=Disabled
                 cached.dynamicWallpaperStatus ?? true
             );
             this.showDesktopWidgetStatus.set(cached.showDesktopWidget ?? true);
+
+            this.applyCachedTheme();
         });
     }
 
