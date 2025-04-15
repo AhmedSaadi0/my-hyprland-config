@@ -6,6 +6,7 @@ import Header from './profile/Header';
 import Profile from './profile/Profile';
 import HardwareBox from './monitors/MonitorsTab';
 import { Button } from 'astal/gtk3/widget';
+import { themesBox } from './dashboard/ThemesButtons';
 
 const sharedTabAttrs = {
     spacing: 7,
@@ -81,7 +82,7 @@ const stack = (
         transition_duration={300}
         shown={settings.menuTabs.dashboard}
     >
-        <label label="dashboard" name={settings.menuTabs.dashboard} />
+        <box name={settings.menuTabs.dashboard}>{themesBox}</box>
         <label label="notifications" name={settings.menuTabs.notifications} />
         <label label="weather" name={settings.menuTabs.weather} />
         <HardwareBox name={settings.menuTabs.monitor} />
@@ -204,15 +205,23 @@ function switchToTab(menuTabs: String) {
 
 function openMenu(menuTab: String) {
     if (menuRevealer.revealChild && stack.shown.toString() === menuTab) {
-        menuRevealer.revealChild = false;
-        MenuButton.get_child().shown = 'down';
+        hideMainMenu();
         return;
     }
 
     if (!menuRevealer.revealChild) {
-        menuRevealer.revealChild = true;
-        MenuButton.get_child().shown = 'up';
+        openMainMenu();
     }
 
     switchToTab(menuTab);
+}
+
+export function hideMainMenu() {
+    menuRevealer.revealChild = false;
+    MenuButton.get_child().shown = 'down';
+}
+
+export function openMainMenu() {
+    menuRevealer.revealChild = true;
+    MenuButton.get_child().shown = 'up';
 }

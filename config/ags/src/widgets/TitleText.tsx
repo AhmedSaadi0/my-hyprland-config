@@ -1,4 +1,5 @@
 import { Gtk } from 'astal/gtk3';
+import { EventBox } from 'astal/gtk3/widget';
 import Pango from 'gi://Pango?version=1.0';
 
 type EllipsizeMode = 'start' | 'middle' | 'end' | 'none';
@@ -28,7 +29,13 @@ interface TitleTextProps {
     textTruncate?: EllipsizeMode;
 }
 
-export const TitleText = (props: TitleTextProps) => {
+interface TitleTextEventBoxProps extends TitleTextProps {
+    eventBoxClass?: string;
+    eventBoxCss?: string;
+    onClicked?: (self: EventBox, event: any) => void;
+}
+
+export const TitleText = (props: TitleTextEventBoxProps) => {
     const orientation = props.vertical
         ? Gtk.Orientation.VERTICAL
         : Gtk.Orientation.HORIZONTAL;
@@ -54,15 +61,21 @@ export const TitleText = (props: TitleTextProps) => {
     );
 
     return (
-        <box
-            className={props.boxClass}
-            css={props.boxCss}
-            orientation={orientation}
-            homogeneous={props.homogeneous}
-            spacing={props.spacing}
+        <button
+            onClick={props.onClicked}
+            className={props.eventBoxClass}
+            css={props.eventBoxCss}
         >
-            {props.ltr ? [textLabel, titleLabel] : [titleLabel, textLabel]}
-        </box>
+            <box
+                className={props.boxClass}
+                css={props.boxCss}
+                orientation={orientation}
+                homogeneous={props.homogeneous}
+                spacing={props.spacing}
+            >
+                {props.ltr ? [textLabel, titleLabel] : [titleLabel, textLabel]}
+            </box>
+        </button>
     );
 };
 

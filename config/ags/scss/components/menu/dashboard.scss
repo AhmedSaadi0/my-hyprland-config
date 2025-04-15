@@ -62,3 +62,70 @@
     background: $primary;
     color: $on-primary;
 }
+
+.themes-box {
+    @extend .left-menu-insider-box;
+}
+
+.themes-box:dir(ltr) {
+    padding-left: 0rem;
+}
+
+.themes-box:dir(rtl) {
+    padding-left: 0rem;
+}
+
+.theme-button-father {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    transition:
+        background 0.2s ease-in-out,
+        color 0.2s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn-box {
+}
+
+.selected-theme {
+    @extend .theme-button-father;
+    background: $primary;
+    color: $on-primary;
+    border-radius: $border-radius;
+}
+
+.selected-theme:hover {
+    background: $secondary;
+    color: $on-secondary;
+    border-radius: $border-radius;
+}
+
+.theme-btn {
+    @extend .theme-button-father;
+    border-radius: $border-radius;
+    background: $primary-container;
+    border-color: $on-primary-container;
+    border-radius: $border-radius;
+}
+
+.theme-btn:hover {
+    background: $secondary;
+    color: $on-secondary;
+    // border-color: $tertiary;
+    // border-radius: $border-radius;
+}
+
+.theme-btn-icon {
+    font-family: $icon-font-family;
+    min-width: 2rem;
+}
+
+.dynamic-theme-btn-icon {
+    font-family: $icon-font-family;
+    min-width: 1.93rem;
+}
+
+.theme-btn-label {
+    min-width: 3rem;
+    min-height: 2.2rem;
+}

@@ -1,9 +1,9 @@
 .wifi-name-label {
     /* margin-left: 0.7em; */
     font-weight: bold;
-    background: $tertiary-container;
+    background: $background;
     color: $on-tertiary-container;
-    margin: 0.25rem 0rem;
+    margin: 0.23rem 0rem;
 }
 
 .wifi-name-label:dir(rtl) {
@@ -22,9 +22,9 @@
 
 .wifi-icon-strength {
     font-family: $icon-font-family;
-    background: $tertiary-container;
+    background: $background;
     color: $on-tertiary-container;
-    margin: 0.25rem 0rem;
+    margin: 0.23rem 0rem;
 }
 
 .wifi-icon-strength:dir(rtl) {

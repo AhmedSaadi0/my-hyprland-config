@@ -1,5 +1,4 @@
 // TODO: -> get language not layout, change to use xml files or something better
-const local = 'RTL';
 const strings = {
     ar: {
         today: 'اليوم',
@@ -349,5 +348,7 @@ const strings = {
         showDesktopWidgets: 'Show Desktop Widgets',
     },
 };
+
+export const local = 'RTL';
 
 export default local === 'RTL' ? strings.ar : strings.en;
