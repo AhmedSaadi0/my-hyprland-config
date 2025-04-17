@@ -36,8 +36,8 @@ export const ThemeButton = ({
                 themeManager.changeTheme(theme);
                 timeout(200, () => hideMainMenu());
             }}
-            eventBoxCss={css}
-            eventBoxClass={bind(selectedTheme).as((value) =>
+            buttonCss={css}
+            buttonClass={bind(selectedTheme).as((value) =>
                 value === theme ? 'unset selected-theme' : 'unset theme-btn'
             )}
         />

@@ -30,8 +30,8 @@ interface TitleTextProps {
 }
 
 interface TitleTextEventBoxProps extends TitleTextProps {
-    eventBoxClass?: string;
-    eventBoxCss?: string;
+    buttonClass?: string;
+    buttonCss?: string;
     onClicked?: (self: EventBox, event: any) => void;
 }
 
@@ -63,8 +63,8 @@ export const TitleText = (props: TitleTextEventBoxProps) => {
     return (
         <button
             onClick={props.onClicked}
-            className={props.eventBoxClass}
-            css={props.eventBoxCss}
+            className={props.buttonClass}
+            css={props.buttonCss}
         >
             <box
                 className={props.boxClass}

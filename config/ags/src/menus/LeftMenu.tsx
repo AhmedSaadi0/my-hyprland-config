@@ -7,6 +7,10 @@ import Profile from './profile/Profile';
 import HardwareBox from './monitors/MonitorsTab';
 import { Button } from 'astal/gtk3/widget';
 import { themesBox } from './dashboard/ThemesButtons';
+import PowerProfileButtons, {
+    buttonsRow,
+} from './dashboard/PowerProfileButtons';
+import DashboardTab from './dashboard/DashboardTab';
 
 const sharedTabAttrs = {
     spacing: 7,
@@ -82,7 +86,7 @@ const stack = (
         transition_duration={300}
         shown={settings.menuTabs.dashboard}
     >
-        <box name={settings.menuTabs.dashboard}>{themesBox}</box>
+        {DashboardTab}
         <label label="notifications" name={settings.menuTabs.notifications} />
         <label label="weather" name={settings.menuTabs.weather} />
         <HardwareBox name={settings.menuTabs.monitor} />

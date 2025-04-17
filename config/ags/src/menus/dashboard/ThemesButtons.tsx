@@ -11,7 +11,9 @@ import {
     MATERIAL_YOU,
     WIN_20,
 } from '../../utils/themes';
+import DashboardBox from '../../widgets/DashboardBox';
 import { ThemeButton } from '../../widgets/ThemeButton';
+import { TitleText } from '../../widgets/TitleText';
 
 export const colorsTheme = (
     <ThemeButton title={strings.colorTheme} icon="" theme={COLOR_THEME} />
@@ -30,6 +32,7 @@ export const materialYouTheme = (
         title={strings.materialYouTheme}
         icon="󰦆"
         theme={MATERIAL_YOU}
+        end=""
     />
 );
 
@@ -42,7 +45,12 @@ export const darkTheme = (
 );
 
 export const goldenTheme = (
-    <ThemeButton title={strings.goldenTheme} icon="󰉊" theme={GOLDEN_THEME} />
+    <ThemeButton
+        title={strings.goldenTheme}
+        icon="󰉊"
+        theme={GOLDEN_THEME}
+        end=""
+    />
 );
 
 export const circlesTheme = (
@@ -110,10 +118,14 @@ const unvisibleThemesRow3 = (
     </box>
 );
 
-export const themesBox = (
-    <box className="themes-box" vertical={true}>
+const themesBox = (
+    <box vertical={true}>
         {visibleThemesRow1}
         {visibleThemesRow2}
         {unvisibleThemesRow3}
     </box>
+);
+
+export default (
+    <DashboardBox icon="" text={strings.themes} widget={themesBox} />
 );
