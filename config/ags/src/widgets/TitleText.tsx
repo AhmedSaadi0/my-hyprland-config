@@ -1,68 +1,116 @@
 import { Gtk } from 'astal/gtk3';
 import { EventBox } from 'astal/gtk3/widget';
 import Pango from 'gi://Pango?version=1.0';
+import { Widget } from '../../types/@girs/gtk-3.0/gtk-3.0.cjs';
 
 type EllipsizeMode = 'start' | 'middle' | 'end' | 'none';
 
-const getEllipsizeMode = (mode?: EllipsizeMode): Pango.EllipsizeMode =>
+const getEllipsizeMode = (mode: EllipsizeMode = 'none'): Pango.EllipsizeMode =>
     ({
         start: Pango.EllipsizeMode.START,
         middle: Pango.EllipsizeMode.MIDDLE,
         end: Pango.EllipsizeMode.END,
         none: Pango.EllipsizeMode.NONE,
-    })[mode || 'none'];
+    })[mode];
 
-interface TitleTextProps {
-    title: string;
-    text: string;
+const getOrientation = (vertical?: boolean): Gtk.Orientation =>
+    vertical ? Gtk.Orientation.VERTICAL : Gtk.Orientation.HORIZONTAL;
+
+interface TitleTextBaseProps {
     vertical?: boolean;
-    ltr?: boolean;
     homogeneous?: boolean;
     spacing?: number;
     boxClass?: string;
     boxCss?: string;
-    titleClass?: string;
-    textClass?: string;
     titleXalign?: number;
     textXalign?: number;
+}
+
+interface TitleTextContentProps {
+    title?: string;
+    text?: string;
+    titleClass?: string;
+    textClass?: string;
     titleTruncate?: EllipsizeMode;
     textTruncate?: EllipsizeMode;
+    titleCss?: string;
+    textCss?: string;
 }
+
+interface TitleTextWidgetProps {
+    titleWidget?: Widget;
+    textWidget?: Widget;
+}
+
+type TitleTextProps = TitleTextBaseProps &
+    TitleTextContentProps &
+    TitleTextWidgetProps;
 
 interface TitleTextEventBoxProps extends TitleTextProps {
     buttonClass?: string;
     buttonCss?: string;
-    onClicked?: (self: EventBox, event: any) => void;
+    onClicked?: (self: EventBox, event: Gtk.ButtonPressEvent) => void;
+    reverseOrder?: boolean;
 }
 
-export const TitleText = (props: TitleTextEventBoxProps) => {
-    const orientation = props.vertical
-        ? Gtk.Orientation.VERTICAL
-        : Gtk.Orientation.HORIZONTAL;
+const createLabel = (
+    content?: string,
+    widget?: Widget,
+    className?: string,
+    xalign?: number,
+    truncate?: EllipsizeMode,
+    css?: string
+) => {
+    if (content !== undefined) {
+        return (
+            <label
+                key={content}
+                label={content}
+                className={className}
+                xalign={xalign}
+                ellipsize={getEllipsizeMode(truncate)}
+                css={css}
+            />
+        );
+    }
+    return widget;
+};
 
-    const titleLabel = (
-        <label
-            label={props.title}
-            className={props.titleClass}
-            xalign={props.titleXalign}
-            ellipsize={getEllipsizeMode(props.titleTruncate)}
-            css={props.boxCss}
-        />
+export const TitleText = ({
+    vertical = false,
+    homogeneous = false,
+    spacing = 0,
+    reverseOrder = false,
+    onClicked,
+    ...props
+}: TitleTextEventBoxProps) => {
+    const orientation = getOrientation(vertical);
+
+    const titleLabel = createLabel(
+        props.title,
+        props.titleWidget,
+        props.titleClass,
+        props.titleXalign,
+        props.titleTruncate,
+        props.titleCss
     );
 
-    const textLabel = (
-        <label
-            label={props.text}
-            className={props.textClass}
-            xalign={props.textXalign}
-            ellipsize={getEllipsizeMode(props.textTruncate)}
-            css={props.boxCss}
-        />
+    const textLabel = createLabel(
+        props.text,
+        props.textWidget,
+        props.textClass,
+        props.textXalign,
+        props.textTruncate,
+        props.textCss
     );
+
+    const content = reverseOrder
+        ? [textLabel, titleLabel]
+        : [titleLabel, textLabel];
 
     return (
         <button
-            onClick={props.onClicked}
+            onClicked={onClicked}
             className={props.buttonClass}
             css={props.buttonCss}
         >
@@ -70,10 +118,10 @@ export const TitleText = (props: TitleTextEventBoxProps) => {
                 className={props.boxClass}
                 css={props.boxCss}
                 orientation={orientation}
-                homogeneous={props.homogeneous}
-                spacing={props.spacing}
+                homogeneous={homogeneous}
+                spacing={spacing}
             >
-                {props.ltr ? [textLabel, titleLabel] : [titleLabel, textLabel]}
+                {content}
             </box>
         </button>
     );
@@ -82,16 +130,23 @@ export const TitleText = (props: TitleTextEventBoxProps) => {
 interface TitleTextRevealerProps extends TitleTextProps {
     revealChild?: boolean;
     transitionDuration?: number;
+    transitionType?: Gtk.RevealerTransitionType;
     buttonClass?: string;
     buttonCss?: string;
     revealerClass?: string;
     onClicked?: () => void;
 }
 
-export const TitleTextRevealer = (props: TitleTextRevealerProps) => {
-    const transitionType = props.vertical
-        ? Gtk.RevealerTransitionType.SLIDE_DOWN
-        : Gtk.RevealerTransitionType.SLIDE_LEFT;
+export const TitleTextRevealer = ({
+    vertical = false,
+    homogeneous = false,
+    spacing = 0,
+    revealChild = false,
+    transitionDuration = 300,
+    transitionType = Gtk.RevealerTransitionType.CROSSFADE,
+    ...props
+}: TitleTextRevealerProps) => {
+    const orientation = getOrientation(vertical);
 
     return (
         <button
@@ -101,85 +156,34 @@ export const TitleTextRevealer = (props: TitleTextRevealerProps) => {
         >
             <box
                 className={props.boxClass}
-                orientation={
-                    props.vertical
-                        ? Gtk.Orientation.VERTICAL
-                        : Gtk.Orientation.HORIZONTAL
-                }
-                homogeneous={props.homogeneous}
-                spacing={props.spacing}
+                orientation={orientation}
+                homogeneous={homogeneous}
+                spacing={spacing}
             >
-                <label
-                    label={props.title}
-                    className={props.titleClass}
-                    xalign={props.titleXalign}
-                    ellipsize={getEllipsizeMode(props.titleTruncate)}
-                />
+                {createLabel(
+                    props.title,
+                    props.titleWidget,
+                    props.titleClass,
+                    props.titleXalign,
+                    props.titleTruncate,
+                    props.titleCss
+                )}
                 <revealer
                     className={props.revealerClass}
-                    reveal_child={props.revealChild}
-                    transition_duration={props.transitionDuration}
+                    reveal_child={revealChild}
+                    transition_duration={transitionDuration}
                     transition_type={transitionType}
                 >
-                    <label
-                        label={props.text}
-                        className={props.textClass}
-                        xalign={props.textXalign}
-                        ellipsize={getEllipsizeMode(props.textTruncate)}
-                    />
+                    {createLabel(
+                        props.text,
+                        props.textWidget,
+                        props.textClass,
+                        props.textXalign,
+                        props.textTruncate,
+                        props.textCss
+                    )}
                 </revealer>
             </box>
         </button>
-    );
-};
-
-export const TitleTextRevealer2 = (props: TitleTextRevealerProps) => {
-    const transitionType = props.vertical
-        ? Gtk.RevealerTransitionType.SLIDE_DOWN
-        : Gtk.RevealerTransitionType.SLIDE_LEFT;
-
-    return (
-        <box
-            className={props.boxClass}
-            css={props.boxCss}
-            orientation={
-                props.vertical
-                    ? Gtk.Orientation.VERTICAL
-                    : Gtk.Orientation.HORIZONTAL
-            }
-            homogeneous={props.homogeneous}
-            spacing={props.spacing}
-        >
-            <button
-                className={props.buttonClass}
-                onHover={(btn) =>
-                    (btn.get_parent().children[1].reveal_child = true)
-                }
-                onHoverLost={(btn) =>
-                    (btn.get_parent().children[1].reveal_child = false)
-                }
-                onClicked={props.onClicked}
-            >
-                <label
-                    label={props.title}
-                    className={props.titleClass}
-                    xalign={props.titleXalign}
-                    ellipsize={getEllipsizeMode(props.titleTruncate)}
-                />
-            </button>
-            <revealer
-                className={props.revealerClass}
-                reveal_child={props.revealChild}
-                transition_duration={props.transitionDuration ?? 500}
-                transition_type={transitionType}
-            >
-                <label
-                    label={props.text}
-                    className={props.textClass}
-                    xalign={props.textXalign}
-                    ellipsize={getEllipsizeMode(props.textTruncate)}
-                />
-            </revealer>
-        </box>
     );
 };

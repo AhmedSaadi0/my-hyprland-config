@@ -1,9 +1,7 @@
 .toolbar-icons-box {
     background: $primary-container;
     border-radius: $border-radius;
-    margin-top: 1rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
+    margin: 1rem;
     padding: 0rem 0.3rem;
 }
 
@@ -147,4 +145,83 @@
     color: $on-primary-container;
     font-weight: bold;
     font-family: $icon-font-family;
+}
+
+// -----------------------------
+// ------- Power Actions -------
+// -----------------------------
+.power-action-btn {
+    @extend .theme-btn;
+    min-width: 5rem;
+    min-height: 2rem;
+    border-radius: 1rem;
+}
+
+.power-action-btn:dir(rtl) {
+    margin-left: 1rem;
+}
+.power-action-btn:dir(ltr) {
+    margin-right: 1rem;
+}
+
+.logout-btn {
+    @extend .power-action-btn;
+    margin: 0rem;
+}
+
+.logout-btn:dir(rtl) {
+    margin: 0rem;
+}
+
+.logout-btn:dir(ltr) {
+    margin: 0rem;
+}
+
+.power-action-revealer {
+    padding-top: 1rem;
+    color: $on-primary-container;
+}
+
+.power-action-revealer-yes-btn {
+    @extend .dashboard-button-father;
+    min-width: 9rem;
+    min-height: 1.8rem;
+    border-radius: 1rem;
+}
+
+.power-action-revealer-yes-btn:hover {
+    background: $secondary;
+    color: $on-secondary;
+}
+
+.power-action-revealer-yes-btn:dir(rtl) {
+    border-top-left-radius: 0rem;
+    border-bottom-left-radius: 0rem;
+}
+
+.power-action-revealer-yes-btn:dir(ltr) {
+    border-top-right-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+}
+
+.power-action-revealer-no-btn {
+    @extend .dashboard-button-father;
+    min-width: 9rem;
+    min-height: 1.8rem;
+    border-radius: 1rem;
+}
+
+.power-action-revealer-no-btn:hover {
+    background: $secondary;
+    color: $on-secondary;
+}
+
+.power-action-revealer-no-btn:dir(rtl) {
+    border-top-right-radius: 0rem;
+    border-bottom-right-radius: 0rem;
+}
+
+.power-action-revealer-no-btn:dir(ltr) {
+    border-top-left-radius: 0rem;
+    border-bottom-left-radius: 0rem;
 }

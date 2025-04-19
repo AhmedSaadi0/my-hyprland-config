@@ -6,10 +6,6 @@ import Header from './profile/Header';
 import Profile from './profile/Profile';
 import HardwareBox from './monitors/MonitorsTab';
 import { Button } from 'astal/gtk3/widget';
-import { themesBox } from './dashboard/ThemesButtons';
-import PowerProfileButtons, {
-    buttonsRow,
-} from './dashboard/PowerProfileButtons';
 import DashboardTab from './dashboard/DashboardTab';
 
 const sharedTabAttrs = {
@@ -22,6 +18,7 @@ const sharedTabAttrs = {
     textClass: 'toolbar-button-text',
     onHover: (btn: Button) => {},
     onHoverLost: (btn: Button) => {},
+    transitionType: Gtk.RevealerTransitionType.SLIDE_RIGHT,
 };
 
 const dashboardTabIcon = (

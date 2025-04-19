@@ -1,6 +1,5 @@
 import PowerProfiles from 'gi://AstalPowerProfiles';
 import strings from '../../utils/strings';
-import { TitleText } from '../../widgets/TitleText';
 import { bind, Binding } from 'astal';
 import DashboardBox from '../../widgets/DashboardBox';
 
