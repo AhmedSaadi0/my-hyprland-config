@@ -1,4 +1,3 @@
-import settings from '../../settings.js';
 import strings from '../../strings.js';
 import { local } from '../../utils/helpers.js';
 import { Widget } from '../../utils/imports.js';

@@ -20,8 +20,6 @@ class ThemeService extends Service {
 
     qt5FilePath = `/home/${USER}/.config/qt5ct/qt5ct.conf`;
     qt6FilePath = `/home/${USER}/.config/qt6ct/qt6ct.conf`;
-    plasmaColorChanger = App.configDir + '/modules/theme/bin/plasma-theme';
-    plasmaColorsPath = App.configDir + '/modules/theme/plasma-colors/';
     selectedTheme = UNICAT_THEME;
     rofiFilePath = `/home/${USER}/.config/rofi/config.rasi`;
     wallpapersList = [];

@@ -1,4 +1,4 @@
-import { Utils, App, Notifications } from './modules/utils/imports.js';
+import { Utils, App } from './modules/utils/imports.js';
 import { Bar } from './modules/topbar.js';
 import { MainMenu } from './modules/menus/MainMenu.js';
 import { VolumeOSD } from './modules/on-screen/volume.js';
@@ -64,9 +64,6 @@ for (let i = 0; i < screens.length; i++) {
     windows.push(TopLeftCorner({ monitor: screen.id }));
     windows.push(TopRightCorner({ monitor: screen.id }));
 }
-
-Notifications.cacheActions;
-globalThis.getNot = () => Notifications;
 
 Utils.execAsync([`paplay`, settings.assets.audio.desktop_login]).catch(print);
 

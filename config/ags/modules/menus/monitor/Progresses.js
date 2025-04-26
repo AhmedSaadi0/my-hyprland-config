@@ -15,8 +15,8 @@ const cpuProgress = Widget.CircularProgress({
         className: 'menu-cpu-icon',
         label: '',
     }),
-    // startAt: 0.5,
-    // endAt: 1,
+    startAt: 0.4,
+    endAt: 0.1,
     rounded: true,
 }).poll(1000, (self) => {
     try {
@@ -42,6 +42,8 @@ const ramProgress = Widget.CircularProgress({
     // startAt: 0.5,
     // endAt: 1,
     rounded: true,
+    startAt: 0.4,
+    endAt: 0.1,
 }).poll(1000, (self) => {
     try {
         menuIsOpen = getMenuStatus();
@@ -66,6 +68,8 @@ const batteryProgress = Widget.CircularProgress({
     // endAt: 1,
     // startAt: 0.5,
     rounded: true,
+    startAt: 0.4,
+    endAt: 0.1,
 }).hook(Battery, (self) => {
     let percentage = Battery.percent;
     self.value = percentage / 100;
@@ -141,6 +145,8 @@ const tempProgress = Widget.CircularProgress({
     // endAt: 1,
     // startAt: 0.5,
     rounded: true,
+    startAt: 0.4,
+    endAt: 0.1,
 }).poll(30000, (self) => {
     Utils.execAsync(settings.scripts.deviceTemp)
         .then((val) => {

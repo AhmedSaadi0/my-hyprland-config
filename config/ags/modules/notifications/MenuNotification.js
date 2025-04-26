@@ -144,6 +144,7 @@ export default (notification, disableMenuOnClick = false) => {
 
     const mainbox = EventBox({
         className: `menu-notification ${notification.urgency}`,
+        name: `notification-${notification.id}`,
         vexpand: false,
         onPrimaryClick: () => {
             // hovered.value = false;
