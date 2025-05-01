@@ -4,7 +4,7 @@
 
 [![Discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/EUcGgRGhrs)
 
-## This will use AGS v2
+## This will use [quickshell](https://quickshell.outfoxxed.me/)
 
 <details>
 <summary>In progress ...</summary>
