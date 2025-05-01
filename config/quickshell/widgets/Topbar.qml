@@ -1,7 +1,5 @@
-// File: panels/topbar.qml
-
+import Quickshell.Hyprland
 import Quickshell
-import Quickshell.Io
 import QtQuick
 
 import "../themes"
@@ -32,7 +30,7 @@ PanelWindow {
         id: clockBackground // الـ ids الداخلية لا بأس بها
         anchors.centerIn: parent
         radius: 15
-        width: 190
+        width: clockText.width + 20
         height: 22
 
         // الربط بـ ThemeManager (سيكون متاحًا في النطاق الذي يتم فيه تحميل هذا المكون)
@@ -48,19 +46,28 @@ PanelWindow {
             }
         }
 
+        SystemClock {
+            id: clock
+            precision: SystemClock.Seconds
+        }
+
         Text {
-            id: clock // الـ ids الداخلية لا بأس بها
+            id: clockText
+            text: clock.date.toLocaleString(Qt.locale(), "(hh:mm:ss) dddd, dd MMMM")
             anchors.centerIn: parent
             color: colorsTheme.textFg
-
-            Process {
-                command: ["date", "+(%I:%M) %A, %d %B"]
-                running: true
-                stdout: SplitParser {
-                    onRead: data => clock.text = data
-                }
-            }
         }
+    }
+
+    Workspaces {
+        id: workspaces
+        width: children[0].width
+        anchors {
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+            margins: 2
+        }
+        height: parent.height - 8
     }
 
     MouseArea {
