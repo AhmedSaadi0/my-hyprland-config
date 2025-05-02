@@ -3,7 +3,7 @@ import QtQuick
 
 PersistentProperties {
     // id: persist
-    reloadableId: "persistedStates"
+    // reloadableId: "persistedStates"
 
     property color textBackgroundColor1: "#F905FF"
     property color textBackgroundColor2: "#20D2FD"

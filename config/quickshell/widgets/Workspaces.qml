@@ -1,83 +1,73 @@
-// Workspaces.qml
 import QtQuick
+import QtQuick.Layouts
 import Quickshell.Hyprland
 
 Item {
     id: root
 
+    // Configuration properties
+    property int underlineHeight: 2
+    property int itemWidth: 33
+    property int fontSize: 17
     property var activeIcons: ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰆈", "󱍙", "󰺵", "󱋡", "󰙨"]
     property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰆉", "󱍚", "󰺶", "󱋢", "󰤑"]
-    property int underlineHeight: 2
 
-    property var focusedId: Hyprland.focusedWorkspace.id
+    // Hyprland interface
+    property int focusedId: Hyprland.focusedWorkspace.id
+    readonly property var workspaceIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-    property var workspaces: {
-        let arr = [];
-        for (let i = 1; i <= 10; i++) {
-            let ws = Hyprland.workspaces[i] || dummyWorkspace(i);
-            arr.push(ws);
-        }
-        return arr;
-    }
-
-    function dummyWorkspace(id) {
-        return Qt.createQmlObject(`
-            import QtQuick 2.0
-            QtObject {
-                property int id: ${id}
-                property string name: ""
-                property var clients: []
-                function focus() {}
-            }
-        `, root);
-    }
-
+    // Container styling
     Rectangle {
         id: container
         radius: 15
         height: parent.height
-        width: row.width + 20
+        width: rowLayout.implicitWidth + 20
         color: palette.light
 
-        // الـ Row داخل المستطيل
-        Row {
-            id: row
+        RowLayout {
+            id: rowLayout
             anchors.centerIn: parent
             spacing: 5
-            height: parent.height // تأخذ ارتفاع الـ container
 
             Repeater {
-                model: workspaces
-                delegate: Component {
+                model: root.workspaceIds.reverse()
+
+                delegate: Item {
+                    id: delegateItem
+                    implicitWidth: root.itemWidth
+                    height: container.height
+
+                    readonly property int workspaceId: modelData
+                    readonly property bool isFocused: workspaceId === root.focusedId
+                    readonly property bool exists: Hyprland.workspaces.values.some(ws => ws.id === workspaceId)
+                    readonly property color itemColor: (isFocused || exists) ? palette.accent : palette.text
+                    readonly property string icon: isFocused ? root.activeIcons[workspaceId - 1] ?? ""
+                                                             : root.inActiveIcons[workspaceId - 1] ?? ""
+
+                    // Underline indicator
                     Rectangle {
-                        id: workspaceItem
-                        width: 30
-                        height: parent.height
-                        color: "transparent"
-
-                        // الخط السفلي
-                        Rectangle {
-                            anchors {
-                                bottom: parent.bottom
-                                horizontalCenter: parent.horizontalCenter
-                            }
-                            width: parent.width - 4
-                            height: 2
-                            color: palette.accent
-                            visible: focusedId === modelData.id
+                        anchors {
+                            bottom: parent.bottom
+                            horizontalCenter: parent.horizontalCenter
                         }
+                        width: parent.width - 4
+                        height: root.underlineHeight
+                        color: palette.accent
+                        visible: delegateItem.isFocused
+                    }
 
-                        Text {
-                            anchors.centerIn: parent
-                            text: focusedId === modelData.id ? root.activeIcons[modelData.id - 1] || "" : root.inActiveIcons[modelData.id - 1] || ""
-                            color: focusedId === modelData.id ? palette.accent : palette.text
-                            font.pixelSize: 17
-                        }
+                    // Workspace icon
+                    Text {
+                        anchors.centerIn: parent
+                        text: delegateItem.icon
+                        color: delegateItem.itemColor
+                        font.pixelSize: root.fontSize
+                    }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: modelData.focus()
-                        }
+                    // Click handling
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: Hyprland.focusWorkspace(delegateItem.workspaceId)
                     }
                 }
             }

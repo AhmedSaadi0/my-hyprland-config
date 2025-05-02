@@ -1,16 +1,18 @@
-import Quickshell.Hyprland
 import Quickshell
 import QtQuick
+// import QtQuick.Effects
+// import Qt5Compat.GraphicalEffects
 
 import "../themes"
 
 PanelWindow {
+    id: topBar
+    reloadableId: "persistedStates"
+    height: 30
 
     ColorsTheme {
         id: colorsTheme
     }
-
-    reloadableId: "persistedStates"
 
     anchors {
         top: true
@@ -18,22 +20,21 @@ PanelWindow {
         right: true
     }
 
-    height: 30 // يمكن أن تكون هذه أيضًا خاصية من خصائص الثيم
-
     Rectangle {
+        id: barBackground
         anchors.fill: parent
-        color: palette.window // palette متاح
+        color: palette.window
         z: -1
     }
 
     Rectangle {
-        id: clockBackground // الـ ids الداخلية لا بأس بها
+        id: clockBackground
         anchors.centerIn: parent
         radius: 15
         width: clockText.width + 20
         height: 22
+        color: palette.window
 
-        // الربط بـ ThemeManager (سيكون متاحًا في النطاق الذي يتم فيه تحميل هذا المكون)
         gradient: Gradient {
             orientation: Gradient.Horizontal
             GradientStop {
@@ -53,11 +54,21 @@ PanelWindow {
 
         Text {
             id: clockText
-            text: clock.date.toLocaleString(Qt.locale(), "(hh:mm:ss) dddd, dd MMMM")
+            text: clock.date.toLocaleString(Qt.locale(), "hh:mm:ss AP - dddd, dd MMMM yyyy")
             anchors.centerIn: parent
             color: colorsTheme.textFg
         }
     }
+
+    // DropShadow {
+    //     anchors.fill: clockBackground
+    //     horizontalOffset: 3
+    //     verticalOffset: 3
+    //     radius: 8.0
+    //     // samples: 17
+    //     color: "#10000000"
+    //     source: clockBackground
+    // }
 
     Workspaces {
         id: workspaces
