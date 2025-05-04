@@ -1,4 +1,5 @@
 import Quickshell
+import QtQuick.Window
 
 import "./widgets"
 

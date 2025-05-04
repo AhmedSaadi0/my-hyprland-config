@@ -81,6 +81,8 @@ PanelWindow {
         height: parent.height - 8
     }
 
+    Netspeed {}
+
     MouseArea {
         anchors.fill: parent
         onClicked:
