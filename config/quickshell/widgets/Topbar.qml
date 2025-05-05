@@ -10,10 +10,6 @@ PanelWindow {
     reloadableId: "persistedStates"
     height: 30
 
-    ColorsTheme {
-        id: colorsTheme
-    }
-
     anchors {
         top: true
         left: true
@@ -30,7 +26,7 @@ PanelWindow {
     Rectangle {
         id: clockBackground
         anchors.centerIn: parent
-        radius: 15
+        radius: ColorsTheme.values.radius
         width: clockText.width + 20
         height: 22
         color: palette.window
@@ -39,11 +35,11 @@ PanelWindow {
             orientation: Gradient.Horizontal
             GradientStop {
                 position: 0.0
-                color: colorsTheme.textBackgroundColor1
+                color: ColorsTheme.colors.textBackgroundColor1
             }
             GradientStop {
                 position: 1.0
-                color: colorsTheme.textBackgroundColor2
+                color: ColorsTheme.colors.textBackgroundColor2
             }
         }
 
@@ -56,7 +52,7 @@ PanelWindow {
             id: clockText
             text: clock.date.toLocaleString(Qt.locale(), "hh:mm:ss AP - dddd, dd MMMM yyyy")
             anchors.centerIn: parent
-            color: colorsTheme.textFg
+            color: ColorsTheme.colors.textFg
         }
     }
 
@@ -72,7 +68,7 @@ PanelWindow {
 
     Workspaces {
         id: workspaces
-        width: children[0].width
+        // width: children[0].width
         anchors {
             right: parent.right
             verticalCenter: parent.verticalCenter
@@ -81,16 +77,5 @@ PanelWindow {
         height: parent.height - 8
     }
 
-    Netspeed {}
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked:
-        // if (ThemeManager.currentThemeName === "dark") {
-        //     ThemeManager.setTheme("light");
-        // } else {
-        //     ThemeManager.setTheme("dark");
-        // }
-        {}
-    }
+    NetworkSpeedIndicator {}
 }
