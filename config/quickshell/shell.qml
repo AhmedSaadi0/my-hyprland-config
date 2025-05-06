@@ -9,6 +9,5 @@ ShellRoot {
 
     Topbar {
         id: topBarWindow
-        height: 30
     }
 }

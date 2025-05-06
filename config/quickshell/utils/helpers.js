@@ -2,10 +2,7 @@ function convertToH(bytes) {
   const bits = (bytes * 8) / 10;
   let speed, dim;
 
-  if (bits < 1000) {
-    speed = bits;
-    dim = "b/s";
-  } else if (bits < 1e6) {
+  if (bits < 1e6) {
     speed = bits / 1e3;
     dim = "kb/s";
   } else if (bits < 1e9) {
@@ -30,8 +27,41 @@ function convertToH(bytes) {
   return `${formatted} ${dim.padEnd(4, " ")}`.slice(0, 9);
 }
 
-// Example outputs:
-// "123  kb/s"
-// "12.3 kb/s"
-// "1.23 kb/s"
-// "999  gb/s"
+function calculateSpeed(currentBytes, oldBytes, intervalMs) {
+  if (
+    typeof currentBytes !== "number" ||
+    typeof oldBytes !== "number" ||
+    intervalMs <= 0
+  ) {
+    return 0;
+  }
+  return (currentBytes - oldBytes) / (intervalMs / 1000);
+}
+
+function signalStrengthToIcon(strength) {
+  if (typeof strength !== "number" || isNaN(strength)) {
+    return "󰤮";
+  }
+  if (strength > 85) {
+    return "󰤨";
+  } else if (strength > 70) {
+    return "󰤥";
+  } else if (strength > 50) {
+    return "󰤢";
+  } else if (strength > 20) {
+    return "󰤟";
+  } else {
+    return "󰤠";
+  }
+}
+
+function isValidPositiveInt(value) {
+  return Number.isInteger(value) && value >= 0;
+}
+
+function formatNetworkName(name) {
+  if (typeof name !== "string" || name.trim() === "") {
+    return "غير متصل";
+  }
+  return name;
+}

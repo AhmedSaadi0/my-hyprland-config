@@ -12,6 +12,8 @@ PersistentProperties {
     }
 
     property var values: QtObject {
+        property int barHeight: 33
+        property int barWidgetsHeight: 25
         property int radius: 15
         property string iconFont: "FantasqueSansM Nerd Font Propo"
     }
