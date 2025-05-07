@@ -8,6 +8,7 @@ import QtQuick.Layouts
 
 import "../../themes"
 import "../../utils/helpers.js" as Helper
+import "../../components"
 
 Rectangle {
     id: netspeedToolbarWidget
@@ -19,16 +20,22 @@ Rectangle {
     property int rxBytes: 0
 
     implicitWidth: 180 + children[0].width
-    implicitHeight: ColorsTheme.values.barWidgetsHeight
+    implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
     color: palette.light
-    radius: ColorsTheme.values.radius
+    radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     Rectangle {
         id: informationRow
         width: children[0].children[1].width + 45
-        height: ColorsTheme.values.barWidgetsHeight - 4
-        radius: ColorsTheme.values.radius
+        height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight - 4
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius
         color: palette.mid
+
+        layer.enabled: true
+        layer.effect: Shadow {
+            color: palette.shadow.alpha(0.4)
+            radius: 8
+        }
 
         anchors {
             left: parent.left
@@ -48,7 +55,7 @@ Rectangle {
             Text {
                 id: networkIcon
                 text: "󰤮"
-                font.family: ColorsTheme.values.iconFont
+                font.family: ThemeManager.selectedTheme.typography.iconFont
                 color: palette.text
                 font.pixelSize: 13
                 horizontalAlignment: Text.AlignHCenter
@@ -87,7 +94,7 @@ Rectangle {
             Label {
                 text: "↑"
                 color: palette.text
-                font.family: ColorsTheme.values.iconFont
+                font.family: ThemeManager.selectedTheme.typography.iconFont
             }
         }
 
@@ -104,7 +111,7 @@ Rectangle {
             }
             Label {
                 text: "↓"
-                font.family: ColorsTheme.values.iconFont
+                font.family: ThemeManager.selectedTheme.typography.iconFont
                 color: palette.text
             }
         }

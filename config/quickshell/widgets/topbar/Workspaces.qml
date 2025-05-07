@@ -15,7 +15,7 @@ Rectangle {
     property int focusedId: Hyprland.focusedWorkspace.id
     readonly property var workspaceIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-    radius: ColorsTheme.values.radius
+    radius: ThemeManager.selectedTheme.dimensions.elementRadius
     height: parent.height
     width: rowLayout.implicitWidth + 20
     color: palette.light
@@ -72,7 +72,7 @@ Rectangle {
                     anchors.centerIn: parent
                     text: workspaceMouseArea.icon
                     font.pixelSize: workspaceRectangle.fontSize
-                    font.family: ColorsTheme.values.iconFont
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
 
                     color: workspaceMouseArea.containsMouse ? palette.active : workspaceMouseArea.defaultItemColor
                 }

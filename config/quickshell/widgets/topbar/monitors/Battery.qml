@@ -11,7 +11,7 @@ TopbarCircularProgress {
     // running: false
     updateInterval: 1000 * 10
     textColor: Kirigami.Theme.textColor
-    backgroundColor: Kirigami.Theme.textColor.alpha(0.3)
+    backgroundColor: Kirigami.Theme.textColor.alpha(0.4)
     foregroundColor: Kirigami.Theme.textColor
 
     onReadHandler: data => {

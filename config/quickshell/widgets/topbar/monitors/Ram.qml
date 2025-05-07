@@ -10,6 +10,6 @@ TopbarCircularProgress {
     textColor: Kirigami.Theme.positiveTextColor
     iconFontSize: 10
 
-    backgroundColor: Kirigami.Theme.positiveTextColor.alpha(0.3)
+    backgroundColor: Kirigami.Theme.positiveTextColor.alpha(0.5)
     foregroundColor: Kirigami.Theme.positiveTextColor
 }

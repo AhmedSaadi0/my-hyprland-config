@@ -5,6 +5,7 @@ import QtQml
 import Quickshell
 
 QtObject {
+
     PersistentProperties {
         id: appSettingsStorage
         reloadableId: "globalAppSettings"

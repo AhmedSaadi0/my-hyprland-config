@@ -14,7 +14,7 @@ CircularProgress {
     inverted: true
     rounded: true
 
-    backgroundColor: palette.accent.alpha(0.3)
+    backgroundColor: palette.accent.alpha(0.4)
     foregroundColor: palette.accent
 
     property bool running: true
@@ -37,7 +37,7 @@ CircularProgress {
         text: root.icon
         color: root.textColor
         font.pixelSize: root.iconFontSize
-        font.family: ColorsTheme.values.iconFont
+        font.family: ThemeManager.selectedTheme.typography.iconFont
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
@@ -50,6 +50,9 @@ CircularProgress {
             onRead: data => {
                 root.onReadHandler(data.trim());
             }
+        }
+        stderr: SplitParser {
+            onRead: data => console.error(data)
         }
     }
 
