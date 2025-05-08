@@ -24,6 +24,9 @@ Rectangle {
     color: palette.light
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
+    // -------------------------
+    // ------ Name & icon ------
+    // -------------------------
     Rectangle {
         id: informationRow
         width: children[0].children[1].width + 45
@@ -33,7 +36,7 @@ Rectangle {
 
         layer.enabled: true
         layer.effect: Shadow {
-            color: palette.shadow.alpha(0.4)
+            color: palette.shadow.alpha(0.2)
             radius: 8
         }
 

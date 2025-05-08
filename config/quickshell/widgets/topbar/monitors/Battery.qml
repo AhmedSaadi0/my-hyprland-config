@@ -5,25 +5,28 @@ import Quickshell.Services.UPower
 
 TopbarCircularProgress {
     id: cpuUsage
-    icon: "󰁹"
     command: ["sh", "-c", "~/.config/quickshell/scripts/cpu_usage.sh"]
-    value: UPower.onBattery
-    // running: false
     updateInterval: 1000 * 10
-    textColor: Kirigami.Theme.textColor
-    backgroundColor: Kirigami.Theme.textColor.alpha(0.4)
-    foregroundColor: Kirigami.Theme.textColor
+
+    // value: UPower.onBattery
+    // running: false
+
+    icon: "󰁹"
+    iconColor: palette.text
+
+    backgroundColor: palette.text.alpha(0.4)
+    foregroundColor: palette.text
 
     onReadHandler: data => {
         const battery = UPower.devices.values[0];
         if (battery.isLaptopBattery) {
             const connected = battery.powerSupply;
             const percentage = battery.percentage;
-            const timeToFull = battery.timeToFull; // 0 means discharged
+            const changeRate = battery.changeRate;
 
             value = percentage;
 
-            if (timeToFull) {
+            if (changeRate <= 0) {
                 if (percentage <= 0.10) {
                     icon = '󰢜';
                 } else if (percentage <= 0.20) {

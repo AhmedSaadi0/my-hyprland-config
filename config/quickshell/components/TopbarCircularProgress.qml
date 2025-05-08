@@ -20,7 +20,7 @@ CircularProgress {
     property bool running: true
     property string icon: ""
     property int iconFontSize: 12
-    property color textColor: palette.accent
+    property color iconColor: palette.accent
     property var command
     property int updateInterval: 1000
     property var onReadHandler: function (data) {
@@ -35,7 +35,7 @@ CircularProgress {
     Text {
         anchors.centerIn: parent
         text: root.icon
-        color: root.textColor
+        color: root.iconColor
         font.pixelSize: root.iconFontSize
         font.family: ThemeManager.selectedTheme.typography.iconFont
         horizontalAlignment: Text.AlignHCenter
@@ -43,7 +43,7 @@ CircularProgress {
     }
 
     Process {
-        id: cpuUsageProcess
+        id: processId
         command: root.command
 
         stdout: SplitParser {
@@ -63,7 +63,7 @@ CircularProgress {
         running: false
 
         onTriggered: {
-            cpuUsageProcess.running = running;
+            processId.running = running;
         }
     }
 
@@ -71,11 +71,11 @@ CircularProgress {
         if (running) {
             updateTimer.start();
         }
-        cpuUsageProcess.running = running;
+        processId.running = running;
     }
 
     Component.onDestruction: {
         updateTimer.stop();
-        cpuUsageProcess.running = false;
+        processId.running = false;
     }
 }

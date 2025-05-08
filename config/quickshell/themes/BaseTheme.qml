@@ -33,8 +33,8 @@ PersistentProperties {
     // --- Dimensions and Spacing ---
     // Grouping sizes, heights, widths, spacing, margins, etc.
     property var dimensions: QtObject {
-        property int barHeight: 33
-        property int barWidgetsHeight: 23
+        property int barHeight: 30
+        property int barWidgetsHeight: 24
 
         // Radius for specific elements (can reference baseRadius)
         property int elementRadius: baseRadius // Renamed from radius for clarity

@@ -1,6 +1,7 @@
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 
 import "../themes"
 import "./topbar"
@@ -115,6 +116,7 @@ PanelWindow {
     // ------ Left Widgets ------
     // --------------------------
     RowLayout {
+        id: leftWidget
         height: ThemeManager.selectedTheme.dimensions.barHeight
         spacing: 10
 

@@ -4,12 +4,13 @@ import "../../../components"
 
 TopbarCircularProgress {
     id: cpuUsage
-    icon: ""
     command: ["sh", "-c", "~/.config/quickshell/scripts/ram_usage.sh"]
     updateInterval: 1000 * 20
-    textColor: Kirigami.Theme.positiveTextColor
+
+    icon: ""
+    iconColor: Kirigami.Theme.positiveTextColor
     iconFontSize: 10
 
-    backgroundColor: Kirigami.Theme.positiveTextColor.alpha(0.5)
+    backgroundColor: Kirigami.Theme.positiveTextColor.alpha(0.4)
     foregroundColor: Kirigami.Theme.positiveTextColor
 }
