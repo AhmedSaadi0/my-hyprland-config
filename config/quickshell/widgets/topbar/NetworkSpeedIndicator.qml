@@ -16,8 +16,8 @@ Rectangle {
     property string networkInterface: "wlp0s20f3"
     property int callInterval: 500
     property int networkTimeout: 300
-    property int txBytes: 0
-    property int rxBytes: 0
+    property var txBytes: 0
+    property var rxBytes: 0
 
     implicitWidth: 180 + children[0].width
     implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
@@ -149,6 +149,7 @@ Rectangle {
                     const strengthRaw = parts[3].trim();
 
                     const stringth = parseInt(strengthRaw, 10);
+
                     if (!Helper.isValidPositiveInt(newTxBytes) || !Helper.isValidPositiveInt(newRxBytes)) {
                         return;
                     }

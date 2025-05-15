@@ -1,8 +1,6 @@
 import Quickshell
 import QtQuick.Window
-import QtQuick.Controls
 
-import "./themes"
 import "./widgets"
 import "./windows/leftwindow"
 
@@ -11,19 +9,22 @@ ShellRoot {
 
     Topbar {
         id: topBarWindow
-
-        Button {
-            onClicked: {
-                if (root.visible) {
-                    root.close();
-                    return;
-                }
-                root.open();
-            }
-        }
     }
 
     LeftWindow {
-        id: root
+        id: leftPanel
+    }
+
+    Connections {
+        target: topBarWindow
+        function onOpenLeftPanelRequested(btn) {
+            if (leftPanel.visible) {
+                leftPanel.close();
+                btn.textRotation = 0;
+                return;
+            }
+            leftPanel.open();
+            btn.textRotation = 180;
+        }
     }
 }

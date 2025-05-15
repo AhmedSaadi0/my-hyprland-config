@@ -3,15 +3,16 @@ import QtQuick
 import QtQuick.Layouts
 
 import "../../themes"
+import "../../components"
 
 PanelWindow {
-    id: panelWindow
-    height: 900
-    width: 360
+    id: leftPanel
+    height: ThemeManager.selectedTheme.dimensions.menuHeight
+    width: ThemeManager.selectedTheme.dimensions.menuWidth
     visible: false
 
-    margins.top: 10
-    margins.left: 10
+    margins.top: 0
+    margins.left: 6
 
     color: "transparent"
 
@@ -28,10 +29,21 @@ PanelWindow {
 
     Rectangle {
         id: contentContainer
-        width: parent.width
+        width: parent.width - 10
         height: parent.height - 10
         color: palette.window
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
+
+        layer.enabled: true
+        layer.effect: Shadow {
+            // radius: 9
+            radius: 9
+            color: palette.shadow.alpha(0.5)
+            spread: 0
+            samples: 15
+            verticalOffset: 2
+            horizontalOffset: 2
+        }
 
         border {
             color: palette.accent
@@ -41,6 +53,12 @@ PanelWindow {
         RowLayout {
             anchors.fill: parent
         }
+
+        Header {
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            // radius: ThemeManager.selectedTheme.dimensions.elementRadius
+        }
     }
 
     // --- Define the animations ---
@@ -49,13 +67,13 @@ PanelWindow {
         target: contentContainer // Animate the inner rectangle
         property: "y"
         to: 0 // Animate to y=0 (visible position relative to window top)
-        duration: panelWindow.showAnimationDuration
-        easing.type: panelWindow.showAnimationType
+        duration: leftPanel.showAnimationDuration
+        easing.type: leftPanel.showAnimationType
         onStopped: {
-            panelWindow.visible = true;
+            leftPanel.visible = true;
         }
         onStarted: {
-            panelWindow.visible = true;
+            leftPanel.visible = true;
         }
     }
 
@@ -64,13 +82,13 @@ PanelWindow {
         target: contentContainer // Animate the inner rectangle
         property: "y"
         to: -contentContainer.height // Animate to y = -height (off-screen above)
-        duration: panelWindow.hideAnimationDuration
-        easing.type: panelWindow.hideAnimationType
+        duration: leftPanel.hideAnimationDuration
+        easing.type: leftPanel.hideAnimationType
         onStarted: {
-            panelWindow.visible = true;
+            leftPanel.visible = true;
         }
         onStopped: {
-            panelWindow.visible = false;
+            leftPanel.visible = false;
         }
     }
 
@@ -82,7 +100,7 @@ PanelWindow {
     }
 
     function open() {
-        panelWindow.visible = true;
+        leftPanel.visible = true;
         hideAnimation.stop();
         showAnimation.start();
     }
@@ -90,6 +108,6 @@ PanelWindow {
     function close() {
         showAnimation.stop();
         hideAnimation.start();
-    // panelWindow.visible = true;
+        leftPanel.visible = true;
     }
 }

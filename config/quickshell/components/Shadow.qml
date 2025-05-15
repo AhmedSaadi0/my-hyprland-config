@@ -2,7 +2,10 @@ import QtQuick
 import Qt5Compat.GraphicalEffects
 
 DropShadow {
-    color: palette.shadow.alpha(0.2)
+
+    property var alpha: 0.25
+
+    color: palette.shadow.alpha(alpha)
     radius: 9
     spread: 0
     samples: 15

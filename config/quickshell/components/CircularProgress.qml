@@ -11,6 +11,7 @@ Item {
     property int margin: 1
     property bool inverted: false
     property bool rounded: true
+    property bool showText: false // New property
 
     // Colors from style context
     property color backgroundColor: palette.accent.alpha(0.3)

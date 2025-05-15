@@ -34,7 +34,10 @@ PersistentProperties {
     // Grouping sizes, heights, widths, spacing, margins, etc.
     property var dimensions: QtObject {
         property int barHeight: 30
-        property int barWidgetsHeight: 24
+        property int barWidgetsHeight: 22
+
+        property int menuHeight: 900
+        property int menuWidth: 380
 
         // Radius for specific elements (can reference baseRadius)
         property int elementRadius: baseRadius // Renamed from radius for clarity

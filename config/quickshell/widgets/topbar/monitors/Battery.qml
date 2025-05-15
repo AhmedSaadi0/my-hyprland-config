@@ -1,20 +1,19 @@
 import QtQuick
-import org.kde.kirigami as Kirigami
 import "../../../components"
 import Quickshell.Services.UPower
 
 TopbarCircularProgress {
-    id: cpuUsage
+    id: batteryUsage
     command: ["sh", "-c", "~/.config/quickshell/scripts/cpu_usage.sh"]
     updateInterval: 1000 * 10
 
     // value: UPower.onBattery
     // running: false
 
-    icon: "󰁹"
+    icon: "-"
     iconColor: palette.text
 
-    backgroundColor: palette.text.alpha(0.4)
+    backgroundColor: palette.text.alpha(0.2)
     foregroundColor: palette.text
 
     onReadHandler: data => {
@@ -22,11 +21,12 @@ TopbarCircularProgress {
         if (battery.isLaptopBattery) {
             const connected = battery.powerSupply;
             const percentage = battery.percentage;
+            const timeToEmpty = battery.timeToEmpty;
             const changeRate = battery.changeRate;
 
             value = percentage;
 
-            if (changeRate <= 0) {
+            if (timeToEmpty === 0) {
                 if (percentage <= 0.10) {
                     icon = '󰢜';
                 } else if (percentage <= 0.20) {
@@ -48,7 +48,8 @@ TopbarCircularProgress {
                 } else {
                     icon = '󰂅';
                 }
-                iconFontSize = 12;
+                iconFontSize = 10;
+                glowIcon = changeRate > 0;
             } else {
                 if (percentage <= 0.10) {
                     icon = '󰁺';
@@ -71,7 +72,7 @@ TopbarCircularProgress {
                 } else {
                     icon = '󰁹';
                 }
-                iconFontSize = 14;
+                glowIcon = false;
             }
         }
     }

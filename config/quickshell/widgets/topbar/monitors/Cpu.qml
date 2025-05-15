@@ -1,7 +1,5 @@
-import Quickshell.Io
 import QtQuick
 
-import "../../../themes"
 import "../../../components"
 
 TopbarCircularProgress {
