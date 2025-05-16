@@ -6,7 +6,7 @@ import QtQuick.Layouts
 import "../../themes"
 import "../../components"
 
-// import "./dashboard"
+import "./dashboard" as Dashboard
 
 ColumnLayout {
     id: layout
@@ -16,9 +16,11 @@ ColumnLayout {
     property var windowsRadius: ThemeManager.selectedTheme.dimensions.elementRadius - 5
     property var selectedWindow: 0
 
+    property var animationDuration: 300
+
     property ListModel tabModel: ListModel {
         ListElement {
-            text: "Home"
+            text: "Control"
             onClick: function () {
                 myStackView.pop(null);
                 selectedWindow = 0;
@@ -26,7 +28,7 @@ ColumnLayout {
         }
 
         ListElement {
-            text: "Create"
+            text: "Notifications"
             onClick: function () {
                 if (selectedWindow == 1) {
                     return;
@@ -42,7 +44,7 @@ ColumnLayout {
         }
 
         ListElement {
-            text: "About"
+            text: "Weather"
             onClick: function () {
                 if (selectedWindow == 2) {
                     return;
@@ -69,48 +71,113 @@ ColumnLayout {
     StackView {
         id: myStackView
         width: layout.width
-        height: layout.height - mainTabBar.height - 10
+        height: layout.height - mainTabBar.height - layout.spacing
+
         initialItem: "dashboard/Dashboard.qml"
 
+        // --- BEAUTIFIED ZOOM & CROSSFADE ANIMATIONS ---
+
+        // When a NEW item is pushed ON TOP of the stack
         pushEnter: Transition {
-            PropertyAnimation {
-                property: "x"
-                from: myStackView.width
-                to: 0
-                duration: 200
-                easing.type: Easing.InOutQuad
+            ParallelAnimation {
+                PropertyAnimation {
+                    property: "x"
+                    from: parent.width
+                    to: 0
+                    duration: 200
+                    easing.type: Easing.OutQuart
+                }
+                PropertyAnimation {
+                    property: "rotation"
+                    from: -15
+                    to: 0
+                    duration: 200
+                    easing.type: Easing.OutBack
+                }
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 200
+                }
             }
         }
 
         pushExit: Transition {
-            PropertyAnimation {
-                property: "x"
-                from: 0
-                to: -myStackView.width
-                duration: 200
-                easing.type: Easing.InOutQuad
+            ParallelAnimation {
+                PropertyAnimation {
+                    property: "x"
+                    from: 0
+                    to: -parent.width
+                    duration: 200
+                    easing.type: Easing.InQuart
+                }
+                PropertyAnimation {
+                    property: "rotation"
+                    from: 0
+                    to: 15
+                    duration: 200
+                    easing.type: Easing.InBack
+                }
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0.5
+                    duration: 200
+                }
             }
         }
 
-        // Pop animation (when going back)
         popEnter: Transition {
-            PropertyAnimation {
-                property: "x"
-                from: -myStackView.width
-                to: 0
-                duration: 200
-                easing.type: Easing.InOutQuad
+            ParallelAnimation {
+                PropertyAnimation {
+                    property: "x"
+                    from: -parent.width
+                    to: 0
+                    duration: 200
+                    easing.type: Easing.OutQuart
+                }
+                PropertyAnimation {
+                    property: "rotation"
+                    from: 15
+                    to: 0
+                    duration: 200
+                    easing.type: Easing.OutBack
+                }
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 0.5
+                    to: 1
+                    duration: 200
+                }
             }
         }
 
         popExit: Transition {
-            PropertyAnimation {
-                property: "x"
-                from: 0
-                to: myStackView.width
-                duration: 200
-                easing.type: Easing.InOutQuad
+            ParallelAnimation {
+                PropertyAnimation {
+                    property: "x"
+                    from: 0
+                    to: parent.width
+                    duration: 200
+                    easing.type: Easing.InQuart
+                }
+                PropertyAnimation {
+                    property: "rotation"
+                    from: 0
+                    to: -15
+                    duration: 200
+                    easing.type: Easing.InBack
+                }
+                PropertyAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 200
+                }
             }
         }
+
+        transformOrigin: Item.Center // ESSENTIAL for scale animations around the center
     }
 }

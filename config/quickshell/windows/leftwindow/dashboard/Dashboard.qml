@@ -9,7 +9,7 @@ Item {
     // Layout.fillWidth: true; Layout.fillHeight: true // Implicit with StackLayout
     Rectangle {
         anchors.fill: parent
-        color: "transparent"
+        color: "lightblue"
         radius: ThemeManager.selectedTheme.dimensions.elementRadius - 5
     }
     Label {
