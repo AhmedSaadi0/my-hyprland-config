@@ -50,14 +50,30 @@ PanelWindow {
             width: 2
         }
 
-        RowLayout {
-            anchors.fill: parent
-        }
+        // RowLayout {
+        //     anchors.fill: parent
+        // }
 
         Header {
+            id: menuHeader
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             // radius: ThemeManager.selectedTheme.dimensions.elementRadius
+        }
+
+        MenuSelectorBar {
+            height: 600
+            // width: parent.width
+            anchors {
+                // top: menuHeader.bottom
+                left: contentContainer.left
+                right: contentContainer.right
+                bottom: contentContainer.bottom
+                leftMargin: 15
+                rightMargin: 16
+                bottomMargin: 15
+                topMargin: 15
+            }
         }
     }
 
