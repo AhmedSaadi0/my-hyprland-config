@@ -9,14 +9,14 @@ import "../../components"
 import "./dashboard" as Dashboard
 
 ColumnLayout {
-    id: layout
+    id: root
     // anchors.fill: parent
     spacing: 10
 
     property var windowsRadius: ThemeManager.selectedTheme.dimensions.elementRadius - 5
     property var selectedWindow: 0
 
-    property var animationDuration: 300
+    property var animationDuration: 400
 
     property ListModel tabModel: ListModel {
         ListElement {
@@ -70,8 +70,8 @@ ColumnLayout {
 
     StackView {
         id: myStackView
-        width: layout.width
-        height: layout.height - mainTabBar.height - layout.spacing
+        width: root.width
+        height: root.height - mainTabBar.height - root.spacing
 
         initialItem: "dashboard/Dashboard.qml"
 
@@ -84,21 +84,21 @@ ColumnLayout {
                     property: "x"
                     from: parent.width
                     to: 0
-                    duration: 200
+                    duration: root.animationDuration
                     easing.type: Easing.OutQuart
                 }
                 PropertyAnimation {
                     property: "rotation"
                     from: -15
                     to: 0
-                    duration: 200
+                    duration: root.animationDuration
                     easing.type: Easing.OutBack
                 }
                 PropertyAnimation {
                     property: "opacity"
                     from: 0
                     to: 1
-                    duration: 200
+                    duration: root.animationDuration
                 }
             }
         }
@@ -109,21 +109,21 @@ ColumnLayout {
                     property: "x"
                     from: 0
                     to: -parent.width
-                    duration: 200
+                    duration: root.animationDuration
                     easing.type: Easing.InQuart
                 }
                 PropertyAnimation {
                     property: "rotation"
                     from: 0
                     to: 15
-                    duration: 200
+                    duration: root.animationDuration
                     easing.type: Easing.InBack
                 }
                 PropertyAnimation {
                     property: "opacity"
                     from: 1
                     to: 0.5
-                    duration: 200
+                    duration: root.animationDuration
                 }
             }
         }
@@ -134,21 +134,21 @@ ColumnLayout {
                     property: "x"
                     from: -parent.width
                     to: 0
-                    duration: 200
+                    duration: root.animationDuration
                     easing.type: Easing.OutQuart
                 }
                 PropertyAnimation {
                     property: "rotation"
                     from: 15
                     to: 0
-                    duration: 200
+                    duration: root.animationDuration
                     easing.type: Easing.OutBack
                 }
                 PropertyAnimation {
                     property: "opacity"
                     from: 0.5
                     to: 1
-                    duration: 200
+                    duration: root.animationDuration
                 }
             }
         }
@@ -159,21 +159,21 @@ ColumnLayout {
                     property: "x"
                     from: 0
                     to: parent.width
-                    duration: 200
+                    duration: root.animationDuration
                     easing.type: Easing.InQuart
                 }
                 PropertyAnimation {
                     property: "rotation"
                     from: 0
                     to: -15
-                    duration: 200
+                    duration: root.animationDuration
                     easing.type: Easing.InBack
                 }
                 PropertyAnimation {
                     property: "opacity"
                     from: 1
                     to: 0
-                    duration: 200
+                    duration: root.animationDuration
                 }
             }
         }

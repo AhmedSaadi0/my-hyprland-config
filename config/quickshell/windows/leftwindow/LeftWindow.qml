@@ -1,6 +1,5 @@
 import Quickshell
 import QtQuick
-import QtQuick.Layouts
 
 import "../../themes"
 import "../../components"
@@ -16,8 +15,10 @@ PanelWindow {
 
     color: "transparent"
 
-    property var showAnimationType: Easing.InOutExpo
-    property var hideAnimationType: Easing.InOutExpo
+    property var showAnimationType: Easing.OutExpo
+    property var hideAnimationType: Easing.InExpo
+    // property var showAnimationType: Easing.InOutExpo
+    // property var hideAnimationType: Easing.InOutExpo
 
     property int showAnimationDuration: 400
     property int hideAnimationDuration: 400
@@ -70,7 +71,7 @@ PanelWindow {
                 right: contentContainer.right
                 bottom: contentContainer.bottom
                 leftMargin: 15
-                rightMargin: 16
+                rightMargin: 15
                 bottomMargin: 15
                 topMargin: 15
             }

@@ -11,7 +11,7 @@ Rectangle {
 
     Image {
         id: backgroundImage
-        source: "/home/ahmed/wallpapers/light/thumbnail.jpg"
+        source: "/home/ahmed/wallpapers/dark/thumbnail.jpg"
         width: ThemeManager.selectedTheme.dimensions.menuWidth - 14
         height: 200
         clip: true

@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 
 PersistentProperties {
-    property int baseRadius: 15
+    property int baseRadius: 12
 
     // --- Color Palette ---
     // Grouping all color definitions
@@ -58,9 +58,10 @@ PersistentProperties {
         property string headingFont: "Sans Serif" // Example
 
         // Font sizes
-        // property int baseFontSize: 12
-        // property int heading1Size: 24
-        // property int bodyFontSize: baseFontSize
+        property int baseFontSize: 12
+        property int heading1Size: 24
+        property int heading2Size: 20
+        property int bodyFontSize: baseFontSize
 
         // Font weights
         // property int bodyFontWeight: Font.Normal
