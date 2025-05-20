@@ -20,8 +20,8 @@ PanelWindow {
     // property var showAnimationType: Easing.InOutExpo
     // property var hideAnimationType: Easing.InOutExpo
 
-    property int showAnimationDuration: 400
-    property int hideAnimationDuration: 400
+    property int showAnimationDuration: 300
+    property int hideAnimationDuration: 300
 
     anchors {
         top: true

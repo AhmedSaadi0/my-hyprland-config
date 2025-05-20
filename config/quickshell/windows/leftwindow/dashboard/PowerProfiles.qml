@@ -34,17 +34,17 @@ Rectangle {
     Text {
         id: icon
         width: 10
-        text: "󰎓"
+        text: ""
         font.family: ThemeManager.selectedTheme.typography.iconFont
         font.bold: true
-        font.pixelSize: ThemeManager.selectedTheme.typography.heading2Size
+        // font.pixelSize: ThemeManager.selectedTheme.typography.heading2Size
         color: Kirigami.Theme.textColor
         anchors {
             top: parent.top
             right: parent.right
             // verticalCenter: parent.verticalCenter
             // horizontalCenter: parent.horizontalCenter
-            topMargin: 13
+            topMargin: 17
             rightMargin: 20
             leftMargin: 20
         }

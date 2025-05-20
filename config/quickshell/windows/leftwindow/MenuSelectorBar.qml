@@ -21,6 +21,7 @@ ColumnLayout {
     property ListModel tabModel: ListModel {
         ListElement {
             text: "Control"
+            icon: "󰨝"
             onClick: function () {
                 myStackView.pop(null);
                 selectedWindow = 0;
@@ -29,6 +30,7 @@ ColumnLayout {
 
         ListElement {
             text: "Notifications"
+            icon: "󰂞"
             onClick: function () {
                 if (selectedWindow == 1) {
                     return;
@@ -45,6 +47,7 @@ ColumnLayout {
 
         ListElement {
             text: "Weather"
+            icon: "󰨹"
             onClick: function () {
                 if (selectedWindow == 2) {
                     return;
@@ -59,6 +62,40 @@ ColumnLayout {
                 selectedWindow = 2;
             }
         }
+
+        // ListElement {
+        //     text: "Monitors"
+        //     onClick: function () {
+        //         if (selectedWindow == 2) {
+        //             return;
+        //         }
+        //         if (selectedWindow > 2) {
+        //             myStackView.pop();
+        //         } else {
+        //             myStackView.push("dashboard/Dashboard.qml");
+        //             myStackView.push("dashboard/Dashboard2.qml");
+        //             myStackView.push("dashboard/Dashboard3.qml");
+        //         }
+        //         selectedWindow = 2;
+        //     }
+        // }
+        //
+        // ListElement {
+        //     text: "Network"
+        //     onClick: function () {
+        //         if (selectedWindow == 2) {
+        //             return;
+        //         }
+        //         if (selectedWindow > 2) {
+        //             myStackView.pop();
+        //         } else {
+        //             myStackView.push("dashboard/Dashboard.qml");
+        //             myStackView.push("dashboard/Dashboard2.qml");
+        //             myStackView.push("dashboard/Dashboard3.qml");
+        //         }
+        //         selectedWindow = 2;
+        //     }
+        // }
     }
 
     CustomTabBar {

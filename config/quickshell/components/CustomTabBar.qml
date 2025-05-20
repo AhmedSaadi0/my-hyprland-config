@@ -5,7 +5,7 @@ import "../themes"
 
 Rectangle {
     id: root
-    color: Kirigami.Theme.backgroundColor
+    color: Kirigami.Theme.activeBackgroundColor
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     property int barWidth: 300
@@ -15,10 +15,11 @@ Rectangle {
     implicitHeight: barHeight
     implicitWidth: barWidth
 
-    property string textHighlightColor: Kirigami.Theme.highlightedTextColor
-    property string textColor: Kirigami.Theme.textColor
-    property string highlightColor: Kirigami.Theme.activeTextColor
-    property int animationDuration: 200
+    property var textHighlightColor: Kirigami.Theme.highlightedTextColor
+    property var textColor: Kirigami.Theme.textColor
+    property var hoverColor: Kirigami.Theme.activeTextColor.lighter(1.2)
+    property var highlightColor: Kirigami.Theme.activeTextColor
+    property int animationDuration: 300
 
     // Expose these two properties for use outside implicitHeight:
     // the control
@@ -28,10 +29,14 @@ Rectangle {
     // Display tab buttons
     ListView {
         id: listView
-        spacing: 1
+        spacing: 8
         anchors {
             fill: parent
-            margins: 1
+            topMargin: 4
+            bottomMargin: 4
+            leftMargin: 6
+            rightMargin: 5
+            // margins: 4
             horizontalCenter: parent.horizontalCenter
             verticalCenter: parent.verticalCenter
         }
@@ -45,74 +50,112 @@ Rectangle {
         delegate: Item {
             id: listDelegate
             // Calculate width more robustly, especially if model count can be 0
-            width: listView.model && listView.model.count > 0 ? listView.width / listView.model.count : listView.width
+            // width: listView.model && listView.model.count > 0 ? listView.width / listView.model.count : listView.width
+            width: listView.currentIndex === index ? 120 : 50
             height: listView.height
 
             property string label: model.text
+            property string icon: model.icon
             property var onClick: model.onClick
 
-            Text {
-                id: labelText
-                text: parent.label
+            Rectangle {
+                id: container
+                width: parent.width
+                height: parent.height
                 anchors.centerIn: parent
-                // Animate color change
-                Behavior on color {
-                    ColorAnimation {
-                        duration: root.animationDuration
+
+                radius: ThemeManager.selectedTheme.dimensions.elementRadius - 2
+                // color: listView.currentIndex === index ? root.highlightColor : "transparent"
+                color: {
+                    if (listView.currentIndex === index) {
+                        root.highlightColor;
+                    } else if (mouseArea.containsMouse) {
+                        root.hoverColor;
+                    } else {
+                        "transparent";
                     }
                 }
-                color: listView.currentIndex === index ? root.textHighlightColor : root.textColor
-                font.pixelSize: 14
-                font.bold: listView.currentIndex === index
+
+                Text {
+                    id: icon
+                    width: Math.max(10, paintedWidth)
+                    text: listDelegate.icon
+                    // color: listView.currentIndex === index ? root.textHighlightColor : root.textColor
+                    color: {
+                        if (listView.currentIndex === index || mouseArea.containsMouse) {
+                            root.textHighlightColor;
+                        } else {
+                            root.textColor;
+                        }
+                    }
+                    // color: root.textHighlightColor
+                    font.pixelSize: 14
+                    font.bold: listView.currentIndex === index
+                    elide: Text.Center
+                    horizontalAlignment: Qt.AlignHCenter
+                    verticalAlignment: Qt.AlignVCenter
+                    anchors {
+                        left: parent.left
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: 15
+                        // horizontalCenter: parent.horizontalCenter
+                    }
+                }
+
+                Text {
+                    id: labelText
+                    width: listView.currentIndex === index ? 70 : 10
+                    text: listView.currentIndex === index ? listDelegate.label : ""
+                    color: listView.currentIndex === index ? root.textHighlightColor : root.textColor
+                    // color: root.textHighlightColor
+                    font.pixelSize: 14
+                    font.bold: listView.currentIndex === index
+                    elide: Text.ElideRight
+                    horizontalAlignment: Qt.AlignLeft
+                    verticalAlignment: Qt.AlignVCenter
+                    anchors {
+                        left: icon.right
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: 15
+                        // rightMargin: 10
+                    }
+
+                    Behavior on width {
+                        // enabled: isExpanding
+                        NumberAnimation {
+                            duration: root.animationDuration
+                            easing.type: Easing.OutBack
+                        }
+                    }
+                }
+
+                Behavior on width {
+                    // enabled: isExpanding
+                    NumberAnimation {
+                        duration: root.animationDuration
+                        easing.type: Easing.OutBack
+                    }
+                }
+
+                Behavior on color {
+                    // enabled: mouseArea.containsMouse
+                    ColorAnimation {
+                        duration: root.animationDuration + 100
+                        easing.type: Easing.OutQuad
+                    }
+                }
             }
 
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
                 hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
                 onClicked: {
                     listView.currentIndex = index;
                     if (typeof listDelegate.onClick === "function") {
                         listDelegate.onClick();
                     }
-                }
-            }
-        }
-
-        highlight: Rectangle {
-            // Changed from Item to Rectangle for direct radius
-            // Bind to currentItem if valid, otherwise use sensible defaults or hide
-            width: listView.currentItemValid ? listView.currentItem.width : 0
-            height: listView.currentItemValid ? listView.currentItem.height : 0
-            x: listView.currentItemValid ? listView.currentItem.x : -width // Hide off-screen if not valid
-
-            // Animate X position
-            Behavior on x {
-                enabled: listView.currentItemValid // Only animate if item is valid
-                NumberAnimation {
-                    duration: root.animationDuration
-                    easing.type: Easing.InOutQuad // Smoother easing
-                }
-            }
-
-            // Animate Width
-            Behavior on width {
-                enabled: listView.currentItemValid
-                NumberAnimation {
-                    duration: root.animationDuration
-                    easing.type: Easing.InOutQuad // Smoother easing
-                }
-            }
-
-            // Visuals of the highlight
-            color: root.highlightColor
-            radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            anchors.margins: 2 // Keep the margin for the inner look
-            opacity: listView.currentItemValid ? 1 : 0 // Fade out if no valid item
-
-            Behavior on opacity {
-                // Animate opacity for smooth appearance/disappearance
-                NumberAnimation {
-                    duration: root.animationDuration / 2
                 }
             }
         }
