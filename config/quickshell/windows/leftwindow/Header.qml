@@ -1,6 +1,6 @@
 import QtQuick
 import Qt5Compat.GraphicalEffects
-import org.kde.kirigami as Kirigami
+// import org.kde.kirigami as Kirigami
 
 import "../../themes"
 import "../../components"

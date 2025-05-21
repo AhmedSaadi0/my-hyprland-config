@@ -10,7 +10,7 @@ import "../../../components"
 Rectangle {
     id: root
 
-    height: 90
+    height: 85
     // width: 400
 
     color: Kirigami.Theme.backgroundColor.lighter(1.4)
@@ -19,8 +19,8 @@ Rectangle {
     property string textColor: Kirigami.Theme.textColor
     property string highlightColor: Kirigami.Theme.activeTextColor
 
-    property int buttonWidth: 100
-    property int buttonHeight: 35
+    property int buttonWidth: 105
+    property int buttonHeight: 30
     property int themeRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     property var selectedProfile: PowerProfiles.profile

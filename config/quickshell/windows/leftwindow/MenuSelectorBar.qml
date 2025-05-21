@@ -4,7 +4,7 @@ import QtQuick.Layouts
 // import org.kde.kirigami as Kirigami
 
 import "../../themes"
-import "../../components"
+import "../../components/tab"
 
 import "./dashboard" as Dashboard
 
@@ -63,45 +63,47 @@ ColumnLayout {
             }
         }
 
-        // ListElement {
-        //     text: "Monitors"
-        //     onClick: function () {
-        //         if (selectedWindow == 2) {
-        //             return;
-        //         }
-        //         if (selectedWindow > 2) {
-        //             myStackView.pop();
-        //         } else {
-        //             myStackView.push("dashboard/Dashboard.qml");
-        //             myStackView.push("dashboard/Dashboard2.qml");
-        //             myStackView.push("dashboard/Dashboard3.qml");
-        //         }
-        //         selectedWindow = 2;
-        //     }
-        // }
-        //
-        // ListElement {
-        //     text: "Network"
-        //     onClick: function () {
-        //         if (selectedWindow == 2) {
-        //             return;
-        //         }
-        //         if (selectedWindow > 2) {
-        //             myStackView.pop();
-        //         } else {
-        //             myStackView.push("dashboard/Dashboard.qml");
-        //             myStackView.push("dashboard/Dashboard2.qml");
-        //             myStackView.push("dashboard/Dashboard3.qml");
-        //         }
-        //         selectedWindow = 2;
-        //     }
-        // }
+        ListElement {
+            text: "Monitors"
+            icon: ""
+            onClick: function () {
+                if (selectedWindow == 2) {
+                    return;
+                }
+                if (selectedWindow > 2) {
+                    myStackView.pop();
+                } else {
+                    myStackView.push("dashboard/Dashboard.qml");
+                    myStackView.push("dashboard/Dashboard2.qml");
+                    myStackView.push("dashboard/Dashboard3.qml");
+                }
+                selectedWindow = 2;
+            }
+        }
+
+        ListElement {
+            text: "Network"
+            icon: ""
+            onClick: function () {
+                if (selectedWindow == 2) {
+                    return;
+                }
+                if (selectedWindow > 2) {
+                    myStackView.pop();
+                } else {
+                    myStackView.push("dashboard/Dashboard.qml");
+                    myStackView.push("dashboard/Dashboard2.qml");
+                    myStackView.push("dashboard/Dashboard3.qml");
+                }
+                selectedWindow = 2;
+            }
+        }
     }
 
-    CustomTabBar {
+    TabBar {
         id: mainTabBar
         model: tabModel
-        barWidth: parent.width + 2
+        barWidth: parent.width
         barHeight: 30
     }
 
