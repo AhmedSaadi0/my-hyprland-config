@@ -1,6 +1,5 @@
 import QtQuick
 import Quickshell.Io
-import QtQuick.Controls
 import Quickshell.Services.UPower
 import org.kde.kirigami as Kirigami
 
@@ -19,7 +18,7 @@ Rectangle {
     property string textColor: Kirigami.Theme.textColor
     property string highlightColor: Kirigami.Theme.activeTextColor
 
-    property int buttonWidth: 105
+    property int buttonWidth: 100
     property int buttonHeight: 30
     property int themeRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
@@ -80,97 +79,78 @@ Rectangle {
 
         spacing: 10
 
-        Button {
+        MButton {
             id: highPerformance
             width: root.buttonWidth
             height: root.buttonHeight
+            text: "High"
             onClicked: {
                 root.selectedProfileText = "performance";
                 profileProcess.running = true;
             }
-            background: Rectangle {
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                color: {
-                    if (root.selectedProfile === 2) {
-                        return root.highlightColor;
-                    }
-                    return Kirigami.Theme.backgroundColor;
+
+            normalBackground: {
+                if (root.selectedProfile === 2) {
+                    return root.highlightColor;
                 }
+                return Kirigami.Theme.backgroundColor;
             }
-            contentItem: Text {
-                text: "High"
-                elide: Text.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                color: {
-                    if (root.selectedProfile === 2) {
-                        return root.textHighlightColor;
-                    }
-                    return root.textColor;
+
+            normalForeground: {
+                if (root.selectedProfile === 2) {
+                    return root.textHighlightColor;
                 }
+                return root.textColor;
             }
         }
 
-        Button {
+        MButton {
             id: balance
             width: root.buttonWidth
             height: root.buttonHeight
+            text: "Balanced"
             onClicked: {
                 root.selectedProfileText = "balanced";
                 profileProcess.running = true;
             }
-            background: Rectangle {
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                color: {
-                    if (root.selectedProfile === 1) {
-                        return root.highlightColor;
-                    }
-                    return Kirigami.Theme.backgroundColor;
+
+            normalBackground: {
+                if (root.selectedProfile === 1) {
+                    return root.highlightColor;
                 }
+                return Kirigami.Theme.backgroundColor;
             }
-            contentItem: Text {
-                width: parent.width
-                text: "Balanced"
-                elide: Text.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                color: {
-                    if (root.selectedProfile === 1) {
-                        return root.textHighlightColor;
-                    }
-                    return root.textColor;
+
+            normalForeground: {
+                if (root.selectedProfile === 1) {
+                    return root.textHighlightColor;
                 }
+                return root.textColor;
             }
         }
 
-        Button {
+        MButton {
             id: batterySaving
             width: root.buttonWidth
             height: root.buttonHeight
+            text: "Low"
             onClicked: {
                 root.selectedProfileText = "power-saver";
                 profileProcess.running = true;
             }
-            background: Rectangle {
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                color: {
-                    if (root.selectedProfile === 0) {
-                        return root.highlightColor;
-                    }
-                    return Kirigami.Theme.backgroundColor;
+
+            normalBackground: {
+                if (root.selectedProfile === 0) {
+                    return root.highlightColor;
                 }
+                return Kirigami.Theme.backgroundColor;
             }
-            contentItem: Text {
-                text: "Low"
-                elide: Text.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                color: {
-                    if (root.selectedProfile === 0) {
-                        return root.textHighlightColor;
-                    }
-                    return root.textColor;
+
+            normalForeground: {
+                if (root.selectedProfile === 0) {
+                    return root.textHighlightColor;
                 }
+                return root.textColor;
             }
         }
     }

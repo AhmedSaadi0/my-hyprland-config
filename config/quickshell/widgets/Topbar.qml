@@ -79,7 +79,7 @@ PanelWindow {
         // --------------------------
         // ------ Left Widgets ------
         // --------------------------
-        Button {
+        MButton {
             id: myCustomButton
             implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
             implicitWidth: 35
@@ -107,13 +107,15 @@ PanelWindow {
 
                 color: {
                     if (!myCustomButton.enabled) {
-                        return Kirigami.Theme.highlightColor;
+                        return myCustomButton.disabledForeground;
                     } else if (myCustomButton.down || myCustomButton.pressed) {
-                        return Kirigami.Theme.highlightColor.lighter(1.8); // Light text for dark background
+                        return myCustomButton.downForeground;
                     } else if (myCustomButton.hovered) {
-                        return "#F6D6DA";
+                        let bg = myCustomButton.hoveredBackground;
+                        let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
+                        return luminance > 0.5 ? "black" : "white";
                     } else {
-                        return Kirigami.Theme.textColor; // Standard text color
+                        return myCustomButton.normalForeground;
                     }
                 }
 
@@ -128,30 +130,6 @@ PanelWindow {
                             duration: 300
                             easing.type: Easing.InOutCubic
                         }
-                    }
-                }
-            }
-
-            background: Rectangle {
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                color: {
-                    if (!myCustomButton.enabled) {
-                        return Kirigami.Theme.negativeBackgroundColor;
-                    } else if (myCustomButton.down) {
-                        return Qt.darker(Kirigami.Theme.hoverColor, 1.15);
-                    } else if (myCustomButton.pressed) {
-                        return Qt.darker(Kirigami.Theme.hoverColor, 1.15); // Same as 'down' for consistency here
-                    } else if (myCustomButton.hovered) {
-                        return Kirigami.Theme.hoverColor.darker(1.4);
-                    } else {
-                        return Kirigami.Theme.activeBackgroundColor;
-                    }
-                }
-
-                border.color: myCustomButton.visualFocus ? Kirigami.Theme.focusColor : "transparent"
-                Behavior on color {
-                    ColorAnimation {
-                        duration: 150 // Short duration for quick feedback
                     }
                 }
             }

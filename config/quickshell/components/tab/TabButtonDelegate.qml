@@ -1,5 +1,7 @@
 import QtQuick
+
 import "../../themes"
+import "../../components"
 
 Item {
     property string text
@@ -23,6 +25,13 @@ Item {
             return mouseArea.containsMouse ? root.hoverColor : "transparent";
         }
 
+        layer {
+            enabled: true
+            effect: Shadow {
+                alpha: 0.3
+            }
+        }
+
         Behavior on color {
             ColorAnimation {
                 duration: root.animationDuration + 100
@@ -42,7 +51,8 @@ Item {
     Behavior on width {
         NumberAnimation {
             duration: root.animationDuration
-            easing.type: Easing.OutBack
+            // easing.type: Easing.OutBack
+            easing.type: Easing.OutExpo
         }
     }
 
