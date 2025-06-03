@@ -1,3 +1,5 @@
+// components/monitors/Ram.qml
+
 import QtQuick
 import org.kde.kirigami as Kirigami
 import "../"

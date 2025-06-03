@@ -55,8 +55,8 @@ Rectangle {
             left: backgroundImage.left
             right: backgroundImage.right
             topMargin: -(profileDetail.height / 2)
-            leftMargin: 15
-            rightMargin: 15
+            leftMargin: 8
+            rightMargin: 8
         }
         layer.enabled: true
         layer.effect: OpacityMask {

@@ -1,41 +1,38 @@
-// windows/leftwindow/LeftWindow.qml
-
 import Quickshell
+
 import QtQuick
 
 import "../../themes"
 import "../../components"
 
 PanelWindow {
-    id: leftPanel
-    height: ThemeManager.selectedTheme.dimensions.menuHeight
-    width: ThemeManager.selectedTheme.dimensions.menuWidth
-    visible: false
+    id: root
 
-    margins.top: 0
-    margins.left: 6
+    // width: 300
+    width: ThemeManager.selectedTheme.dimensions.menuWidth
 
     color: "transparent"
 
     // property var showAnimationType: Easing.OutExpo
     // property var hideAnimationType: Easing.InExpo
-    property var showAnimationType: Easing.InOutExpo
-    property var hideAnimationType: Easing.InOutExpo
+    property var showAnimationType: Easing.InOutBounce
+    property var hideAnimationType: Easing.InOutBounce
 
-    property int showAnimationDuration: 300
-    property int hideAnimationDuration: 300
+    property int showAnimationDuration: 100
+    property int hideAnimationDuration: 100
 
     anchors {
         top: true
         left: true
+        bottom: true
     }
 
     Rectangle {
         id: contentContainer
-        width: parent.width - 10
-        height: parent.height - 10
+        width: parent.width
+        height: parent.height
         color: palette.window
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius
+        // radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
         layer.enabled: true
         layer.effect: Shadow {
@@ -46,11 +43,6 @@ PanelWindow {
             samples: 15
             verticalOffset: 2
             horizontalOffset: 2
-        }
-
-        border {
-            color: palette.accent
-            width: 2
         }
 
         // RowLayout {
@@ -65,17 +57,17 @@ PanelWindow {
         }
 
         MenuSelectorBar {
-            height: 600
+            // height: 600
             // width: parent.width
             anchors {
-                // top: menuHeader.bottom
+                top: menuHeader.bottom
                 left: contentContainer.left
                 right: contentContainer.right
                 bottom: contentContainer.bottom
                 leftMargin: 15
                 rightMargin: 15
                 bottomMargin: 15
-                topMargin: 15
+                topMargin: 8
             }
         }
     }
@@ -84,42 +76,42 @@ PanelWindow {
     PropertyAnimation {
         id: showAnimation
         target: contentContainer // Animate the inner rectangle
-        property: "y"
+        property: "x"
         to: 0 // Animate to y=0 (visible position relative to window top)
-        duration: leftPanel.showAnimationDuration
-        easing.type: leftPanel.showAnimationType
+        duration: root.showAnimationDuration
+        easing.type: root.showAnimationType
         onStopped: {
-            leftPanel.visible = true;
+            root.visible = true;
         }
         onStarted: {
-            leftPanel.visible = true;
+            root.visible = true;
         }
     }
 
     PropertyAnimation {
         id: hideAnimation
         target: contentContainer // Animate the inner rectangle
-        property: "y"
-        to: -contentContainer.height // Animate to y = -height (off-screen above)
-        duration: leftPanel.hideAnimationDuration
-        easing.type: leftPanel.hideAnimationType
+        property: "x"
+        to: -contentContainer.width // Animate to y = -height (off-screen above)
+        duration: root.hideAnimationDuration
+        easing.type: root.hideAnimationType
         onStarted: {
-            leftPanel.visible = true;
+            root.visible = true;
         }
         onStopped: {
-            leftPanel.visible = false;
+            root.visible = false;
         }
     }
 
     Component.onCompleted: {
-        contentContainer.y = -contentContainer.height;
+        contentContainer.x = -contentContainer.width;
         if (visible) {
             open();
         }
     }
 
     function open() {
-        leftPanel.visible = true;
+        // root.visible = true;
         hideAnimation.stop();
         showAnimation.start();
     }
@@ -127,6 +119,6 @@ PanelWindow {
     function close() {
         showAnimation.stop();
         hideAnimation.start();
-        leftPanel.visible = true;
+    // root.visible = true;
     }
 }

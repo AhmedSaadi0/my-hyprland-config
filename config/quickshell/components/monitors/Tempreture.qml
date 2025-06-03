@@ -1,3 +1,5 @@
+// components/monitors/Tempreture.qml
+
 import QtQuick
 import org.kde.kirigami as Kirigami
 import "../"

@@ -9,7 +9,9 @@ RowLayout {
     spacing: 6
 
     Tempreture {}
-    Battery {}
+    Battery {
+        glowIcon: false
+    }
     Ram {}
     Cpu {}
 }

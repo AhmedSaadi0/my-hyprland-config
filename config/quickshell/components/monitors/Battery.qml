@@ -1,3 +1,5 @@
+// components/monitors/Battery.qml
+
 import QtQuick
 import Quickshell.Services.UPower
 

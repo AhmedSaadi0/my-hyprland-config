@@ -1,3 +1,5 @@
+// windows/leftwindow/monitoring/Progresses.qml
+
 import QtQuick
 
 import "../../../components/monitors"

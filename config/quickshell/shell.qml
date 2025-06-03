@@ -15,16 +15,23 @@ ShellRoot {
         id: leftPanel
     }
 
+    LeftWindowFull {
+        id: leftPanelFull
+        visible: false
+    }
+
     Connections {
         target: topBarWindow
         function onOpenLeftPanelRequested(btn) {
-            if (leftPanel.visible) {
-                leftPanel.close();
+            if (leftPanelFull.visible) {
+                // leftPanel.close();
                 btn.textRotation = 0;
+                leftPanelFull.close();
                 return;
             }
-            leftPanel.open();
+            // leftPanel.open();
             btn.textRotation = 180;
+            leftPanelFull.open();
         }
     }
 }

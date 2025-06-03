@@ -1,3 +1,5 @@
+// components/monitors/Cpu.qml
+
 import QtQuick
 
 import "../"

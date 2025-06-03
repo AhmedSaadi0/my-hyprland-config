@@ -49,14 +49,28 @@ CircularProgress {
         layer.enabled: true
         z: 2
 
-        Glow {
-            source: textitem
-            color: "yellow"
-            radius: 16
-            samples: 16
-            transparentBorder: true
-            visible: root.glowIcon
-            // active: isCharging
+        // Glow {
+        //     id: textItemGlow
+        //     active: isCharging
+        // }
+
+        Loader {
+            id: glowLoader
+            anchors.fill: parent // Glow effect doesn't take space, but for completeness
+            active: root.glowIcon
+            sourceComponent: glowComponentInstance // Set when active
+
+        }
+
+        Component {
+            id: glowComponentInstance
+            Glow {
+                color: "yellow"
+                radius: 16
+                samples: 16
+                transparentBorder: true
+                enabled: false
+            }
         }
 
         SequentialAnimation on opacity {

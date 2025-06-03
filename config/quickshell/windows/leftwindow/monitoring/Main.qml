@@ -1,7 +1,8 @@
 // windows/leftwindow/monitoring/Main.qml
+
 import QtQuick
 
-Rectangle {
+Item {
     id: monotoringMenu
     objectName: "monitoring"
     // width: parent.width

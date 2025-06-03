@@ -1,3 +1,5 @@
+// components/CircularProgress.qml
+
 import QtQuick
 
 Item {

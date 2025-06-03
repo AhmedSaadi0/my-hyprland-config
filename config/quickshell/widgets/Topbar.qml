@@ -10,7 +10,7 @@ import "../components"
 
 PanelWindow {
     id: topBar
-    height: ThemeManager.selectedTheme.dimensions.barHeight + 7
+    height: ThemeManager.selectedTheme.dimensions.barHeight
     color: "transparent"
 
     anchors {
@@ -83,7 +83,7 @@ PanelWindow {
             id: myCustomButton
             implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
             implicitWidth: 35
-            text: ""
+            text: ""
             font.family: ThemeManager.selectedTheme.typography.iconFont
             onClicked: {
                 handler.toggleMenu();
