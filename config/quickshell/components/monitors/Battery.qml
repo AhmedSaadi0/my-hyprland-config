@@ -1,6 +1,7 @@
 import QtQuick
-import "../../../components"
 import Quickshell.Services.UPower
+
+import "../"
 
 TopbarCircularProgress {
     id: batteryUsage
@@ -18,7 +19,7 @@ TopbarCircularProgress {
 
     onReadHandler: data => {
         const battery = UPower.devices.values[0];
-        if (battery.isLaptopBattery) {
+        if (battery && battery.isLaptopBattery) {
             const connected = battery.powerSupply;
             const percentage = battery.percentage;
             const timeToEmpty = battery.timeToEmpty;
@@ -48,7 +49,7 @@ TopbarCircularProgress {
                 } else {
                     icon = '󰂅';
                 }
-                iconFontSize = 10;
+                // iconFontSize = batteryUsage.iconFontSize - 1;
                 glowIcon = changeRate > 0;
             } else {
                 if (percentage <= 0.10) {

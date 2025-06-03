@@ -36,6 +36,7 @@ Rectangle {
     Text {
         id: clockText
         text: clock.date.toLocaleString(Qt.locale(), "hh:mm AP - dddd, dd MMMM yyyy")
+        font.bold: true
         anchors.centerIn: parent
         color: ThemeManager.selectedTheme.colors.textFg
     }

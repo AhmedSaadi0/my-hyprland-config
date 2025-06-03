@@ -2,6 +2,7 @@ pragma Singleton
 
 import Quickshell
 import QtQuick
+import org.kde.kirigami as Kirigami
 
 BaseTheme {
     id: colorsTheme
@@ -9,9 +10,9 @@ BaseTheme {
     property int themeRadius: 15
 
     property var colors: QtObject {
-        property color textBackgroundColor1: "#F905FF"
-        property color textBackgroundColor2: "#20D2FD"
-        property color textFg: "#09070f"
+        property color textBackgroundColor1: Kirigami.Theme.negativeTextColor
+        property color textBackgroundColor2: Kirigami.Theme.highlightColor
+        property color textFg: Kirigami.Theme.backgroundColor
     }
 
     // property var dimensions: QtObject {

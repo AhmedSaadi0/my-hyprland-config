@@ -5,26 +5,62 @@ import QtQuick.Layouts
 
 import "../../themes"
 import "../../components/tab"
+import "../../components"
 
 import "./dashboard" as Dashboard
+import "./monitoring" as Monitoring
 
 ColumnLayout {
     id: root
     // anchors.fill: parent
     spacing: 10
 
-    property var windowsRadius: ThemeManager.selectedTheme.dimensions.elementRadius - 5
-    property var selectedWindow: 0
+    readonly property int dashboardMenuIndex: 0
+    readonly property int notificationMenuIndex: 1
+    readonly property int weatherMenuIndex: 2
+    readonly property int monotoringMenuIndex: 3
+    readonly property int networkMenuIndex: 4
 
+    property var windowsRadius: ThemeManager.selectedTheme.dimensions.elementRadius - 5
+    property var currentMenu: dashboardMenuIndex
+    property var currentList: []
     property var animationDuration: 400
+
+    Component {
+        id: dashboardMenu
+        Dashboard.Dashboard {}
+    }
+
+    Component {
+        id: notificationMenu
+        NotiList {}
+    }
+
+    Component {
+        id: weatherMenu
+        Dashboard.Dashboard2 {}
+    }
+
+    Component {
+        id: monotoringMenu
+        Monitoring.Main {
+            id: md
+        }
+    }
+
+    Component {
+        id: networkMenu
+        Dashboard.Dashboard3 {}
+    }
 
     property ListModel tabModel: ListModel {
         ListElement {
             text: "Control"
             icon: "󰨝"
             onClick: function () {
-                myStackView.pop(null);
-                selectedWindow = 0;
+                myStackView.popToIndex(0);
+                currentMenu = dashboardMenuIndex;
+                currentList = [];
             }
         }
 
@@ -32,16 +68,16 @@ ColumnLayout {
             text: "Notifications"
             icon: "󰂞"
             onClick: function () {
-                if (selectedWindow == 1) {
+                if (currentMenu === notificationMenuIndex) {
                     return;
                 }
-                if (selectedWindow > 1) {
-                    myStackView.pop("dashboard/Dashboard3.qml");
+                if (currentMenu > notificationMenuIndex) {
+                    myStackView.popToIndex(notificationMenuIndex);
+                    root.popToIndex(notificationMenuIndex);
                 } else {
-                    myStackView.push("dashboard/Dashboard.qml");
-                    myStackView.push("dashboard/Dashboard2.qml");
+                    root.addToList(notificationMenu);
                 }
-                selectedWindow = 1;
+                currentMenu = notificationMenuIndex;
             }
         }
 
@@ -49,17 +85,17 @@ ColumnLayout {
             text: "Weather"
             icon: "󰨹"
             onClick: function () {
-                if (selectedWindow == 2) {
+                if (currentMenu === weatherMenuIndex) {
                     return;
                 }
-                if (selectedWindow > 2) {
-                    myStackView.pop();
+                if (currentMenu > weatherMenuIndex) {
+                    myStackView.popToIndex(weatherMenuIndex);
+                    root.popToIndex(weatherMenuIndex);
                 } else {
-                    myStackView.push("dashboard/Dashboard.qml");
-                    myStackView.push("dashboard/Dashboard2.qml");
-                    myStackView.push("dashboard/Dashboard3.qml");
+                    root.addToList(notificationMenu);
+                    root.addToList(weatherMenu);
                 }
-                selectedWindow = 2;
+                currentMenu = weatherMenuIndex;
             }
         }
 
@@ -67,17 +103,18 @@ ColumnLayout {
             text: "Monitors"
             icon: ""
             onClick: function () {
-                if (selectedWindow == 2) {
+                if (currentMenu === monotoringMenuIndex) {
                     return;
                 }
-                if (selectedWindow > 2) {
-                    myStackView.pop();
+                if (currentMenu > monotoringMenuIndex) {
+                    myStackView.popToIndex(monotoringMenuIndex);
+                    root.popToIndex(monotoringMenuIndex);
                 } else {
-                    myStackView.push("dashboard/Dashboard.qml");
-                    myStackView.push("dashboard/Dashboard2.qml");
-                    myStackView.push("dashboard/Dashboard3.qml");
+                    root.addToList(notificationMenu);
+                    root.addToList(weatherMenu);
+                    root.addToList(monotoringMenu);
                 }
-                selectedWindow = 2;
+                currentMenu = monotoringMenuIndex;
             }
         }
 
@@ -85,18 +122,36 @@ ColumnLayout {
             text: "Network"
             icon: ""
             onClick: function () {
-                if (selectedWindow == 2) {
+                if (currentMenu === networkMenuIndex) {
                     return;
                 }
-                if (selectedWindow > 2) {
-                    myStackView.pop();
+                if (currentMenu > networkMenuIndex) {
+                    myStackView.popToIndex(networkMenuIndex);
+                    root.popToIndex(networkMenuIndex);
                 } else {
-                    myStackView.push("dashboard/Dashboard.qml");
-                    myStackView.push("dashboard/Dashboard2.qml");
-                    myStackView.push("dashboard/Dashboard3.qml");
+                    root.addToList(notificationMenu);
+                    root.addToList(weatherMenu);
+                    root.addToList(monotoringMenu);
+                    root.addToList(networkMenu);
                 }
-                selectedWindow = 2;
+                currentMenu = networkMenuIndex;
             }
+        }
+    }
+
+    function addToList(menu) {
+        if (currentList.includes(menu)) {
+            return;
+        }
+        currentList.push(menu);
+        myStackView.push(menu);
+    }
+
+    function popToIndex(index) {
+        if (index < currentList.length) {
+            currentList.splice(index);
+        } else {
+            currentList = [];
         }
     }
 
@@ -104,7 +159,10 @@ ColumnLayout {
         id: mainTabBar
         model: tabModel
         barWidth: parent.width
-        barHeight: 30
+        barHeight: 35
+        layer.enabled: true
+        layer.effect: Shadow {} // Add specific shadow properties if needed
+
     }
 
     StackView {
@@ -112,7 +170,9 @@ ColumnLayout {
         width: root.width
         height: root.height - mainTabBar.height - root.spacing
 
-        initialItem: "dashboard/Dashboard.qml"
+        initialItem: dashboardMenu
+
+        smooth: true
 
         // --- BEAUTIFIED ZOOM & CROSSFADE ANIMATIONS ---
 
@@ -218,5 +278,9 @@ ColumnLayout {
         }
 
         transformOrigin: Item.Center // ESSENTIAL for scale animations around the center
+
+        // Component.onCompleted: {
+        //     myStackView.push(...root.menuViews);
+        // }
     }
 }

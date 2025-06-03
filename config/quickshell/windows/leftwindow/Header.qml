@@ -7,7 +7,10 @@ import "../../components"
 
 Rectangle {
     id: root
+    width: parent.width
+    height: 270
     color: "transparent"
+    // color: "#ffff00"
 
     Image {
         id: backgroundImage

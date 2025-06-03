@@ -1,12 +1,14 @@
+// windows/leftwindow/dashboard/Dashboard.qml
 import QtQuick
-import QtQuick.Controls
+// import QtQuick.Controls
 
 import "../../../themes"
 
 Item {
-    id: view1
+    id: dashboardMenu
     objectName: "view1" // objectName for debugging
     // Layout.fillWidth: true; Layout.fillHeight: true // Implicit with StackLayout
+
     Rectangle {
         anchors.fill: parent
         color: "transparent"
@@ -17,10 +19,5 @@ Item {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
         }
-    }
-    Label {
-        anchors.centerIn: parent
-        text: "Content of View 1"
-        color: "#000"
     }
 }

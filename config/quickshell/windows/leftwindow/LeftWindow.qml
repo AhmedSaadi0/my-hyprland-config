@@ -15,10 +15,10 @@ PanelWindow {
 
     color: "transparent"
 
-    property var showAnimationType: Easing.OutExpo
-    property var hideAnimationType: Easing.InExpo
-    // property var showAnimationType: Easing.InOutExpo
-    // property var hideAnimationType: Easing.InOutExpo
+    // property var showAnimationType: Easing.OutExpo
+    // property var hideAnimationType: Easing.InExpo
+    property var showAnimationType: Easing.InOutExpo
+    property var hideAnimationType: Easing.InOutExpo
 
     property int showAnimationDuration: 300
     property int hideAnimationDuration: 300

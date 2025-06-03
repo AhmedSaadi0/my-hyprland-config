@@ -11,7 +11,7 @@ Button {
     property var textVerticalAlignment: Text.AlignVCenter
 
     property var disabledBackground: Kirigami.Theme.negativeBackgroundColor
-    property var downBackground: Qt.darker(Kirigami.Theme.hoverColor, 1.15)
+    property var downBackground: Kirigami.Theme.hoverColor.darker(1.15)
     property var hoveredBackground: Kirigami.Theme.hoverColor
     property var normalBackground: Kirigami.Theme.activeBackgroundColor
 
@@ -22,7 +22,7 @@ Button {
 
     layer.enabled: true
     layer.effect: Shadow {
-        alpha: 0.1
+        alpha: 0.3
     }
 
     contentItem: Text {
@@ -62,9 +62,10 @@ Button {
                 return myCustomButton.normalBackground;
             }
         }
-        // border.color: myCustomButton.hovered ? "red" : "transparent" // Visual feedback
 
-        border.color: myCustomButton.visualFocus ? Kirigami.Theme.focusColor : "transparent"
+        // border.color: myCustomButton.hovered ? "red" : "transparent" // Visual feedback
+        // border.color: myCustomButton.visualfocus ? Kirigami.Theme.focusColor : "transparent"
+
         Behavior on color {
             ColorAnimation {
                 duration: 150 // Short duration for quick feedback

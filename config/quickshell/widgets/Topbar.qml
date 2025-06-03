@@ -1,11 +1,11 @@
 import Quickshell
+import Quickshell.Io
 import QtQuick
-import QtQuick.Controls
-import org.kde.kirigami as Kirigami
+// import QtQuick.Controls
+// import org.kde.kirigami as Kirigami
 
 import "../themes"
 import "./topbar"
-import "./topbar/monitors"
 import "../components"
 
 PanelWindow {
@@ -86,7 +86,7 @@ PanelWindow {
             text: ""
             font.family: ThemeManager.selectedTheme.typography.iconFont
             onClicked: {
-                topBar.openLeftPanelRequested(myCustomButton);
+                handler.toggleMenu();
             }
 
             anchors {
@@ -108,8 +108,6 @@ PanelWindow {
                 color: {
                     if (!myCustomButton.enabled) {
                         return myCustomButton.disabledForeground;
-                    } else if (myCustomButton.down || myCustomButton.pressed) {
-                        return myCustomButton.downForeground;
                     } else if (myCustomButton.hovered) {
                         let bg = myCustomButton.hoveredBackground;
                         let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
@@ -144,6 +142,14 @@ PanelWindow {
                 verticalCenter: parent.verticalCenter
                 leftMargin: 10
             }
+        }
+    }
+
+    IpcHandler {
+        id: handler
+        target: "Topbar"
+        function toggleMenu() {
+            topBar.openLeftPanelRequested(myCustomButton);
         }
     }
 }

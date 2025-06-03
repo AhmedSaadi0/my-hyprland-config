@@ -61,6 +61,7 @@ PersistentProperties {
         property int baseFontSize: 12
         property int heading1Size: 24
         property int heading2Size: 20
+        property int heading3Size: 16
         property int bodyFontSize: baseFontSize
 
         // Font weights

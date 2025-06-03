@@ -38,7 +38,7 @@ Rectangle {
         id: listView
         anchors {
             fill: parent
-            margins: 4
+            margins: 6
             leftMargin: 6
             rightMargin: 5
         }

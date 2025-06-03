@@ -19,7 +19,7 @@ Rectangle {
     property var txBytes: 0
     property var rxBytes: 0
 
-    implicitWidth: 180 + children[0].width
+    implicitWidth: 190 + children[0].width
     implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
     color: palette.light
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
@@ -62,11 +62,13 @@ Rectangle {
                 color: palette.text
                 font.pixelSize: 13
                 horizontalAlignment: Text.AlignHCenter
+                font.bold: true
             }
 
             Text {
                 id: networkName
                 text: "-"
+                font.bold: true
                 color: palette.text
             }
         }

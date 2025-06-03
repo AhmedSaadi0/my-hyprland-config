@@ -1,6 +1,6 @@
 import QtQuick
 import org.kde.kirigami as Kirigami
-import "../../../components"
+import "../"
 
 TopbarCircularProgress {
     id: tempUsage

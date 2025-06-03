@@ -1,9 +1,7 @@
 import QtQuick.Layouts
 import QtQuick
-import org.kde.kirigami as Kirigami
 
-import "../../../components"
-import "../../../themes"
+import "../../components/monitors/"
 
 RowLayout {
     // anchors.fill: parent

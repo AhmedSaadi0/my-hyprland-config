@@ -12,7 +12,7 @@ Rectangle {
     property int fontSize: 17
     property var activeIcons: ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰆈", "󱍙", "󰺵", "󱋡", "󰙨"]
     property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰆉", "󱍚", "󰺶", "󱋢", "󰤑"]
-    property int focusedId: Hyprland.focusedWorkspace.id
+    property int focusedId: Hyprland.focusedWorkspace !== null ? Hyprland.focusedWorkspace.id : 0
     readonly property var workspaceIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     radius: ThemeManager.selectedTheme.dimensions.elementRadius

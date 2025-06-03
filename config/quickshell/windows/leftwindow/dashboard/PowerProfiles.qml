@@ -9,165 +9,201 @@ import "../../../components"
 Rectangle {
     id: root
 
-    height: 85
-    // width: 400
+    // -------------------------------------------------------------------------
+    // --- Configuration Properties (Constants & Theme Aliases)
+    // -------------------------------------------------------------------------
 
-    color: Kirigami.Theme.backgroundColor.lighter(1.4)
+    // --- Dimensions ---
+    property int componentHeight: 85
+    property int defaultButtonWidth: 100
+    property int defaultButtonHeight: 30
+    property int componentRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
-    property string textHighlightColor: Kirigami.Theme.highlightedTextColor
-    property string textColor: Kirigami.Theme.textColor
-    property string highlightColor: Kirigami.Theme.activeTextColor
+    property int iconElementWidth: 10 // Note: Text width might override this
+    property int iconTopMargin: 12
+    property int iconRightMargin: 20
+    // property int iconLeftMargin: 20 // Was commented out in original for icon
 
-    property int buttonWidth: 100
-    property int buttonHeight: 30
-    property int themeRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property int titleTopMargin: 5
+    property int titleLeftMargin: 20
+    property int titleIconSpacing: 10 // Was title.rightMargin
 
-    property var selectedProfile: PowerProfiles.profile
-    property string selectedProfileText: ""
+    property int buttonsRowTopMargin: 10
+    property int buttonsRowSpacing: 10
 
-    radius: themeRadius
+    // --- Colors (Aliasing Theme colors for clarity and central access) ---
+    property color componentBackgroundColor: Kirigami.Theme.backgroundColor.lighter(1.4)
+    property color baseTextColor: Kirigami.Theme.textColor
+    property color highlightedStateTextColor: Kirigami.Theme.highlightedTextColor // For active button text
+    property color activeStateBackgroundColor: Kirigami.Theme.activeTextColor     // For active button background (original highlightColor)
+    property color defaultStateBackgroundColor: Kirigami.Theme.activeBackgroundColor // For inactive button background
+
+    // --- Fonts (Aliasing Theme fonts) ---
+    property string iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+    property int headingFontSize: ThemeManager.selectedTheme.typography.heading3Size
+
+    // --- Texts & Content ---
+    property string mainTitleText: qsTr("Performance Mode") // "وضع الاداء"
+    property string iconCharacter: ""
+
+    property string highPerformanceButtonLabel: qsTr("High")
+    property string balancedButtonLabel: qsTr("Balanced")
+    property string lowButtonLabel: qsTr("Low")
+
+    property string highPerformanceProfileCmd: "performance"
+    property string balancedProfileCmd: "balanced"
+    property string powerSaverProfileCmd: "power-saver"
+
+    // --- Constants for Profile Indices (matching UPower.profile values) ---
+    readonly property int profileIndexPerformance: 2
+    readonly property int profileIndexBalanced: 1
+    readonly property int profileIndexPowerSaver: 0
+
+    // -------------------------------------------------------------------------
+    // --- State Properties
+    // -------------------------------------------------------------------------
+    property var selectedProfile: PowerProfiles.profile // Comes from UPower
+    property string profileToSetOnClick: "" // Stores the command string for the Process
+
+    // -------------------------------------------------------------------------
+    // --- Root Visual Properties
+    // -------------------------------------------------------------------------
+    height: root.componentHeight
+    // width: 400 // Keep commented if it should be flexible or set by parent
+    color: root.componentBackgroundColor
+    radius: root.componentRadius
 
     layer.enabled: true
-    layer.effect: Shadow {}
+    layer.effect: Shadow {} // Add specific shadow properties if needed
 
+    // -------------------------------------------------------------------------
+    // --- Visual Child Elements
+    // -------------------------------------------------------------------------
     Text {
-        id: icon
-        width: 10
-        text: ""
-        font.family: ThemeManager.selectedTheme.typography.iconFont
+        id: iconElement // Renamed id for clarity
+        width: root.iconElementWidth
+        text: root.iconCharacter
+        font.family: root.iconFontFamily
         font.bold: true
-        // font.pixelSize: ThemeManager.selectedTheme.typography.heading2Size
-        color: Kirigami.Theme.textColor
+        font.pixelSize: root.headingFontSize
+        color: root.baseTextColor
         anchors {
             top: parent.top
             right: parent.right
-            // verticalCenter: parent.verticalCenter
-            // horizontalCenter: parent.horizontalCenter
-            topMargin: 17
-            rightMargin: 20
-            leftMargin: 20
+            topMargin: root.iconTopMargin
+            rightMargin: root.iconRightMargin
+            // leftMargin: root.iconLeftMargin // Kept commented
         }
     }
 
     Text {
-        id: title
-        text: "وضع الاداء"
-        // text: "english"
-        font.pixelSize: ThemeManager.selectedTheme.typography.heading2Size
+        id: titleElement
+        text: root.mainTitleText
+        font.pixelSize: root.headingFontSize
         font.bold: true
-        color: Kirigami.Theme.textColor
+        color: root.baseTextColor
         horizontalAlignment: Text.AlignRight
         anchors {
             top: parent.top
             left: parent.left
-            right: icon.left
-            topMargin: 5
-            rightMargin: 10
-            leftMargin: 20
+            right: iconElement.left // Anchor to the icon element
+            topMargin: root.titleTopMargin
+            rightMargin: root.titleIconSpacing // Space between title and icon
+            leftMargin: root.titleLeftMargin
         }
     }
 
     Row {
         id: widgetsRow
-        // width: parent.width
+        // width: parent.width // Keep commented if width should be determined by content
         anchors {
-            top: title.bottom
+            top: titleElement.bottom
             verticalCenter: parent.verticalCenter
             horizontalCenter: parent.horizontalCenter
-            topMargin: 5
+            topMargin: root.buttonsRowTopMargin
         }
-
-        spacing: 10
+        spacing: root.buttonsRowSpacing
 
         MButton {
-            id: highPerformance
-            width: root.buttonWidth
-            height: root.buttonHeight
-            text: "High"
+            id: highPerformanceButton
+            width: root.defaultButtonWidth
+            height: root.defaultButtonHeight
+            text: root.highPerformanceButtonLabel
             onClicked: {
-                root.selectedProfileText = "performance";
+                root.profileToSetOnClick = root.highPerformanceProfileCmd;
                 profileProcess.running = true;
             }
 
-            normalBackground: {
-                if (root.selectedProfile === 2) {
-                    return root.highlightColor;
-                }
-                return Kirigami.Theme.backgroundColor;
-            }
-
-            normalForeground: {
-                if (root.selectedProfile === 2) {
-                    return root.textHighlightColor;
-                }
-                return root.textColor;
-            }
+            // Dynamic properties for styling based on selectedProfile
+            normalBackground: (root.selectedProfile === root.profileIndexPerformance) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+            normalForeground: (root.selectedProfile === root.profileIndexPerformance) ? root.highlightedStateTextColor : root.baseTextColor
         }
 
         MButton {
-            id: balance
-            width: root.buttonWidth
-            height: root.buttonHeight
-            text: "Balanced"
+            id: balancedButton
+            width: root.defaultButtonWidth
+            height: root.defaultButtonHeight
+            text: root.balancedButtonLabel
             onClicked: {
-                root.selectedProfileText = "balanced";
+                root.profileToSetOnClick = root.balancedProfileCmd;
                 profileProcess.running = true;
             }
 
-            normalBackground: {
-                if (root.selectedProfile === 1) {
-                    return root.highlightColor;
-                }
-                return Kirigami.Theme.backgroundColor;
-            }
-
-            normalForeground: {
-                if (root.selectedProfile === 1) {
-                    return root.textHighlightColor;
-                }
-                return root.textColor;
-            }
+            normalBackground: (root.selectedProfile === root.profileIndexBalanced) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+            normalForeground: (root.selectedProfile === root.profileIndexBalanced) ? root.highlightedStateTextColor : root.baseTextColor
         }
 
         MButton {
-            id: batterySaving
-            width: root.buttonWidth
-            height: root.buttonHeight
-            text: "Low"
+            id: batterySavingButton
+            width: root.defaultButtonWidth
+            height: root.defaultButtonHeight
+            text: root.lowButtonLabel
             onClicked: {
-                root.selectedProfileText = "power-saver";
-                profileProcess.running = true;
+                root.profileToSetOnClick = root.powerSaverProfileCmd;
+                profileProcess.running = true; // Or profileProcess.start()
             }
 
-            normalBackground: {
-                if (root.selectedProfile === 0) {
-                    return root.highlightColor;
-                }
-                return Kirigami.Theme.backgroundColor;
-            }
-
-            normalForeground: {
-                if (root.selectedProfile === 0) {
-                    return root.textHighlightColor;
-                }
-                return root.textColor;
-            }
+            normalBackground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+            normalForeground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.highlightedStateTextColor : root.baseTextColor
         }
     }
 
+    // -------------------------------------------------------------------------
+    // --- Non-Visual Child Elements (Logic, Processes, etc.)
+    // -------------------------------------------------------------------------
     Process {
         id: profileProcess
         running: false
-        command: ["powerprofilesctl", "set", root.selectedProfileText]
+        command: ["powerprofilesctl", "set", root.profileToSetOnClick]
+
+        property string stdErrString: ""
+        property string stdOutString: ""
+
         stderr: SplitParser {
             onRead: data => {
-                console.error(`Error changing power profile: ${data}`);
+                profileProcess.stdErrString += data;
             }
         }
-        // stdout: SplitParser {
-        //     onRead: data => {
-        //         console.warn(`line read: ${data}`);
-        //     }
-        // }
+        stdout: SplitParser {
+            onRead: data => {
+                profileProcess.stdOutString += data;
+            }
+        }
+
+        onRunningChanged: {
+            if (running) {
+                stdErrString = "";
+                stdOutString = "";
+            }
+        }
     }
+
+    // TODO: -> improve this and see where to use it
+    // Connections {
+    //     target: PowerProfiles
+    //     function onProfileChanged() {
+    //         // console.log("PowerProfiles.profile changed externally to:", PowerProfiles.profile);
+    //         // root.selectedProfile already reflects this due to direct binding
+    //     }
+    // }
 }
