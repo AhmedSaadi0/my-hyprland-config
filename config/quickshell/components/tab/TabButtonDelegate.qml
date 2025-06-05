@@ -25,12 +25,12 @@ Item {
             return mouseArea.containsMouse ? root.hoverColor : "transparent";
         }
 
-        layer {
-            enabled: true
-            effect: Shadow {
-                alpha: 0.3
-            }
-        }
+        // layer {
+        //     enabled: true
+        //     effect: Shadow {
+        //         alpha: 0.3
+        //     }
+        // }
 
         Behavior on color {
             ColorAnimation {
@@ -64,7 +64,7 @@ Item {
 
         onClicked: {
             listView.currentIndex = index;
-            ensureVisible();
+            // ensureVisible();
             onClick?.();
         }
     }

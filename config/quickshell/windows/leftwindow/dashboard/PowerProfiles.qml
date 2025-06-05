@@ -73,8 +73,8 @@ Rectangle {
     color: root.componentBackgroundColor
     radius: root.componentRadius
 
-    layer.enabled: true
-    layer.effect: Shadow {} // Add specific shadow properties if needed
+    // layer.enabled: true
+    // layer.effect: Shadow {} // Add specific shadow properties if needed
 
     // -------------------------------------------------------------------------
     // --- Visual Child Elements

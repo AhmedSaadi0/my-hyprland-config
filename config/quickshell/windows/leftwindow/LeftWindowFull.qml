@@ -13,13 +13,13 @@ PanelWindow {
 
     color: "transparent"
 
-    // property var showAnimationType: Easing.OutExpo
-    // property var hideAnimationType: Easing.InExpo
-    property var showAnimationType: Easing.InOutBounce
-    property var hideAnimationType: Easing.InOutBounce
+    property var showAnimationType: Easing.OutExpo
+    property var hideAnimationType: Easing.InExpo
+    // property var showAnimationType: Easing.OutQuint
+    // property var hideAnimationType: Easing.InQuint
 
-    property int showAnimationDuration: 100
-    property int hideAnimationDuration: 100
+    property int showAnimationDuration: 300
+    property int hideAnimationDuration: 300
 
     anchors {
         top: true
@@ -34,16 +34,16 @@ PanelWindow {
         color: palette.window
         // radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
-        layer.enabled: true
-        layer.effect: Shadow {
-            // radius: 9
-            radius: 9
-            color: palette.shadow.alpha(0.5)
-            spread: 0
-            samples: 15
-            verticalOffset: 2
-            horizontalOffset: 2
-        }
+        // layer.enabled: true
+        // layer.effect: Shadow {
+        //     // radius: 9
+        //     radius: 9
+        //     color: palette.shadow.alpha(0.5)
+        //     spread: 0
+        //     samples: 15
+        //     verticalOffset: 2
+        //     horizontalOffset: 2
+        // }
 
         // RowLayout {
         //     anchors.fill: parent
@@ -64,10 +64,10 @@ PanelWindow {
                 left: contentContainer.left
                 right: contentContainer.right
                 bottom: contentContainer.bottom
-                leftMargin: 15
-                rightMargin: 15
-                bottomMargin: 15
-                topMargin: 8
+                leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+                rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+                bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+                topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2
             }
         }
     }

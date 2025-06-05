@@ -5,7 +5,7 @@ import QtQuick
 // import org.kde.kirigami as Kirigami
 
 import "../themes"
-import "./topbar"
+import "./widgets"
 import "../components"
 
 PanelWindow {
@@ -27,9 +27,9 @@ PanelWindow {
         height: ThemeManager.selectedTheme.dimensions.barHeight
         width: parent.width
         color: palette.window
-        layer.enabled: true
         anchors.top: parent.top
 
+        layer.enabled: true
         layer.effect: Shadow {
             color: palette.shadow.alpha(0.8)
             radius: 8

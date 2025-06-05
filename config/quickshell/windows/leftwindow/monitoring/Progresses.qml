@@ -1,69 +1,119 @@
 // windows/leftwindow/monitoring/Progresses.qml
-
+// import QtQuick.Effects
 import QtQuick
+import QtQuick.Layouts
+import org.kde.kirigami as Kirigami
 
-import "../../../components/monitors"
+import "../../../components/monitors" // For Tempreture, Battery, Ram, Cpu
+// import "../../../components" // For Tempreture, Battery, Ram, Cpu
+import "../../../themes"
 
-Row {
+Rectangle {
     id: root
-    width: parent.width
-    height: 100
-    spacing: 8
-    // color: "#FEEBEA"
+    height: 150
+    width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2)
+    radius: ThemeManager.selectedTheme.dimensions.elementRadius
+    color: Kirigami.Theme.backgroundColor.lighter(1.4)
 
-    property int progressWidth: 70
-    property int progressHeight: 70
-    property int thickness: 8
-    property int iconFontSize: 28
+    property int monitorWidth: 65
+    property int monitorHeight: 65
+    property int monitorItemThickness: root.thickness
+    property int monitorItemIconFontSize: root.iconFontSize
 
-    Tempreture {
-        id: temp
-        width: root.progressWidth
-        height: root.progressHeight
-        thickness: root.thickness
-        iconFontSize: root.iconFontSize
-        // anchors {
-        //     top: parent.top
-        //     left: parent.left
-        // }
+    property int thickness: 7
+    property int iconFontSize: 24
+
+    // layer.enabled: true
+    // layer.smooth: true
+    // layer.effect: Shadow {}
+
+    // ShaderEffect {
+    //     width: 200
+    //     height: 100
+    //     // fragmentShader: "
+    //     // varying highp vec2 qt_TexCoord0;
+    //     // void main() {
+    //     //     // Simple shadow simulation (darken background)
+    //     //     gl_FragColor = vec4(0, 0, 0, 0.3);
+    //     // }"
+    // }
+
+    // MultiEffect {
+    //     source: root
+    //     anchors.fill: root
+    //     autoPaddingEnabled: false
+    //     paddingRect: Qt.rect(0, 10 * (-1), 100, 100)
+    //     shadowBlur: 1.0
+    //     shadowColor: 'black'
+    //     shadowEnabled: true
+    //     shadowVerticalOffset: 10
+    // }
+
+    // Define the components to be loaded by MonitorWidget
+    Component {
+        id: tempComponent
+        Tempreture {}
+    }
+    Component {
+        id: batComponent
+        Battery {}
+    }
+    Component {
+        id: ramComponent
+        Ram {}
+    }
+    Component {
+        id: cpuComponent
+        Cpu {}
     }
 
-    Battery {
-        id: bat
-        width: root.progressWidth
-        height: root.progressHeight
-        thickness: root.thickness
-        iconFontSize: root.iconFontSize
-        // anchors {
-        // anchors {
-        //     top: parent.top
-        //     left: temp.right
-        // }
-    }
+    RowLayout {
+        id: mainLayout
+        anchors {
+            fill: parent
+            margins: ThemeManager.selectedTheme.dimensions.smallPadding || 5 // Padding inside the root rectangle
+        }
+        spacing: ThemeManager.selectedTheme.dimensions.smallSpacing || 5         // Spacing between each MonitorWidget
 
-    Ram {
-        id: ram
-        width: root.progressWidth
-        height: root.progressHeight
-        thickness: root.thickness
-        iconFontSize: root.iconFontSize
-        // anchors {
-        // anchors {
-        //     top: parent.top
-        //     left: bat.right
-        // }
-    }
+        MonitorWidget {
+            Layout.fillWidth: true // Make each MonitorWidget take equal share of width
+            title: "Temp" // Shorter title if space is tight
+            // valueText: "100%" // Default is "100%", can be overridden or updated dynamically
+            monitorComponent: tempComponent
+            monitorItemWidth: root.monitorWidth
+            monitorItemHeight: root.monitorHeight
+            monitorItemThickness: root.monitorItemThickness
+            monitorItemIconFontSize: root.monitorItemIconFontSize
+        }
 
-    Cpu {
-        id: cpu
-        width: root.progressWidth
-        height: root.progressHeight
-        thickness: root.thickness
-        iconFontSize: root.iconFontSize
-        // anchors {
-        // anchors {
-        //     top: parent.top
-        //     left: ram.right
-        // }
+        MonitorWidget {
+            Layout.fillWidth: true
+            title: "Battery"
+            monitorComponent: batComponent
+            monitorItemWidth: root.monitorWidth
+            monitorItemHeight: root.monitorHeight
+            monitorItemThickness: root.monitorItemThickness
+            monitorItemIconFontSize: root.monitorItemIconFontSize
+        }
+
+        MonitorWidget {
+            Layout.fillWidth: true
+            title: "RAM"
+            monitorComponent: ramComponent
+            monitorItemWidth: root.monitorWidth
+            monitorItemHeight: root.monitorHeight
+            monitorItemThickness: root.monitorItemThickness
+            monitorItemIconFontSize: root.monitorItemIconFontSize
+        }
+
+        MonitorWidget {
+            Layout.fillWidth: true
+            title: "CPU"
+            monitorComponent: cpuComponent
+            monitorItemWidth: root.monitorWidth
+            monitorItemHeight: root.monitorHeight
+            monitorItemThickness: root.monitorItemThickness
+            monitorItemIconFontSize: root.monitorItemIconFontSize
+        }
     }
 }

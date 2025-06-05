@@ -7,7 +7,7 @@ import QtQuick.Layouts
 
 import "../../themes"
 import "../../components/tab"
-import "../../components"
+// import "../../components"
 
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
@@ -167,8 +167,8 @@ ColumnLayout {
         model: tabModel
         barWidth: parent.width
         barHeight: 35
-        layer.enabled: true
-        layer.effect: Shadow {} // Add specific shadow properties if needed
+        // layer.enabled: true
+        // layer.effect: Shadow {} // Add specific shadow properties if needed
 
         // onCurrentIndexChanged: {
         //     if (root.currentViewIndex !== currentIndex) {

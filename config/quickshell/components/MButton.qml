@@ -1,3 +1,5 @@
+// components/MButton.qml
+
 import QtQuick
 import QtQuick.Controls
 import org.kde.kirigami as Kirigami
@@ -20,10 +22,10 @@ Button {
     property var hoveredForeground: Kirigami.Theme.highlightColor
     property var normalForeground: Kirigami.Theme.textColor
 
-    layer.enabled: true
-    layer.effect: Shadow {
-        alpha: 0.3
-    }
+    // layer.enabled: true
+    // layer.effect: Shadow {
+    //     alpha: 0.3
+    // }
 
     contentItem: Text {
         id: buttonTextContent

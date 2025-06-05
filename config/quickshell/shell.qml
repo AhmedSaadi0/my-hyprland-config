@@ -1,7 +1,7 @@
 import Quickshell
 import QtQuick.Window
 
-import "./widgets"
+import "./topbar"
 import "./windows/leftwindow"
 
 ShellRoot {

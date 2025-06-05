@@ -37,16 +37,16 @@ PanelWindow {
         color: palette.window
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
-        layer.enabled: true
-        layer.effect: Shadow {
-            // radius: 9
-            radius: 9
-            color: palette.shadow.alpha(0.5)
-            spread: 0
-            samples: 15
-            verticalOffset: 2
-            horizontalOffset: 2
-        }
+        // layer.enabled: true
+        // layer.effect: Shadow {
+        //     // radius: 9
+        //     radius: 9
+        //     color: palette.shadow.alpha(0.5)
+        //     spread: 0
+        //     samples: 15
+        //     verticalOffset: 2
+        //     horizontalOffset: 2
+        // }
 
         border {
             color: palette.accent

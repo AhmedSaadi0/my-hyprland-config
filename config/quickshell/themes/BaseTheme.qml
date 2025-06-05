@@ -38,6 +38,7 @@ PersistentProperties {
 
         property int menuHeight: 900
         property int menuWidth: 380
+        property int menuWidgetsMargin: 15
 
         // Radius for specific elements (can reference baseRadius)
         property int elementRadius: baseRadius // Renamed from radius for clarity

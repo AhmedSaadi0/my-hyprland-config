@@ -123,10 +123,10 @@ Rectangle {
             horizontalCenter: profileDetail.horizontalCenter
             topMargin: -(profileImage.width / 2)
         }
-        layer.enabled: true
-        layer.effect: Shadow {
-            alpha: 0.4
-        }
+        // layer.enabled: true
+        // layer.effect: Shadow {
+        //     alpha: 0.4
+        // }
     }
 
     Text {
@@ -139,11 +139,11 @@ Rectangle {
             top: profileImage.bottom
             horizontalCenter: profileImage.horizontalCenter
         }
-        layer.enabled: true
-        layer.effect: Shadow {
-            alpha: 0.5
-            // radius: 3
-        }
+        // layer.enabled: true
+        // layer.effect: Shadow {
+        //     alpha: 0.5
+        //     // radius: 3
+        // }
     }
 
     Text {
@@ -153,9 +153,9 @@ Rectangle {
             top: titleText.bottom
             horizontalCenter: profileImage.horizontalCenter
         }
-        layer.enabled: true
-        layer.effect: Shadow {
-            alpha: 0.5
-        }
+        // layer.enabled: true
+        // layer.effect: Shadow {
+        //     alpha: 0.5
+        // }
     }
 }
