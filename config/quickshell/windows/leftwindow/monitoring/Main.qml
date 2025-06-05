@@ -43,7 +43,7 @@ Column {
         {
             title: "الذاكرة",
             role: "memoryRole",
-            width: 100,
+            // width: 150,
             alignment: Text.AlignLeft
         },
         {
@@ -63,10 +63,10 @@ Column {
         model: myDataModel
         columns: myColumns
 
-        rowHeight: 20
-        headerHeight: 25
+        rowHeight: 25
+        headerHeight: 30
 
-        tableBackgroundColor: Kirigami.Theme.activeBackgroundColor
+        tableBackgroundColor: palette.accent
         // tableBorderColor: "navy"
         tableBorderWidth: 0
         // tableRadius: Kirigami.Units.smallRadius // Or a fixed value like 8
@@ -75,7 +75,7 @@ Column {
         showHorizontalGridLines: false
 
         // Header
-        headerBackgroundColor: "transparent"
+        headerBackgroundColor: palette.mid
         headerTextColor: Kirigami.Theme.textColor
         headerFont: Qt.font({
             family: "Arial",
@@ -86,7 +86,7 @@ Column {
         // headerBorderWidth: 0
 
         // Cells
-        cellBackgroundColor: "transparent"
+        cellBackgroundColor: Kirigami.Theme.backgroundColor.alpha(0.8)
         alternatingCellBackgroundColor: "transparent"
         cellTextColor: Kirigami.Theme.textColor
         cellFont: Qt.font({
@@ -97,6 +97,11 @@ Column {
         // cellBorderWidth: 0
 
         // General
-        cellPadding: 8
+        cellPadding: 15
+
+        // --- Control Spacing ---
+        headerCellSpacing: 0   // <<< SET THIS TO 0 FOR CONNECTED HEADERS
+        cellColumnSpacing: 0   // Optional: for data cells
+        cellRowSpacing: 1      // Optional: for data rows
     }
 }

@@ -3,7 +3,8 @@ import Qt5Compat.GraphicalEffects
 // import org.kde.kirigami as Kirigami
 
 import "../../themes"
-import "../../components"
+
+// import "../../components"
 
 Rectangle {
     id: root
