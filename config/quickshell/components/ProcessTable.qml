@@ -49,26 +49,26 @@ SimpleTable {
 
             for (var i = 0; i < Math.min(processes.length, 6); i++) {
                 dataModel.append({
-                    memoryRole: processes[i].name,
-                    percentageRole: processes[i].value.toFixed(2)
+                    textRole: processes[i].name,
+                    valueRole: processes[i].value.toFixed(2)
                 });
             }
 
             if (dataModel.count === 0) {
                 dataModel.append({
-                    memoryRole: "لا عمليات متاحة",
-                    percentageRole: "0.00"
+                    textRole: "لا عمليات متاحة",
+                    valueRole: "0.00"
                 });
             }
         } catch (e) {
             console.error("خطأ في تحليل JSON من سكربت المعالج:", e.message);
             console.error("البيانات المستلمة التي سببت الخطأ:", data);
             // Display an error message in the table if parsing fails
-            if (dataModel.count === 0 || dataModel.get(0).memoryRole !== "خطأ في التحليل") {
+            if (dataModel.count === 0 || dataModel.get(0).textRole !== "خطأ في التحليل") {
                 dataModel.clear();
                 dataModel.append({
-                    memoryRole: "خطأ في التحليل",
-                    percentageRole: "N/A"
+                    textRole: "خطأ في التحليل",
+                    valueRole: "N/A"
                 });
             }
         }
@@ -77,16 +77,16 @@ SimpleTable {
     property var tableColumns: [
         {
             title: root.title,
-            role: "memoryRole",
+            role: "textRole",
             alignment: Text.AlignLeft,
             width: 140,
             leftMargin: 12
         },
         {
             title: root.value,
-            role: "percentageRole",
+            role: "valueRole",
             alignment: Text.AlignRight,
-            width: 50,
+            width: 55,
             rightMargin: 10
         }
     ]
@@ -96,8 +96,8 @@ SimpleTable {
         id: dataModel
         // Initial placeholder data while waiting for the script to run
         ListElement {
-            memoryRole: "جاري تحميل البيانات..."
-            percentageRole: "0.00"
+            textRole: "جاري تحميل البيانات..."
+            valueRole: "0.00"
         }
     }
 
@@ -118,11 +118,11 @@ SimpleTable {
             onRead: data => {
                 console.error("خطأ سكربت المعالج:", data);
                 // Display a script error message in the table
-                if (dataModel.count === 0 || dataModel.get(0).memoryRole !== "خطأ في السكربت") {
+                if (dataModel.count === 0 || dataModel.get(0).textRole !== "خطأ في السكربت") {
                     dataModel.clear();
                     dataModel.append({
-                        memoryRole: "خطأ في السكربت",
-                        percentageRole: "N/A"
+                        textRole: "خطأ في السكربت",
+                        valueRole: "N/A"
                     });
                 }
             }

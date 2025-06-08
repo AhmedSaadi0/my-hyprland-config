@@ -25,7 +25,7 @@ Rectangle {
     property color headerBackgroundColor: Qt.tint(Kirigami.Theme.backgroundColor, 1.05)
     property color headerTextColor: Kirigami.Theme.textColor
     property font headerFont: Qt.font({
-        pixelSize: ThemeManager.selectedTheme.heading3Size,
+        pixelSize: ThemeManager.selectedTheme.typography.heading3Size,
         bold: true
     })
 
@@ -37,7 +37,7 @@ Rectangle {
     // --- DEFAULT Properties for Cells/Rows Text ---
     property color cellTextColor: Kirigami.Theme.textColor
     property font cellFont: Qt.font({
-        pixelSize: ThemeManager.selectedTheme.medium
+        pixelSize: ThemeManager.selectedTheme.typography.medium
     })
 
     property var cellElideMode: Text.ElideRight

@@ -50,4 +50,24 @@ Rectangle {
             topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         }
     }
+
+    TempTable {
+        id: tempTable
+
+        anchors {
+            top: ramTable.bottom
+            right: cpuTable.right
+            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        }
+    }
+
+    BatteryTable {
+        id: batteryTable
+
+        anchors {
+            top: ramTable.bottom
+            right: progresses.right
+            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        }
+    }
 }
