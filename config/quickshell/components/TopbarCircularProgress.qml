@@ -1,8 +1,9 @@
 import QtQuick
 import Quickshell.Io
-import "../themes"
 import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
+
+import "../themes"
 
 CircularProgress {
     id: root

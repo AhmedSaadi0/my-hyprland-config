@@ -65,6 +65,9 @@ PersistentProperties {
         property int heading3Size: 16
         property int bodyFontSize: baseFontSize
 
+        property int medium: 14
+        property int small: 12
+
         // Font weights
         // property int bodyFontWeight: Font.Normal
         // property int headingFontWeight: Font.Bold

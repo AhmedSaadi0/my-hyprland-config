@@ -2,106 +2,52 @@
 
 import QtQuick
 
-import org.kde.kirigami as Kirigami // Still useful for Theme defaults and Units
 import "../../../themes"
 import "../../../components"
 
-Column {
+Rectangle {
     id: monotoringMenu
     objectName: "monitoring"
-    spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+    width: ThemeManager.selectedTheme.dimensions.menuWidth
+    color: "transparent"
+    // spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsSpacing
 
+    // This component is from the original code, keeping it as is.
     Progresses {
         id: progresses
-    }
-
-    ListModel {
-        id: myDataModel
-        ListElement {
-            memoryRole: "Alice Wonderland Smith"
-            percentageRole: "10"
-        }
-        ListElement {
-            memoryRole: "Alice FIIII"
-            percentageRole: "99.99"
-        }
-        ListElement {
-            memoryRole: "Alice FIIII"
-            percentageRole: "99.99"
-        }
-        ListElement {
-            memoryRole: "Alice FIIII"
-            percentageRole: "99.99"
-        }
-        ListElement {
-            memoryRole: "Alice FIIII"
-            percentageRole: "99.99"
+        anchors {
+            top: parent.top
+            // left: parent.left
+            // right: parent.right
+            // horizontalCenter: parent.horizontalCenter
+            leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+            rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         }
     }
 
-    property var myColumns: [
-        {
-            title: "الذاكرة",
-            role: "memoryRole",
-            // width: 150,
-            alignment: Text.AlignLeft
-        },
-        {
-            title: "%",
-            role: "percentageRole",
-            width: 50,
-            alignment: Text.AlignRight
+    ProcessTable {
+        id: cpuTable
+        running: true
+        command: ["python", ".config/quickshell/scripts/python/top_cpu_usage.py"]
+        title: "Cpu Usage"
+        anchors {
+            top: progresses.bottom
+            left: progresses.left
+            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         }
-    ]
+    }
 
-    SimpleTable {
-        id: myMonitoringTable
+    ProcessTable {
+        id: ramTable
+        interval: 1000 * 5
+        running: true
+        command: ["python", ".config/quickshell/scripts/python/top_ram_usage.py"]
+        title: "Mem Usage"
 
-        width: 160
-        height: 220
-
-        model: myDataModel
-        columns: myColumns
-
-        rowHeight: 25
-        headerHeight: 30
-
-        tableBackgroundColor: palette.accent
-        // tableBorderColor: "navy"
-        tableBorderWidth: 0
-        // tableRadius: Kirigami.Units.smallRadius // Or a fixed value like 8
-
-        showVerticalGridLines: false
-        showHorizontalGridLines: false
-
-        // Header
-        headerBackgroundColor: palette.mid
-        headerTextColor: Kirigami.Theme.textColor
-        headerFont: Qt.font({
-            family: "Arial",
-            pixelSize: 14,
-            bold: true
-        })
-        // headerBorderColor: "transparent"
-        // headerBorderWidth: 0
-
-        // Cells
-        cellBackgroundColor: Kirigami.Theme.backgroundColor.alpha(0.8)
-        alternatingCellBackgroundColor: "transparent"
-        cellTextColor: Kirigami.Theme.textColor
-        cellFont: Qt.font({
-            family: "Verdana",
-            pixelSize: 12
-        })
-        // cellBorderColor: "transparent"
-        // cellBorderWidth: 0
-
-        // General
-        cellPadding: 15
-
-        // --- Control Spacing ---
-        headerCellSpacing: 0   // <<< SET THIS TO 0 FOR CONNECTED HEADERS
-        cellColumnSpacing: 0   // Optional: for data cells
-        cellRowSpacing: 1      // Optional: for data rows
+        anchors {
+            top: progresses.bottom
+            right: progresses.right
+            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        }
     }
 }

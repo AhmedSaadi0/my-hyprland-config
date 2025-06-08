@@ -67,7 +67,7 @@ PanelWindow {
                 leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
                 rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
                 bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-                topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2
+                topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 1.6
             }
         }
     }

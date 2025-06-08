@@ -15,7 +15,7 @@ import "./monitoring" as Monitoring
 ColumnLayout {
     id: root
     // anchors.fill: parent
-    spacing: 10
+    spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
     readonly property int dashboardMenuIndex: 0
     readonly property int notificationMenuIndex: 1

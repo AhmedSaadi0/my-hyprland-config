@@ -17,29 +17,36 @@ Rectangle {
 
     // --- Properties for Table Container ---
     property color tableBackgroundColor: Kirigami.Theme.backgroundColor
-    property color tableBorderColor: Kirigami.Theme.frameColor
+    property color tableBorderColor: Kirigami.Theme.positiveBackgroundColor
     property int tableBorderWidth: 1
     property real tableRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     // --- Properties for Header ---
     property color headerBackgroundColor: Qt.tint(Kirigami.Theme.backgroundColor, 1.05)
     property color headerTextColor: Kirigami.Theme.textColor
-    property font headerFont: Kirigami.Theme.font(Kirigami.Theme.FontWeight.Bold, Kirigami.Theme.FontSize.Small)
-    property color headerBorderColor: Kirigami.Theme.frameColor
+    property font headerFont: Qt.font({
+        pixelSize: ThemeManager.selectedTheme.heading3Size,
+        bold: true
+    })
+
+    property color headerBorderColor: Kirigami.Theme.positiveBackgroundColor
     property int headerBorderWidth: 1
     property int headerHeight: Kirigami.Units.gridUnit * 2.5
     property int headerCellSpacing: 0
 
     // --- DEFAULT Properties for Cells/Rows Text ---
     property color cellTextColor: Kirigami.Theme.textColor
-    property font cellFont: Kirigami.Theme.font(Kirigami.Theme.FontWeight.Normal, Kirigami.Theme.FontSize.Small)
+    property font cellFont: Qt.font({
+        pixelSize: ThemeManager.selectedTheme.medium
+    })
+
     property var cellElideMode: Text.ElideRight
     property var cellWrapMode: Text.NoWrap
 
     // --- General Cell Properties ---
     property color cellBackgroundColor: Kirigami.Theme.backgroundColor
     property color alternatingCellBackgroundColor: Kirigami.Theme.alternateBackgroundColor
-    property color cellBorderColor: Kirigami.Theme.frameColor
+    property color cellBorderColor: Kirigami.Theme.positiveBackgroundColor
     property int cellBorderWidth: 1
     property int rowHeight: Kirigami.Units.gridUnit * 2
     property int cellColumnSpacing: 0
@@ -47,7 +54,8 @@ Rectangle {
 
     // --- General Table Properties ---
     property var columns: []
-    property int cellPadding: Kirigami.Units.smallSpacing
+    property int cellLeftMargin: Kirigami.Units.smallSpacing
+    property int cellRightMargin: Kirigami.Units.smallSpacing
     property bool showVerticalGridLines: true
     property bool showHorizontalGridLines: true
 
@@ -72,7 +80,7 @@ Rectangle {
             id: headerRowLayout
             // width: parent.width // This parent is now tableContentLayout
             Layout.fillWidth: true // Ensure it takes the width of tableContentLayout
-            height: tableRoot.headerHeight // Fixed height for header
+            height: tableRoot.headerHeight
             spacing: tableRoot.headerCellSpacing
 
             Repeater { /* ... header delegate ... */
@@ -105,9 +113,9 @@ Rectangle {
                         verticalAlignment: Text.AlignVCenter
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.left
-                        anchors.leftMargin: tableRoot.cellPadding
+                        anchors.leftMargin: columnDef.leftMargin !== undefined ? columnDef.leftMargin : tableRoot.cellLeftMargin
                         anchors.right: parent.right
-                        anchors.rightMargin: tableRoot.cellPadding
+                        anchors.rightMargin: columnDef.rightMargin !== undefined ? columnDef.rightMargin : tableRoot.cellRightMargin
                     }
                 }
             }
@@ -140,6 +148,14 @@ Rectangle {
                     border.width: (tableRoot.cellBorderWidth > 0 && (tableRoot.showVerticalGridLines || tableRoot.showHorizontalGridLines)) ? tableRoot.cellBorderWidth : 0
                     clip: true
 
+                    // For debugging
+                    // color: {
+                    //     const randomInt = Math.floor(Math.random() * 16777216);
+                    //     // Convert the integer to a hexadecimal string and pad with zeros if needed
+                    //     const hexColor = "#" + randomInt.toString(16).padStart(6, "0");
+                    //     return hexColor;
+                    // }
+
                     Text {
                         text: rowData && columnDef ? rowData[columnDef.role] : ""
                         font: columnDef.cellFont !== undefined ? columnDef.cellFont : tableRoot.cellFont
@@ -149,10 +165,11 @@ Rectangle {
                         horizontalAlignment: columnDef.alignment !== undefined ? columnDef.alignment : Text.AlignLeft
                         verticalAlignment: columnDef.cellVerticalAlignment !== undefined ? columnDef.cellVerticalAlignment : Text.AlignVCenter
                         anchors.verticalCenter: parent.verticalCenter
+
                         anchors.left: parent.left
-                        anchors.leftMargin: tableRoot.cellPadding
+                        anchors.leftMargin: columnDef.leftMargin !== undefined ? columnDef.leftMargin : tableRoot.cellLeftMargin
                         anchors.right: parent.right
-                        anchors.rightMargin: tableRoot.cellPadding
+                        anchors.rightMargin: columnDef.rightMargin !== undefined ? columnDef.rightMargin : tableRoot.cellRightMargin
                     }
                 }
             }

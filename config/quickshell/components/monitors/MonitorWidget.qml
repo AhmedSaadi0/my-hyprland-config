@@ -27,13 +27,13 @@ ColumnLayout {
 
     spacing: ThemeManager.selectedTheme.dimensions.smallSpacing || 4 // Spacing between title, value, and monitor
 
-    Layout.alignment: Qt.AlignHCenter // Center this ColumnLayout horizontally within its RowLayout cell
+    Layout.alignment: Qt.AlignHCenter
 
     Text {
         id: titleLabel
         text: monitorUnitRoot.title
         font.bold: true
-        font.pixelSize: ThemeManager.selectedTheme.fontSizes.small || 12
+        font.pixelSize: ThemeManager.selectedTheme.typography.heading3Size
         color: Kirigami.Theme.textColor
         Layout.alignment: Qt.AlignHCenter // Center text horizontally
         elide: Text.ElideRight
@@ -44,7 +44,7 @@ ColumnLayout {
     Text {
         id: valueLabel
         text: monitorUnitRoot.valueText
-        font.pixelSize: ThemeManager.selectedTheme.fontSizes.medium || 14
+        font.pixelSize: ThemeManager.selectedTheme.typography.medium
         color: Kirigami.Theme.textColor
         Layout.alignment: Qt.AlignHCenter // Center text horizontally
         horizontalAlignment: Text.AlignHCenter
@@ -81,8 +81,6 @@ ColumnLayout {
             if ("iconFontSize" in item) {
                 item.iconFontSize = monitorUnitRoot.monitorItemIconFontSize;
             }
-            // If you want to connect to a signal from 'item' here to update 'valueLabel.text',
-            // do it here. See commented out section in valueLabel.
         }
     }
 }
