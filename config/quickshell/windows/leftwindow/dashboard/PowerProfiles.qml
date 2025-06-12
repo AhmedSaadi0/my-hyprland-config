@@ -8,6 +8,7 @@ import "../../../components"
 
 Rectangle {
     id: root
+    width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2)
 
     // -------------------------------------------------------------------------
     // --- Configuration Properties (Constants & Theme Aliases)
@@ -69,7 +70,6 @@ Rectangle {
     // --- Root Visual Properties
     // -------------------------------------------------------------------------
     height: root.componentHeight
-    // width: 400 // Keep commented if it should be flexible or set by parent
     color: root.componentBackgroundColor
     radius: root.componentRadius
 

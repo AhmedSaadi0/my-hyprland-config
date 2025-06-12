@@ -10,8 +10,10 @@ import "../components"
 
 PanelWindow {
     id: topBar
-    height: ThemeManager.selectedTheme.dimensions.barHeight
+    implicitHeight: ThemeManager.selectedTheme.dimensions.barHeight
     color: "transparent"
+
+    exclusionMode: ExclusionMode.Auto
 
     anchors {
         top: true

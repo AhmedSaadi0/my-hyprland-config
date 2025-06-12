@@ -1,6 +1,5 @@
 pragma Singleton
 
-import Quickshell
 import QtQuick
 import org.kde.kirigami as Kirigami
 

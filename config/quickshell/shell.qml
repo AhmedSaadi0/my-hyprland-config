@@ -11,13 +11,37 @@ ShellRoot {
         id: topBarWindow
     }
 
-    LeftWindow {
-        id: leftPanel
-    }
+    // RightBar {
+    //     id: rightBarWindow
+    // }
+    //
+    // BottomBar {
+    //     id: bottomBarWindow
+    // }
+
+    // LeftWindow {
+    //     id: leftPanel
+    // }
 
     LeftWindowFull {
         id: leftPanelFull
         visible: false
+    }
+
+    TopLeftCorner {
+        id: topLeftCorner
+    }
+
+    TopRightCorner {
+        id: topRightCorners
+    }
+
+    BottomRightCorner {
+        id: bottomRightCorners
+    }
+
+    BottomLeftCorner {
+        id: bottomLeftCorners
     }
 
     Connections {

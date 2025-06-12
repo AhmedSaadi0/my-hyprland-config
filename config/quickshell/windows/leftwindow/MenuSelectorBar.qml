@@ -182,6 +182,7 @@ ColumnLayout {
 
     StackView {
         id: myStackView
+        // width: ThemeManager.selectedTheme.dimensions.menuWidth
         width: root.width
         height: root.height - mainTabBar.height - root.spacing
 

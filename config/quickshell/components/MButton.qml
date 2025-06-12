@@ -22,6 +22,11 @@ Button {
     property var hoveredForeground: Kirigami.Theme.highlightColor
     property var normalForeground: Kirigami.Theme.textColor
 
+    property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property int topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+
     // layer.enabled: true
     // layer.effect: Shadow {
     //     alpha: 0.3
@@ -51,7 +56,12 @@ Button {
     }
 
     background: Rectangle {
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius
+        // radius: ThemeManager.selectedTheme.dimensions.elementRadius
+
+        topLeftRadius: myCustomButton.topLeftRadius
+        topRightRadius: myCustomButton.topRightRadius
+        bottomLeftRadius: myCustomButton.bottomLeftRadius
+        bottomRightRadius: myCustomButton.bottomRightRadius
 
         color: {
             if (!myCustomButton.enabled) {
