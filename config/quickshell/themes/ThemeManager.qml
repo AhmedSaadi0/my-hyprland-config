@@ -1,3 +1,5 @@
+// themes/ThemeManager.qml
+
 pragma Singleton
 
 import Quickshell

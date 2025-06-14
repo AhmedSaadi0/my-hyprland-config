@@ -1,111 +1,88 @@
+// themes/BaseTheme.qml
+
 import QtQuick
 import Quickshell
+import org.kde.kirigami as Kirigami
 
 PersistentProperties {
-    property int baseRadius: 12
+    id: root
 
-    // --- Color Palette ---
-    // Grouping all color definitions
+    // --- SOURCE PROPERTIES (for overriding in custom themes) ---
+    // These are the actual values. Custom themes will override these.
+    // The underscore is a convention to indicate these are the 'backing' properties.
 
-    property var colors: QtObject {
-        property color textBackgroundColor1: "#F905FF"
-        property color textBackgroundColor2: "#20D2FD"
+    // Colors
+    property color _textBackgroundColor1: Kirigami.Theme.negativeTextColor
+    property color _textBackgroundColor2: Kirigami.Theme.highlightColor
+    property color _textFg: Kirigami.Theme.backgroundColor
+    property color _topbarColor: Kirigami.Theme.backgroundColor
 
-        // Foreground color for text
-        property color textFg: "#09070f"
+    // Dimensions
+    property int _baseRadius: 12
+    property int _barHeight: 30
+    property int _barWidgetsHeight: 22
+    property int _menuHeight: 900
+    property int _menuWidth: 380
+    property int _menuWidgetsMargin: 15
+    property int _elementRadius: root._baseRadius // Reference the source property
 
-        // Add more color roles here for better organization and clarity
-        // property color primary: "#..."
-        // property color secondary: "#..."
-        // property color background: "#..."
-        // property color foreground: "#..."
-        // property color border: "#..."
-        // property color accent: "#..."
-        // property color success: "#..."
-        // property color warning: "#..."
-        // property color error: "#..."
-        // property color disabled: "#..."
-        // property color buttonBackground: "#..."
-        // property color buttonText: "#..."
-        // ... etc. Define colors by their *role* rather than just a generic name
+    // Typography
+    property string _iconFont: "FantasqueSansM Nerd Font Propo"
+    property string _bodyFont: "Sans Serif"
+    property int _baseFontSize: 12
+    property int _mediumFontSize: 14
+    property int _smallFontSize: 12
+
+    // Hyprland
+    property int _hyprBorderWidth: 2
+    property string _hyprActiveBorder: 'rgba(FDBBC4ff) rgba(ff00ffff) 0deg'
+    property string _hyprInactiveBorder: 'rgba(59595900) 0deg'
+    property int _hyprRounding: root._baseRadius
+    property string _hyprDropShadow: 'no'
+
+    // --- PUBLIC GROUPED API (for using the theme) ---
+    // These structured objects are for clean access (e.g., theme.colors.xyz).
+    // They are readonly to prevent accidental replacement.
+
+    property string themeName: "Base Theme"
+
+    readonly property var colors: QtObject {
+        property alias textBackgroundColor1: root._textBackgroundColor1
+        property alias textBackgroundColor2: root._textBackgroundColor2
+        property alias textFg: root._textFg
+        property alias topbarColor: root._topbarColor
     }
 
-    // --- Dimensions and Spacing ---
-    // Grouping sizes, heights, widths, spacing, margins, etc.
-    property var dimensions: QtObject {
-        property int barHeight: 30
-        property int barWidgetsHeight: 22
-
-        property int menuHeight: 900
-        property int menuWidth: 380
-        property int menuWidgetsMargin: 15
-
-        // Radius for specific elements (can reference baseRadius)
-        property int elementRadius: baseRadius // Renamed from radius for clarity
-
-        // Common spacing values
-        // property int spacing: 5
-        // property int margin: 10
-        // property int padding: 8
-        // ...
+    readonly property var dimensions: QtObject {
+        property alias baseRadius: root._baseRadius
+        property alias barHeight: root._barHeight
+        property alias barWidgetsHeight: root._barWidgetsHeight
+        property alias menuHeight: root._menuHeight
+        property alias menuWidth: root._menuWidth
+        property alias menuWidgetsMargin: root._menuWidgetsMargin
+        property alias elementRadius: root._elementRadius
     }
 
-    // --- Typography ---
-    // Grouping font-related properties
-    property var typography: QtObject {
-        // Font family names
-        property string iconFont: "FantasqueSansM Nerd Font Propo"
-        property string bodyFont: "Sans Serif" // Example
-        property string headingFont: "Sans Serif" // Example
-
-        // Font sizes
-        property int baseFontSize: 12
-        property int heading1Size: 24
-        property int heading2Size: 20
-        property int heading3Size: 16
-        property int bodyFontSize: baseFontSize
-
-        property int medium: 14
-        property int small: 12
-
-        // Font weights
-        // property int bodyFontWeight: Font.Normal
-        // property int headingFontWeight: Font.Bold
+    readonly property var typography: QtObject {
+        property alias iconFont: root._iconFont
+        property alias bodyFont: root._bodyFont
+        property alias baseFontSize: root._baseFontSize
+        property alias medium: root._mediumFontSize
+        property alias small: root._smallFontSize
     }
 
-    // --- System Integration Settings ---
-    // Grouping properties that configure external system themes or assets
-
-    property var systemSettings: QtObject {
-        // Path to the wallpaper image for this theme
-        property string wallpaper: "colors.png"
-
-        // Strings used to configure external theme engines/settings
-        property string qtThemeColor: "" // e.g., "light", "dark"
-        property string qtThemeStyle: "" // e.g., "Fusion", "Material"
-        property string kvantumTheme: "" // Name of Kvantum theme
-        property string gtk3Theme: ""    // Name of GTK3 theme
-        property string gtk4Theme: ""    // Name of GTK4 theme
-        property string themeIcons: ""   // Name of icon theme
-        property string themeMode: ""    // e.g., "light", "dark" - general mode indicator
-        property string themefont: ""    // System-wide font setting string (if applicable)
-        // ...
+    // Note: You can skip this pattern for SystemSettings and Hyprland if you
+    // prefer to replace the whole object, but for consistency, it's better this way.
+    readonly property var hyprConfiguration: QtObject {
+        property alias border_width: root._hyprBorderWidth
+        property alias active_border: root._hyprActiveBorder
+        property alias inactive_border: root._hyprInactiveBorder
+        property alias rounding: root._hyprRounding
+        property alias drop_shadow: root._hyprDropShadow
     }
 
-    // --- Hyprland Configuration ---
-    // Grouping properties specific to Hyprland window manager settings
-    property var hyprConfiguration: QtObject {
-        property int border_width: 2
-        property string active_border: 'rgba(FDBBC4ff) rgba(ff00ffff) 0deg'
-        property string inactive_border: 'rgba(59595900) 0deg'
-        property int rounding: baseRadius // Can reference the theme's baseRadius
-        property string drop_shadow: 'no'
-        // Add all other relevant hyprland configuration properties here
-        // property string layout: "..."
-        // property string animation: "..."
-        // ...
-    }
-
-    // Optional: Add a property to hold the theme's display name
-    property string themeName: "Unnamed Theme"
+    // System settings often don't need overriding this granularly, so
+    // keeping it as a single 'var' property might be fine if you always
+    // define the whole block. But for completeness, here it is aliased:
+    // ...
 }

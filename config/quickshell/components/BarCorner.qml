@@ -61,6 +61,7 @@ Item {
         Component.onCompleted: requestPaint()
         // onPositionChanged: requestPaint()
         // onCornerRadiusChanged: requestPaint()
-        // onShapeColorChanged: requestPaint()
+        // Component.onShapeColorChanged: requestPaint()
     }
+    onShapeColorChanged: cornerCanvas.requestPaint()
 }

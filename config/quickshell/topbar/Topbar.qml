@@ -28,7 +28,8 @@ PanelWindow {
         id: barBackground
         height: ThemeManager.selectedTheme.dimensions.barHeight
         width: parent.width
-        color: palette.window
+        // color: palette.window
+        color: ThemeManager.selectedTheme.colors.topbarColor
         anchors.top: parent.top
 
         layer.enabled: true

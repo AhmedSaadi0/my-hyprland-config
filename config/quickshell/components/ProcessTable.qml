@@ -8,7 +8,7 @@ SimpleTable {
     id: root
 
     width: 167
-    height: 180
+    height: 203
 
     model: dataModel // Assign the ListModel as the table's model
     columns: tableColumns // Assign the column definitions
@@ -28,7 +28,7 @@ SimpleTable {
 
     // Cell Styling
     cellBackgroundColor: Kirigami.Theme.backgroundColor.alpha(0.8)
-    alternatingCellBackgroundColor: "transparent"
+    // alternatingCellBackgroundColor: "transparent"
     cellTextColor: Kirigami.Theme.textColor
 
     // Spacing Control
@@ -47,7 +47,7 @@ SimpleTable {
             var processes = JSON.parse(data);
             dataModel.clear();
 
-            for (var i = 0; i < Math.min(processes.length, 6); i++) {
+            for (var i = 0; i < Math.min(processes.length, 7); i++) {
                 dataModel.append({
                     textRole: processes[i].name,
                     valueRole: processes[i].value.toFixed(2)
