@@ -61,10 +61,11 @@ PanelWindow {
         }
 
         Rectangle {
+            id: monitors
             width: 108
             height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
             radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: palette.light
+            color: ThemeManager.selectedTheme.colors.topbarBgColorV1
             layer.enabled: true
             layer.effect: Shadow {}
 

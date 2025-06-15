@@ -4,11 +4,13 @@ import QtQuick
 import Quickshell.Io
 import org.kde.kirigami as Kirigami
 
+// import "../themes"
+
 SimpleTable {
     id: root
 
     width: 167
-    height: 203
+    height: 205
 
     model: dataModel // Assign the ListModel as the table's model
     columns: tableColumns // Assign the column definitions
@@ -16,7 +18,7 @@ SimpleTable {
     rowHeight: 25
     headerHeight: 30
 
-    tableBackgroundColor: palette.accent
+    // tableBackgroundColor: palette.mid
     tableBorderWidth: 0
 
     showVerticalGridLines: false
@@ -27,8 +29,8 @@ SimpleTable {
     headerTextColor: Kirigami.Theme.textColor
 
     // Cell Styling
-    cellBackgroundColor: Kirigami.Theme.backgroundColor.alpha(0.8)
-    // alternatingCellBackgroundColor: "transparent"
+    cellBackgroundColor: Kirigami.Theme.backgroundColor.lighter(1.5)
+    alternatingCellBackgroundColor: Kirigami.Theme.backgroundColor
     cellTextColor: Kirigami.Theme.textColor
 
     // Spacing Control

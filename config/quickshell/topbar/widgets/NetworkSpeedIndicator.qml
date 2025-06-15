@@ -21,7 +21,7 @@ Rectangle {
 
     implicitWidth: 190 + children[0].width
     implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
-    color: palette.light
+    color: ThemeManager.selectedTheme.colors.topbarBgColorV3
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     // -------------------------
@@ -32,7 +32,7 @@ Rectangle {
         width: children[0].children[1].width + 45
         height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight - 4
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        color: palette.mid
+        color: ThemeManager.selectedTheme.colors.topbarColor
 
         layer.enabled: true
         layer.effect: Shadow {
@@ -59,7 +59,7 @@ Rectangle {
                 id: networkIcon
                 text: "󰤮"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
-                color: palette.text
+                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
                 font.pixelSize: 13
                 horizontalAlignment: Text.AlignHCenter
                 font.bold: true
@@ -69,7 +69,7 @@ Rectangle {
                 id: networkName
                 text: "-"
                 font.bold: true
-                color: palette.text
+                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
             }
         }
     }
@@ -94,11 +94,11 @@ Rectangle {
             Text {
                 id: uploadSpeedText
                 text: "0b/s"
-                color: palette.text
+                color: ThemeManager.selectedTheme.colors.topbarFgColorV3
             }
             Label {
                 text: "↑"
-                color: palette.text
+                color: ThemeManager.selectedTheme.colors.topbarFgColorV3
                 font.family: ThemeManager.selectedTheme.typography.iconFont
             }
         }
@@ -112,12 +112,12 @@ Rectangle {
             Text {
                 id: downloadSpeedText
                 text: "0b/s"
-                color: palette.text
+                color: ThemeManager.selectedTheme.colors.topbarFgColorV3
             }
             Label {
                 text: "↓"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
-                color: palette.text
+                color: ThemeManager.selectedTheme.colors.topbarFgColorV3
             }
         }
     }

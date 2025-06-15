@@ -18,7 +18,9 @@ Rectangle {
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
     height: parent.height
     width: rowLayout.implicitWidth + 20
-    color: palette.light
+    // color: palette.light
+
+    color: ThemeManager.selectedTheme.colors.topbarBgColorV1
 
     RowLayout {
         id: rowLayout

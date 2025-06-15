@@ -18,18 +18,18 @@ Rectangle {
     // --- Properties for Table Container ---
     property color tableBackgroundColor: Kirigami.Theme.backgroundColor
     property color tableBorderColor: Kirigami.Theme.positiveBackgroundColor
-    property int tableBorderWidth: 1
+    property int tableBorderWidth: 2
     property real tableRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     // --- Properties for Header ---
-    property color headerBackgroundColor: Qt.tint(Kirigami.Theme.backgroundColor, 1.05)
+    property color headerBackgroundColor: Kirigami.Theme.backgroundColor
     property color headerTextColor: Kirigami.Theme.textColor
     property font headerFont: Qt.font({
-        pixelSize: ThemeManager.selectedTheme.typography.heading3Size,
+        pixelSize: ThemeManager.selectedTheme.typography.heading4Size,
         bold: true
     })
 
-    property color headerBorderColor: Kirigami.Theme.positiveBackgroundColor
+    property color headerBorderColor: headerBackgroundColor
     property int headerBorderWidth: 1
     property int headerHeight: Kirigami.Units.gridUnit * 2.5
     property int headerCellSpacing: 0
@@ -140,6 +140,13 @@ Rectangle {
                     readonly property int colIndex: index % tableRoot.columns.length
                     readonly property var columnDef: tableRoot.columns[colIndex]
                     readonly property var rowData: tableRoot.model.get(rowIndex)
+
+                    // --- NEW: Logic for identifying cell position ---
+                    readonly property bool isFirstCellInCol: colIndex === 0
+                    readonly property bool isLastCellInCol: colIndex === (tableRoot.columns.length - 1)
+                    // Check if the current row index is the last one in the model
+                    readonly property bool isLastRow: (tableRoot.model && rowIndex === (tableRoot.model.count - 1))
+
                     Layout.preferredHeight: tableRoot.rowHeight // Fixed height for data rows
                     Layout.preferredWidth: columnDef.width ? columnDef.width : ((dataGridLayout.width - (tableRoot.cellColumnSpacing * (tableRoot.columns.length - 1))) / (tableRoot.columns.length || 1))
                     Layout.fillWidth: true
@@ -147,6 +154,12 @@ Rectangle {
                     border.color: tableRoot.cellBorderColor
                     border.width: (tableRoot.cellBorderWidth > 0 && (tableRoot.showVerticalGridLines || tableRoot.showHorizontalGridLines)) ? tableRoot.cellBorderWidth : 0
                     clip: true
+
+                    // --- NEW: Apply radius to bottom corners of the last row ---
+                    // A cell gets a bottom-left radius if it's in the first column AND the last row.
+                    bottomLeftRadius: (isFirstCellInCol && isLastRow) ? tableRoot.tableRadius : 0
+                    // A cell gets a bottom-right radius if it's in the last column AND the last row.
+                    bottomRightRadius: (isLastCellInCol && isLastRow) ? tableRoot.tableRadius : 0
 
                     // For debugging
                     // color: {

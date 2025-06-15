@@ -13,7 +13,9 @@ Rectangle {
     height: 150
     width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2)
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
-    color: Kirigami.Theme.linkBackgroundColor
+    // color: Kirigami.Theme.linkBackgroundColor
+
+    color: ThemeManager.selectedTheme.colors.topbarBgColorV2
 
     property int monitorWidth: 65
     property int monitorHeight: 65

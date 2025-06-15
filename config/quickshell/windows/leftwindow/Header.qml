@@ -11,7 +11,6 @@ Rectangle {
     width: parent.width
     height: 270
     color: "transparent"
-    // color: "#ffff00"
 
     Image {
         id: backgroundImage
@@ -49,7 +48,8 @@ Rectangle {
         id: profileDetail
         width: backgroundImage.width
         height: 130
-        color: palette.accent.alpha(0.7)
+        // color: palette.accent.alpha(0.7)
+        color: ThemeManager.selectedTheme.colors.topbarBgColorV2.alpha(0.7)
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
         smooth: true
         anchors {
@@ -136,7 +136,8 @@ Rectangle {
         text: "احمد الصعدي"
         font.pixelSize: 35
         font.family: "VIP Rawy Regular"
-        color: palette.base
+        // color: palette.base
+        color: ThemeManager.selectedTheme.colors.topbarFgColorV2
         anchors {
             top: profileImage.bottom
             horizontalCenter: profileImage.horizontalCenter
@@ -150,7 +151,8 @@ Rectangle {
 
     Text {
         text: "مهندس برمجيات"
-        color: palette.base
+        // color: palette.base
+        color: ThemeManager.selectedTheme.colors.topbarFgColorV2
         anchors {
             top: titleText.bottom
             horizontalCenter: profileImage.horizontalCenter

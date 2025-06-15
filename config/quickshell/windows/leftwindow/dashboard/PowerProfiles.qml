@@ -33,8 +33,8 @@ Rectangle {
     property int buttonsRowSpacing: 10
 
     // --- Colors (Aliasing Theme colors for clarity and central access) ---
-    property color componentBackgroundColor: Kirigami.Theme.backgroundColor.lighter(1.4)
-    property color baseTextColor: Kirigami.Theme.textColor
+    property color componentBackgroundColor: ThemeManager.selectedTheme.colors.topbarBgColorV1
+    property color baseTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
     property color highlightedStateTextColor: Kirigami.Theme.highlightedTextColor // For active button text
     property color activeStateBackgroundColor: Kirigami.Theme.activeTextColor     // For active button background (original highlightColor)
     property color defaultStateBackgroundColor: Kirigami.Theme.activeBackgroundColor // For inactive button background

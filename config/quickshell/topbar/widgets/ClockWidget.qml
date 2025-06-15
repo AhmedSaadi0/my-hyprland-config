@@ -14,18 +14,18 @@ Rectangle {
         orientation: Gradient.Horizontal
         GradientStop {
             position: 0.0
-            color: ThemeManager.selectedTheme.colors.textBackgroundColor1
+            color: ThemeManager.selectedTheme.colors.primary
         }
         GradientStop {
             position: 1.0
-            color: ThemeManager.selectedTheme.colors.textBackgroundColor2
+            color: ThemeManager.selectedTheme.colors.secondary
         }
     }
 
     anchors.centerIn: parent
     layer.enabled: true
     layer.effect: Shadow {
-        color: palette.shadow.alpha(0.3)
+        color: ThemeManager.selectedTheme.colors.topbarColor
     }
 
     SystemClock {
@@ -38,6 +38,6 @@ Rectangle {
         text: clock.date.toLocaleString(Qt.locale(), "hh:mm AP - dddd, dd MMMM yyyy")
         font.bold: true
         anchors.centerIn: parent
-        color: ThemeManager.selectedTheme.colors.textFg
+        color: ThemeManager.selectedTheme.colors.onPrimary
     }
 }

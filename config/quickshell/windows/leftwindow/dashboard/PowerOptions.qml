@@ -42,8 +42,8 @@ Rectangle {
     property int confirmationButtonsSpacing: 0
 
     // --- Colors (Aliasing Theme colors for clarity and central access) ---
-    property color componentBackgroundColor: Kirigami.Theme.backgroundColor.lighter(1.4)
-    property color baseTextColor: Kirigami.Theme.textColor
+    property color componentBackgroundColor: ThemeManager.selectedTheme.colors.topbarBgColorV2
+    property color baseTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV2
     property color highlightedStateTextColor: Kirigami.Theme.highlightedTextColor
     property color activeStateBackgroundColor: Kirigami.Theme.activeTextColor
     property color defaultStateBackgroundColor: Kirigami.Theme.activeBackgroundColor
