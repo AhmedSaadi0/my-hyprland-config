@@ -37,6 +37,7 @@ PersistentProperties {
     property color _leftMenuFgColorV2: Kirigami.Theme.neutralTextColor
     property color _leftMenuFgColorV3: Kirigami.Theme.highlightedTextColor
 
+    property color _subtleTextColor: Kirigami.Theme.textColor.alpha(0.8)
     // --------------------
     // ---- Dimensions ----
     // --------------------
@@ -47,6 +48,10 @@ PersistentProperties {
     property int _menuWidth: 380
     property int _menuWidgetsMargin: 15
     property int _elementRadius: root._baseRadius // Reference the source property
+
+    property int _spacingSmall: 4      // للمسافات الصغيرة داخل العناصر
+    property int _spacingMedium: 8     // للمسافات بين العناصر (مثل ListView)
+    property int _spacingLarge: 12     // للمسافات الأكبر والهوامش
 
     // --------------------
     // ---- Typography ----
@@ -113,6 +118,8 @@ PersistentProperties {
         property alias leftMenuFgColorV1: root._leftMenuFgColorV1
         property alias leftMenuFgColorV2: root._leftMenuFgColorV2
         property alias leftMenuFgColorV3: root._leftMenuFgColorV3
+
+        property alias subtleText: root._subtleTextColor
     }
 
     // --- Dimensions and Spacing ---
@@ -137,6 +144,10 @@ PersistentProperties {
         property alias baseFontSize: root._baseFontSize
         property alias medium: root._mediumFontSize
         property alias small: root._smallFontSize
+
+        property alias spacingSmall: root._spacingSmall
+        property alias spacingMedium: root._spacingMedium
+        property alias spacingLarge: root._spacingLarge
     }
 
     // --- System Integration Settings ---

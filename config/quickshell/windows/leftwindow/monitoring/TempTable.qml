@@ -70,19 +70,19 @@ ProcessTable {
             dataModel.append({
                 textRole: "CPU",
                 iconRole: "",
-                valueRole: readData.cpu_max_temp.toFixed(0) + ' C°'
+                valueRole: readData.cpu_max_temp ? readData.cpu_max_temp.toFixed(0) + ' C°' : ""
             });
 
             dataModel.append({
                 textRole: "GPU",
                 iconRole: "",
-                valueRole: readData.gpu_max_temp.toFixed(0) + ' C°'
+                valueRole: readData.gpu_max_temp ? readData.gpu_max_temp.toFixed(0) + ' C°' : ""
             });
 
             dataModel.append({
                 textRole: "Storage",
                 iconRole: "󰋊",
-                valueRole: readData.storage_max_temp.toFixed(0) + ' C°'
+                valueRole: readData.storage_max_temp ? readData.storage_max_temp.toFixed(0) + ' C°' : ""
             });
         } catch (e) {
             console.error("خطأ في تحليل JSON من سكربت المعالج:", e.message);

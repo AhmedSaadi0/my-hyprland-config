@@ -64,7 +64,7 @@ PanelWindow {
                     target: contentContainer
                     x: -contentContainer.width  // يخرج من الشاشة كلياً
                     opacity: 0.0
-                    scale: 0.92  // تصغير خفيف
+                    scale: 0.95  // تصغير خفيف
                 }
             }
         ]
@@ -76,17 +76,17 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 400
-                        easing.type: Easing.OutQuint
+                        duration: 500
+                        easing.type: Easing.OutExpo  // نفس smoothOut
                     }
                     NumberAnimation {
                         properties: "opacity"
-                        duration: 220
+                        duration: 420
                         easing.type: Easing.OutQuad
                     }
                     NumberAnimation {
                         properties: "scale"
-                        duration: 780
+                        duration: 480
                         easing.type: Easing.OutExpo
                     }
                 }
@@ -97,17 +97,17 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 500
+                        duration: 300
                         easing.type: Easing.InCubic  // نفس smoothIn
                     }
                     NumberAnimation {
                         properties: "opacity"
-                        duration: 480
+                        duration: 280
                         easing.type: Easing.InQuad
                     }
                     NumberAnimation {
                         properties: "scale"
-                        duration: 400
+                        duration: 300
                         easing.type: Easing.InCubic
                     }
                 }
