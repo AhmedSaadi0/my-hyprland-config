@@ -6,5 +6,4 @@
 
 ## This will use [quickshell](https://quickshell.outfoxxed.me/)
 
-<details>
-<summary>In progress ...</summary>
+[In progress ...](https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/config/quickshell/todo.md)
