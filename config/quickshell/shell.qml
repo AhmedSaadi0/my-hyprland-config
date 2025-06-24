@@ -1,5 +1,6 @@
 import Quickshell
 import QtQuick.Window
+import Quickshell.Io
 
 import "./topbar"
 import "./windows/leftwindow"
@@ -7,55 +8,100 @@ import "./windows/leftwindow"
 ShellRoot {
     id: shellRoot
 
-    Topbar {
-        id: topBarWindow
+    Variants {
+        model: Quickshell.screens
+        Topbar {
+            id: topBarWindow
+
+            required property ShellScreen modelData
+            screen: modelData
+            menuIsOpen: handler.isMenuOpen
+            onOpenLeftPanelRequested: {
+                handler.toggleMenu();
+            }
+        }
     }
 
-    // RightBar {
-    //     id: rightBarWindow
-    // }
-    //
-    // BottomBar {
-    //     id: bottomBarWindow
-    // }
+    IpcHandler {
+        id: handler
+        target: "Topbar"
 
-    // LeftWindow {
-    //     id: leftPanel
-    // }
+        property bool isMenuOpen: false
+
+        function toggleMenu() {
+            if (leftPanelFull.visible) {
+                // leftPanel.close();
+                // btn.textRotation = 0;
+                leftPanelFull.close();
+                isMenuOpen = false;
+                return;
+            }
+            // leftPanel.open();
+            // btn.textRotation = 180;
+            leftPanelFull.open();
+            isMenuOpen = true;
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        TopLeftCorner {
+            id: topLeftCorner
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        TopRightCorner {
+            id: topRightCorners
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        BottomRightCorner {
+            id: bottomRightCorners
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        BottomLeftCorner {
+            id: bottomLeftCorners
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
 
     LeftWindowFull {
         id: leftPanelFull
         visible: false
+        required property ShellScreen modelData
+        screen: modelData
     }
 
-    TopLeftCorner {
-        id: topLeftCorner
-    }
-
-    TopRightCorner {
-        id: topRightCorners
-    }
-
-    BottomRightCorner {
-        id: bottomRightCorners
-    }
-
-    BottomLeftCorner {
-        id: bottomLeftCorners
-    }
-
-    Connections {
-        target: topBarWindow
-        function onOpenLeftPanelRequested(btn) {
-            if (leftPanelFull.visible) {
-                // leftPanel.close();
-                btn.textRotation = 0;
-                leftPanelFull.close();
-                return;
-            }
-            // leftPanel.open();
-            btn.textRotation = 180;
-            leftPanelFull.open();
-        }
-    }
+    // Connections {
+    //     target: topBarWindow
+    //     function onOpenLeftPanelRequested(btn) {
+    //         if (leftPanelFull.visible) {
+    //             // leftPanel.close();
+    //             btn.textRotation = 0;
+    //             leftPanelFull.close();
+    //             return;
+    //         }
+    //         // leftPanel.open();
+    //         btn.textRotation = 180;
+    //         leftPanelFull.open();
+    //     }
+    // }
 }

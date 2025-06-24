@@ -1,4 +1,4 @@
-// themes/BaseTheme.qml
+// themes/BaseTheme.qmlbasethe
 
 import QtQuick
 import Quickshell
@@ -49,9 +49,9 @@ PersistentProperties {
     property int _menuWidgetsMargin: 15
     property int _elementRadius: root._baseRadius // Reference the source property
 
-    property int _spacingSmall: 4      // للمسافات الصغيرة داخل العناصر
-    property int _spacingMedium: 8     // للمسافات بين العناصر (مثل ListView)
-    property int _spacingLarge: 12     // للمسافات الأكبر والهوامش
+    property int _spacingSmall: 4
+    property int _spacingMedium: 6
+    property int _spacingLarge: 8
 
     // --------------------
     // ---- Typography ----
@@ -131,6 +131,10 @@ PersistentProperties {
         property alias menuWidth: root._menuWidth
         property alias menuWidgetsMargin: root._menuWidgetsMargin
         property alias elementRadius: root._elementRadius
+
+        property alias spacingSmall: root._spacingSmall
+        property alias spacingMedium: root._spacingMedium
+        property alias spacingLarge: root._spacingLarge
     }
 
     // --- Typography ---

@@ -2,7 +2,6 @@
 
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls 2.15 // SwipeView is in Controls
 import "../../themes"
 import "../../components/tab"
 import "./dashboard" as Dashboard
@@ -12,79 +11,157 @@ ColumnLayout {
     id: root
     spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-    // The single source of truth for the currently active tab index.
+    // --- State & Animation Control ---
     property int currentIndex: 0
+    property int inAnimationDuration: 100
+    property int outAnimationDuration: 300
+    property var inAnimationEasing: Easing.InCurve
+    property var outAnimationEasing: Easing.OutExpo
 
-    // The data model for the tabs.
-    // Note: The onClick handlers have been removed as they are no longer needed.
-    // The TabBar component itself will manage changing the index.
+    // --- نموذج التابات ---
     property ListModel tabModel: ListModel {
         ListElement {
             text: "Control"
             icon: "󰨝"
+            onClick: function () {
+                root.changeTab(0);
+            }
         }
         ListElement {
             text: "Notifications"
             icon: "󰂞"
+            onClick: function () {
+                root.changeTab(1);
+            }
         }
         ListElement {
             text: "Weather"
             icon: "󰨹"
+            onClick: function () {
+                root.changeTab(2);
+            }
         }
         ListElement {
             text: "Monitors"
             icon: ""
+            onClick: function () {
+                root.changeTab(3);
+            }
         }
         ListElement {
             text: "Network"
             icon: ""
+            onClick: function () {
+                root.changeTab(4);
+            }
         }
     }
 
-    // --- Tab Bar ---
-    // This bar displays the tabs and allows the user to change the currentIndex.
-    TabBar {
-        id: mainTabBar
-        Layout.fillWidth: true
-        barHeight: 35
-        model: tabModel
+    function changeTab(newIndex) {
+        if (newIndex === currentIndex)
+            return;
+        var oldIndex = currentIndex;
+        var direction = (newIndex > oldIndex) ? 1 : -1;
+        var oldPage = viewContainer.itemAt(oldIndex);
+        var newPage = viewContainer.itemAt(newIndex);
 
-        // Two-way binding:
-        // 1. When root.currentIndex changes, the TabBar updates.
-        // 2. When the user clicks a tab, the TabBar's currentIndex changes,
-        //    which in turn updates root.currentIndex.
-        currentIndex: root.currentIndex
-        onCurrentIndexChanged: root.currentIndex = currentIndex
+        // وضع الصفحة الجديدة خارج الشاشة في الجهة الصحيحة ثم إظهارها
+        newPage.x = direction * viewContainer.width;
+        newPage.visible = true;
+
+        // رسوم الخروج للصفحة القديمة
+        var exitAnim = Qt.createQmlObject('import QtQuick ; NumberAnimation { }', viewContainer);
+        exitAnim.target = oldPage;
+        exitAnim.property = "x";
+        exitAnim.from = 0;
+        exitAnim.to = -direction * viewContainer.width;
+        exitAnim.duration = inAnimationDuration;
+        exitAnim.easing.type = inAnimationEasing;
+
+        // استبدال onFinished بتوصيل الإشارة finished
+        exitAnim.finished.connect(function () {
+            // إخفاء الصفحة القديمة وتدمير الرسوم
+            oldPage.visible = false;
+            exitAnim.destroy();
+
+            // رسوم الدخول للصفحة الجديدة
+            var enterAnim = Qt.createQmlObject('import QtQuick ; NumberAnimation { }', viewContainer);
+            enterAnim.target = newPage;
+            enterAnim.property = "x";
+            enterAnim.from = direction * viewContainer.width;
+            enterAnim.to = 0;
+            enterAnim.duration = outAnimationDuration;
+            enterAnim.easing.type = outAnimationEasing;
+
+            // عند انتهاء الدخول نخّلي الرسوم وتحدّث currentIndex
+            enterAnim.finished.connect(function () {
+                enterAnim.destroy();
+                currentIndex = newIndex;
+                mainTabBar.currentIndex = newIndex;
+            });
+
+            enterAnim.start();
+        });
+
+        exitAnim.start();
     }
 
-    // --- Page Container ---
-    // SwipeView is designed for exactly this use-case: a set of pages
-    // that the user can swipe between, with smooth, built-in animations.
-    SwipeView {
+    // --- شريط التابات ---
+    TabBar {
+        id: mainTabBar
+        model: tabModel
+        Layout.fillWidth: true
+        barHeight: 35
+        Component.onCompleted: currentIndex = root.currentIndex
+    }
+
+    StackLayout {
         id: viewContainer
         Layout.fillWidth: true
         Layout.fillHeight: true
-        clip: true // Ensures pages don't draw outside the container during animation
-
-        // Two-way binding with the root's currentIndex.
-        // 1. When root.currentIndex changes (e.g., from the TabBar), the SwipeView animates to the correct page.
-        // 2. If the user swipes, the SwipeView's currentIndex changes, which updates the root.currentIndex.
         currentIndex: root.currentIndex
-        onCurrentIndexChanged: root.currentIndex = currentIndex
+        clip: true
+        smooth: true
 
-        // --- Pages ---
-        // The pages are now direct children of the SwipeView.
-        // No need to manually manage 'x' or 'visible' properties.
-        // The SwipeView handles all positioning and visibility automatically.
+        // تعريف الصفحات (في البداية جميعها مرئية لكن خارج المشهد ما عدا الأولى)
+        Dashboard.Dashboard {
+            id: dashboardPage
+            x: 0
+            visible: true
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
 
-        Dashboard.Dashboard {}
+        NotiList {
+            id: notiPage
+            x: viewContainer.width
+            visible: false
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
 
-        NotiList {}
+        Dashboard.Dashboard2 {
+            id: weatherPage
+            x: viewContainer.width
+            visible: false
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
 
-        Dashboard.Dashboard2 {}
+        Monitoring.Main {
+            id: monitorPage
+            x: viewContainer.width
+            visible: false
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
 
-        Monitoring.Main {}
-
-        Dashboard.Dashboard3 {}
+        Dashboard.Dashboard3 {
+            id: networkPage
+            x: viewContainer.width
+            visible: false
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+        }
     }
 }

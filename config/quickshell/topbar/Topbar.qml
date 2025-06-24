@@ -6,6 +6,7 @@ import QtQuick
 
 import "../themes"
 import "./widgets"
+import "./systemtray"
 import "../components"
 
 PanelWindow {
@@ -22,6 +23,7 @@ PanelWindow {
     }
 
     signal openLeftPanelRequested(var btn)
+    property bool menuIsOpen: false
 
     // Background
     Rectangle {
@@ -90,7 +92,7 @@ PanelWindow {
             text: ""
             font.family: ThemeManager.selectedTheme.typography.iconFont
             onClicked: {
-                handler.toggleMenu();
+                topBar.openLeftPanelRequested(myCustomButton);
             }
 
             anchors {
@@ -99,7 +101,7 @@ PanelWindow {
                 leftMargin: 5
             }
 
-            property var textRotation: 0
+            property var textRotation: menuIsOpen ? 180 : 0
 
             contentItem: Text {
                 id: buttonTextContent
@@ -137,23 +139,32 @@ PanelWindow {
             }
         }
 
-        NetworkSpeedIndicator {
-            id: internetIndicator
-            layer.enabled: true
-            layer.effect: Shadow {}
+        SystemTray {
+            id: systemTray
             anchors {
                 left: myCustomButton.right
                 verticalCenter: parent.verticalCenter
                 leftMargin: 10
             }
         }
-    }
 
-    IpcHandler {
-        id: handler
-        target: "Topbar"
-        function toggleMenu() {
-            topBar.openLeftPanelRequested(myCustomButton);
+        NetworkSpeedIndicator {
+            id: internetIndicator
+            layer.enabled: true
+            layer.effect: Shadow {}
+            anchors {
+                left: systemTray.right
+                verticalCenter: parent.verticalCenter
+                leftMargin: 10
+            }
         }
     }
+
+    // IpcHandler {
+    //     id: handler
+    //     target: "Topbar"
+    //     function toggleMenu() {
+    //         topBar.openLeftPanelRequested(myCustomButton);
+    //     }
+    // }
 }

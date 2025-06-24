@@ -29,7 +29,7 @@ Button {
 
     // layer.enabled: true
     // layer.effect: Shadow {
-    //     alpha: 0.3
+    //     alpha: 0.1
     // }
 
     contentItem: Text {

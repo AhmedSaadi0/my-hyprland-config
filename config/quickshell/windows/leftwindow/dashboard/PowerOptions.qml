@@ -157,21 +157,6 @@ Rectangle {
                 }
 
                 MButton {
-                    id: rebootButton
-                    width: root.defaultButtonWidth
-                    height: root.defaultButtonHeight
-                    text: root.rebootButtonLabel
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    normalBackground: root.defaultStateBackgroundColor
-                    normalForeground: root.baseTextColor
-                    onClicked: {
-                        root.pendingActionCommand = ["systemctl", "reboot"];
-                        root.pendingActionMessage = qsTr("Are you sure you want to reboot?");
-                        viewStack.push(confirmationDialogComponent);
-                    }
-                }
-
-                MButton {
                     id: logoutButton
                     width: root.defaultButtonWidth
                     height: root.defaultButtonHeight
@@ -185,6 +170,21 @@ Rectangle {
                         // root.pendingActionCommand = ["loginctl", "kill-session", "self"];
                         root.pendingActionCommand = ["hyprctl", "dispatch", "exit"];
                         root.pendingActionMessage = qsTr("Are you sure you want to log out?");
+                        viewStack.push(confirmationDialogComponent);
+                    }
+                }
+
+                MButton {
+                    id: rebootButton
+                    width: root.defaultButtonWidth
+                    height: root.defaultButtonHeight
+                    text: root.rebootButtonLabel
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
+                    normalBackground: root.defaultStateBackgroundColor
+                    normalForeground: root.baseTextColor
+                    onClicked: {
+                        root.pendingActionCommand = ["systemctl", "reboot"];
+                        root.pendingActionMessage = qsTr("Are you sure you want to reboot?");
                         viewStack.push(confirmationDialogComponent);
                     }
                 }

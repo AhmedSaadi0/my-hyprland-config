@@ -1,0 +1,2 @@
+- [ ] Systray
+- [ ] App launcher
