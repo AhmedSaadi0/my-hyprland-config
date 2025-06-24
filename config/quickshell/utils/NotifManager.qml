@@ -2,6 +2,7 @@
 pragma Singleton
 pragma ComponentBehavior: Bound
 
+import Quickshell.Io
 import QtQuick
 import Quickshell
 import Quickshell.Services.Notifications
@@ -32,6 +33,11 @@ Singleton {
         dndEnabled = !dndEnabled;
     }
 
+    Process {
+        id: notificationSound
+        command: ["paplay", ".config/quickshell/assets/audio/new-notification.mp3"]
+    }
+
     // --- Server Logic ---
     NotificationServer {
         id: notifServer
@@ -54,6 +60,7 @@ Singleton {
 
             // 2. أطلق إشارة للواجهة بأن هناك إشعاراً جديداً جاهزاً
             root.notificationReceived(newSmartNotif);
+            notificationSound.running = true;
         }
     }
 
@@ -70,7 +77,7 @@ Singleton {
         readonly property string appIcon: notification ? notification.appIcon : ""
         readonly property string appName: notification ? notification.appName : ""
         readonly property string image: notification ? notification.image : ""
-        readonly property int id: notification ? notification.id : null
+        readonly property int id: notification.id
 
         // You can add computed properties here too
         readonly property date time: new Date()

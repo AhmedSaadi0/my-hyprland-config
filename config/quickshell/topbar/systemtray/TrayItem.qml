@@ -11,17 +11,17 @@ MouseArea {
     required property SystemTrayItem modelData
 
     acceptedButtons: Qt.LeftButton | Qt.RightButton
-    implicitWidth: 10
-    implicitHeight: 10
+    implicitWidth: 12
+    implicitHeight: 12
 
     onClicked: event => {
-        if (event.button === Qt.LeftButton)
+        if (event.button === Qt.LeftButton) {
             modelData.activate();
-        else if (modelData.hasMenu)
+        } else if (modelData.hasMenu) {
             menu.open();
+        }
     }
 
-    // TODO: custom menu
     QsMenuAnchor {
         id: menu
 

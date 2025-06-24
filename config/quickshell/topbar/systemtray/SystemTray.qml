@@ -30,7 +30,9 @@ Item {
         Repeater {
             id: items
             model: SystemTray.items
-            TrayItem {}
+            // The delegate for the repeater is defined in your other file.
+            // Assuming it's named 'TrayItem.qml'
+            delegate: TrayItem {}
         }
     }
 

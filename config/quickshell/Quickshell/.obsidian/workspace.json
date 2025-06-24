@@ -1,0 +1,168 @@
+{
+  "main": {
+    "id": "d1c9af37e9313e88",
+    "type": "split",
+    "children": [
+      {
+        "id": "db2290a7027d28f6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "05735a7fcb0330e7",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "علامة تبويب جديدة"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f644585ae747d6dd",
+    "type": "split",
+    "children": [
+      {
+        "id": "167f08d4923f8f23",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bb681b71be6e5d2e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "مستكشف الملفات"
+            }
+          },
+          {
+            "id": "628f7753018b353c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "البحث"
+            }
+          },
+          {
+            "id": "5897103bb0e46ffe",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "الإشارات المرجعية"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "0248d25952ad8b89",
+    "type": "split",
+    "children": [
+      {
+        "id": "3d0ebe1fc93704f1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3d0c63c6b633e572",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "روابط نصية"
+            }
+          },
+          {
+            "id": "a3ef17d8640d31a7",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "روابط صادرة"
+            }
+          },
+          {
+            "id": "46977b451cac3af3",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "c78f2fdcf5ecbf2c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "الخطوط العريضة"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:افتح الانتقال السريع": false,
+      "graph:فتح العرض البياني": false,
+      "canvas:إنشاء لوحة بصرية جديدة": false,
+      "daily-notes:فتح ملاحظة اليوم": false,
+      "templates:إدراج قالب": false,
+      "command-palette:فتح لوحة الأوامر": false
+    }
+  },
+  "active": "05735a7fcb0330e7",
+  "lastOpenFiles": [
+    "مرحبًا.md"
+  ]
+}

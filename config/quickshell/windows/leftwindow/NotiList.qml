@@ -55,6 +55,7 @@ Item {
             MButton {
                 id: clearAllButton
                 implicitHeight: 25
+                implicitWidth: 75
 
                 text: "Clear All"
                 enabled: notifModel.count > 0
