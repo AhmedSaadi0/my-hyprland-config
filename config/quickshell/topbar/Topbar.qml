@@ -16,6 +16,9 @@ PanelWindow {
 
     exclusionMode: ExclusionMode.Auto
 
+    // LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
+    // LayoutMirroring.childrenInherit: true
+
     anchors {
         top: true
         left: true
@@ -159,12 +162,4 @@ PanelWindow {
             }
         }
     }
-
-    // IpcHandler {
-    //     id: handler
-    //     target: "Topbar"
-    //     function toggleMenu() {
-    //         topBar.openLeftPanelRequested(myCustomButton);
-    //     }
-    // }
 }

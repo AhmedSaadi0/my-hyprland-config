@@ -38,6 +38,10 @@ PersistentProperties {
     property color _leftMenuFgColorV3: Kirigami.Theme.highlightedTextColor
 
     property color _subtleTextColor: Kirigami.Theme.textColor.alpha(0.8)
+
+    // OSDs
+    property color _volOsdBgColor: Kirigami.Theme.backgroundColor.lighter(1.5)
+    property color _volOsdFgColor: Kirigami.Theme.textColor
     // --------------------
     // ---- Dimensions ----
     // --------------------
@@ -118,6 +122,9 @@ PersistentProperties {
         property alias leftMenuFgColorV1: root._leftMenuFgColorV1
         property alias leftMenuFgColorV2: root._leftMenuFgColorV2
         property alias leftMenuFgColorV3: root._leftMenuFgColorV3
+
+        property alias volOsdBgColor: root._volOsdBgColor
+        property alias volOsdFgColor: root._volOsdFgColor
 
         property alias subtleText: root._subtleTextColor
     }

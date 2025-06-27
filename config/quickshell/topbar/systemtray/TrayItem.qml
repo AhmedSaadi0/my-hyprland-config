@@ -11,8 +11,8 @@ MouseArea {
     required property SystemTrayItem modelData
 
     acceptedButtons: Qt.LeftButton | Qt.RightButton
-    implicitWidth: 12
-    implicitHeight: 12
+    implicitWidth: 13
+    implicitHeight: 13
 
     onClicked: event => {
         if (event.button === Qt.LeftButton) {
@@ -31,6 +31,7 @@ MouseArea {
 
     IconImage {
         id: icon
+        implicitSize: 13
 
         source: {
             let icon = root.modelData.icon;

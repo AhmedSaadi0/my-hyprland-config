@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "../../utils"
-import "../../themes"
-import "../../components"
+import "../../../utils"
+import "../../../themes"
+import "../../../components"
 
 Item {
     id: root
@@ -94,6 +94,7 @@ Item {
             clip: true
             ScrollBar.vertical.policy: ScrollBar.AsNeeded
             ScrollBar.vertical.active: true
+            // ScrollBar.vertical: StyledScrollBar {}
 
             ListView {
                 id: notifView

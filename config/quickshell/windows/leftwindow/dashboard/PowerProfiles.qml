@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import Quickshell.Io
 import Quickshell.Services.UPower
 import org.kde.kirigami as Kirigami

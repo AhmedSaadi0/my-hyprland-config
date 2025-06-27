@@ -1,11 +1,12 @@
 // windows/leftwindow/MenuSelectorBar.qml
 
-import QtQuick 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Layouts
 import "../../themes"
 import "../../components/tab"
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
+import "./notificatoin"
 
 ColumnLayout {
     id: root
@@ -65,6 +66,8 @@ ColumnLayout {
         var oldPage = viewContainer.itemAt(oldIndex);
         var newPage = viewContainer.itemAt(newIndex);
 
+        mainTabBar.currentIndex = newIndex;
+        currentIndex = newIndex;
         // وضع الصفحة الجديدة خارج الشاشة في الجهة الصحيحة ثم إظهارها
         newPage.x = direction * viewContainer.width;
         newPage.visible = true;
@@ -96,8 +99,8 @@ ColumnLayout {
             // عند انتهاء الدخول نخّلي الرسوم وتحدّث currentIndex
             enterAnim.finished.connect(function () {
                 enterAnim.destroy();
-                currentIndex = newIndex;
-                mainTabBar.currentIndex = newIndex;
+            // currentIndex = newIndex;
+            // mainTabBar.currentIndex = newIndex;
             });
 
             enterAnim.start();

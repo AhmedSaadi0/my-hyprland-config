@@ -1,5 +1,6 @@
 // windows/leftwindow/dashboard/PowerOptions.qml
 
+import QtQuick.Effects
 import QtQuick
 import QtQuick.Controls
 import Quickshell.Io // Needed for the Process component

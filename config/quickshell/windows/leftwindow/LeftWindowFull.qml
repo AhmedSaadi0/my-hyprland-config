@@ -7,6 +7,8 @@ PanelWindow {
     id: root
 
     property bool isShown: false
+    property var menuSelectorRef: menus
+
     width: ThemeManager.selectedTheme.dimensions.menuWidth
     color: "transparent"
 
@@ -32,6 +34,7 @@ PanelWindow {
         }
 
         MenuSelectorBar {
+            id: menus
             anchors {
                 top: menuHeader.bottom
                 left: contentContainer.left
@@ -43,7 +46,6 @@ PanelWindow {
                 topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 1.6
             }
         }
-
         transformOrigin: Item.Center
 
         states: [

@@ -14,7 +14,7 @@ Item {
 
     Row {
         id: layout
-        spacing: 5
+        spacing: 9
 
         add: Transition {
             NumberAnimation {

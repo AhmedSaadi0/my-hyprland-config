@@ -6,9 +6,13 @@ import Quickshell.Io
 
 import "./topbar"
 import "./windows/leftwindow"
+import "./osd"
 
 ShellRoot {
     id: shellRoot
+
+    LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
+    LayoutMirroring.childrenInherit: true
 
     Variants {
         model: Quickshell.screens
@@ -21,27 +25,6 @@ ShellRoot {
             onOpenLeftPanelRequested: {
                 handler.toggleMenu();
             }
-        }
-    }
-
-    IpcHandler {
-        id: handler
-        target: "Topbar"
-
-        property bool isMenuOpen: false
-
-        function toggleMenu() {
-            if (leftPanelFull.visible) {
-                // leftPanel.close();
-                // btn.textRotation = 0;
-                leftPanelFull.close();
-                isMenuOpen = false;
-                return;
-            }
-            // leftPanel.open();
-            // btn.textRotation = 180;
-            leftPanelFull.open();
-            isMenuOpen = true;
         }
     }
 
@@ -85,12 +68,62 @@ ShellRoot {
         }
     }
 
+    // BottomBar {}
+
     LeftWindowFull {
         id: leftPanelFull
         visible: false
         required property ShellScreen modelData
         screen: modelData
     }
+
+    IpcHandler {
+        id: handler
+        target: "Topbar"
+
+        property bool isMenuOpen: false
+        property int targetedMenu: 0
+        property int openedMenu: leftPanelFull.menuSelectorRef.currentIndex
+
+        function toggleMenu() {
+            if (leftPanelFull.visible) {
+                if (targetedMenu != openedMenu) {
+                    leftPanelFull.menuSelectorRef.changeTab(targetedMenu);
+                    return;
+                }
+                leftPanelFull.close();
+                isMenuOpen = false;
+                return;
+            }
+            leftPanelFull.open();
+            isMenuOpen = true;
+            leftPanelFull.menuSelectorRef.changeTab(targetedMenu);
+        }
+
+        function toggleDashboardMenu() {
+            targetedMenu = 0;
+            toggleMenu();
+        }
+
+        function toggleNotificatoinsMenu() {
+            targetedMenu = 1;
+            toggleMenu();
+        }
+        function toggleWeatherMenu() {
+            targetedMenu = 2;
+            toggleMenu();
+        }
+        function toggleMonotoringMenu() {
+            targetedMenu = 3;
+            toggleMenu();
+        }
+        function toggleNetworkingMenu() {
+            targetedMenu = 4;
+            toggleMenu();
+        }
+    }
+
+    Volume {}
 
     // Connections {
     //     target: topBarWindow
