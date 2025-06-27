@@ -170,7 +170,7 @@ Rectangle {
                     // }
 
                     Text {
-                        text: rowData && columnDef ? rowData[columnDef.role] : ""
+                        text: rowData && columnDef ? (rowData[columnDef.role] ?? "") : ""
                         font: columnDef.cellFont !== undefined ? columnDef.cellFont : tableRoot.cellFont
                         color: columnDef.cellTextColor !== undefined ? columnDef.cellTextColor : tableRoot.cellTextColor
                         elide: columnDef.cellElideMode !== undefined ? columnDef.cellElideMode : tableRoot.cellElideMode

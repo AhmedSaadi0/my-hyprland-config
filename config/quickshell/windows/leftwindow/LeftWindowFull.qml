@@ -9,7 +9,7 @@ PanelWindow {
     property bool isShown: false
     property var menuSelectorRef: menus
 
-    width: ThemeManager.selectedTheme.dimensions.menuWidth
+    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
     color: "transparent"
 
     anchors {

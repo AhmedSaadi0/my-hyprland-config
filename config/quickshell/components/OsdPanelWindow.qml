@@ -29,34 +29,48 @@ PanelWindow {
     property real sliderValue: 0.5
     property color bgColor: ThemeManager.selectedTheme.colors.volOsdBgColor
     property string valueTextIcon: ""
-    property QtObject valueTextIconFont: ThemeManager.selectedTheme.typography.iconFont
+    property string valueTextIconFont: ThemeManager.selectedTheme.typography.iconFont
     property color valueTextColor: ThemeManager.selectedTheme.colors.volOsdFgColor
     property real animationEasing: Easing.OutBack
+    property string watchSignal: ""
+    property int interval: 3000
+
     signal valueChanged(real newValue)
 
     Timer {
         id: hideContainerTimer
-        interval: 3000
+        interval: root.interval
         repeat: false
         onTriggered: root.showing = false
     }
 
     Timer {
         id: hideViewTimer
-        interval: 4000
+        interval: root.interval + 1000
         repeat: false
         onTriggered: root.visible = false
     }
 
-    Connections {
-        target: root.target
-        function onVolumeChanged() {
-            root.showing = true;
-            root.visible = true;
-            hideContainerTimer.restart();
-            hideViewTimer.restart();
+    Component.onCompleted: {
+        if (root.target && root.watchSignal !== "") {
+            root.target[root.watchSignal].connect(function () {
+                root.showing = true;
+                root.visible = true;
+                hideContainerTimer.restart();
+                hideViewTimer.restart();
+            });
         }
     }
+
+    // Connections {
+    //     target: root.target
+    //     function onValueChanged(newValue) {
+    //         root.showing = true;
+    //         root.visible = true;
+    //         hideContainerTimer.restart();
+    //         hideViewTimer.restart();
+    //     }
+    // }
 
     // عنصر للحركة
     Item {

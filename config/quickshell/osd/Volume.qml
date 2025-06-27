@@ -1,7 +1,4 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
-import Quickshell
 import "../themes"
 import "../components"
 import "../services"
@@ -11,6 +8,7 @@ OsdPanelWindow {
 
     target: Audio
     sliderValue: Audio.volume
+    watchSignal: "volumeChanged"
     valueTextIcon: {
         const vol = Audio.volume;
         if (Audio.muted) {

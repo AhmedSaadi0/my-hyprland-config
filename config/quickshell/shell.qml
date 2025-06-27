@@ -11,9 +11,6 @@ import "./osd"
 ShellRoot {
     id: shellRoot
 
-    LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
-    LayoutMirroring.childrenInherit: true
-
     Variants {
         model: Quickshell.screens
         Topbar {
@@ -124,6 +121,7 @@ ShellRoot {
     }
 
     Volume {}
+    Brightness {}
 
     // Connections {
     //     target: topBarWindow

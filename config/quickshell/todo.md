@@ -6,9 +6,9 @@
 
 ### 🔔 On-Screen Displays (OSDs)
 
-- [ ] **Notifications **
+- [ ] **Notifications**
 - [x] **Sound OSD**
-- [ ] **Brightness OSD**
+- [x] **Brightness OSD**
 - [ ] **Volume & Brightness Popup Animations**
 - [ ] **Battery Status OSD**
 
