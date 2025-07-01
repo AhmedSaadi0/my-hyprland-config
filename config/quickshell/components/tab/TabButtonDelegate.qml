@@ -1,7 +1,8 @@
 import QtQuick
 
 import "../../themes"
-import "../../components"
+
+// import "../../components"
 
 Item {
     property string text

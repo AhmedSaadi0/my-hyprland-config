@@ -1,5 +1,4 @@
 //@ pragma UseQApplication
-pragma ComponentBehavior: Bound
 
 import Quickshell
 import QtQuick.Window
@@ -11,24 +10,6 @@ import "./osd"
 
 ShellRoot {
     id: shellRoot
-
-    Variants {
-        model: Quickshell.screens
-        TopLeftCorner {
-            id: topLeftCorner
-            required property ShellScreen modelData
-            screen: modelData
-        }
-    }
-
-    Variants {
-        model: Quickshell.screens
-        TopRightCorner {
-            id: topRightCorners
-            required property ShellScreen modelData
-            screen: modelData
-        }
-    }
 
     Variants {
         model: Quickshell.screens
@@ -44,30 +25,49 @@ ShellRoot {
         }
     }
 
-    // Variants {
-    //     model: Quickshell.screens
-    //     BottomRightCorner {
-    //         id: bottomRightCorners
-    //
-    //         required property ShellScreen modelData
-    //         screen: modelData
-    //     }
-    // }
-    //
-    // Variants {
-    //     model: Quickshell.screens
-    //     BottomLeftCorner {
-    //         id: bottomLeftCorners
-    //
-    //         required property ShellScreen modelData
-    //         screen: modelData
-    //     }
-    // }
+    Variants {
+        model: Quickshell.screens
+        TopLeftCorner {
+            id: topLeftCorner
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        TopRightCorner {
+            id: topRightCorners
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        BottomRightCorner {
+            id: bottomRightCorners
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        BottomLeftCorner {
+            id: bottomLeftCorners
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
 
     // BottomBar {}
 
     LeftWindowFull {
-        // NewLeftWindow {
         id: leftPanelFull
         visible: false
         required property ShellScreen modelData
@@ -106,17 +106,14 @@ ShellRoot {
             targetedMenu = 1;
             toggleMenu();
         }
-
         function toggleWeatherMenu() {
             targetedMenu = 2;
             toggleMenu();
         }
-
         function toggleMonotoringMenu() {
             targetedMenu = 3;
             toggleMenu();
         }
-
         function toggleNetworkingMenu() {
             targetedMenu = 4;
             toggleMenu();
@@ -125,7 +122,6 @@ ShellRoot {
 
     Volume {}
     Brightness {}
-    ToastNotificationHandler {}
 
     // Connections {
     //     target: topBarWindow

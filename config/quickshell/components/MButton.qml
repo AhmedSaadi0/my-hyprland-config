@@ -36,7 +36,6 @@ Button {
         id: buttonTextContent
         font: myCustomButton.font
         text: myCustomButton.text
-
         horizontalAlignment: myCustomButton.textHorizontalAlignment
         verticalAlignment: myCustomButton.textVerticalAlignment
 

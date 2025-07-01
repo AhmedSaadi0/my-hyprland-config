@@ -2,18 +2,22 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "../../../utils"
+// --- استيراد المكونات المخصصة
+import "../../../services"
 import "../../../themes"
 import "../../../components"
 
 Item {
     id: root
+
+    // --- خصائص التخطيط
     Layout.fillWidth: true
     Layout.fillHeight: true
 
     //==================================================
-    //  Data Model and Connections
+    //  1. البيانات والاتصالات (Data & Logic)
     //==================================================
+
     ListModel {
         id: notifModel
     }
@@ -21,16 +25,17 @@ Item {
     Connections {
         target: NotifManager
 
-        // When the manager says a new notification arrived
+        // عند وصول إشعار جديد من المدير
         function onNotificationReceived(smartNotifObject) {
             notifModel.insert(0, {
                 "smartNotif": smartNotifObject
             });
         }
 
-        // When the manager confirms a notification was closed
+        // عند تأكيد إغلاق إشعار
         function onNotificationClosed(smartNotifObject) {
-            // Find the corresponding item in our model and remove it
+            // البحث عن العنصر المطابق في النموذج وحذفه
+            // ملاحظة: هذا البحث قد يكون بطيئاً إذا كانت القائمة طويلة جداً
             for (let i = 0; i < notifModel.count; ++i) {
                 if (notifModel.get(i).smartNotif === smartNotifObject) {
                     notifModel.remove(i);
@@ -41,52 +46,41 @@ Item {
     }
 
     //==================================================
-    //  Visual Layout
+    //  2. الواجهة الرسومية (UI Layout)
     //==================================================
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
 
-        Row {
-
+        // --- الأزرار العلوية (Header)
+        RowLayout {
+            spacing: 0
+            Layout.fillWidth: true
             Layout.alignment: Qt.AlignRight
-            // Layout.bottomMargin: ThemeManager.selectedTheme.spacingLarge
 
             MButton {
-                id: clearAllButton
+                text: qsTr("Clear All") // استخدام qsTr للترجمة مستقبلاً
                 implicitHeight: 25
                 implicitWidth: 75
-
-                text: "Clear All"
                 enabled: notifModel.count > 0
-
                 topRightRadius: 0
                 bottomRightRadius: 0
-
-                onClicked: {
-                    NotifManager.clearAllNotifs();
-                }
+                onClicked: NotifManager.clearAllNotifs()
             }
 
             MButton {
-                id: dnd
                 text: NotifManager.dndEnabled ? "󰂛" : "󰂚"
                 font: ThemeManager.selectedTheme.typography.iconFont
-
                 implicitWidth: 35
                 implicitHeight: 25
-
-                // enabled: notifModel.count > 0
-
                 topLeftRadius: 0
                 bottomLeftRadius: 0
-
-                onClicked: {
-                    NotifManager.toggleDnd();
-                }
+                onClicked: NotifManager.toggleDnd()
             }
         }
 
+        // --- قائمة الإشعارات
         ScrollView {
             id: notifScroll
             Layout.fillWidth: true
@@ -94,21 +88,19 @@ Item {
             clip: true
             ScrollBar.vertical.policy: ScrollBar.AsNeeded
             ScrollBar.vertical.active: true
-            // ScrollBar.vertical: StyledScrollBar {}
 
             ListView {
                 id: notifView
                 width: notifScroll.width
                 implicitHeight: contentHeight
-                interactive: false
+                interactive: false // التمرير يتم عبر ScrollView
                 clip: true
 
-                // 3. The model is our clean ListModel.
                 model: notifModel
-                spacing: ThemeManager.selectedTheme.typography.spacingLarge
+                spacing: ThemeManager.selectedTheme.dimensions.spacingLarge
                 topMargin: ThemeManager.selectedTheme.dimensions.spacingLarge
 
-                // 4. All transitions are defined here and will work perfectly.
+                // --- الرسوم المتحركة (Transitions)
                 displaced: Transition {
                     NumberAnimation {
                         properties: "y"
@@ -149,113 +141,18 @@ Item {
                     }
                 }
 
-                //==================================================
-                //  Delegate for Each Notification
-                //==================================================
-                delegate: Rectangle {
-                    id: delegateRoot
+                // --- مندوب عرض كل إشعار (Delegate)
+                delegate: NotificationItem {
                     width: notifView.width
-                    color: ThemeManager.selectedTheme.colors.topbarBgColorV1
-                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                    implicitHeight: contentLayout.implicitHeight + 32
 
-                    property var notif: model.smartNotif
+                    // ربط بيانات النموذج بخصائص المكون
+                    notification: model.smartNotif
 
-                    ColumnLayout {
-                        id: contentLayout
-                        anchors.fill: parent
-                        anchors.margins: 16
-                        spacing: ThemeManager.selectedTheme.typography.spacingMedium
-
-                        // -- Row 1: App Name, Time, Close Button
-                        RowLayout {
-                            Layout.fillWidth: true
-                            spacing: 8
-                            Item {
-                                width: 16
-                                height: 16
-                                Layout.alignment: Qt.AlignVCenter
-                                Text {
-                                    text: "✕"
-                                    font.pixelSize: 14
-                                    anchors.centerIn: parent
-                                    color: ThemeManager.selectedTheme.colors.primary
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    cursorShape: Qt.PointingHandCursor
-                                    onClicked: {
-                                        // ** The Logic: Just call dismiss on the original notification object **
-                                        // The smart Notif object in the backend will handle the rest.
-                                        if (notif && notif.notification) {
-                                            notif.notification.dismiss();
-                                        }
-                                        enabled = false;
-                                    }
-                                }
-                            }
-                            Text {
-                                text: notif ? notif.appName : ""
-                                font.pixelSize: ThemeManager.selectedTheme.typography.heading4Size
-                                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
-                                Layout.fillWidth: true
-                                elide: Text.ElideRight
-                            }
-                            Text {
-                                text: notif ? notif.timeStr : ""
-                                font.pixelSize: ThemeManager.selectedTheme.typography.small
-                                color: ThemeManager.selectedTheme.colors.subtleText
-                                Layout.alignment: Qt.AlignVCenter
-                            }
+                    // عند طلب إغلاق الإشعار من المكون، نقوم بتنفيذ المنطق هنا
+                    onDismissClicked: {
+                        if (model.smartNotif && model.smartNotif.notification) {
+                            model.smartNotif.notification.dismiss();
                         }
-
-                        RowLayout {
-                            Layout.fillWidth: true
-                            spacing: ThemeManager.selectedTheme.typography.spacingMedium
-                            Item {
-                                width: 24
-                                height: 24
-                                Layout.alignment: Qt.AlignVCenter
-                                // visible: notif && notif.image
-                                Image {
-                                    anchors.fill: parent
-                                    source: notif ? notif.image : ""
-                                    fillMode: Image.PreserveAspectFit
-                                    smooth: true
-                                }
-                            }
-                            Text {
-                                text: notif ? notif.summary : ""
-                                font.pixelSize: ThemeManager.selectedTheme.typography.heading4Size
-                                font.bold: true
-                                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
-                                Layout.fillWidth: true
-                                elide: Text.ElideRight
-                            }
-                        }
-
-                        Text {
-                            text: notif ? notif.body : ""
-                            wrapMode: Text.WordWrap
-                            maximumLineCount: 2
-                            elide: Text.ElideRight
-                            font.pixelSize: ThemeManager.selectedTheme.typography.medium
-                            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-                            Layout.fillWidth: true
-                        }
-
-                        // RowLayout {
-                        //     visible: notif.actions && notif.actions.length > 0
-                        //     spacing: ThemeManager.selectedTheme.typography.spacingMedium
-                        //     Repeater {
-                        //         model: notif.actions
-                        //         Button {
-                        //             text: modelData.label
-                        //             font.pixelSize: ThemeManager.selectedTheme.typography.small
-                        //             onClicked: modelData.trigger()
-                        //         }
-                        //     }
-                        // }
                     }
                 }
             }

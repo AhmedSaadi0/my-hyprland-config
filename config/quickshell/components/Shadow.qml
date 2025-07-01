@@ -6,9 +6,9 @@ DropShadow {
     property var alpha: 0.25
 
     color: palette.shadow.alpha(alpha)
-    radius: 5       // Reduced for sharper results
+    radius: 5
     spread: 0
-    samples: 8      // Balanced quality/performance
+    samples: 8
     horizontalOffset: 2
     verticalOffset: 2
 

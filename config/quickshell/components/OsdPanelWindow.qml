@@ -3,6 +3,9 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import QtQuick.Effects
+import QtQuick.Controls.Material
+// import org.kde.kirigami as Kirigami
+
 import "../themes"
 
 PanelWindow {
@@ -119,25 +122,25 @@ PanelWindow {
 
             RowLayout {
                 anchors.fill: parent
-                anchors.topMargin: 5
-                anchors.leftMargin: 20
+                // anchors.topMargin: 5
+                anchors.leftMargin: 10
                 anchors.rightMargin: 20
-                anchors.bottomMargin: 5
+                // anchors.bottomMargin: 5
 
                 LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
                 LayoutMirroring.childrenInherit: true
 
                 Slider {
-                    id: volumeSlider
                     from: 0.0
                     to: 1.0
                     value: root.sliderValue
                     Layout.fillWidth: true
                     onValueChanged: root.valueChanged(value)
+                    Material.accent: palette.accent
                 }
 
                 Text {
-                    Layout.leftMargin: 10
+                    Layout.leftMargin: 5
                     text: root.valueTextIcon
                     color: root.valueTextColor
                     font.family: root.valueTextIconFont

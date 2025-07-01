@@ -10,6 +10,7 @@ PersistentProperties {
     // --- SOURCE PROPERTIES (for overriding in custom themes) ---
     // These are the actual values. Custom themes will override these.
     // The underscore is a convention to indicate these are the 'backing' properties.
+    property real _alpha: 1
 
     // --------------------
     // ------ Colors ------
@@ -47,6 +48,7 @@ PersistentProperties {
     // --------------------
     property int _baseRadius: 12
     property int _barHeight: 30
+    property int _barBottomMargin: 10
     property int _barWidgetsHeight: 22
     property int _menuHeight: 900
     property int _menuWidth: 380
@@ -98,41 +100,45 @@ PersistentProperties {
     property string themeName: "Base Theme"
 
     // --- Color Palette ---
+
     readonly property var colors: QtObject {
         // General
-        property alias primary: root._primary
-        property alias secondary: root._secondary
-        property alias onPrimary: root._onPrimary
-        property alias onSecondary: root._onSecondary
+        property color primary: Qt.rgba(root._primary.r, root._primary.g, root._primary.b, root._alpha)
+        property color secondary: Qt.rgba(root._secondary.r, root._secondary.g, root._secondary.b, root._alpha)
+        property color onPrimary: Qt.rgba(root._onPrimary.r, root._onPrimary.g, root._onPrimary.b, root._alpha)
+        property color onSecondary: Qt.rgba(root._onSecondary.r, root._onSecondary.g, root._onSecondary.b, root._alpha)
 
         // Top Bar
-        property alias topbarColor: root._topbarColor
+        property color topbarColor: Qt.rgba(root._topbarColor.r, root._topbarColor.g, root._topbarColor.b, root._alpha)
 
-        property alias topbarBgColorV1: root._topbarBgColorV1
-        property alias topbarBgColorV2: root._topbarBgColorV2
-        property alias topbarBgColorV3: root._topbarBgColorV3
-        property alias topbarFgColorV1: root._topbarFgColorV1
-        property alias topbarFgColorV2: root._topbarFgColorV2
-        property alias topbarFgColorV3: root._topbarFgColorV3
+        property color topbarBgColorV1: Qt.rgba(root._topbarBgColorV1.r, root._topbarBgColorV1.g, root._topbarBgColorV1.b, root._alpha)
+        property color topbarBgColorV2: Qt.rgba(root._topbarBgColorV2.r, root._topbarBgColorV2.g, root._topbarBgColorV2.b, root._alpha)
+        property color topbarBgColorV3: Qt.rgba(root._topbarBgColorV3.r, root._topbarBgColorV3.g, root._topbarBgColorV3.b, root._alpha)
+
+        property color topbarFgColorV1: Qt.rgba(root._topbarFgColorV1.r, root._topbarFgColorV1.g, root._topbarFgColorV1.b, 1)
+        property color topbarFgColorV2: Qt.rgba(root._topbarFgColorV2.r, root._topbarFgColorV2.g, root._topbarFgColorV2.b, 1)
+        property color topbarFgColorV3: Qt.rgba(root._topbarFgColorV3.r, root._topbarFgColorV3.g, root._topbarFgColorV3.b, 1)
 
         // Left Menu
-        property alias leftMenuBgColorV1: root._leftMenuBgColorV1
-        property alias leftMenuBgColorV2: root._leftMenuBgColorV2
-        property alias leftMenuBgColorV3: root._leftMenuBgColorV3
-        property alias leftMenuFgColorV1: root._leftMenuFgColorV1
-        property alias leftMenuFgColorV2: root._leftMenuFgColorV2
-        property alias leftMenuFgColorV3: root._leftMenuFgColorV3
+        property color leftMenuBgColorV1: Qt.rgba(root._leftMenuBgColorV1.r, root._leftMenuBgColorV1.g, root._leftMenuBgColorV1.b, root._alpha)
+        property color leftMenuBgColorV2: Qt.rgba(root._leftMenuBgColorV2.r, root._leftMenuBgColorV2.g, root._leftMenuBgColorV2.b, root._alpha)
+        property color leftMenuBgColorV3: Qt.rgba(root._leftMenuBgColorV3.r, root._leftMenuBgColorV3.g, root._leftMenuBgColorV3.b, root._alpha)
 
-        property alias volOsdBgColor: root._volOsdBgColor
-        property alias volOsdFgColor: root._volOsdFgColor
+        property color leftMenuFgColorV1: Qt.rgba(root._leftMenuFgColorV1.r, root._leftMenuFgColorV1.g, root._leftMenuFgColorV1.b, 1)
+        property color leftMenuFgColorV2: Qt.rgba(root._leftMenuFgColorV2.r, root._leftMenuFgColorV2.g, root._leftMenuFgColorV2.b, 1)
+        property color leftMenuFgColorV3: Qt.rgba(root._leftMenuFgColorV3.r, root._leftMenuFgColorV3.g, root._leftMenuFgColorV3.b, 1)
 
-        property alias subtleText: root._subtleTextColor
+        property color volOsdBgColor: Qt.rgba(root._volOsdBgColor.r, root._volOsdBgColor.g, root._volOsdBgColor.b, root._alpha)
+        property color volOsdFgColor: Qt.rgba(root._volOsdFgColor.r, root._volOsdFgColor.g, root._volOsdFgColor.b, 1)
+
+        property color subtleText: Qt.rgba(root._subtleTextColor.r, root._subtleTextColor.g, root._subtleTextColor.b, root._alpha)
     }
 
     // --- Dimensions and Spacing ---
     readonly property var dimensions: QtObject {
         property alias baseRadius: root._baseRadius
         property alias barHeight: root._barHeight
+        property alias barBottomMargin: root._barBottomMargin
         property alias barWidgetsHeight: root._barWidgetsHeight
         property alias menuHeight: root._menuHeight
         property alias menuWidth: root._menuWidth

@@ -1,8 +1,9 @@
 import QtQuick
 import Quickshell
 import "../../themes"
+// import QtQuick.Controls.Material
 
-// import "../../components"
+import "../../components"
 
 PanelWindow {
     id: root
@@ -10,22 +11,78 @@ PanelWindow {
     property bool isShown: false
     property var menuSelectorRef: menus
 
-    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 50
-    implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    // implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
+    implicitWidth: 40
     color: "transparent"
-    visible: false
-
-    exclusionMode: ExclusionMode.Ignore
+    // color: ThemeManager.selectedTheme.colors.topbarColor
+    visible: true
 
     anchors {
-        // top: true
+        top: true
         left: true
         bottom: true
     }
 
     Rectangle {
+        id: iconsBar
+        color: ThemeManager.selectedTheme.colors.topbarColor
+        implicitWidth: 40
+        height: parent.height
+        anchors {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+
+        MButton {
+            id: dashboardIcon
+            text: "󰨝"
+            normalBackground: "transparent"
+            height: 30
+
+            font {
+                family: ThemeManager.selectedTheme.typography.iconFont
+                pixelSize: 15
+            }
+
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+
+                topMargin: 20
+                leftMargin: 5
+                rightMargin: 5
+            }
+        }
+
+        MButton {
+            id: notificationsIcon
+            text: "󰂞"
+            normalBackground: "transparent"
+            height: 30
+
+            font {
+                family: ThemeManager.selectedTheme.typography.iconFont
+                pixelSize: 15
+            }
+
+            anchors {
+                top: dashboardIcon.bottom
+                left: parent.left
+                right: parent.right
+
+                topMargin: 10
+                leftMargin: 5
+                rightMargin: 5
+            }
+        }
+    }
+
+    Rectangle {
         id: contentContainer
-        width: parent.width - 50
+        // width: ThemeManager.selectedTheme.dimensions.menuWidth
+        implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
         height: parent.height
         color: ThemeManager.selectedTheme.colors.topbarColor
 
@@ -33,11 +90,16 @@ PanelWindow {
         scale: 0.98
         x: -50
 
+        anchors {
+            left: parent.left
+            top: parent.top
+            bottom: parent.bottom
+        }
+
         Header {
             id: menuHeader
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 4
         }
 
         MenuSelectorBar {
@@ -53,7 +115,6 @@ PanelWindow {
                 topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 1.6
             }
         }
-
         transformOrigin: Item.Center
 
         states: [
@@ -86,18 +147,18 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 620
-                        easing.type: Easing.OutExpo
+                        duration: 500
+                        easing.type: Easing.OutExpo  // نفس smoothOut
                     }
                     NumberAnimation {
                         properties: "opacity"
-                        duration: 300
-                        easing.type: Easing.InOutQuad
+                        duration: 420
+                        easing.type: Easing.OutQuad
                     }
                     NumberAnimation {
                         properties: "scale"
-                        duration: 560
-                        easing.type: Easing.OutBack
+                        duration: 480
+                        easing.type: Easing.OutExpo
                     }
                 }
             },
@@ -108,16 +169,16 @@ PanelWindow {
                     NumberAnimation {
                         properties: "x"
                         duration: 400
-                        easing.type: Easing.InExpo
+                        easing.type: Easing.InCubic  // نفس smoothIn
                     }
                     NumberAnimation {
                         properties: "opacity"
-                        duration: 300
+                        duration: 280
                         easing.type: Easing.InQuad
                     }
                     NumberAnimation {
                         properties: "scale"
-                        duration: 360
+                        duration: 400
                         easing.type: Easing.InCubic
                     }
                 }
@@ -128,7 +189,7 @@ PanelWindow {
     // عند التغيير في isShown، نهيّئ الظهور أو بدء الإخفاء المؤجل
     onIsShownChanged: {
         if (isShown) {
-            root.visible = true;
+            root.implicitWidth = ThemeManager.selectedTheme.dimensions.menuWidth + 40;
         } else {
             hideTimer.restart();
         }
@@ -136,20 +197,21 @@ PanelWindow {
 
     Timer {
         id: hideTimer
-        interval: 300
+        interval: 400
         repeat: false
-        onTriggered: root.visible = false
+        onTriggered: root.implicitWidth = 40
     }
 
     Component.onCompleted: {
         if (!isShown) {
-            root.visible = false;
+            root.implicitWidth = 40;
         }
     }
 
     function open() {
         isShown = true;
     }
+
     function close() {
         isShown = false;
     }

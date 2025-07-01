@@ -14,10 +14,10 @@ TopbarCircularProgress {
     // running: false
 
     icon: "-"
-    iconColor: palette.text
 
+    iconColor: palette.accent
     backgroundColor: palette.text.alpha(0.2)
-    foregroundColor: palette.text
+    foregroundColor: palette.accent
 
     onReadHandler: data => {
         const battery = UPower.devices.values[0];

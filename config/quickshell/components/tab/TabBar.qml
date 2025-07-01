@@ -25,7 +25,7 @@ Rectangle {
     property color textHighlightColor: Kirigami.Theme.highlightedTextColor
     property color textColor: Kirigami.Theme.textColor
     property color hoverColor: Kirigami.Theme.activeTextColor.lighter(1.2)
-    property color highlightColor: Kirigami.Theme.activeTextColor
+    property color highlightColor: palette.accent
     property int animationDuration: 300
 
     //-----------------------

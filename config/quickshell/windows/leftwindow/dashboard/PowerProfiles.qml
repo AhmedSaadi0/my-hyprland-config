@@ -36,7 +36,12 @@ Rectangle {
     // --- Colors (Aliasing Theme colors for clarity and central access) ---
     property color componentBackgroundColor: ThemeManager.selectedTheme.colors.topbarBgColorV1
     property color baseTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
-    property color highlightedStateTextColor: Kirigami.Theme.highlightedTextColor // For active button text
+    property color highlightedStateTextColor: {
+        let bg = activeStateBackgroundColor;
+
+        let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
+        return luminance > 0.5 ? "black" : "white";
+    }
     property color activeStateBackgroundColor: Kirigami.Theme.activeTextColor     // For active button background (original highlightColor)
     property color defaultStateBackgroundColor: Kirigami.Theme.activeBackgroundColor // For inactive button background
 

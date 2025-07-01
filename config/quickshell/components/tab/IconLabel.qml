@@ -15,7 +15,16 @@ Item {
         id: icon
         width: Math.max(7, paintedWidth)
         text: iconText
-        color: isActive ? root.textHighlightColor : root.textColor
+        // color: isActive ? root.textHighlightColor : root.textColor
+        color: {
+            if (isActive) {
+                let bg = textHighlightColor;
+                let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
+                return luminance > 0.5 ? "black" : "white";
+            }
+
+            return root.textColor;
+        }
         font.pixelSize: 14
         font.bold: isActive
         font.family: ThemeManager.selectedTheme.typography.iconFont
@@ -30,7 +39,15 @@ Item {
         id: label
         width: currentWidth - icon.width - 25
         text: labelText
-        color: root.textHighlightColor
+        color: {
+            if (isActive) {
+                let bg = textHighlightColor;
+                let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
+                return luminance > 0.5 ? "black" : "white";
+            }
+
+            return root.textColor;
+        }
         font.pixelSize: 14
         font.bold: isActive
         elide: Text.ElideRight

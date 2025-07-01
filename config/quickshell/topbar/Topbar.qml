@@ -1,6 +1,8 @@
 import Quickshell
-import Quickshell.Io
+import QtQuick.Effects
 import QtQuick
+
+// import QtQuick.Controls.Material
 // import QtQuick.Controls
 // import org.kde.kirigami as Kirigami
 
@@ -38,12 +40,24 @@ PanelWindow {
         anchors.top: parent.top
 
         layer.enabled: true
-        layer.effect: Shadow {
-            color: palette.shadow.alpha(0.8)
-            radius: 8
+        // layer.effect: Shadow {}
+        layer.effect: MultiEffect {
+            source: barBackground
+            anchors.fill: barBackground
+            shadowEnabled: true
+            shadowColor: Qt.rgba(0, 0, 0, 0.25)  // نفس alpha 0.25
+            shadowBlur: 0.6                      // 0.0 إلى 1.0 (كلما زادت زاد النعومة)
+            shadowVerticalOffset: 2
+            shadowHorizontalOffset: 2
+
+            // خصائص إضافية لجعل الظل يشبه CSS العصري:
+            blurEnabled: false
+            // contrast: 1.0
+            // brightness: 1.0
+            // saturation: 1.0
         }
 
-        // z: -1
+        z: -1
 
         // -------------------
         // ------ Clock ------

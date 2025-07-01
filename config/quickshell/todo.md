@@ -6,10 +6,10 @@
 
 ### 🔔 On-Screen Displays (OSDs)
 
-- [ ] **Notifications**
+- [x] **Notifications**
 - [x] **Sound OSD**
 - [x] **Brightness OSD**
-- [ ] **Volume & Brightness Popup Animations**
+- [x] **Volume & Brightness Popup Animations**
 - [ ] **Battery Status OSD**
 
 ### 🌤️ Weather Integration
