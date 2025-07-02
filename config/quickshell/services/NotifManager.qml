@@ -60,7 +60,9 @@ Singleton {
 
             // 2. أطلق إشارة للواجهة بأن هناك إشعاراً جديداً جاهزاً
             root.notificationReceived(newSmartNotif);
-            notificationSound.running = true;
+            if (!root.dndEnabled) {
+                notificationSound.running = true;
+            }
         }
     }
 
@@ -77,7 +79,7 @@ Singleton {
         readonly property string appIcon: notification ? notification.appIcon : ""
         readonly property string appName: notification ? notification.appName : ""
         readonly property string image: notification ? notification.image : ""
-        readonly property int id: notification.id
+        readonly property int id: notification ? notification.id : 0
 
         // You can add computed properties here too
         readonly property date time: new Date()
@@ -92,7 +94,7 @@ Singleton {
         // This Connections block listens to the lifecycle of the original notification.
         readonly property Connections conn: Connections {
             // We listen to the Retainable object provided by Quickshell
-            target: notifComponent.notification.Retainable
+            target: notifComponent.notification ? notifComponent.notification.Retainable : null
 
             // onDropped is emitted when the notification is dismissed or closed.
             function onDropped(): void {

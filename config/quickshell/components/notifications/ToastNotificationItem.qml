@@ -1,9 +1,9 @@
 // ToastNotificationPopup.qml
 import QtQuick
-import QtQuick.Layouts
+// import QtQuick.Layouts
 import QtQuick.Effects
 
-import "../components"
+// import "../../components"
 
 Item {
     id: root
@@ -26,6 +26,7 @@ Item {
             easing.type: Easing.OutCubic
         }
     }
+
     Behavior on scale {
         NumberAnimation {
             duration: 300

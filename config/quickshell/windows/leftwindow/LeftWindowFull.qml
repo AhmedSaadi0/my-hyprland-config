@@ -1,14 +1,14 @@
 import QtQuick
 import Quickshell
 import "../../themes"
-
-// import "../../components"
+import "../../components"
 
 PanelWindow {
     id: root
 
     property bool isShown: false
     property var menuSelectorRef: menus
+
 
     implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 50
     implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
@@ -23,38 +23,40 @@ PanelWindow {
         bottom: true
     }
 
-    Rectangle {
+    // Rectangle {
+    CorneredBox {
         id: contentContainer
-        width: parent.width - 50
+        width: parent.width - 25
         height: parent.height
-        color: ThemeManager.selectedTheme.colors.topbarColor
+        // color: "#000000"
 
         opacity: 0.0
-        scale: 0.98
+        // scale: 0.98
         x: -50
 
         Header {
             id: menuHeader
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 4
+            width: parent.width - 25
+
+            anchors {
+                top: parent.top
+                topMargin: 4
+            }
         }
 
         MenuSelectorBar {
             id: menus
+            width: parent.width 
+
             anchors {
                 top: menuHeader.bottom
-                left: contentContainer.left
-                right: contentContainer.right
                 bottom: contentContainer.bottom
-                leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-                rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
                 bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
                 topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 1.6
             }
         }
 
-        transformOrigin: Item.Center
+        transformOrigin: Item.Left
 
         states: [
             State {
@@ -74,7 +76,7 @@ PanelWindow {
                     target: contentContainer
                     x: -contentContainer.width  // يخرج من الشاشة كلياً
                     opacity: 0.0
-                    scale: 0.95  // تصغير خفيف
+                    // scale: 0.95  // تصغير خفيف
                 }
             }
         ]
@@ -89,16 +91,16 @@ PanelWindow {
                         duration: 620
                         easing.type: Easing.OutExpo
                     }
-                    NumberAnimation {
-                        properties: "opacity"
-                        duration: 300
-                        easing.type: Easing.InOutQuad
-                    }
-                    NumberAnimation {
-                        properties: "scale"
-                        duration: 560
-                        easing.type: Easing.OutBack
-                    }
+                    // NumberAnimation {
+                    //     properties: "opacity"
+                    //     duration: 300
+                    //     easing.type: Easing.InOutQuad
+                    // }
+                    // NumberAnimation {
+                    //     properties: "scale"
+                    //     duration: 560
+                    //     easing.type: Easing.OutBack
+                    // }
                 }
             },
             Transition {
@@ -112,14 +114,14 @@ PanelWindow {
                     }
                     NumberAnimation {
                         properties: "opacity"
-                        duration: 300
+                        duration: 600
                         easing.type: Easing.InQuad
                     }
-                    NumberAnimation {
-                        properties: "scale"
-                        duration: 360
-                        easing.type: Easing.InCubic
-                    }
+                    // NumberAnimation {
+                    //     properties: "scale"
+                    //     duration: 360
+                    //     easing.type: Easing.InCubic
+                    // }
                 }
             }
         ]
@@ -136,7 +138,7 @@ PanelWindow {
 
     Timer {
         id: hideTimer
-        interval: 300
+        interval: 800
         repeat: false
         onTriggered: root.visible = false
     }

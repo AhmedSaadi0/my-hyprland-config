@@ -16,6 +16,7 @@ Rectangle {
     //-----------------------
     property int barWidth: 300
     property int barHeight: 50
+
     implicitWidth: barWidth
     implicitHeight: barHeight
 
@@ -40,9 +41,9 @@ Rectangle {
             fill: parent
             margins: 6
             leftMargin: 6
-            rightMargin: 5
+            rightMargin: 6
         }
-        spacing: 12
+        spacing: 14
         orientation: ListView.Horizontal
         highlightFollowsCurrentItem: false
 

@@ -28,7 +28,7 @@ Rectangle {
 
     property int titleTopMargin: 5
     property int titleLeftMargin: 20
-    property int titleIconSpacing: 10 // Was title.rightMargin
+    property int titleIconSpacing: 20 // Was title.rightMargin
 
     property int buttonsRowTopMargin: 10
     property int buttonsRowSpacing: 10
@@ -95,8 +95,9 @@ Rectangle {
         color: root.baseTextColor
         anchors {
             top: parent.top
-            right: parent.right
+            left: parent.left
             topMargin: root.iconTopMargin
+            leftMargin: root.iconRightMargin
             rightMargin: root.iconRightMargin
             // leftMargin: root.iconLeftMargin // Kept commented
         }
@@ -108,11 +109,11 @@ Rectangle {
         font.pixelSize: root.headingFontSize
         font.bold: true
         color: root.baseTextColor
-        horizontalAlignment: Text.AlignRight
+        // horizontalAlignment: Text.AlignRight
         anchors {
             top: parent.top
-            left: parent.left
-            right: iconElement.left // Anchor to the icon element
+            right: parent.right
+            left: iconElement.right // Anchor to the icon element
             topMargin: root.titleTopMargin
             rightMargin: root.titleIconSpacing // Space between title and icon
             leftMargin: root.titleLeftMargin

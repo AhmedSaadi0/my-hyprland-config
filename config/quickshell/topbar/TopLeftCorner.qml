@@ -13,6 +13,7 @@ PanelWindow {
     implicitHeight: 20
     implicitWidth: 25
     exclusionMode: ExclusionMode.Normal
+
     // width: 300
     // width: ThemeManager.selectedTheme.dimensions.menuWidth
 

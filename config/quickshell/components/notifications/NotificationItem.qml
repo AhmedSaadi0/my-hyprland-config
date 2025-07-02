@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 
-import "../themes"
+import "../../themes"
 
 // هذا المكون يعرض إشعاراً واحداً فقط.
 // إنه لا يتصل بأي مدير منطق (logic manager) مباشرة، مما يجعله قابلاً لإعادة الاستخدام.
@@ -75,14 +75,18 @@ Rectangle {
             Layout.fillWidth: true
             spacing: ThemeManager.selectedTheme.typography.spacingMedium
 
-            Image {
-                source: notification ? notification.image : ""
+            Item {
                 width: 24
                 height: 24
-                Layout.alignment: Qt.AlignTop
-                fillMode: Image.PreserveAspectFit
-                smooth: true
-                visible: source !== "" // إخفاء الصورة إذا لم يكن هناك مصدر
+                Layout.alignment: Qt.AlignVCenter
+                // visible: notif && notif.image
+                Image {
+                    anchors.fill: parent
+                    source: notification ? notification.image : ""
+                    // source: notif ? notif.image : ""
+                    fillMode: Image.PreserveAspectFit
+                    smooth: true
+                }
             }
 
             Text {

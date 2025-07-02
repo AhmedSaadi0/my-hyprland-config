@@ -6,6 +6,7 @@ import QtQuick.Layouts
 import "../../../services"
 import "../../../themes"
 import "../../../components"
+import "../../../components/notifications"
 
 Item {
     id: root

@@ -110,9 +110,9 @@ Rectangle {
                 color: root.baseTextColor
                 anchors {
                     top: parent.top
-                    right: parent.right
+                    left: parent.left
                     topMargin: root.iconTopMargin
-                    rightMargin: root.iconRightMargin
+                    leftMargin: root.iconRightMargin
                 }
             }
 
@@ -122,11 +122,11 @@ Rectangle {
                 font.pixelSize: root.headingFontSize
                 font.bold: true
                 color: root.baseTextColor
-                horizontalAlignment: Text.AlignRight
+                // horizontalAlignment: Text.AlignRight
                 anchors {
                     top: parent.top
-                    left: parent.left
-                    right: iconElement.left
+                    right: parent.right
+                    left: iconElement.right
                     topMargin: root.titleTopMargin
                     rightMargin: root.titleIconSpacing
                     leftMargin: root.titleLeftMargin

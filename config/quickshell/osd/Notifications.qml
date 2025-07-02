@@ -1,134 +1,71 @@
+// ToastNotificationHandler.qml
 import QtQuick
 import Quickshell
-
 // import QtQuick.Controls
-// import QtQuick.Layouts
-import QtQuick.Effects
+import QtQuick.Layouts
 
-import "../components"
 // import "../themes"
 import "../services"
+import "../components/notifications"
 
-// هذه النافذة تظهر كإشعار منبثق "Toast" عند وصول إشعار جديد
 PanelWindow {
     id: root
 
-    // --- خصائص النافذة
-    // العرض والارتفاع سيعتمدان على حجم المحتوى
-    implicitWidth: panelContent.width + 20  // عرض المحتوى + هوامش
-    implicitHeight: panelContent.height + 40 // ارتفاع المحتوى + هوامش للظهور والاختفاء
+    // الحجم سيعتمد على المحتوى الداخلي
+    implicitWidth: popupContainer.implicitWidth + 20
+    implicitHeight: popupContainer.implicitHeight + 20
     color: "transparent"
-    visible: false
+    visible: popupModel.count > 0 // النافذة تكون مرئية فقط إذا كان هناك إشعارات
 
-    // --- خصائص تحديد الموضع على الشاشة
     exclusionMode: ExclusionMode.Ignore
     margins {
-        bottom: 10
+        bottom: 30
+        left: 30
     }
+
     anchors {
         bottom: true
         left: true
     }
 
-    // --- حالة النافذة والبيانات
-    property bool showing: false
-    property var currentNotification: null // <-- 2. خاصية لتخزين الإشعار الحالي
-
-    // --- مؤقتات الإخفاء التلقائي
-    Timer {
-        id: hideContainerTimer
-        interval: 5000 // زيادة الوقت قليلاً ليكون المستخدم قادراً على القراءة
-        repeat: false
-        onTriggered: root.showing = false
+    // نموذج بيانات لتخزين الإشعارات التي ستعرض
+    ListModel {
+        id: popupModel
     }
 
-    Timer {
-        id: hideViewTimer
-        interval: hideContainerTimer.interval + 300 // يختفي بعد انتهاء حركة الخروج
-        repeat: false
-        onTriggered: root.visible = false
-    }
-
-    // --- الاتصال بمدير الإشعارات
+    // الاتصال بمدير الإشعارات
     Connections {
         target: NotifManager
 
         function onNotificationReceived(smartNotifObject) {
-            // تحديث بيانات الإشعار
-            root.currentNotification = smartNotifObject;
-
-            // إظهار النافذة وإعادة تشغيل المؤقتات
-            root.showing = true;
-            root.visible = true;
-            hideContainerTimer.restart();
-            hideViewTimer.restart();
-        }
-
-        // عند إغلاق الإشعار من مكان آخر (مثل القائمة الرئيسية)
-        function onNotificationClosed(smartNotifObject) {
-            // إذا كان هو نفس الإشعار المعروض حالياً، قم بإخفائه
-            if (root.currentNotification === smartNotifObject) {
-                root.showing = false;
-                // لا نحتاج لإيقاف المؤقتات، لأن `showing = false` ستؤدي إلى إخفائه
+            // إضافة الإشعار الجديد إلى بداية القائمة
+            if (!NotifManager.dndEnabled) {
+                popupModel.insert(0, {
+                    "notificationData": smartNotifObject
+                });
             }
         }
     }
 
-    // --- حاوية المحتوى للتحكم في حركة الدخول والخروج
-    Item {
-        id: panelContainer
-        anchors.fill: parent
+    // حاوية لرص الإشعارات فوق بعضها
+    ColumnLayout {
+        id: popupContainer
+        spacing: 8
 
-        states: State {
-            name: "visible"
-            when: root.showing
-            PropertyChanges {
-                target: panelContent
-                y: 20 // الموضع النهائي بعد الحركة
-                opacity: 1
-            }
-        }
+        // Repeater يقوم بإنشاء نسخة من المكون لكل عنصر في النموذج
+        Repeater {
+            model: popupModel
 
-        transitions: Transition {
-            NumberAnimation {
-                properties: "y, opacity"
-                duration: 300
-                easing.type: Easing.OutCubic
-            }
-        }
+            // المكون الذي سيتم تكراره
+            delegate: ToastNotificationItem {
+                // تمرير بيانات الإشعار من النموذج إلى المكون
+                notification: model.notificationData
 
-        // <-- 3. تم استبدال المحتوى بالمكون الجديد
-        NotificationItem {
-            id: panelContent
-            width: 350 // تحديد عرض مناسب للإشعار المنبثق
-
-            // تحديد الموضع الأولي للحركة
-            y: root.height
-            opacity: 0
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            // <-- 4. ربط بيانات الإشعار
-            notification: root.currentNotification
-
-            // تطبيق تأثير الظل مباشرة على المكون
-            layer.enabled: true
-            layer.effect: MultiEffect {
-                shadowEnabled: true
-                shadowBlur: 1.1
-                shadowColor: "#55000000"
-                shadowHorizontalOffset: 4
-                shadowVerticalOffset: 4
-                shadowOpacity: 0.5
-            }
-
-            // <-- 5. التعامل مع حدث النقر على زر الإغلاق
-            onDismissClicked: {
-                // إخفاء النافذة فوراً
-                root.showing = false;
-
-                // إبلاغ المدير بأن الإشعار قد تم إغلاقه
-                if (notification && notification.notification) {
-                    notification.notification.dismiss();
+                // عند طلب المكون للحذف (بعد انتهاء وقته أو النقر عليه)
+                onRequestRemove: {
+                    // ابحث عن العنصر في النموذج وقم بحذفه
+                    // model.index يعطينا موقع العنصر الحالي
+                    popupModel.remove(model.index);
                 }
             }
         }

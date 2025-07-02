@@ -44,27 +44,27 @@ ShellRoot {
         }
     }
 
-    // Variants {
-    //     model: Quickshell.screens
-    //     BottomRightCorner {
-    //         id: bottomRightCorners
-    //
-    //         required property ShellScreen modelData
-    //         screen: modelData
-    //     }
-    // }
-    //
-    // Variants {
-    //     model: Quickshell.screens
-    //     BottomLeftCorner {
-    //         id: bottomLeftCorners
-    //
-    //         required property ShellScreen modelData
-    //         screen: modelData
-    //     }
-    // }
+    Variants {
+        model: Quickshell.screens
+        BottomRightCorner {
+            id: bottomRightCorners
 
-    // BottomBar {}
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
+
+    Variants {
+        model: Quickshell.screens
+        BottomLeftCorner {
+            id: bottomLeftCorners
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
+
+    LeftBar {}
 
     LeftWindowFull {
         // NewLeftWindow {
@@ -125,7 +125,7 @@ ShellRoot {
 
     Volume {}
     Brightness {}
-    ToastNotificationHandler {}
+    Notifications {}
 
     // Connections {
     //     target: topBarWindow

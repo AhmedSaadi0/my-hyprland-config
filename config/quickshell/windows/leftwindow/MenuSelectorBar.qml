@@ -12,12 +12,16 @@ ColumnLayout {
     id: root
     spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
+    // LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
+    // LayoutMirroring.childrenInherit: true
+
     // --- State & Animation Control ---
     property int currentIndex: 0
     property int inAnimationDuration: 100
     property int outAnimationDuration: 300
     property var inAnimationEasing: Easing.InCurve
     property var outAnimationEasing: Easing.OutExpo
+    property int topbarWidth: ThemeManager.selectedTheme.dimensions.menuWidth - 30
 
     // --- نموذج التابات ---
     property ListModel tabModel: ListModel {
@@ -113,15 +117,22 @@ ColumnLayout {
     TabBar {
         id: mainTabBar
         model: tabModel
-        Layout.fillWidth: true
+        // Layout.fillWidth: true
+        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
+        barWidth: root.topbarWidth
         barHeight: 35
         Component.onCompleted: currentIndex = root.currentIndex
     }
 
     StackLayout {
         id: viewContainer
+        width: parent.width
         Layout.fillWidth: true
         Layout.fillHeight: true
+        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         currentIndex: root.currentIndex
         clip: true
         smooth: true

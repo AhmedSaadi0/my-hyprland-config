@@ -10,7 +10,7 @@
 - [x] **Sound OSD**
 - [x] **Brightness OSD**
 - [x] **Volume & Brightness Popup Animations**
-- [ ] **Battery Status OSD**
+- [x] **Battery Status OSD**
 
 ### 🌤️ Weather Integration
 
