@@ -10,8 +10,9 @@ import "../../../components"
 Rectangle {
     id: monotoringMenu
     objectName: "monitoring"
-    width: ThemeManager.selectedTheme.dimensions.menuWidth
     color: "transparent"
+    implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    // width: ThemeManager.selectedTheme.dimensions.menuWidth
     // spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsSpacing
 
     // This component is from the original code, keeping it as is.

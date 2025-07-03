@@ -2,7 +2,7 @@
 // import QtQuick.Effects
 import QtQuick
 import QtQuick.Layouts
-import org.kde.kirigami as Kirigami
+// import org.kde.kirigami as Kirigami
 
 import "../../../components/monitors" // For Tempreture, Battery, Ram, Cpu
 // import "../../../components" // For Tempreture, Battery, Ram, Cpu

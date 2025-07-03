@@ -10,11 +10,18 @@ Rectangle {
     id: root
     color: "transparent"
 
-    property string boxColor : ThemeManager.selectedTheme.colors.topbarColor
+    property string boxColor: ThemeManager.selectedTheme.colors.topbarColor
+    property int cornerWidth: 20
+    property int cornerHeight: 20
+
+    property bool topLeftVisible: true
+    property bool topRightVisible: true
+    property bool bottomLeftVisible: true
+    property bool bottomRightVisible: true
 
     Rectangle {
         id: centerBox
-        color: boxColor
+        color: root.boxColor
         anchors {
             top: parent.top
             bottom: parent.bottom
@@ -26,6 +33,9 @@ Rectangle {
 
     BarCorner {
         id: bottomRightBarCorner
+        width: root.cornerWidth
+        visible: root.bottomLeftVisible
+        height: root.cornerHeight
         anchors {
             // top: parent.top
             right: parent.right
@@ -38,6 +48,9 @@ Rectangle {
 
     BarCorner {
         id: topRightBarCorner
+        width: root.cornerWidth
+        height: root.cornerHeight
+        visible: root.topLeftVisible
         anchors {
             top: parent.top
             right: parent.right
@@ -50,6 +63,9 @@ Rectangle {
 
     BarCorner {
         id: topLeftBarCorner
+        width: root.cornerWidth
+        height: root.cornerHeight
+        visible: root.topRightVisible
         anchors {
             top: parent.top
             left: parent.left
@@ -62,6 +78,9 @@ Rectangle {
 
     BarCorner {
         id: bottomLeftBarCorner
+        width: root.cornerWidth
+        height: root.cornerHeight
+        visible: root.bottomRightVisible
         anchors {
             bottom: parent.bottom
             left: parent.left

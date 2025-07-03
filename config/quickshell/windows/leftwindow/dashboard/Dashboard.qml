@@ -7,7 +7,9 @@ import "../../../themes"
 
 Column {
     // color: "transparent"
-    width: ThemeManager.selectedTheme.dimensions.menuWidth
+    // width: ThemeManager.selectedTheme.dimensions.menuWidth
+    // height: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+
     spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
     PowerProfiles {

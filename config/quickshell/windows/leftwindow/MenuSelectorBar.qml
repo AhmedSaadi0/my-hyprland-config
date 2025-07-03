@@ -117,9 +117,6 @@ ColumnLayout {
     TabBar {
         id: mainTabBar
         model: tabModel
-        // Layout.fillWidth: true
-        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
         barWidth: root.topbarWidth
         barHeight: 35
@@ -128,11 +125,14 @@ ColumnLayout {
 
     StackLayout {
         id: viewContainer
-        width: parent.width
+        // width: parent.width
+
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
+        // Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        // Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
         currentIndex: root.currentIndex
         clip: true
         smooth: true

@@ -10,7 +10,7 @@ import "../components"
 
 PanelWindow {
     id: root
-    implicitWidth: 1
+    implicitWidth: 26
     color: "transparent"
 
     // exclusionMode: ExclusionMode.Auto
@@ -23,25 +23,16 @@ PanelWindow {
         bottom: true
     }
 
-    // Background
-    Rectangle {
-        id: barBackground
-        height: ThemeManager.selectedTheme.dimensions.barHeight
-        width: parent.width
-        color: palette.window
-
+    CorneredBox {
+        // width: 50
+        height: parent.height
+        bottomRightVisible: false
+        topRightVisible: false
         anchors {
-            top: parent.top
-            bottom: parent.bottom
+            fill: parent
         }
 
         layer.enabled: true
-        layer.effect: Shadow {
-            color: palette.shadow.alpha(0.8)
-            radius: 8
-        }
-
-        // z: -1
-
+        layer.effect: Shadow {}
     }
 }

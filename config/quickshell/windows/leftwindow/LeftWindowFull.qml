@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import QtQuick.Layouts
 import "../../themes"
 import "../../components"
 
@@ -8,7 +9,6 @@ PanelWindow {
 
     property bool isShown: false
     property var menuSelectorRef: menus
-
 
     implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 50
     implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
@@ -30,31 +30,53 @@ PanelWindow {
         height: parent.height
         // color: "#000000"
 
-        opacity: 0.0
+        opacity: 1.0
         // scale: 0.98
         x: -50
 
-        Header {
-            id: menuHeader
+        layer.enabled: true
+        layer.effect: Shadow {}
+
+        Column {
+            id: col
             width: parent.width - 25
+            height: root.implicitHeight
 
-            anchors {
-                top: parent.top
-                topMargin: 4
+            spacing: 10
+            // anchors.fill: parent
+
+            property int sideMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
+            Header {
+                id: menuHeader
+
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: col.sideMargin
+                anchors.rightMargin: col.sideMargin
+            }
+
+            MenuSelectorBar {
+                id: menus
+
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: col.sideMargin
+                anchors.rightMargin: col.sideMargin
             }
         }
+        // ColumnLayout {
+        //     id: contentCo
+        //     width: parent.width - 25
+        //     height: root.implicitHeight
+        //
+        //     Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        //     Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        //
+        //     // leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin + 100
+        //
 
-        MenuSelectorBar {
-            id: menus
-            width: parent.width 
-
-            anchors {
-                top: menuHeader.bottom
-                bottom: contentContainer.bottom
-                bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-                topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 1.6
-            }
-        }
+        // }
 
         transformOrigin: Item.Left
 
@@ -75,7 +97,7 @@ PanelWindow {
                 PropertyChanges {
                     target: contentContainer
                     x: -contentContainer.width  // يخرج من الشاشة كلياً
-                    opacity: 0.0
+                    // opacity: 0.0
                     // scale: 0.95  // تصغير خفيف
                 }
             }
@@ -88,7 +110,7 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 620
+                        duration: 500
                         easing.type: Easing.OutExpo
                     }
                     // NumberAnimation {
@@ -109,14 +131,14 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 400
+                        duration: 500
                         easing.type: Easing.InExpo
                     }
-                    NumberAnimation {
-                        properties: "opacity"
-                        duration: 600
-                        easing.type: Easing.InQuad
-                    }
+                    // NumberAnimation {
+                    //     properties: "opacity"
+                    //     duration: 900
+                    //     easing.type: Easing.InQuad
+                    // }
                     // NumberAnimation {
                     //     properties: "scale"
                     //     duration: 360

@@ -12,14 +12,14 @@ import "./osd"
 ShellRoot {
     id: shellRoot
 
-    Variants {
-        model: Quickshell.screens
-        TopLeftCorner {
-            id: topLeftCorner
-            required property ShellScreen modelData
-            screen: modelData
-        }
-    }
+    // Variants {
+    //     model: Quickshell.screens
+    //     TopLeftCorner {
+    //         id: topLeftCorner
+    //         required property ShellScreen modelData
+    //         screen: modelData
+    //     }
+    // }
 
     Variants {
         model: Quickshell.screens
@@ -44,25 +44,25 @@ ShellRoot {
         }
     }
 
-    Variants {
-        model: Quickshell.screens
-        BottomRightCorner {
-            id: bottomRightCorners
-
-            required property ShellScreen modelData
-            screen: modelData
-        }
-    }
-
-    Variants {
-        model: Quickshell.screens
-        BottomLeftCorner {
-            id: bottomLeftCorners
-
-            required property ShellScreen modelData
-            screen: modelData
-        }
-    }
+    // Variants {
+    //     model: Quickshell.screens
+    //     BottomRightCorner {
+    //         id: bottomRightCorners
+    //
+    //         required property ShellScreen modelData
+    //         screen: modelData
+    //     }
+    // }
+    //
+    // Variants {
+    //     model: Quickshell.screens
+    //     BottomLeftCorner {
+    //         id: bottomLeftCorners
+    //
+    //         required property ShellScreen modelData
+    //         screen: modelData
+    //     }
+    // }
 
     LeftBar {}
 
