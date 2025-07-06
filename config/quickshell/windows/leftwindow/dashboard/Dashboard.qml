@@ -3,7 +3,7 @@
 // import QtQuick.Controls
 import QtQuick
 
-import "../../../themes"
+import "root:/themes"
 
 Column {
     // color: "transparent"

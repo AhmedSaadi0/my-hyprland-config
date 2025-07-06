@@ -3,17 +3,17 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 // --- استيراد المكونات المخصصة
-import "../../../services"
-import "../../../themes"
-import "../../../components"
-import "../../../components/notifications"
+import "root:/services"
+import "root:/themes"
+import "root:/components"
+import "root:/components/notifications"
 
 Item {
     id: root
 
     // --- خصائص التخطيط
-    Layout.fillWidth: true
-    Layout.fillHeight: true
+    // Layout.fillWidth: true
+    // Layout.fillHeight: true
 
     //==================================================
     //  1. البيانات والاتصالات (Data & Logic)

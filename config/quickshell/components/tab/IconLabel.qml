@@ -1,29 +1,32 @@
+// components/tab/IconLabel.qml
+
 import QtQuick
 import "../../themes"
 
+// This component is now simpler. It ONLY handles a horizontal layout.
+// Its parent (TabButtonDelegate) is responsible for rotating it.
 Item {
+    id: root
+
     property string iconText
     property string labelText
     property bool isActive
-    property int currentWidth
-    // property bool isCurrent
+    property int currentWidth // This is the width it's given to lay out content
 
-    width: currentWidth
-    height: parent.height
+    // These are no longer needed, as the parent handles the layout.
+    // width: currentWidth
+    // height: parent.height
 
     Text {
         id: icon
-        width: Math.max(7, paintedWidth)
         text: iconText
-        // color: isActive ? root.textHighlightColor : root.textColor
         color: {
             if (isActive) {
                 let bg = textHighlightColor;
                 let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
                 return luminance > 0.5 ? "black" : "white";
             }
-
-            return root.textColor;
+            return textColor;
         }
         font.pixelSize: 14
         font.bold: isActive
@@ -37,17 +40,10 @@ Item {
 
     Text {
         id: label
-        width: currentWidth - icon.width - 25
+        // The width is now calculated based on the parent's width, which is passed via currentWidth
+        width: Math.max(0, root.width - icon.width - 25)
         text: labelText
-        color: {
-            if (isActive) {
-                let bg = textHighlightColor;
-                let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-                return luminance > 0.5 ? "black" : "white";
-            }
-
-            return root.textColor;
-        }
+        color: icon.color // Match the icon's color
         font.pixelSize: 14
         font.bold: isActive
         elide: Text.ElideRight
@@ -55,15 +51,6 @@ Item {
             left: icon.right
             verticalCenter: parent.verticalCenter
             leftMargin: 10
-            // right: parent.right
-            // rightMargin: 10
         }
-
-        // Behavior on width {
-        //     NumberAnimation {
-        //         duration: root.animationDuration
-        //         easing.type: Easing.OutBack
-        //     }
-        // }
     }
 }

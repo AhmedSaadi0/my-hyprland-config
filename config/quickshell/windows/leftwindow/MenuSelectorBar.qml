@@ -1,179 +1,130 @@
-// windows/leftwindow/MenuSelectorBar.qml
-
 import QtQuick
 import QtQuick.Layouts
-import "../../themes"
-import "../../components/tab"
+import QtQuick.Controls
+
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
-import "./notificatoin"
 
-ColumnLayout {
-    id: root
-    spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+import "root:/themes"
+import "root:/utils"
 
-    // LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
-    // LayoutMirroring.childrenInherit: true
+StackView {
+    id: stackView
 
-    // --- State & Animation Control ---
+    Layout.fillWidth: true
+    Layout.fillHeight: true
+    clip: true
+    smooth: true
+
+    property int transitionDuration: 350
+    property var outEasing: Easing.OutQuad
+    property var inEasing: Easing.InQuart
+
     property int currentIndex: 0
-    property int inAnimationDuration: 100
-    property int outAnimationDuration: 300
-    property var inAnimationEasing: Easing.InCurve
-    property var outAnimationEasing: Easing.OutExpo
-    property int topbarWidth: ThemeManager.selectedTheme.dimensions.menuWidth - 30
+    property int previousIndex: 0
 
-    // --- نموذج التابات ---
-    property ListModel tabModel: ListModel {
-        ListElement {
-            text: "Control"
-            icon: "󰨝"
-            onClick: function () {
-                root.changeTab(0);
-            }
-        }
-        ListElement {
-            text: "Notifications"
-            icon: "󰂞"
-            onClick: function () {
-                root.changeTab(1);
-            }
-        }
-        ListElement {
-            text: "Weather"
-            icon: "󰨹"
-            onClick: function () {
-                root.changeTab(2);
-            }
-        }
-        ListElement {
-            text: "Monitors"
-            icon: ""
-            onClick: function () {
-                root.changeTab(3);
-            }
-        }
-        ListElement {
-            text: "Network"
-            icon: ""
-            onClick: function () {
-                root.changeTab(4);
+    property var pageComponents: [dashboardComponent, notiListComponent, weatherComponent, monitorComponent, networkComponent]
+
+    initialItem: pageComponents.length > 0 ? pageComponents[0] : null
+
+    Connections {
+        target: LeftMenuStatus
+        function onSelectedIndexTargeted(newIndex) {
+            if (newIndex >= 0 && newIndex < pageComponents.length && newIndex !== currentIndex) {
+                previousIndex = currentIndex;
+                currentIndex = newIndex;
+                stackView.replace(pageComponents[newIndex]);
             }
         }
     }
 
-    function changeTab(newIndex) {
-        if (newIndex === currentIndex)
-            return;
-        var oldIndex = currentIndex;
-        var direction = (newIndex > oldIndex) ? 1 : -1;
-        var oldPage = viewContainer.itemAt(oldIndex);
-        var newPage = viewContainer.itemAt(newIndex);
-
-        mainTabBar.currentIndex = newIndex;
-        currentIndex = newIndex;
-        // وضع الصفحة الجديدة خارج الشاشة في الجهة الصحيحة ثم إظهارها
-        newPage.x = direction * viewContainer.width;
-        newPage.visible = true;
-
-        // رسوم الخروج للصفحة القديمة
-        var exitAnim = Qt.createQmlObject('import QtQuick ; NumberAnimation { }', viewContainer);
-        exitAnim.target = oldPage;
-        exitAnim.property = "x";
-        exitAnim.from = 0;
-        exitAnim.to = -direction * viewContainer.width;
-        exitAnim.duration = inAnimationDuration;
-        exitAnim.easing.type = inAnimationEasing;
-
-        // استبدال onFinished بتوصيل الإشارة finished
-        exitAnim.finished.connect(function () {
-            // إخفاء الصفحة القديمة وتدمير الرسوم
-            oldPage.visible = false;
-            exitAnim.destroy();
-
-            // رسوم الدخول للصفحة الجديدة
-            var enterAnim = Qt.createQmlObject('import QtQuick ; NumberAnimation { }', viewContainer);
-            enterAnim.target = newPage;
-            enterAnim.property = "x";
-            enterAnim.from = direction * viewContainer.width;
-            enterAnim.to = 0;
-            enterAnim.duration = outAnimationDuration;
-            enterAnim.easing.type = outAnimationEasing;
-
-            // عند انتهاء الدخول نخّلي الرسوم وتحدّث currentIndex
-            enterAnim.finished.connect(function () {
-                enterAnim.destroy();
-            // currentIndex = newIndex;
-            // mainTabBar.currentIndex = newIndex;
-            });
-
-            enterAnim.start();
-        });
-
-        exitAnim.start();
+    replaceEnter: Transition {
+        ParallelAnimation {
+            NumberAnimation {
+                property: "x"
+                from: stackView.previousIndex < stackView.currentIndex ? stackView.width : -stackView.width
+                to: 0
+                duration: 350
+                easing.type: stackView.outEasing
+            }
+            NumberAnimation {
+                property: "scale"
+                from: 0.9
+                to: 1.0
+                duration: 350
+                easing.type: stackView.outEasing
+            }
+            NumberAnimation {
+                property: "opacity"
+                from: 0
+                to: 1
+                duration: 350
+                easing.type: stackView.outEasing
+            }
+        }
     }
 
-    // --- شريط التابات ---
-    TabBar {
-        id: mainTabBar
-        model: tabModel
-
-        barWidth: root.topbarWidth
-        barHeight: 35
-        Component.onCompleted: currentIndex = root.currentIndex
+    replaceExit: Transition {
+        ParallelAnimation {
+            NumberAnimation {
+                property: "x"
+                from: 0
+                to: stackView.previousIndex < stackView.currentIndex ? -stackView.width / 4 : stackView.width / 4
+                duration: 250
+                easing.type: stackView.inEasing
+            }
+            NumberAnimation {
+                property: "scale"
+                from: 1.0
+                to: 0.9
+                duration: 250
+                easing.type: stackView.inEasing
+            }
+            NumberAnimation {
+                property: "opacity"
+                from: 1
+                to: 0
+                duration: 250
+                easing.type: stackView.inEasing
+            }
+        }
     }
 
-    StackLayout {
-        id: viewContainer
-        // width: parent.width
-
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-
-        // Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        // Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-
-        currentIndex: root.currentIndex
-        clip: true
-        smooth: true
-
-        // تعريف الصفحات (في البداية جميعها مرئية لكن خارج المشهد ما عدا الأولى)
+    Component {
+        id: dashboardComponent
         Dashboard.Dashboard {
-            id: dashboardPage
-            x: 0
-            visible: true
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
+    }
 
+    Component {
+        id: notiListComponent
         NotiList {
-            id: notiPage
-            x: viewContainer.width
-            visible: false
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
+    }
 
+    Component {
+        id: weatherComponent
         Dashboard.Dashboard2 {
-            id: weatherPage
-            x: viewContainer.width
-            visible: false
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
+    }
 
+    Component {
+        id: monitorComponent
         Monitoring.Main {
-            id: monitorPage
-            x: viewContainer.width
-            visible: false
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
+    }
 
+    Component {
+        id: networkComponent
         Dashboard.Dashboard3 {
-            id: networkPage
-            x: viewContainer.width
-            visible: false
             Layout.fillWidth: true
             Layout.fillHeight: true
         }

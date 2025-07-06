@@ -57,7 +57,7 @@
 - [ ] **Feature Control Window (UI to Toggle Features)**
 - [ ] **Day/Night Theme Switching Based on Time**
 - [ ] **Custom Full Themes**
-- [ ] **Implement PyWall or an alternative**
+- [ ] **Implement PyWall(pywal16) or an alternative**
 
 ### 🧠 Productivity & UX
 
@@ -65,7 +65,13 @@
 - [x] **Notifications History Center**
   - [ ] Add Action buttons
 - [x] **Improve Menus Navigation**
-- [ ] **Improve Animations**
-  - [ ] Menu
-  - [ ] Notifications
-  - [ ] Navigation
+- [x] **Improve Animations**
+  - [x] Menu
+  - [x] Notifications
+  - [x] Navigation
+
+### Left Menu
+
+- [x] **Left Menu Navigation**
+- [x] **Left Menu Animations**
+- [ ] **Add new icons for more control like brightness**

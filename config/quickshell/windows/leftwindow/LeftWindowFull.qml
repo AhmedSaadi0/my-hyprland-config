@@ -1,8 +1,10 @@
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
-import "../../themes"
-import "../../components"
+
+import "root:/themes"
+import "root:/components"
+import "root:/utils"
 
 PanelWindow {
     id: root
@@ -12,25 +14,44 @@ PanelWindow {
 
     implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 50
     implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+
+    exclusiveZone: ThemeManager.selectedTheme.dimensions.menuWidth + 10
+
     color: "transparent"
     visible: false
 
-    exclusionMode: ExclusionMode.Ignore
+    // exclusionMode: ExclusionMode.Ignore
+    // exclusionMode: ExclusionMode.Auto
+
+    Connections {
+        target: LeftMenuStatus
+        function onSelectedIndexTargeted(newIndex) {
+            if (newIndex === -1) {
+                root.close();
+            } else {
+                root.open();
+            }
+        }
+    }
 
     anchors {
-        // top: true
+        top: true
         left: true
         bottom: true
     }
 
-    // Rectangle {
+    margins {
+        left: -5
+        top: -10
+    }
+
     CorneredBox {
         id: contentContainer
-        width: parent.width - 25
-        height: parent.height
+        implicitWidth: parent.width - 25
+        implicitHeight: parent.height
         // color: "#000000"
 
-        opacity: 1.0
+        // opacity: 1.0
         // scale: 0.98
         x: -50
 
@@ -58,6 +79,7 @@ PanelWindow {
 
             MenuSelectorBar {
                 id: menus
+                height: contentContainer.height - menuHeader.height - col.sideMargin
 
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -87,8 +109,8 @@ PanelWindow {
                 PropertyChanges {
                     target: contentContainer
                     x: 0
-                    opacity: 1.0
-                    scale: 1.0
+                    // opacity: 1.0
+                    // scale: 1.0
                 }
             },
             State {
@@ -110,8 +132,8 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 500
-                        easing.type: Easing.OutExpo
+                        duration: 400
+                        easing.type: Easing.OutCubic
                     }
                     // NumberAnimation {
                     //     properties: "opacity"
@@ -131,7 +153,7 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 500
+                        duration: 400
                         easing.type: Easing.InExpo
                     }
                     // NumberAnimation {
@@ -153,6 +175,7 @@ PanelWindow {
     onIsShownChanged: {
         if (isShown) {
             root.visible = true;
+            hideTimer.stop();
         } else {
             hideTimer.restart();
         }
@@ -160,7 +183,7 @@ PanelWindow {
 
     Timer {
         id: hideTimer
-        interval: 800
+        interval: 500
         repeat: false
         onTriggered: root.visible = false
     }

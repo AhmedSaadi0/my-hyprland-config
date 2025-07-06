@@ -10,7 +10,8 @@ import "../components"
 PanelWindow {
     id: root
 
-    implicitHeight: 20
+    implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    implicitWidth: 19
     exclusionMode: ExclusionMode.Normal
 
     focusable: false
@@ -21,9 +22,9 @@ PanelWindow {
     property real cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius * 2
 
     anchors {
-        top: true
         right: true
-        // bottom: true
+        bottom: true
+        // top: true
         // left: true
     }
 

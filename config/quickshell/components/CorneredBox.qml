@@ -1,9 +1,9 @@
 // ملف: FinalTest.qml
 import QtQuick
 import QtQuick.Window
-import QtQuick.Shapes
+// import QtQuick.Shapes
 
-import "../../components"
+// import "../../components"
 import "../themes"
 
 Rectangle {
@@ -43,7 +43,7 @@ Rectangle {
         }
         position: "bottom-left"
         shapeColor: palette.window
-        // rotation: 90
+        // rotation: 180
     }
 
     BarCorner {

@@ -11,26 +11,24 @@ Button {
 
     property var textHorizontalAlignment: Text.AlignHCenter
     property var textVerticalAlignment: Text.AlignVCenter
+    property bool isActive: false
 
     property var disabledBackground: Kirigami.Theme.negativeBackgroundColor
     property var downBackground: Kirigami.Theme.hoverColor.darker(1.15)
     property var hoveredBackground: Kirigami.Theme.hoverColor
-    property var normalBackground: Kirigami.Theme.activeBackgroundColor
+    property var normalBackground: Kirigami.Theme.activeBackgroundColor // Original value
+    property var activeBackground: ThemeManager.selectedTheme.colors.primary
 
     property var disabledForeground: Kirigami.Theme.highlightColor.darker(0.5)
     property var downForeground: Kirigami.Theme.highlightColor.lighter(1.8)
-    property var hoveredForeground: Kirigami.Theme.highlightColor
+    // property var hoveredForeground: ThemeManager.selectedTheme.colors.onPrimary
     property var normalForeground: Kirigami.Theme.textColor
+    property var activeForeground: ThemeManager.selectedTheme.colors.onPrimary
 
     property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-
-    // layer.enabled: true
-    // layer.effect: Shadow {
-    //     alpha: 0.1
-    // }
 
     contentItem: Text {
         id: buttonTextContent
@@ -42,9 +40,15 @@ Button {
         color: {
             if (!myCustomButton.enabled) {
                 return myCustomButton.disabledForeground;
-            } else if (myCustomButton.down || myCustomButton.pressed) {
-                return myCustomButton.downForeground;
+                // } else if (myCustomButton.down || myCustomButton.pressed) {
+                //     return myCustomButton.downForeground;
+            } else if (myCustomButton.isActive) {
+                return myCustomButton.activeForeground;
+                // let bg = myCustomButton.activeBackground;
+                // let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
+                // return luminance > 0.5 ? "black" : "white";
             } else if (myCustomButton.hovered) {
+                // return myCustomButton.hoveredForeground;
                 let bg = myCustomButton.hoveredBackground;
                 let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
                 return luminance > 0.5 ? "black" : "white";
@@ -55,8 +59,6 @@ Button {
     }
 
     background: Rectangle {
-        // radius: ThemeManager.selectedTheme.dimensions.elementRadius
-
         topLeftRadius: myCustomButton.topLeftRadius
         topRightRadius: myCustomButton.topRightRadius
         bottomLeftRadius: myCustomButton.bottomLeftRadius
@@ -65,22 +67,21 @@ Button {
         color: {
             if (!myCustomButton.enabled) {
                 return myCustomButton.disabledBackground;
-            } else if (myCustomButton.down || myCustomButton.pressed) {
-                return myCustomButton.downBackground;
+                // } else if (myCustomButton.down || myCustomButton.pressed) {
+                //     return myCustomButton.downBackground;
             } else if (myCustomButton.hovered) {
                 return myCustomButton.hoveredBackground;
+            } else if (myCustomButton.isActive) {
+                return myCustomButton.activeBackground;
             } else {
                 return myCustomButton.normalBackground;
             }
         }
 
-        // border.color: myCustomButton.hovered ? "red" : "transparent" // Visual feedback
-        // border.color: myCustomButton.visualfocus ? Kirigami.Theme.focusColor : "transparent"
-
         Behavior on color {
             ColorAnimation {
-                duration: 150 // Short duration for quick feedback
-                // easing.type: Easing.InOutCubic
+                duration: 400
+                easing.type: Easing.OutQuad
             }
         }
     }
