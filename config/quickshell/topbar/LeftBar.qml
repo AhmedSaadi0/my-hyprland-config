@@ -8,6 +8,7 @@ import QtQuick.Effects
 import "../themes"
 import "../components"
 import "root:/utils"
+import "root:/services"
 
 PanelWindow {
     id: root
@@ -16,6 +17,45 @@ PanelWindow {
     property bool panelOpen: false
     property int activeMenuIndex: LeftMenuStatus.selectedIndex
     exclusiveZone: 45
+
+    // --- 2. خاصية لتخزين مؤشر عنصر الإشعارات ---
+    property int notificationMenuIndex: -1
+
+    // --- 3. ربط الواجهة بخدمة الإشعارات ---
+    // هذا الكود يراقب التغييرات في NotifManager ويحدّث الواجهة
+    Connections {
+        target: NotifManager // الهدف هو الـ Singleton الخاص بنا
+
+        // هذه الدالة تُستدعى تلقائياً عندما تتغير قيمة NotifManager.notificationCount
+        function onNotificationCountChanged() {
+            // نتأكد من أننا وجدنا عنصر الإشعارات أولاً
+            if (root.notificationMenuIndex !== -1) {
+                // نقوم بتحديث خاصية notificationCount في الموديل بكفاءة عالية
+                buttonGroup.model.set(root.notificationMenuIndex, {
+                    "notificationCount": NotifManager.notificationCount
+                });
+            }
+        }
+    }
+
+    // --- 4. إعداد القيمة الأولية عند بدء تشغيل الواجهة ---
+    Component.onCompleted: {
+        // نبحث عن عنصر "Notifications" في الموديل مرة واحدة فقط
+        for (let i = 0; i < buttonGroup.model.count; i++) {
+            if (buttonGroup.model.get(i).name === "Notifications") {
+                // نخزن مؤشره (index) للوصول السريع لاحقاً
+                root.notificationMenuIndex = i;
+
+                // نقوم بتعيين القيمة الأولية للعداد عند بدء التشغيل
+                // هذا مهم في حال كانت هناك إشعارات موجودة بالفعل
+                buttonGroup.model.set(i, {
+                    "notificationCount": NotifManager.notificationCount
+                });
+
+                break; // نوقف البحث بعد العثور عليه
+            }
+        }
+    }
 
     implicitWidth: 60
     implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
@@ -41,7 +81,6 @@ PanelWindow {
         left: true
         bottom: true
     }
-
     margins {
         top: -10
     }
@@ -63,18 +102,14 @@ PanelWindow {
 
         ButtonGroup {
             id: buttonGroup
-            // anchors.fill: parent
-
             implicitWidth: 30
             implicitHeight: 300
-
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.topMargin: 20
             anchors.leftMargin: 5
             anchors.rightMargin: 5
 
-            // Pass the model data to the group
             model: ListModel {
                 ListElement {
                     icon: "󰨝"
@@ -83,32 +118,29 @@ PanelWindow {
                 ListElement {
                     icon: "󰂞"
                     name: "Notifications"
+                    // القيمة الأولية هنا ستُحدّث فوراً عند بدء التشغيل
+                    notificationCount: 0
                 }
                 ListElement {
-                    text: "Weather"
                     icon: "󰨹"
+                    name: "Weather"
                 }
                 ListElement {
-                    text: "Monitors"
                     icon: ""
+                    name: "Monitors"
                 }
                 ListElement {
-                    text: "Network"
                     icon: ""
+                    name: "Network"
                 }
             }
 
-            // Connect the group's state to the panel's state
-
-            // React to clicks within the group
             onCurrentIndexChanged: function () {
                 const newIndex = buttonGroup.currentIndex;
                 root.activeMenuIndex = newIndex;
                 if (newIndex === -1) {
                     root.panelOpen = false;
                 } else {
-                    // Check if it was already open with the same menu
-                    // to prevent re-triggering animations.
                     if (!root.panelOpen) {
                         root.panelOpen = true;
                     }

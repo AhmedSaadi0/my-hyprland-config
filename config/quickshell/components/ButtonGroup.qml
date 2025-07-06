@@ -1,7 +1,7 @@
 import QtQuick
 // import QtQuick.Controls
 
-import "../themes"
+import "root:/themes"
 
 Item {
     id: buttonGroup
@@ -14,16 +14,10 @@ Item {
 
     Rectangle {
         id: highlightIndicator
-
-        // --- MODIFIED ---
-        // Set x to 0 and width to the full width of the parent.
-        // This makes the highlight match the button geometry perfectly.
         x: 0
         width: buttonGroup.width
-
         height: buttonGroup.buttonHeight
         y: buttonGroup.currentIndex * (buttonGroup.buttonHeight + buttonGroup.itemSpacing)
-
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
         color: ThemeManager.selectedTheme.colors.primary
         opacity: buttonGroup.currentIndex !== -1 ? 1.0 : 0.0
@@ -48,26 +42,59 @@ Item {
 
         Repeater {
             id: buttonRepeater
-            // model is aliased from the parent
 
-            delegate: MButton {
-                width: buttonContainer.width // This was already correct
+            // --- DELEGATE MODIFIED FOR BADGE ---
+            delegate: Item {
+                // This Item is a container for the button and the badge
+                width: buttonContainer.width
                 height: buttonGroup.buttonHeight
 
-                // Overrides remain the same
-                isActive: buttonGroup.currentIndex === index
-                normalBackground: "transparent"
-                activeBackground: "transparent"
-                hoveredBackground: isActive ? "transparent" : ThemeManager.selectedTheme.colors.primary
+                // The original MButton is now placed inside the container
+                MButton {
+                    id: button
+                    anchors.fill: parent // Fill the container
 
-                text: model.icon
-                font.family: ThemeManager.selectedTheme.typography.iconFont
-                font.pixelSize: 15
+                    isActive: buttonGroup.currentIndex === index
+                    normalBackground: "transparent"
+                    activeBackground: "transparent"
+                    hoveredBackground: isActive ? "transparent" : ThemeManager.selectedTheme.colors.primary
 
-                onClicked: {
-                    var newIndex = (buttonGroup.currentIndex === index) ? -1 : index;
-                    buttonGroup.currentIndex = newIndex;
-                    // buttonGroup.currentIndexChanged(newIndex);
+                    text: model.icon
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
+                    font.pixelSize: 15
+
+                    onClicked: {
+                        var newIndex = (buttonGroup.currentIndex === index) ? -1 : index;
+                        buttonGroup.currentIndex = newIndex;
+                    }
+                }
+
+                // --- BADGE ADDED HERE ---
+                // This Rectangle is the notification badge
+                Rectangle {
+                    id: badgeCircle
+                    width: 14
+                    height: 14
+                    radius: 7 // Make it a circle
+                    color: ThemeManager.selectedTheme.colors.primary
+
+                    // Crucial: Only show if notificationCount is defined and > 0
+                    visible: model.notificationCount && model.notificationCount > 0
+
+                    // Position in the top-right corner of the button area
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.topMargin: 2
+                    anchors.rightMargin: 2
+
+                    // The text number inside the badge
+                    Text {
+                        text: model.notificationCount
+                        anchors.centerIn: parent
+                        color: ThemeManager.selectedTheme.colors.onPrimary
+                        font.bold: true
+                        font.pixelSize: 8
+                    }
                 }
             }
         }

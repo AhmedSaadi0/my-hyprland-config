@@ -15,10 +15,10 @@ PersistentProperties {
     // --------------------
     // ------ Colors ------
     // --------------------
-    property color _primary: Kirigami.Theme.negativeTextColor
-    property color _secondary: Kirigami.Theme.highlightColor
-    property color _onPrimary: Kirigami.Theme.backgroundColor
-    property color _onSecondary: Kirigami.Theme.backgroundColor
+    property color _primary: Kirigami.Theme.highlightColor
+    property color _secondary: Kirigami.Theme.activeBackgroundColor
+    property color _onPrimary: Kirigami.Theme.highlightedTextColor
+    property color _onSecondary: Kirigami.Theme.textColor
 
     // topbar
     property color _topbarColor: Kirigami.Theme.backgroundColor

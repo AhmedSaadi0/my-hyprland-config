@@ -1,4 +1,4 @@
-// NotifManager.qml (Final Self-Contained Version)
+// NotifManager.qml
 pragma Singleton
 pragma ComponentBehavior: Bound
 
@@ -10,39 +10,61 @@ import Quickshell.Services.Notifications
 Singleton {
     id: root
 
+    // -------------------------------------------------------------------
+    // --- Public API for UI Components ---
+    // -------------------------------------------------------------------
+
+    // 1. A live list of all active notification objects.
+    // This can be used by a UI to display a list of all current notifications.
+    property list<QtObject> activeNotifications: []
+
+    // 2. A convenience property that reflects the number of active notifications.
+    // UI elements like badges can bind directly to this property.
+    // It's an alias, so it automatically updates when 'activeNotifications' changes.
+    readonly property var notificationCount: activeNotifications.length
+
+    // 3. Do Not Disturb mode state.
     property bool dndEnabled: false
 
     // --- Signals for the UI ---
-    // تطلق عند وصول إشعار جديد، وترسل كائن "Notif" الذكي
+    // Emitted when a new notification is ready to be displayed.
     signal notificationReceived(var smartNotifObject)
 
-    // تطلق عندما يتم تأكيد حذف الإشعار، وترسل كائن "Notif" الذكي
+    // Emitted when a notification is confirmed to be closed/dismissed.
     signal notificationClosed(var smartNotifObject)
 
     // --- Public Functions for the UI ---
+    // Dismisses all currently active notifications.
     function clearAllNotifs() {
-        // نمر على كل الإشعارات "الأصلية" ونطلب منها الحذف
-        // هذا سيؤدي إلى إطلاق onDropped لكل واحد منها
-        const allTracked = [...notifServer.trackedNotifications.values];
-        for (const notif of allTracked) {
-            notif.dismiss();
+        // We iterate over a copy because dismissing will modify the original list.
+        const allSmartNotifs = [...root.activeNotifications];
+        for (const notif of allSmartNotifs) {
+            // Access the original notification and dismiss it.
+            // This will trigger the onDropped signal for each.
+            notif.notification.dismiss();
         }
     }
 
+    // Toggles the Do Not Disturb state.
     function toggleDnd() {
         dndEnabled = !dndEnabled;
     }
 
+    // -------------------------------------------------------------------
+    // --- Internal Logic & Server Handling ---
+    // -------------------------------------------------------------------
+
+    // Process to play a sound effect for new notifications.
     Process {
         id: notificationSound
         command: ["paplay", ".config/quickshell/assets/audio/new-notification.mp3"]
     }
 
-    // --- Server Logic ---
+    // The core notification server from Quickshell.
     NotificationServer {
         id: notifServer
 
-        // ... (server properties)
+        // Server capabilities
         actionsSupported: true
         bodyHyperlinksSupported: true
         bodyImagesSupported: true
@@ -50,16 +72,22 @@ Singleton {
         imageSupported: true
         persistenceSupported: true
 
+        // This is triggered when a new notification arrives from any application.
         onNotification: originalNotif => {
             originalNotif.tracked = true;
 
-            // 1. قم بإنشاء كائن Notif الذكي، ومرر له الإشعار الأصلي
+            // Create our custom "smart" notification object that wraps the original.
             const newSmartNotif = notifComp.createObject(root, {
                 notification: originalNotif
             });
 
-            // 2. أطلق إشارة للواجهة بأن هناك إشعاراً جديداً جاهزاً
+            // Add the new notification to our live list.
+            root.activeNotifications.push(newSmartNotif);
+
+            // Inform the UI about the new notification.
             root.notificationReceived(newSmartNotif);
+
+            // Play sound if Do Not Disturb is off.
             if (!root.dndEnabled) {
                 notificationSound.running = true;
             }
@@ -67,13 +95,15 @@ Singleton {
     }
 
     // --- The Smart "Notif" Object Definition ---
+    // This is a template for our custom notification objects. It adds features
+    // like a timestamp and simplifies property access for the UI.
     component Notif: QtObject {
         id: notifComponent
 
-        // The original notification object from the server
+        // The original notification object from the server.
         required property Notification notification
 
-        // Properties for direct access in the UI delegate
+        // Properties for direct and easy access in the UI delegate.
         readonly property string summary: notification ? notification.summary : ""
         readonly property string body: notification ? notification.body : ""
         readonly property string appIcon: notification ? notification.appIcon : ""
@@ -81,34 +111,36 @@ Singleton {
         readonly property string image: notification ? notification.image : ""
         readonly property int id: notification ? notification.id : 0
 
-        // You can add computed properties here too
+        // Computed properties for added value.
         readonly property date time: new Date()
-        readonly property string timeStr: {
-            return time.toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
+        readonly property string timeStr: time.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        })
 
-        // This is the self-management logic!
-        // This Connections block listens to the lifecycle of the original notification.
+        // Self-management logic: This block listens to the lifecycle of the original notification.
         readonly property Connections conn: Connections {
-            // We listen to the Retainable object provided by Quickshell
             target: notifComponent.notification ? notifComponent.notification.Retainable : null
 
-            // onDropped is emitted when the notification is dismissed or closed.
+            // onDropped is emitted when the notification is dismissed by any means
+            // (user click, timeout, or programmatically).
             function onDropped(): void {
-                // When the original notification is dropped,
-                // we emit our "closed" signal, sending this smart Notif object itself.
+                // Inform the UI that this specific notification has closed.
                 root.notificationClosed(notifComponent);
 
-                // We can now schedule this smart object for destruction
-                notifComponent.destroy(500); // Destroy after 500ms to be safe
+                // Find this notification in our live list and remove it.
+                const index = root.activeNotifications.indexOf(notifComponent);
+                if (index > -1) {
+                    root.activeNotifications.splice(index, 1);
+                }
+
+                // Schedule this object for garbage collection to prevent memory leaks.
+                notifComponent.destroy(500); // 500ms delay for safety.
             }
         }
     }
 
-    // A factory for creating Notif objects
+    // A factory component for creating instances of our "Notif" object.
     Component {
         id: notifComp
         Notif {}

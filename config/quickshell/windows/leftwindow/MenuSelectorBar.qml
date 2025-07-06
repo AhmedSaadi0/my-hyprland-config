@@ -23,17 +23,72 @@ StackView {
     property int currentIndex: 0
     property int previousIndex: 0
 
-    property var pageComponents: [dashboardComponent, notiListComponent, weatherComponent, monitorComponent, networkComponent]
+    // المكونات الأصلية (Component فقط)
+    Component {
+        id: dashboardComponent
+        Dashboard.Dashboard {}
+    }
+    Component {
+        id: notiListComponent
+        NotiList {}
+    }
+    Component {
+        id: weatherComponent
+        Dashboard.Dashboard2 {}
+    }
+    Component {
+        id: monitorComponent
+        Monitoring.Main {}
+    }
+    Component {
+        id: networkComponent
+        Dashboard.Dashboard3 {}
+    }
 
-    initialItem: pageComponents.length > 0 ? pageComponents[0] : null
+    // العناصر التي يتم إنشاؤها مرة واحدة
+    property var dashboardPage
+    property var notiListPage
+    property var weatherPage
+    property var monitorPage
+    property var networkPage
+
+    Component.onCompleted: {
+        dashboardPage = dashboardComponent.createObject(stackView, {
+            "visible": false
+            // "anchors.fill": stackView
+        });
+        notiListPage = notiListComponent.createObject(stackView, {
+            "visible": false
+            // "anchors.fill": stackView
+        });
+        weatherPage = weatherComponent.createObject(stackView, {
+            "visible": false
+            // "anchors.fill": stackView
+        });
+        monitorPage = monitorComponent.createObject(stackView, {
+            "visible": false
+            // "anchors.fill": stackView
+        });
+        networkPage = networkComponent.createObject(stackView, {
+            "visible": false
+            // "anchors.fill": stackView
+        });
+
+        dashboardPage.visible = true;
+        stackView.push(dashboardPage);
+    }
+
+    function getPage(index) {
+        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage][index];
+    }
 
     Connections {
         target: LeftMenuStatus
         function onSelectedIndexTargeted(newIndex) {
-            if (newIndex >= 0 && newIndex < pageComponents.length && newIndex !== currentIndex) {
+            if (newIndex >= 0 && newIndex < 5 && newIndex !== currentIndex) {
                 previousIndex = currentIndex;
                 currentIndex = newIndex;
-                stackView.replace(pageComponents[newIndex]);
+                stackView.replace(getPage(newIndex));
             }
         }
     }
@@ -87,46 +142,6 @@ StackView {
                 duration: 250
                 easing.type: stackView.inEasing
             }
-        }
-    }
-
-    Component {
-        id: dashboardComponent
-        Dashboard.Dashboard {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-    }
-
-    Component {
-        id: notiListComponent
-        NotiList {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-    }
-
-    Component {
-        id: weatherComponent
-        Dashboard.Dashboard2 {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-    }
-
-    Component {
-        id: monitorComponent
-        Monitoring.Main {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-    }
-
-    Component {
-        id: networkComponent
-        Dashboard.Dashboard3 {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
         }
     }
 }
