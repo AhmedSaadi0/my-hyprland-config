@@ -12,11 +12,15 @@ import "root:/services"
 
 PanelWindow {
     id: root
+    exclusiveZone: 45
+    implicitWidth: 60
+    implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    color: "transparent"
+    exclusionMode: ExclusionMode.Ignore
 
     // --- Properties ---
     property bool panelOpen: false
     property int activeMenuIndex: LeftMenuStatus.selectedIndex
-    exclusiveZone: 45
 
     // --- 2. خاصية لتخزين مؤشر عنصر الإشعارات ---
     property int notificationMenuIndex: -1
@@ -56,11 +60,6 @@ PanelWindow {
             }
         }
     }
-
-    implicitWidth: 60
-    implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
-    color: "transparent"
-    exclusionMode: ExclusionMode.Ignore
 
     Connections {
         target: LeftMenuStatus
@@ -109,6 +108,7 @@ PanelWindow {
             anchors.topMargin: 20
             anchors.leftMargin: 5
             anchors.rightMargin: 5
+            useHand: true
 
             model: ListModel {
                 ListElement {

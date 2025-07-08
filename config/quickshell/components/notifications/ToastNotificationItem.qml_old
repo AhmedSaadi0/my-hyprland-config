@@ -1,7 +1,7 @@
+// components/notifications/NotificationItem.qml
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Services.Notifications
-
 import "root:/themes"
 import "root:/components"
 
@@ -18,12 +18,10 @@ Rectangle {
 
     ColumnLayout {
         id: contentLayout
-
         anchors.fill: parent
         anchors.margins: ThemeManager.selectedTheme.dimensions.spacingLarge
         spacing: ThemeManager.selectedTheme.typography.spacingMedium
 
-        // -- 1. Header Row: Close Button, App Name, Time --
         RowLayout {
             Layout.fillWidth: true
             spacing: ThemeManager.selectedTheme.typography.spacingSmall
@@ -32,21 +30,16 @@ Rectangle {
                 width: 16
                 height: 16
                 Layout.alignment: Qt.AlignVCenter
-
                 Text {
                     text: "✕"
                     font.pixelSize: 14
                     anchors.centerIn: parent
                     color: ThemeManager.selectedTheme.colors.primary
                 }
-
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        root.dismissClicked(); // إرسال إشارة بدلاً من تنفيذ المنطق مباشرة
-                        enabled = false; // تعطيل الزر لمنع النقرات المتعددة
-                    }
+                    onClicked: root.dismissClicked()
                 }
             }
 
@@ -66,7 +59,6 @@ Rectangle {
             }
         }
 
-        // -- 2. Summary Row: Icon and Title --
         RowLayout {
             Layout.fillWidth: true
             spacing: ThemeManager.selectedTheme.typography.spacingMedium
@@ -93,7 +85,6 @@ Rectangle {
             }
         }
 
-        // -- 3. Body Text --
         Text {
             text: notification ? notification.body : ""
             visible: text !== ""
@@ -105,7 +96,6 @@ Rectangle {
             Layout.fillWidth: true
         }
 
-        // -- 4. Action Buttons --
         RowLayout {
             Layout.fillWidth: true
             visible: notification && notification.displayActions && notification.displayActions.length > 0
@@ -113,12 +103,10 @@ Rectangle {
 
             Repeater {
                 model: notification ? notification.displayActions : []
-
                 delegate: MButton {
                     text: modelData.text
                     Layout.fillWidth: true
                     textElide: Text.ElideRight
-
                     onClicked: root.actionInvoked(index)
                 }
             }

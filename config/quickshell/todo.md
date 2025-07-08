@@ -55,6 +55,7 @@
 - [ ] **Material 3 (M3) Dynamic Coloring**
 - [ ] **Dynamic Wallpaper Folders Support**
 - [ ] **Feature Control Window (UI to Toggle Features)**
+- [ ] **Create a config file**
 - [ ] **Day/Night Theme Switching Based on Time**
 - [ ] **Custom Full Themes**
 - [ ] **Implement PyWall(pywal16) or an alternative**
@@ -63,7 +64,11 @@
 
 - [ ] **Keyboard Layout Switch Indicator**
 - [x] **Notifications History Center**
-  - [ ] Add Action buttons
+  - [x] Add Action buttons
+  - [x] Fix Race Condition
+  - [x] Dismissal Synchronization
+  - [x] Responsive Timer
+  - [x] Fix Logic Duplication
 - [x] **Improve Menus Navigation**
 - [x] **Improve Animations**
   - [x] Menu

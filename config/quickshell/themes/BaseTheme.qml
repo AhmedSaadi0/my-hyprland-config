@@ -3,6 +3,7 @@
 import QtQuick
 import Quickshell
 import org.kde.kirigami as Kirigami
+import "root:/utils/helpers.js" as Helper
 
 PersistentProperties {
     id: root
@@ -16,7 +17,7 @@ PersistentProperties {
     // ------ Colors ------
     // --------------------
     property color _primary: Kirigami.Theme.highlightColor
-    property color _secondary: Kirigami.Theme.activeBackgroundColor
+    property color _secondary: Kirigami.Theme.negativeTextColor
     property color _onPrimary: Kirigami.Theme.highlightedTextColor
     property color _onSecondary: Kirigami.Theme.textColor
 
@@ -106,6 +107,11 @@ PersistentProperties {
         property color primary: Qt.rgba(root._primary.r, root._primary.g, root._primary.b, root._alpha)
         property color secondary: Qt.rgba(root._secondary.r, root._secondary.g, root._secondary.b, root._alpha)
         property color onPrimary: Qt.rgba(root._onPrimary.r, root._onPrimary.g, root._onPrimary.b, root._alpha)
+        // property color onPrimary: {
+        //     color = Helper.getAccurteTextColor(root._primary);
+        //     console.info(color);
+        //     return color;
+        // }
         property color onSecondary: Qt.rgba(root._onSecondary.r, root._onSecondary.g, root._onSecondary.b, root._alpha)
 
         // Top Bar

@@ -7,7 +7,7 @@ Item {
     property string position: "top-left"
     // هذا اللون الآن هو لون الشكل نفسه، وليس لون الخلفية
     property color shapeColor: palette.window
-    property real cornerRadius: 25
+    property real cornerRadius: 30
 
     width: cornerRadius
     height: cornerRadius

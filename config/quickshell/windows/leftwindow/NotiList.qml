@@ -1,8 +1,8 @@
+// NotificationList.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-// --- استيراد المكونات المخصصة
 import "root:/services"
 import "root:/themes"
 import "root:/components"
@@ -11,32 +11,18 @@ import "root:/components/notifications"
 Item {
     id: root
 
-    // --- خصائص التخطيط
-    // Layout.fillWidth: true
-    // Layout.fillHeight: true
-
-    //==================================================
-    //  1. البيانات والاتصالات (Data & Logic)
-    //==================================================
-
     ListModel {
         id: notifModel
     }
 
     Connections {
         target: NotifManager
-
-        // عند وصول إشعار جديد من المدير
         function onNotificationReceived(smartNotifObject) {
             notifModel.insert(0, {
                 "smartNotif": smartNotifObject
             });
         }
-
-        // عند تأكيد إغلاق إشعار
         function onNotificationClosed(smartNotifObject) {
-            // البحث عن العنصر المطابق في النموذج وحذفه
-            // ملاحظة: هذا البحث قد يكون بطيئاً إذا كانت القائمة طويلة جداً
             for (let i = 0; i < notifModel.count; ++i) {
                 if (notifModel.get(i).smartNotif === smartNotifObject) {
                     notifModel.remove(i);
@@ -46,22 +32,16 @@ Item {
         }
     }
 
-    //==================================================
-    //  2. الواجهة الرسومية (UI Layout)
-    //==================================================
-
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
 
-        // --- الأزرار العلوية (Header)
         RowLayout {
             spacing: 0
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignRight
-
             MButton {
-                text: qsTr("Clear All") // استخدام qsTr للترجمة مستقبلاً
+                text: qsTr("Clear All")
                 implicitHeight: 25
                 implicitWidth: 75
                 enabled: notifModel.count > 0
@@ -69,7 +49,6 @@ Item {
                 bottomRightRadius: 0
                 onClicked: NotifManager.clearAllNotifs()
             }
-
             MButton {
                 text: NotifManager.dndEnabled ? "󰂛" : "󰂚"
                 font: ThemeManager.selectedTheme.typography.iconFont
@@ -81,27 +60,19 @@ Item {
             }
         }
 
-        // --- قائمة الإشعارات
         ScrollView {
             id: notifScroll
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
             ScrollBar.vertical.policy: ScrollBar.AsNeeded
-            ScrollBar.vertical.active: true
 
             ListView {
                 id: notifView
                 width: notifScroll.width
-                implicitHeight: contentHeight
-                interactive: false // التمرير يتم عبر ScrollView
-                clip: true
-
                 model: notifModel
                 spacing: ThemeManager.selectedTheme.dimensions.spacingLarge
                 topMargin: ThemeManager.selectedTheme.dimensions.spacingLarge
-
-                // --- الرسوم المتحركة (Transitions)
                 displaced: Transition {
                     NumberAnimation {
                         properties: "y"
@@ -142,17 +113,18 @@ Item {
                     }
                 }
 
-                // --- مندوب عرض كل إشعار (Delegate)
                 delegate: NotificationItem {
                     width: notifView.width
-
-                    // ربط بيانات النموذج بخصائص المكون
                     notification: model.smartNotif
 
-                    // عند طلب إغلاق الإشعار من المكون، نقوم بتنفيذ المنطق هنا
                     onDismissClicked: {
-                        if (model.smartNotif && model.smartNotif.notification) {
+                        if (model.smartNotif) {
                             model.smartNotif.notification.dismiss();
+                        }
+                    }
+                    onActionInvoked: index => {
+                        if (model.smartNotif) {
+                            model.smartNotif.invokeAction(index);
                         }
                     }
                 }

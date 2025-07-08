@@ -1,23 +1,20 @@
 // ToastNotificationHandler.qml
 import QtQuick
 import Quickshell
-// import QtQuick.Controls
 import QtQuick.Layouts
-
-// import "../themes"
-import "../services"
-import "../components/notifications"
+import "root:/services"
+import "root:/components/notifications"
 
 PanelWindow {
     id: root
 
-    // الحجم سيعتمد على المحتوى الداخلي
     implicitWidth: popupContainer.implicitWidth + 20
     implicitHeight: popupContainer.implicitHeight + 20
     color: "transparent"
-    visible: popupModel.count > 0 // النافذة تكون مرئية فقط إذا كان هناك إشعارات
+    visible: popupModel.count > 0
 
     exclusionMode: ExclusionMode.Ignore
+
     margins {
         bottom: 30
         left: 30
@@ -28,44 +25,135 @@ PanelWindow {
         left: true
     }
 
-    // نموذج بيانات لتخزين الإشعارات التي ستعرض
     ListModel {
         id: popupModel
     }
 
-    // الاتصال بمدير الإشعارات
     Connections {
         target: NotifManager
-
         function onNotificationReceived(smartNotifObject) {
-            // إضافة الإشعار الجديد إلى بداية القائمة
             if (!NotifManager.dndEnabled) {
                 popupModel.insert(0, {
-                    "notificationData": smartNotifObject
+                    "smartNotif": smartNotifObject
                 });
+            }
+        }
+        function onNotificationClosed(smartNotifObject) {
+            // Find and remove matching popup if it exists
+            for (let i = 0; i < popupModel.count; ++i) {
+                if (popupModel.get(i).smartNotif === smartNotifObject) {
+                    popupModel.remove(i);
+                    break;
+                }
             }
         }
     }
 
-    // حاوية لرص الإشعارات فوق بعضها
+    // --- Popup Component Definition ---
+    component ToastNotificationPopup: Item {
+        id: toastRoot
+        property var notification
+        signal requestRemove
+
+        width: notificationItem.width
+        height: notificationItem.height
+
+        property bool showing: false
+        opacity: 0
+        scale: 0.9
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 300
+                easing.type: Easing.OutCubic
+            }
+        }
+        Behavior on scale {
+            NumberAnimation {
+                duration: 300
+                easing.type: Easing.OutCubic
+            }
+        }
+
+        states: State {
+            name: "visible"
+            when: showing
+            PropertyChanges {
+                target: toastRoot
+                opacity: 1
+                scale: 1.0
+            }
+        }
+
+        Timer {
+            id: hideTimer
+            interval: 3000
+            repeat: false
+            onTriggered: showing = false
+        }
+
+        HoverHandler {
+            // anchors.fill: parent
+            onHoveredChanged: {
+                if (hovered)
+                    hideTimer.stop();
+                else if (toastRoot.showing)
+                    hideTimer.start();
+            }
+        }
+
+        onShowingChanged: {
+            if (!showing) {
+                removeDelay.start();
+            }
+        }
+
+        Timer {
+            id: removeDelay
+            interval: 300
+            repeat: false
+            onTriggered: toastRoot.requestRemove()
+        }
+
+        Component.onCompleted: {
+            showing = true;
+            hideTimer.start();
+        }
+
+        NotificationItem {
+            id: notificationItem
+            width: 350
+            notification: toastRoot.notification
+
+            onDismissClicked: {
+                hideTimer.stop();
+                showing = false;
+            }
+
+            onActionInvoked: index => {
+                if (toastRoot.notification) {
+                    toastRoot.notification.invokeAction(index);
+                }
+                hideTimer.stop();
+                showing = false;
+            }
+        }
+    }
+
+    // --- Layout for Popups ---
     ColumnLayout {
         id: popupContainer
         spacing: 8
 
-        // Repeater يقوم بإنشاء نسخة من المكون لكل عنصر في النموذج
         Repeater {
             model: popupModel
 
-            // المكون الذي سيتم تكراره
-            delegate: ToastNotificationItem {
-                // تمرير بيانات الإشعار من النموذج إلى المكون
-                notification: model.notificationData
-
-                // عند طلب المكون للحذف (بعد انتهاء وقته أو النقر عليه)
+            delegate: ToastNotificationPopup {
+                notification: model.smartNotif
                 onRequestRemove: {
-                    // ابحث عن العنصر في النموذج وقم بحذفه
-                    // model.index يعطينا موقع العنصر الحالي
-                    popupModel.remove(model.index);
+                    if (model.index >= 0 && model.index < popupModel.count) {
+                        popupModel.remove(model.index);
+                    }
                 }
             }
         }

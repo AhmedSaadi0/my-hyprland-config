@@ -4,6 +4,7 @@ import QtQuick.Controls
 
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
+import "./animations"
 
 import "root:/themes"
 import "root:/utils"
@@ -13,6 +14,7 @@ StackView {
 
     Layout.fillWidth: true
     Layout.fillHeight: true
+
     clip: true
     smooth: true
 
@@ -93,55 +95,7 @@ StackView {
         }
     }
 
-    replaceEnter: Transition {
-        ParallelAnimation {
-            NumberAnimation {
-                property: "x"
-                from: stackView.previousIndex < stackView.currentIndex ? stackView.width : -stackView.width
-                to: 0
-                duration: 350
-                easing.type: stackView.outEasing
-            }
-            NumberAnimation {
-                property: "scale"
-                from: 0.9
-                to: 1.0
-                duration: 350
-                easing.type: stackView.outEasing
-            }
-            NumberAnimation {
-                property: "opacity"
-                from: 0
-                to: 1
-                duration: 350
-                easing.type: stackView.outEasing
-            }
-        }
-    }
+    replaceEnter: ZoomIn {}
 
-    replaceExit: Transition {
-        ParallelAnimation {
-            NumberAnimation {
-                property: "x"
-                from: 0
-                to: stackView.previousIndex < stackView.currentIndex ? -stackView.width / 4 : stackView.width / 4
-                duration: 250
-                easing.type: stackView.inEasing
-            }
-            NumberAnimation {
-                property: "scale"
-                from: 1.0
-                to: 0.9
-                duration: 250
-                easing.type: stackView.inEasing
-            }
-            NumberAnimation {
-                property: "opacity"
-                from: 1
-                to: 0
-                duration: 250
-                easing.type: stackView.inEasing
-            }
-        }
-    }
+    replaceExit: ZoomOut {}
 }

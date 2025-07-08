@@ -9,6 +9,8 @@ import "../themes"
 Button {
     id: myCustomButton
 
+    property int cursorShape: Qt.ArrowCursor
+
     property var textHorizontalAlignment: Text.AlignHCenter
     property var textVerticalAlignment: Text.AlignVCenter
     property bool isActive: false
@@ -30,12 +32,15 @@ Button {
     property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
+    property var textElide: Text.ElideRight
+
     contentItem: Text {
         id: buttonTextContent
         font: myCustomButton.font
         text: myCustomButton.text
         horizontalAlignment: myCustomButton.textHorizontalAlignment
         verticalAlignment: myCustomButton.textVerticalAlignment
+        elide: myCustomButton.textElide
 
         color: {
             if (!myCustomButton.enabled) {
@@ -84,5 +89,19 @@ Button {
                 easing.type: Easing.OutQuad
             }
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+
+        // ربط شكل المؤشر بالخاصية التي أضفناها للزر
+        cursorShape: myCustomButton.cursorShape
+
+        // مهم جداً: هذه الخصائص تضمن أن هذه المنطقة لا تتداخل
+        // مع وظيفة النقر الخاصة بالزر الأساسي.
+        // هي فقط تغير شكل المؤشر وتمرر الأحداث لما تحتها.
+        propagateComposedEvents: true
+        acceptedButtons: Qt.NoButton
     }
 }

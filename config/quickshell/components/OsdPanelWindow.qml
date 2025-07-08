@@ -140,10 +140,12 @@ PanelWindow {
                 }
 
                 Text {
+                    id: iconText
                     Layout.leftMargin: 5
                     text: root.valueTextIcon
                     color: root.valueTextColor
                     font.family: root.valueTextIconFont
+                    opacity: 1.0
                 }
             }
         }
