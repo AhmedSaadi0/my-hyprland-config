@@ -55,7 +55,7 @@
 - [ ] **Material 3 (M3) Dynamic Coloring**
 - [ ] **Dynamic Wallpaper Folders Support**
 - [ ] **Feature Control Window (UI to Toggle Features)**
-- [ ] **Create a config file**
+- [x] **Create a config file**
 - [ ] **Day/Night Theme Switching Based on Time**
 - [ ] **Custom Full Themes**
 - [ ] **Implement PyWall(pywal16) or an alternative**
