@@ -69,6 +69,8 @@
   - [x] Dismissal Synchronization
   - [x] Responsive Timer
   - [x] Fix Logic Duplication
+  - [x] Add sound with Notifications
+  - [x] Implement DND
 - [x] **Improve Menus Navigation**
 - [x] **Improve Animations**
   - [x] Menu

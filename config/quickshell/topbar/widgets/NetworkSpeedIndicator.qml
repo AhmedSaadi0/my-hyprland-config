@@ -6,16 +6,16 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "../../themes"
-import "../../utils/helpers.js" as Helper
-import "../../components"
+import "root:/themes"
+import "root:/utils/helpers.js" as Helper
+import "root:/components"
+import "root:/config"
 
 Rectangle {
     id: netspeedToolbarWidget
 
-    property string networkInterface: "wlp0s20f3"
-    property int callInterval: 500
-    property int networkTimeout: 300
+    property string networkInterface: App.networkMonitor
+    property int callInterval: App.networkInterval
     property var txBytes: 0
     property var rxBytes: 0
 
@@ -124,7 +124,7 @@ Rectangle {
 
     Timer {
         id: updateTimer
-        interval: 1000
+        interval: callInterval
         repeat: true
         running: true
         onTriggered: {
@@ -134,10 +134,17 @@ Rectangle {
 
     Process {
         id: networkMonitoringProcess
-        command: ["sh", "-c", `~/.config/quickshell/scripts/internet.sh ${networkInterface}`]
+        // command: ["sh", "-c", `~/.config/quickshell/scripts/internet.sh ${networkInterface}`]
+        command: App.scripts.bash.internetCommand
 
         stdinEnabled: true
         // running: true
+
+        stderr: SplitParser {
+            onRead: data => {
+                console.error(data);
+            }
+        }
 
         stdout: SplitParser {
             id: outputParser

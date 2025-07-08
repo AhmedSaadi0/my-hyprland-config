@@ -126,7 +126,7 @@ Item {
 
                         property int oldCount: -1
 
-                        onTextChanged: {
+                        onTextChanged: function (text) {
                             if (oldCount !== -1 && oldCount !== text) {
                                 textAnimation.restart();
                             }

@@ -2,10 +2,9 @@
 
 import QtQuick
 
-import "../../../themes"
-import "../../../components"
-
-// import QtQuick.Controls.Material
+import "root:/components"
+import "root:/themes"
+import "root:/config"
 
 Rectangle {
     id: monotoringMenu
@@ -31,7 +30,8 @@ Rectangle {
     ProcessTable {
         id: cpuTable
         running: true
-        command: ["python", ".config/quickshell/scripts/python/top_cpu_usage.py"]
+        // command: ["python", ".config/quickshell/scripts/python/top_cpu_usage.py"]
+        command: App.scripts.python.topCpuUsageCommand
         title: "Cpu Usage"
         anchors {
             top: progresses.bottom
@@ -44,7 +44,8 @@ Rectangle {
         id: ramTable
         interval: 1000 * 5
         running: true
-        command: ["python", ".config/quickshell/scripts/python/top_ram_usage.py"]
+        // command: ["python", ".config/quickshell/scripts/python/top_ram_usage.py"]
+        command: App.scripts.python.topRamUsageCommand
         title: "Mem Usage"
 
         anchors {

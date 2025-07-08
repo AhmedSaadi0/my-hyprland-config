@@ -1,8 +1,8 @@
 import Quickshell
 import QtQuick
 
-import "../../themes"
-import "../../components"
+import "root:/themes"
+import "root:/components"
 
 Rectangle {
     id: clockBackground

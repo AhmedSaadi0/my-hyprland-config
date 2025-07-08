@@ -9,6 +9,7 @@ import "root:/topbar"
 import "root:/windows/leftwindow"
 import "root:/osd"
 import "root:/utils"
+import "root:/config"
 
 ShellRoot {
     id: shellRoot

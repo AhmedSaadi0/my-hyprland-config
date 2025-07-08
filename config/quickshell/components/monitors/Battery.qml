@@ -3,17 +3,17 @@
 import QtQuick
 import Quickshell.Services.UPower
 
-import "../"
+import "root:/components"
 
 TopbarCircularProgress {
     id: batteryUsage
-    command: ["sh", "-c", "~/.config/quickshell/scripts/cpu_usage.sh"]
+    command: ["ls"] // TODO: -> use a better way than calling fake command to run the interval
     updateInterval: 1000 * 10
 
     // value: UPower.onBattery
     // running: false
 
-    icon: "-"
+    icon: ""
 
     iconColor: palette.accent
     backgroundColor: palette.text.alpha(0.2)

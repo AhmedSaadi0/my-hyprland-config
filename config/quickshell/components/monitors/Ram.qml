@@ -2,11 +2,14 @@
 
 import QtQuick
 import org.kde.kirigami as Kirigami
-import "../"
+
+import "root:/components"
+import "root:/config"
 
 TopbarCircularProgress {
     id: cpuUsage
-    command: ["sh", "-c", "~/.config/quickshell/scripts/ram_usage.sh"]
+    // command: ["sh", "-c", "~/.config/quickshell/scripts/ram_usage.sh"]
+    command: App.scripts.bash.ramCommand
     updateInterval: 1000 * 20
 
     icon: ""

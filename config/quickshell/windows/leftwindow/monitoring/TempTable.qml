@@ -1,14 +1,15 @@
 import QtQuick
 
-import "../../../themes"
-import "../../../components"
+import "root:/themes"
+import "root:/components"
+import "root:/config"
 
 ProcessTable {
     id: batteryTable
     height: 105
     interval: 1000 * 60
     running: true
-    command: ["python", ".config/quickshell/scripts/python/devices_temp.py"]
+    command: App.scripts.python.devicesTempCommand
     title: "Temp"
     value: ""
 

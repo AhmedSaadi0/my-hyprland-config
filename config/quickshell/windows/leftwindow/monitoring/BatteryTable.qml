@@ -1,14 +1,16 @@
 import QtQuick
 
-import "../../../themes"
-import "../../../components"
+import "root:/themes"
+import "root:/components"
+import "root:/config"
 
 ProcessTable {
     id: batteryTable
     height: 105
     interval: 1000 * 60
     running: true
-    command: ["python", ".config/quickshell/scripts/python/battery_info.py"]
+    // command: ["python", ".config/quickshell/scripts/python/battery_info.py"]
+    command: App.scripts.python.batteryInfoCommand
     title: "Battery"
     value: "󱧥"
 

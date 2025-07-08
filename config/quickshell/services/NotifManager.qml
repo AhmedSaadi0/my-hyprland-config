@@ -6,6 +6,7 @@ import Quickshell.Io
 import QtQuick
 import Quickshell
 import Quickshell.Services.Notifications
+import "root:/config"
 
 Singleton {
     id: root
@@ -34,7 +35,7 @@ Singleton {
 
     Process {
         id: notificationSound
-        command: ["paplay", ".config/quickshell/assets/audio/new-notification.mp3"]
+        command: ["paplay", App.assets.audio.notificationAlert]
     }
 
     NotificationServer {

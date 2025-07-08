@@ -2,9 +2,9 @@ import QtQuick
 import Qt5Compat.GraphicalEffects
 // import org.kde.kirigami as Kirigami
 
-import "../../themes"
-
-// import "../../components"
+import "root:/themes"
+import "root:/config"
+import "root:/components"
 
 Rectangle {
     id: root
@@ -14,7 +14,7 @@ Rectangle {
 
     Image {
         id: backgroundImage
-        source: "/home/ahmed/wallpapers/dark/thumbnail.jpg"
+        source: App.darkM3WallpaperPath + "/thumbnail.jpg"
         width: ThemeManager.selectedTheme.dimensions.menuWidth - 14
         height: 200
         clip: true
@@ -117,7 +117,7 @@ Rectangle {
         id: profileImage
         width: 80
         height: 80
-        source: "/home/ahmed/wallpapers/profile.webp"
+        source: App.profilePicture
         fillMode: Image.PreserveAspectCrop
         anchors {
             // anchors.centerIn: parent
@@ -125,15 +125,15 @@ Rectangle {
             horizontalCenter: profileDetail.horizontalCenter
             topMargin: -(profileImage.width / 2)
         }
-        // layer.enabled: true
-        // layer.effect: Shadow {
-        //     alpha: 0.4
-        // }
+        layer.enabled: true
+        layer.effect: Shadow {
+            alpha: 0.4
+        }
     }
 
     Text {
         id: titleText
-        text: "احمد الصعدي"
+        text: App.username
         font.pixelSize: 35
         font.family: "VIP Rawy Regular"
         // color: palette.base
@@ -142,24 +142,26 @@ Rectangle {
             top: profileImage.bottom
             horizontalCenter: profileImage.horizontalCenter
         }
-        // layer.enabled: true
-        // layer.effect: Shadow {
-        //     alpha: 0.5
-        //     // radius: 3
-        // }
+        smooth: true
+        layer.enabled: true
+        layer.effect:
+        // alpha: 0.5
+        // radius: 3
+        Shadow {}
     }
 
     Text {
-        text: "مهندس برمجيات"
+        text: App.subtitle
         // color: palette.base
         color: ThemeManager.selectedTheme.colors.topbarFgColorV2
         anchors {
             top: titleText.bottom
             horizontalCenter: profileImage.horizontalCenter
         }
-        // layer.enabled: true
-        // layer.effect: Shadow {
-        //     alpha: 0.5
-        // }
+        smooth: true
+        layer.enabled: true
+        layer.effect:
+        // alpha: 0.5
+        Shadow {}
     }
 }
