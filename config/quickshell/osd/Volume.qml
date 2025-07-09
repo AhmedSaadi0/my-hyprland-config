@@ -1,10 +1,15 @@
 import QtQuick
+import Quickshell.Wayland
+
 import "../themes"
 import "../components"
 import "../services"
 
 OsdPanelWindow {
     id: root
+
+    WlrLayershell.namespace: "quickshell:volumePopup"
+    WlrLayershell.layer: WlrLayer.Overlay
 
     target: Audio
     sliderValue: Audio.volume

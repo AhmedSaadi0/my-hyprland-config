@@ -4,8 +4,8 @@ import Quickshell
 
 import QtQuick
 
-import "../themes"
-import "../components"
+import "root:/themes"
+import "root:/components"
 
 PanelWindow {
     id: root
@@ -35,7 +35,6 @@ PanelWindow {
         }
         position: "top-left"
         cornerRadius: root.cornerRadius
-        shapeColor: palette.window
     }
 
     // BarCorner {

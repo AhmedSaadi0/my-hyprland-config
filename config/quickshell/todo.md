@@ -51,6 +51,7 @@
 
 ### 🎨 Themes & Personalization
 
+- [x] **Theme Service**
 - [ ] **Automatic Wallpaper Changer**
 - [ ] **Material 3 (M3) Dynamic Coloring**
 - [ ] **Dynamic Wallpaper Folders Support**

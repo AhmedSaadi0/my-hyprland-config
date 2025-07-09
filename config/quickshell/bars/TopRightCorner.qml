@@ -10,7 +10,8 @@ import "../components"
 PanelWindow {
     id: root
 
-    implicitHeight: 20
+    implicitHeight: 19
+    implicitWidth: 19
     exclusionMode: ExclusionMode.Normal
 
     focusable: false
@@ -21,21 +22,23 @@ PanelWindow {
     property real cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius * 2
 
     anchors {
-        bottom: true
         right: true
-        // top: true
+        top: true
+        // bottom: true
         // left: true
     }
 
+    margins {
+        top: -10
+    }
+
     BarCorner {
-        id: bottomRightBarCorner
+        id: topRightBarCorner
         anchors {
-            // top: parent.top
+            top: parent.top
             right: parent.right
-            bottom: parent.bottom
         }
-        position: "bottom-right"
+        position: "top-right"
         cornerRadius: root.cornerRadius
-        shapeColor: palette.window
     }
 }

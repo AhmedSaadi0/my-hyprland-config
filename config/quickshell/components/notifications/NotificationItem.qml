@@ -115,7 +115,7 @@ Rectangle {
                 model: notification ? notification.displayActions : []
 
                 delegate: MButton {
-                    text: modelData.text
+                    text: modelData.text !== "" ? modelData.text : "Do Action"
                     Layout.fillWidth: true
                     textElide: Text.ElideRight
 

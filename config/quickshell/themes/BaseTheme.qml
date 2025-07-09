@@ -1,12 +1,13 @@
-// themes/BaseTheme.qmlbasethe
+// themes/BaseTheme.qml
 
 import QtQuick
 import Quickshell
 import org.kde.kirigami as Kirigami
-import "root:/utils/helpers.js" as Helper
 
 PersistentProperties {
     id: root
+
+    property string themeName: "Base Theme"
 
     // --- SOURCE PROPERTIES (for overriding in custom themes) ---
     // These are the actual values. Custom themes will override these.
@@ -44,6 +45,7 @@ PersistentProperties {
     // OSDs
     property color _volOsdBgColor: Kirigami.Theme.backgroundColor.lighter(1.5)
     property color _volOsdFgColor: Kirigami.Theme.textColor
+
     // --------------------
     // ---- Dimensions ----
     // --------------------
@@ -64,7 +66,7 @@ PersistentProperties {
     // ---- Typography ----
     // --------------------
     property string _iconFont: "FantasqueSansM Nerd Font Propo"
-    property string _bodyFont: "Sans Serif"
+    property string _bodyFont: "JF Flat"
     property int _baseFontSize: 12
     property int _heading1Size: 22
     property int _heading2Size: 20
@@ -76,12 +78,14 @@ PersistentProperties {
     // ------------------------
     // -- System Integration --
     // ------------------------
-    property string _wallpaper: "colors.png"
-    property string _qtThemeStyle: "Fusion"
+    property string _wallpaper: "gruvb_solarsys.png"
+    property string _qtThemeStyle: "Breeze"
     property string _kvantumTheme: "KvGnome"
-    property string _gtk3Theme: "Breeze"
+    property string _gtkTheme: "Breeze"
     property string _themeIcons: "breeze-dark"
     property string _themeMode: "dark"
+    property string _plasmaColorScheme: "MateriaYaruDark"
+    property string _konsoleProfile: "MaterialYouAlt.profile"
 
     // --------------------
     // ----- Hyprland -----
@@ -97,8 +101,6 @@ PersistentProperties {
     // These structured objects are for clean access (e.g., theme.colors.xyz).
     // They are readonly to prevent accidental replacement.
     // ======================================================================
-
-    property string themeName: "Base Theme"
 
     // --- Color Palette ---
 
@@ -178,17 +180,20 @@ PersistentProperties {
         property alias wallpaper: root._wallpaper
         property alias qtThemeStyle: root._qtThemeStyle
         property alias kvantumTheme: root._kvantumTheme
-        property alias gtk3Theme: root._gtk3Theme
+        property alias gtkTheme: root._gtkTheme
         property alias themeIcons: root._themeIcons
         property alias themeMode: root._themeMode
+        property alias plasmaColorScheme: root._plasmaColorScheme
+        property alias konsoleProfile: root._konsoleProfile
+        property alias fontName: root._bodyFont
     }
 
     // --- Hyprland Configuration ---
-    readonly property var hyprConfiguration: QtObject {
-        property alias border_width: root._hyprBorderWidth
-        property alias active_border: root._hyprActiveBorder
-        property alias inactive_border: root._hyprInactiveBorder
+    readonly property var hyprlandConfiguration: QtObject {
+        property alias borderWidth: root._hyprBorderWidth
+        property alias activeBorder: root._hyprActiveBorder
+        property alias inactiveBorder: root._hyprInactiveBorder
         property alias rounding: root._hyprRounding
-        property alias drop_shadow: root._hyprDropShadow
+        property alias dropShadow: root._hyprDropShadow
     }
 }

@@ -1,11 +1,15 @@
 import QtQuick
-import Quickshell.Hyprland
-import "../themes"
-import "../components"
-import "../services"
+import Quickshell.Wayland
+
+import "root:/themes"
+import "root:/components"
+import "root:/services"
 
 OsdPanelWindow {
     id: root
+
+    WlrLayershell.namespace: "quickshell:volumePopup"
+    WlrLayershell.layer: WlrLayer.Overlay
 
     target: Brightness
     sliderValue: Brightness.brightness

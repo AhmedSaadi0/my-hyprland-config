@@ -1,35 +1,29 @@
 pragma Singleton
 
 import QtQuick
-import org.kde.kirigami as Kirigami
 
 BaseTheme {
     id: colorsTheme
 
-    // --------------------
-    // ------ Colors ------
-    // --------------------
-    // _textBackgroundColor1: "#22C1EB"
-    // _textBackgroundColor2: "#FD02FF"
-    // _textFg: "#1F1635"
-    //
-    // // topbar
-    // _topbarColor: Kirigami.Theme.backgroundColor
-    //
-    // _topbarBgColorV1: "#1F1635"
-    // _topbarBgColorV2: Kirigami.Theme.highlightColor
-    // _topbarBgColorV3: Kirigami.Theme.neutralBackgroundColor
-    // _topbarFgColorV1: Kirigami.Theme.textColor
-    // _topbarFgColorV2: Kirigami.Theme.highlightedTextColor
-    // _topbarFgColorV3: Kirigami.Theme.neutralTextColor
-    //
-    // // Left Menu
-    // _leftMenuBgColorV1: Kirigami.Theme.backgroundColor
-    // _leftMenuBgColorV2: Kirigami.Theme.negativeBackgroundColor
-    // _leftMenuBgColorV3: Kirigami.Theme.highlightColor
-    // _leftMenuFgColorV1: Kirigami.Theme.textColor
-    // _leftMenuFgColorV2: Kirigami.Theme.neutralTextColor
-    // _leftMenuFgColorV3: Kirigami.Theme.highlightedTextColor
+    themeName: "ColorsTheme"
+
+    _plasmaColorScheme: "AColors"
+
+    _wallpaper: "colors.png"
+
+    _primary: "#22C1EB"
+    _secondary: "#FD02FF"
+
+    _themeIcons: "Vivid-Dark-Icons"
+    _kvantumTheme: "Shades-of-purple"
+    _gtkTheme: "Shades-of-purple"
+    _konsoleProfile: "pinky.profile"
 
     _baseRadius: 12
+
+    _hyprBorderWidth: 3
+    _hyprActiveBorder: "rgba(EB08FBff) rgba(16D7BAff) 0deg"
+    _hyprInactiveBorder: "rgba(59595900) 0deg"
+    _hyprRounding: _baseRadius
+    _hyprDropShadow: "no"
 }

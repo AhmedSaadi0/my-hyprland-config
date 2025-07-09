@@ -1,20 +1,18 @@
 pragma Singleton
 
-import Quickshell
 import QtQuick
 
-PersistentProperties {
+BaseTheme {
+    id: deerTheme
 
-    property var colors: QtObject {
-        property color textBackgroundColor1: "#F905FF"
-        property color textBackgroundColor2: "#20D2FD"
-        property color textFg: "#09070f"
-    }
+    themeName: "DeerTheme"
 
-    property var values: QtObject {
-        property int barHeight: 33
-        property int barWidgetsHeight: 23
-        property int radius: 15
-        property string iconFont: "FantasqueSansM Nerd Font Propo"
-    }
+    _wallpaper: "deer.jpg"
+
+    _primary: "#DCB5F3"
+    _secondary: "#F7B28A"
+
+    _topbarColor: "#0A1D27"
+    _plasmaColorScheme: "BlueDeer"
+    _konsoleProfile: "game.profile"
 }

@@ -3,16 +3,20 @@ pragma Singleton
 import QtQuick
 import Quickshell.Io
 import Quickshell
+import Quickshell.Hyprland
 
 Singleton {
     id: root
 
     readonly property string mainPath: Quickshell.shellRoot
     readonly property var homePath: mainPath.split(".")[0]
-    readonly property var configFilePath: homePath + ".ahmed-config.json"
+    readonly property var configFilePath: homePath + ".hishell.json"
     readonly property string assetsPath: mainPath + "/assets"
     readonly property string bashScriptsPath: mainPath + "/scripts"
     readonly property string pythonScriptsPath: mainPath + "/scripts/python"
+    readonly property string wallpapersPath: assetsPath + "/wallpapers"
+    readonly property string cacheFolderPath: homePath + ".cache/hishell"
+    readonly property string themeCacheFilePath: cacheFolderPath + "/theme.json"
 
     // --------------------------------------------------------------
     property string username: "Username"
@@ -27,6 +31,10 @@ Singleton {
     property string weatherLocation: "sanaa"
     property bool usePrayerTimes: true
     // -------------------------------------------------------------------------
+
+    Component.onCompleted: {
+        Hyprland.dispatch(`exec mkdir -p ${cacheFolderPath}`);
+    }
 
     FileView {
         id: fileView
@@ -49,7 +57,6 @@ Singleton {
 
     // كائن لتنظيم مسارات الأصول (Assets)
     readonly property QtObject assets: QtObject {
-        readonly property string wallpapers: "file://" + root.assetsPath + "/wallpapers"
         readonly property QtObject icons: QtObject {
             readonly property string hot_weather: "file://" + root.assetsPath + "/icons/hot-weather.png"
             readonly property string cold_weather: "file://" + root.assetsPath + "/icons/cold-weather.png"
@@ -86,6 +93,7 @@ Singleton {
             readonly property var topCpuUsageCommand: ["python", topCpuUsage]
             readonly property var topRamUsageCommand: ["python", topRamUsage]
         }
+
         readonly property QtObject bash: QtObject {
             // Files
             readonly property string cpuUsage: root.bashScriptsPath + "/cpu_usage.sh"

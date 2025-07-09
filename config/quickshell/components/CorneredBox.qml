@@ -42,7 +42,7 @@ Rectangle {
             bottom: parent.bottom
         }
         position: "bottom-left"
-        shapeColor: palette.window
+        shapeColor: root.boxColor
         // rotation: 180
     }
 
@@ -57,36 +57,36 @@ Rectangle {
             // bottom: parent.bottom
         }
         position: "top-left"
-        shapeColor: palette.window
+        shapeColor: root.boxColor
         // rotation: 270
     }
 
-    BarCorner {
-        id: topLeftBarCorner
-        width: root.cornerWidth
-        height: root.cornerHeight
-        visible: root.topRightVisible
-        anchors {
-            top: parent.top
-            left: parent.left
-            // bottom: parent.bottom
-        }
-        position: "top-right"
-        shapeColor: palette.window
-        // rotation: 270
-    }
-
-    BarCorner {
-        id: bottomLeftBarCorner
-        width: root.cornerWidth
-        height: root.cornerHeight
-        visible: root.bottomRightVisible
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-        }
-        position: "bottom-right"
-        shapeColor: palette.window
-        // rotation: 270
-    }
+    // BarCorner {
+    //     id: topLeftBarCorner
+    //     width: root.cornerWidth
+    //     height: root.cornerHeight
+    //     visible: root.topRightVisible
+    //     anchors {
+    //         top: parent.top
+    //         left: parent.left
+    //         // bottom: parent.bottom
+    //     }
+    //     position: "top-right"
+    //     shapeColor: root.boxColor
+    //     // rotation: 270
+    // }
+    //
+    // BarCorner {
+    //     id: bottomLeftBarCorner
+    //     width: root.cornerWidth
+    //     height: root.cornerHeight
+    //     visible: root.bottomRightVisible
+    //     anchors {
+    //         bottom: parent.bottom
+    //         left: parent.left
+    //     }
+    //     position: "bottom-right"
+    //     shapeColor: root.boxColor
+    //     // rotation: 270
+    // }
 }

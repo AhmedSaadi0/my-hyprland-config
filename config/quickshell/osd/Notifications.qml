@@ -2,6 +2,8 @@
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
+import Quickshell.Wayland
+
 import "root:/services"
 import "root:/components/notifications"
 
@@ -14,6 +16,10 @@ PanelWindow {
     visible: popupModel.count > 0
 
     exclusionMode: ExclusionMode.Ignore
+    aboveWindows: true
+
+    WlrLayershell.namespace: "quickshell:notificationPopup"
+    WlrLayershell.layer: WlrLayer.Overlay
 
     margins {
         bottom: 30

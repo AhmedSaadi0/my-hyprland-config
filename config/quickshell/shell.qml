@@ -5,7 +5,7 @@ import Quickshell
 import QtQuick.Window
 import Quickshell.Io
 
-import "root:/topbar"
+import "root:/bars"
 import "root:/windows/leftwindow"
 import "root:/osd"
 import "root:/utils"
@@ -16,15 +16,6 @@ ShellRoot {
 
     signal openLeftPanelRequested(int selectedIndex)
 
-    // Variants {
-    //     model: Quickshell.screens
-    //     TopLeftCorner {
-    //         id: topLeftCorner
-    //         required property ShellScreen modelData
-    //         screen: modelData
-    //     }
-    // }
-
     Variants {
         model: Quickshell.screens
         Topbar {
@@ -32,10 +23,6 @@ ShellRoot {
 
             required property ShellScreen modelData
             screen: modelData
-            // menuIsOpen: handler.isMenuOpen
-            // onOpenLeftPanelRequested: {
-            //     handler.toggleMenu();
-            // }
         }
     }
 
@@ -48,26 +35,6 @@ ShellRoot {
         }
     }
 
-    // Variants {
-    //     model: Quickshell.screens
-    //     BottomRightCorner {
-    //         id: bottomRightCorners
-    //
-    //         required property ShellScreen modelData
-    //         screen: modelData
-    //     }
-    // }
-    //
-    // Variants {
-    //     model: Quickshell.screens
-    //     BottomLeftCorner {
-    //         id: bottomLeftCorners
-    //
-    //         required property ShellScreen modelData
-    //         screen: modelData
-    //     }
-    // }
-
     Variants {
         model: Quickshell.screens
         LeftBar {
@@ -78,11 +45,7 @@ ShellRoot {
     }
 
     LeftWindowFull {
-        // NewLeftWindow {
         id: leftPanelFull
-        // visible: false
-        // required property ShellScreen modelData
-        // screen: modelData
     }
 
     IpcHandler {
@@ -132,19 +95,4 @@ ShellRoot {
     Volume {}
     Brightness {}
     Notifications {}
-
-    // Connections {
-    //     target: topBarWindow
-    //     function onOpenLeftPanelRequested(btn) {
-    //         if (leftPanelFull.visible) {
-    //             // leftPanel.close();
-    //             btn.textRotation = 0;
-    //             leftPanelFull.close();
-    //             return;
-    //         }
-    //         // leftPanel.open();
-    //         btn.textRotation = 180;
-    //         leftPanelFull.open();
-    //     }
-    // }
 }

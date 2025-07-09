@@ -6,7 +6,6 @@ import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
 import "./animations"
 
-import "root:/themes"
 import "root:/utils"
 
 StackView {
@@ -32,7 +31,7 @@ StackView {
     }
     Component {
         id: notiListComponent
-        NotiList {}
+        NotificationsList {}
     }
     Component {
         id: weatherComponent
@@ -96,6 +95,5 @@ StackView {
     }
 
     replaceEnter: ZoomIn {}
-
     replaceExit: ZoomOut {}
 }
