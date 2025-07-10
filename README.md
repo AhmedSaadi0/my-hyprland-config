@@ -6,7 +6,7 @@
 
 ## This branch will use [quickshell](https://quickshell.outfoxxed.me/)
 
-If you want to use ags change the branch to main
+If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSaadi0/my-hyprland-config/blob/main)
 
 [In progress ...](https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/config/quickshell/todo.md)
 
@@ -457,13 +457,13 @@ nvim .ahmed-config.json
 #### Dark
 
 <p align='center'>
-	<img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/dark.png'/>
+	<img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/dark.png'/>
 </p>
 
 #### Light
 
 <p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/main/screenshots/light.png'/>
+	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/light.png'/>
 </p>
 
 <hr />
