@@ -37,6 +37,7 @@ Singleton {
      */
     function changePlasmaColor(colorSchemeName) {
         // This requires the 'plasma-apply-colorscheme' tool to be installed.
+        console.info(colorSchemeName);
         return ['plasma-apply-colorscheme', colorSchemeName];
     }
 

@@ -7,7 +7,7 @@ import org.kde.kirigami as Kirigami
 PersistentProperties {
     id: root
 
-    property string themeName: "Base Theme"
+    property string themeName: "BaseTheme"
 
     // --- SOURCE PROPERTIES (for overriding in custom themes) ---
     // These are the actual values. Custom themes will override these.
@@ -84,7 +84,7 @@ PersistentProperties {
     property string _gtkTheme: "Breeze"
     property string _themeIcons: "breeze-dark"
     property string _themeMode: "dark"
-    property string _plasmaColorScheme: "MateriaYaruDark"
+    property string _plasmaColorScheme: "MaterialYouDark"
     property string _konsoleProfile: "MaterialYouAlt.profile"
 
     // --------------------

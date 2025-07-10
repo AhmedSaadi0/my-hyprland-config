@@ -5,101 +5,75 @@ import QtQuick.Layouts
 
 import "root:/themes"
 
-// Pane هو المكون الأساسي المثالي لبطاقة مرئية
 Pane {
     id: root
-    // padding: 15            // الهامش الداخلي للبطاقة
 
-    // --- الخصائص العامة للبطاقة ---
-    // يمكنك تغيير هذه القيم عند استخدام البطاقة
+    width: parent.width
 
-    // 1. خصائص المحتوى (التي يتم الوصول إليها من الخارج)
+    height: contentItem.implicitHeight + padding * 2
+    implicitHeight: contentItem.implicitHeight + padding * 2
+
     property alias title: titleElement.text
     property alias icon: iconElement.text
+    default property alias content: contentColumn.data
 
-    // 2. خصائص التصميم
     property color cardColor: ThemeManager.selectedTheme.colors.topbarBgColorV1
     property color textColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
     property int cardRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int headerSpacing: 10      // المسافة بين الأيقونة والعنوان
+    property int headerSpacing: 10
+    property int contentSpacing: 10 // مسافة بين عناصر المحتوى المضافة
 
-    // 3. خصائص الخطوط
     property int titleFontSize: ThemeManager.selectedTheme.typography.heading3Size
     property int iconFontSize: ThemeManager.selectedTheme.typography.heading3Size
-    // ملاحظة: تأكد من أن خط NerdFont مُحمّل في مشروعك
     property string iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
 
-    // اجعل البطاقة تأخذ عرض الأب بشكل افتراضي
-    implicitWidth: parent.implicitWidth
-    // الارتفاع يُحسب تلقائيًا بناءً على المحتوى
-    implicitHeight: mainLayout.implicitHeight
-
-    // هذه هي الميزة الأهم:
-    // أي عنصر تضعه داخل <Card> سيذهب إلى contentArea
-    default property alias content: contentArea.data
-
-    // تخصيص خلفية الـ Pane
     background: Rectangle {
         color: root.cardColor
         radius: root.cardRadius
     }
 
-    // الهيكل الداخلي للبطاقة باستخدام Layouts
-    ColumnLayout {
-        id: mainLayout
-        width: parent.width // اجعل التخطيط يملأ عرض البطاقة
-
-        // --- الجزء الأول: رأس البطاقة (Header) ---
+    contentItem: ColumnLayout {
         RowLayout {
-            // اجعل الرأس يأخذ العرض الكامل مع تطبيق الهوامش
+            id: headerRow
+            visible: root.title.length > 0
             Layout.fillWidth: true
-            Layout.margins: root.padding
-            // لا نريد هامشًا سفليًا هنا، سنضيف فاصل بدلاً منه
-            Layout.bottomMargin: 0
             spacing: root.headerSpacing
 
-            // الأيقونة
             Text {
                 id: iconElement
                 text: "\uf128"
                 font.family: root.iconFontFamily
                 font.pixelSize: root.iconFontSize
                 color: root.textColor
-                Layout.alignment: Qt.AlignCenter
+                Layout.alignment: Qt.AlignVCenter
             }
 
-            // العنوان
             Text {
                 id: titleElement
-                text: qsTr("عنوان البطاقة")
+                text: ""
                 font.pixelSize: root.titleFontSize
                 font.bold: true
                 color: root.textColor
-                elide: Text.ElideRight // يضيف "..." إذا كان النص طويلاً
-                Layout.alignment: Qt.AlignCenter
-                Layout.fillWidth: true // اجعل العنوان يملأ باقي المساحة
+                elide: Text.ElideRight
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignVCenter
             }
         }
 
-        // --- فاصل مرئي بين الرأس والمحتوى ---
         Rectangle {
+            id: separator
+            visible: headerRow.visible && contentColumn.children.length > 0
             Layout.fillWidth: true
-            Layout.leftMargin: root.padding
-            Layout.rightMargin: root.padding
             Layout.topMargin: root.padding / 2
             Layout.bottomMargin: root.padding / 2
             height: 1
-            color: root.textColor
+            color: Qt.rgba(root.textColor.r, root.textColor.g, root.textColor.b, 0.2)
         }
 
-        // --- الجزء الثاني: منطقة المحتوى (Content) ---
-        // هذه هي الحاوية التي ستستقبل العناصر من الخارج
         ColumnLayout {
-            id: contentArea
+            id: contentColumn
             Layout.fillWidth: true
-            Layout.margins: root.padding
-            spacing: 10
-            Layout.bottomMargin: 20
+            spacing: root.contentSpacing
         }
     }
 }

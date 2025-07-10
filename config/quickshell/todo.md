@@ -64,6 +64,7 @@
 ### 🧠 Productivity & UX
 
 - [ ] **Keyboard Layout Switch Indicator**
+- [x] **Improve Menu Cards**
 - [x] **Notifications History Center**
   - [x] Add Action buttons
   - [x] Fix Race Condition

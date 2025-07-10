@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell.Io
 import Quickshell.Services.UPower
 import org.kde.kirigami as Kirigami
@@ -10,7 +11,7 @@ MenuCard {
     id: root
 
     // --- Texts & Content ---
-    title: qsTr("Performance Mode") // "وضع الاداء"
+    title: qsTr("Power Profiles") // "وضع الاداء"
     icon: ""
 
     property int defaultButtonWidth: 100
@@ -48,51 +49,53 @@ MenuCard {
     property var selectedProfile: PowerProfiles.profile // Comes from UPower
     property string profileToSetOnClick: "" // Stores the command string for the Process
 
-    Row {
+    // Replace Row with RowLayout
+    RowLayout { // <--- MODIFIED: Was 'Row'
         id: widgetsRow
-        // width: parent.width // Keep commented if width should be determined by content
-
+        Layout.fillWidth: true // <--- ADDED: Tell the layout to fill the available width
         spacing: root.buttonsRowSpacing
+
+        // Now, you can decide how the buttons should behave inside the RowLayout.
+        // Option 1: Keep them fixed width (they will be aligned to the left).
+        // Option 2 (Recommended): Make them fill the available space equally.
+
+        // --- Using Option 2 (Recommended for a better look) ---
 
         MButton {
             id: highPerformanceButton
-            width: root.defaultButtonWidth
+            Layout.fillWidth: true // <--- ADDED: Make button fill available width
             height: root.defaultButtonHeight
             text: root.highPerformanceButtonLabel
             onClicked: {
                 root.profileToSetOnClick = root.highPerformanceProfileCmd;
                 profileProcess.running = true;
             }
-
-            // Dynamic properties for styling based on selectedProfile
             normalBackground: (root.selectedProfile === root.profileIndexPerformance) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
             normalForeground: (root.selectedProfile === root.profileIndexPerformance) ? root.highlightedStateTextColor : root.baseTextColor
         }
 
         MButton {
             id: balancedButton
-            width: root.defaultButtonWidth
+            Layout.fillWidth: true // <--- ADDED
             height: root.defaultButtonHeight
             text: root.balancedButtonLabel
             onClicked: {
                 root.profileToSetOnClick = root.balancedProfileCmd;
                 profileProcess.running = true;
             }
-
             normalBackground: (root.selectedProfile === root.profileIndexBalanced) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
             normalForeground: (root.selectedProfile === root.profileIndexBalanced) ? root.highlightedStateTextColor : root.baseTextColor
         }
 
         MButton {
             id: batterySavingButton
-            width: root.defaultButtonWidth
+            Layout.fillWidth: true // <--- ADDED
             height: root.defaultButtonHeight
             text: root.lowButtonLabel
             onClicked: {
                 root.profileToSetOnClick = root.powerSaverProfileCmd;
-                profileProcess.running = true; // Or profileProcess.start()
+                profileProcess.running = true;
             }
-
             normalBackground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
             normalForeground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.highlightedStateTextColor : root.baseTextColor
         }

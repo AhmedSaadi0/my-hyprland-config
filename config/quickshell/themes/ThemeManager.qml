@@ -15,7 +15,7 @@ Singleton {
 
     // الآن تستقبل كائن الثيم مباشرة لتمريره
     function loadTheme(themeFile) {
-        const component = Qt.createComponent(themeFile);
+        const component = Qt.createComponent(`${themeFile}.qml`);
         if (component.status === Component.Ready) {
             const themeInstance = component.createObject();
             if (themeInstance) {
@@ -96,7 +96,7 @@ Singleton {
         watchChanges: true
         onLoaded: {
             const fileContents = JSON.parse(cacheFile.text());
-            loadTheme(`${fileContents.selectedTheme}.qml`);
+            loadTheme(fileContents.selectedTheme);
         }
         onLoadFailed: error => {
             if (error == FileViewError.FileNotFound) {

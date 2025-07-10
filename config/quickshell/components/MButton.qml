@@ -1,18 +1,33 @@
 // components/MButton.qml
 
 import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls
 import org.kde.kirigami as Kirigami
 
-import "../themes"
+import "root:/themes"
 
 Button {
-    id: myCustomButton
+    id: root
 
     property int cursorShape: Qt.ArrowCursor
 
-    property var textHorizontalAlignment: Text.AlignHCenter
+    property string iconText: ""
+    property bool showIcon: iconText !== ""
+
+    property var textHorizontalAlignment: showIcon ? Text.AlignRight : Text.AlignHCenter
     property var textVerticalAlignment: Text.AlignVCenter
+    property int textPreferredWidth: 3
+    property int textLeftMargin: 0
+    property int textRightMargin: 0
+    property var textElide: Text.ElideRight
+
+    property var iconHorizontalAlignment: Text.AlignHCenter
+    property var iconVerticalAlignment: Text.AlignVCenter
+    property int iconPreferredWidth: 2
+    property int iconLeftMargin: 0
+    property int iconRightMargin: 0
+
     property bool isActive: false
 
     property var disabledBackground: Kirigami.Theme.negativeBackgroundColor
@@ -32,54 +47,72 @@ Button {
     property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
-    property var textElide: Text.ElideRight
+    contentItem: RowLayout {
+        anchors.fill: parent
+        Layout.alignment: Qt.AlignVCenter
 
-    contentItem: Text {
-        id: buttonTextContent
-        font: myCustomButton.font
-        text: myCustomButton.text
-        horizontalAlignment: myCustomButton.textHorizontalAlignment
-        verticalAlignment: myCustomButton.textVerticalAlignment
-        elide: myCustomButton.textElide
+        Text {
+            id: buttonMainText
+            text: root.text
+            font: root.font
+            elide: root.textElide
+            horizontalAlignment: root.textHorizontalAlignment
+            verticalAlignment: root.textVerticalAlignment
+            Layout.fillWidth: true
+            Layout.preferredWidth: root.textPreferredWidth
 
-        color: {
-            if (!myCustomButton.enabled) {
-                return myCustomButton.disabledForeground;
-                // } else if (myCustomButton.down || myCustomButton.pressed) {
-                //     return myCustomButton.downForeground;
-            } else if (myCustomButton.isActive) {
-                return myCustomButton.activeForeground;
-                // let bg = myCustomButton.activeBackground;
-                // let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-                // return luminance > 0.5 ? "black" : "white";
-            } else if (myCustomButton.hovered) {
-                // return myCustomButton.hoveredForeground;
-                let bg = myCustomButton.hoveredBackground;
-                let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-                return luminance > 0.5 ? "black" : "white";
-            } else {
-                return myCustomButton.normalForeground;
+            Layout.leftMargin: root.textLeftMargin
+            Layout.rightMargin: root.textRightMargin
+
+            color: {
+                if (!root.enabled) {
+                    return root.disabledForeground;
+                } else if (root.isActive) {
+                    return root.activeForeground;
+                } else if (root.hovered) {
+                    let bg = root.hoveredBackground;
+                    let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
+                    return luminance > 0.5 ? "black" : "white";
+                } else {
+                    return root.normalForeground;
+                }
             }
+        }
+
+        Text {
+            id: iconTextItem
+            visible: root.showIcon
+            text: root.iconText
+            font.family: ThemeManager.selectedTheme.typography.iconFont
+            font.pixelSize: buttonMainText.font.pixelSize
+            horizontalAlignment: root.iconHorizontalAlignment
+            verticalAlignment: root.iconVerticalAlignment
+            color: buttonMainText.color
+            Layout.fillWidth: root.showIcon
+            Layout.preferredWidth: root.iconPreferredWidth
+
+            Layout.leftMargin: root.iconLeftMargin
+            Layout.rightMargin: root.iconRightMargin
         }
     }
 
     background: Rectangle {
-        topLeftRadius: myCustomButton.topLeftRadius
-        topRightRadius: myCustomButton.topRightRadius
-        bottomLeftRadius: myCustomButton.bottomLeftRadius
-        bottomRightRadius: myCustomButton.bottomRightRadius
+        topLeftRadius: root.topLeftRadius
+        topRightRadius: root.topRightRadius
+        bottomLeftRadius: root.bottomLeftRadius
+        bottomRightRadius: root.bottomRightRadius
 
         color: {
-            if (!myCustomButton.enabled) {
-                return myCustomButton.disabledBackground;
+            if (!root.enabled) {
+                return root.disabledBackground;
                 // } else if (myCustomButton.down || myCustomButton.pressed) {
                 //     return myCustomButton.downBackground;
-            } else if (myCustomButton.hovered) {
-                return myCustomButton.hoveredBackground;
-            } else if (myCustomButton.isActive) {
-                return myCustomButton.activeBackground;
+            } else if (root.hovered) {
+                return root.hoveredBackground;
+            } else if (root.isActive) {
+                return root.activeBackground;
             } else {
-                return myCustomButton.normalBackground;
+                return root.normalBackground;
             }
         }
 
@@ -95,12 +128,8 @@ Button {
         anchors.fill: parent
         hoverEnabled: true
 
-        // ربط شكل المؤشر بالخاصية التي أضفناها للزر
-        cursorShape: myCustomButton.cursorShape
+        cursorShape: root.cursorShape
 
-        // مهم جداً: هذه الخصائص تضمن أن هذه المنطقة لا تتداخل
-        // مع وظيفة النقر الخاصة بالزر الأساسي.
-        // هي فقط تغير شكل المؤشر وتمرر الأحداث لما تحتها.
         propagateComposedEvents: true
         acceptedButtons: Qt.NoButton
     }

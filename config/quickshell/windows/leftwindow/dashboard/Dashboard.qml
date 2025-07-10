@@ -12,6 +12,10 @@ Column {
 
     spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
+    Themes {
+        id: themes
+    }
+
     PowerProfiles {
         id: powerProfiles
         // anchors {
@@ -20,10 +24,6 @@ Column {
         //     leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         //     rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         // }
-    }
-
-    Themes {
-        id: themes
     }
 
     PowerOptions {

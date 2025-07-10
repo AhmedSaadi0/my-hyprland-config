@@ -20,17 +20,63 @@ MenuCard {
         rowSpacing: 10
 
         MButton {
-            text: "test"
+            text: "Colors"
+            iconText: ""
             Layout.fillWidth: true
+            onClicked: ThemeManager.loadTheme("ColorsTheme")
+            textLeftMargin: 2
+            iconRightMargin: 2
+            iconPreferredWidth: 1
         }
 
         MButton {
-            text: "test"
+            text: "Deer"
+            iconText: ""
             Layout.fillWidth: true
+            onClicked: ThemeManager.loadTheme("DeerTheme")
+            textLeftMargin: 2
+            iconRightMargin: 2
+            iconPreferredWidth: 1
         }
+
         MButton {
-            text: "test"
+            text: "Base"
+            iconText: "󰖔"
             Layout.fillWidth: true
+            onClicked: ThemeManager.loadTheme("BaseTheme")
+            textLeftMargin: 2
+            iconRightMargin: 2
+            iconPreferredWidth: 1
+        }
+
+        MButton {
+            text: "Harmony"
+            iconText: "󰔉"
+            Layout.fillWidth: true
+            onClicked: ThemeManager.loadTheme("HarmonyTheme")
+            textLeftMargin: 2
+            iconRightMargin: 2
+            iconPreferredWidth: 1
+        }
+
+        MButton {
+            text: "Dark"
+            iconText: "󱀝"
+            Layout.fillWidth: true
+            onClicked: ThemeManager.loadTheme("DarkTheme")
+            textLeftMargin: 2
+            iconRightMargin: 2
+            iconPreferredWidth: 1
+        }
+
+        MButton {
+            text: "Base"
+            iconText: ""
+            Layout.fillWidth: true
+            onClicked: ThemeManager.loadTheme("BaseTheme")
+            textLeftMargin: 2
+            iconRightMargin: 2
+            iconPreferredWidth: 1
         }
     }
 }
