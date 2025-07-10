@@ -7,13 +7,12 @@ BaseTheme {
 
     themeName: "ColorsTheme"
 
-    _plasmaColorScheme: "AColors"
-
     _wallpaper: "colors.png"
 
     _primary: "#22C1EB"
     _secondary: "#FD02FF"
 
+    _plasmaColorScheme: "AColors"
     _themeIcons: "Vivid-Dark-Icons"
     _kvantumTheme: "Shades-of-purple"
     _gtkTheme: "Shades-of-purple"

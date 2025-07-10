@@ -11,30 +11,23 @@ import org.kde.kirigami as Kirigami
 import "../../../themes"
 import "../../../components"
 
-Rectangle {
+// Rectangle {
+MenuCard {
     id: root
 
     width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2)
+    height: 120
 
     // -------------------------------------------------------------------------
     // --- Configuration Properties (Constants & Theme Aliases)
     // -------------------------------------------------------------------------
 
     // --- Dimensions ---
-    property int componentHeight: 90
     property int defaultButtonWidth: 100
     property int defaultButtonHeight: 30
     property int componentRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property var animationDuration: 400
 
-    property int iconTopMargin: 16
-    property int iconRightMargin: 20
-
-    property int titleTopMargin: 9
-    property int titleLeftMargin: 20
-    property int titleIconSpacing: 10
-
-    property int buttonsRowTopMargin: 10
     property int buttonsRowSpacing: 10
 
     // Confirmation dialog dimensions/margins
@@ -56,8 +49,8 @@ Rectangle {
     property int confirmationMessageFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
 
     // --- Texts & Content ---
-    property string mainTitleText: qsTr("Power Options")
-    property string mainIconCharacter: "" // Power icon
+    title: qsTr("Power Options")
+    icon: ""
 
     // Power option button labels (using appropriate icons from FontAwesome 6/Nerd Fonts)
     // ⏻ (U+23FB) - Power off icon
@@ -69,8 +62,8 @@ Rectangle {
 
     // Confirmation dialog texts
     property string confirmationTitleText: qsTr("Confirm Action")
-    property string confirmYesText: qsTr("Yes")
-    property string confirmNoText: qsTr("No")
+    property string confirmYesText: qsTr("Continue  ")
+    property string confirmNoText: qsTr("")
 
     // -------------------------------------------------------------------------
     // --- State Properties for confirmation logic
@@ -83,64 +76,23 @@ Rectangle {
     // -------------------------------------------------------------------------
     // --- Root Visual Properties
     // -------------------------------------------------------------------------
-    height: root.componentHeight
-    color: root.componentBackgroundColor
-    radius: root.componentRadius
+    // color: root.componentBackgroundColor
+    // radius: root.componentRadius
 
     // The StackView will manage different "screens" within this component
     StackView {
         id: viewStack
-        anchors {
-            fill: parent
-        }
+
+        implicitWidth: parent.implicitWidth
+
         // The initial screen displaying the power options buttons
         initialItem: Item {
             id: mainPowerOptionsScreen
             // anchors.fill: viewStack
 
-            // -------------------------------------------------------------------------
-            // --- Visual Elements for Main Power Options Screen
-            // -------------------------------------------------------------------------
-            Text {
-                id: iconElement
-                text: root.mainIconCharacter
-                font.family: root.iconFontFamily
-                font.bold: true
-                font.pixelSize: root.headingFontSize
-                color: root.baseTextColor
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    topMargin: root.iconTopMargin
-                    leftMargin: root.iconRightMargin
-                }
-            }
-
-            Text {
-                id: titleElement
-                text: root.mainTitleText
-                font.pixelSize: root.headingFontSize
-                font.bold: true
-                color: root.baseTextColor
-                // horizontalAlignment: Text.AlignRight
-                anchors {
-                    top: parent.top
-                    right: parent.right
-                    left: iconElement.right
-                    topMargin: root.titleTopMargin
-                    rightMargin: root.titleIconSpacing
-                    leftMargin: root.titleLeftMargin
-                }
-            }
-
             Row {
                 id: powerOptionsButtonsRow
-                anchors {
-                    top: titleElement.bottom
-                    verticalCenter: parent.verticalCenter // Keep centered within available space
-                    horizontalCenter: parent.horizontalCenter
-                    topMargin: root.buttonsRowTopMargin
-                }
+
                 spacing: root.buttonsRowSpacing
 
                 MButton {
@@ -154,6 +106,7 @@ Rectangle {
                     onClicked: {
                         root.pendingActionCommand = ["systemctl", "poweroff"];
                         root.pendingActionMessage = qsTr("Are you sure you want to power off?");
+                        root.confirmYesText = qsTr("Power off");
                         viewStack.push(confirmationDialogComponent);
                     }
                 }
@@ -172,6 +125,7 @@ Rectangle {
                         // root.pendingActionCommand = ["loginctl", "kill-session", "self"];
                         root.pendingActionCommand = ["hyprctl", "dispatch", "exit"];
                         root.pendingActionMessage = qsTr("Are you sure you want to log out?");
+                        root.confirmYesText = qsTr("Log out");
                         viewStack.push(confirmationDialogComponent);
                     }
                 }
@@ -187,6 +141,7 @@ Rectangle {
                     onClicked: {
                         root.pendingActionCommand = ["systemctl", "reboot"];
                         root.pendingActionMessage = qsTr("Are you sure you want to reboot?");
+                        root.confirmYesText = qsTr("Reboot");
                         viewStack.push(confirmationDialogComponent);
                     }
                 }
@@ -200,6 +155,7 @@ Rectangle {
             id: confirmationDialogComponent
 
             Item {
+                width: root.width
                 // Use Item as the root for the pushed component, allowing flexible content and positioning
                 // anchors.fill: parent
 
@@ -209,44 +165,44 @@ Rectangle {
                     height: parent.height * 0.9
                     color: root.componentBackgroundColor
                     radius: root.componentRadius
-                    anchors.centerIn: parent
+                    // anchors.centerIn: parent
 
-                    Text {
-                        id: confirmationTitle
-                        text: root.confirmationTitleText
-                        font.pixelSize: root.headingFontSize
-                        font.bold: true
-                        color: root.baseTextColor
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors {
-                            top: parent.top
-                            horizontalCenter: parent.horizontalCenter
-                            // topMargin: root.confirmationPadding
-                        }
-                    }
-
-                    Text {
-                        id: confirmationMessage
-                        text: root.pendingActionMessage // Text updated from pendingActionMessage
-                        font.pixelSize: root.confirmationMessageFontSize
-                        color: root.baseTextColor
-                        wrapMode: Text.WordWrap
-                        horizontalAlignment: Text.AlignHCenter
-                        width: parent.width - (root.confirmationPadding * 2) // Confine text width
-                        anchors {
-                            top: confirmationTitle.bottom
-                            horizontalCenter: parent.horizontalCenter
-                            topMargin: -6
-                        }
-                    }
+                    // Text {
+                    //     id: confirmationTitle
+                    //     text: root.confirmationTitleText
+                    //     font.pixelSize: root.headingFontSize
+                    //     font.bold: true
+                    //     color: root.baseTextColor
+                    //     horizontalAlignment: Text.AlignHCenter
+                    //     anchors {
+                    //         top: parent.top
+                    //         horizontalCenter: parent.horizontalCenter
+                    //         // topMargin: root.confirmationPadding
+                    //     }
+                    // }
+                    //
+                    // Text {
+                    //     id: confirmationMessage
+                    //     text: root.pendingActionMessage // Text updated from pendingActionMessage
+                    //     font.pixelSize: root.confirmationMessageFontSize
+                    //     color: root.baseTextColor
+                    //     wrapMode: Text.WordWrap
+                    //     horizontalAlignment: Text.AlignHCenter
+                    //     width: parent.width - (root.confirmationPadding * 2) // Confine text width
+                    //     anchors {
+                    //         top: confirmationTitle.bottom
+                    //         horizontalCenter: parent.horizontalCenter
+                    //         topMargin: -6
+                    //     }
+                    // }
 
                     Row {
                         spacing: root.confirmationButtonsSpacing
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            bottom: parent.bottom
-                            bottomMargin: 4
-                        }
+                        // anchors {
+                        //     horizontalCenter: parent.horizontalCenter
+                        //     bottom: parent.bottom
+                        //     // bottomMargin: 4
+                        // }
 
                         MButton {
                             id: noButton
@@ -283,172 +239,63 @@ Rectangle {
         } // End of confirmationDialogComponent
 
         pushEnter: Transition {
-            // The NEW item (confirmation dialog content) enters
-            ParallelAnimation {
-                // Animate the Item itself, setting its starting rotation and position
-                // The item will then slide into its default (anchored) position (x=0, y=0, rotY=0)
-                NumberAnimation {
-                    property: "opacity"
-                    from: 0
-                    to: 1
-                    duration: root.animationDuration
-                    easing.type: Easing.OutQuint
-                }
-                // Start rotated to appear like its "back" is showing, then flip to front
-                // RotationAnimation {
-                //     property: "rotationY"
-                //     from: 90
-                //     to: 0
-                //     duration: root.animationDuration
-                //     easing.type: Easing.OutBack
-                // }
-                // Start smaller and grow
-                NumberAnimation {
-                    property: "scale"
-                    from: 0.7
-                    to: 1.0
-                    duration: root.animationDuration
-                    easing.type: Easing.OutBack
-                }
-                // Start shifted slightly off-center and slide into view
-                NumberAnimation {
-                    property: "x"
-                    from: {
-                        if (root.pendingActionCommand[1] === "dispatch") {
-                            return parent.width * 0.15;
-                        } else if (root.pendingActionCommand[1] === "reboot") {
-                            return 0;
-                        } else if (root.pendingActionCommand[1] === "poweroff") {
-                            return parent.width * -0.15;
-                        }
-                    }
-                    to: 0
-                    duration: root.animationDuration
-                    easing.type: Easing.OutQuint
-                }
+            NumberAnimation {
+                properties: "y"
+                from: 20
+                to: 0
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+            NumberAnimation {
+                properties: "opacity"
+                from: 0
+                to: 1
+                duration: 150
             }
         }
-
         pushExit: Transition {
-            // The OLD item (main screen content) exits
-            ParallelAnimation {
-                // The current item fades out completely
-                // NumberAnimation {
-                //     property: "opacity"
-                //     to: 0
-                //     duration: root.animationDuration
-                //     easing.type: Easing.InQuint
-                // }
-                // // Flip it away in the opposite direction
-                // RotationAnimation {
-                //     property: "rotationY"
-                //     to: -90
-                //     duration: root.animationDuration
-                //     easing.type: Easing.InBack
-                // }
-                // Shrink it as it goes away
-                NumberAnimation {
-                    property: "scale"
-                    to: 0.7
-                    duration: root.animationDuration
-                    easing.type: Easing.InBack
-                }
-                // Slide it slightly off-center in the opposite direction
-                NumberAnimation {
-                    property: "x"
-                    to: {
-                        if (root.pendingActionCommand[1] === "dispatch") {
-                            return parent.width * 0.15;
-                        } else if (root.pendingActionCommand[1] === "reboot") {
-                            return 0;
-                        } else if (root.pendingActionCommand[1] === "poweroff") {
-                            return parent.width * -0.15;
-                        }
-                    }
-                    duration: root.animationDuration
-                    easing.type: Easing.InQuint
-                }
+            NumberAnimation {
+                properties: "y"
+                from: 0
+                to: -20
+                duration: 200
+                easing.type: Easing.InCubic
+            }
+            NumberAnimation {
+                properties: "opacity"
+                from: 1
+                to: 0
+                duration: 150
             }
         }
-
-        // --- Pop Animations ---
         popEnter: Transition {
-            // The NEW item (main screen content) enters (revealed again)
-            ParallelAnimation {
-                NumberAnimation {
-                    property: "opacity"
-                    from: 0
-                    to: 1
-                    duration: root.animationDuration
-                    easing.type: Easing.OutQuint
-                }
-                // RotationAnimation {
-                //     property: "rotationY"
-                //     from: -90
-                //     to: 0
-                //     duration: root.animationDuration
-                //     easing.type: Easing.OutBack
-                // }
-                NumberAnimation {
-                    property: "scale"
-                    from: 0.7
-                    to: 1.0
-                    duration: root.animationDuration
-                    easing.type: Easing.OutBack
-                }
-                NumberAnimation {
-                    property: "x"
-                    from: {
-                        if (root.pendingActionCommand[1] === "dispatch") {
-                            return parent.width * 0.15;
-                        } else if (root.pendingActionCommand[1] === "reboot") {
-                            return 0;
-                        } else if (root.pendingActionCommand[1] === "poweroff") {
-                            return parent.width * -0.15;
-                        }
-                    }
-                    to: 0
-                    duration: root.animationDuration
-                    easing.type: Easing.OutQuint
-                }
+            NumberAnimation {
+                properties: "y"
+                from: -20
+                to: 0
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+            NumberAnimation {
+                properties: "opacity"
+                from: 0
+                to: 1
+                duration: 150
             }
         }
-
         popExit: Transition {
-            // The OLD item (confirmation dialog content) exits (is dismissed)
-            ParallelAnimation {
-                NumberAnimation {
-                    property: "opacity"
-                    to: 0
-                    duration: root.animationDuration
-                    easing.type: Easing.InQuint
-                }
-                // RotationAnimation {
-                //     property: "rotationY"
-                //     to: 90
-                //     duration: root.animationDuration
-                //     easing.type: Easing.InBack
-                // }
-                NumberAnimation {
-                    property: "scale"
-                    to: 0.7
-                    duration: root.animationDuration
-                    easing.type: Easing.InBack
-                }
-                NumberAnimation {
-                    property: "x"
-                    to: {
-                        if (root.pendingActionCommand[1] === "dispatch") {
-                            return parent.width * 0.15;
-                        } else if (root.pendingActionCommand[1] === "reboot") {
-                            return 0;
-                        } else if (root.pendingActionCommand[1] === "poweroff") {
-                            return parent.width * -0.15;
-                        }
-                    }
-                    duration: root.animationDuration
-                    easing.type: Easing.InQuint
-                }
+            NumberAnimation {
+                properties: "y"
+                from: 0
+                to: 20
+                duration: 200
+                easing.type: Easing.InCubic
+            }
+            NumberAnimation {
+                properties: "opacity"
+                from: 1
+                to: 0
+                duration: 150
             }
         }
 

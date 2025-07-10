@@ -22,6 +22,10 @@ Column {
         // }
     }
 
+    Themes {
+        id: themes
+    }
+
     PowerOptions {
         id: powerOptions
         // width: parent.width

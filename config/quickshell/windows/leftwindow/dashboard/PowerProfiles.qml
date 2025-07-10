@@ -1,40 +1,24 @@
 import QtQuick
-import QtQuick.Effects
 import Quickshell.Io
 import Quickshell.Services.UPower
 import org.kde.kirigami as Kirigami
 
-import "../../../themes"
-import "../../../components"
+import "root:/themes"
+import "root:/components"
 
-Rectangle {
+MenuCard {
     id: root
-    width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2)
 
-    // -------------------------------------------------------------------------
-    // --- Configuration Properties (Constants & Theme Aliases)
-    // -------------------------------------------------------------------------
+    // --- Texts & Content ---
+    title: qsTr("Performance Mode") // "وضع الاداء"
+    icon: ""
 
-    // --- Dimensions ---
-    property int componentHeight: 85
     property int defaultButtonWidth: 100
     property int defaultButtonHeight: 30
-    property int componentRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
-    property int iconElementWidth: 10 // Note: Text width might override this
-    property int iconTopMargin: 12
-    property int iconRightMargin: 20
-    // property int iconLeftMargin: 20 // Was commented out in original for icon
-
-    property int titleTopMargin: 5
-    property int titleLeftMargin: 20
-    property int titleIconSpacing: 20 // Was title.rightMargin
-
-    property int buttonsRowTopMargin: 10
     property int buttonsRowSpacing: 10
 
     // --- Colors (Aliasing Theme colors for clarity and central access) ---
-    property color componentBackgroundColor: ThemeManager.selectedTheme.colors.topbarBgColorV1
     property color baseTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
     property color highlightedStateTextColor: {
         let bg = activeStateBackgroundColor;
@@ -44,14 +28,6 @@ Rectangle {
     }
     property color activeStateBackgroundColor: Kirigami.Theme.activeTextColor     // For active button background (original highlightColor)
     property color defaultStateBackgroundColor: Kirigami.Theme.activeBackgroundColor // For inactive button background
-
-    // --- Fonts (Aliasing Theme fonts) ---
-    property string iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
-    property int headingFontSize: ThemeManager.selectedTheme.typography.heading3Size
-
-    // --- Texts & Content ---
-    property string mainTitleText: qsTr("Performance Mode") // "وضع الاداء"
-    property string iconCharacter: ""
 
     property string highPerformanceButtonLabel: qsTr("High")
     property string balancedButtonLabel: qsTr("Balanced")
@@ -72,63 +48,10 @@ Rectangle {
     property var selectedProfile: PowerProfiles.profile // Comes from UPower
     property string profileToSetOnClick: "" // Stores the command string for the Process
 
-    // -------------------------------------------------------------------------
-    // --- Root Visual Properties
-    // -------------------------------------------------------------------------
-    height: root.componentHeight
-    color: root.componentBackgroundColor
-    radius: root.componentRadius
-
-    // layer.enabled: true
-    // layer.effect: Shadow {} // Add specific shadow properties if needed
-
-    // -------------------------------------------------------------------------
-    // --- Visual Child Elements
-    // -------------------------------------------------------------------------
-    Text {
-        id: iconElement // Renamed id for clarity
-        width: root.iconElementWidth
-        text: root.iconCharacter
-        font.family: root.iconFontFamily
-        font.bold: true
-        font.pixelSize: root.headingFontSize
-        color: root.baseTextColor
-        anchors {
-            top: parent.top
-            left: parent.left
-            topMargin: root.iconTopMargin
-            leftMargin: root.iconRightMargin
-            rightMargin: root.iconRightMargin
-            // leftMargin: root.iconLeftMargin // Kept commented
-        }
-    }
-
-    Text {
-        id: titleElement
-        text: root.mainTitleText
-        font.pixelSize: root.headingFontSize
-        font.bold: true
-        color: root.baseTextColor
-        // horizontalAlignment: Text.AlignRight
-        anchors {
-            top: parent.top
-            right: parent.right
-            left: iconElement.right // Anchor to the icon element
-            topMargin: root.titleTopMargin
-            rightMargin: root.titleIconSpacing // Space between title and icon
-            leftMargin: root.titleLeftMargin
-        }
-    }
-
     Row {
         id: widgetsRow
         // width: parent.width // Keep commented if width should be determined by content
-        anchors {
-            top: titleElement.bottom
-            verticalCenter: parent.verticalCenter
-            horizontalCenter: parent.horizontalCenter
-            topMargin: root.buttonsRowTopMargin
-        }
+
         spacing: root.buttonsRowSpacing
 
         MButton {
