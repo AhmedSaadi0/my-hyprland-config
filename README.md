@@ -185,7 +185,7 @@ sudo dnf install plasma-desktop ark kate dolphin
 
 ### تغيير الاعدادات
 
-- انشء ملف باسم `.ahmed-config.json` في مجلد الهوم
+- انشء ملف باسم `.hishell.json` في مجلد الهوم
 
 ```bash
 nvim .hishell.json
@@ -409,7 +409,7 @@ sudo dnf install plasma-desktop ark kate dolphin
 - Create a file with the name `.hishell.json` in your home directory.
 
 ```bash
-nvim .ahmed-config.json
+nvim .hishell.json
 ```
 
 - Add these settings
