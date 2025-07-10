@@ -8,12 +8,10 @@
 
 If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSaadi0/my-hyprland-config/blob/main)
 
-[In progress ...](https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/config/quickshell/todo.md)
-
 <details>
 <summary>العربية</summary>
 
-**ملاحظة:** هذه الإعدادات لا تزال في مرحلة التطوير، وسأقوم بإضافة المزيد من الميزات بصورة مستمرة عندما يتاح لدي وقت أكثر.
+**ملاحظة:** هذه الإعدادات لا تزال في [مرحلة التطوير](https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/config/quickshell/todo.md)، وسأقوم بإضافة المزيد من الميزات بصورة مستمرة عندما يتاح لدي وقت أكثر.
 
 ### ملاحظة
 
@@ -235,7 +233,7 @@ nvim .hishell.json
 
 <summary>English</summary>
 
-**Note:** This configuration is a work in progress, and I will continue to add more features as time permits.
+**Note:** This configuration is a [work in progress](https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/config/quickshell/todo.md), and I will continue to add more features as time permits.
 
 ### Note
 
