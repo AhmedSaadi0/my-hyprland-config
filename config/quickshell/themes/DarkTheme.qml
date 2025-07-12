@@ -2,12 +2,14 @@ pragma Singleton
 
 import QtQuick
 
+import "root:/config"
+
 BaseTheme {
     id: darkTheme
 
     themeName: "DarkTheme"
 
-    _wallpaper: "dark.jpg"
+    _wallpaper: App.assets.getWallpaperPath("dark.jpg")
 
     _primary: "#F59549"
     _secondary: "#02A4ED"

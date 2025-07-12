@@ -1,8 +1,8 @@
 pragma Singleton
 
 import QtQuick
-import Quickshell.Io
 import Quickshell
+import Quickshell.Io
 import Quickshell.Hyprland
 
 import "root:/utils" as Utils
@@ -12,86 +12,184 @@ Singleton {
     id: root
 
     property var selectedTheme: ColorsTheme
+    property int selectedDarkWallpaperIndex: 0
+    property int selectedLightWallpaperIndex: 0
+    property var wallpapersList: []
 
+    // تحميل الثيم من ملف QML
     function loadTheme(themeFile) {
         const component = Qt.createComponent(`${themeFile}.qml`);
-        if (component.status === Component.Ready) {
-            const themeInstance = component.createObject();
-            if (themeInstance) {
-                root.selectedTheme = themeInstance;
-                applyTheme(themeInstance);
-            } else {
-                console.error("فشل إنشاء كائن الثيم:", themeFile);
-            }
-        } else {
+        if (component.status !== Component.Ready) {
             console.error("فشل تحميل الثيم:", component.errorString());
+            return;
         }
+
+        const themeInstance = component.createObject();
+        if (!themeInstance) {
+            console.error("فشل إنشاء كائن الثيم:", themeFile);
+            return;
+        }
+
+        root.selectedTheme = themeInstance;
+        applyTheme(themeInstance);
     }
 
+    // تنفيذ أوامر إلى Hyprland
     function dispatchCommand(description, commandArray) {
-        if (!commandArray || commandArray.length === 0) {
+        if (!Array.isArray(commandArray) || commandArray.length === 0) {
             console.warn(`تم تخطي الأمر الفارغ: ${description}`);
             return;
         }
 
-        const commandString = commandArray.join(' ');
-
-        // console.info(`[${description}] Dispatching: exec ${commandString}`);
-
-        Hyprland.dispatch(`exec ${commandString}`);
+        return Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 
-    function applyTheme(themeObject) {
-        if (!themeObject) {
-            console.error("Cannot apply a null theme object.");
+    // تطبيق إعدادات الثيم
+    function applyTheme(theme) {
+        if (!theme) {
+            console.error("لا يمكن تطبيق ثيم غير موجود.");
             return;
         }
 
-        console.log("Applying theme:", themeObject.themeName || "Unnamed Theme");
+        wallpaperTimer.stop();
+        getWallpapersList.running = false;
 
-        const settings = themeObject.systemSettings;
+        console.info("تطبيق الثيم:", theme.themeName || "ثيم بدون اسم");
 
-        dispatchCommand("Change Wallpaper", Utils.Helper.changeWallpaper(settings.wallpaper));
-        dispatchCommand("Change Plasma Color", Utils.Helper.changePlasmaColor(settings.plasmaColorScheme));
-        dispatchCommand("Change Plasma Icons", Utils.Helper.changePlasmaIcons(settings.themeIcons));
-        dispatchCommand("Change Konsole Profile", Utils.Helper.changeKonsoleProfile(settings.konsoleProfile));
-        dispatchCommand("Change GTK Theme", Utils.Helper.changeGtkTheme(settings.gtkTheme));
-        dispatchCommand("Change GTK Icons", Utils.Helper.changeGtkIcons(settings.themeIcons));
-        dispatchCommand("Change GTK Font", Utils.Helper.changeGtkIcons(settings.fontName));
-        dispatchCommand("Change Qt Style", Utils.Helper.changeQtStyle(settings.qtThemeStyle));
-        dispatchCommand("Change Kvantum Theme", Utils.Helper.changeKvantumTheme(settings.kvantumTheme));
+        const settings = theme.systemSettings;
 
+        if (settings.enableDynamicWallpapers) {
+            getWallpapersList.running = true;
+        } else {
+            applyStaticTheme(settings);
+        }
+    }
+
+    function applyStaticTheme(settings) {
+        changeWallpaper(settings.wallpaper);
+        changeQtTheme(settings);
+        changeGtkTheme(settings);
         setHyprlandConfigurations();
-        const newData = {
-            selectedTheme: this.selectedTheme.themeName
-        };
-        cacheFile.setText(JSON.stringify(newData, null, 2));
+        cacheAppliedData();
     }
 
     function setHyprlandConfigurations() {
         const cfg = selectedTheme.hyprlandConfiguration;
-        Hyprland.dispatch(`exec hyprctl keyword general:border_size ${cfg.borderWidth}`);
-        Hyprland.dispatch(`exec hyprctl keyword general:col.active_border '${cfg.activeBorder}'`);
-        Hyprland.dispatch(`exec hyprctl keyword general:col.inactive_border '${cfg.inactiveBorder}'`);
-        Hyprland.dispatch(`exec hyprctl keyword decoration:rounding ${cfg.rounding}`);
-        Hyprland.dispatch(`exec hyprctl keyword decoration:drop_shadow ${cfg.dropShadow ? "yes" : "no"}`);
+        const keywords = [[`general:border_size`, cfg.borderWidth], [`general:col.active_border`, `'${cfg.activeBorder}'`], [`general:col.inactive_border`, `'${cfg.inactiveBorder}'`], [`decoration:rounding`, cfg.rounding], [`decoration:drop_shadow`, cfg.dropShadow ? "yes" : "no`"]];
+
+        for (const [key, value] of keywords) {
+            Hyprland.dispatch(`exec hyprctl keyword ${key} ${value}`);
+        }
+    }
+
+    function changeWallpaper(path) {
+        dispatchCommand("تغيير الخلفية", Utils.Helper.changeWallpaper(path));
+    }
+
+    function changeQtTheme(s) {
+        dispatchCommand("Plasma Color", Utils.Helper.changePlasmaColor(s.plasmaColorScheme));
+        dispatchCommand("Plasma Icons", Utils.Helper.changePlasmaIcons(s.themeIcons));
+        dispatchCommand("Konsole Profile", Utils.Helper.changeKonsoleProfile(s.konsoleProfile));
+        dispatchCommand("Qt Style", Utils.Helper.changeQtStyle(s.qtThemeStyle));
+        dispatchCommand("Kvantum Theme", Utils.Helper.changeKvantumTheme(s.kvantumTheme));
+    }
+
+    function changeGtkTheme(s) {
+        dispatchCommand("GTK Theme", Utils.Helper.changeGtkTheme(s.gtkTheme));
+        dispatchCommand("GTK Icons", Utils.Helper.changeGtkIcons(s.themeIcons));
+        dispatchCommand("GTK Font", Utils.Helper.changeGtkIcons(s.fontName)); // ملاحظة: يبدو أنها خطأ، يُفضل: changeGtkFont
+    }
+
+    function cacheAppliedData() {
+        const data = {
+            selectedTheme: selectedTheme.themeName,
+            selectedDarkWallpaper: selectedDarkWallpaperIndex,
+            selectedLightWallpaper: selectedLightWallpaperIndex
+        };
+        cacheFile.setText(JSON.stringify(data, null, 2));
     }
 
     FileView {
         id: cacheFile
         path: Qt.resolvedUrl(App.themeCacheFilePath)
         watchChanges: true
+
         onLoaded: {
-            const fileContents = JSON.parse(cacheFile.text());
-            loadTheme(fileContents.selectedTheme);
-        }
-        onLoadFailed: error => {
-            if (error == FileViewError.FileNotFound) {
-                console.info("Cache File not found, creating new file.");
-                cacheFile.setText(JSON.stringify("{selectedTheme:0}"));
-            } else {
-                console.error("Cache file could not be load: " + error);
+            try {
+                const data = JSON.parse(cacheFile.text());
+                selectedDarkWallpaperIndex = data.selectedDarkWallpaper;
+                selectedLightWallpaperIndex = data.selectedLightWallpaper;
+                loadTheme(data.selectedTheme);
+            } catch (e) {
+                console.error("فشل قراءة ملف التخزين:", e);
             }
+        }
+
+        onLoadFailed: error => {
+            if (error === FileViewError.FileNotFound) {
+                console.info("ملف التخزين غير موجود. سيتم إنشاؤه.");
+                cacheFile.setText(JSON.stringify({
+                    selectedTheme: "default"
+                }));
+            } else {
+                console.error("فشل تحميل ملف التخزين:", error);
+            }
+        }
+    }
+
+    Process {
+        id: getWallpapersList
+        command: Utils.Helper.getWallpapersList(selectedTheme.systemSettings.dynamicWallpapersPath)
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const jsonData = JSON.parse(this.text);
+                root.wallpapersList = jsonData;
+
+                applyDynamicWallpaper();
+            }
+        }
+
+        stderr: SplitParser {
+            onRead: data => {
+                console.error(data);
+            }
+        }
+    }
+
+    function applyDynamicWallpaper() {
+        const settings = selectedTheme.systemSettings;
+        const themeMode = settings.themeMode;
+
+        let selectedWallpaper = themeMode === "light" ? wallpapersList[selectedLightWallpaperIndex] : wallpapersList[selectedDarkWallpaperIndex];
+
+        changeWallpaper(selectedWallpaper);
+
+        if (settings.enableDynamicColoring) {
+            dispatchCommand("Apply M3 Themeing", Utils.Helper.applyM3PlasmaColor(selectedWallpaper, themeMode));
+        }
+
+        cacheAppliedData();
+        wallpaperTimer.running = settings.enableDynamicWallpapers || settings.enableDynamicColoring;
+    }
+
+    Timer {
+        id: wallpaperTimer
+        running: false
+        interval: selectedTheme?.systemSettings?.dynamicWallpapersInterval || 60000
+        repeat: true
+
+        onTriggered: {
+            const settings = selectedTheme.systemSettings;
+            const mode = settings.themeMode;
+
+            if (mode === "light") {
+                selectedLightWallpaperIndex++;
+            } else {
+                selectedDarkWallpaperIndex++;
+            }
+
+            applyDynamicWallpaper();
         }
     }
 }

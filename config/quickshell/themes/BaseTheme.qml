@@ -87,6 +87,11 @@ PersistentProperties {
     property string _plasmaColorScheme: "MaterialYouDark"
     property string _konsoleProfile: "MaterialYouAlt.profile"
 
+    property bool _enableDynamicColoring: false
+    property bool _enableDynamicWallpapers: false
+    property int _dynamicWallpapersInterval: 15 * 1000 * 60
+    property string _dynamicWallpapersPath: ""
+
     // --------------------
     // ----- Hyprland -----
     // --------------------
@@ -186,6 +191,11 @@ PersistentProperties {
         property alias plasmaColorScheme: root._plasmaColorScheme
         property alias konsoleProfile: root._konsoleProfile
         property alias fontName: root._bodyFont
+
+        property alias enableDynamicColoring: root._enableDynamicColoring
+        property alias enableDynamicWallpapers: root._enableDynamicWallpapers
+        property alias dynamicWallpapersInterval: root._dynamicWallpapersInterval
+        property alias dynamicWallpapersPath: root._dynamicWallpapersPath
     }
 
     // --- Hyprland Configuration ---

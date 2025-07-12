@@ -32,7 +32,7 @@ class ColorExporter:
             ncolor=ncolor,
             source_type="image",
             scheme_variant=1,
-            chroma_mult=1.8,
+            chroma_mult=2.8,
             tone_mult=1.0,
         )
 

@@ -23,12 +23,12 @@ PanelWindow {
 
     margins {
         bottom: 30
-        left: 30
+        right: 30
     }
 
     anchors {
         bottom: true
-        left: true
+        right: true
     }
 
     ListModel {

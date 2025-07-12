@@ -19,10 +19,8 @@ Singleton {
      * @param {string} wallpaperName - The filename of the wallpaper (e.g., "my-wallpaper.jpg").
      * @returns {string[]} The command array to be executed.
      */
-    function changeWallpaper(wallpaperName) {
-        // Assumes you have a 'wallpapersPath' property defined in Config.qml.
-        const wallpaperPath = Config.App.wallpapersPath + "/" + wallpaperName;
-        return ['swww', 'img', '--transition-type', 'random', wallpaperPath];
+    function changeWallpaper(wallpaperPath) {
+        return ['swww', 'img', '--transition-type', 'random', `'${wallpaperPath}'`];
     }
 
     // ==========================================================
@@ -37,8 +35,18 @@ Singleton {
      */
     function changePlasmaColor(colorSchemeName) {
         // This requires the 'plasma-apply-colorscheme' tool to be installed.
-        console.info(colorSchemeName);
         return ['plasma-apply-colorscheme', colorSchemeName];
+    }
+
+    function getWallpapersList(path) {
+        const scriptFile = Config.App.scripts.bash.getWallpapers;
+        return [scriptFile, `${path}`];
+    }
+
+    function applyM3PlasmaColor(selectedWallpaperPath, themeMode) {
+        const scriptCommand = Config.App.scripts.python.dynamicM3Command;
+        const command = [...scriptCommand, `'${selectedWallpaperPath}'`, "-m", themeMode];
+        return command;
     }
 
     /**

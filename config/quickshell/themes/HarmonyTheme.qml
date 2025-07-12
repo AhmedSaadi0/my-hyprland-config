@@ -2,12 +2,14 @@ pragma Singleton
 
 import QtQuick
 
+import "root:/config"
+
 BaseTheme {
     id: colorsTheme
 
     themeName: "HarmonyTheme"
 
-    _wallpaper: "ign_wanderlust.jpg"
+    _wallpaper: App.assets.getWallpaperPath("ign_wanderlust.jpg")
 
     _primary: "#BE626B"
     _secondary: "#6AA6A5"

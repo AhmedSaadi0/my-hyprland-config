@@ -3,9 +3,14 @@ pragma Singleton
 import QtQuick
 
 BaseTheme {
-    id: deerTheme
-
+    id: root
     themeName: "M3Light"
+
+    _enableDynamicColoring: true
+    _enableDynamicWallpapers: true
+    _dynamicWallpapersPath: "/home/ahmed/wallpapers/light"
+
+    _themeMode: "light"
     _baseRadius: 18
     _hyprBorderWidth: 3
 

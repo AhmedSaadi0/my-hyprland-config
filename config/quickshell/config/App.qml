@@ -77,6 +77,10 @@ Singleton {
             readonly property string notificationAlert: root.assetsPath + "/audio/new-notification.mp3"
             readonly property string cpuHighUsage: root.assetsPath + "/audio/cpu_high_usage.wav"
         }
+
+        function getWallpaperPath(wallpaper) {
+            return root.wallpapersPath + "/" + wallpaper;
+        }
     }
 
     readonly property QtObject scripts: QtObject {
@@ -86,12 +90,14 @@ Singleton {
             readonly property string devicesTemp: root.pythonScriptsPath + "/devices_temp.py"
             readonly property string topCpuUsage: root.pythonScriptsPath + "/top_cpu_usage.py"
             readonly property string topRamUsage: root.pythonScriptsPath + "/top_ram_usage.py"
+            readonly property string dynamicM3: root.pythonScriptsPath + "/m3/dynamic-m3.py"
 
             // Commands
             readonly property var batteryInfoCommand: ["python", batteryInfo]
             readonly property var devicesTempCommand: ["python", devicesTemp]
             readonly property var topCpuUsageCommand: ["python", topCpuUsage]
             readonly property var topRamUsageCommand: ["python", topRamUsage]
+            readonly property var dynamicM3Command: ["python", dynamicM3]
         }
 
         readonly property QtObject bash: QtObject {
@@ -101,6 +107,7 @@ Singleton {
             readonly property string internet: root.bashScriptsPath + "/internet.sh"
             readonly property string deviceTempreture: root.bashScriptsPath + "/temp.sh"
             readonly property string playerctl: root.homePath + "/.config/hypr/scripts/playerctl.sh"
+            readonly property string getWallpapers: root.bashScriptsPath + "/get_wallpapers.sh"
 
             // Commands
             readonly property var internetCommand: ["sh", "-c", `${internet} ${root.networkMonitor}`]

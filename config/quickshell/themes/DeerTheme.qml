@@ -2,12 +2,14 @@ pragma Singleton
 
 import QtQuick
 
+import "root:/config"
+
 BaseTheme {
     id: deerTheme
 
     themeName: "DeerTheme"
 
-    _wallpaper: "deer.jpg"
+    _wallpaper: App.assets.getWallpaperPath("deer.jpg")
 
     _primary: "#DCB5F3"
     _secondary: "#F7B28A"

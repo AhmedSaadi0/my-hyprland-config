@@ -119,8 +119,8 @@ Item {
                         id: badgeText
                         text: model.notificationCount
                         anchors.centerIn: parent
-                        color: ThemeManager.selectedTheme.colors.onPrimary
-                        // color: Helper.getAccurteTextColor(ThemeManager.selectedTheme.colors.primary)
+                        // color: ThemeManager.selectedTheme.colors.onPrimary
+                        color: Helper.getAccurteTextColor(ThemeManager.selectedTheme.colors.primary)
                         font.bold: true
                         font.pixelSize: 8
 
