@@ -10,12 +10,12 @@ Singleton {
 
     readonly property string mainPath: Quickshell.shellRoot
     readonly property var homePath: mainPath.split(".")[0]
-    readonly property var configFilePath: homePath + ".hishell.json"
+    readonly property var configFilePath: homePath + ".nibrasshell.json"
     readonly property string assetsPath: mainPath + "/assets"
     readonly property string bashScriptsPath: mainPath + "/scripts"
     readonly property string pythonScriptsPath: mainPath + "/scripts/python"
     readonly property string wallpapersPath: assetsPath + "/wallpapers"
-    readonly property string cacheFolderPath: homePath + ".cache/hishell"
+    readonly property string cacheFolderPath: homePath + ".cache/nibrasshell"
     readonly property string themeCacheFilePath: cacheFolderPath + "/theme.json"
 
     // --------------------------------------------------------------

@@ -83,7 +83,7 @@ Item {
                     id: badgeCircle
                     width: 15
                     height: 15
-                    radius: height / 2
+                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
                     color: ThemeManager.selectedTheme.colors.primary
                     opacity: 0.0
                     scale: 0.7

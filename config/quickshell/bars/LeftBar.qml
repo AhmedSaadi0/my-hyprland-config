@@ -133,6 +133,10 @@ PanelWindow {
                     icon: ""
                     name: "Network"
                 }
+                ListElement {
+                    icon: "󰾰"
+                    name: "Devices"
+                }
             }
 
             onCurrentIndexChanged: function () {

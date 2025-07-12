@@ -77,7 +77,7 @@ PanelWindow {
                 anchors.rightMargin: col.sideMargin
             }
 
-            MenuSelectorBar {
+            Menus {
                 id: menus
                 height: contentContainer.height - menuHeader.height - col.sideMargin
 

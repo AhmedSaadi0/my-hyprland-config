@@ -1,5 +1,5 @@
 import Quickshell.Hyprland
 
 GlobalShortcut {
-    appid: "hishell"
+    appid: "nibrasshel"
 }

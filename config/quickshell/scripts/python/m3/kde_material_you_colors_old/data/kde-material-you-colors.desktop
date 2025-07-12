@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=kde-material-you-colors
+Icon=color-management
+Name=KDE Material You Colors
+Comment=Starts/Restarts background process
+Type=Application
+X-KDE-AutostartScript=true

@@ -40,10 +40,10 @@ MenuCard {
         }
 
         MButton {
-            text: "Base"
+            text: "M3 Dark"
             iconText: "󰖔"
             Layout.fillWidth: true
-            onClicked: ThemeManager.loadTheme("BaseTheme")
+            onClicked: ThemeManager.loadTheme("M3Dark")
             textLeftMargin: 2
             iconRightMargin: 2
             iconPreferredWidth: 1
@@ -70,10 +70,10 @@ MenuCard {
         }
 
         MButton {
-            text: "Base"
+            text: "M3 Light"
             iconText: ""
             Layout.fillWidth: true
-            onClicked: ThemeManager.loadTheme("BaseTheme")
+            onClicked: ThemeManager.loadTheme("M3Light")
             textLeftMargin: 2
             iconRightMargin: 2
             iconPreferredWidth: 1

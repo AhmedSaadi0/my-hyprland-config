@@ -19,7 +19,7 @@ PanelWindow {
 
     color: "transparent"
 
-    property real cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius * 2
+    property real cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     anchors {
         right: true

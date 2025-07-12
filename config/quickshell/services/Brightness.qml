@@ -70,12 +70,12 @@ Singleton {
         id: setProc
     }
 
-    HiShellShortcut {
+    NibrasShellShortcut {
         name: "brightnessUp"
         onPressed: root.increaseBrightness()
     }
 
-    HiShellShortcut {
+    NibrasShellShortcut {
         name: "brightnessDown"
         onPressed: root.decreaseBrightness()
     }

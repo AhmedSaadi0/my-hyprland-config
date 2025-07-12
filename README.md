@@ -1,4 +1,4 @@
-# My Hyprland Config
+# NibrasShell – Hyprland + Quickshell
 
 **Join our [Discord Server](https://discord.gg/EUcGgRGhrs) for discussions and support!**
 
@@ -113,7 +113,7 @@ sudo dnf install plasma-desktop ark kate dolphin
     mv ~/.config/fish/config.fish ~/.config/fish/config.back.fish
 
     # نسخ الملفات
-    cp -r hishell ~/.config/hypr
+    cp -r nibrasshell ~/.config/hypr
     cp -r ~/.config/hypr/config/quickshell ~/.config/quickshell
     cp -r ~/.config/hypr/config/wofi ~/.config/wofi
     cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
@@ -185,10 +185,10 @@ sudo dnf install plasma-desktop ark kate dolphin
 
 ### تغيير الاعدادات
 
-- انشء ملف باسم `.hishell.json` في مجلد الهوم
+- انشء ملف باسم `.nibrasshell.json` في مجلد الهوم
 
 ```bash
-nvim .hishell.json
+nvim .nibrasshell.json
 ```
 
 - قم باضافة الاعدادات حسب جهازك ومنطقتك
@@ -406,10 +406,10 @@ sudo dnf install plasma-desktop ark kate dolphin
 
 ### Change the settings
 
-- Create a file with the name `.hishell.json` in your home directory.
+- Create a file with the name `.nibrasshell.json` in your home directory.
 
 ```bash
-nvim .hishell.json
+nvim .nibrasshell.json
 ```
 
 - Add these settings

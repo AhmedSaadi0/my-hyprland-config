@@ -13,14 +13,13 @@ Singleton {
 
     property var selectedTheme: ColorsTheme
 
-    // الآن تستقبل كائن الثيم مباشرة لتمريره
     function loadTheme(themeFile) {
         const component = Qt.createComponent(`${themeFile}.qml`);
         if (component.status === Component.Ready) {
             const themeInstance = component.createObject();
             if (themeInstance) {
                 root.selectedTheme = themeInstance;
-                applyTheme(themeInstance); // مرر الثيم الجديد مباشرة
+                applyTheme(themeInstance);
             } else {
                 console.error("فشل إنشاء كائن الثيم:", themeFile);
             }
@@ -29,27 +28,19 @@ Singleton {
         }
     }
 
-    // --- دالة مساعدة جديدة ---
-    // هذه الدالة تأخذ اسمًا وصفيًا ومصفوفة أوامر،
-    // ثم تحولها إلى أمر واحد وترسله عبر Hyprland.
     function dispatchCommand(description, commandArray) {
         if (!commandArray || commandArray.length === 0) {
             console.warn(`تم تخطي الأمر الفارغ: ${description}`);
             return;
         }
 
-        // تحويل المصفوفة إلى سلسلة نصية يفصل بينها مسافات
         const commandString = commandArray.join(' ');
 
-        // طباعة الأمر للمساعدة في تصحيح الأخطاء
         // console.info(`[${description}] Dispatching: exec ${commandString}`);
 
-        // إرسال الأمر للتنفيذ
         Hyprland.dispatch(`exec ${commandString}`);
     }
 
-    // --- دالة تطبيق الثيم المحسّنة ---
-    // هذه الدالة الآن تستخدم Hyprland.dispatch مباشرة
     function applyTheme(themeObject) {
         if (!themeObject) {
             console.error("Cannot apply a null theme object.");
@@ -58,10 +49,8 @@ Singleton {
 
         console.log("Applying theme:", themeObject.themeName || "Unnamed Theme");
 
-        // استخراج الإعدادات لتسهيل القراءة
         const settings = themeObject.systemSettings;
 
-        // 1. قم بإرسال جميع الأوامر مباشرة
         dispatchCommand("Change Wallpaper", Utils.Helper.changeWallpaper(settings.wallpaper));
         dispatchCommand("Change Plasma Color", Utils.Helper.changePlasmaColor(settings.plasmaColorScheme));
         dispatchCommand("Change Plasma Icons", Utils.Helper.changePlasmaIcons(settings.themeIcons));
@@ -72,7 +61,6 @@ Singleton {
         dispatchCommand("Change Qt Style", Utils.Helper.changeQtStyle(settings.qtThemeStyle));
         dispatchCommand("Change Kvantum Theme", Utils.Helper.changeKvantumTheme(settings.kvantumTheme));
 
-        // 2. قم بتطبيق إعدادات Hyprland مباشرة (هذا الجزء يبقى كما هو)
         setHyprlandConfigurations();
         const newData = {
             selectedTheme: this.selectedTheme.themeName
@@ -80,7 +68,6 @@ Singleton {
         cacheFile.setText(JSON.stringify(newData, null, 2));
     }
 
-    // هذه الدالة تبقى كما هي لأنها تستخدم واجهة Hyprland مباشرة (أفضل من exec)
     function setHyprlandConfigurations() {
         const cfg = selectedTheme.hyprlandConfiguration;
         Hyprland.dispatch(`exec hyprctl keyword general:border_size ${cfg.borderWidth}`);
