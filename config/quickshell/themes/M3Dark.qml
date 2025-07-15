@@ -22,7 +22,7 @@ BaseTheme {
     _plasmaColorScheme: "MaterialYouDark"
     _konsoleProfile: "MaterialYouAlt.profile"
 
-    _themeIcons: "Vivid-Dark-Icons"
+    _themeIcons: "Tela-dark"
     _kvantumTheme: "Tellgo"
     _gtkTheme: "Breeze-Dark"
 

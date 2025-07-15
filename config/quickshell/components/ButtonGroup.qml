@@ -62,6 +62,7 @@ Item {
                     hoveredBackground: isActive ? "transparent" : ThemeManager.selectedTheme.colors.primary
 
                     text: model.icon
+                    activeText: model.activeIcon
                     font.family: ThemeManager.selectedTheme.typography.iconFont
                     font.pixelSize: 15
 

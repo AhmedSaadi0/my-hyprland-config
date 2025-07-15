@@ -18,10 +18,10 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    selected_color_mode = "dark" if args.mode == "dark" else "light"
+    SELECTED_COLOR_MODE = "dark" if args.mode == "dark" else "light"
 
     # Apply plasma theme
-    ColorExporter(args.image_path, None, selected_color_mode)
+    ColorExporter(args.image_path, None, SELECTED_COLOR_MODE)
 
     # Apply GTK theme
     # gradience_cli = GradienceCLI(

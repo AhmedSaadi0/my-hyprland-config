@@ -164,6 +164,9 @@ Singleton {
         let selectedWallpaper = themeMode === "light" ? wallpapersList[selectedLightWallpaperIndex] : wallpapersList[selectedDarkWallpaperIndex];
 
         changeWallpaper(selectedWallpaper);
+        changeQtTheme(settings);
+        changeGtkTheme(settings);
+        setHyprlandConfigurations();
 
         if (settings.enableDynamicColoring) {
             dispatchCommand("Apply M3 Themeing", Utils.Helper.applyM3PlasmaColor(selectedWallpaper, themeMode));

@@ -83,4 +83,10 @@
 
 - [x] **Left Menu Navigation**
 - [x] **Left Menu Animations**
-- [ ] **Add new icons for more control like brightness**
+- [ ] **Clipboard Manager**
+- [ ] **App Launcher** - or maybe in another place
+- [ ] **Todo List**
+- [ ] **Hyprland Control**
+- [ ] **Quickshell Control** -> right now is Dashboard
+- [ ] **Keybindings Cheatsheet**
+- [ ] **Launched Apps** -> not a menu, but a list of the apps that are currently running

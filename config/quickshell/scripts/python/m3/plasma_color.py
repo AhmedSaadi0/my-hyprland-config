@@ -31,8 +31,17 @@ class ColorExporter:
             wallpaper_data=wallpaper_data,
             ncolor=ncolor,
             source_type="image",
-            scheme_variant=1,
-            chroma_mult=2.8,
+            # 0 = Content
+            # 1 = Expressive
+            # 2 = Fidelity
+            # 3 = Monochrome
+            # 4 = Neutral
+            # 5 = TonalSpot
+            # 6 = Vibrant
+            # 7 = Rainbow
+            # 8 = FruitSalad
+            scheme_variant=2,
+            chroma_mult=2.5,
             tone_mult=1.0,
         )
 

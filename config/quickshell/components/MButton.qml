@@ -29,6 +29,8 @@ Button {
     property int iconRightMargin: 0
 
     property bool isActive: false
+    property string originalText: text
+    property string activeText: ""
 
     property var disabledBackground: Kirigami.Theme.negativeBackgroundColor
     property var downBackground: Kirigami.Theme.hoverColor.darker(1.15)
@@ -65,9 +67,13 @@ Button {
             Layout.rightMargin: root.textRightMargin
 
             color: {
+                buttonMainText.text = root.originalText;
                 if (!root.enabled) {
                     return root.disabledForeground;
                 } else if (root.isActive) {
+                    if (root.activeText) {
+                        buttonMainText.text = root.activeText;
+                    }
                     return root.activeForeground;
                 } else if (root.hovered) {
                     let bg = root.hoveredBackground;

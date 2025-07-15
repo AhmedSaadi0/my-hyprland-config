@@ -1,40 +1,45 @@
 // windows/leftwindow/dashboard/Dashboard.qml
 
-// import QtQuick.Controls
 import QtQuick
-
 import "root:/themes"
 
-Column {
-    // color: "transparent"
-    // width: ThemeManager.selectedTheme.dimensions.menuWidth
-    // height: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+// استبدل Column بـ Item ليكون الحاوية الرئيسية
+Item {
+    id: container
 
-    spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+    Column {
+        id: topContent
 
-    Themes {
-        id: themes
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        // anchors.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
+        spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
+        // العناصر العلوية تبقى هنا
+        Themes {
+            id: themes
+            // اجعل العرض يملأ العمود
+            width: parent.width
+        }
+
+        PowerProfiles {
+            id: powerProfiles
+            // اجعل العرض يملأ العمود
+            width: parent.width
+        }
     }
 
-    PowerProfiles {
-        id: powerProfiles
-        // anchors {
-        //     top: parent.top
-        //     // horizontalCenter: parent.horizontalCenter
-        //     leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        //     rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        // }
-    }
-
+    // عنصر خيارات الطاقة، الآن خارج العمود العلوي
     PowerOptions {
         id: powerOptions
-        // width: parent.width
-        // anchors {
-        //     // horizontalCenter: parent.horizontalCenter
-        //     top: powerProfiles.bottom
-        //     topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        //     leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        //     rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        // }
+
+        // تثبيت هذا العنصر في أسفل الحاوية الرئيسية
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        anchors.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin - 10
     }
 }

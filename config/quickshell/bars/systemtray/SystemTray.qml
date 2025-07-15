@@ -36,19 +36,19 @@ Item {
         }
     }
 
-    Behavior on implicitWidth {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.BezierSpline
-            // easing.bezierCurve: Appearance.anim.curves.emphasized
-        }
-    }
-
-    Behavior on implicitHeight {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.BezierSpline
-            // easing.bezierCurve: Appearance.anim.curves.emphasized
-        }
-    }
+    // Behavior on implicitWidth {
+    //     NumberAnimation {
+    //         duration: 300
+    //         easing.type: Easing.BezierSpline
+    //         // easing.bezierCurve: Appearance.anim.curves.emphasized
+    //     }
+    // }
+    //
+    // Behavior on implicitHeight {
+    //     NumberAnimation {
+    //         duration: 300
+    //         easing.type: Easing.BezierSpline
+    //         // easing.bezierCurve: Appearance.anim.curves.emphasized
+    //     }
+    // }
 }

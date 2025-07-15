@@ -113,29 +113,40 @@ PanelWindow {
             model: ListModel {
                 ListElement {
                     icon: "󰨝"
+                    activeIcon: "󰕮"
                     name: "Dashboard"
                 }
                 ListElement {
-                    icon: "󰂞"
+                    icon: ""
+                    activeIcon: ""
                     name: "Notifications"
                     // القيمة الأولية هنا ستُحدّث فوراً عند بدء التشغيل
                     notificationCount: 0
                 }
                 ListElement {
-                    icon: "󰨹"
+                    icon: ""
+                    activeIcon: "󰅟"
                     name: "Weather"
                 }
                 ListElement {
-                    icon: ""
+                    icon: ""
+                    activeIcon: ""
                     name: "Monitors"
                 }
                 ListElement {
-                    icon: ""
+                    icon: "󰲝"
+                    activeIcon: "󰛳"
                     name: "Network"
                 }
                 ListElement {
                     icon: "󰾰"
+                    // activeIcon: ""
                     name: "Devices"
+                }
+                ListElement {
+                    icon: "󰅌"
+                    activeIcon: "󰅇"
+                    name: "Clipboard"
                 }
             }
 

@@ -1,9 +1,11 @@
 pragma ComponentBehavior: Bound
 
-import Quickshell
-import Quickshell.Widgets
-import Quickshell.Services.SystemTray
 import QtQuick
+import QtQuick.Layouts
+import Quickshell
+import Quickshell.Services.SystemTray
+import Quickshell.Widgets
+import Qt5Compat.GraphicalEffects
 
 MouseArea {
     id: root
@@ -24,24 +26,22 @@ MouseArea {
 
     QsMenuAnchor {
         id: menu
-
         menu: root.modelData.menu
         anchor.window: this.QsWindow.window
     }
 
     IconImage {
-        id: icon
-        implicitSize: 13
-
-        source: {
-            let icon = root.modelData.icon;
-            if (icon.includes("?path=")) {
-                const [name, path] = icon.split("?path=");
-                icon = `file://${path}/${name.slice(name.lastIndexOf("/") + 1)}`;
-            }
-            return icon;
-        }
-        asynchronous: true
-        anchors.fill: parent
+        id: trayIcon
+        width: parent.implicitWidth
+        height: parent.implicitHeight
+        // visible:
+        source: root.modelData.icon
+        anchors.centerIn: parent
+        // onPaletteChanged: {
+        //     // var oldSource = source;
+        //     // source = "";
+        //     // source = oldSource;
+        //     console.info("CHHH -> " + oldSource);
+        // }
     }
 }
