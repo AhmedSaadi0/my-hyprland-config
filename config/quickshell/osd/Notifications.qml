@@ -6,17 +6,19 @@ import Quickshell.Wayland
 
 import "root:/services"
 import "root:/components/notifications"
+import "root:/components"
+import "root:/themes"
 
 PanelWindow {
     id: root
 
-    implicitWidth: popupContainer.implicitWidth + 20
-    implicitHeight: popupContainer.implicitHeight + 20
+    implicitWidth: 370
+    implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+
     color: "transparent"
     visible: popupModel.count > 0
 
     exclusionMode: ExclusionMode.Ignore
-    aboveWindows: true
 
     WlrLayershell.namespace: "quickshell:notificationPopup"
     WlrLayershell.layer: WlrLayer.Overlay
@@ -24,11 +26,14 @@ PanelWindow {
     margins {
         bottom: 30
         right: 30
+        top: 70
+        left: 30
     }
 
     anchors {
         bottom: true
         right: true
+        top: true
     }
 
     ListModel {
@@ -64,30 +69,68 @@ PanelWindow {
         width: notificationItem.width
         height: notificationItem.height
 
-        property bool showing: false
         opacity: 0
-        scale: 0.9
+        x: 100
 
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutCubic
-            }
-        }
-        Behavior on scale {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutCubic
-            }
+        Component.onCompleted: {
+            show();
+            hideTimer.start();
         }
 
-        states: State {
-            name: "visible"
-            when: showing
-            PropertyChanges {
+        function show() {
+            xAnimation.to = 0;
+            opacityAnimation.to = 1;
+            parallelShowAnimation.start();
+        }
+
+        function hide() {
+            hideTimer.stop();
+            xAnimation.to = toastRoot.width;
+            opacityAnimation.to = 0;
+            parallelHideAnimation.start();
+        }
+
+        layer.enabled: true
+        layer.effect: Shadow {}
+
+        ParallelAnimation {
+            id: parallelShowAnimation
+
+            NumberAnimation {
+                id: xAnimation
                 target: toastRoot
-                opacity: 1
-                scale: 1.0
+                property: "x"
+                duration: 400
+                easing.type: Easing.OutCubic
+            }
+
+            NumberAnimation {
+                id: opacityAnimation
+                target: toastRoot
+                property: "opacity"
+                duration: 250
+                easing.type: Easing.OutQuad
+            }
+        }
+
+        ParallelAnimation {
+            id: parallelHideAnimation
+            onStopped: toastRoot.requestRemove()
+
+            NumberAnimation {
+                target: toastRoot
+                property: "x"
+                to: toastRoot.width
+                duration: 400
+                easing.type: Easing.InCubic
+            }
+
+            NumberAnimation {
+                target: toastRoot
+                property: "opacity"
+                to: 0
+                duration: 350
+                easing.type: Easing.InQuad
             }
         }
 
@@ -95,71 +138,96 @@ PanelWindow {
             id: hideTimer
             interval: 3000
             repeat: false
-            onTriggered: showing = false
+            onTriggered: hide()
         }
 
         HoverHandler {
-            // anchors.fill: parent
             onHoveredChanged: {
-                if (hovered)
+                if (hovered) {
                     hideTimer.stop();
-                else if (toastRoot.showing)
-                    hideTimer.start();
+                } else {
+                    hideTimer.restart();
+                }
             }
-        }
-
-        onShowingChanged: {
-            if (!showing) {
-                removeDelay.start();
-            }
-        }
-
-        Timer {
-            id: removeDelay
-            interval: 300
-            repeat: false
-            onTriggered: toastRoot.requestRemove()
-        }
-
-        Component.onCompleted: {
-            showing = true;
-            hideTimer.start();
         }
 
         NotificationItem {
             id: notificationItem
             width: 350
             notification: toastRoot.notification
-
-            onDismissClicked: {
-                hideTimer.stop();
-                showing = false;
-            }
-
+            onDismissClicked: hide()
             onActionInvoked: index => {
                 if (toastRoot.notification) {
                     toastRoot.notification.invokeAction(index);
                 }
-                hideTimer.stop();
-                showing = false;
+                hide();
             }
         }
     }
 
-    // --- Layout for Popups ---
-    ColumnLayout {
+    ListView {
         id: popupContainer
+        implicitWidth: root.implicitWidth
+        implicitHeight: root.implicitHeight
+
         spacing: 8
+        model: popupModel
+        interactive: false
+        clip: true
 
-        Repeater {
-            model: popupModel
+        // anchors.top: parent.top
 
-            delegate: ToastNotificationPopup {
-                notification: model.smartNotif
-                onRequestRemove: {
-                    if (model.index >= 0 && model.index < popupModel.count) {
-                        popupModel.remove(model.index);
-                    }
+        displaced: Transition {
+            NumberAnimation {
+                properties: "y"
+                duration: 300
+                easing.type: Easing.OutCubic
+            }
+        }
+
+        // انتقال عند إضافة عنصر
+        add: Transition {
+            ParallelAnimation {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1.0
+                    duration: 300
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 0.8
+                    to: 1.0
+                    duration: 300
+                    easing.type: Easing.OutBack
+                }
+            }
+        }
+
+        // انتقال عند إزالة عنصر
+        remove: Transition {
+            ParallelAnimation {
+                NumberAnimation {
+                    property: "opacity"
+                    to: 0
+                    duration: 300
+                }
+                NumberAnimation {
+                    property: "scale"
+                    to: 0.8
+                    duration: 300
+                    easing.type: Easing.InCubic
+                }
+            }
+        }
+
+        delegate: ToastNotificationPopup {
+            width: popupContainer.width
+            notification: model.smartNotif
+
+            onRequestRemove: {
+                if (model.index >= 0 && model.index < popupModel.count) {
+                    popupModel.remove(model.index);
                 }
             }
         }

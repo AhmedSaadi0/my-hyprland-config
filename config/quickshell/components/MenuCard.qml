@@ -36,8 +36,9 @@ Pane {
         RowLayout {
             id: headerRow
             visible: root.title.length > 0
-            Layout.fillWidth: true
             spacing: root.headerSpacing
+
+            Layout.fillWidth: true
 
             Text {
                 id: iconElement
