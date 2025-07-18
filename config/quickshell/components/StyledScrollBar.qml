@@ -1,24 +1,30 @@
+// components/CustomScrollBar.qml
+
 import QtQuick
 import QtQuick.Controls
 
 ScrollBar {
     id: root
 
-    contentItem: StyledRect {
+    contentItem: Rectangle {
+        // تم التعديل من StyledRect إلى Rectangle
         implicitWidth: 6
+
+        // نفس منطق الشفافية الذكي
         opacity: root.pressed ? 1 : root.policy === ScrollBar.AlwaysOn || (root.active && root.size < 1) ? 0.8 : 0
-        radius: 15
-        // color: palette.m3secondary
+
+        radius: 3 // نصف العرض لمظهر دائري مثالي
+        color: Kirigami.Theme.textColor // استخدم لونًا من الثيم ليتناسب
 
         Behavior on opacity {
             NumberAnimation {
                 duration: 300
-                easing.type: Easing.BezierSpline
-                // easing.bezierCurve: Appearance.anim.curves.standard
+                easing.type: Easing.OutQuad
             }
         }
     }
 
+    // هذا الجزء اختياري لكن يمكن إبقاؤه
     MouseArea {
         z: -1
         anchors.fill: parent

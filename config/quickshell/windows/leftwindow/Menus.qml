@@ -1,3 +1,5 @@
+// windows/leftwindow/Menus.qml
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls

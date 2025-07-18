@@ -20,6 +20,7 @@ PanelWindow {
     color: "transparent"
     visible: false
 
+    focusable: true
     // exclusionMode: ExclusionMode.Ignore
     // exclusionMode: ExclusionMode.Auto
 

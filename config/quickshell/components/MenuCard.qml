@@ -1,4 +1,6 @@
 // Card.qml
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls // Pane is in Controls
 import QtQuick.Layouts
@@ -11,7 +13,7 @@ Pane {
     width: parent.width
 
     height: contentItem.implicitHeight + padding * 2
-    implicitHeight: contentItem.implicitHeight + padding * 2
+    implicitHeight: height
 
     property alias title: titleElement.text
     property alias icon: iconElement.text
@@ -26,6 +28,16 @@ Pane {
     property int titleFontSize: ThemeManager.selectedTheme.typography.heading3Size
     property int iconFontSize: ThemeManager.selectedTheme.typography.heading3Size
     property string iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+
+    property var heightEasingType: Easing.InOutQuad
+    property var heightAnimationDuration: 300
+
+    Behavior on height {
+        NumberAnimation {
+            duration: root.heightAnimationDuration
+            easing.type: root.heightEasingType
+        }
+    }
 
     background: Rectangle {
         color: root.cardColor
