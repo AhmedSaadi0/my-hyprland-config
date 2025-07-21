@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell.Services.UPower
 
 import "root:/components"
+import "root:/themes"
 
 TopbarCircularProgress {
     id: batteryUsage
@@ -15,9 +16,9 @@ TopbarCircularProgress {
 
     icon: ""
 
-    iconColor: palette.accent
-    backgroundColor: palette.text.alpha(0.2)
-    foregroundColor: palette.accent
+    iconColor: ThemeManager.selectedTheme.colors.primary
+    backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
+    foregroundColor: ThemeManager.selectedTheme.colors.primary
 
     onReadHandler: data => {
         const battery = UPower.devices.values[0];

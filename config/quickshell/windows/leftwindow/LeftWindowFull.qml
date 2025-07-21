@@ -20,7 +20,7 @@ PanelWindow {
     color: "transparent"
     visible: false
 
-    focusable: true
+    focusable: menus.currentIndex == 0
     // exclusionMode: ExclusionMode.Ignore
     // exclusionMode: ExclusionMode.Auto
 

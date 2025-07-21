@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Dialogs
 import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami // نحتاجه للوصول إلى ألوان الثيم في الرأس
@@ -20,6 +21,8 @@ MenuCard {
     title: "الثيمات والتخصيص"
     icon: ""
 
+    readonly property var selectedTheme: ThemeManager.selectedTheme
+
     // onSettingsExpandedChanged: function () {
     //     console.info(settingsExpanded);
     //     if (settingsExpanded) {
@@ -29,20 +32,18 @@ MenuCard {
     //     }
     // }
 
-    // ديالوج اختيار الألوان
-    // ColorDialog {
-    //     id: colorDialog
-    //     title: "اختر اللون"
-    //
-    //     property var targetTheme: null
-    //     property string targetPropertyName: ""
-    //
-    //     onAccepted: {
-    //         if (targetTheme && targetPropertyName !== "") {
-    //             targetTheme[targetPropertyName] = color;
-    //         }
-    //     }
-    // }
+    ColorDialog {
+        id: colorDialog
+        title: "اختر اللون"
+        objectName: "colorPickerDialog"
+
+        property var targetedColor
+
+        onAccepted: {
+            console.info(targetedColor);
+            selectedTheme._primary = selectedColor;
+        }
+    }
 
     ColumnLayout {
         id: mainLayout
@@ -179,6 +180,7 @@ MenuCard {
 
             // --- قسم الألوان والمظهر ---
             M3GroupBox {
+                id: colorsBox
                 title: "الألوان والمظهر"
                 Layout.fillWidth: true
                 Layout.topMargin: 10 // هامش علوي فقط لأول عنصر
@@ -199,27 +201,28 @@ MenuCard {
 
                 // Repeater لإنشاء أزرار الألوان
                 Repeater {
-                    model: colorModel
+                    model: colorsBox.colorModel
                     delegate: RowLayout {
-                        // اجعل التخطيط يملأ عرض الحاوية بالكامل
                         Layout.fillWidth: true
-                        spacing: 8
+                        spacing: 20
 
-                        property color currentColor: root.currentTheme ? root.currentTheme[modelData.propName] : "black"
+                        property color currentColor: root.selectedTheme._primary
 
                         Label {
                             text: modelData.label
-                            // اجعل النص يأخذ الحد الأدنى من المساحة
-                            Layout.fillWidth: false
+                            Layout.preferredWidth: parent.width / 3
+                            Layout.fillWidth: true
                         }
 
-                        Button {
-                            Layout.fillWidth: true // دع الزر يأخذ باقي المساحة
+                        MButton {
+                            Layout.preferredWidth: parent.width * 2 / 3
+                            Layout.fillWidth: true
                             text: Qt.color(currentColor).toString()
                             onClicked: {
-                                colorDialog.currentColor = currentColor;
-                                colorDialog.targetTheme = root.currentTheme;
-                                colorDialog.targetPropertyName = modelData.propName;
+                                colorDialog.selectedColor = currentColor;
+                                colorDialog.targetedColor = modelData.propName;
+                                // colorDialog.targetTheme = root.selectedTheme;
+                                // colorDialog.targetPropertyName = modelData.propName;
                                 colorDialog.open();
                             }
                             Rectangle {
@@ -238,15 +241,18 @@ MenuCard {
                     Layout.fillWidth: true
                     Label {
                         text: "الشفافية العامة:"
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: parent.width / 3
                     }
                     Slider {
-                        Layout.fillWidth: true // اجعل السلايدر يأخذ باقي المساحة
+                        Layout.preferredWidth: parent.width * 2 / 3
+                        Layout.fillWidth: true
                         from: 0.1
                         to: 1.0
                         stepSize: 0.05
-                        value: root.currentTheme ? root.currentTheme._alpha : 1.0
-                        onValueChanged: if (root.currentTheme)
-                            root.currentTheme._alpha = value
+                        value: root.selectedTheme ? root.selectedTheme._alpha : 1.0
+                        onValueChanged: if (root.selectedTheme)
+                            root.selectedTheme._alpha = value
                     }
                 }
             }
@@ -259,24 +265,24 @@ MenuCard {
                 Switch {
                     Layout.fillWidth: true // اجعل كل Switch يملأ العرض
                     text: "تفعيل الخلفيات المتحركة"
-                    checked: root.currentTheme ? root.currentTheme._enableDynamicWallpapers : false
-                    onCheckedChanged: if (root.currentTheme)
-                        root.currentTheme._enableDynamicWallpapers = checked
+                    checked: root.selectedTheme ? root.selectedTheme._enableDynamicWallpapers : false
+                    onCheckedChanged: if (root.selectedTheme)
+                        root.selectedTheme._enableDynamicWallpapers = checked
                 }
                 Switch {
                     Layout.fillWidth: true
                     text: "تفعيل الألوان من الخلفية"
-                    checked: root.currentTheme ? root.currentTheme._enableDynamicColoring : false
-                    onCheckedChanged: if (root.currentTheme)
-                        root.currentTheme._enableDynamicColoring = checked
+                    checked: root.selectedTheme ? root.selectedTheme._enableDynamicColoring : false
+                    onCheckedChanged: if (root.selectedTheme)
+                        root.selectedTheme._enableDynamicColoring = checked
                 }
                 TextField {
                     Layout.fillWidth: true
                     placeholderText: "مسار مجلد الخلفيات"
-                    text: root.currentTheme ? root.currentTheme._dynamicWallpapersPath : ""
-                    enabled: root.currentTheme ? root.currentTheme._enableDynamicWallpapers : false
-                    onAccepted: if (root.currentTheme)
-                        root.currentTheme._dynamicWallpapersPath = text
+                    text: root.selectedTheme ? root.selectedTheme._dynamicWallpapersPath : ""
+                    enabled: root.selectedTheme ? root.selectedTheme._enableDynamicWallpapers : false
+                    onAccepted: if (root.selectedTheme)
+                        root.selectedTheme._dynamicWallpapersPath = text
                 }
             }
 
@@ -288,23 +294,23 @@ MenuCard {
                 TextField {
                     Layout.fillWidth: true // اجعل كل حقل نصي يملأ العرض
                     placeholderText: "اسم ثيم GTK"
-                    text: root.currentTheme ? root.currentTheme._gtkTheme : ""
-                    onAccepted: if (root.currentTheme)
-                        root.currentTheme._gtkTheme = text
+                    text: root.selectedTheme ? root.selectedTheme._gtkTheme : ""
+                    onAccepted: if (root.selectedTheme)
+                        root.selectedTheme._gtkTheme = text
                 }
                 TextField {
                     Layout.fillWidth: true
                     placeholderText: "اسم حزمة الأيقونات"
-                    text: root.currentTheme ? root.currentTheme._themeIcons : ""
-                    onAccepted: if (root.currentTheme)
-                        root.currentTheme._themeIcons = text
+                    text: root.selectedTheme ? root.selectedTheme._themeIcons : ""
+                    onAccepted: if (root.selectedTheme)
+                        root.selectedTheme._themeIcons = text
                 }
                 TextField {
                     Layout.fillWidth: true
                     placeholderText: "اسم ثيم Kvantum"
-                    text: root.currentTheme ? root.currentTheme._kvantumTheme : ""
-                    onAccepted: if (root.currentTheme)
-                        root.currentTheme._kvantumTheme = text
+                    text: root.selectedTheme ? root.selectedTheme._kvantumTheme : ""
+                    onAccepted: if (root.selectedTheme)
+                        root.selectedTheme._kvantumTheme = text
                 }
             }
 
@@ -321,15 +327,15 @@ MenuCard {
                         Layout.fillWidth: true // اجعل الأزرار تتقاسم المساحة بالتساوي
                         text: "إعادة تعيين"
                         iconText: ""
-                        onClicked: if (root.currentTheme)
-                            ThemeManager.resetThemeToDefaults(root.currentTheme.themeName)
+                        onClicked: if (root.selectedTheme)
+                            ThemeManager.resetThemeToDefaults(root.selectedTheme.themeName)
                     }
                     MButton {
                         Layout.fillWidth: true
                         text: "تطبيق"
                         iconText: ""
-                        onClicked: if (root.currentTheme)
-                            ThemeManager.applyTheme(root.currentTheme)
+                        onClicked: if (root.selectedTheme)
+                            ThemeManager.applyTheme(root.selectedTheme)
                     }
                 }
                 MButton {
@@ -337,8 +343,8 @@ MenuCard {
                     text: "حفظ التعديلات"
                     iconText: ""
                     highlighted: true
-                    onClicked: if (root.currentTheme)
-                        ThemeManager.saveCustomThemeSettings(root.currentTheme)
+                    onClicked: if (root.selectedTheme)
+                        ThemeManager.saveCustomThemeSettings(root.selectedTheme)
                 }
             }
         }

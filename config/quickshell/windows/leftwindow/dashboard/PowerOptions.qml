@@ -54,24 +54,24 @@ MenuCard {
             MButton {
                 Layout.fillWidth: true
                 Layout.preferredHeight: root.buttonHeight
-                text: root.logoutButtonLabel
-                font.family: root.iconFontFamily
-                onClicked: {
-                    root.pendingActionCommand = ["hyprctl", "dispatch", "exit"];
-                    root.pendingActionMessage = qsTr("Confirm Logout");
-                    root.confirmActionText = qsTr("Log out ");
-                    viewStack.push(confirmationView);
-                }
-            }
-            MButton {
-                Layout.fillWidth: true
-                Layout.preferredHeight: root.buttonHeight
                 text: root.rebootButtonLabel
                 font.family: root.iconFontFamily
                 onClicked: {
                     root.pendingActionCommand = ["systemctl", "reboot"];
                     root.pendingActionMessage = qsTr("Confirm Reboot");
                     root.confirmActionText = qsTr("Reboot ");
+                    viewStack.push(confirmationView);
+                }
+            }
+            MButton {
+                Layout.fillWidth: true
+                Layout.preferredHeight: root.buttonHeight
+                text: root.logoutButtonLabel
+                font.family: root.iconFontFamily
+                onClicked: {
+                    root.pendingActionCommand = ["hyprctl", "dispatch", "exit"];
+                    root.pendingActionMessage = qsTr("Confirm Logout");
+                    root.confirmActionText = qsTr("Log out ");
                     viewStack.push(confirmationView);
                 }
             }

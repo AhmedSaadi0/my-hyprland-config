@@ -4,9 +4,9 @@ import QtQuick
 import QtQuick.Layouts
 // import org.kde.kirigami as Kirigami
 
-import "../../../components/monitors" // For Tempreture, Battery, Ram, Cpu
 // import "../../../components" // For Tempreture, Battery, Ram, Cpu
-import "../../../themes"
+import "root:/components/monitors" // For Tempreture, Battery, Ram, Cpu
+import "root:/themes"
 
 Rectangle {
     id: root
