@@ -57,8 +57,7 @@
 - [x] **Dynamic Wallpaper Folders Support**
 - [x] **Feature Control Window (UI to Toggle Features)**
 - [x] **Create a config file**
-- [ ] **Day/Night Theme Switching Based on Time**
-- [ ] **Custom Full Themes**
+- [x] **Custom Full Themes**
 
 ### 🧠 Productivity & UX
 

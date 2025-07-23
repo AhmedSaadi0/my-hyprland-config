@@ -92,6 +92,7 @@ PersistentProperties {
     property bool _enableDynamicWallpapers: false
     property int _dynamicWallpapersInterval: 15 * 1000 * 60
     property string _dynamicWallpapersPath: ""
+    property int _selectedWallpaperIndex: 0
 
     // --------------------
     // ----- Hyprland -----
@@ -198,6 +199,7 @@ PersistentProperties {
         property alias enableDynamicWallpapers: root._enableDynamicWallpapers
         property alias dynamicWallpapersInterval: root._dynamicWallpapersInterval
         property alias dynamicWallpapersPath: root._dynamicWallpapersPath
+        property alias selectedWallpaperIndex: root._selectedWallpaperIndex
     }
 
     // --- Hyprland Configuration ---

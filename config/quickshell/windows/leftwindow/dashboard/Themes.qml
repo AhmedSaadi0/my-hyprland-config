@@ -33,7 +33,7 @@ MenuCard {
         // Colors
         "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor",
         // System Settings
-        "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersPath", "_gtkTheme", "_themeIcons", "_kvantumTheme", "_dynamicWallpapersInterval"]
+        "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersPath", "_gtkTheme", "_themeIcons", "_kvantumTheme", "_dynamicWallpapersInterval", "_selectedWallpaperIndex", "_wallpaper"]
 
     // <<< CHANGED: New, safer function to copy theme properties.
     // This function manually copies properties, preserving their data types.
@@ -233,10 +233,23 @@ MenuCard {
                 }
                 TextField {
                     Layout.fillWidth: true
+                    placeholderText: "Selected Wallpaper"
+                    text: workingTheme._selectedWallpaperIndex
+                    onAccepted: workingTheme._selectedWallpaperIndex = text
+                }
+                TextField {
+                    Layout.fillWidth: true
                     placeholderText: "Wallpapers folder path"
                     text: workingTheme._dynamicWallpapersPath
                     enabled: workingTheme._enableDynamicWallpapers
                     onAccepted: workingTheme._dynamicWallpapersPath = text
+                }
+                TextField {
+                    Layout.fillWidth: true
+                    placeholderText: "Normal Wallpaper"
+                    text: workingTheme._wallpaper
+                    enabled: !workingTheme._enableDynamicWallpapers
+                    onAccepted: workingTheme._wallpaper = text
                 }
             }
 
@@ -326,13 +339,13 @@ MenuCard {
                         Layout.fillWidth: true
                         text: "Reset"
                         iconText: ""
-                        onClicked: ThemeManager.resetThemeToDefaults(workingTheme.themeName)
+                        onClicked: ThemeManager.loadTheme(workingTheme.themeName)
                     }
                     MButton {
                         Layout.fillWidth: true
                         text: "Apply"
                         iconText: ""
-                        onClicked: ThemeManager.updateAndApplyTheme(workingTheme)
+                        onClicked: ThemeManager.updateAndApplyTheme(workingTheme, false)
                     }
                 }
                 MButton {
@@ -340,7 +353,7 @@ MenuCard {
                     text: "Save Changes"
                     iconText: ""
                     highlighted: true
-                    onClicked: ThemeManager.saveCustomThemeSettings(workingTheme)
+                    onClicked: ThemeManager.updateAndApplyTheme(workingTheme, true)
                 }
             }
         }
