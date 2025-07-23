@@ -54,12 +54,11 @@
 - [x] **Theme Service**
 - [x] **Automatic Wallpaper Changer**
 - [x] **Material 3 (M3) Dynamic Coloring**
-- [ ] **Dynamic Wallpaper Folders Support**
-- [ ] **Feature Control Window (UI to Toggle Features)**
+- [x] **Dynamic Wallpaper Folders Support**
+- [x] **Feature Control Window (UI to Toggle Features)**
 - [x] **Create a config file**
 - [ ] **Day/Night Theme Switching Based on Time**
 - [ ] **Custom Full Themes**
-- [ ] **Implement PyWall(pywal16) or an alternative**
 
 ### 🧠 Productivity & UX
 

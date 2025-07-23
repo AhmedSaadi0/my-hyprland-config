@@ -1,61 +1,111 @@
+// MenuCard.qml
+
 import QtQuick
-import QtQuick.Dialogs
+// import QtQuick.Dialogs
 import QtQuick.Controls
 import QtQuick.Layouts
-import org.kde.kirigami as Kirigami // نحتاجه للوصول إلى ألوان الثيم في الرأس
+import org.kde.kirigami as Kirigami
 
-import QtQuick.Dialogs
-
-import "root:/components"
-import "root:/themes"
+import "../../../components"
+import "../../../themes"
 
 MenuCard {
     id: root
-    // width: 320
 
     property bool settingsExpanded: false
     readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height) * 2
-
     height: settingsExpanded ? settingsLayout.implicitHeight + padding + fixedHeight : fixedHeight
 
-    title: "الثيمات والتخصيص"
+    title: "Themes & Customization"
     icon: ""
 
-    readonly property var selectedTheme: ThemeManager.selectedTheme
+    // 1. Local working copy of the theme.
+    property var workingTheme: ({})
 
-    // onSettingsExpandedChanged: function () {
-    //     console.info(settingsExpanded);
-    //     if (settingsExpanded) {
-    //         contentItem.implicitHeight = 400;
-    //     } else {
-    //         contentItem.implicitHeight = null;
-    //     }
-    // }
+    // 2. Stable ListModel for colors.
+    ListModel {
+        id: colorModel
+    }
 
-    ColorDialog {
-        id: colorDialog
-        title: "اختر اللون"
-        objectName: "colorPickerDialog"
+    // <<< CHANGED: Define the exact list of properties to copy.
+    // This is the safest way to create a clean working copy.
+    readonly property var themePropertyKeys: ["themeName",
+        // Colors
+        "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor",
+        // System Settings
+        "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersPath", "_gtkTheme", "_themeIcons", "_kvantumTheme", "_dynamicWallpapersInterval"]
 
-        property var targetedColor
+    // <<< CHANGED: New, safer function to copy theme properties.
+    // This function manually copies properties, preserving their data types.
+    function copyTheme(themeObject) {
+        if (!themeObject)
+            return {};
+        const newTheme = {};
+        for (const key of root.themePropertyKeys) {
+            if (themeObject.hasOwnProperty(key)) {
+                // Direct assignment preserves the data type (color, int, string, bool)
+                newTheme[key] = themeObject[key];
+            }
+        }
+        return newTheme;
+    }
 
-        onAccepted: {
-            console.info(targetedColor);
-            selectedTheme._primary = selectedColor;
+    // Populates the ListModel from the current workingTheme.
+    function populateColorModel(theme) {
+        colorModel.clear();
+        if (!theme || Object.keys(theme).length === 0)
+            return;
+
+        function appendColor(label, bgProp, fgProp, isEnabled) {
+            const bgColor = theme[bgProp];
+            const fgColor = fgProp ? theme[fgProp] : "transparent";
+            const enabled = isEnabled;
+
+            colorModel.append({
+                "label": label,
+                "bgPropName": bgProp,
+                "fgPropName": fgProp,
+                "bgColor": bgColor,
+                "fgColor": fgColor,
+                "bgColorString": Qt.color(bgColor).toString(),
+                "fgColorString": Qt.color(fgColor).toString(),
+                "enabled": enabled
+            });
+        }
+
+        appendColor("Primary", "_primary", "_onPrimary", !workingTheme._enableDynamicColoring);
+        appendColor("Secondary", "_secondary", "_onSecondary", !workingTheme._enableDynamicColoring);
+        appendColor("Topbar BG V1", "_topbarBgColorV1", "_topbarFgColorV1", !workingTheme._enableDynamicColoring);
+        appendColor("Topbar BG V2", "_topbarBgColorV2", "_topbarFgColorV2", !workingTheme._enableDynamicColoring);
+        appendColor("Topbar BG V3", "_topbarBgColorV3", "_topbarFgColorV3", !workingTheme._enableDynamicColoring);
+        appendColor("Left Menu BG V1", "_leftMenuBgColorV1", "_leftMenuFgColorV1", !workingTheme._enableDynamicColoring);
+        appendColor("Left Menu BG V2", "_leftMenuBgColorV2", "_leftMenuFgColorV2", !workingTheme._enableDynamicColoring);
+        appendColor("Left Menu BG V3", "_leftMenuBgColorV3", "_leftMenuFgColorV3", !workingTheme._enableDynamicColoring);
+        appendColor("Volume OSD", "_volOsdBgColor", "_volOsdFgColor", !workingTheme._enableDynamicColoring);
+        appendColor("Subtle Text", "_subtleTextColor", "_subtleTextColor", !workingTheme._enableDynamicColoring);
+    }
+
+    // --- Event Handling ---
+    Component.onCompleted: {
+        root.workingTheme = copyTheme(ThemeManager.selectedTheme);
+        populateColorModel(root.workingTheme);
+    }
+
+    Connections {
+        target: ThemeManager
+        function onSelectedThemeUpdated() {
+            root.workingTheme = copyTheme(ThemeManager.selectedTheme);
+            populateColorModel(root.workingTheme);
         }
     }
 
+    // --- UI Definition ---
     ColumnLayout {
         id: mainLayout
-
-        // ===================================
-        // 1. شبكة اختيار الثيمات الأساسية
-        // ===================================
         GridLayout {
             id: grid
             columns: 3
             Layout.fillWidth: true
-
             MButton {
                 text: "Colors"
                 onClicked: ThemeManager.loadTheme("ColorsTheme")
@@ -93,8 +143,6 @@ MenuCard {
                 iconText: ""
             }
         }
-
-        // فاصل بصري
         Rectangle {
             id: sperator
             Layout.fillWidth: true
@@ -103,33 +151,24 @@ MenuCard {
             height: 1
             color: ThemeManager.selectedTheme.colors.topbarFgColorV1.alpha(0.2)
         }
-
-        // ==================================================
-        // 2. رأس قسم الإعدادات (الزر القابل للطي)
-        // ==================================================
-
         Rectangle {
             id: settingsHeader
             Layout.fillWidth: true
             height: 30
             color: "transparent"
             radius: 4
-
             RowLayout {
                 anchors.fill: parent
                 anchors.leftMargin: 10
                 anchors.rightMargin: 10
-
                 Label {
-                    text: "التخصيص المتقدم"
+                    text: "Advanced Customization"
                     font.bold: true
                     color: Kirigami.Theme.textColor
                 }
-
                 Item {
                     Layout.fillWidth: true
                 }
-
                 Label {
                     id: expandIcon
                     text: ""
@@ -137,7 +176,6 @@ MenuCard {
                     font.pixelSize: 16
                     color: Kirigami.Theme.textColor
                     rotation: root.settingsExpanded ? 180 : 0
-
                     Behavior on rotation {
                         NumberAnimation {
                             duration: 150
@@ -146,22 +184,16 @@ MenuCard {
                     }
                 }
             }
-
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    root.settingsExpanded = !root.settingsExpanded;
-                }
+                onClicked: root.settingsExpanded = !root.settingsExpanded
             }
         }
-
         ColumnLayout {
             id: settingsLayout
-            spacing: 12 // قللنا المسافة بين الحاويات قليلاً
+            spacing: 12
             Layout.fillWidth: true
-
-            // الجزء الخاص بالحركة يبقى كما هو
             height: root.settingsExpanded ? implicitHeight : 0
             opacity: root.settingsExpanded ? 1.0 : 0.0
             clip: true
@@ -178,173 +210,137 @@ MenuCard {
                 }
             }
 
-            // --- قسم الألوان والمظهر ---
+            M3GroupBox {
+                title: "Wallpaper Settings"
+                Layout.fillWidth: true
+                Switch {
+                    Layout.fillWidth: true
+                    text: "Enable dynamic wallpapers"
+                    checked: workingTheme._enableDynamicWallpapers
+                    onCheckedChanged: workingTheme._enableDynamicWallpapers = checked
+                }
+                Switch {
+                    Layout.fillWidth: true
+                    text: "Enable colors from wallpaper"
+                    checked: workingTheme._enableDynamicColoring
+                    onCheckedChanged: workingTheme._enableDynamicColoring = checked
+                }
+                TextField {
+                    Layout.fillWidth: true
+                    placeholderText: "Wallpapers interval"
+                    text: workingTheme._dynamicWallpapersInterval
+                    onAccepted: workingTheme._dynamicWallpapersInterval = text
+                }
+                TextField {
+                    Layout.fillWidth: true
+                    placeholderText: "Wallpapers folder path"
+                    text: workingTheme._dynamicWallpapersPath
+                    enabled: workingTheme._enableDynamicWallpapers
+                    onAccepted: workingTheme._dynamicWallpapersPath = text
+                }
+            }
+
+            M3GroupBox {
+                title: "Component Themes"
+                Layout.fillWidth: true
+                TextField {
+                    Layout.fillWidth: true
+                    placeholderText: "GTK theme name"
+                    text: workingTheme._gtkTheme
+                    onAccepted: workingTheme._gtkTheme = text
+                }
+                TextField {
+                    Layout.fillWidth: true
+                    placeholderText: "Icon pack name"
+                    text: workingTheme._themeIcons
+                    onAccepted: workingTheme._themeIcons = text
+                }
+                TextField {
+                    Layout.fillWidth: true
+                    placeholderText: "Kvantum theme name"
+                    text: workingTheme._kvantumTheme
+                    onAccepted: workingTheme._kvantumTheme = text
+                }
+            }
+
             M3GroupBox {
                 id: colorsBox
-                title: "الألوان والمظهر"
+                title: "Colors & Appearance"
                 Layout.fillWidth: true
-                Layout.topMargin: 10 // هامش علوي فقط لأول عنصر
-
-                // لا نضع ColumnLayout هنا، بل نضع المحتوى مباشرة
-
-                // موديل الألوان
-                property var colorModel: [
-                    {
-                        label: "اللون الأساسي:",
-                        propName: "_primary"
-                    },
-                    {
-                        label: "اللون الثانوي:",
-                        propName: "_secondary"
-                    }
-                ]
-
-                // Repeater لإنشاء أزرار الألوان
+                Layout.topMargin: 10
+                enabled: !workingTheme._enableDynamicColoring
                 Repeater {
-                    model: colorsBox.colorModel
-                    delegate: RowLayout {
+                    model: colorModel
+                    delegate: GridLayout {
                         Layout.fillWidth: true
-                        spacing: 20
-
-                        property color currentColor: root.selectedTheme._primary
-
+                        columns: 3
+                        columnSpacing: 0
                         Label {
-                            text: modelData.label
-                            Layout.preferredWidth: parent.width / 3
+                            text: model.label
+                            Layout.preferredWidth: parent.width / 2
                             Layout.fillWidth: true
                         }
-
-                        MButton {
-                            Layout.preferredWidth: parent.width * 2 / 3
+                        EditableColorField {
+                            Layout.preferredWidth: parent.width * (model.fgPropName !== null ? 2 / 6 : 4 / 6)
                             Layout.fillWidth: true
-                            text: Qt.color(currentColor).toString()
-                            onClicked: {
-                                colorDialog.selectedColor = currentColor;
-                                colorDialog.targetedColor = modelData.propName;
-                                // colorDialog.targetTheme = root.selectedTheme;
-                                // colorDialog.targetPropertyName = modelData.propName;
-                                colorDialog.open();
+                            Layout.preferredHeight: 25
+                            text: model.bgColorString
+                            normalBackground: model.bgColor
+                            normalForeground: model.fgColor
+                            topRightRadius: 0
+                            enabled: model.enabled
+                            bottomRightRadius: 0
+                            topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+                            bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+                            onValidColorUpdated: function (newColor) {
+                                root.workingTheme[model.bgPropName] = newColor;
                             }
-                            Rectangle {
-                                anchors.fill: parent
-                                anchors.margins: 4
-                                color: currentColor
-                                radius: 4
-                                z: -1
+                        }
+                        EditableColorField {
+                            visible: model.fgPropName !== null
+                            Layout.preferredWidth: parent.width * 2 / 6
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 25
+                            text: model.fgColorString
+                            enabled: model.enabled
+                            normalBackground: model.fgColor
+                            normalForeground: model.bgColor
+                            topLeftRadius: 0
+                            bottomLeftRadius: 0
+                            topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+                            bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+                            onValidColorUpdated: function (newColor) {
+                                root.workingTheme[model.fgPropName] = newColor;
                             }
                         }
                     }
                 }
-
-                // عنصر الشفافية
-                RowLayout {
-                    Layout.fillWidth: true
-                    Label {
-                        text: "الشفافية العامة:"
-                        Layout.fillWidth: true
-                        Layout.preferredWidth: parent.width / 3
-                    }
-                    Slider {
-                        Layout.preferredWidth: parent.width * 2 / 3
-                        Layout.fillWidth: true
-                        from: 0.1
-                        to: 1.0
-                        stepSize: 0.05
-                        value: root.selectedTheme ? root.selectedTheme._alpha : 1.0
-                        onValueChanged: if (root.selectedTheme)
-                            root.selectedTheme._alpha = value
-                    }
-                }
             }
-
-            // --- قسم الخلفيات ---
             M3GroupBox {
-                title: "إعدادات الخلفية"
+                title: "Actions"
                 Layout.fillWidth: true
-
-                Switch {
-                    Layout.fillWidth: true // اجعل كل Switch يملأ العرض
-                    text: "تفعيل الخلفيات المتحركة"
-                    checked: root.selectedTheme ? root.selectedTheme._enableDynamicWallpapers : false
-                    onCheckedChanged: if (root.selectedTheme)
-                        root.selectedTheme._enableDynamicWallpapers = checked
-                }
-                Switch {
-                    Layout.fillWidth: true
-                    text: "تفعيل الألوان من الخلفية"
-                    checked: root.selectedTheme ? root.selectedTheme._enableDynamicColoring : false
-                    onCheckedChanged: if (root.selectedTheme)
-                        root.selectedTheme._enableDynamicColoring = checked
-                }
-                TextField {
-                    Layout.fillWidth: true
-                    placeholderText: "مسار مجلد الخلفيات"
-                    text: root.selectedTheme ? root.selectedTheme._dynamicWallpapersPath : ""
-                    enabled: root.selectedTheme ? root.selectedTheme._enableDynamicWallpapers : false
-                    onAccepted: if (root.selectedTheme)
-                        root.selectedTheme._dynamicWallpapersPath = text
-                }
-            }
-
-            // --- قسم مكونات النظام ---
-            M3GroupBox {
-                title: "ثيمات المكونات"
-                Layout.fillWidth: true
-
-                TextField {
-                    Layout.fillWidth: true // اجعل كل حقل نصي يملأ العرض
-                    placeholderText: "اسم ثيم GTK"
-                    text: root.selectedTheme ? root.selectedTheme._gtkTheme : ""
-                    onAccepted: if (root.selectedTheme)
-                        root.selectedTheme._gtkTheme = text
-                }
-                TextField {
-                    Layout.fillWidth: true
-                    placeholderText: "اسم حزمة الأيقونات"
-                    text: root.selectedTheme ? root.selectedTheme._themeIcons : ""
-                    onAccepted: if (root.selectedTheme)
-                        root.selectedTheme._themeIcons = text
-                }
-                TextField {
-                    Layout.fillWidth: true
-                    placeholderText: "اسم ثيم Kvantum"
-                    text: root.selectedTheme ? root.selectedTheme._kvantumTheme : ""
-                    onAccepted: if (root.selectedTheme)
-                        root.selectedTheme._kvantumTheme = text
-                }
-            }
-
-            // --- قسم الإجراءات ---
-            M3GroupBox {
-                title: "الإجراءات"
-                Layout.fillWidth: true
-
                 RowLayout {
                     Layout.fillWidth: true
                     spacing: 10
-
                     MButton {
-                        Layout.fillWidth: true // اجعل الأزرار تتقاسم المساحة بالتساوي
-                        text: "إعادة تعيين"
+                        Layout.fillWidth: true
+                        text: "Reset"
                         iconText: ""
-                        onClicked: if (root.selectedTheme)
-                            ThemeManager.resetThemeToDefaults(root.selectedTheme.themeName)
+                        onClicked: ThemeManager.resetThemeToDefaults(workingTheme.themeName)
                     }
                     MButton {
                         Layout.fillWidth: true
-                        text: "تطبيق"
+                        text: "Apply"
                         iconText: ""
-                        onClicked: if (root.selectedTheme)
-                            ThemeManager.applyTheme(root.selectedTheme)
+                        onClicked: ThemeManager.updateAndApplyTheme(workingTheme)
                     }
                 }
                 MButton {
                     Layout.fillWidth: true
-                    text: "حفظ التعديلات"
+                    text: "Save Changes"
                     iconText: ""
                     highlighted: true
-                    onClicked: if (root.selectedTheme)
-                        ThemeManager.saveCustomThemeSettings(root.selectedTheme)
+                    onClicked: ThemeManager.saveCustomThemeSettings(workingTheme)
                 }
             }
         }

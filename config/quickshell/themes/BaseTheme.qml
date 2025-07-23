@@ -24,6 +24,7 @@ PersistentProperties {
 
     // topbar
     property color _topbarColor: Kirigami.Theme.backgroundColor
+    property color _topbarFgColor: Kirigami.Theme.textColor
 
     property color _topbarBgColorV1: Kirigami.Theme.backgroundColor.lighter(1.5)
     property color _topbarBgColorV2: Kirigami.Theme.negativeBackgroundColor
@@ -123,6 +124,7 @@ PersistentProperties {
 
         // Top Bar
         property color topbarColor: Qt.rgba(root._topbarColor.r, root._topbarColor.g, root._topbarColor.b, root._alpha)
+        property color topbarFgColor: Qt.rgba(root._topbarFgColor.r, root._topbarFgColor.g, root._topbarFgColor.b, root._alpha)
 
         property color topbarBgColorV1: Qt.rgba(root._topbarBgColorV1.r, root._topbarBgColorV1.g, root._topbarBgColorV1.b, root._alpha)
         property color topbarBgColorV2: Qt.rgba(root._topbarBgColorV2.r, root._topbarBgColorV2.g, root._topbarBgColorV2.b, root._alpha)

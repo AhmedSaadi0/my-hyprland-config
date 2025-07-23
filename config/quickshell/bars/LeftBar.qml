@@ -12,11 +12,17 @@ import "root:/services"
 
 PanelWindow {
     id: root
-    exclusiveZone: 45
     implicitWidth: 60
     implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
+    // exclusiveZone: 45
+
+    anchors {
+        // top: true
+        left: true
+        bottom: true
+    }
 
     // --- Properties ---
     property bool panelOpen: false
@@ -59,6 +65,8 @@ PanelWindow {
                 break; // نوقف البحث بعد العثور عليه
             }
         }
+
+        margins.top = -10;
     }
 
     Connections {
@@ -73,15 +81,6 @@ PanelWindow {
             duration: 300
             easing.type: Easing.InOutCubic
         }
-    }
-
-    anchors {
-        top: true
-        left: true
-        bottom: true
-    }
-    margins {
-        top: -10
     }
 
     CorneredBox {

@@ -11,8 +11,9 @@ BaseTheme {
     _dynamicWallpapersPath: "/home/ahmed/wallpapers/dark"
 
     _themeMode: "dark"
-    _baseRadius: 18
+    _baseRadius: 14
     _hyprBorderWidth: 3
+    // _dynamicWallpapersInterval: 1000 * 10
 
     _wallpaper: "dark.png"
 

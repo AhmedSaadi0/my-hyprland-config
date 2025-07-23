@@ -12,10 +12,10 @@ PanelWindow {
     property bool isShown: false
     property var menuSelectorRef: menus
 
-    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 50
+    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 20
     implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
 
-    exclusiveZone: ThemeManager.selectedTheme.dimensions.menuWidth + 10
+    exclusiveZone: ThemeManager.selectedTheme.dimensions.menuWidth - 40
 
     color: "transparent"
     visible: false
@@ -42,13 +42,13 @@ PanelWindow {
     }
 
     margins {
-        left: -5
+        left: 40
         top: -10
     }
 
     CorneredBox {
         id: contentContainer
-        implicitWidth: parent.width - 25
+        implicitWidth: parent.width
         implicitHeight: parent.height
         // color: "#000000"
 

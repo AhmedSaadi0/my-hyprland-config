@@ -38,6 +38,11 @@ Singleton {
         return ['plasma-apply-colorscheme', colorSchemeName];
     }
 
+    function changePlasmaAccentColor(accentColor) {
+        // This requires the 'plasma-apply-colorscheme' tool to be installed.
+        return ['plasma-apply-colorscheme', "-a", `'${accentColor}'`];
+    }
+
     function getWallpapersList(path) {
         const scriptFile = Config.App.scripts.bash.getWallpapers;
         return [scriptFile, `${path}`];

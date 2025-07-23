@@ -11,7 +11,7 @@ BaseTheme {
 
     _wallpaper: App.assets.getWallpaperPath("ign_wanderlust.jpg")
 
-    _primary: "#BE626B"
+    _primary: "#ea7984"
     _secondary: "#6AA6A5"
 
     _plasmaColorScheme: "Nordic"

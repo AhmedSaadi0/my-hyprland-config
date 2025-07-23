@@ -11,7 +11,7 @@ BaseTheme {
     _dynamicWallpapersPath: "/home/ahmed/wallpapers/light"
 
     _themeMode: "light"
-    _baseRadius: 18
+    _baseRadius: 14
     _hyprBorderWidth: 3
 
     _wallpaper: "light.png"

@@ -10,7 +10,7 @@ Item {
     // هذا اللون الآن هو لون الشكل نفسه، وليس لون الخلفية
 
     property color shapeColor: ThemeManager.selectedTheme.colors.topbarColor
-    property real cornerRadius: 30
+    property real cornerRadius: ThemeManager.selectedTheme.dimensions.baseRadius
 
     width: cornerRadius
     height: cornerRadius

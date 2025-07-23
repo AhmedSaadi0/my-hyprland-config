@@ -13,13 +13,14 @@ Rectangle {
     property var activeIcons: ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰆈", "󱍙", "󰺵", "󱋡", "󰙨"]
     property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰆉", "󱍚", "󰺶", "󱋢", "󰤑"]
     property int focusedId: Hyprland.focusedWorkspace !== null ? Hyprland.focusedWorkspace.id : 0
+    property string primaryColor: ThemeManager.selectedTheme.colors.primary
     readonly property var workspaceIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     property var focusedItem: null
 
-    radius: ThemeManager.selectedTheme.dimensions.elementRadius
     height: parent.height
     width: rowLayout.implicitWidth + 20
+    radius: ThemeManager.selectedTheme.dimensions.elementRadius
     color: ThemeManager.selectedTheme.colors.topbarBgColorV1
 
     onFocusedIdChanged: {
@@ -59,9 +60,9 @@ Rectangle {
                 readonly property bool exists: Hyprland.workspaces.values.some(ws => ws.id === workspaceId)
                 readonly property color defaultItemColor: {
                     if (isFocused) {
-                        palette.accent;
+                        workspaceRectangle.primaryColor;
                     } else if (exists) {
-                        palette.accent;
+                        workspaceRectangle.primaryColor;
                     } else {
                         palette.text.alpha(0.4);
                     }
@@ -79,7 +80,7 @@ Rectangle {
 
                     font.pixelSize: workspaceRectangle.fontSize
                     font.family: ThemeManager.selectedTheme.typography.iconFont
-                    color: workspaceMouseArea.containsMouse ? palette.active : workspaceMouseArea.defaultItemColor
+                    color: workspaceMouseArea.containsMouse ? workspaceRectangle.primaryColor : workspaceMouseArea.defaultItemColor
 
                     // (مُحسَّن) أنميشن لتغيير اللون بسلاسة
                     Behavior on color {
@@ -133,7 +134,7 @@ Rectangle {
         height: workspaceRectangle.underlineHeight
         anchors.bottom: parent.bottom
         // anchors.horizontalCenterOffset: -2
-        color: palette.accent
+        color: ThemeManager.selectedTheme.colors.primary
         radius: height / 2
 
         Behavior on x {

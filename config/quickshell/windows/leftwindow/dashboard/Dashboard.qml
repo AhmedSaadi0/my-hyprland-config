@@ -1,30 +1,22 @@
 // windows/leftwindow/dashboard/Dashboard.qml (النسخة النهائية الصحيحة)
 
 import QtQuick
-import QtQuick.Controls // نحتاج ScrollView
+import QtQuick.Controls
 import QtQuick.Layouts
 import "root:/themes"
 import "root:/components"
 
-// اجعل المكون الجذري للداشبورد هو ScrollView
 ScrollView {
     id: dashboardScroller
     anchors.fill: parent
     clip: true
+    contentWidth: availableWidth
 
     ScrollBar.vertical: StyledScrollBar {
         interactive: false
     }
 
-    //
-    // // 2. تخصيص مظهر شريط التمرير
-    // ScrollBar.vertical.contentItem: Rectangle {
-    //     // اجعل لونه شبه شفاف. يمكنك استخدام لون من الثيم
-    //     color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.4)
-    //
-    //     // اجعل حوافه مستديرة
-    //     radius: 1
-    // }
+    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
     ColumnLayout {
         width: dashboardScroller.availableWidth

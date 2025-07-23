@@ -9,6 +9,7 @@ import "../themes"
 Rectangle {
     id: root
     color: "transparent"
+    implicitWidth: 10
 
     property string boxColor: ThemeManager.selectedTheme.colors.topbarColor
     property int cornerWidth: 20
@@ -34,8 +35,8 @@ Rectangle {
     BarCorner {
         id: bottomRightBarCorner
         width: root.cornerWidth
-        visible: root.bottomLeftVisible
         height: root.cornerHeight
+        visible: root.bottomLeftVisible
         anchors {
             // top: parent.top
             right: parent.right

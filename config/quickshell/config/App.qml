@@ -17,6 +17,7 @@ Singleton {
     readonly property string wallpapersPath: assetsPath + "/wallpapers"
     readonly property string cacheFolderPath: homePath + ".cache/nibrasshell"
     readonly property string themeCacheFilePath: cacheFolderPath + "/theme.json"
+    readonly property string themeCacheFolderPath: cacheFolderPath + "/themes/"
 
     // --------------------------------------------------------------
     property string username: "Username"
@@ -34,6 +35,7 @@ Singleton {
 
     Component.onCompleted: {
         Hyprland.dispatch(`exec mkdir -p ${cacheFolderPath}`);
+        Hyprland.dispatch(`exec mkdir -p ${themeCacheFolderPath}`);
     }
 
     FileView {
