@@ -350,7 +350,7 @@ MenuCard {
                 }
                 MButton {
                     Layout.fillWidth: true
-                    text: "Save Changes"
+                    text: "Apply & Save Changes"
                     iconText: ""
                     highlighted: true
                     onClicked: ThemeManager.updateAndApplyTheme(workingTheme, true)

@@ -120,9 +120,11 @@ Singleton {
         const settings = root.selectedTheme.systemSettings;
 
         wallpaperTimer.stop();
+
         getWallpapersList.running = false;
 
         if (settings.enableDynamicWallpapers) {
+            getWallpapersList.command = Utils.Helper.getWallpapersList(root.selectedTheme.systemSettings.dynamicWallpapersPath);
             getWallpapersList.running = true; // يبدأ عملية جلب الخلفيات وتطبيقها
         } else {
             _applyStaticTheme(settings);
@@ -160,7 +162,14 @@ Singleton {
         const settings = selectedTheme.systemSettings;
         const themeMode = settings.themeMode;
 
-        const selectedWallpaper = wallpapersList[settings.selectedWallpaperIndex];
+        let currentIndex = settings.selectedWallpaperIndex;
+
+        if (currentIndex >= wallpapersList.length) {
+            currentIndex = 0;
+            selectedTheme._selectedWallpaperIndex = 0;
+        }
+
+        const selectedWallpaper = wallpapersList[currentIndex];
         _applyCoreThemeSettings(settings, selectedWallpaper);
 
         if (settings.enableDynamicColoring) {
@@ -295,6 +304,7 @@ Singleton {
                     root.wallpapersList = JSON.parse(this.text);
                     root._applyDynamicWallpaper();
                 } catch (e) {
+                    console.error(root.selectedTheme.systemSettings.dynamicWallpapersPath);
                     console.error("Failed to parse wallpapers list:", e);
                 }
             }
