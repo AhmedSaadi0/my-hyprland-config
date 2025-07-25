@@ -48,12 +48,18 @@ StackView {
         Dashboard.Dashboard3 {}
     }
 
+    Component {
+        id: clipboardComponent
+        Clipboard {}
+    }
+
     // العناصر التي يتم إنشاؤها مرة واحدة
     property var dashboardPage
     property var notiListPage
     property var weatherPage
     property var monitorPage
     property var networkPage
+    property var clipboardPage
 
     Component.onCompleted: {
         dashboardPage = dashboardComponent.createObject(stackView, {
@@ -77,18 +83,23 @@ StackView {
             // "anchors.fill": stackView
         });
 
+        clipboardPage = clipboardComponent.createObject(stackView, {
+            "visible": false
+            // "anchors.fill": stackView
+        });
+
         dashboardPage.visible = true;
         stackView.push(dashboardPage);
     }
 
     function getPage(index) {
-        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage][index];
+        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage][index];
     }
 
     Connections {
         target: LeftMenuStatus
         function onSelectedIndexTargeted(newIndex) {
-            if (newIndex >= 0 && newIndex < 5 && newIndex !== currentIndex) {
+            if (newIndex >= 0 && newIndex !== currentIndex) {
                 previousIndex = currentIndex;
                 currentIndex = newIndex;
                 stackView.replace(getPage(newIndex));

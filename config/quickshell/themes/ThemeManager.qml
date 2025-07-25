@@ -20,7 +20,9 @@ Singleton {
     signal selectedThemeUpdated
 
     // 1.2. الخصائص العامة (Public Properties)
+    property string _currentThemeFile: "" // لتخزين مسار ملف السمة المحمل حالياً
     property var selectedTheme: ColorsTheme
+    // --- انتهى قسم الإضافة ---
     property var wallpapersList: []
     property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${selectedTheme.themeName}.json`
 
@@ -44,6 +46,7 @@ Singleton {
         }
 
         root.selectedTheme = themeInstance;
+        root._currentThemeFile = themeFile; // حفظ مسار السمة الحالية
         sessionSaver.setText(JSON.stringify({
             activeThemeName: themeFile
         }));
@@ -90,6 +93,14 @@ Singleton {
     readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading1Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
     readonly property var _systemPropertyKeys: ["_wallpaper", "_qtThemeStyle", "_kvantumTheme", "_gtkTheme", "_themeIcons", "_themeMode", "_plasmaColorScheme", "_konsoleProfile", "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex"]
     readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
+
+    // --- ابدأ الإضافة هنا ---
+    // خصائص محددة للاستعادة
+    readonly property var _wallpaperSystemPropertyKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper"]
+    readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_themeIcons"]
+    readonly property var _gtkPropertyKeys: ["_gtkTheme", "_themeIcons"]
+    // --- انتهى قسم الإضافة ---
+
     readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_systemPropertyKeys).concat(_hyprlandPropertyKeys)
 
     //================================================================
@@ -99,7 +110,68 @@ Singleton {
 
     Component.onCompleted: {
         console.log("Application starting. Loading last session...");
-        sessionLoader.path = App.themeCacheFilePath; // بدء تحميل الجلسة السابقة
+        startUpTimer.start();
+    }
+
+    /**
+     * ينتقل إلى الخلفية التالية في القائمة إذا كانت الخلفيات الديناميكية مفعلة.
+     */
+    function switchToNextWallpaper() {
+        if (!selectedTheme.systemSettings.enableDynamicWallpapers || wallpapersList.length === 0) {
+            console.info("Cannot switch wallpaper: Dynamic wallpapers are not enabled or list is empty.");
+            return;
+        }
+        console.log("Switching to the next wallpaper manually.");
+        wallpaperTimer.trigger(); // تشغيل المؤقت فورًا لتغيير الخلفية
+        wallpaperTimer.restart(); // إعادة تشغيل المؤقت ليبدأ العد من جديد
+    }
+
+    /**
+     * يستعيد إعدادات الألوان إلى القيم الافتراضية للسمة الحالية.
+     */
+    function resetColorSettings() {
+        console.log("Resetting color settings to default.");
+        _resetPropertiesToDefault(_colorPropertyKeys);
+    }
+
+    /**
+     * يستعيد إعدادات الخلفية (ديناميكية، مسار، ...) إلى القيم الافتراضية.
+     */
+    function resetWallpaperSystemSettings() {
+        console.log("Resetting wallpaper system settings to default.");
+        _resetPropertiesToDefault(_wallpaperSystemPropertyKeys);
+    }
+
+    /**
+     * يستعيد إعدادات Hyprland إلى القيم الافتراضية للسمة.
+     */
+    function resetHyprlandSettings() {
+        console.log("Resetting Hyprland settings to default.");
+        _resetPropertiesToDefault(_hyprlandPropertyKeys);
+    }
+
+    /**
+     * يستعيد إعدادات Plasma (الألوان، الأيقونات، ...) إلى القيم الافتراضية.
+     */
+    function resetPlasmaSettings() {
+        console.log("Resetting Plasma settings to default.");
+        _resetPropertiesToDefault(_plasmaPropertyKeys);
+    }
+
+    /**
+     * يستعيد إعدادات GTK (السمة، الأيقونات) إلى القيم الافتراضية.
+     */
+    function resetGtkSettings() {
+        console.log("Resetting GTK settings to default.");
+        _resetPropertiesToDefault(_gtkPropertyKeys);
+    }
+
+    function resetWholeTheme() {
+        resetColorSettings();
+        resetWallpaperSystemSettings();
+        resetHyprlandSettings();
+        resetPlasmaSettings();
+        resetGtkSettings();
     }
 
     //================================================================
@@ -125,6 +197,7 @@ Singleton {
 
         if (settings.enableDynamicWallpapers) {
             getWallpapersList.command = Utils.Helper.getWallpapersList(root.selectedTheme.systemSettings.dynamicWallpapersPath);
+            console.info(getWallpapersList.command);
             getWallpapersList.running = true; // يبدأ عملية جلب الخلفيات وتطبيقها
         } else {
             _applyStaticTheme(settings);
@@ -163,8 +236,10 @@ Singleton {
         const themeMode = settings.themeMode;
 
         let currentIndex = settings.selectedWallpaperIndex;
+        console.info(currentIndex);
+        console.info(wallpapersList.length);
 
-        if (currentIndex >= wallpapersList.length) {
+        if (currentIndex >= wallpapersList.length && wallpapersList.length != 0) {
             currentIndex = 0;
             selectedTheme._selectedWallpaperIndex = 0;
         }
@@ -224,6 +299,48 @@ Singleton {
         // ملاحظة: استدعاء الأمر مرتين هو حل بديل لمشكلة في تطبيق اللون بشكل موثوق.
         _dispatchCommand("Plasma Accent Color", Utils.Helper.changePlasmaAccentColor(accentColor));
         _dispatchCommand("Plasma Accent Color", Utils.Helper.changePlasmaAccentColor(accentColor));
+    }
+
+    /**
+     * دالة مساعدة خاصة لاستعادة مجموعة معينة من الخصائص إلى قيمها الافتراضية.
+     * @param keysToReset مصفوفة من أسماء الخصائص المراد استعادتها.
+     */
+    function _resetPropertiesToDefault(keysToReset) {
+        if (!_currentThemeFile) {
+            console.error("Cannot reset properties: Current theme file is unknown.");
+            return;
+        }
+
+        // 1. إنشاء مكون مؤقت من ملف السمة الأصلي للحصول على القيم الافتراضية
+        const tempComponent = Qt.createComponent(`${_currentThemeFile}.qml`);
+        if (tempComponent.status !== Component.Ready) {
+            console.error("Failed to load temporary theme for reset:", tempComponent.errorString());
+            return;
+        }
+
+        const defaultThemeObject = tempComponent.createObject();
+        if (!defaultThemeObject) {
+            console.error("Failed to create temporary theme object for reset.");
+            return;
+        }
+
+        // 2. نسخ القيم الافتراضية إلى السمة النشطة
+        let modifiedData = {};
+        for (const key of keysToReset) {
+            if (root.selectedTheme.hasOwnProperty(key) && defaultThemeObject.hasOwnProperty(key)) {
+                const defaultValue = defaultThemeObject[key];
+                root.selectedTheme[key] = defaultValue; // تحديث السمة الحية
+                modifiedData[key] = defaultValue;       // تجميع البيانات للتطبيق
+            }
+        }
+
+        // 3. تدمير الكائن المؤقت لتحرير الذاكرة
+        defaultThemeObject.destroy();
+        tempComponent.destroy();
+
+        // 4. تطبيق التغييرات وحفظها
+        // نقوم بتمرير false لـ saveTheme هنا لأن _cacheAppliedData سيتم استدعاؤها عبر المؤقت
+        updateAndApplyTheme(modifiedData, true);
     }
 
     // 4.4. حفظ البيانات والتخزين المؤقت (Data Persistence & Caching)
@@ -334,6 +451,15 @@ Singleton {
         interval: 1000 // تأخير لتطبيق اللون المميز
         repeat: false
         onTriggered: root._applyAccentColor()
+    }
+
+    Timer {
+        id: startUpTimer
+        interval: 1000
+        repeat: false
+        onTriggered: {
+            sessionLoader.path = App.themeCacheFilePath; // بدء تحميل الجلسة السابقة
+        }
     }
 
     Timer {

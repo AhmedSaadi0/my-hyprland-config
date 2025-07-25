@@ -137,11 +137,11 @@ PanelWindow {
                     activeIcon: "󰛳"
                     name: "Network"
                 }
-                ListElement {
-                    icon: "󰾰"
-                    // activeIcon: ""
-                    name: "Devices"
-                }
+                // ListElement {
+                //     icon: "󰾰"
+                //     // activeIcon: ""
+                //     name: "Devices"
+                // }
                 ListElement {
                     icon: "󰅌"
                     activeIcon: "󰅇"

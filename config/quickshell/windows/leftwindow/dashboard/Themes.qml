@@ -339,7 +339,7 @@ MenuCard {
                         Layout.fillWidth: true
                         text: "Reset"
                         iconText: ""
-                        onClicked: ThemeManager.loadTheme(workingTheme.themeName)
+                        onClicked: ThemeManager.resetWholeTheme()
                     }
                     MButton {
                         Layout.fillWidth: true
