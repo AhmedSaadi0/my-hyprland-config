@@ -58,8 +58,8 @@
 - [x] **Feature Control Window (UI to Toggle Features)**
 - [x] **Create a config file**
 - [x] **Custom Full Themes**
-- [x] **Fix Reset theme to default btn**
-- [x] **Add an option to reset colors to default**
+- [ ] **Fix Reset theme to default btn**
+- [ ] **Add an option to reset colors to default**
 - [ ] **Add more options to control like radius, and hyprland settings**
 
 ### 🧠 Productivity & UX

@@ -1,7 +1,6 @@
-// MenuCard.qml
+// MenuCard.qml (الإصدار المصحح)
 
 import QtQuick
-// import QtQuick.Dialogs
 import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
@@ -13,44 +12,39 @@ MenuCard {
     id: root
 
     property bool settingsExpanded: false
-    readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height) * 2
+
+    readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height + 5) * 2
     height: settingsExpanded ? settingsLayout.implicitHeight + padding + fixedHeight : fixedHeight
+
+    Behavior on height {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.InOutQuad
+        }
+    }
 
     title: "Themes & Customization"
     icon: ""
 
-    // 1. Local working copy of the theme.
     property var workingTheme: ({})
-
-    // 2. Stable ListModel for colors.
     ListModel {
         id: colorModel
     }
 
-    // <<< CHANGED: Define the exact list of properties to copy.
-    // This is the safest way to create a clean working copy.
-    readonly property var themePropertyKeys: ["themeName",
-        // Colors
-        "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor",
-        // System Settings
-        "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersPath", "_gtkTheme", "_themeIcons", "_kvantumTheme", "_dynamicWallpapersInterval", "_selectedWallpaperIndex", "_wallpaper"]
+    readonly property var themePropertyKeys: ThemeManager._allSerializableKeys
 
-    // <<< CHANGED: New, safer function to copy theme properties.
-    // This function manually copies properties, preserving their data types.
     function copyTheme(themeObject) {
         if (!themeObject)
             return {};
         const newTheme = {};
         for (const key of root.themePropertyKeys) {
             if (themeObject.hasOwnProperty(key)) {
-                // Direct assignment preserves the data type (color, int, string, bool)
                 newTheme[key] = themeObject[key];
             }
         }
         return newTheme;
     }
 
-    // Populates the ListModel from the current workingTheme.
     function populateColorModel(theme) {
         colorModel.clear();
         if (!theme || Object.keys(theme).length === 0)
@@ -85,7 +79,6 @@ MenuCard {
         appendColor("Subtle Text", "_subtleTextColor", "_subtleTextColor", !workingTheme._enableDynamicColoring);
     }
 
-    // --- Event Handling ---
     Component.onCompleted: {
         root.workingTheme = copyTheme(ThemeManager.selectedTheme);
         populateColorModel(root.workingTheme);
@@ -99,9 +92,10 @@ MenuCard {
         }
     }
 
-    // --- UI Definition ---
     ColumnLayout {
         id: mainLayout
+        spacing: 10
+
         GridLayout {
             id: grid
             columns: 3
@@ -143,6 +137,7 @@ MenuCard {
                 iconText: ""
             }
         }
+
         Rectangle {
             id: sperator
             Layout.fillWidth: true
@@ -151,6 +146,7 @@ MenuCard {
             height: 1
             color: ThemeManager.selectedTheme.colors.topbarFgColorV1.alpha(0.2)
         }
+
         Rectangle {
             id: settingsHeader
             Layout.fillWidth: true
@@ -190,6 +186,7 @@ MenuCard {
                 onClicked: root.settingsExpanded = !root.settingsExpanded
             }
         }
+
         ColumnLayout {
             id: settingsLayout
             spacing: 12
@@ -214,39 +211,28 @@ MenuCard {
                 title: "Wallpaper Settings"
                 Layout.fillWidth: true
                 Switch {
-                    Layout.fillWidth: true
                     text: "Enable dynamic wallpapers"
                     checked: workingTheme._enableDynamicWallpapers
                     onCheckedChanged: workingTheme._enableDynamicWallpapers = checked
                 }
                 Switch {
-                    Layout.fillWidth: true
                     text: "Enable colors from wallpaper"
                     checked: workingTheme._enableDynamicColoring
                     onCheckedChanged: workingTheme._enableDynamicColoring = checked
                 }
                 TextField {
-                    Layout.fillWidth: true
                     placeholderText: "Wallpapers interval"
                     text: workingTheme._dynamicWallpapersInterval
-                    onAccepted: workingTheme._dynamicWallpapersInterval = text
+                    onAccepted: workingTheme._dynamicWallpapersInterval = Number(text)
                 }
                 TextField {
-                    Layout.fillWidth: true
-                    placeholderText: "Selected Wallpaper"
-                    text: workingTheme._selectedWallpaperIndex
-                    onAccepted: workingTheme._selectedWallpaperIndex = text
-                }
-                TextField {
-                    Layout.fillWidth: true
                     placeholderText: "Wallpapers folder path"
                     text: workingTheme._dynamicWallpapersPath
                     enabled: workingTheme._enableDynamicWallpapers
                     onAccepted: workingTheme._dynamicWallpapersPath = text
                 }
                 TextField {
-                    Layout.fillWidth: true
-                    placeholderText: "Normal Wallpaper"
+                    placeholderText: "Static Wallpaper Path"
                     text: workingTheme._wallpaper
                     enabled: !workingTheme._enableDynamicWallpapers
                     onAccepted: workingTheme._wallpaper = text
@@ -257,22 +243,159 @@ MenuCard {
                 title: "Component Themes"
                 Layout.fillWidth: true
                 TextField {
-                    Layout.fillWidth: true
+                    placeholderText: "Plasma color scheme"
+                    text: workingTheme._plasmaColorScheme
+                    onAccepted: workingTheme._plasmaColorScheme = text
+                }
+                TextField {
+                    placeholderText: "QT style (e.g., Kvantum)"
+                    text: workingTheme._qtThemeStyle
+                    onAccepted: workingTheme._qtThemeStyle = text
+                }
+                TextField {
+                    placeholderText: "Kvantum theme name"
+                    text: workingTheme._kvantumTheme
+                    onAccepted: workingTheme._kvantumTheme = text
+                }
+                TextField {
+                    placeholderText: "Konsole profile name"
+                    text: workingTheme._konsoleProfile
+                    onAccepted: workingTheme._konsoleProfile = text
+                }
+                TextField {
                     placeholderText: "GTK theme name"
                     text: workingTheme._gtkTheme
                     onAccepted: workingTheme._gtkTheme = text
                 }
                 TextField {
-                    Layout.fillWidth: true
                     placeholderText: "Icon pack name"
                     text: workingTheme._themeIcons
                     onAccepted: workingTheme._themeIcons = text
                 }
-                TextField {
+                ComboBox {
                     Layout.fillWidth: true
-                    placeholderText: "Kvantum theme name"
-                    text: workingTheme._kvantumTheme
-                    onAccepted: workingTheme._kvantumTheme = text
+                    textRole: "text"
+                    valueRole: "value"
+                    model: [
+                        {
+                            text: "Light Mode",
+                            value: "light"
+                        },
+                        {
+                            text: "Dark Mode",
+                            value: "dark"
+                        }
+                    ]
+                    currentIndex: workingTheme._themeMode === "light" ? 0 : 1
+                    onActivated: workingTheme._themeMode = model[currentIndex].value
+                }
+            }
+
+            // --- الكود المصحح هنا ---
+            M3GroupBox {
+                title: "Hyprland Settings"
+                Layout.fillWidth: true
+                GridLayout {
+                    columns: 2
+                    Layout.fillWidth: true
+
+                    Label {
+                        text: "Border Width"
+                    }
+                    TextField {
+                        Layout.fillWidth: true
+                        text: workingTheme._hyprBorderWidth
+                        onAccepted: workingTheme._hyprBorderWidth = Number(text)
+                    }
+
+                    Label {
+                        text: "Rounding"
+                    }
+                    TextField {
+                        Layout.fillWidth: true
+                        text: workingTheme._hyprRounding
+                        onAccepted: workingTheme._hyprRounding = Number(text)
+                    }
+
+                    Label {
+                        text: "Active Border"
+                    }
+                    TextField {
+                        Layout.fillWidth: true
+                        text: workingTheme._hyprActiveBorder
+                        onAccepted: workingTheme._hyprActiveBorder = text
+                    }
+
+                    Label {
+                        text: "Inactive Border"
+                    }
+                    TextField {
+                        Layout.fillWidth: true
+                        text: workingTheme._hyprInactiveBorder
+                        onAccepted: workingTheme._hyprInactiveBorder = text
+                    }
+
+                    Label {
+                        text: "Drop Shadow"
+                    }
+                    Switch {
+                        checked: workingTheme._hyprDropShadow
+                        onCheckedChanged: workingTheme._hyprDropShadow = checked
+                    }
+                }
+            }
+
+            M3GroupBox {
+                title: "Dimensions & Spacing"
+                Layout.fillWidth: true
+                GridLayout {
+                    columns: 2
+                    Layout.fillWidth: true
+                    Repeater {
+                        model: ThemeManager._dimensionPropertyKeys
+                        delegate: RowLayout {
+                            Layout.fillWidth: true
+                            Label {
+                                text: modelData.substring(1).replace(/([A-Z])/g, ' $1').trim()
+                            }
+                            Item {
+                                Layout.fillWidth: true
+                            }
+                            TextField {
+                                Layout.preferredWidth: 80
+                                text: workingTheme[modelData]
+                                horizontalAlignment: TextInput.AlignRight
+                                onAccepted: workingTheme[modelData] = Number(text)
+                            }
+                        }
+                    }
+                }
+            }
+
+            M3GroupBox {
+                title: "Typography"
+                Layout.fillWidth: true
+                GridLayout {
+                    columns: 2
+                    Layout.fillWidth: true
+                    Repeater {
+                        model: ThemeManager._typographyPropertyKeys
+                        delegate: RowLayout {
+                            Layout.fillWidth: true
+                            Label {
+                                text: modelData.substring(1).replace(/([A-Z])/g, ' $1').trim()
+                            }
+                            Item {
+                                Layout.fillWidth: true
+                            }
+                            TextField {
+                                Layout.preferredWidth: 150
+                                text: workingTheme[modelData]
+                                horizontalAlignment: TextInput.AlignRight
+                                onAccepted: workingTheme[modelData] = (typeof ThemeManager.selectedTheme[modelData] === "number") ? Number(text) : text
+                            }
+                        }
+                    }
                 }
             }
 
@@ -329,31 +452,70 @@ MenuCard {
                     }
                 }
             }
+
             M3GroupBox {
-                title: "Actions"
+                title: "Actions & Resets"
+                Layout.fillWidth: true
+                GridLayout {
+                    columns: 2
+                    Layout.fillWidth: true
+                    MButton {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 30
+                        text: "Reset Colors"
+                        onClicked: ThemeManager.resetColorSettings()
+                    }
+                    MButton {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 30
+                        text: "Reset Wallpapers"
+                        onClicked: ThemeManager.resetWallpaperSystemSettings()
+                    }
+                    MButton {
+                        Layout.fillWidth: true
+                        text: "Reset Hyprland"
+                        onClicked: ThemeManager.resetHyprlandSettings()
+                    }
+                    MButton {
+                        Layout.fillWidth: true
+                        text: "Reset Plasma/QT"
+                        onClicked: ThemeManager.resetPlasmaSettings()
+                    }
+                    MButton {
+                        Layout.fillWidth: true
+                        text: "Reset GTK"
+                        onClicked: ThemeManager.resetGtkSettings()
+                    }
+                    MButton {
+                        Layout.fillWidth: true
+                        text: "Next Wallpaper"
+                        onClicked: ThemeManager.switchToNextWallpaper()
+                        iconText: ""
+                    }
+                }
+            }
+
+            M3GroupBox {
+                title: "Apply Changes"
                 Layout.fillWidth: true
                 RowLayout {
                     Layout.fillWidth: true
                     spacing: 10
                     MButton {
                         Layout.fillWidth: true
-                        text: "Reset"
-                        iconText: ""
-                        onClicked: ThemeManager.resetWholeTheme()
-                    }
-                    MButton {
-                        Layout.fillWidth: true
                         text: "Apply"
                         iconText: ""
                         onClicked: ThemeManager.updateAndApplyTheme(workingTheme, false)
+                        textPreferredWidth: 3
                     }
-                }
-                MButton {
-                    Layout.fillWidth: true
-                    text: "Apply & Save Changes"
-                    iconText: ""
-                    highlighted: true
-                    onClicked: ThemeManager.updateAndApplyTheme(workingTheme, true)
+                    MButton {
+                        Layout.fillWidth: true
+                        text: "Apply & Save"
+                        iconText: ""
+                        highlighted: true
+                        onClicked: ThemeManager.updateAndApplyTheme(workingTheme, true)
+                        textPreferredWidth: 5
+                    }
                 }
             }
         }

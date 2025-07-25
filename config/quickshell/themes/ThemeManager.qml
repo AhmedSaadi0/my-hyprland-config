@@ -94,12 +94,10 @@ Singleton {
     readonly property var _systemPropertyKeys: ["_wallpaper", "_qtThemeStyle", "_kvantumTheme", "_gtkTheme", "_themeIcons", "_themeMode", "_plasmaColorScheme", "_konsoleProfile", "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex"]
     readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
 
-    // --- ابدأ الإضافة هنا ---
     // خصائص محددة للاستعادة
     readonly property var _wallpaperSystemPropertyKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper"]
     readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_themeIcons"]
     readonly property var _gtkPropertyKeys: ["_gtkTheme", "_themeIcons"]
-    // --- انتهى قسم الإضافة ---
 
     readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_systemPropertyKeys).concat(_hyprlandPropertyKeys)
 
@@ -122,7 +120,7 @@ Singleton {
             return;
         }
         console.log("Switching to the next wallpaper manually.");
-        wallpaperTimer.trigger(); // تشغيل المؤقت فورًا لتغيير الخلفية
+        wallpaperTimer.triggered();
         wallpaperTimer.restart(); // إعادة تشغيل المؤقت ليبدأ العد من جديد
     }
 
