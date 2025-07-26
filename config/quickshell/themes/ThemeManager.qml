@@ -12,27 +12,28 @@ Singleton {
     id: root
 
     //================================================================
-    // القسم 1: الواجهة العامة (Public API)
+    // القسم 2: الواجهة العامة (Public API)
     // - الخصائص والإشارات والدوال التي تتعامل معها واجهة المستخدم بشكل مباشر.
     //================================================================
 
-    // 1.1. الإشارات (Signals)
+    // 2.1. الإشارات (Signals)
     signal selectedThemeUpdated
 
-    // 1.2. الخصائص العامة (Public Properties)
+    // 2.2. الخصائص العامة (Public Properties)
     property string _currentThemeFile: "" // لتخزين مسار ملف السمة المحمل حالياً
     property var selectedTheme: ColorsTheme
     // --- انتهى قسم الإضافة ---
     property var wallpapersList: []
     property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${selectedTheme.themeName}.json`
 
-    // 1.3. الدوال العامة (Public Functions)
+    // 2.3. الدوال العامة (Public Functions)
 
     /**
      * يقوم بتحميل سمة جديدة من ملف واستبدال السمة الحالية.
      * @param themeFile المسار إلى ملف السمة (بدون الامتداد .qml).
      */
     function loadTheme(themeFile) {
+        _stopRunningAllProcess();
         const component = Qt.createComponent(`${themeFile}.qml`);
         if (component.status !== Component.Ready) {
             console.error("Failed to load theme:", component.errorString());
@@ -50,6 +51,7 @@ Singleton {
         sessionSaver.setText(JSON.stringify({
             activeThemeName: themeFile
         }));
+
         cacheThemeFile.path = App.themeCacheFolderPath + `/${themeFile}.json`;
         cacheThemeFile.reload();
     }
@@ -84,13 +86,13 @@ Singleton {
     }
 
     //================================================================
-    // القسم 2: الحالة الداخلية والثوابت (Internal State & Constants)
+    // القسم 3: الحالة الداخلية والثوابت (Internal State & Constants)
     // - خصائص للقراءة فقط تستخدم داخليًا لتنظيم منطق العمل.
     //================================================================
 
-    readonly property var _colorPropertyKeys: ["_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor"]
+    readonly property var _colorPropertyKeys: ["_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor"]
     readonly property var _dimensionPropertyKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
-    readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading1Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
+    readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading2Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
     readonly property var _systemPropertyKeys: ["_wallpaper", "_qtThemeStyle", "_kvantumTheme", "_gtkTheme", "_themeIcons", "_themeMode", "_plasmaColorScheme", "_konsoleProfile", "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex"]
     readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
 
@@ -102,12 +104,12 @@ Singleton {
     readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_systemPropertyKeys).concat(_hyprlandPropertyKeys)
 
     //================================================================
-    // القسم 3: معالجات دورة الحياة (Lifecycle Handlers)
+    // القسم 4: معالجات دورة الحياة (Lifecycle Handlers)
     // - يتم تشغيلها عند إنشاء المكون.
     //================================================================
 
     Component.onCompleted: {
-        console.log("Application starting. Loading last session...");
+        console.info("Application starting. Loading last session...");
         startUpTimer.start();
     }
 
@@ -115,11 +117,11 @@ Singleton {
      * ينتقل إلى الخلفية التالية في القائمة إذا كانت الخلفيات الديناميكية مفعلة.
      */
     function switchToNextWallpaper() {
-        if (!selectedTheme.systemSettings.enableDynamicWallpapers || wallpapersList.length === 0) {
+        if (!selectedTheme.systemSettings.enableDynamicWallpapers || wallpapersList.length === 1) {
             console.info("Cannot switch wallpaper: Dynamic wallpapers are not enabled or list is empty.");
             return;
         }
-        console.log("Switching to the next wallpaper manually.");
+        console.info("Switching to the next wallpaper manually.");
         wallpaperTimer.triggered();
         wallpaperTimer.restart(); // إعادة تشغيل المؤقت ليبدأ العد من جديد
     }
@@ -128,7 +130,7 @@ Singleton {
      * يستعيد إعدادات الألوان إلى القيم الافتراضية للسمة الحالية.
      */
     function resetColorSettings() {
-        console.log("Resetting color settings to default.");
+        console.info("Resetting color settings to default.");
         _resetPropertiesToDefault(_colorPropertyKeys);
     }
 
@@ -136,7 +138,7 @@ Singleton {
      * يستعيد إعدادات الخلفية (ديناميكية، مسار، ...) إلى القيم الافتراضية.
      */
     function resetWallpaperSystemSettings() {
-        console.log("Resetting wallpaper system settings to default.");
+        console.info("Resetting wallpaper system settings to default.");
         _resetPropertiesToDefault(_wallpaperSystemPropertyKeys);
     }
 
@@ -144,7 +146,7 @@ Singleton {
      * يستعيد إعدادات Hyprland إلى القيم الافتراضية للسمة.
      */
     function resetHyprlandSettings() {
-        console.log("Resetting Hyprland settings to default.");
+        console.info("Resetting Hyprland settings to default.");
         _resetPropertiesToDefault(_hyprlandPropertyKeys);
     }
 
@@ -152,7 +154,7 @@ Singleton {
      * يستعيد إعدادات Plasma (الألوان، الأيقونات، ...) إلى القيم الافتراضية.
      */
     function resetPlasmaSettings() {
-        console.log("Resetting Plasma settings to default.");
+        console.info("Resetting Plasma settings to default.");
         _resetPropertiesToDefault(_plasmaPropertyKeys);
     }
 
@@ -160,7 +162,7 @@ Singleton {
      * يستعيد إعدادات GTK (السمة، الأيقونات) إلى القيم الافتراضية.
      */
     function resetGtkSettings() {
-        console.log("Resetting GTK settings to default.");
+        console.info("Resetting GTK settings to default.");
         _resetPropertiesToDefault(_gtkPropertyKeys);
     }
 
@@ -173,11 +175,11 @@ Singleton {
     }
 
     //================================================================
-    // القسم 4: المنطق الداخلي (Internal Logic)
+    // القسم 5: المنطق الداخلي (Internal Logic)
     // - الدوال الخاصة التي تدير عملية تطبيق السمات وحفظها.
     //================================================================
 
-    // 4.1. تنسيق تطبيق السمة (Theme Application Coordination)
+    // 5.1. تنسيق تطبيق السمة (Theme Application Coordination)
 
     /**
      * الدالة المنسقة الرئيسية. تقرأ من السمة الحالية وتطبق الإعدادات.
@@ -190,12 +192,10 @@ Singleton {
         const settings = root.selectedTheme.systemSettings;
 
         wallpaperTimer.stop();
-
         getWallpapersList.running = false;
 
         if (settings.enableDynamicWallpapers) {
             getWallpapersList.command = Utils.Helper.getWallpapersList(root.selectedTheme.systemSettings.dynamicWallpapersPath);
-            console.info(getWallpapersList.command);
             getWallpapersList.running = true; // يبدأ عملية جلب الخلفيات وتطبيقها
         } else {
             _applyStaticTheme(settings);
@@ -203,6 +203,10 @@ Singleton {
 
         if (saveTheme) {
             sendChangedSignalTimer.start();
+        }
+
+        if (!settings.enableDynamicColoring) {
+            applyAccentColorTimer.start();
         }
     }
 
@@ -221,10 +225,9 @@ Singleton {
      */
     function _applyStaticTheme(settings) {
         _applyCoreThemeSettings(settings, settings.wallpaper);
-        applyAccentColorTimer.start(); // تطبيق اللون المميز بعد فترة قصيرة
     }
 
-    // 4.2. منطق الخلفيات الديناميكية (Dynamic Wallpaper Logic)
+    // 5.2. منطق الخلفيات الديناميكية (Dynamic Wallpaper Logic)
 
     /**
      * يطبق الخلفية الديناميكية بناءً على وضع السمة (فاتح/داكن).
@@ -234,34 +237,33 @@ Singleton {
         const themeMode = settings.themeMode;
 
         let currentIndex = settings.selectedWallpaperIndex;
-        console.info(currentIndex);
-        console.info(wallpapersList.length);
 
-        if (currentIndex >= wallpapersList.length && wallpapersList.length != 0) {
-            currentIndex = 0;
-            selectedTheme._selectedWallpaperIndex = 0;
+        if (currentIndex >= wallpapersList.length && wallpapersList.length != 1) {
+            currentIndex = 1;
+            selectedTheme._selectedWallpaperIndex = 1;
         }
 
         const selectedWallpaper = wallpapersList[currentIndex];
         _applyCoreThemeSettings(settings, selectedWallpaper);
 
         if (settings.enableDynamicColoring) {
-            _dispatchCommand("Apply M3 Theming", Utils.Helper.applyM3PlasmaColor(selectedWallpaper, themeMode));
+            _dispatchCommand("Apply M4 Theming", Utils.Helper.applyM3PlasmaColor(selectedWallpaper, themeMode));
         }
 
         wallpaperTimer.running = settings.enableDynamicWallpapers || settings.enableDynamicColoring;
     }
 
-    // 4.3. دوال مساعدة منخفضة المستوى (Low-level Action Helpers)
+    // 5.3. دوال مساعدة منخفضة المستوى (Low-level Action Helpers)
 
     /**
      * يرسل أمرًا تنفيذيًا عبر Hyprland.
      */
     function _dispatchCommand(description, commandArray) {
-        if (!Array.isArray(commandArray) || commandArray.length === 0) {
+        if (!Array.isArray(commandArray) || commandArray.length === 1) {
             console.warn(`Skipping empty command: ${description}`);
             return;
         }
+        console.info(description + " -> " + commandArray.join(' '));
         Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 
@@ -296,7 +298,6 @@ Singleton {
         const accentColor = selectedTheme.colors.primary;
         // ملاحظة: استدعاء الأمر مرتين هو حل بديل لمشكلة في تطبيق اللون بشكل موثوق.
         _dispatchCommand("Plasma Accent Color", Utils.Helper.changePlasmaAccentColor(accentColor));
-        _dispatchCommand("Plasma Accent Color", Utils.Helper.changePlasmaAccentColor(accentColor));
     }
 
     /**
@@ -309,7 +310,7 @@ Singleton {
             return;
         }
 
-        // 1. إنشاء مكون مؤقت من ملف السمة الأصلي للحصول على القيم الافتراضية
+        // 2. إنشاء مكون مؤقت من ملف السمة الأصلي للحصول على القيم الافتراضية
         const tempComponent = Qt.createComponent(`${_currentThemeFile}.qml`);
         if (tempComponent.status !== Component.Ready) {
             console.error("Failed to load temporary theme for reset:", tempComponent.errorString());
@@ -322,7 +323,7 @@ Singleton {
             return;
         }
 
-        // 2. نسخ القيم الافتراضية إلى السمة النشطة
+        // 3. نسخ القيم الافتراضية إلى السمة النشطة
         let modifiedData = {};
         for (const key of keysToReset) {
             if (root.selectedTheme.hasOwnProperty(key) && defaultThemeObject.hasOwnProperty(key)) {
@@ -332,16 +333,16 @@ Singleton {
             }
         }
 
-        // 3. تدمير الكائن المؤقت لتحرير الذاكرة
+        // 4. تدمير الكائن المؤقت لتحرير الذاكرة
         defaultThemeObject.destroy();
         tempComponent.destroy();
 
-        // 4. تطبيق التغييرات وحفظها
+        // 5. تطبيق التغييرات وحفظها
         // نقوم بتمرير false لـ saveTheme هنا لأن _cacheAppliedData سيتم استدعاؤها عبر المؤقت
         updateAndApplyTheme(modifiedData, true);
     }
 
-    // 4.4. حفظ البيانات والتخزين المؤقت (Data Persistence & Caching)
+    // 5.4. حفظ البيانات والتخزين المؤقت (Data Persistence & Caching)
 
     /**
      * يجمع البيانات الحالية من السمة ويحفظها في ملف التخزين المؤقت.
@@ -353,16 +354,24 @@ Singleton {
                 dataToSave[key] = root.selectedTheme[key];
             }
         }
-        cacheThemeFile.setText(JSON.stringify(dataToSave, null, 2));
-        console.log(`Data for '${selectedTheme.themeName}' saved to ${cacheThemeFile.path}`);
+        cacheThemeFile.setText(JSON.stringify(dataToSave, null, 3));
+        console.info(`Data for '${selectedTheme.themeName}' saved to ${cacheThemeFile.path}`);
+    }
+
+    function _stopRunningAllProcess() {
+        getWallpapersList.running = false;
+        wallpaperTimer.stop();
+        applyAccentColorTimer.stop();
+        startUpTimer.stop();
+        sendChangedSignalTimer.stop();
     }
 
     //================================================================
-    // القسم 5: المكونات الفرعية والعاملة (Child Components & Workers)
+    // القسم 6: المكونات الفرعية والعاملة (Child Components & Workers)
     // - عناصر لإدارة العمليات غير المتزامنة، والمؤقتات، وملفات الإدخال/الإخراج.
     //================================================================
 
-    // 5.1. عمال إدارة الملفات (File I/O Workers)
+    // 6.1. عمال إدارة الملفات (File I/O Workers)
 
     FileView {
         id: sessionLoader
@@ -389,9 +398,13 @@ Singleton {
     FileView {
         id: cacheThemeFile
         path: root.targetedCacheThemeFile
-        watchChanges: true
+        watchChanges: false
 
         onLoaded: {
+            // if (this.path !== root.targetedCacheThemeFile) {
+            //     console.warn("Ignoring stale cache load for:", this.path);
+            //     return; // تجاهل هذه النتيجة لأنها قديمة
+            // }
             try {
                 const data = JSON.parse(cacheThemeFile.text());
                 root.updateAndApplyTheme(data, true);
@@ -402,12 +415,16 @@ Singleton {
             }
         }
         onLoadFailed: {
+            if (this.path !== root.targetedCacheThemeFile) {
+                console.warn("Ignoring stale cache load for:", this.path);
+                return; // تجاهل هذه النتيجة لأنها قديمة
+            }
             console.info("Cache file not found. It will be created with default values.");
             root._cacheAppliedData();
         }
     }
 
-    // 5.2. عامل جلب الخلفيات (Wallpaper Fetcher Process)
+    // 6.2. عامل جلب الخلفيات (Wallpaper Fetcher Process)
 
     Process {
         id: getWallpapersList
@@ -429,8 +446,6 @@ Singleton {
         }
     }
 
-    // 5.3. المؤقتات المساعدة (Utility Timers)
-
     Timer {
         id: wallpaperTimer
         repeat: true
@@ -446,9 +461,11 @@ Singleton {
 
     Timer {
         id: applyAccentColorTimer
-        interval: 1000 // تأخير لتطبيق اللون المميز
+        interval: 2000
         repeat: false
-        onTriggered: root._applyAccentColor()
+        onTriggered: {
+            root._applyAccentColor();
+        }
     }
 
     Timer {
@@ -456,13 +473,13 @@ Singleton {
         interval: 1000
         repeat: false
         onTriggered: {
-            sessionLoader.path = App.themeCacheFilePath; // بدء تحميل الجلسة السابقة
+            sessionLoader.path = App.themeCacheFilePath;
         }
     }
 
     Timer {
         id: sendChangedSignalTimer
-        interval: 1000 // تأخير قبل الحفظ وإرسال إشارة التحديث
+        interval: 1000
         repeat: false
         onTriggered: {
             root._cacheAppliedData();

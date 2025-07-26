@@ -40,7 +40,7 @@ Singleton {
 
     function changePlasmaAccentColor(accentColor) {
         // This requires the 'plasma-apply-colorscheme' tool to be installed.
-        return ['plasma-apply-colorscheme', "-a", `'${accentColor}'`];
+        return ['plasma-apply-colorscheme', '-a', `"${accentColor}"`];
     }
 
     function getWallpapersList(path) {

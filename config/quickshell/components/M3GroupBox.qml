@@ -3,6 +3,8 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 
+import "../themes"
+
 GroupBox {
     id: root
 
@@ -10,7 +12,7 @@ GroupBox {
     // 1. API - الخصائص الخارجية
     // ============================
     default property alias content: userContentColumn.data
-    property int cornerRadius: 16
+    property int cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     // ===================================
     // 2. Styling - المظهر والتصميم
