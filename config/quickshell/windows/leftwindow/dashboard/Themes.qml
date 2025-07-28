@@ -292,6 +292,15 @@ MenuCard {
                     }
 
                     Label {
+                        text: "Selected Wallpaper"
+                    }
+                    TextField {
+                        Layout.fillWidth: true
+                        text: workingTheme._selectedWallpaperIndex
+                        onAccepted: workingTheme._selectedWallpaperIndex = Number(text)
+                    }
+
+                    Label {
                         text: "Wallpapers folder"
                     }
                     TextField {
@@ -413,26 +422,26 @@ MenuCard {
                         onAccepted: workingTheme._themeIcons = text
                     }
 
-                    Label {
-                        text: "Theme Mode"
-                    }
-                    ComboBox {
-                        Layout.fillWidth: true
-                        textRole: "text"
-                        valueRole: "value"
-                        model: [
-                            {
-                                text: "Light Mode",
-                                value: "light"
-                            },
-                            {
-                                text: "Dark Mode",
-                                value: "dark"
-                            }
-                        ]
-                        currentIndex: workingTheme._themeMode === "light" ? 0 : 1
-                        onActivated: workingTheme._themeMode = model[currentIndex].value
-                    }
+                    // Label {
+                    //     text: "Theme Mode"
+                    // }
+                    // ComboBox {
+                    //     Layout.fillWidth: true
+                    //     textRole: "text"
+                    //     valueRole: "value"
+                    //     model: [
+                    //         {
+                    //             text: "Light Mode",
+                    //             value: "light"
+                    //         },
+                    //         {
+                    //             text: "Dark Mode",
+                    //             value: "dark"
+                    //         }
+                    //     ]
+                    //     currentIndex: workingTheme._themeMode === "light" ? 0 : 1
+                    //     onActivated: workingTheme._themeMode = model[currentIndex].value
+                    // }
                 }
             }
 

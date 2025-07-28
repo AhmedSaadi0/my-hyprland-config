@@ -61,6 +61,7 @@
 - [x] **Fix Reset theme to default btn**
 - [x] **Add an option to reset colors to default**
 - [x] **Add more options to control like radius, and hyprland settings**
+- [ ] **Add an option to halt dynamic wallpapers changing**
 
 ### 🧠 Productivity & UX
 
@@ -91,3 +92,8 @@
 - [ ] **Quickshell Control** -> right now is Dashboard
 - [ ] **Keybindings Cheatsheet**
 - [ ] **Launched Apps** -> not a menu, but a list of the apps that are currently running
+
+### Code Improvements
+
+- [ ] **Create a Component for Theme Settings Text & Label**
+- [ ] **On Wallpaper Settings when TextField Must be updated before save**

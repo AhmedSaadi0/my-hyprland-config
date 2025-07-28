@@ -289,9 +289,10 @@ Singleton {
     }
 
     function _changeGtkTheme(settings) {
+        const fontSize = root.selectedTheme.typography.baseFontSize;
         _dispatchCommand("GTK Theme", Utils.Helper.changeGtkTheme(settings.gtkTheme));
         _dispatchCommand("GTK Icons", Utils.Helper.changeGtkIcons(settings.themeIcons));
-        _dispatchCommand("GTK Font", Utils.Helper.changeGtkFont(settings.fontName));
+        _dispatchCommand("GTK Font", Utils.Helper.changeGtkFont(settings.fontName, fontSize));
     }
 
     function _applyAccentColor() {

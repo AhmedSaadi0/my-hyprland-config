@@ -100,9 +100,9 @@ Singleton {
         return ['gsettings', 'set', 'org.gnome.desktop.interface', 'icon-theme', iconThemeName];
     }
 
-    function changeGtkFont(fontName) {
+    function changeGtkFont(fontName, fontSize) {
         // This command sets the theme for both GTK3 and GTK4 in most modern environments.
-        return ['gsettings', 'set', 'org.gnome.desktop.interface', 'font-name', fontName];
+        return ['gsettings', 'set', 'org.gnome.desktop.interface', 'font-name', `'${fontName} ${fontSize}'`];
     }
     // ==========================================================
     // ==               APPLICATION STYLING                    ==

@@ -9,7 +9,7 @@ import "../themes"
 Rectangle {
     id: root
     color: "transparent"
-    implicitWidth: 10
+    implicitWidth: 0
 
     property string boxColor: ThemeManager.selectedTheme.colors.topbarColor
     property int cornerWidth: 20
