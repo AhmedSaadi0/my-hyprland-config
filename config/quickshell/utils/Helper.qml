@@ -20,7 +20,11 @@ Singleton {
      * @returns {string[]} The command array to be executed.
      */
     function changeWallpaper(wallpaperPath) {
-        return ['swww', 'img', '--transition-type', 'random', `'${wallpaperPath}'`];
+        return ['swww', 'img', '--transition-type', 'grow', `'${wallpaperPath}'`];
+    }
+
+    function getCursorpos(wallpaperPath) {
+        return ["hyprctl", "cursorpos"];
     }
 
     // ==========================================================

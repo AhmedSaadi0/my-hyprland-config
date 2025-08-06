@@ -86,8 +86,10 @@ PanelWindow {
     CorneredBox {
         id: containerBox
         anchors.fill: parent
+
         bottomRightVisible: false
         topRightVisible: false
+
         layer.enabled: true
         layer.effect: MultiEffect {
             source: containerBox

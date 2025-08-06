@@ -12,6 +12,7 @@ Rectangle {
     implicitWidth: 0
 
     property string boxColor: ThemeManager.selectedTheme.colors.topbarColor
+
     property int cornerWidth: 20
     property int cornerHeight: 20
 

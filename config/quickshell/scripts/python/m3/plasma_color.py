@@ -1,17 +1,18 @@
-import os
 from pathlib import Path
 
-from css_theme import CssThemeExporter
 from kde_material_you_colors.schemeconfigs import ThemeConfig
 from kde_material_you_colors.utils import (
     konsole_utils,
     ksyntax_utils,
     plasma_utils,
+    pywal_utils,
 )
 from kde_material_you_colors.utils.m3_scheme_utils import (
     export_schemes,
     get_material_you_colors,
 )
+
+from css_theme import CssThemeExporter
 from kitty_theme import KittyThemeExporter
 
 
@@ -21,10 +22,6 @@ class ColorExporter:
     tones_error = {}
     base_text_states = {}
     toolbar_opacity_dark = 0
-
-    file_path = (
-        f'{os.path.expanduser("~")}/.config/ags/scss/themes/m3/dynamic.scss'
-    )
 
     def __init__(self, wallpaper_data, ncolor, theme_mode):
         material_you_colors = get_material_you_colors(
@@ -64,6 +61,7 @@ class ColorExporter:
         export_schemes(schemes)
         self.export_plasma_color(schemes, theme_mode)
         self.export_konsole_theme(schemes, theme_mode)
+        self.export_and_apply_pywal_theme(schemes, theme_mode)
 
     def export_css_theme(self, color_schema):
         # Export css theme
@@ -86,8 +84,26 @@ class ColorExporter:
             light=theme_mode == "light",
             pywal_light=theme_mode == "light",
             schemes=schemes,
-            konsole_opacity=70,
-            konsole_opacity_dark=70,
+            konsole_opacity=80,
+            konsole_opacity_dark=80,
             dark_light=theme_mode != "light",
         )
         konsole_utils.apply_color_scheme()
+
+    def export_and_apply_pywal_theme(self, schemes, theme_mode):
+        """
+        Exports and applies the color scheme for pywal.
+        """
+        is_light_theme = theme_mode == "light"
+
+        # استدعاء الدالة باستخدام أسماء المتغيرات بشكل صريح لتجنب الأخطاء
+        # وتفعيل خاصية التصدير عبر use_pywal=True
+        pywal_utils.apply_schemes(
+            schemes=schemes,
+            light=is_light_theme,
+            use_pywal=True,
+        )
+
+        print(
+            f"Successfully exported and applied {'light' if is_light_theme else 'dark'} pywal theme."
+        )

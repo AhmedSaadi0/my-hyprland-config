@@ -62,6 +62,13 @@
 - [x] **Add an option to reset colors to default**
 - [x] **Add more options to control like radius, and hyprland settings**
 - [ ] **Add an option to halt dynamic wallpapers changing**
+- [ ] **Add Dracula Theme**
+- [ ] **Add Solarized Theme**
+- [ ] **Add Gruvbox Theme**
+- [ ] **Add Catppuccin Theme**
+- [ ] **Add Tokyo Night Theme**
+- [ ] **Add Rosé Pine Theme**
+- [ ] **Add Oxocarbon Theme**
 
 ### 🧠 Productivity & UX
 

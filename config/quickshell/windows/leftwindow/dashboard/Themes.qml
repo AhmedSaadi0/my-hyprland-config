@@ -118,24 +118,28 @@ MenuCard {
                 onClicked: ThemeManager.loadTheme("M3Dark")
                 Layout.fillWidth: true
                 iconText: "󰖔"
+                textPreferredWidth: 4
             }
             MButton {
-                text: "Harmony"
+                text: "Nord"
                 onClicked: ThemeManager.loadTheme("HarmonyTheme")
                 Layout.fillWidth: true
-                iconText: "󰔉"
+                iconText: "󱄆"
+                // textPreferredWidth: 4
             }
             MButton {
-                text: "Dark"
+                text: "Dracula"
                 onClicked: ThemeManager.loadTheme("DarkTheme")
                 Layout.fillWidth: true
-                iconText: "󱀝"
+                iconText: "󰴂"
+                textPreferredWidth: 4
             }
             MButton {
                 text: "M3 Light"
                 onClicked: ThemeManager.loadTheme("M3Light")
                 Layout.fillWidth: true
                 iconText: ""
+                textPreferredWidth: 4
             }
         }
 
