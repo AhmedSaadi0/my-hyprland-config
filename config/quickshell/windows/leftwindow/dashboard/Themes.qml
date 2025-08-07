@@ -11,9 +11,12 @@ import "../../../themes"
 MenuCard {
     id: root
 
+    title: "Themes & Customization"
+    icon: ""
+
     property bool settingsExpanded: false
 
-    readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height + 5) * 2
+    readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height + fullThemesRow.implicitHeight + 5) * 2
     height: settingsExpanded ? settingsLayout.implicitHeight + padding + fixedHeight : fixedHeight
 
     Behavior on height {
@@ -22,9 +25,6 @@ MenuCard {
             easing.type: Easing.InOutQuad
         }
     }
-
-    title: "Themes & Customization"
-    icon: ""
 
     property var workingTheme: ({})
     ListModel {
@@ -97,49 +97,69 @@ MenuCard {
         id: mainLayout
         spacing: 10
 
+        RowLayout {
+            id: fullThemesRow
+            Layout.fillWidth: true
+            spacing: 10 // مسافة بين البطاقات
+
+            ThemeSelectorCard {
+                Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
+                themeTitle: "Dracula"
+                lightThemeName: "DraculaLight"
+                darkThemeName: "DraculaDark"
+
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+            }
+
+            ThemeSelectorCard {
+                Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
+                themeTitle: "Material"
+                lightThemeName: "M3Light"
+                darkThemeName: "M3Dark"
+
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+            }
+        }
+
+        Label {
+            id: singleThemeLabel
+            text: "Single Themes"
+            font.pointSize: 10
+            font.bold: true
+            color: Kirigami.Theme.textColor
+            opacity: 0.8
+            Layout.topMargin: 5
+            // Layout.horizontalCenter: parent.horizontalCenter
+
+        }
+
         GridLayout {
             id: grid
-            columns: 3
+            columns: 3 // استخدام عمودين مناسب للأزرار الصغيرة
             Layout.fillWidth: true
+            columnSpacing: 10
+            rowSpacing: 10
+
             MButton {
                 text: "Colors"
                 onClicked: ThemeManager.loadTheme("ColorsTheme")
                 Layout.fillWidth: true
                 iconText: ""
+                isActive: ThemeManager.selectedTheme.themeName === "ColorsTheme"
             }
             MButton {
                 text: "Deer"
                 onClicked: ThemeManager.loadTheme("DeerTheme")
                 Layout.fillWidth: true
                 iconText: ""
-            }
-            MButton {
-                text: "M3 Dark"
-                onClicked: ThemeManager.loadTheme("M3Dark")
-                Layout.fillWidth: true
-                iconText: "󰖔"
-                textPreferredWidth: 4
+                isActive: ThemeManager.selectedTheme.themeName === "DeerTheme"
             }
             MButton {
                 text: "Nord"
                 onClicked: ThemeManager.loadTheme("HarmonyTheme")
                 Layout.fillWidth: true
                 iconText: "󱄆"
-                // textPreferredWidth: 4
-            }
-            MButton {
-                text: "Dracula"
-                onClicked: ThemeManager.loadTheme("DarkTheme")
-                Layout.fillWidth: true
-                iconText: "󰴂"
-                textPreferredWidth: 4
-            }
-            MButton {
-                text: "M3 Light"
-                onClicked: ThemeManager.loadTheme("M3Light")
-                Layout.fillWidth: true
-                iconText: ""
-                textPreferredWidth: 4
+                isActive: ThemeManager.selectedTheme.themeName === "HarmonyTheme"
             }
         }
 

@@ -90,7 +90,7 @@ Singleton {
     // - خصائص للقراءة فقط تستخدم داخليًا لتنظيم منطق العمل.
     //================================================================
 
-    readonly property var _colorPropertyKeys: ["_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor"]
+    readonly property var _colorPropertyKeys: ["themeName", "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor"]
     readonly property var _dimensionPropertyKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
     readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading2Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
     readonly property var _systemPropertyKeys: ["_wallpaper", "_qtThemeStyle", "_kvantumTheme", "_gtkTheme", "_themeIcons", "_themeMode", "_plasmaColorScheme", "_konsoleProfile", "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex"]
@@ -462,7 +462,7 @@ Singleton {
 
     Timer {
         id: applyAccentColorTimer
-        interval: 2000
+        interval: 3000
         repeat: false
         onTriggered: {
             root._applyAccentColor();
