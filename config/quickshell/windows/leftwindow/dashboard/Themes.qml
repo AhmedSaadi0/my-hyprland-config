@@ -113,6 +113,15 @@ MenuCard {
 
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
+                themeTitle: "Catppuccin"
+                lightThemeName: "CatppuccinLight"
+                darkThemeName: "CatppuccinDark"
+
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+            }
+
+            ThemeSelectorCard {
+                Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
                 themeTitle: "Material"
                 lightThemeName: "M3Light"
                 darkThemeName: "M3Dark"

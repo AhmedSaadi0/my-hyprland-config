@@ -362,7 +362,7 @@ Singleton {
     function _stopRunningAllProcess() {
         getWallpapersList.running = false;
         wallpaperTimer.stop();
-        applyAccentColorTimer.stop();
+        // applyAccentColorTimer.stop();
         startUpTimer.stop();
         sendChangedSignalTimer.stop();
     }
@@ -462,9 +462,10 @@ Singleton {
 
     Timer {
         id: applyAccentColorTimer
-        interval: 3000
+        interval: 2000
         repeat: false
         onTriggered: {
+            root._applyAccentColor();
             root._applyAccentColor();
         }
     }

@@ -65,7 +65,7 @@
 - [x] **Add Dracula Theme**
 - [ ] **Add Solarized Theme**
 - [ ] **Add Gruvbox Theme**
-- [ ] **Add Catppuccin Theme**
+- [x] **Add Catppuccin Theme**
 - [ ] **Add Tokyo Night Theme**
 - [ ] **Add Rosé Pine Theme**
 - [ ] **Add Oxocarbon Theme**
