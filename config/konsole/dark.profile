@@ -1,6 +1,6 @@
 [Appearance]
-ColorScheme=Ramadan G
-Font=FantasqueSansM Nerd Font,14,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+ColorScheme=Dracula
+Font=FantasqueSansM Nerd Font Mono,14,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
 [Cursor Options]
 CustomCursorTextColor=0,0,0

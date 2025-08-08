@@ -89,8 +89,12 @@ Color=0,170,255
 Color=0,170,255
 
 [General]
+Anchor=0.5,0.5
 Blur=true
 ColorRandomization=false
 Description=Arc b
-Opacity=0.7
+FillStyle=Tile
+Opacity=0.9
 Wallpaper=
+WallpaperFlipType=NoFlip
+WallpaperOpacity=1

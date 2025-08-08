@@ -42,11 +42,11 @@ BaseTheme {
     _volOsdFgColor: "#f8f8f2"
 
     _plasmaColorScheme: "Dracula"
-    _konsoleProfile: "dark.profile"
+    _konsoleProfile: "DraculaDark.profile"
 
     _themeIcons: "Zafiro-Dracula"
     _kvantumTheme: "Tellgo"
-    _gtkTheme: "Tokyonight-Dark-BL"
+    _gtkTheme: "Dracula"
 
     _hyprActiveBorder: "rgba(ff79c6ff) rgba(8be9fdff) 0deg"
 }

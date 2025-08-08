@@ -1,8 +1,11 @@
 [Appearance]
-ColorScheme=Windows 30
-Font=FantasqueSansM Nerd Font,14,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+ColorScheme=Arc b
+Font=FantasqueSansM Nerd Font Mono,15,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
 [General]
-Command=/bin/fish
+Command=/usr/bin/env fish
 Name=pinky
 Parent=FALLBACK/
+
+[Scrolling]
+HistorySize=20000

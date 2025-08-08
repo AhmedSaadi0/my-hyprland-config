@@ -11,10 +11,10 @@ Color=255,218,217
 Color=199,199,199
 
 [Color0Faint]
-Color=199,199,199
+Color=97,97,97
 
 [Color0Intense]
-Color=199,199,199
+Color=116,116,116
 
 [Color1]
 Color=244,67,54
@@ -44,13 +44,13 @@ Color=255,152,0
 Color=255,152,0
 
 [Color4]
-Color=26,115,232
+Color=143,32,20
 
 [Color4Faint]
-Color=26,115,232
+Color=72,15,10
 
 [Color4Intense]
-Color=26,115,232
+Color=116,25,16
 
 [Color5]
 Color=156,39,176
@@ -96,4 +96,5 @@ Description=Materia
 FillStyle=Tile
 Opacity=0.8
 Wallpaper=
+WallpaperFlipType=NoFlip
 WallpaperOpacity=1

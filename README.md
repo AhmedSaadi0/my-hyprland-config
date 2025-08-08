@@ -452,16 +452,32 @@ nvim .nibrasshell.json
 
 # First look - لقطة اوليه
 
-#### Dark
+#### Catppuccin dark
 
 <p align='center'>
-	<img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/dark.png'/>
+	<img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/Catppuccin-dark.png'/>
 </p>
 
-#### Light
+#### M3 Light
 
 <p align='center'>
 	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/light.png'/>
+</p>
+
+<hr />
+
+#### Nord light
+
+<p align='center'>
+	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/nord-light.png'/>
+</p>
+
+<hr />
+
+#### Dracula Light
+
+<p align='center'>
+	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/dracula-light.png'/>
 </p>
 
 <hr />

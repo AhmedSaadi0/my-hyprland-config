@@ -11,7 +11,7 @@ BaseTheme {
 
     _wallpaper: App.assets.getWallpaperPath("linux.png")
 
-    _primary: "#bd93f9"       // بنفسجي ناعم
+    _primary: "#c197ff"       // بنفسجي ناعم
     _secondary: "#ff79c6"     // وردي نيوني
     _onPrimary: "#f8f8f2"     // خلفية فاتحة جدًا
     _onSecondary: "#f8f8f2"
@@ -39,7 +39,7 @@ BaseTheme {
     // _volOsdFgColor: "#282a36"
 
     _plasmaColorScheme: "DraculaLight"
-    _konsoleProfile: "dark.profile"
+    _konsoleProfile: "DraculaLight.profile"
 
     _themeIcons: "Zafiro-Dracula"
     _kvantumTheme: "Tellgo"

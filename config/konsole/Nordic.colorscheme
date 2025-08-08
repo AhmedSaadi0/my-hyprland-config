@@ -14,13 +14,13 @@ RandomHueRange=360
 RandomSaturationRange=100
 
 [Color0]
-Color=59,66,82
+Color=123,138,170
 
 [Color0Faint]
-Color=59,66,82
+Color=74,84,103
 
 [Color0Intense]
-Color=59,66,82
+Color=104,117,144
 
 [Color1]
 Color=191,97,106
@@ -101,8 +101,12 @@ RandomHueRange=360
 RandomSaturationRange=100
 
 [General]
+Anchor=0.5,0.5
 Blur=true
 ColorRandomization=false
 Description=Nordic
-Opacity=0.75
+FillStyle=Tile
+Opacity=0.9
 Wallpaper=
+WallpaperFlipType=NoFlip
+WallpaperOpacity=1

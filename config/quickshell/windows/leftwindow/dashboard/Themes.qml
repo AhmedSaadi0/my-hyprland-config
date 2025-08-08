@@ -16,7 +16,7 @@ MenuCard {
 
     property bool settingsExpanded: false
 
-    readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height + fullThemesRow.implicitHeight + 5) * 2
+    readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height + fullThemesRow.implicitHeight + fullThemesRow2.implicitHeight - 35) * 2
     height: settingsExpanded ? settingsLayout.implicitHeight + padding + fixedHeight : fixedHeight
 
     Behavior on height {
@@ -127,6 +127,40 @@ MenuCard {
                 darkThemeName: "M3Dark"
 
                 isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+            }
+        }
+
+        RowLayout {
+            id: fullThemesRow2
+            Layout.fillWidth: true
+            spacing: 10 // مسافة بين البطاقات
+
+            ThemeSelectorCard {
+                Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
+                themeTitle: "Nord"
+                lightThemeName: "NordLight"
+                darkThemeName: "NordDark"
+
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+            }
+
+            ThemeSelectorCard {
+                Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
+                themeTitle: "Gruvbox"
+                lightThemeName: "NordLight"
+                darkThemeName: "NordDark"
+
+                enabled: false
+                // isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+            }
+            ThemeSelectorCard {
+                Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
+                themeTitle: "Tokyo Night"
+                lightThemeName: "NordLight"
+                darkThemeName: "NordDark"
+
+                enabled: false
+                // isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
             }
         }
 

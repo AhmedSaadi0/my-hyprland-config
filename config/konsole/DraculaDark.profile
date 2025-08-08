@@ -1,11 +1,11 @@
 [Appearance]
-ColorScheme=Blue
-Font=Anka/Coder,11,-1,5,50,0,0,0,0,0
+ColorScheme=Dracula
+Font=FantasqueSansM Nerd Font Mono,14,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 UseFontLineChararacters=false
 
 [General]
 Command=/bin/fish
-Name=Dracula
+Name=DraculaDark
 Parent=FALLBACK/
 
 [Scrolling]
