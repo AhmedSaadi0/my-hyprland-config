@@ -147,11 +147,10 @@ MenuCard {
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
                 themeTitle: "Gruvbox"
-                lightThemeName: "NordLight"
-                darkThemeName: "NordDark"
+                lightThemeName: "GruvboxLight"
+                darkThemeName: "GruvboxDark"
 
-                enabled: false
-                // isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
             }
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض

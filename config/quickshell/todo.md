@@ -63,12 +63,13 @@
 - [x] **Add more options to control like radius, and hyprland settings**
 - [ ] **Add an option to halt dynamic wallpapers changing**
 - [x] **Add Dracula Theme**
-- [x] **Add Nord Theme**
-- [ ] **Add Gruvbox Theme**
+- [ ] **Add Solarized Theme**
+- [x] **Add Gruvbox Theme**
 - [x] **Add Catppuccin Theme**
 - [ ] **Add Tokyo Night Theme**
 - [ ] **Add Rosé Pine Theme**
 - [ ] **Add Oxocarbon Theme**
+- [ ] **Extends color schema up to 6 colors**
 
 ### 🧠 Productivity & UX
 
