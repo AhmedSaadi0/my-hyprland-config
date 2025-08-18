@@ -94,6 +94,15 @@ Singleton {
         return ['gsettings', 'set', 'org.gnome.desktop.interface', 'gtk-theme', themeName];
     }
 
+    function removeOldGtk4Theme() {
+        return ['find', '-P', '~/.config/gtk-4.0/', '-mindepth', '1', '!', '-name', '"settings.ini"', '-delete'];
+    }
+
+    function changeGtk4Theme(themeName) {
+        // This command sets the theme for both GTK3 and GTK4 in most modern environments.
+        return ['cp', '-rf', `~/.themes/${themeName}/gtk-4.0/*`, '~/.config/gtk-4.0/'];
+    }
+
     /**
      * @function changeGtkIcons
      * @description Generates a command to apply a GTK icon theme.

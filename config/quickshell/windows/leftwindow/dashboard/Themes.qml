@@ -76,7 +76,7 @@ MenuCard {
         appendColor("Left Menu BG V1", "_leftMenuBgColorV1", "_leftMenuFgColorV1", !workingTheme._enableDynamicColoring);
         appendColor("Left Menu BG V2", "_leftMenuBgColorV2", "_leftMenuFgColorV2", !workingTheme._enableDynamicColoring);
         appendColor("Left Menu BG V3", "_leftMenuBgColorV3", "_leftMenuFgColorV3", !workingTheme._enableDynamicColoring);
-        appendColor("Volume OSD", "_volOsdBgColor", "_volOsdFgColor", !workingTheme._enableDynamicColoring);
+        appendColor("OSD", "_volOsdBgColor", "_volOsdFgColor", !workingTheme._enableDynamicColoring);
         appendColor("Subtle Text", "_subtleTextColor", "_subtleTextColor", !workingTheme._enableDynamicColoring);
     }
 
@@ -155,11 +155,10 @@ MenuCard {
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
                 themeTitle: "Tokyo Night"
-                lightThemeName: "NordLight"
-                darkThemeName: "NordDark"
+                lightThemeName: "TokyoNightLight"
+                darkThemeName: "TokyoNightDark"
 
-                enabled: false
-                // isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
             }
         }
 
@@ -195,13 +194,6 @@ MenuCard {
                 Layout.fillWidth: true
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "DeerTheme"
-            }
-            MButton {
-                text: "Nord"
-                onClicked: ThemeManager.loadTheme("HarmonyTheme")
-                Layout.fillWidth: true
-                iconText: "󱄆"
-                isActive: ThemeManager.selectedTheme.themeName === "HarmonyTheme"
             }
         }
 
@@ -261,12 +253,14 @@ MenuCard {
             height: root.settingsExpanded ? implicitHeight : 0
             opacity: root.settingsExpanded ? 1.0 : 0.0
             clip: true
+
             Behavior on height {
                 NumberAnimation {
                     duration: 300
                     easing.type: Easing.InOutQuad
                 }
             }
+
             Behavior on opacity {
                 NumberAnimation {
                     duration: 250
@@ -351,7 +345,7 @@ MenuCard {
                     Label {
                         text: "Wallpapers interval"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._dynamicWallpapersInterval
                         onAccepted: workingTheme._dynamicWallpapersInterval = Number(text)
@@ -360,7 +354,7 @@ MenuCard {
                     Label {
                         text: "Selected Wallpaper"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._selectedWallpaperIndex
                         onAccepted: workingTheme._selectedWallpaperIndex = Number(text)
@@ -369,7 +363,7 @@ MenuCard {
                     Label {
                         text: "Wallpapers folder"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._dynamicWallpapersPath
                         enabled: workingTheme._enableDynamicWallpapers
@@ -379,7 +373,7 @@ MenuCard {
                     Label {
                         text: "Static Wallpaper"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._wallpaper
                         enabled: !workingTheme._enableDynamicWallpapers
@@ -394,14 +388,24 @@ MenuCard {
                 GridLayout {
                     columns: 2
                     Layout.fillWidth: true
-                    columnSpacing: 10
+                    columnSpacing: 50
                     rowSpacing: 5
+
+                    Label {
+                        text: "Enable accent color"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    Switch {
+                        Layout.alignment: Qt.AlignRight
+                        checked: workingTheme._enableAccentColoring
+                        onCheckedChanged: workingTheme._enableAccentColoring = checked
+                    }
 
                     Label {
                         text: "Base Corner Radius"
                         Layout.alignment: Qt.AlignVCenter
                     }
-                    TextField {
+                    EditableField {
                         id: baseRadiusField
                         Layout.fillWidth: true
                         text: workingTheme._baseRadius
@@ -437,7 +441,7 @@ MenuCard {
                     Label {
                         text: "Plasma color scheme"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._plasmaColorScheme
                         onAccepted: workingTheme._plasmaColorScheme = text
@@ -446,7 +450,7 @@ MenuCard {
                     Label {
                         text: "QT style (e.g., Kvantum)"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._qtThemeStyle
                         onAccepted: workingTheme._qtThemeStyle = text
@@ -455,7 +459,7 @@ MenuCard {
                     Label {
                         text: "Kvantum theme name"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._kvantumTheme
                         onAccepted: workingTheme._kvantumTheme = text
@@ -464,7 +468,7 @@ MenuCard {
                     Label {
                         text: "Konsole profile name"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._konsoleProfile
                         onAccepted: workingTheme._konsoleProfile = text
@@ -473,7 +477,7 @@ MenuCard {
                     Label {
                         text: "GTK theme name"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._gtkTheme
                         onAccepted: workingTheme._gtkTheme = text
@@ -482,7 +486,7 @@ MenuCard {
                     Label {
                         text: "Icon pack name"
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._themeIcons
                         onAccepted: workingTheme._themeIcons = text
@@ -525,7 +529,7 @@ MenuCard {
                         text: "Border Width"
                         Layout.alignment: Qt.AlignVCenter
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._hyprBorderWidth
                         onAccepted: workingTheme._hyprBorderWidth = Number(text)
@@ -535,7 +539,7 @@ MenuCard {
                         text: "Rounding"
                         Layout.alignment: Qt.AlignVCenter
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._hyprRounding
                         onAccepted: workingTheme._hyprRounding = Number(text)
@@ -545,7 +549,7 @@ MenuCard {
                         text: "Active Border"
                         Layout.alignment: Qt.AlignVCenter
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._hyprActiveBorder
                         onAccepted: workingTheme._hyprActiveBorder = text
@@ -555,7 +559,7 @@ MenuCard {
                         text: "Inactive Border"
                         Layout.alignment: Qt.AlignVCenter
                     }
-                    TextField {
+                    EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._hyprInactiveBorder
                         onAccepted: workingTheme._hyprInactiveBorder = text
@@ -592,7 +596,7 @@ MenuCard {
                             Item {
                                 Layout.fillWidth: true
                             }
-                            TextField {
+                            EditableField {
                                 Layout.preferredWidth: 80
                                 text: workingTheme[modelData]
                                 horizontalAlignment: TextInput.AlignRight
@@ -620,7 +624,7 @@ MenuCard {
                             Item {
                                 Layout.fillWidth: true
                             }
-                            TextField {
+                            EditableField {
                                 Layout.preferredWidth: 150
                                 text: workingTheme[modelData]
                                 horizontalAlignment: TextInput.AlignRight

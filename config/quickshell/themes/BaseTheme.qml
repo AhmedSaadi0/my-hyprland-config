@@ -18,9 +18,16 @@ PersistentProperties {
     // ------ Colors ------
     // --------------------
     property color _primary: Kirigami.Theme.highlightColor
-    property color _secondary: Kirigami.Theme.negativeTextColor
     property color _onPrimary: Kirigami.Theme.highlightedTextColor
+
+    property color _secondary: Kirigami.Theme.textColor
     property color _onSecondary: Kirigami.Theme.textColor
+
+    // property color _tertiary: Kirigami.Theme.negativeTextColor
+    // property color _onTertiary: Kirigami.Theme.textColor
+    //
+    // property color _error: Kirigami.Theme.negativeTextColor
+    // property color _onError: Kirigami.Theme.textColor
 
     // topbar
     property color _topbarColor: Kirigami.Theme.backgroundColor
@@ -88,6 +95,7 @@ PersistentProperties {
     property string _plasmaColorScheme: "MaterialYouDark"
     property string _konsoleProfile: "MaterialYouAlt.profile"
 
+    property bool _enableAccentColoring: false
     property bool _enableDynamicColoring: false
     property bool _enableDynamicWallpapers: false
     property int _dynamicWallpapersInterval: 15 * 1000 * 60
@@ -195,6 +203,7 @@ PersistentProperties {
         property alias konsoleProfile: root._konsoleProfile
         property alias fontName: root._bodyFont
 
+        property alias enableAccentColoring: root._enableAccentColoring
         property alias enableDynamicColoring: root._enableDynamicColoring
         property alias enableDynamicWallpapers: root._enableDynamicWallpapers
         property alias dynamicWallpapersInterval: root._dynamicWallpapersInterval

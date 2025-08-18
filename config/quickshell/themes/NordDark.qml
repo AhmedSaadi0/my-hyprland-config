@@ -5,12 +5,7 @@ import "root:/config"
 BaseTheme {
     id: darkTheme
     themeName: "NordDark"
-
-    // Nord Palette
-    // Polar Night (Backgrounds): #2E3440, #3B4252, #434C5E, #4C566A
-    // Snow Storm (Foregrounds): #D8DEE9, #E5E9F0, #ECEFF4
-    // Frost (Accents): #8FBCBB, #88C0D0, #81A1C1, #5E81AC
-    // Aurora (Syntax/Status): #BF616A (Red), #A3BE8C (Green), #EBCB8B (Yellow)
+    _themeMode: "dark"
 
     _wallpaper: App.assets.getWallpaperPath("nord-dark.png")
 

@@ -5,6 +5,7 @@ import "root:/config"
 BaseTheme {
     id: lightTheme
     themeName: "NordLight"
+    _themeMode: "light"
 
     // Nord Palette
     // Polar Night (Foregrounds): #2E3440, #3B4252, #434C5E, #4C566A

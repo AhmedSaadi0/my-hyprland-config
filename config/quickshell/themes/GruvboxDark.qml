@@ -5,6 +5,7 @@ import "root:/config"
 BaseTheme {
     id: lightTheme
     themeName: "GruvboxDark"
+    _themeMode: "dark"
 
     _wallpaper: App.assets.getWallpaperPath("gruvbox-dark.png")
 
@@ -13,10 +14,10 @@ BaseTheme {
     _onPrimary: "#282828"
     _onSecondary: "#282828"
 
-    _topbarColor: "#3c3836"  // bg1
+    _topbarColor: "#32302f"  // bg1
     _topbarFgColor: "#ebdbb2" // fg
-    _topbarBgColorV1: "#504945" // bg2
-    _topbarBgColorV2: "#665c54" // bg3
+    _topbarBgColorV1: "#3a3835" // bg2
+    _topbarBgColorV2: "#504945" // bg3
     _topbarBgColorV3: "#fe8019" // orange
     _topbarFgColorV1: "#fbf1c7" // fg0
     _topbarFgColorV2: "#fbf1c7" // fg0
@@ -40,5 +41,5 @@ BaseTheme {
 
     _themeIcons: "Gruvbox"
 
-    _gtkTheme: "Nordic-lighter"
+    _gtkTheme: "Gruvbox-Dark-Soft"
 }

@@ -5,6 +5,7 @@ import "root:/config"
 BaseTheme {
     id: lightTheme
     themeName: "GruvboxLight"
+    _themeMode: "light"
 
     _wallpaper: App.assets.getWallpaperPath("gruvbox-light.png")
 
@@ -40,5 +41,5 @@ BaseTheme {
 
     _themeIcons: "Gruvbox"
 
-    _gtkTheme: "Nordic-lighter"
+    _gtkTheme: "Gruvbox-Light-Soft"
 }

@@ -1,5 +1,6 @@
 pragma Singleton
 
+import org.kde.kirigami as Kirigami
 import QtQuick
 
 BaseTheme {
@@ -11,6 +12,7 @@ BaseTheme {
     _dynamicWallpapersPath: "/home/ahmed/wallpapers/light"
 
     _themeMode: "light"
+
     _baseRadius: 14
     _hyprBorderWidth: 3
 

@@ -66,10 +66,11 @@
 - [ ] **Add Solarized Theme**
 - [x] **Add Gruvbox Theme**
 - [x] **Add Catppuccin Theme**
-- [ ] **Add Tokyo Night Theme**
+- [x] **Add Tokyo Night Theme**
 - [ ] **Add Rosé Pine Theme**
 - [ ] **Add Oxocarbon Theme**
 - [ ] **Extends color schema up to 6 colors**
+- [ ] **Support gtk4 themes by replacing files in `.config/gtk-4.0/`**
 
 ### 🧠 Productivity & UX
 

@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from css_theme import CssThemeExporter
 from kde_material_you_colors.schemeconfigs import ThemeConfig
 from kde_material_you_colors.utils import (
     konsole_utils,
@@ -11,8 +12,6 @@ from kde_material_you_colors.utils.m3_scheme_utils import (
     export_schemes,
     get_material_you_colors,
 )
-
-from css_theme import CssThemeExporter
 from kitty_theme import KittyThemeExporter
 
 
@@ -61,7 +60,7 @@ class ColorExporter:
         export_schemes(schemes)
         self.export_plasma_color(schemes, theme_mode)
         self.export_konsole_theme(schemes, theme_mode)
-        self.export_and_apply_pywal_theme(schemes, theme_mode)
+        # self.export_and_apply_pywal_theme(schemes, theme_mode)
 
     def export_css_theme(self, color_schema):
         # Export css theme

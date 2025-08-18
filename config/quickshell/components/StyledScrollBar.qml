@@ -2,6 +2,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import org.kde.kirigami as Kirigami
 
 ScrollBar {
     id: root
@@ -14,7 +15,7 @@ ScrollBar {
         opacity: root.pressed ? 1 : root.policy === ScrollBar.AlwaysOn || (root.active && root.size < 1) ? 0.8 : 0
 
         radius: 3 // نصف العرض لمظهر دائري مثالي
-        color: Kirigami.Theme.textColor // استخدم لونًا من الثيم ليتناسب
+        color: Kirigami.Theme.textColor
 
         Behavior on opacity {
             NumberAnimation {

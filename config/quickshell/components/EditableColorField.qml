@@ -6,63 +6,35 @@ import QtQuick.Controls
 import "root:/themes"
 
 // EditText that checks if input is a color and changes accordingly
-TextField {
+EditableField {
     id: root
 
     signal validColorUpdated(var newColor)
-
-    topPadding: 0
-    bottomPadding: 0
-
-    property color normalBackground: "white"
-    property color normalForeground: "black"
-    property color errorBorderColor: "red"
-
-    property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-
-    property bool isValid: true
-
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
-
-    color: root.normalForeground
+    borderColor: "transparent"
+    borderSize: 0
 
     onAccepted: {
         validateColor(root.text);
     }
 
     function validateColor(inputText) {
-        var potentialColor = Qt.color(inputText);
+        try {
+            var potentialColor = Qt.color(inputText);
 
-        if (potentialColor.valid) {
-            root.isValid = true;
-            root.normalBackground = potentialColor;
-            root.validColorUpdated(potentialColor);
-        } else {
-            root.isValid = false;
-            console.info("خطأ: صيغة اللون '" + inputText + "' غير صحيحة. استخدم صيغة مثل #RRGGBB");
-        }
-    }
-
-    background: Rectangle {
-        topLeftRadius: root.topLeftRadius
-        topRightRadius: root.topRightRadius
-        bottomLeftRadius: root.bottomLeftRadius
-        bottomRightRadius: root.bottomRightRadius
-
-        color: root.enabled ? root.normalBackground : root.normalBackground.alpha(0.4)
-
-        border.color: root.isValid ? "transparent" : root.errorBorderColor
-        border.width: root.isValid ? 0 : 1 // إظهار الحدود فقط عند وجود خطأ
-
-        Behavior on color {
-            ColorAnimation {
-                duration: 250
-                easing.type: Easing.OutQuad
+            if (potentialColor.valid) {
+                root.normalBackground = potentialColor;
+                root.validColorUpdated(potentialColor);
+                root.borderColor = "transparent";
+                root.borderSize = 0;
+            } else {
+                root.borderColor = "red";
+                root.borderSize = 1;
+                console.error("خطأ: صيغة اللون '" + inputText + "' غير صحيحة. استخدم صيغة مثل #RRGGBB");
             }
+        } catch (ValidationException) {
+            root.borderColor = "red";
+            root.borderSize = 1;
+            console.error("خطأ: صيغة اللون '" + inputText + "' غير صحيحة. استخدم صيغة مثل #RRGGBB");
         }
     }
 }
