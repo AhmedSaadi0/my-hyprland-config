@@ -311,15 +311,12 @@ MenuCard {
                 }
             }
 
-            // --- التغييرات تبدأ هنا ---
-
             M3GroupBox {
                 title: "Wallpaper Settings"
                 Layout.fillWidth: true
                 GridLayout {
                     columns: 2
                     Layout.fillWidth: true
-                    // columnSpacing: 2
                     rowSpacing: 5
 
                     Label {
@@ -327,6 +324,7 @@ MenuCard {
                         Layout.alignment: Qt.AlignVCenter
                     }
                     Switch {
+                        id: enableDynamicWallpapersSwitch
                         Layout.alignment: Qt.AlignRight
                         checked: workingTheme._enableDynamicWallpapers
                         onCheckedChanged: workingTheme._enableDynamicWallpapers = checked
@@ -339,7 +337,12 @@ MenuCard {
                     Switch {
                         Layout.alignment: Qt.AlignRight
                         checked: workingTheme._enableDynamicColoring
-                        onCheckedChanged: workingTheme._enableDynamicColoring = checked
+                        // --- التعديل هنا ---
+                        onCheckedChanged: {
+                            workingTheme._enableDynamicColoring = checked;
+                            // أعد تحميل نموذج اللون لتحديث حالة التمكين/التعطيل
+                            populateColorModel(workingTheme);
+                        }
                     }
 
                     Label {
@@ -348,7 +351,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._dynamicWallpapersInterval
-                        onAccepted: workingTheme._dynamicWallpapersInterval = Number(text)
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._dynamicWallpapersInterval = Number(text)
                     }
 
                     Label {
@@ -357,7 +361,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._selectedWallpaperIndex
-                        onAccepted: workingTheme._selectedWallpaperIndex = Number(text)
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._selectedWallpaperIndex = Number(text)
                     }
 
                     Label {
@@ -366,8 +371,10 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._dynamicWallpapersPath
-                        enabled: workingTheme._enableDynamicWallpapers
-                        onAccepted: workingTheme._dynamicWallpapersPath = text
+                        enabled: enableDynamicWallpapersSwitch.checked
+
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._dynamicWallpapersPath = text
                     }
 
                     Label {
@@ -376,8 +383,10 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._wallpaper
-                        enabled: !workingTheme._enableDynamicWallpapers
-                        onAccepted: workingTheme._wallpaper = text
+                        // enabled: !workingTheme._enableDynamicWallpapers
+                        enabled: !enableDynamicWallpapersSwitch.checked
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._wallpaper = text
                     }
                 }
             }
@@ -409,19 +418,12 @@ MenuCard {
                         id: baseRadiusField
                         Layout.fillWidth: true
                         text: workingTheme._baseRadius
-                        // validator: IntValidator {
-                        //     bottom: 0
-                        //     top: 50
-                        // } // لضمان إدخال أرقام فقط
                         horizontalAlignment: TextInput.AlignRight
 
-                        // --- هذا هو الجزء الأهم ---
-                        onAccepted: {
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: {
                             const newRadius = Number(text);
-                            // 1. تحديث القيمة الأساسية في الكائن المؤقت
                             workingTheme._baseRadius = newRadius;
-
-                            // 2. تحديث القيم التابعة لها يدويًا
                             workingTheme._elementRadius = newRadius;
                             workingTheme._hyprRounding = newRadius;
                         }
@@ -444,7 +446,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._plasmaColorScheme
-                        onAccepted: workingTheme._plasmaColorScheme = text
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._plasmaColorScheme = text
                     }
 
                     Label {
@@ -453,7 +456,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._qtThemeStyle
-                        onAccepted: workingTheme._qtThemeStyle = text
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._qtThemeStyle = text
                     }
 
                     Label {
@@ -462,7 +466,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._kvantumTheme
-                        onAccepted: workingTheme._kvantumTheme = text
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._kvantumTheme = text
                     }
 
                     Label {
@@ -471,7 +476,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._konsoleProfile
-                        onAccepted: workingTheme._konsoleProfile = text
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._konsoleProfile = text
                     }
 
                     Label {
@@ -480,7 +486,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._gtkTheme
-                        onAccepted: workingTheme._gtkTheme = text
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._gtkTheme = text
                     }
 
                     Label {
@@ -489,33 +496,12 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._themeIcons
-                        onAccepted: workingTheme._themeIcons = text
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._themeIcons = text
                     }
-
-                    // Label {
-                    //     text: "Theme Mode"
-                    // }
-                    // ComboBox {
-                    //     Layout.fillWidth: true
-                    //     textRole: "text"
-                    //     valueRole: "value"
-                    //     model: [
-                    //         {
-                    //             text: "Light Mode",
-                    //             value: "light"
-                    //         },
-                    //         {
-                    //             text: "Dark Mode",
-                    //             value: "dark"
-                    //         }
-                    //     ]
-                    //     currentIndex: workingTheme._themeMode === "light" ? 0 : 1
-                    //     onActivated: workingTheme._themeMode = model[currentIndex].value
-                    // }
                 }
             }
 
-            // --- الكود المصحح والمتناسق ---
             M3GroupBox {
                 title: "Hyprland Settings"
                 Layout.fillWidth: true
@@ -532,7 +518,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._hyprBorderWidth
-                        onAccepted: workingTheme._hyprBorderWidth = Number(text)
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._hyprBorderWidth = Number(text)
                     }
 
                     Label {
@@ -542,7 +529,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._hyprRounding
-                        onAccepted: workingTheme._hyprRounding = Number(text)
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._hyprRounding = Number(text)
                     }
 
                     Label {
@@ -552,7 +540,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._hyprActiveBorder
-                        onAccepted: workingTheme._hyprActiveBorder = text
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._hyprActiveBorder = text
                     }
 
                     Label {
@@ -562,7 +551,8 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._hyprInactiveBorder
-                        onAccepted: workingTheme._hyprInactiveBorder = text
+                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                        onEditingFinished: workingTheme._hyprInactiveBorder = text
                     }
 
                     Label {
@@ -576,8 +566,6 @@ MenuCard {
                     }
                 }
             }
-
-            // --- التغييرات تنتهي هنا ---
 
             M3GroupBox {
                 title: "Dimensions & Spacing"
@@ -600,7 +588,8 @@ MenuCard {
                                 Layout.preferredWidth: 80
                                 text: workingTheme[modelData]
                                 horizontalAlignment: TextInput.AlignRight
-                                onAccepted: workingTheme[modelData] = Number(text)
+                                // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                                onEditingFinished: workingTheme[modelData] = Number(text)
                             }
                         }
                     }
@@ -628,7 +617,8 @@ MenuCard {
                                 Layout.preferredWidth: 150
                                 text: workingTheme[modelData]
                                 horizontalAlignment: TextInput.AlignRight
-                                onAccepted: workingTheme[modelData] = (typeof ThemeManager.selectedTheme[modelData] === "number") ? Number(text) : text
+                                // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
+                                onEditingFinished: workingTheme[modelData] = (typeof ThemeManager.selectedTheme[modelData] === "number") ? Number(text) : text
                             }
                         }
                     }
@@ -639,7 +629,6 @@ MenuCard {
                 id: colorsBox
                 title: "Colors & Appearance"
                 Layout.fillWidth: true
-                // Layout.topMargin: 10
                 enabled: !workingTheme._enableDynamicColoring
                 Repeater {
                     model: colorModel

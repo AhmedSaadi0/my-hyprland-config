@@ -1,3 +1,5 @@
+// components/Shadow.qml
+
 import QtQuick
 import Qt5Compat.GraphicalEffects
 

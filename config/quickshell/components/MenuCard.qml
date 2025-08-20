@@ -1,4 +1,5 @@
-// Card.qml
+// components/MenuCard.qml
+
 pragma ComponentBehavior: Bound
 
 import QtQuick

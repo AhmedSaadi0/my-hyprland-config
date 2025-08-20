@@ -1,3 +1,5 @@
+// windows/leftwindow/dashboard/PowerProfiles.qml
+
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Io

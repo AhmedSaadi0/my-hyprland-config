@@ -1,4 +1,4 @@
-// windows/leftwindow/monitoring/CpuTable.qml
+// components/ProcessTable.qml
 
 import QtQuick
 import Quickshell.Io

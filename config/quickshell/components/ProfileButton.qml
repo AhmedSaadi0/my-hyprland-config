@@ -1,4 +1,5 @@
-// ProfileButton.qml
+// components/ProfileButton.qml
+
 import QtQuick
 // import QtQuick.Controls
 import org.kde.kirigami as Kirigami

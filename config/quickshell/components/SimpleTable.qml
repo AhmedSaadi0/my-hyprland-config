@@ -1,4 +1,5 @@
 // components/SimpleTable.qml
+
 import QtQuick
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami

@@ -61,7 +61,7 @@ PanelWindow {
 
         Column {
             id: col
-            width: parent.width - 25
+            width: parent.width - 20
             height: root.implicitHeight
 
             spacing: 10

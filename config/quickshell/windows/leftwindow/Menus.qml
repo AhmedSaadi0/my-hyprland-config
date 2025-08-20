@@ -6,6 +6,7 @@ import QtQuick.Controls
 
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
+import "./weather"
 import "./animations"
 
 import "root:/utils"
@@ -37,7 +38,7 @@ StackView {
     }
     Component {
         id: weatherComponent
-        Dashboard.Dashboard2 {}
+        WeatherMenu {}
     }
     Component {
         id: monitorComponent

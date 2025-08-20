@@ -14,8 +14,8 @@
 
 ### 🌤️ Weather Integration
 
-- [ ] **Weather Service (Backend)**
-- [ ] **Weather Widget (UI)**
+- [x] **Weather Service (Backend)**
+- [x] **Weather Menu (UI)**
 - [ ] **Severe Weather Alerts**
 
 ### 🌐 Network Management
@@ -70,7 +70,7 @@
 - [ ] **Add Rosé Pine Theme**
 - [ ] **Add Oxocarbon Theme**
 - [ ] **Extends color schema up to 6 colors**
-- [ ] **Support gtk4 themes by replacing files in `.config/gtk-4.0/`**
+- [x] **Support gtk4 themes by replacing files in `.config/gtk-4.0/`**
 
 ### 🧠 Productivity & UX
 

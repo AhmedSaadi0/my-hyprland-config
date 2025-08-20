@@ -1,3 +1,5 @@
+// windows/leftwindow/dashboard/PowerOptions.qml
+
 import QtQuick
 
 import QtQuick.Controls

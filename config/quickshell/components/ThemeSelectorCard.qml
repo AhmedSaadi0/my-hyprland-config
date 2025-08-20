@@ -1,3 +1,5 @@
+// components/ThemeSelectorCard.qml
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls // <-- هذا هو السطر الذي تم إضافته لإصلاح الخطأ

@@ -1,3 +1,5 @@
+// components/TopbarCircularProgress.qml
+
 import QtQuick
 import Quickshell.Io
 import QtQuick.Controls

@@ -1,3 +1,5 @@
+// components/ButtonGroup.qml
+
 import QtQuick
 // import QtQuick.Controls
 
