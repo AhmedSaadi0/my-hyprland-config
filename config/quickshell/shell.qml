@@ -10,6 +10,7 @@ import "root:/windows/leftwindow"
 import "root:/osd"
 import "root:/utils"
 import "root:/config"
+import "root:/desktop"
 
 ShellRoot {
     id: shellRoot
@@ -95,4 +96,5 @@ ShellRoot {
     Volume {}
     Brightness {}
     Notifications {}
+    ClockWidget {}
 }

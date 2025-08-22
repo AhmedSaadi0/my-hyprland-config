@@ -61,16 +61,16 @@
 - [x] **Fix Reset theme to default btn**
 - [x] **Add an option to reset colors to default**
 - [x] **Add more options to control like radius, and hyprland settings**
-- [ ] **Add an option to halt dynamic wallpapers changing**
 - [x] **Add Dracula Theme**
-- [ ] **Add Solarized Theme**
 - [x] **Add Gruvbox Theme**
 - [x] **Add Catppuccin Theme**
 - [x] **Add Tokyo Night Theme**
+- [x] **Support gtk4 themes by replacing files in `.config/gtk-4.0/`**
+- [ ] **Add an option to halt dynamic wallpapers changing**
+- [ ] **Add Solarized Theme**
 - [ ] **Add Rosé Pine Theme**
 - [ ] **Add Oxocarbon Theme**
 - [ ] **Extends color schema up to 6 colors**
-- [x] **Support gtk4 themes by replacing files in `.config/gtk-4.0/`**
 
 ### 🧠 Productivity & UX
 
@@ -105,4 +105,10 @@
 ### Code Improvements
 
 - [ ] **Create a Component for Theme Settings Text & Label**
-- [ ] **On Wallpaper Settings when TextField Must be updated before save**
+- [x] **On Wallpaper Settings when TextField Must be updated before save**
+
+### Desktop Widgets
+
+- [ ] **Clock Widget**
+- [ ] **Weather**
+- [ ] **Music Widget**

@@ -137,7 +137,7 @@ StackView {
                     from: parent.height * 0.6
                     to: 0
                     duration: 420
-                    easing.type: Easing.OutExpo
+                    easing.type: Easing.OutBack
                 }
                 NumberAnimation {
                     property: "opacity"
@@ -165,7 +165,7 @@ StackView {
                 from: 0
                 to: -parent.height * 0.3
                 duration: 300
-                easing.type: Easing.InExpo
+                easing.type: Easing.InCubic
             }
             NumberAnimation {
                 property: "opacity"
@@ -206,7 +206,7 @@ StackView {
                     from: -parent.height * 0.3
                     to: 0
                     duration: 420
-                    easing.type: Easing.OutExpo
+                    easing.type: Easing.OutBack
                 }
                 NumberAnimation {
                     property: "opacity"
@@ -234,7 +234,7 @@ StackView {
                 from: 0
                 to: parent.height * 0.6
                 duration: 300
-                easing.type: Easing.InExpo
+                easing.type: Easing.InCubic
             }
             NumberAnimation {
                 property: "opacity"
