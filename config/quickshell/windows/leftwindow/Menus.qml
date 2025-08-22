@@ -20,9 +20,9 @@ StackView {
     clip: true
     smooth: true
 
-    property int transitionDuration: 350
-    property var outEasing: Easing.OutQuad
-    property var inEasing: Easing.InQuart
+    // property int transitionDuration: 350
+    // property var outEasing: Easing.OutQuad
+    // property var inEasing: Easing.InQuart
 
     property int currentIndex: 0
     property int previousIndex: 0
@@ -101,13 +101,155 @@ StackView {
         target: LeftMenuStatus
         function onSelectedIndexTargeted(newIndex) {
             if (newIndex >= 0 && newIndex !== currentIndex) {
-                previousIndex = currentIndex;
+
+                // 2. باستخدام JavaScript، قم بتعيين الأنيميشن المناسب *قبل* استدعاء replace
+                if (newIndex > currentIndex) {
+                    // التحرك للأمام
+                    stackView.replaceEnter = enterFromBottom;
+                    stackView.replaceExit = exitToTop;
+                } else {
+                    // التحرك للخلف
+                    stackView.replaceEnter = enterFromTop;
+                    stackView.replaceExit = exitToBottom;
+                }
+
+                // 3. الآن قم بتحديث الفهرس واستدعِ replace
                 currentIndex = newIndex;
                 stackView.replace(getPage(newIndex));
             }
         }
     }
 
-    replaceEnter: ZoomIn {}
-    replaceExit: ZoomOut {}
+    Transition {
+        id: enterFromBottom
+        SequentialAnimation {
+            PropertyAction {
+                property: "opacity"
+                value: 0
+            }
+            PropertyAction {
+                property: "scale"
+                value: 0.92
+            }
+            ParallelAnimation {
+                NumberAnimation {
+                    property: "y"
+                    from: parent.height * 0.6
+                    to: 0
+                    duration: 420
+                    easing.type: Easing.OutExpo
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 350
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 0.92
+                    to: 1.0
+                    duration: 380
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
+    }
+
+    Transition {
+        id: exitToTop
+        ParallelAnimation {
+            NumberAnimation {
+                property: "y"
+                from: 0
+                to: -parent.height * 0.3
+                duration: 300
+                easing.type: Easing.InExpo
+            }
+            NumberAnimation {
+                property: "opacity"
+                from: 1
+                to: 0
+                duration: 280
+                easing.type: Easing.InQuad
+            }
+            NumberAnimation {
+                property: "scale"
+                from: 1.0
+                to: 0.95
+                duration: 300
+                easing.type: Easing.InCubic
+            }
+        }
+    }
+
+    // --- الدخول من الأعلى ---
+    Transition {
+        id: enterFromTop
+        SequentialAnimation {
+            PropertyAction {
+                property: "opacity"
+                value: 0
+            }
+            PropertyAction {
+                property: "scale"
+                value: 0.92
+            }
+            PropertyAction {
+                property: "y"
+                value: -parent.height * 0.3
+            }
+            ParallelAnimation {
+                NumberAnimation {
+                    property: "y"
+                    from: -parent.height * 0.3
+                    to: 0
+                    duration: 420
+                    easing.type: Easing.OutExpo
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 350
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 0.92
+                    to: 1.0
+                    duration: 380
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
+    }
+
+    Transition {
+        id: exitToBottom
+        ParallelAnimation {
+            NumberAnimation {
+                property: "y"
+                from: 0
+                to: parent.height * 0.6
+                duration: 300
+                easing.type: Easing.InExpo
+            }
+            NumberAnimation {
+                property: "opacity"
+                from: 1
+                to: 0
+                duration: 280
+                easing.type: Easing.InQuad
+            }
+            NumberAnimation {
+                property: "scale"
+                from: 1.0
+                to: 0.95
+                duration: 300
+                easing.type: Easing.InCubic
+            }
+        }
+    }
 }

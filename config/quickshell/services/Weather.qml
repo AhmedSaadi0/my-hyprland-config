@@ -366,10 +366,10 @@ Singleton {
         }
 
         if (maxRain > 50) {
-            chanceOfRainNotified(`High chance of rain today, up to ${maxRain}%`);
+            chanceOfRainNotified(`Max chance of rain today, up to ${maxRain}%`);
         }
         if (maxSnow > 20) {
-            chanceOfSnowNotified(`Chance of snow today is ${maxSnow}%`);
+            chanceOfSnowNotified(`Max chance of snow today is ${maxSnow}%`);
         }
         if (maxFrost > 50) {
             chanceOfFrostNotified(`Warning: Chance of frost is ${maxFrost}%`);

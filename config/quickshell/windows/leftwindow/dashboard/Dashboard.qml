@@ -1,4 +1,4 @@
-// windows/leftwindow/dashboard/Dashboard.qml (النسخة النهائية الصحيحة)
+// windows/leftwindow/dashboard/Dashboard.qml
 
 import QtQuick
 import QtQuick.Controls
@@ -8,10 +8,11 @@ import "root:/components"
 
 ScrollView {
     id: dashboardScroller
-    anchors.fill: parent
-
+    width: parent.width
+    height: parent.height
     clip: true
-    contentWidth: availableWidth
+    // anchors.fill: parent
+    // contentWidth: availableWidth
 
     ScrollBar.vertical: StyledScrollBar {
         interactive: false

@@ -100,9 +100,9 @@ Singleton {
 
             summary = notification.summary;
             body = notification.body;
-            appIcon = notification.appIcon;
+            appIcon = notification.appIcon.replace("file://", "");
             appName = notification.appName;
-            image = notification.image;
+            image = notification.image.replace("file://", "");
             notifId = notification.id;
 
             var newActions = [];
