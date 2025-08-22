@@ -15,8 +15,8 @@
 ### 🌤️ Weather Integration
 
 - [x] **Weather Service (Backend)**
-- [x] **Weather Menu (UI)**
-- [ ] **Severe Weather Alerts**
+- [x] **Weather Widget (UI)**
+- [x] **Severe Weather Alerts**
 
 ### 🌐 Network Management
 

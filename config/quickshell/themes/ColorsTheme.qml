@@ -8,6 +8,7 @@ BaseTheme {
     id: colorsTheme
 
     themeName: "ColorsTheme"
+    _themeMode: "dark"
 
     _wallpaper: App.assets.getWallpaperPath("colors.png")
 

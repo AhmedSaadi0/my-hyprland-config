@@ -9,6 +9,7 @@ import "root:/components"
 ScrollView {
     id: dashboardScroller
     anchors.fill: parent
+
     clip: true
     contentWidth: availableWidth
 

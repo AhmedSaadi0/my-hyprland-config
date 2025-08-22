@@ -455,7 +455,7 @@ nvim .nibrasshell.json
 #### Catppuccin dark
 
 <p align='center'>
-	<img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/Catppuccin-dark.png'/>
+	<img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/Catppuccin-dark.png'/>
 </p>
 
 #### M3 Light
@@ -469,7 +469,7 @@ nvim .nibrasshell.json
 #### Nord light
 
 <p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/nord-light.png'/>
+	<img alt='Nord' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/nord-light.png'/>
 </p>
 
 <hr />
@@ -477,14 +477,30 @@ nvim .nibrasshell.json
 #### Dracula Light
 
 <p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/dracula-light.png'/>
+	<img alt='Dracula' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/dracula-light.png'/>
+</p>
+
+<hr />
+
+#### Gruvbox Dark
+
+<p align='center'>
+	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/gruvbox.png'/>
+</p>
+
+<hr />
+
+#### TokyoNight Dark
+
+<p align='center'>
+	<img alt='TokyoNight' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/tokyonight.png'/>
 </p>
 
 <hr />
 
 ### Credits
 
-<a href="https://www.flaticon.com/free-icons/high-voltage" title="high voltage icons">High voltage icons created by Muhammad Atif - Flaticon</a>
+#### Icons and GTK Themes
 
 <a href="https://www.pling.com/p/2037657/" title="BeautySolar">BeautySolar Icons</a>
 
@@ -519,3 +535,11 @@ nvim .nibrasshell.json
 <a href="https://www.pling.com/p/1658156/" title="Victory-gtk-theme">Victory-gtk-theme</a>
 
 <a href="https://store.kde.org/p/2106379" title="Windows11 icon theme">Windows11 icon theme</a>
+
+#### png Icons
+
+<a href="https://www.flaticon.com/free-icons/foggy" title="foggy icons">Foggy icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/high-voltage" title="high voltage icons">High voltage icons created by Muhammad Atif - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/wind" title="wind icons">Wind icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/rain" title="rain icons">Rain icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/notification" title="notification icons">Notification icons created by Freepik - Flaticon</a>

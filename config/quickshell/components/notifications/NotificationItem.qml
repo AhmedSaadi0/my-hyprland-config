@@ -6,11 +6,14 @@ import Quickshell.Services.Notifications
 
 import "root:/themes"
 import "root:/components"
+import "root:/config"
 
 Rectangle {
     id: root
 
     property var notification
+    property string defaultIcon: App.assets.icons.notification
+
     signal dismissClicked
     signal actionInvoked(int index)
 
@@ -75,12 +78,15 @@ Rectangle {
             visible: notification && (notification.image || notification.summary)
 
             Image {
-                source: notification ? notification.image : ""
+
+                source: notification ? (notification.image || notification.appIcon || defaultIcon) : defaultIcon
+
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 Layout.alignment: Qt.AlignTop
                 fillMode: Image.PreserveAspectFit
                 smooth: true
+                // الرؤية تعتمد على أن المصدر ليس فارغًا (وهو ما لن يحدث مع وجود أيقونة افتراضية)
                 visible: source !== ""
             }
 

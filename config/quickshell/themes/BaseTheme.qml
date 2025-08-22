@@ -43,9 +43,9 @@ PersistentProperties {
     // Left Menu
     property color _leftMenuBgColorV1: Kirigami.Theme.backgroundColor
     property color _leftMenuBgColorV2: Kirigami.Theme.negativeBackgroundColor
-    property color _leftMenuBgColorV3: Kirigami.Theme.highlightColor
+    property color _leftMenuBgColorV3: Kirigami.Theme.highlightColor.alpha(0.6)
     property color _leftMenuFgColorV1: Kirigami.Theme.textColor
-    property color _leftMenuFgColorV2: Kirigami.Theme.neutralTextColor
+    property color _leftMenuFgColorV2: Kirigami.Theme.textColor
     property color _leftMenuFgColorV3: Kirigami.Theme.highlightedTextColor
 
     property color _subtleTextColor: Kirigami.Theme.textColor.alpha(0.8)

@@ -8,6 +8,7 @@ BaseTheme {
     id: darkTheme
 
     themeName: "CatppuccinLight"
+    _themeMode: "dark"
 
     _wallpaper: App.assets.getWallpaperPath("Cat.jpg")
 

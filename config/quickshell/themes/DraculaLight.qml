@@ -8,6 +8,7 @@ BaseTheme {
     id: darkTheme
 
     themeName: "DraculaLight"
+    _themeMode: "light"
 
     _wallpaper: App.assets.getWallpaperPath("linux.png")
 

@@ -5,6 +5,7 @@ import "root:/config"
 BaseTheme {
     id: lightTheme
     themeName: "TokyoNightLight"
+    _themeMode: "light"
 
     _wallpaper: App.assets.getWallpaperPath("tokyonight-light.png")
 

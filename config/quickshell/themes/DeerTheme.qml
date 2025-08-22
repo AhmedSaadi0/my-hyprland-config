@@ -8,6 +8,7 @@ BaseTheme {
     id: deerTheme
 
     themeName: "DeerTheme"
+    _themeMode: "dark"
 
     _wallpaper: App.assets.getWallpaperPath("deer.jpg")
 

@@ -9,7 +9,7 @@ Singleton {
     id: root
 
     // ========================================================================
-    // 0. قواميس الأيقونات (Icon Dictionaries)
+    // 0. Icon Dictionaries
     // ========================================================================
 
     property var sun_icon_dic: ({
@@ -115,7 +115,7 @@ Singleton {
         })
 
     // ========================================================================
-    // 1. الخصائص (Properties)
+    // 1. Properties
     // ========================================================================
     property bool isLoading: true
     property string lastUpdated: ""
@@ -123,11 +123,9 @@ Singleton {
     property string countryName: "..."
     property int currentTemp: 0
     property int feelsLike: 0
-    property string weatherDescription: "جاري التحميل..."
+    property string weatherDescription: "Loading..."
     property string weatherCode: "113"
-    property string weatherIcon: "" // أيقونة شمس افتراضية
-    property string highTemp: "35°"
-    property string lowTemp: "28°"
+    property string weatherIcon: "" // Default sun icon
     property int humidity: 0
     property int windSpeed: 0
     property string windDirection: ""
@@ -141,20 +139,31 @@ Singleton {
     property var hourlyForecast: []
 
     // ========================================================================
-    // 2. الإشارات (Signals)
+    // 2. Signals
     // ========================================================================
     signal weatherUpdated
-    signal coldWeatherWarning(string message)
-    signal hotWeatherWarning(string message)
-    signal rainChanceWarning(string message)
     signal fetchFailed(string error)
 
+    signal chanceOfRainNotified(string message)
+    signal chanceOfSnowNotified(string message)
+    signal chanceOfFrostNotified(string message)
+    signal chanceOfFogNotified(string message)
+    signal chanceOfRemdryNotified(string message)
+    signal chanceOfThunderNotified(string message)
+    signal chanceOfWindyNotified(string message)
+    signal chanceOfHotWeatherNotified(string message)
+
     // ========================================================================
-    // 3. المنطق (Logic)
+    // 3. Logic
     // ========================================================================
+    function getWeatherData() {
+        getWeatherProcess.running = true;
+    }
+
     Process {
         id: getWeatherProcess
-        command: ['curl', 'https://ar.wttr.in/Sanaa?format=j1']
+        // IMPORTANT: Changed URL to get English data (removed "ar.")
+        command: ['curl', 'https://wttr.in/Sanaa?format=j1']
         stdout: StdioCollector {
             onStreamFinished: {
                 const output = this.text;
@@ -162,18 +171,18 @@ Singleton {
                     parseWeatherData(output);
                 } else {
                     isLoading = false;
-                    fetchFailed("تم استلام بيانات فارغة من الخادم.");
+                    fetchFailed("Received empty data from the server.");
                 }
             }
         }
         stderr: SplitParser {
-            onRead: data => console.error("Error getting weather data:", data)
+            onRead: data => console.error("Error fetching weather data:", data)
         }
     }
 
-    // --- دوال مساعدة جديدة لاختيار الأيقونة ---
+    // --- Helper functions for icon selection ---
 
-    // دالة لتحويل وقت بصيغة "06:30 AM" إلى كائن Date صالح للمقارنة
+    // Parses a time string like "06:30 AM" into a comparable Date object
     function _parseTime(timeStr) {
         if (!timeStr || timeStr === "N/A")
             return null;
@@ -189,7 +198,7 @@ Singleton {
             hours += 12;
         }
         if (ampm === "AM" && hours === 12) {
-            // منتصف الليل
+            // Midnight case
             hours = 0;
         }
 
@@ -198,13 +207,13 @@ Singleton {
         return date;
     }
 
-    // دالة لتحديد ما إذا كان الوقت نهاراً
+    // Determines if the current time is daytime
     function _isDayTime(sunriseStr, sunsetStr) {
         const now = new Date();
         const sunriseTime = _parseTime(sunriseStr);
         const sunsetTime = _parseTime(sunsetStr);
 
-        // في حال فشل التحويل، نفترض أنه نهار كقيمة افتراضية
+        // If parsing fails, default to daytime
         if (!sunriseTime || !sunsetTime) {
             console.warn("Could not parse sunrise/sunset times. Defaulting to daytime.");
             return true;
@@ -213,13 +222,13 @@ Singleton {
         return now >= sunriseTime && now < sunsetTime;
     }
 
-    // دالة لجلب الأيقونة المناسبة
+    // Gets the appropriate weather icon
     function getWeatherIcon(code, isDay) {
         if (isDay) {
-            // إذا لم يجد الكود، يرجع أيقونة الشمس الافتراضية
+            // Returns default sun icon if code not found
             return sun_icon_dic[code] || '';
         } else {
-            // إذا لم يجد الكود، يرجع أيقونة القمر الافتراضية
+            // Returns default moon icon if code not found
             return moon_icon_dic[code] || '';
         }
     }
@@ -229,11 +238,11 @@ Singleton {
         try {
             const data = JSON.parse(jsonData);
 
-            // القسم الأول: الطقس الحالي
+            // Section 1: Current Condition
             const current = data?.current_condition?.[0];
             currentTemp = parseInt(current?.temp_C) || 0;
             feelsLike = parseInt(current?.FeelsLikeC) || 0;
-            weatherDescription = current?.lang_ar?.[0]?.value || current?.weatherDesc?.[0]?.value || "غير متوفر";
+            weatherDescription = current?.weatherDesc?.[0]?.value || "Not available";
             weatherCode = current?.weatherCode || "113";
             humidity = parseInt(current?.humidity) || 0;
             windSpeed = parseInt(current?.windspeedKmph) || 0;
@@ -242,25 +251,22 @@ Singleton {
             visibility = parseInt(current?.visibility) || 0;
             uvIndex = parseInt(current?.uvIndex) || 0;
 
-            // القسم الثاني: معلومات الموقع
+            // Section 2: Location Info
             const area = data?.nearest_area?.[0];
-            areaName = area?.areaName?.[0]?.value || "مكان غير معروف";
+            areaName = area?.areaName?.[0]?.value || "Unknown location";
             countryName = area?.country?.[0]?.value || "";
 
-            // القسم الثالث: البيانات الفلكية
+            // Section 3: Astronomical Data
             const astronomy = data?.weather?.[0]?.astronomy?.[0];
             sunrise = astronomy?.sunrise || "N/A";
             sunset = astronomy?.sunset || "N/A";
             moonPhase = astronomy?.moon_phase || "N/A";
 
-            // =============================================
-            // == الجزء الجديد: تحديد الأيقونة الصحيحة  ====
-            // =============================================
+            // --- Determine correct icon based on day/night ---
             const isDay = _isDayTime(sunrise, sunset);
             weatherIcon = getWeatherIcon(weatherCode, isDay);
-            // =============================================
 
-            // القسم الرابع: توقعات الأيام القادمة
+            // Section 4: Daily Forecast
             let dailyData = [];
             if (data?.weather && Array.isArray(data.weather)) {
                 for (let day of data.weather) {
@@ -272,15 +278,14 @@ Singleton {
                         maxTemp: parseInt(day?.maxtempC) || 0,
                         avgTemp: parseInt(day?.avgtempC) || 0,
                         weatherCode: representativeHour?.weatherCode || "113",
-                        description: representativeHour?.lang_ar?.[0]?.value || representativeHour?.weatherDesc?.[0]?.value || "...",
-                        // يمكنك إضافة أيقونة لكل يوم أيضاً بنفس الطريقة
-                        icon: getWeatherIcon(representativeHour?.weatherCode || "113", true) // نفترض النهار للتوقعات
+                        description: representativeHour?.weatherDesc?.[0]?.value || "...",
+                        icon: getWeatherIcon(representativeHour?.weatherCode || "113", true) // Assume day for forecast icons
                     });
                 }
             }
             dailyForecast = dailyData;
 
-            // القسم الخامس: توقعات الساعات القادمة
+            // Section 5: Hourly Forecast
             let hourlyData = [];
             const todayHourly = data?.weather?.[0]?.hourly;
             if (todayHourly && Array.isArray(todayHourly)) {
@@ -290,9 +295,15 @@ Singleton {
                         time: timeStr,
                         temp: parseInt(hour?.tempC) || 0,
                         weatherCode: hour?.weatherCode || "113",
-                        description: hour?.lang_ar?.[0]?.value || hour?.weatherDesc?.[0]?.value || "...",
+                        description: hour?.weatherDesc?.[0]?.value || "...",
                         chanceOfRain: parseInt(hour?.chanceofrain) || 0,
-                        // يمكنك إضافة أيقونة لكل ساعة أيضاً
+                        chanceOfSnow: parseInt(hour?.chanceofsnow) || 0,
+                        chanceOfFrost: parseInt(hour?.chanceoffrost) || 0,
+                        chanceOfFog: parseInt(hour?.chanceoffog) || 0,
+                        chanceOfRemdry: parseInt(hour?.chanceofremdry) || 0,
+                        chanceOfThunder: parseInt(hour?.chanceofthunder) || 0,
+                        chanceOfWindy: parseInt(hour?.chanceofwindy) || 0,
+                        chanceOfHotTemp: parseInt(hour?.chanceofhightemp) || 0,
                         icon: getWeatherIcon(hour?.weatherCode || "113", _isDayTime(sunrise, sunset))
                     });
                 }
@@ -309,8 +320,8 @@ Singleton {
             weatherUpdated();
         } catch (e) {
             isLoading = false;
-            console.error("فشل كارثي في معالجة بيانات JSON:", e.message, e.stack);
-            fetchFailed("بيانات غير صالحة من الخادم.");
+            console.error("Fatal error parsing JSON data:", e.message, e.stack);
+            fetchFailed("Invalid data received from the server.");
         }
     }
 
@@ -322,49 +333,76 @@ Singleton {
         const tomorrow = new Date();
         tomorrow.setDate(today.getDate() + 1);
         if (date.toDateString() === today.toDateString())
-            return "اليوم";
+            return "Today";
         if (date.toDateString() === tomorrow.toDateString())
-            return "غداً";
-        return date.toLocaleDateString('ar-EG', {
+            return "Tomorrow";
+        return date.toLocaleDateString('en-US', {
             weekday: 'long'
         });
     }
 
     function checkWeatherConditions() {
-        if (dailyForecast.length === 0)
+        if (hourlyForecast.length === 0)
             return;
-        const today = dailyForecast[0];
-        if (today.minTemp <= 7) {
-            coldWeatherWarning(`طقس بارد متوقع! الصغرى: ${today.minTemp}°`);
+
+        let maxRain = 0, maxSnow = 0, maxFrost = 0, maxFog = 0;
+        let maxThunder = 0, maxWindy = 0, maxHotTemp = 0;
+
+        for (const hour of hourlyForecast) {
+            if (hour.chanceOfRain > maxRain)
+                maxRain = hour.chanceOfRain;
+            if (hour.chanceOfSnow > maxSnow)
+                maxSnow = hour.chanceOfSnow;
+            if (hour.chanceOfFrost > maxFrost)
+                maxFrost = hour.chanceOfFrost;
+            if (hour.chanceOfFog > maxFog)
+                maxFog = hour.chanceOfFog;
+            if (hour.chanceOfThunder > maxThunder)
+                maxThunder = hour.chanceOfThunder;
+            if (hour.chanceOfWindy > maxWindy)
+                maxWindy = hour.chanceOfWindy;
+            if (hour.chanceOfHotTemp > maxHotTemp)
+                maxHotTemp = hour.chanceOfHotTemp;
         }
-        if (today.maxTemp > 35) {
-            hotWeatherWarning(`طقس حار متوقع! العظمى: ${today.maxTemp}°`);
+
+        if (maxRain > 50) {
+            chanceOfRainNotified(`High chance of rain today, up to ${maxRain}%`);
         }
-        let maxRainChance = 0;
-        for (let i = 0; i < hourlyForecast.length; i++) {
-            if (hourlyForecast[i].chanceOfRain > maxRainChance) {
-                maxRainChance = hourlyForecast[i].chanceOfRain;
-            }
+        if (maxSnow > 20) {
+            chanceOfSnowNotified(`Chance of snow today is ${maxSnow}%`);
         }
-        if (maxRainChance > 60) {
-            rainChanceWarning(`فرصة هطول أمطار اليوم تصل إلى ${maxRainChance}%`);
+        if (maxFrost > 50) {
+            chanceOfFrostNotified(`Warning: Chance of frost is ${maxFrost}%`);
+        }
+        if (maxFog > 60) {
+            chanceOfFogNotified(`Warning: High chance of fog (${maxFog}%)`);
+        }
+        if (maxThunder > 40) {
+            chanceOfThunderNotified(`Warning: Thunderstorm possible today (${maxThunder}%)`);
+        }
+        if (maxWindy > 50) {
+            chanceOfWindyNotified(`It might get windy today, chance is ${maxWindy}%`);
+        }
+        if (maxHotTemp > 60) {
+            chanceOfHotWeatherNotified(`Warning: High temperature expected (${maxHotTemp}% chance)`);
         }
     }
 
     // ========================================================================
-    // 4. التشغيل التلقائي (Automation)
+    // 4. Automation
     // ========================================================================
     Timer {
-        interval: 900000
+        interval: 900000 // 15 minutes
         running: true
         repeat: true
         onTriggered: {
-            console.info("تحديث الطقس تلقائياً...");
-            getWeatherProcess.running = true;
+            console.info("Timer triggered: Refreshing weather data...");
+            getWeatherData();
         }
     }
+
     Component.onCompleted: {
-        console.info("بدء خدمة الطقس...");
-        getWeatherProcess.running = true;
+        console.info("WeatherService started. Initial fetch...");
+        getWeatherData();
     }
 }

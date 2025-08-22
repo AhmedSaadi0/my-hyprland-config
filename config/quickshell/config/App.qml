@@ -60,22 +60,29 @@ Singleton {
     // كائن لتنظيم مسارات الأصول (Assets)
     readonly property QtObject assets: QtObject {
         readonly property QtObject icons: QtObject {
-            readonly property string hot_weather: "file://" + root.assetsPath + "/icons/hot-weather.png"
-            readonly property string cold_weather: "file://" + root.assetsPath + "/icons/cold-weather.png"
-            readonly property string mosque: "file://" + root.assetsPath + "/icons/mosque.png"
-            readonly property string high_energy_rate: "file://" + root.assetsPath + "/icons/electrical-danger-sign.png"
-            readonly property string high_voltage: "file://" + root.assetsPath + "/icons/electrical-danger-sign.png"
-            readonly property string high_temp_warning: "file://" + root.assetsPath + "/icons/electrical-danger-sign.png"
+            readonly property string notification: root.assetsPath + "/icons/notification.png"
+            readonly property string weather: root.assetsPath + "/icons/weather-icon.png"
+            readonly property string hotWeather: root.assetsPath + "/icons/hot-weather.png"
+            readonly property string coldWeather: root.assetsPath + "/icons/cold-weather.png"
+            readonly property string fog: root.assetsPath + "/icons/fog.png"
+            readonly property string rain: root.assetsPath + "/icons/rain.png"
+            readonly property string wind: root.assetsPath + "/icons/wind.png"
+            readonly property string thunder: root.assetsPath + "/icons/thunder.png"
+            readonly property string mosque: root.assetsPath + "/icons/mosque.png"
+            readonly property string highEnergyRate: root.assetsPath + "/icons/electrical-danger-sign.png"
+            readonly property string highVoltage: root.assetsPath + "/icons/electrical-danger-sign.png"
+            readonly property string highTempWarning: root.assetsPath + "/icons/electrical-danger-sign.png"
         }
         readonly property QtObject audio: QtObject {
-            readonly property string cold_weather: root.assetsPath + "/audio/cold-weather.mp3"
-            readonly property string prayer_time: root.assetsPath + "/audio/prayer-notification.ogg"
-            readonly property string desktop_login: root.assetsPath + "/audio/desktop-login.mp3"
-            readonly property string desktop_logout: root.assetsPath + "/audio/desktop-logout.mp3"
-            readonly property string high_energy_rate: root.assetsPath + "/audio/warning-sound.mp3"
+            readonly property string hotWeather: root.assetsPath + "/audio/cold-weather.mp3"
+            readonly property string coldWeather: root.assetsPath + "/audio/cold-weather.mp3"
+            readonly property string prayerTime: root.assetsPath + "/audio/prayer-notification.ogg"
+            readonly property string desktopLogin: root.assetsPath + "/audio/desktop-login.mp3"
+            readonly property string desktopLogout: root.assetsPath + "/audio/desktop-logout.mp3"
+            readonly property string highEnergyRate: root.assetsPath + "/audio/warning-sound.mp3"
             readonly property string warning: root.assetsPath + "/audio/warning-sound.mp3"
-            readonly property string high_voltage: root.assetsPath + "/audio/warning-sound.mp3"
-            readonly property string high_temp_warning: root.assetsPath + "/audio/warning-sound.mp3"
+            readonly property string highVoltage: root.assetsPath + "/audio/warning-sound.mp3"
+            readonly property string highTempWarning: root.assetsPath + "/audio/warning-sound.mp3"
             readonly property string notificationAlert: root.assetsPath + "/audio/new-notification.mp3"
             readonly property string cpuHighUsage: root.assetsPath + "/audio/cpu_high_usage.wav"
         }
@@ -128,5 +135,14 @@ Singleton {
     readonly property QtObject prayerTimes: QtObject {
         readonly property string city: root.city
         readonly property string country: root.country
+    }
+
+    function dispatchCommand(description, commandArray) {
+        if (!Array.isArray(commandArray) || commandArray.length === 1) {
+            console.warn(`Skipping empty command: ${description}`);
+            return;
+        }
+        console.info(description + " -> " + commandArray.join(' '));
+        Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 }

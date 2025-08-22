@@ -7,6 +7,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Services.Notifications
 import "root:/config"
+import "root:/utils"
 
 Singleton {
     id: root
@@ -33,9 +34,26 @@ Singleton {
         dndEnabled = !dndEnabled;
     }
 
-    Process {
-        id: notificationSound
-        command: ["paplay", App.assets.audio.notificationAlert]
+    function notify({
+        summary,
+        body = "",
+        icon = "",
+        urgency = "normal",
+        tone = App.assets.audio.notificationAlert
+    }) {
+        App.dispatchCommand("Notify", Helper.sendNotification({
+            summary: summary,
+            body: body,
+            icon: icon,
+            urgency: urgency
+        }));
+        playNotificationTone(tone);
+    }
+
+    function playNotificationTone(tone = App.assets.audio.notificationAlert) {
+        if (!root.dndEnabled) {
+            App.dispatchCommand("Notification tone", Helper.playSoundCommand(tone));
+        }
     }
 
     NotificationServer {
@@ -59,9 +77,7 @@ Singleton {
 
             root.notificationReceived(newSmartNotif);
 
-            if (!root.dndEnabled) {
-                notificationSound.running = true;
-            }
+        // playNotificationTone();
         }
     }
 

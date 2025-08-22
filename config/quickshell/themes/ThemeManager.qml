@@ -260,12 +260,13 @@ Singleton {
      * يرسل أمرًا تنفيذيًا عبر Hyprland.
      */
     function _dispatchCommand(description, commandArray) {
-        if (!Array.isArray(commandArray) || commandArray.length === 1) {
-            console.warn(`Skipping empty command: ${description}`);
-            return;
-        }
-        console.info(description + " -> " + commandArray.join(' '));
-        Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
+        App.dispatchCommand(description, commandArray);
+    // if (!Array.isArray(commandArray) || commandArray.length === 1) {
+    //     console.warn(`Skipping empty command: ${description}`);
+    //     return;
+    // }
+    // console.info(description + " -> " + commandArray.join(' '));
+    // Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 
     function _changeWallpaper(path) {

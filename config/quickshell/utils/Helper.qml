@@ -142,4 +142,54 @@ Singleton {
         // Requires the 'kvantummanager' tool to be installed.
         return ['kvantummanager', '--set', themeName];
     }
+
+    // ==========================================================
+    // ==               NOTIFICATION COMMANDS                  ==
+    // ==========================================================
+
+    /**
+     * @function sendNotification
+     * @description Generates a fully-featured 'notify-send' command array with explicit arguments.
+     * @param {string} summary - The notification title (required).
+     * @param {string} body - The main notification message.
+     * @param {string} icon - Icon name (e.g., "info") or full path to an image.
+     * @param {string} urgency - Urgency level: "low", "normal", or "critical".
+     * @returns {string[]} The command array for a Process element.
+     */
+    function sendNotification({
+        summary,
+        body = "",
+        icon = "",
+        urgency = "normal"
+    }) {
+        // Basic validation
+        if (!summary) {
+            console.error("sendNotification Error: 'summary' (title) is a required argument.");
+            return [];
+        }
+
+        let command = ['notify-send'];
+
+        // Add App name
+        command.push('-a', `NibrasShell`);
+
+        if (urgency) {
+            command.push('-u', `'${urgency}'`);
+        }
+        if (icon) {
+            command.push('-i', `'${icon}'`);
+        }
+
+        // Add the main content (must be last)
+        command.push(`'${summary}'`); // Title
+        if (body) {
+            command.push(`'${body}'`); // Message body
+        }
+
+        return command;
+    }
+
+    function playSoundCommand(soundPath) {
+        return ['paplay', `'${soundPath}'`];
+    }
 }
