@@ -1,7 +1,23 @@
 // components/Shadow.qml
 
 import QtQuick
+import QtQuick.Effects
+
 import Qt5Compat.GraphicalEffects
+
+// MultiEffect {
+//
+//     property var color: "#55000000"
+//     property var radius: 0
+//     property var alpha: 0
+//
+//     shadowEnabled: true
+//     shadowBlur: 0.1
+//     shadowColor: color
+//     shadowHorizontalOffset: 4
+//     shadowVerticalOffset: 4
+//     shadowOpacity: 0.5
+// }
 
 DropShadow {
 
@@ -10,10 +26,10 @@ DropShadow {
     color: palette.shadow.alpha(alpha)
     radius: 5
     spread: 0
-    samples: 8
+    samples: 47
     horizontalOffset: 2
     verticalOffset: 2
-
+    cached: true
     // color: palette.shadow.alpha(alpha)
     // radius: 9
     // spread: 0

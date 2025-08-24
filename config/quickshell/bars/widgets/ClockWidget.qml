@@ -23,10 +23,10 @@ Rectangle {
     }
 
     anchors.centerIn: parent
-    layer.enabled: true
-    layer.effect: Shadow {
-        color: ThemeManager.selectedTheme.colors.topbarColor
-    }
+    // layer.enabled: true
+    // layer.effect: Shadow {
+    //     color: ThemeManager.selectedTheme.colors.topbarColor
+    // }
 
     SystemClock {
         id: clock

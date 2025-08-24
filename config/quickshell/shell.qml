@@ -96,5 +96,14 @@ ShellRoot {
     Volume {}
     Brightness {}
     Notifications {}
-    ClockWidget {}
+
+    Variants {
+        model: Quickshell.screens
+        Widgets {
+            id: desktopWidgets
+
+            required property ShellScreen modelData
+            screen: modelData
+        }
+    }
 }

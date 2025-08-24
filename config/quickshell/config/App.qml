@@ -100,6 +100,8 @@ Singleton {
             readonly property string topCpuUsage: root.pythonScriptsPath + "/top_cpu_usage.py"
             readonly property string topRamUsage: root.pythonScriptsPath + "/top_ram_usage.py"
             readonly property string dynamicM3: root.pythonScriptsPath + "/m3/dynamic-m3.py"
+            readonly property string rembgOverylayWallpaper: root.pythonScriptsPath + "/create_depth_image_rembg.py"
+            readonly property string opencvOverylayWallpaper: root.pythonScriptsPath + "/create_depth_image_opencv.py"
 
             // Commands
             readonly property var batteryInfoCommand: ["python", batteryInfo]
@@ -107,6 +109,8 @@ Singleton {
             readonly property var topCpuUsageCommand: ["python", topCpuUsage]
             readonly property var topRamUsageCommand: ["python", topRamUsage]
             readonly property var dynamicM3Command: ["python", dynamicM3]
+            readonly property var rembgOverylayWallpaperCommand: ["python", rembgOverylayWallpaper]
+            readonly property var opencvOverylayWallpaperCommand: ["python", opencvOverylayWallpaper]
         }
 
         readonly property QtObject bash: QtObject {

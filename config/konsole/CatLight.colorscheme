@@ -1,98 +1,98 @@
 [Background]
-Color=251,241,199
+Color=249,249,249
 
 [BackgroundFaint]
-Color=251,241,199
+Color=249,249,249
 
 [BackgroundIntense]
-Color=251,241,199
+Color=249,249,249
 
 [Color0]
-Color=101,71,53
+Color=199,199,199
 
 [Color0Faint]
-Color=101,71,53
+Color=199,199,199
 
 [Color0Intense]
-Color=101,71,53
+Color=199,199,199
 
 [Color1]
-Color=193,74,74
+Color=244,67,54
 
 [Color1Faint]
-Color=193,74,74
+Color=244,67,54
 
 [Color1Intense]
-Color=193,74,74
+Color=244,67,54
 
 [Color2]
-Color=108,120,46
+Color=76,175,80
 
 [Color2Faint]
-Color=108,120,46
+Color=76,175,80
 
 [Color2Intense]
-Color=108,120,46
+Color=76,175,80
 
 [Color3]
-Color=180,113,9
+Color=255,152,0
 
 [Color3Faint]
-Color=180,113,9
+Color=255,152,0
 
 [Color3Intense]
-Color=180,113,9
+Color=255,152,0
 
 [Color4]
-Color=69,112,122
+Color=26,115,232
 
 [Color4Faint]
-Color=69,112,122
+Color=26,115,232
 
 [Color4Intense]
-Color=69,112,122
+Color=26,115,232
 
 [Color5]
-Color=148,94,128
+Color=156,39,176
 
 [Color5Faint]
-Color=148,94,128
+Color=156,39,176
 
 [Color5Intense]
-Color=148,94,128
+Color=156,39,176
 
 [Color6]
-Color=76,122,93
+Color=0,151,167
 
 [Color6Faint]
-Color=76,122,93
+Color=0,151,167
 
 [Color6Intense]
-Color=76,122,93
+Color=0,151,167
 
 [Color7]
-Color=229,213,173
+Color=36,36,36
 
 [Color7Faint]
-Color=229,213,173
+Color=36,36,36
 
 [Color7Intense]
-Color=229,213,173
+Color=36,36,36
 
 [Foreground]
-Color=101,71,53
+Color=68,68,68
 
 [ForegroundFaint]
-Color=101,71,53
+Color=68,68,68
 
 [ForegroundIntense]
-Color=101,71,53
+Color=36,36,36
 
 [General]
 Anchor=0.5,0.5
 Blur=false
 ColorRandomization=false
-Description=Gruvbox Material Medium Light
+Description=CatLight
 FillStyle=Tile
 Opacity=0.85
 Wallpaper=

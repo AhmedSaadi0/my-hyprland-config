@@ -29,6 +29,7 @@ Button {
     property int iconRightMargin: 0
 
     property bool isActive: false
+    property bool showTooltip: false
     property string originalText: text
     property string activeText: ""
 
@@ -49,9 +50,14 @@ Button {
     property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
+    ToolTip.text: root.text
+    ToolTip.visible: root.hovered && root.showTooltip
+    ToolTip.delay: 500
+
     contentItem: RowLayout {
         anchors.fill: parent
         Layout.alignment: Qt.AlignVCenter
+        spacing: 0
 
         Text {
             id: buttonMainText
@@ -62,6 +68,8 @@ Button {
             verticalAlignment: root.textVerticalAlignment
             Layout.fillWidth: true
             Layout.preferredWidth: root.textPreferredWidth
+
+            // onTruncatedChanged: root.textIsTruncated == truncated
 
             Layout.leftMargin: root.textLeftMargin
             Layout.rightMargin: root.textRightMargin

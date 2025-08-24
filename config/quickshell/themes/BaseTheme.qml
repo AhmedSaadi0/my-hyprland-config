@@ -111,6 +111,24 @@ PersistentProperties {
     property int _hyprRounding: root._baseRadius
     property string _hyprDropShadow: 'no'
 
+    // ------------------------
+    // --- Desktop Clock Widget ---
+    // ------------------------
+    property bool _desktopClockEnabled: true
+    property bool _desktopClockSahdowEnabled: false
+    property color _desktopClockSahdowColor: "#40000000"
+    property color _desktopClockColor: _primary
+    property string _desktopClockLocal: "en_US"
+    property string _desktopClockFormat: "hh:mm AP"
+    property string _desktopClockFont: _bodyFont
+    property point _desktopClockPosition: Qt.point(100, 100)
+
+    // Depth Effect Settings
+    property bool _desktopClockDepthEffectEnabled: false
+    property string _desktopClockDepthModel: "u2net" // isnet-general-use
+    property string _desktopClockDepthOverlayPath
+    property size _desktopClockSize: Qt.size(701, 501)
+
     // ======================================================================
     // --- PUBLIC GROUPED API (for using the theme) ---
     // These structured objects are for clean access (e.g., theme.colors.xyz).
@@ -218,5 +236,23 @@ PersistentProperties {
         property alias inactiveBorder: root._hyprInactiveBorder
         property alias rounding: root._hyprRounding
         property alias dropShadow: root._hyprDropShadow
+    }
+
+    // --- Desktop Clock Widget Configuration ---
+    readonly property var desktopClock: QtObject {
+        property alias enabled: root._desktopClockEnabled
+        property alias shadowEnabled: root._desktopClockSahdowEnabled
+        property alias shadowColor: root._desktopClockSahdowColor
+        property alias color: root._desktopClockColor
+        property alias local: root._desktopClockLocal
+        property alias format: root._desktopClockFormat
+        property alias font: root._desktopClockFont
+        property alias position: root._desktopClockPosition
+        property alias size: root._desktopClockSize
+
+        // Depth Effect
+        property alias depthEffectEnabled: root._desktopClockDepthEffectEnabled
+        property alias depthModel: root._desktopClockDepthModel
+        property alias depthOverlayPath: root._desktopClockDepthOverlayPath
     }
 }

@@ -101,9 +101,19 @@ sudo dnf install plasma-desktop ark kate dolphin
 - بالنسبة للتوزيعات القائمة على **دبيان/أوبونتو**، يمكنك تثبيت البرامج باستخدام `apt install` او البحث عن طريق `apt search hyprland`.
 - بالنسبة لبرامج ادارة الحزم الاخرى، قم بالبحث عن كل برنامج وتثبيته عبر مدير حزم نظامك.
 
+### متطلبات تاثير العمق للساعة في سطح المكتب
+
+- نحتاج مكتبه `rembg` و `pillow` لانشاء الصور ذات تاثير العمق
+
+```bash
+pip install rembg[gpu] pillow
+```
+
+#### استخرج جميع الثيمات في المجلد `config/gtk-themes/` الى `~/.themes`
+
 ### اعداد الملفات:
 
-    git clone https://github.com/AhmedSaadi0/my-hyprland-config.git
+    git clone https://github.com/AhmedSaadi0/NibrasShell.git
 
     # عمل نسخة احتياطية لملفاتك الاصلية
     mv ~/.config/hypr/ ~/.config/hypr-old
@@ -121,12 +131,6 @@ sudo dnf install plasma-desktop ark kate dolphin
     # اعداد الصلاحيات للملفات التنفيذية
     sudo chmod +x ~/.config/hypr/scripts/*
     sudo chmod +x ~/.config/quickshell/scripts/*
-
-    # اعداد بيئة النظام
-    # غير ضرورية لانه يتم استخدام nvidia.conf
-    # استخدمها اذا كنت تعتقد انك تحتاجها فعلا
-    sudo cp /etc/environment /etc/environmentOLD
-    echo 'QT_QPA_PLATFORMTHEME=kde' | sudo tee -a /etc/environment
 
     # نسخ اعدادت easyeffects
     cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
@@ -152,36 +156,14 @@ sudo dnf install plasma-desktop ark kate dolphin
     tar xvf ~/.config/hypr/config/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
-    tar xvf ~/.config/hypr/config/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
-    tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
-    tar xvf ~/.config/hypr/config/icons/NeonIcons.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
+    tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
 
-    mkdir ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Cabinet-Light-Orange.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Kimi-dark.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Nordic-darker-standard-buttons.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Orchis-Green-Dark-Compact.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Dracula.tar.gz -C ~/.themes
-    mkdir ~/.local/share/themes
-    unzip ~/.config/hypr/config/gtk-themes/adw-gtk3.zip -d ~/.local/share/themes
-
 ### بامكانك تغير خط الجهاز الى 'JF Flat' اذا اردت ان تحصل على نفس الخط الذي لدي
-
-### انشاء كرون تاب لتحسين استخدام البطارية باستخدام قاعدة الشحن 40-80
-
-    VISUAL=/usr/bin/nano crontab -e
-    * * * * * ~/.config/hypr/scripts/battery.sh
-
-#### تغيير مسار ملف صوت اشعارات البطارية في الملف `hypr/scripts/battery.sh`
-
-    home_path="/home/ahmed"
 
 ### تغيير الاعدادات
 
@@ -321,9 +303,19 @@ sudo dnf install plasma-desktop ark kate dolphin
 - For **Debian/Ubuntu-based** systems, you can install dependencies using `apt install` or search using `apt search hyprland`.
 - For other package managers, search for each dependency and install using your system's package manager.
 
+### Depth effect requirements
+
+- we need `rembg` and `pillow` to create the needed images to apply depth effect
+
+```bash
+pip install rembg[gpu] pillow
+```
+
+#### Extract all themes in `config/gtk-themes/` to `~/.themes`
+
 ### Setting up files:
 
-    git clone https://github.com/AhmedSaadi0/my-hyprland-config.git
+    git clone https://github.com/AhmedSaadi0/NibrasShell.git
 
     # backup your files
     mv ~/.config/hypr/ ~/.config/hypr-old
@@ -341,12 +333,6 @@ sudo dnf install plasma-desktop ark kate dolphin
     # set permissions for scripts
     sudo chmod +x ~/.config/hypr/scripts/*
     sudo chmod +x ~/.config/quickshell/scripts/*
-
-    # setup environment
-    # Not needed anymore becuase we are using nvidia.conf
-    # only use it if you think you realy need it
-    sudo cp /etc/environment /etc/environmentOLD
-    echo 'QT_QPA_PLATFORMTHEME=kde' | sudo tee -a /etc/environment
 
     # Copy easyeffects settings
     cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
@@ -372,37 +358,14 @@ sudo dnf install plasma-desktop ark kate dolphin
     tar xvf ~/.config/hypr/config/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
-    tar xvf ~/.config/hypr/config/icons/kora-grey-light-panel.tar.gz -C ~/.local/share/icons
-    tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
-    tar xvf ~/.config/hypr/config/icons/NeonIcons.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
+    tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
     tar xvf ~/.config/hypr/config/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
 
-    mkdir ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Cabinet-Light-Orange.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Kimi-dark.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Nordic-darker-standard-buttons.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Orchis-Green-Dark-Compact.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Shades-of-purple.tar.xz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Tokyonight-Dark-BL.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/Dracula.tar.gz -C ~/.themes
-    tar xvf ~/.config/hypr/config/gtk-themes/adw-gtk3.tar.gz -C ~/.themes
-    mkdir ~/.local/share/themes
-    unzip ~/.config/hypr/config/gtk-themes/adw-gtk3.zip -d ~/.local/share/themes
-
 ### You can change system fonts if you want to 'JF Flat' to have the same font I had
-
-### Creating crontab for battery 40-80 rule:
-
-    VISUAL=/usr/bin/nano crontab -e
-    * * * * * ~/.config/hypr/scripts/battery.sh
-
-#### Change home path for battery script in `hypr/scripts/battery.sh`
-
-    home_path="/home/ahmed"
 
 ### Change the settings
 
@@ -458,18 +421,28 @@ nvim .nibrasshell.json
 	<img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/Catppuccin-dark.png'/>
 </p>
 
-#### M3 Light
+<hr />
+
+#### M3
 
 <p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/light.png'/>
+	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/m3-light.png'/>
+</p>
+
+<p align='center'>
+	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/m3-dark.png'/>
 </p>
 
 <hr />
 
-#### Nord light
+#### Nord
 
 <p align='center'>
 	<img alt='Nord' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/nord-light.png'/>
+</p>
+
+<p align='center'>
+	<img alt='Nord' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/nord-dark.png'/>
 </p>
 
 <hr />
@@ -482,10 +455,14 @@ nvim .nibrasshell.json
 
 <hr />
 
-#### Gruvbox Dark
+#### Gruvbox
 
 <p align='center'>
-	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/gruvbox.png'/>
+	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/gruvbox-light.png'/>
+</p>
+
+<p align='center'>
+	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/gruvbox-dark.png'/>
 </p>
 
 <hr />
@@ -536,10 +513,14 @@ nvim .nibrasshell.json
 
 <a href="https://store.kde.org/p/2106379" title="Windows11 icon theme">Windows11 icon theme</a>
 
-#### png Icons
+#### PNG Icons
 
 <a href="https://www.flaticon.com/free-icons/foggy" title="foggy icons">Foggy icons created by Freepik - Flaticon</a>
+
 <a href="https://www.flaticon.com/free-icons/high-voltage" title="high voltage icons">High voltage icons created by Muhammad Atif - Flaticon</a>
+
 <a href="https://www.flaticon.com/free-icons/wind" title="wind icons">Wind icons created by Freepik - Flaticon</a>
+
 <a href="https://www.flaticon.com/free-icons/rain" title="rain icons">Rain icons created by Freepik - Flaticon</a>
+
 <a href="https://www.flaticon.com/free-icons/notification" title="notification icons">Notification icons created by Freepik - Flaticon</a>

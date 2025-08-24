@@ -14,5 +14,8 @@ Parent=FALLBACK/
 [Keyboard]
 KeyBindings=default
 
+[Scrolling]
+HistorySize=20000
+
 [Terminal Features]
 BlinkingCursorEnabled=false

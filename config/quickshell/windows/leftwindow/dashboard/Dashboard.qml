@@ -8,11 +8,14 @@ import "root:/components"
 
 ScrollView {
     id: dashboardScroller
-    width: parent.width
+
+    // width: parent.width
     height: parent.height
+
     clip: true
+
     // anchors.fill: parent
-    // contentWidth: availableWidth
+    contentWidth: availableWidth
 
     ScrollBar.vertical: StyledScrollBar {
         interactive: false

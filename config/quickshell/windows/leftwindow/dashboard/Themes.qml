@@ -1,12 +1,15 @@
-// MenuCard.qml (الإصدار المحسن والمتناسق)
+// MenuCard.qml
 
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
+import QtQuick.Dialogs
+import Qt.labs.platform
 
 import "../../../components"
 import "../../../themes"
+import "root:/utils/helpers.js" as Helper
 
 MenuCard {
     id: root
@@ -15,6 +18,10 @@ MenuCard {
     icon: ""
 
     property bool settingsExpanded: false
+    property bool alphaMatting: false
+    property int foregroundThreshold: 240
+    property int backgroundThreshold: 10
+    property int erodeSize: 10
 
     readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height + fullThemesRow.implicitHeight + fullThemesRow2.implicitHeight - 35) * 2
     height: settingsExpanded ? settingsLayout.implicitHeight + padding + fixedHeight : fixedHeight
@@ -90,6 +97,39 @@ MenuCard {
         function onSelectedThemeUpdated() {
             root.workingTheme = copyTheme(ThemeManager.selectedTheme);
             populateColorModel(root.workingTheme);
+        }
+    }
+
+    FolderDialog {
+        id: dynamicWallpaperFolderDialog
+        title: "Please choose a wallpapers folder"
+        onAccepted: {
+            // FolderDialog يُرجع المسار في خاصية اسمها folder
+            const folderPath = this.folder.toString().replace("file://", "");
+            wallpaperFolderSelectButton.text = folderPath;
+            workingTheme._dynamicWallpapersPath = folderPath;
+        }
+    }
+
+    FileDialog {
+        id: staticWallpaperFileDialog
+        title: "Please choose a static wallpaper"
+        nameFilters: ["Image files (*.jpg *.jpeg *.png *.bmp)", "All files (*.*)"]
+        onAccepted: {
+            const filePath = file.toString().replace("file://", "");
+            wallpaperImageSelectButton.text = filePath;
+            workingTheme._wallpaper = filePath;
+        }
+    }
+
+    FileDialog {
+        id: clockDepthOverlayDialog
+        title: "Select Overlay Image"
+        nameFilters: ["Image files (*.jpg *.jpeg *.png)", "All files (*.*)"]
+        onAccepted: {
+            const filePath = file.toString().replace("file://", "");
+            overlayImageButton.text = filePath;
+            workingTheme._desktopClockDepthOverlayPath = filePath;
         }
     }
 
@@ -307,6 +347,7 @@ MenuCard {
                         onClicked: ThemeManager.switchToNextWallpaper()
                         iconText: ""
                         textPreferredWidth: 7
+                        enabled: workingTheme._enableDynamicWallpapers
                     }
                 }
             }
@@ -319,6 +360,7 @@ MenuCard {
                     Layout.fillWidth: true
                     rowSpacing: 5
 
+                    // ... (الأكواد الخاصة بـ enableDynamicWallpapersSwitch و enableDynamicColoringSwitch بدون تغيير) ...
                     Label {
                         text: "Enable dynamic wallpapers"
                         Layout.alignment: Qt.AlignVCenter
@@ -337,10 +379,8 @@ MenuCard {
                     Switch {
                         Layout.alignment: Qt.AlignRight
                         checked: workingTheme._enableDynamicColoring
-                        // --- التعديل هنا ---
                         onCheckedChanged: {
                             workingTheme._enableDynamicColoring = checked;
-                            // أعد تحميل نموذج اللون لتحديث حالة التمكين/التعطيل
                             populateColorModel(workingTheme);
                         }
                     }
@@ -351,7 +391,6 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._dynamicWallpapersInterval
-                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
                         onEditingFinished: workingTheme._dynamicWallpapersInterval = Number(text)
                     }
 
@@ -361,32 +400,293 @@ MenuCard {
                     EditableField {
                         Layout.fillWidth: true
                         text: workingTheme._selectedWallpaperIndex
-                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
                         onEditingFinished: workingTheme._selectedWallpaperIndex = Number(text)
                     }
 
+                    // --- (3) تعديل: الكود الخاص باختيار المجلد لم يتغير هنا، التغيير كان في تعريف dynamicWallpaperFolderDialog في الأعلى ---
                     Label {
                         text: "Wallpapers folder"
+                        Layout.alignment: Qt.AlignVCenter
                     }
-                    EditableField {
+                    RowLayout {
                         Layout.fillWidth: true
-                        text: workingTheme._dynamicWallpapersPath
+                        spacing: 5
                         enabled: enableDynamicWallpapersSwitch.checked
 
-                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
-                        onEditingFinished: workingTheme._dynamicWallpapersPath = text
+                        // TextField {
+                        //     Layout.fillWidth: true
+                        //     text: workingTheme._dynamicWallpapersPath
+                        //     placeholderText: "Select a folder..."
+                        //     readOnly: true // من الأفضل جعله للقراءة فقط
+                        // }
+                        MButton {
+                            id: wallpaperFolderSelectButton
+                            iconText: ""
+                            text: workingTheme._dynamicWallpapersPath
+                            Layout.fillWidth: true
+                            onClicked: dynamicWallpaperFolderDialog.open()
+                            textElide: Text.ElideLeft
+                            showTooltip: true
+                            iconPreferredWidth: 1
+                            textPreferredWidth: 3
+                        }
+                    }
+
+                    // --- الكود الخاص بالخلفية الثابتة يبقى كما هو لأنه يعمل بشكل صحيح ---
+                    Label {
+                        text: "Static Wallpaper"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 5
+                        enabled: !enableDynamicWallpapersSwitch.checked
+
+                        // TextField {
+                        //     Layout.fillWidth: true
+                        //     text: workingTheme._wallpaper
+                        //     placeholderText: "Select a file..."
+                        //     readOnly: true // من الأفضل جعله للقراءة فقط
+                        // }
+                        MButton {
+                            id: wallpaperImageSelectButton
+                            iconText: ""
+                            text: workingTheme._wallpaper
+                            Layout.fillWidth: true
+                            onClicked: staticWallpaperFileDialog.open()
+                            textElide: Text.ElideLeft
+                            showTooltip: true
+                            iconPreferredWidth: 1
+                            textPreferredWidth: 3
+                        }
+                    }
+                }
+            }
+
+            M3GroupBox {
+                id: clockSettingsGroup
+                title: "Clock Widget Settings"
+                Layout.fillWidth: true
+
+                // جعل المجموعة بأكملها غير مفعلة إذا تم تعطيل الساعة
+
+                GridLayout {
+                    columns: 2
+                    Layout.fillWidth: true
+                    rowSpacing: 5
+                    columnSpacing: 10
+
+                    // مفتاح لتفعيل أو تعطيل الويدجت بالكامل
+                    Label {
+                        text: "Enable Clock Widget"
+                        Layout.alignment: Qt.AlignVCenter
+                        // جعل النص باهتًا إذا تم تعطيل الويدجت الرئيسي
+                        opacity: clockSettingsGroup.enabled ? 1.0 : 0.5
+                    }
+                    Switch {
+                        Layout.alignment: Qt.AlignRight
+                        // هذا المفتاح يتحكم في خاصية "enabled" للمجموعة كلها
+                        checked: workingTheme._desktopClockEnabled
+                        onCheckedChanged: workingTheme._desktopClockEnabled = checked
+                    }
+
+                    // حقل لتغيير لون الساعة
+                    Label {
+                        text: "Clock Color"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    EditableColorField {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 25
+                        // ربط القيم بخصائص الساعة في الثيم
+                        text: Qt.color(workingTheme._desktopClockColor).toString()
+                        normalForeground: Helper.getAccurteTextColor(workingTheme._desktopClockColor)
+                        normalBackground: workingTheme._desktopClockColor
+                        onValidColorUpdated: workingTheme._desktopClockColor = newColor
+                        enabled: workingTheme._desktopClockEnabled
                     }
 
                     Label {
-                        text: "Static Wallpaper"
+                        text: "Enable Shadow"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    Switch {
+                        id: colorShadowSwitch
+                        Layout.alignment: Qt.AlignRight
+                        checked: workingTheme._desktopClockSahdowEnabled
+                        onCheckedChanged: workingTheme._desktopClockSahdowEnabled = checked
+                        enabled: workingTheme._desktopClockEnabled
+                    }
+
+                    Label {
+                        text: "Shadow Color"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    EditableColorField {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 25
+                        text: Qt.color(workingTheme._desktopClockSahdowColor).toString()
+                        normalForeground: Helper.getAccurteTextColor(workingTheme._desktopClockSahdowColor)
+                        normalBackground: workingTheme._desktopClockSahdowColor
+                        onValidColorUpdated: workingTheme._desktopClockSahdowColor = newColor
+                        enabled: colorShadowSwitch.checked
+                    }
+
+                    Label {
+                        text: "Clock Format"
+                        Layout.alignment: Qt.AlignVCenter
                     }
                     EditableField {
                         Layout.fillWidth: true
-                        text: workingTheme._wallpaper
-                        // enabled: !workingTheme._enableDynamicWallpapers
-                        enabled: !enableDynamicWallpapersSwitch.checked
-                        // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
-                        onEditingFinished: workingTheme._wallpaper = text
+                        text: workingTheme._desktopClockFormat
+                        placeholderText: "e.g., hh:mm or h:mm A"
+                        onEditingFinished: workingTheme._desktopClockFormat = text
+                        enabled: workingTheme._desktopClockEnabled
+                    }
+
+                    Label {
+                        text: "Clock Local"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: workingTheme._desktopClockLocal
+                        placeholderText: "e.g., en_US"
+                        onEditingFinished: workingTheme._desktopClockLocal = text
+                        enabled: workingTheme._desktopClockEnabled
+                    }
+
+                    Label {
+                        text: "Clock Font"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: workingTheme._desktopClockFont
+                        onEditingFinished: workingTheme._desktopClockFont = text
+                        enabled: workingTheme._desktopClockEnabled
+                    }
+
+                    // --- إعدادات تأثير العمق ---
+                    Rectangle {
+                        // فاصل بصري
+                        Layout.fillWidth: true
+                        Layout.columnSpan: 2 // اجعل الفاصل يمتد على العمودين
+                        Layout.topMargin: 5
+                        Layout.bottomMargin: 5
+                        height: 1
+                        color: ThemeManager.selectedTheme.colors.topbarFgColorV1.alpha(0.2)
+                        enabled: workingTheme._desktopClockEnabled
+                    }
+
+                    Label {
+                        text: "Enable Depth Effect"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    Switch {
+                        id: depthEffectSwitch
+                        Layout.alignment: Qt.AlignRight
+                        checked: workingTheme._desktopClockDepthEffectEnabled
+                        onCheckedChanged: workingTheme._desktopClockDepthEffectEnabled = checked
+                    }
+
+                    Label {
+                        text: "AI Model"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    ComboBox {
+                        id: modelComboBox
+                        Layout.fillWidth: true
+                        enabled: depthEffectSwitch.checked
+
+                        model: ["u2net", "isnet-general-use"]
+
+                        currentIndex: model.indexOf(workingTheme._desktopClockDepthModel) >= 0 ? model.indexOf(workingTheme._desktopClockDepthModel) : 0
+
+                        onCurrentTextChanged: {
+                            workingTheme._desktopClockDepthModel = currentText;
+                        }
+                    }
+
+                    Label {
+                        text: "Alpha Matting"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    Switch {
+                        id: alphaMattingComboBox
+                        Layout.alignment: Qt.AlignRight
+                        checked: root.alphaMatting
+                        onCheckedChanged: root.alphaMatting = checked
+                        enabled: depthEffectSwitch.checked
+                    }
+
+                    Label {
+                        text: "BG Threshold"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: root.backgroundThreshold
+                        onEditingFinished: root.backgroundThreshold = text
+                        enabled: alphaMattingComboBox.checked
+                    }
+
+                    Label {
+                        text: "FG Threshold"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: root.foregroundThreshold
+                        onEditingFinished: root.foregroundThreshold = text
+                        enabled: alphaMattingComboBox.checked
+                    }
+
+                    Label {
+                        text: "Erode Size"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: root.erodeSize
+                        onEditingFinished: root.erodeSize = text
+                        enabled: alphaMattingComboBox.checked
+                    }
+
+                    Label {
+                        text: "Create Overlay Image"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    MButton {
+                        id: createOverlayImageButton
+                        Layout.fillWidth: true
+                        enabled: depthEffectSwitch.checked
+                        text: "Create..."
+                        textElide: Text.ElideLeft
+                        onClicked: {
+                            ThemeManager.createImageOverlay({
+                                model: workingTheme._desktopClockDepthModel,
+                                alphaMatting: root.alphaMatting,
+                                foregroundThreshold: root.foregroundThreshold,
+                                backgroundThreshold: root.backgroundThreshold,
+                                erodeSize: root.erodeSize
+                            });
+                        }
+                        showTooltip: true
+                    }
+
+                    Label {
+                        text: "Overlay Image"
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+                    MButton {
+                        id: overlayImageButton
+                        Layout.fillWidth: true
+                        enabled: depthEffectSwitch.checked
+                        text: workingTheme._desktopClockDepthOverlayPath || "Select Image..."
+                        textElide: Text.ElideLeft
+                        onClicked: clockDepthOverlayDialog.open()
+                        showTooltip: true
                     }
                 }
             }
@@ -685,6 +985,7 @@ MenuCard {
                     Layout.fillWidth: true
                     spacing: 10
                     MButton {
+                        id: applyBtn
                         Layout.fillWidth: true
                         text: "Apply"
                         iconText: ""

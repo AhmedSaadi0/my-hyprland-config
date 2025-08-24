@@ -192,4 +192,63 @@ Singleton {
     function playSoundCommand(soundPath) {
         return ['paplay', `'${soundPath}'`];
     }
+
+    function createImageOverlayRembg({
+        wallpaperPath,
+        outputPath,
+        model = "u2net",
+        alphaMatting = false,
+        foregroundThreshold = 240,
+        backgroundThreshold = 10,
+        erodeSize = 10
+    }) {
+        if (!wallpaperPath || !outputPath) {
+            console.error("createImageOverlayRembg: wallpaperPath and outputPath are required.");
+            return [];
+        }
+
+        const scriptCommand = Config.App.scripts.python.rembgOverylayWallpaperCommand;
+
+        let commandArray = [...scriptCommand, wallpaperPath, outputPath];
+
+        if (model && model !== "u2net") {
+            commandArray.push("--model", model);
+        }
+
+        if (alphaMatting) {
+            commandArray.push("--alpha-matting");
+            if (foregroundThreshold !== undefined) {
+                commandArray.push("--foreground-threshold", foregroundThreshold.toString());
+            }
+            if (backgroundThreshold !== undefined) {
+                commandArray.push("--background-threshold", backgroundThreshold.toString());
+            }
+            if (erodeSize !== undefined) {
+                commandArray.push("--erode-size", erodeSize.toString());
+            }
+        }
+
+        console.info("CAACC " + commandArray);
+        return commandArray;
+    }
+
+    // Not in use
+    function createImageOverlayOpencv({
+        wallpaperPath
+    }) {
+        const scriptCommand = Config.App.scripts.python.opencvOverylayWallpaperCommand;
+        return [scriptCommand, `'${wallpaperPath}'`];
+    }
+
+    function generateRandomString(length = 7) {
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let result = "";
+        const charactersLength = characters.length;
+
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+
+        return result;
+    }
 }

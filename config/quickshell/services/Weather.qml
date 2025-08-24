@@ -348,7 +348,12 @@ Singleton {
         let maxRain = 0, maxSnow = 0, maxFrost = 0, maxFog = 0;
         let maxThunder = 0, maxWindy = 0, maxHotTemp = 0;
 
+        // البدء بقيم أولية عالية للمتغيرات الصغرى
+        let minRain = 101, minSnow = 101, minFrost = 101, minFog = 101;
+        let minThunder = 101, minWindy = 101, minHotTemp = 101;
+
         for (const hour of hourlyForecast) {
+            // حساب القيم القصوى
             if (hour.chanceOfRain > maxRain)
                 maxRain = hour.chanceOfRain;
             if (hour.chanceOfSnow > maxSnow)
@@ -363,28 +368,46 @@ Singleton {
                 maxWindy = hour.chanceOfWindy;
             if (hour.chanceOfHotTemp > maxHotTemp)
                 maxHotTemp = hour.chanceOfHotTemp;
+
+            // حساب القيم الصغرى
+            if (hour.chanceOfRain < minRain)
+                minRain = hour.chanceOfRain;
+            if (hour.chanceOfSnow < minSnow)
+                minSnow = hour.chanceOfSnow;
+            if (hour.chanceOfFrost < minFrost)
+                minFrost = hour.chanceOfFrost;
+            if (hour.chanceOfFog < minFog)
+                minFog = hour.chanceOfFog;
+            if (hour.chanceOfThunder < minThunder)
+                minThunder = hour.chanceOfThunder;
+            if (hour.chanceOfWindy < minWindy)
+                minWindy = hour.chanceOfWindy;
+            if (hour.chanceOfHotTemp < minHotTemp)
+                minHotTemp = hour.chanceOfHotTemp;
         }
 
-        if (maxRain > 50) {
-            chanceOfRainNotified(`Max chance of rain today, up to ${maxRain}%`);
+        // --== إرسال الإشعارات مع النطاق الكامل (الأدنى والأقصى) ==--
+
+        if (maxRain > 10) {
+            chanceOfRainNotified(`Chance of rain today ranges from ${minRain}% to ${maxRain}%`);
         }
         if (maxSnow > 20) {
-            chanceOfSnowNotified(`Max chance of snow today is ${maxSnow}%`);
+            chanceOfSnowNotified(`Chance of snow today ranges from ${minSnow}% to ${maxSnow}%`);
         }
-        if (maxFrost > 50) {
-            chanceOfFrostNotified(`Warning: Chance of frost is ${maxFrost}%`);
+        if (maxFrost > 10) {
+            chanceOfFrostNotified(`Warning: Chance of frost today is between ${minFrost}% and ${maxFrost}%`);
         }
-        if (maxFog > 60) {
-            chanceOfFogNotified(`Warning: High chance of fog (${maxFog}%)`);
+        if (maxFog > 10) {
+            chanceOfFogNotified(`Warning: High chance of fog, ranging from ${minFog}% to ${maxFog}%`);
         }
-        if (maxThunder > 40) {
-            chanceOfThunderNotified(`Warning: Thunderstorm possible today (${maxThunder}%)`);
+        if (maxThunder > 10) {
+            chanceOfThunderNotified(`Warning: Thunderstorm chance today is between ${minThunder}% and ${maxThunder}%`);
         }
-        if (maxWindy > 50) {
-            chanceOfWindyNotified(`It might get windy today, chance is ${maxWindy}%`);
+        if (maxWindy > 10) {
+            chanceOfWindyNotified(`It might get windy today, with chances from ${minWindy}% to ${maxWindy}%`);
         }
-        if (maxHotTemp > 60) {
-            chanceOfHotWeatherNotified(`Warning: High temperature expected (${maxHotTemp}% chance)`);
+        if (maxHotTemp > 10) {
+            chanceOfHotWeatherNotified(`Warning: High temperature expected. Chance is between ${minHotTemp}% and ${maxHotTemp}%`);
         }
     }
 

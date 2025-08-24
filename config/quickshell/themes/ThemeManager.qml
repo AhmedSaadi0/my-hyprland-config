@@ -101,7 +101,9 @@ Singleton {
     readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_themeIcons"]
     readonly property var _gtkPropertyKeys: ["_gtkTheme", "_themeIcons"]
 
-    readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_systemPropertyKeys).concat(_hyprlandPropertyKeys)
+    readonly property var _desktopClockPropertyKeys: ["_desktopClockLocal", "_desktopClockFont", "_desktopClockEnabled", "_desktopClockColor", "_desktopClockFormat", "_desktopClockPosition", "_desktopClockDepthEffectEnabled", "_desktopClockDepthModel", "_desktopClockDepthOverlayPath", "_desktopClockSize", "_desktopClockSahdowColor", "_desktopClockSahdowEnabled"]
+
+    readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_systemPropertyKeys).concat(_hyprlandPropertyKeys).concat(_desktopClockPropertyKeys)
 
     //================================================================
     // القسم 4: معالجات دورة الحياة (Lifecycle Handlers)
@@ -166,12 +168,18 @@ Singleton {
         _resetPropertiesToDefault(_gtkPropertyKeys);
     }
 
+    function resetClockSettings() {
+        console.info("Resetting Desktop Clock settings to default.");
+        _resetPropertiesToDefault(_desktopClockPropertyKeys);
+    }
+
     function resetWholeTheme() {
         resetColorSettings();
         resetWallpaperSystemSettings();
         resetHyprlandSettings();
         resetPlasmaSettings();
         resetGtkSettings();
+        resetClockSettings();
     }
 
     //================================================================
@@ -215,6 +223,7 @@ Singleton {
      */
     function _applyCoreThemeSettings(settings, wallpaperPath) {
         _changeWallpaper(wallpaperPath);
+        _applyDynamicColoring(wallpaperPath, settings);
         _changeQtTheme(settings);
         _changeGtkTheme(settings);
         _changeGtk4Theme(settings);
@@ -246,12 +255,15 @@ Singleton {
 
         const selectedWallpaper = wallpapersList[currentIndex];
         _applyCoreThemeSettings(settings, selectedWallpaper);
-
-        if (settings.enableDynamicColoring) {
-            _dispatchCommand("Apply M4 Theming", Utils.Helper.applyM3PlasmaColor(selectedWallpaper, themeMode));
-        }
+        _applyDynamicColoring(selectedWallpaper, settings);
 
         wallpaperTimer.running = settings.enableDynamicWallpapers || settings.enableDynamicColoring;
+    }
+
+    function _applyDynamicColoring(selectedWallpaper, settings) {
+        if (settings.enableDynamicColoring) {
+            _dispatchCommand("Apply M4 Theming", Utils.Helper.applyM3PlasmaColor(selectedWallpaper, settings.themeMode));
+        }
     }
 
     // 5.3. دوال مساعدة منخفضة المستوى (Low-level Action Helpers)
@@ -429,11 +441,11 @@ Singleton {
             }
             console.info("Cache file not found. It will be created with default values.");
             root._cacheAppliedData();
+            root.selectedThemeUpdated();
         }
     }
 
     // 6.2. عامل جلب الخلفيات (Wallpaper Fetcher Process)
-
     Process {
         id: getWallpapersList
         command: Utils.Helper.getWallpapersList(root.selectedTheme.systemSettings.dynamicWallpapersPath)
@@ -451,6 +463,58 @@ Singleton {
         }
         stderr: SplitParser {
             onRead: data => console.error("Error getting wallpaper list:", data)
+        }
+    }
+
+    function createImageOverlay({
+        model = "u2net",
+        alphaMatting = false,
+        foregroundThreshold = 240,
+        backgroundThreshold = 10,
+        erodeSize = 10
+    }) {
+        const settings = selectedTheme.systemSettings;
+        const cacheFolderPath = App.cacheFolderPath;
+        const cachedImageName = Utils.Helper.generateRandomString(10);
+        const newImagePath = `${cacheFolderPath}/${cachedImageName}.png`;
+
+        createOverlayImageProcess.command = Utils.Helper.createImageOverlayRembg({
+            wallpaperPath: settings.wallpaper,
+            outputPath: newImagePath,
+            model: model,
+            alphaMatting: alphaMatting,
+            foregroundThreshold: foregroundThreshold,
+            backgroundThreshold: backgroundThreshold,
+            erodeSize: erodeSize
+        });
+        createOverlayImageProcess.start(newImagePath);
+    }
+
+    Process {
+        id: createOverlayImageProcess
+
+        property string newImagePath
+
+        command: []
+        stdout: StdioCollector {
+            onStreamFinished: {
+                App.dispatchCommand("send notification of creation", Utils.Helper.sendNotification({
+                    summary: "Image created",
+                    body: `Overlay image created successfully in: ${createOverlayImageProcess.newImagePath}`
+                }));
+                App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
+
+                selectedTheme._desktopClockDepthOverlayPath = createOverlayImageProcess.newImagePath;
+                _cacheAppliedData();
+            }
+        }
+        stderr: SplitParser {
+            onRead: data => console.error("Error getting creating wallpaper overlay: ", data)
+        }
+
+        function start(imagePath) {
+            createOverlayImageProcess.newImagePath = imagePath;
+            createOverlayImageProcess.running = true;
         }
     }
 

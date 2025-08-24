@@ -8,13 +8,13 @@ Color=40,40,40
 Color=40,40,40
 
 [Color0]
-Color=69,64,61
+Color=122,113,108
 
 [Color0Faint]
-Color=69,64,61
+Color=83,77,74
 
 [Color0Intense]
-Color=69,64,61
+Color=111,103,98
 
 [Color1]
 Color=234,105,98
@@ -38,10 +38,10 @@ Color=169,182,101
 Color=216,166,87
 
 [Color3Faint]
-Color=216,166,87
+Color=108,82,44
 
 [Color3Intense]
-Color=216,166,87
+Color=166,126,67
 
 [Color4]
 Color=125,174,163
@@ -89,8 +89,12 @@ Color=212,190,152
 Color=212,190,152
 
 [General]
+Anchor=0.5,0.5
 Blur=false
 ColorRandomization=false
 Description=Gruvbox Material Medium Dark
-Opacity=1
+FillStyle=Tile
+Opacity=0.85
 Wallpaper=
+WallpaperFlipType=NoFlip
+WallpaperOpacity=1
