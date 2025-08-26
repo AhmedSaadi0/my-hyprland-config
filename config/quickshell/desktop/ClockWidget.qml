@@ -24,10 +24,6 @@ Item {
         height = ThemeManager.selectedTheme.desktopClock.size.height;
 
         timeText.color = ThemeManager.selectedTheme.desktopClock.color;
-
-        shadow.shadowColor = ThemeManager.selectedTheme.desktopClock.shadowColor;
-        timeText.layer = ThemeManager.selectedTheme.desktopClock.shadowEnabled;
-    // timeText.text = systemClock.date.toLocaleString(clockLocal, ThemeManager.selectedTheme.desktopClock.format);
     }
 
     Component.onCompleted: {
@@ -135,7 +131,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 20
 
-        text: systemClock.date.toLocaleString(clockLocal, ThemeManager.selectedTheme.desktopClock.format)
+        text: systemClock.date.toLocaleString(Qt.locale(ThemeManager.selectedTheme.desktopClock.local), ThemeManager.selectedTheme.desktopClock.format)
         color: ThemeManager.selectedTheme.desktopClock.color
         font.family: ThemeManager.selectedTheme.desktopClock.font
 

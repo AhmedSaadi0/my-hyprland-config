@@ -109,7 +109,6 @@
 
 ### Desktop Widgets
 
-- [x] **Clock Widget**
-- [x] **Depth Effect**
+- [ ] **Clock Widget**
 - [ ] **Weather**
 - [ ] **Music Widget**

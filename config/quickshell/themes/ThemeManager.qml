@@ -11,49 +11,80 @@ import "root:/config"
 Singleton {
     id: root
 
-    //================================================================
-    // القسم 2: الواجهة العامة (Public API)
-    // - الخصائص والإشارات والدوال التي تتعامل معها واجهة المستخدم بشكل مباشر.
-    //================================================================
-
-    // 2.1. الإشارات (Signals)
     signal selectedThemeUpdated
 
-    // 2.2. الخصائص العامة (Public Properties)
-    property string _currentThemeFile: "" // لتخزين مسار ملف السمة المحمل حالياً
-    property var selectedTheme: ColorsTheme
-    // --- انتهى قسم الإضافة ---
+    property var _activeThemeInstance: null
+
+    readonly property alias selectedTheme: root._activeThemeInstance
+
+    property string _currentThemeFile: ""
+
     property var wallpapersList: []
     property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${selectedTheme.themeName}.json`
 
-    // 2.3. الدوال العامة (Public Functions)
+    // property var selectedTheme: ColorsTheme
+    property var _originalThemeCache: ({})
 
-    /**
-     * يقوم بتحميل سمة جديدة من ملف واستبدال السمة الحالية.
-     * @param themeFile المسار إلى ملف السمة (بدون الامتداد .qml).
-     */
     function loadTheme(themeFile) {
         _stopRunningAllProcess();
-        const component = Qt.createComponent(`${themeFile}.qml`);
-        if (component.status !== Component.Ready) {
-            console.error("Failed to load theme:", component.errorString());
+
+        if (_currentThemeFile === themeFile && _activeThemeInstance) {
+            console.log("Theme already loaded:", themeFile);
             return;
         }
 
-        const themeInstance = component.createObject();
-        if (!themeInstance) {
-            console.error("Failed to create theme object:", themeFile);
+        if (!_originalThemeCache[themeFile]) {
+            console.log(`Theme component for '${themeFile}' not in cache. Creating and caching it now.`);
+            const component = Qt.createComponent(`${themeFile}.qml`);
+            if (component.status !== Component.Ready) {
+                console.error("Failed to load theme component:", component.errorString());
+                if (component)
+                    component.destroy();
+                return;
+            }
+            _originalThemeCache[themeFile] = component;
+        }
+
+        const cachedComponent = _originalThemeCache[themeFile];
+
+        // ================== التغيير الجوهري هنا ==================
+
+        // 1. أنشئ الكائن الجديد واجعل الـ Singleton (root) هو المالك (parent) له.
+        //    هذا يضمن أن دورة حياة الكائن مرتبطة بالـ Singleton.
+        const newThemeInstance = cachedComponent.createObject(root);
+
+        if (!newThemeInstance) {
+            console.error("Failed to create theme object from cached component:", themeFile);
             return;
         }
 
-        root.selectedTheme = themeInstance;
-        root._currentThemeFile = themeFile; // حفظ مسار السمة الحالية
+        // 2. احتفظ بمرجع للكائن القديم قبل أن نستبدله.
+        const oldThemeInstance = root._activeThemeInstance;
+
+        // 3. الآن، قم بتعيين الكائن الجديد. هذا سيؤدي إلى تحديث الواجهة الرسومية
+        //    لأنها مرتبطة بالاسم المستعار selectedTheme.
+        root._activeThemeInstance = newThemeInstance;
+        root._currentThemeFile = themeFile;
+
+        // 4. أرسل الإشارة بعد التعيين مباشرة.
+        root.selectedThemeUpdated();
+
+        // ... (باقي الكود الخاص بحفظ الجلسة وتحميل الكاش) ...
         sessionSaver.setText(JSON.stringify({
             activeThemeName: themeFile
         }));
-
         cacheThemeFile.path = App.themeCacheFolderPath + `/${themeFile}.json`;
         cacheThemeFile.reload();
+
+        // 5. الآن وبعد أن تحولت كل الارتباطات إلى الكائن الجديد، قم بحذف الكائن القديم.
+        //    لأننا المالك الوحيد له، يجب أن يتم حذفه بنجاح.
+        if (oldThemeInstance) {
+            console.log(`Destroying old theme instance '${oldThemeInstance.themeName}'.`);
+            // لا حاجة لـ Qt.callLater هنا لأننا غيرنا المراجع بالفعل.
+            // الحذف المباشر أكثر وضوحًا.
+            oldThemeInstance.destroy();
+        }
+    // =========================================================
     }
 
     /**
@@ -320,45 +351,32 @@ Singleton {
         _dispatchCommand("Plasma Accent Color", Utils.Helper.changePlasmaAccentColor(accentColor));
     }
 
-    /**
-     * دالة مساعدة خاصة لاستعادة مجموعة معينة من الخصائص إلى قيمها الافتراضية.
-     * @param keysToReset مصفوفة من أسماء الخصائص المراد استعادتها.
-     */
     function _resetPropertiesToDefault(keysToReset) {
-        if (!_currentThemeFile) {
-            console.error("Cannot reset properties: Current theme file is unknown.");
+        if (!_currentThemeFile || !_originalThemeCache[_currentThemeFile]) {
+            console.error("Cannot reset properties: The original theme component is not cached.");
             return;
         }
 
-        // 2. إنشاء مكون مؤقت من ملف السمة الأصلي للحصول على القيم الافتراضية
-        const tempComponent = Qt.createComponent(`${_currentThemeFile}.qml`);
-        if (tempComponent.status !== Component.Ready) {
-            console.error("Failed to load temporary theme for reset:", tempComponent.errorString());
-            return;
-        }
+        const cachedComponent = _originalThemeCache[_currentThemeFile];
 
-        const defaultThemeObject = tempComponent.createObject();
+        const defaultThemeObject = cachedComponent.createObject();
+
         if (!defaultThemeObject) {
-            console.error("Failed to create temporary theme object for reset.");
+            console.error("Failed to create temporary theme object from cached component for reset.");
             return;
         }
 
-        // 3. نسخ القيم الافتراضية إلى السمة النشطة
         let modifiedData = {};
         for (const key of keysToReset) {
             if (root.selectedTheme.hasOwnProperty(key) && defaultThemeObject.hasOwnProperty(key)) {
                 const defaultValue = defaultThemeObject[key];
-                root.selectedTheme[key] = defaultValue; // تحديث السمة الحية
-                modifiedData[key] = defaultValue;       // تجميع البيانات للتطبيق
+                root.selectedTheme[key] = defaultValue;
+                modifiedData[key] = defaultValue;
             }
         }
 
-        // 4. تدمير الكائن المؤقت لتحرير الذاكرة
         defaultThemeObject.destroy();
-        tempComponent.destroy();
 
-        // 5. تطبيق التغييرات وحفظها
-        // نقوم بتمرير false لـ saveTheme هنا لأن _cacheAppliedData سيتم استدعاؤها عبر المؤقت
         updateAndApplyTheme(modifiedData, true);
     }
 

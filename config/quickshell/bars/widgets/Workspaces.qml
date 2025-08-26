@@ -13,8 +13,9 @@ Rectangle {
     property var activeIcons: ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰆈", "󱍙", "󰺵", "󱋡", "󰙨"]
     property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰆉", "󱍚", "󰺶", "󱋢", "󰤑"]
     property int focusedId: Hyprland.focusedWorkspace !== null ? Hyprland.focusedWorkspace.id : 0
-    property string primaryColor: ThemeManager.selectedTheme.colors.primary
+
     readonly property var workspaceIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    readonly property var reversedWorkspaceIds: workspaceIds.slice().reverse()
 
     property var focusedItem: null
 
@@ -43,12 +44,13 @@ Rectangle {
 
     RowLayout {
         id: rowLayout
-        anchors.centerIn: parent
+        anchors.top: parent
         spacing: 5
 
         Repeater {
-            // model: workspaceRectangle.workspaceIds
-            model: workspaceRectangle.workspaceIds.reverse() // For rtl layout
+            // --- (تحسين) ---
+            // استخدام الخاصية المحسوبة مسبقًا
+            model: workspaceRectangle.reversedWorkspaceIds
 
             delegate: MouseArea {
                 id: workspaceMouseArea
@@ -59,10 +61,10 @@ Rectangle {
                 readonly property bool isFocused: workspaceId === workspaceRectangle.focusedId
                 readonly property bool exists: Hyprland.workspaces.values.some(ws => ws.id === workspaceId)
                 readonly property color defaultItemColor: {
-                    if (isFocused) {
-                        workspaceRectangle.primaryColor;
-                    } else if (exists) {
-                        workspaceRectangle.primaryColor;
+                    // --- (تم التعديل) ---
+                    // استخدام الربط المباشر بالثيم
+                    if (isFocused || exists) {
+                        ThemeManager.selectedTheme.colors.primary;
                     } else {
                         palette.text.alpha(0.4);
                     }
@@ -80,29 +82,26 @@ Rectangle {
 
                     font.pixelSize: workspaceRectangle.fontSize
                     font.family: ThemeManager.selectedTheme.typography.iconFont
-                    color: workspaceMouseArea.containsMouse ? workspaceRectangle.primaryColor : workspaceMouseArea.defaultItemColor
+                    // --- (تم التعديل) ---
+                    // استخدام الربط المباشر بالثيم
+                    color: workspaceMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary : workspaceMouseArea.defaultItemColor
 
-                    // (مُحسَّن) أنميشن لتغيير اللون بسلاسة
                     Behavior on color {
                         ColorAnimation {
-                            duration: 250 // تم زيادة المدة لتتوافق مع حركة المؤشر
+                            duration: 250
                             easing.type: Easing.InOutQuad
                         }
                     }
 
                     onTextChanged: {
-                        // 2. نقوم بإعادة تشغيل الأنيميشن في كل مرة
                         if (exists) {
                             fadeTransition.restart();
                         }
                     }
 
-                    // (جديد) 3. هذا هو الأنيميشن الذي سيقوم بعملية التلاشي
                     SequentialAnimation {
                         id: fadeTransition
-                        running: false // لا يعمل تلقائيًا، نحن نشغله يدويًا
-
-                        // الخطوة الأولى: تلاشى للخارج
+                        running: false
                         PropertyAnimation {
                             target: iconText
                             property: "opacity"
@@ -110,8 +109,6 @@ Rectangle {
                             duration: 150
                             easing.type: Easing.InQuad
                         }
-
-                        // الخطوة الثالثة: تلاشى للداخل
                         PropertyAnimation {
                             target: iconText
                             property: "opacity"
@@ -133,7 +130,8 @@ Rectangle {
 
         height: workspaceRectangle.underlineHeight
         anchors.bottom: parent.bottom
-        // anchors.horizontalCenterOffset: -2
+        // --- (تم التعديل) ---
+        // التأكد من استخدام الربط المباشر هنا أيضًا
         color: ThemeManager.selectedTheme.colors.primary
         radius: height / 2
 

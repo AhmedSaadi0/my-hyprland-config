@@ -1,4 +1,4 @@
-// MenuCard.qml
+// windows/leftwindow/dashboard/Themes.qml
 
 import QtQuick
 import QtQuick.Controls
@@ -9,6 +9,7 @@ import Qt.labs.platform
 
 import "../../../components"
 import "../../../themes"
+import "./settings"
 import "root:/utils/helpers.js" as Helper
 
 MenuCard {
@@ -33,12 +34,31 @@ MenuCard {
         }
     }
 
-    property var workingTheme: ({})
+    // property var workingTheme: ({})
+    property var workingTheme: root.copyTheme(ThemeManager.selectedTheme)
+
     ListModel {
         id: colorModel
     }
 
     readonly property var themePropertyKeys: ThemeManager._allSerializableKeys
+
+    function updateWorkingTheme(sourceTheme) {
+        if (!sourceTheme || !workingTheme)
+            return;
+
+        // مسح الخصائص القديمة (اختياري ولكنه جيد لتجنب بقاء قيم قديمة)
+        for (const key in workingTheme) {
+            delete workingTheme[key];
+        }
+
+        // نسخ الخصائص الجديدة إلى الكائن الموجود
+        for (const key of root.themePropertyKeys) {
+            if (sourceTheme.hasOwnProperty(key)) {
+                workingTheme[key] = sourceTheme[key];
+            }
+        }
+    }
 
     function copyTheme(themeObject) {
         if (!themeObject)
@@ -53,29 +73,39 @@ MenuCard {
     }
 
     function populateColorModel(theme) {
-        colorModel.clear();
-        if (!theme || Object.keys(theme).length === 0)
+        if (!theme || Object.keys(theme).length === 0) {
+            colorModel.clear();
             return;
+        }
+
+        // استخدام bulk update لتحسين الأداء ومنع التسريبات المحتملة
+        var newModelData = [];
 
         function appendColor(label, bgProp, fgProp, isEnabled) {
             const bgColor = theme[bgProp];
             const fgColor = fgProp ? theme[fgProp] : "transparent";
-            const enabled = isEnabled;
 
-            colorModel.append({
+            // إضافة فحص للتأكد من أن الألوان ليست undefined قبل استخدامها
+            if (typeof bgColor === 'undefined') {
+                console.warn(`Warning: '${bgProp}' is undefined in the current theme.`);
+                return; // تخطي هذا اللون لتجنب الأخطاء
+            }
+
+            newModelData.push({
                 "label": label,
                 "bgPropName": bgProp,
                 "fgPropName": fgProp,
                 "bgColor": bgColor,
                 "fgColor": fgColor,
-                "bgColorString": bgColor !== undefined ? Qt.color(bgColor).toString() : "",
+                "bgColorString": Qt.color(bgColor).toString(),
                 "fgColorString": Qt.color(fgColor).toString(),
-                "enabled": enabled
+                "enabled": isEnabled
             });
         }
 
+        const isDynamic = !theme._enableDynamicColoring;
         appendColor("Primary", "_primary", "_onPrimary", !workingTheme._enableDynamicColoring);
-        appendColor("Secondary", "_secondary", "_onSecondary", !workingTheme._enableDynamicColoring);
+        appendColor("Secondary", "_secondary", "_onSecondary", isDynamic);
         appendColor("Topbar Color", "_topbarColor", "_topbarFgColor", !workingTheme._enableDynamicColoring);
         appendColor("Topbar BG V1", "_topbarBgColorV1", "_topbarFgColorV1", !workingTheme._enableDynamicColoring);
         appendColor("Topbar BG V2", "_topbarBgColorV2", "_topbarFgColorV2", !workingTheme._enableDynamicColoring);
@@ -85,18 +115,27 @@ MenuCard {
         appendColor("Left Menu BG V3", "_leftMenuBgColorV3", "_leftMenuFgColorV3", !workingTheme._enableDynamicColoring);
         appendColor("OSD", "_volOsdBgColor", "_volOsdFgColor", !workingTheme._enableDynamicColoring);
         appendColor("Subtle Text", "_subtleTextColor", "_subtleTextColor", !workingTheme._enableDynamicColoring);
+
+        colorModel.clear();
+        colorModel.append(newModelData);
     }
 
     Component.onCompleted: {
-        root.workingTheme = copyTheme(ThemeManager.selectedTheme);
+        // لم نعد بحاجة لتهيئة workingTheme هنا لأنه تم تهيئته عند التعريف.
+        // نحتاج فقط لملء النموذج لأول مرة.
         populateColorModel(root.workingTheme);
     }
 
+    // --- (4) تعديل: تبسيط Connections ---
     Connections {
         target: ThemeManager
         function onSelectedThemeUpdated() {
-            root.workingTheme = copyTheme(ThemeManager.selectedTheme);
+            // تحديث workingTheme بالقيم الجديدة من الثيم الذي تم تحميله
+            root.updateWorkingTheme(ThemeManager.selectedTheme);
             populateColorModel(root.workingTheme);
+
+            // إشعار الواجهة بالتغييرات
+            root.workingThemeChanged();
         }
     }
 
@@ -308,50 +347,9 @@ MenuCard {
                 }
             }
 
-            M3GroupBox {
-                title: "Actions & Resets"
-                Layout.fillWidth: true
-                GridLayout {
-                    columns: 2
-                    Layout.fillWidth: true
-                    MButton {
-                        Layout.fillWidth: true
-                        Layout.preferredWidth: 30
-                        text: "Reset Colors"
-                        onClicked: ThemeManager.resetColorSettings()
-                    }
-                    MButton {
-                        Layout.fillWidth: true
-                        Layout.preferredWidth: 30
-                        text: "Reset Wallpapers"
-                        onClicked: ThemeManager.resetWallpaperSystemSettings()
-                    }
-                    MButton {
-                        Layout.fillWidth: true
-                        text: "Reset Hyprland"
-                        onClicked: ThemeManager.resetHyprlandSettings()
-                    }
-                    MButton {
-                        Layout.fillWidth: true
-                        text: "Reset Plasma/QT"
-                        onClicked: ThemeManager.resetPlasmaSettings()
-                    }
-                    MButton {
-                        Layout.fillWidth: true
-                        text: "Reset GTK"
-                        onClicked: ThemeManager.resetGtkSettings()
-                    }
-                    MButton {
-                        Layout.fillWidth: true
-                        text: "Next Wallpaper"
-                        onClicked: ThemeManager.switchToNextWallpaper()
-                        iconText: ""
-                        textPreferredWidth: 7
-                        enabled: workingTheme._enableDynamicWallpapers
-                    }
-                }
-            }
+            ActionsAndResets {}
 
+            // TODO: -> Mode to new files and use components
             M3GroupBox {
                 title: "Wallpaper Settings"
                 Layout.fillWidth: true
@@ -601,7 +599,7 @@ MenuCard {
 
                         model: ["u2net", "isnet-general-use"]
 
-                        currentIndex: model.indexOf(workingTheme._desktopClockDepthModel) >= 0 ? model.indexOf(workingTheme._desktopClockDepthModel) : 0
+                        currentIndex: workingTheme._desktopClockDepthModel ? model.indexOf(workingTheme._desktopClockDepthModel) : 0
 
                         onCurrentTextChanged: {
                             workingTheme._desktopClockDepthModel = currentText;
