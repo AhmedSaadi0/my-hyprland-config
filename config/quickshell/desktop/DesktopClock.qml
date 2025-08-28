@@ -23,6 +23,7 @@ Item {
     y: clockPosition.y
     width: clockSize.width
     height: clockSize.height
+
     transformOrigin: Item.Center
 
     SequentialAnimation {
@@ -75,6 +76,7 @@ Item {
             damping: 0.4
         }
     }
+
     Behavior on width {
         enabled: !root.editMode
         NumberAnimation {
@@ -82,6 +84,7 @@ Item {
             easing.type: Easing.InOutCubic
         }
     }
+
     Behavior on height {
         enabled: !root.editMode
         NumberAnimation {
@@ -124,6 +127,13 @@ Item {
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
+        }
+
+        Behavior on font.pointSize {
+            NumberAnimation {
+                duration: 600
+                easing.type: Easing.InOutCubic
+            }
         }
     }
 

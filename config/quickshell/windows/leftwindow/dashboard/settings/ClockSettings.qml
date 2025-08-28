@@ -78,6 +78,7 @@ M3GroupBox {
             textValue: workingTheme._desktopClockFormat
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked
+            onEditFinished: workingTheme._desktopClockFormat = text
         }
 
         SettingTextField {
@@ -85,6 +86,7 @@ M3GroupBox {
             textValue: workingTheme._desktopClockLocal
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked
+            onEditFinished: workingTheme._desktopClockLocal = text
         }
 
         SettingTextField {
@@ -92,6 +94,7 @@ M3GroupBox {
             textValue: workingTheme._desktopClockFont
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked
+            onEditFinished: workingTheme._desktopClockFont = text
         }
 
         Rectangle {
@@ -174,6 +177,7 @@ M3GroupBox {
             textValue: root.backgroundThreshold
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked && _enableDepthEffectSwitch.isChecked && _enableAlphaMatting.isChecked
+            onEditFinished: workingTheme.backgroundThreshold = text
         }
 
         SettingTextField {
@@ -181,6 +185,7 @@ M3GroupBox {
             textValue: root.foregroundThreshold
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked && _enableDepthEffectSwitch.isChecked && _enableAlphaMatting.isChecked
+            onEditFinished: workingTheme.foregroundThreshold = text
         }
 
         SettingTextField {
@@ -188,6 +193,7 @@ M3GroupBox {
             textValue: root.erodeSize
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked && _enableDepthEffectSwitch.isChecked && _enableAlphaMatting.isChecked
+            onEditFinished: workingTheme.erodeSize = text
         }
 
         SettingButton {

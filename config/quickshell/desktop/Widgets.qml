@@ -21,14 +21,24 @@ PanelWindow {
 
     readonly property var clockSettings: Theme.ThemeManager.selectedTheme.desktopClock
 
-    property point currentClockPosition: clockSettings.position
-    property size currentClockSize: clockSettings.size
+    // property point currentClockPosition: clockSettings.position
+    // property size currentClockSize: clockSettings.size
 
-    ClockWidget {
+    property point currentClockPosition
+    property size currentClockSize
+
+    // قم بتهيئتها مرة واحدة عند اكتمال تحميل المكون
+    Component.onCompleted: {
+        currentClockPosition = clockSettings.position;
+        currentClockSize = clockSettings.size;
+    }
+
+    DesktopClock {
         id: theClock
 
         clockPosition: currentClockPosition
         clockSize: currentClockSize
+
         visible: clockSettings.enabled
         editMode: false
         clockColor: clockSettings.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary : clockSettings.color
@@ -44,9 +54,7 @@ PanelWindow {
                     "_desktopClockPosition": newPosition,
                     "_desktopClockSize": newSize
                 };
-                console.info("SAAAA -> " + updatedData);
                 Theme.ThemeManager.updateAndApplyTheme(updatedData, true);
-
                 theClock.playSaveFeedbackAnimation();
             }
         }

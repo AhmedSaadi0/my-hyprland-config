@@ -13,6 +13,8 @@ RowLayout {
 
     property var selectedTheme
 
+    signal editFinished(string text)
+
     Label {
         text: root.label
         Layout.alignment: Qt.AlignVCenter
@@ -28,5 +30,7 @@ RowLayout {
         topRightRadius: selectedTheme.dimensions.elementRadius
         bottomLeftRadius: selectedTheme.dimensions.elementRadius
         bottomRightRadius: selectedTheme.dimensions.elementRadius
+
+        onEditingFinished: root.editFinished(text)
     }
 }

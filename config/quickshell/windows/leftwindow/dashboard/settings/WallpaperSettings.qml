@@ -47,12 +47,14 @@ M3GroupBox {
             label: "Wallpapers interval (ms)"
             textValue: workingTheme._dynamicWallpapersInterval
             selectedTheme: root.selectedTheme
+            onEditFinished: workingTheme._dynamicWallpapersInterval = text
         }
 
         SettingTextField {
             label: "Selected Wallpaper (index)"
             textValue: workingTheme._selectedWallpaperIndex
             selectedTheme: root.selectedTheme
+            onEditFinished: workingTheme._selectedWallpaperIndex = text
         }
 
         SettingButton {
