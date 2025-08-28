@@ -137,9 +137,7 @@ MenuCard {
         id: dynamicWallpaperFolderDialog
         title: "Please choose a wallpapers folder"
         onAccepted: {
-            // FolderDialog يُرجع المسار في خاصية اسمها folder
             const folderPath = this.folder.toString().replace("file://", "");
-            wallpaperFolderSelectButton.text = folderPath;
             workingTheme._dynamicWallpapersPath = folderPath;
         }
     }
@@ -150,7 +148,6 @@ MenuCard {
         nameFilters: ["Image files (*.jpg *.jpeg *.png *.bmp)", "All files (*.*)"]
         onAccepted: {
             const filePath = file.toString().replace("file://", "");
-            wallpaperImageSelectButton.text = filePath;
             workingTheme._wallpaper = filePath;
         }
     }
@@ -161,7 +158,6 @@ MenuCard {
         nameFilters: ["Image files (*.jpg *.jpeg *.png)", "All files (*.*)"]
         onAccepted: {
             const filePath = file.toString().replace("file://", "");
-            overlayImageButton.text = filePath;
             workingTheme._desktopClockDepthOverlayPath = filePath;
         }
     }
