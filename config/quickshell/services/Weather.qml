@@ -5,6 +5,8 @@ import QtQuick
 import Quickshell.Io
 import Quickshell
 
+import "root:/config"
+
 Singleton {
     id: root
 
@@ -115,7 +117,7 @@ Singleton {
         })
 
     // ========================================================================
-    // 1. Properties
+    // 1. Prperties
     // ========================================================================
     property bool isLoading: true
     property string lastUpdated: ""
@@ -157,13 +159,16 @@ Singleton {
     // 3. Logic
     // ========================================================================
     function getWeatherData() {
+        const location = App.weather.location;
+        // const local = App.weather.language;
+
+        getWeatherProcess.command = ['curl', `https://wttr.in/${location}?format=j1`];
         getWeatherProcess.running = true;
     }
 
     Process {
         id: getWeatherProcess
-        // IMPORTANT: Changed URL to get English data (removed "ar.")
-        command: ['curl', 'https://wttr.in/Sanaa?format=j1']
+        // command: ['curl', 'https://wttr.in/Sanaa?format=j1']
         stdout: StdioCollector {
             onStreamFinished: {
                 const output = this.text;
@@ -389,10 +394,10 @@ Singleton {
         // --== إرسال الإشعارات مع النطاق الكامل (الأدنى والأقصى) ==--
 
         if (maxRain > 10) {
-            chanceOfRainNotified(`Chance of rain today ranges from ${minRain}% to ${maxRain}%`);
+            chanceOfRainNotified(`Min chance of rain today is ${minRain} max is ${maxRain}%`);
         }
         if (maxSnow > 20) {
-            chanceOfSnowNotified(`Chance of snow today ranges from ${minSnow}% to ${maxSnow}%`);
+            chanceOfSnowNotified(`Min chance of snow today is ${minSnow}% max is ${maxSnow}%`);
         }
         if (maxFrost > 10) {
             chanceOfFrostNotified(`Warning: Chance of frost today is between ${minFrost}% and ${maxFrost}%`);
