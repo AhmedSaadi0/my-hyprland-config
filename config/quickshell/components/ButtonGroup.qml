@@ -1,30 +1,31 @@
-// components/ButtonGroup.qml
-
 import QtQuick
-// import QtQuick.Controls
 
-import "root:/themes"
 import "root:/utils/helpers.js" as Helper
 
 Item {
-    id: buttonGroup
+    id: root
 
-    // --- Public API ---
     property alias model: buttonRepeater.model
     property int currentIndex: -1
     property int itemSpacing: 10
     property int buttonHeight: 30
     property bool useHand: false
 
+    property var theme
+
+    implicitWidth: 50
+    implicitHeight: buttonContainer.implicitHeight
+
     Rectangle {
         id: highlightIndicator
-        x: 0
-        width: buttonGroup.width
-        height: buttonGroup.buttonHeight
-        y: buttonGroup.currentIndex * (buttonGroup.buttonHeight + buttonGroup.itemSpacing)
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        color: ThemeManager.selectedTheme.colors.primary
-        opacity: buttonGroup.currentIndex !== -1 ? 1.0 : 0.0
+
+        width: root.width
+        height: root.buttonHeight
+        y: root.currentIndex * (root.buttonHeight + root.itemSpacing)
+
+        radius: root.theme ? root.theme.dimensions.elementRadius : 8
+        color: root.theme ? root.theme.colors.primary : "blue"
+        opacity: root.currentIndex !== -1 ? 1.0 : 0.0
 
         Behavior on y {
             NumberAnimation {
@@ -42,63 +43,57 @@ Item {
     Column {
         id: buttonContainer
         anchors.fill: parent
-        spacing: buttonGroup.itemSpacing
+        spacing: root.itemSpacing
 
         Repeater {
             id: buttonRepeater
 
-            // --- DELEGATE MODIFIED FOR BADGE ---
             delegate: Item {
-                // This Item is a container for the button and the badge
                 width: buttonContainer.width
-                height: buttonGroup.buttonHeight
+                height: root.buttonHeight
 
-                // The original MButton is now placed inside the container
                 MButton {
                     id: button
-                    anchors.fill: parent // Fill the container
-
-                    isActive: buttonGroup.currentIndex === index
-                    normalBackground: "transparent"
-                    activeBackground: "transparent"
-                    hoveredBackground: isActive ? "transparent" : ThemeManager.selectedTheme.colors.primary
+                    anchors.fill: parent
 
                     text: model.icon
                     activeText: model.activeIcon
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
+                    isActive: root.currentIndex === index
+                    hoverEnabled: true
+
+                    // استخدام مباشر لقيم السمة مع قيم افتراضية
+                    font.family: root.theme ? root.theme.typography.iconFont : "sans-serif"
                     font.pixelSize: 15
 
-                    onClicked: {
-                        var newIndex = (buttonGroup.currentIndex === index) ? -1 : index;
-                        buttonGroup.currentIndex = newIndex;
-                    }
+                    normalBackground: "transparent"
+                    activeBackground: "transparent"
+                    hoveredBackground: isActive ? "transparent" : (root.theme ? root.theme.colors.primary : "blue")
 
-                    hoverEnabled: true
-                    // تغيير شكل المؤشر بناءً على قيمة المتغير useHand
-                    cursorShape: buttonGroup.useHand ? Qt.PointingHandCursor : Qt.ArrowCursor
+                    cursorShape: root.useHand ? Qt.PointingHandCursor : Qt.ArrowCursor
+
+                    onClicked: {
+                        root.currentIndex = (root.currentIndex === index) ? -1 : index;
+                    }
                 }
 
-                // --- BADGE ADDED HERE ---
-                // This Rectangle is the notification badge
-
-                // --- BADGE ADDED HERE ---
                 Rectangle {
                     id: badgeCircle
+
                     width: 15
                     height: 15
-                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                    color: ThemeManager.selectedTheme.colors.primary
+
+                    // استخدام مباشر لقيم السمة مع قيم افتراضية
+                    radius: root.theme ? root.theme.dimensions.elementRadius : 8
+                    color: root.theme ? root.theme.colors.primary : "blue"
+                    visible: model.notificationCount && model.notificationCount > 0
                     opacity: 0.0
                     scale: 0.7
-                    visible: model.notificationCount && model.notificationCount > 0
 
-                    // Position in the top-right corner of the button area
                     anchors.top: parent.top
                     anchors.right: parent.right
                     anchors.topMargin: 2
                     anchors.rightMargin: 2
 
-                    // Animation for visibility and scale on appear
                     states: State {
                         name: "visible"
                         when: badgeCircle.visible
@@ -117,28 +112,28 @@ Item {
                         }
                     }
 
-                    // النص داخل الـ badge
                     Text {
                         id: badgeText
+
                         text: model.notificationCount
-                        anchors.centerIn: parent
-                        // color: ThemeManager.selectedTheme.colors.onPrimary
-                        color: Helper.getAccurteTextColor(ThemeManager.selectedTheme.colors.primary)
+                        // استخدام مباشر لقيم السمة مع قيم افتراضية
+                        color: root.theme ? Helper.getAccurteTextColor(root.theme.colors.primary) : "white"
                         font.bold: true
                         font.pixelSize: 8
 
+                        anchors.centerIn: parent
                         property int oldCount: -1
 
-                        onTextChanged: function (text) {
+                        onTextChanged: {
                             if (oldCount !== -1 && oldCount !== text) {
                                 textAnimation.restart();
                             }
                             oldCount = text;
                         }
 
-                        // تعريف الأنميشن عند التغيير
                         SequentialAnimation {
                             id: textAnimation
+
                             NumberAnimation {
                                 target: badgeText
                                 property: "scale"

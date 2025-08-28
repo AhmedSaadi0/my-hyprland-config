@@ -19,8 +19,6 @@ PanelWindow {
 
     color: "transparent"
 
-    property real cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-
     anchors {
         right: true
         top: true
@@ -39,6 +37,7 @@ PanelWindow {
             right: parent.right
         }
         position: "top-right"
-        cornerRadius: root.cornerRadius
+        cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+        shapeColor: ThemeManager.selectedTheme.colors.volOsdBgColor
     }
 }

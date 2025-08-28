@@ -116,6 +116,7 @@ Item {
                 delegate: NotificationItem {
                     width: notifView.width
                     notification: model.smartNotif
+                    theme: ThemeManager.selectedTheme
 
                     onDismissClicked: {
                         if (model.smartNotif) {

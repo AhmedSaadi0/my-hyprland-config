@@ -102,6 +102,7 @@ PanelWindow {
 
         ButtonGroup {
             id: buttonGroup
+            theme: ThemeManager.selectedTheme
             implicitWidth: 30
             implicitHeight: 300
             anchors.left: parent.left

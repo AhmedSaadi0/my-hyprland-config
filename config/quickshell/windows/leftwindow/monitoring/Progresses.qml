@@ -1,10 +1,8 @@
 // windows/leftwindow/monitoring/Progresses.qml
-// import QtQuick.Effects
+
 import QtQuick
 import QtQuick.Layouts
-// import org.kde.kirigami as Kirigami
 
-// import "../../../components" // For Tempreture, Battery, Ram, Cpu
 import "root:/components/monitors" // For Tempreture, Battery, Ram, Cpu
 import "root:/themes"
 
@@ -54,19 +52,34 @@ Rectangle {
     // Define the components to be loaded by MonitorWidget
     Component {
         id: tempComponent
-        Tempreture {}
+        Tempreture {
+
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+        }
     }
     Component {
         id: batComponent
-        Battery {}
+        Battery {
+            glowIcon: false
+            iconColor: ThemeManager.selectedTheme.colors.primary
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+            backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
+            foregroundColor: ThemeManager.selectedTheme.colors.primary
+        }
     }
     Component {
         id: ramComponent
-        Ram {}
+        Ram {
+
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+        }
     }
     Component {
         id: cpuComponent
-        Cpu {}
+        Cpu {
+
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+        }
     }
 
     RowLayout {

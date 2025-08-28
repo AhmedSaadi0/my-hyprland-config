@@ -2,10 +2,6 @@ import Quickshell
 import QtQuick.Effects
 import QtQuick
 
-// import QtQuick.Controls.Material
-// import QtQuick.Controls
-// import org.kde.kirigami as Kirigami
-
 import "../themes"
 import "./widgets"
 import "./systemtray"

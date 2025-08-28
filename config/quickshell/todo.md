@@ -1,114 +1,116 @@
-### 🖥️ Core UI Components
+## 🎨 الواجهة (UI & UX)
 
-- [x] **System Tray (Systray)**
-- [ ] **Application Launcher**
-- [ ] **Scratchpads** (for quick-access apps like calculator, notes, terminal)
+- **Core UI**
+  - [x] System Tray (Systray)
+  - [ ] Application Launcher
+  - [ ] Scratchpads
 
-### 🔔 On-Screen Displays (OSDs)
+- **Menus**
+  - [x] Left Menu Navigation
+  - [x] Left Menu Animations
+  - [ ] Clipboard Manager
+  - [ ] Todo List
+  - [ ] Hyprland Control
+  - [ ] Quickshell Control (Dashboard حالياً)
+  - [ ] Keybindings Cheatsheet
+  - [ ] Launched Apps List
 
-- [x] **Notifications**
-- [x] **Sound OSD**
-- [x] **Brightness OSD**
-- [x] **Volume & Brightness Popup Animations**
-- [x] **Battery Status OSD**
+- **Widgets**
+  - [x] Clock Widget
+  - [x] Depth Effect
+  - [x] Support Depth Effect for Dynamic Wallpapers
+  - [ ] Depth effect for each wallpaper in dynamic wallpapers
+  - [ ] Auto Depth Effect generation + clock adaptation
+  - [ ] Weather Widget
+  - [ ] Music Widget
 
-### 🌤️ Weather Integration
+---
 
-- [x] **Weather Service (Backend)**
-- [x] **Weather Widget (UI)**
-- [x] **Severe Weather Alerts**
+## 🔔 الإشعارات & OSD (Notifications & OSD)
 
-### 🌐 Network Management
-
-- [ ] **Network Manager Interface**
-- [ ] **VPN Status Indicator**
-- [ ] **Quick Toggle for Wi-Fi / Airplane Mode**
-
-### 🧰 Device Management
-
-- [ ] **Audio Devices Control**
-- [ ] **Screen/Display Settings**
-- [ ] **Bluetooth Manager UI**
-- [ ] **Battery & Power Profiles Integration**
-
-### 🕌 Prayer Time Service
-
-- [ ] **Prayer Time Notifications & Widget**
-- [ ] **Hijri Date Display on Desktop**
-
-### 🎵 Music Player Integration
-
-- [ ] **Dynamic Island Support**
-- [ ] **Cava Visualization**
-- [ ] **Media Controls Widget**
-- [ ] **Lyrics Display (Live sync)**
-
-### 🤖 AI Integration
-
-- [ ] **AI API Support**
-- [ ] **Quick AI Assistant (Prompt overlay)**
-- [ ] **Clipboard AI Summarizer**
-
-### 🎨 Themes & Personalization
-
-- [x] **Theme Service**
-- [x] **Automatic Wallpaper Changer**
-- [x] **Material 3 (M3) Dynamic Coloring**
-- [x] **Dynamic Wallpaper Folders Support**
-- [x] **Feature Control Window (UI to Toggle Features)**
-- [x] **Create a config file**
-- [x] **Custom Full Themes**
-- [x] **Fix Reset theme to default btn**
-- [x] **Add an option to reset colors to default**
-- [x] **Add more options to control like radius, and hyprland settings**
-- [x] **Add Dracula Theme**
-- [x] **Add Gruvbox Theme**
-- [x] **Add Catppuccin Theme**
-- [x] **Add Tokyo Night Theme**
-- [x] **Support gtk4 themes by replacing files in `.config/gtk-4.0/`**
-- [ ] **Add an option to halt dynamic wallpapers changing**
-- [ ] **Add Solarized Theme**
-- [ ] **Add Rosé Pine Theme**
-- [ ] **Add Oxocarbon Theme**
-- [ ] **Extends color schema up to 6 colors**
-
-### 🧠 Productivity & UX
-
-- [ ] **Keyboard Layout Switch Indicator**
-- [x] **Improve Menu Cards**
-- [x] **Notifications History Center**
-  - [x] Add Action buttons
-  - [x] Fix Race Condition
-  - [x] Dismissal Synchronization
+- [x] Notifications
+- [x] Notifications History Center
+  - [x] Action buttons
+  - [x] Race Condition Fix
+  - [x] Dismissal Sync
   - [x] Responsive Timer
-  - [x] Fix Logic Duplication
-  - [x] Add sound with Notifications
-  - [x] Implement DND
-- [x] **Improve Menus Navigation**
-- [x] **Improve Animations**
-  - [x] Menu
-  - [x] Notifications
-  - [x] Navigation
+  - [x] Sound with Notifications
+  - [x] DND
 
-### Left Menu
+- [x] Sound OSD
+- [x] Brightness OSD
+- [x] Battery Status OSD
+- [x] Volume & Brightness Animations
 
-- [x] **Left Menu Navigation**
-- [x] **Left Menu Animations**
-- [ ] **Clipboard Manager**
-- [ ] **App Launcher** - or maybe in another place
-- [ ] **Todo List**
-- [ ] **Hyprland Control**
-- [ ] **Quickshell Control** -> right now is Dashboard
-- [ ] **Keybindings Cheatsheet**
-- [ ] **Launched Apps** -> not a menu, but a list of the apps that are currently running
+---
 
-### Code Improvements
+## 🧰 إدارة النظام (System & Devices)
 
-- [ ] **Create a Component for Theme Settings Text & Label**
-- [x] **On Wallpaper Settings when TextField Must be updated before save**
+- **Network**
+  - [ ] Network Manager Interface
+  - [ ] VPN Status Indicator
+  - [ ] Quick Wi-Fi / Airplane Toggle
 
-### Desktop Widgets
+- **Devices**
+  - [ ] Audio Devices Control
+  - [ ] Screen / Display Settings
+  - [ ] Bluetooth Manager UI
+  - [ ] Battery & Power Profiles Integration
 
-- [ ] **Clock Widget**
-- [ ] **Weather**
-- [ ] **Music Widget**
+---
+
+## 🌤️ الخدمات (Services)
+
+- **Weather**
+  - [x] Weather Service (Backend)
+  - [x] Severe Weather Alerts
+
+- **Prayer Time**
+  - [ ] Prayer Time Notifications & Widget
+  - [ ] Hijri Date Display
+
+- **Music**
+  - [ ] Dynamic Island Support
+  - [ ] Cava Visualization
+  - [ ] Media Controls Widget
+  - [ ] Lyrics Display (Live sync)
+
+- **AI**
+  - [ ] AI API Support
+  - [ ] Quick AI Assistant (Prompt overlay)
+  - [ ] Clipboard AI Summarizer
+
+---
+
+## 🎨 الثيمات والتخصيص (Themes & Personalization)
+
+- [x] Theme Service
+- [x] Automatic Wallpaper Changer
+- [x] Material 3 (M3) Dynamic Coloring
+- [x] Dynamic Wallpaper Folders
+- [x] Feature Control Window
+- [x] Config File
+- [x] Custom Full Themes
+- [x] Reset Theme Fix + Colors Reset
+- [x] Add more controls (radius, hyprland settings)
+- [x] Dracula, Gruvbox, Catppuccin, Tokyo Night Themes
+- [x] GTK4 Theme Support
+- [ ] Halt Dynamic Wallpapers option
+- [ ] Solarized, Rosé Pine, Oxocarbon Themes
+- [ ] Extend Color Schema (6 colors)
+
+---
+
+## 🧠 تحسينات وتجربة المستخدم (Productivity & UX)
+
+- [ ] Keyboard Layout Switch Indicator
+- [x] Improve Menu Cards
+- [x] Improve Menus Navigation
+- [x] Improve Animations (Menu, Notifications, Navigation)
+
+---
+
+## 🛠️ تحسين الكود (Code Improvements)
+
+- [x] Create Component for Theme Settings Text & Label
+- [x] Wallpaper Settings: TextField update before save

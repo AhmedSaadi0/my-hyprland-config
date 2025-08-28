@@ -2,6 +2,7 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import QtQuick
 import QtQuick.Window
 import Quickshell.Io
 
@@ -14,6 +15,19 @@ import "root:/desktop"
 
 ShellRoot {
     id: shellRoot
+
+    readonly property var _selectedTheme: ThemeManager.selectedTheme
+
+    Component.onCompleted: {
+        Qt.setContextProperty("currentTheme", _selectedTheme);
+    }
+
+    Connections {
+        target: ThemeManager
+        function onSelectedThemeChanged() {
+            Qt.setContextProperty("currentTheme", ThemeManager.selectedTheme);
+        }
+    }
 
     signal openLeftPanelRequested(int selectedIndex)
 

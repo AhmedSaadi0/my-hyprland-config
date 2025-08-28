@@ -1,10 +1,7 @@
-// desktop/Widgets.qml (الإصدار النهائي والكامل)
-
 import QtQuick
 import Quickshell
-import QtQuick.Effects
 
-import "root:/themes"
+import "root:/themes" as Theme
 import "root:/components"
 
 PanelWindow {
@@ -22,57 +19,67 @@ PanelWindow {
     focusable: true
     exclusionMode: ExclusionMode.Ignore
 
-    // خاصية لتخزين مسار الصورة الجديد مؤقتًا
-    property string nextImageSource: ThemeManager.selectedTheme.desktopClock.depthOverlayPath
+    readonly property var clockSettings: Theme.ThemeManager.selectedTheme.desktopClock
 
-    ClockWidget {}
+    property point currentClockPosition: clockSettings.position
+    property size currentClockSize: clockSettings.size
+
+    ClockWidget {
+        id: theClock
+
+        clockPosition: currentClockPosition
+        clockSize: currentClockSize
+        visible: clockSettings.enabled
+        editMode: false
+        clockColor: clockSettings.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary : clockSettings.color
+        clockFont: clockSettings.font
+        clockFormat: clockSettings.format
+        clockLocale: clockSettings.local
+        shadowEnabled: clockSettings.shadowEnabled
+        shadowColor: clockSettings.shadowColor
+
+        onEditModeToggled: (editing, newPosition, newSize) => {
+            if (!editing) {
+                const updatedData = {
+                    "_desktopClockPosition": newPosition,
+                    "_desktopClockSize": newSize
+                };
+                console.info("SAAAA -> " + updatedData);
+                Theme.ThemeManager.updateAndApplyTheme(updatedData, true);
+
+                theClock.playSaveFeedbackAnimation();
+            }
+        }
+    }
+
+    Connections {
+        target: Theme.ThemeManager
+        function onSelectedThemeUpdated() {
+            currentClockPosition = clockSettings.position;
+            currentClockSize = clockSettings.size;
+            foregroundImage.opacity = 0;
+        }
+    }
 
     Image {
         id: foregroundImage
         z: 2
-        opacity: 1 // تبدأ الصورة مرئية بالكامل
+        opacity: 1
 
-        visible: ThemeManager.selectedTheme.desktopClock.depthEffectEnabled
-        source: ThemeManager.selectedTheme.desktopClock.depthOverlayPath
+        visible: clockSettings.depthEffectEnabled
 
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
 
-        // أنميشن للتلاشي عند تغيير الشفافية
         Behavior on opacity {
             NumberAnimation {
                 duration: 500
-            } // مدة أنميشن التلاشي 500 ميلي ثانية
-        }
-
-        Timer {
-            id: imageChangeTimer
-            interval: 800 // 800 ميلي ثانية تأخير
-            repeat: false
-            onTriggered: {
-                // عند انتهاء المؤقت، نبدأ عملية التغيير مع الأنميشن
-                // أولاً، نجعل الصورة الحالية شفافة
-                foregroundImage.opacity = 0;
             }
         }
 
-        // مراقبة التغيير في مسار الصورة
-        Connections {
-            target: ThemeManager.selectedTheme.desktopClock
-            function onDepthOverlayPathChanged() {
-                // نخزن المصدر الجديد ونبدأ المؤقت
-                nextImageSource = ThemeManager.selectedTheme.desktopClock.depthOverlayPath;
-                imageChangeTimer.restart();
-            }
-        }
-
-        // عندما ينتهي أنميشن التلاشي للخارج (تصبح الصورة شفافة)
         onOpacityChanged: {
-            // إذا كانت الصورة قد أصبحت شفافة تمامًا ومصدرها لا يطابق المصدر الجديد
-            if (foregroundImage.opacity === 0 && foregroundImage.source !== nextImageSource) {
-                // نغير المصدر إلى الصورة الجديدة
-                foregroundImage.source = nextImageSource;
-                // ثم نعيد الشفافية إلى 1 لتبدأ الصورة الجديدة في الظهور (أنميشن التلاشي للداخل)
+            if (foregroundImage.opacity === 0 && foregroundImage.source !== clockSettings.depthOverlayPath) {
+                foregroundImage.source = clockSettings.depthOverlayPath;
                 foregroundImage.opacity = 1;
             }
         }
@@ -83,8 +90,8 @@ PanelWindow {
         z: -1
 
         onPressed: {
-            if (clockComponent.editMode) {
-                clockComponent.editMode = false;
+            if (theClock.editMode) {
+                theClock.editMode = false;
             }
             mouse.accepted = false;
         }

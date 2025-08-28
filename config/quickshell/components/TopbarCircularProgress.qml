@@ -5,8 +5,6 @@ import Quickshell.Io
 import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
 
-import "../themes"
-
 CircularProgress {
     id: root
 
@@ -24,6 +22,7 @@ CircularProgress {
 
     property bool running: true
     property string icon: ""
+    property string iconFontFamily: "FantasqueSansM Nerd Font Propo"
     property int iconFontSize: 11
     property color iconColor: palette.accent
     property var command
@@ -46,7 +45,7 @@ CircularProgress {
         text: root.icon
         color: root.iconColor
         font.pixelSize: root.iconFontSize
-        font.family: ThemeManager.selectedTheme.typography.iconFont
+        font.family: root.iconFontFamily
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         layer.enabled: true

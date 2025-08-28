@@ -64,7 +64,7 @@ Rectangle {
                     // --- (تم التعديل) ---
                     // استخدام الربط المباشر بالثيم
                     if (isFocused || exists) {
-                        ThemeManager.selectedTheme.colors.primary;
+                        ThemeManager.selectedTheme ? ThemeManager.selectedTheme.colors.primary : null;
                     } else {
                         palette.text.alpha(0.4);
                     }

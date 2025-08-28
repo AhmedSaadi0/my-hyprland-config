@@ -13,85 +13,53 @@ Singleton {
 
     signal selectedThemeUpdated
 
+    property bool _isThemeLoading: false
     property var _activeThemeInstance: null
+    property string _currentThemeFile: ""
+    property var _originalThemeCache: ({})
+    property var wallpapersList: []
 
     readonly property alias selectedTheme: root._activeThemeInstance
+    readonly property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${selectedTheme.themeName}.json`
 
-    property string _currentThemeFile: ""
+    readonly property var _colorPropertyKeys: ["themeName", "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor",]
+    readonly property var _dimensionPropertyKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
+    readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading2Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
+    readonly property var _systemPropertyKeys: ["_wallpaper", "_qtThemeStyle", "_kvantumTheme", "_gtkTheme", "_themeIcons", "_themeMode", "_plasmaColorScheme", "_konsoleProfile", "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_enableAccentColoring"]
+    readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
+    readonly property var _wallpaperSystemPropertyKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper"]
+    readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_themeIcons"]
+    readonly property var _gtkPropertyKeys: ["_gtkTheme", "_themeIcons"]
+    readonly property var _desktopClockPropertyKeys: ["_desktopClockLocal", "_desktopClockFont", "_desktopClockEnabled", "_desktopClockColor", "_desktopClockFormat", "_desktopClockPosition", "_desktopClockDepthEffectEnabled", "_desktopClockDepthModel", "_desktopClockDepthOverlayPath", "_desktopClockSize", "_desktopClockSahdowColor", "_desktopClockSahdowEnabled", "_desktopClockUseThemeColor"]
+    readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_systemPropertyKeys).concat(_hyprlandPropertyKeys).concat(_desktopClockPropertyKeys)
 
-    property var wallpapersList: []
-    property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${selectedTheme.themeName}.json`
+    Component.onCompleted: {
+        console.info("Application starting. Loading last session...");
+        startUpTimer.start();
+    }
 
-    // property var selectedTheme: ColorsTheme
-    property var _originalThemeCache: ({})
+    //================================================================
+    // Public API
+    //================================================================
 
-    function loadTheme(themeFile) {
-        _stopRunningAllProcess();
+    function requestLoadTheme(themeFile) {
+        if (_isThemeLoading) {
+            console.warn(`Request to load '${themeFile}' ignored: a theme is already being loaded.`);
+            return;
+        }
 
         if (_currentThemeFile === themeFile && _activeThemeInstance) {
             console.log("Theme already loaded:", themeFile);
             return;
         }
 
-        if (!_originalThemeCache[themeFile]) {
-            console.log(`Theme component for '${themeFile}' not in cache. Creating and caching it now.`);
-            const component = Qt.createComponent(`${themeFile}.qml`);
-            if (component.status !== Component.Ready) {
-                console.error("Failed to load theme component:", component.errorString());
-                if (component)
-                    component.destroy();
-                return;
-            }
-            _originalThemeCache[themeFile] = component;
-        }
+        console.log("Starting to load theme:", themeFile);
+        _isThemeLoading = true;
 
-        const cachedComponent = _originalThemeCache[themeFile];
-
-        // ================== التغيير الجوهري هنا ==================
-
-        // 1. أنشئ الكائن الجديد واجعل الـ Singleton (root) هو المالك (parent) له.
-        //    هذا يضمن أن دورة حياة الكائن مرتبطة بالـ Singleton.
-        const newThemeInstance = cachedComponent.createObject(root);
-
-        if (!newThemeInstance) {
-            console.error("Failed to create theme object from cached component:", themeFile);
-            return;
-        }
-
-        // 2. احتفظ بمرجع للكائن القديم قبل أن نستبدله.
-        const oldThemeInstance = root._activeThemeInstance;
-
-        // 3. الآن، قم بتعيين الكائن الجديد. هذا سيؤدي إلى تحديث الواجهة الرسومية
-        //    لأنها مرتبطة بالاسم المستعار selectedTheme.
-        root._activeThemeInstance = newThemeInstance;
-        root._currentThemeFile = themeFile;
-
-        // 4. أرسل الإشارة بعد التعيين مباشرة.
-        root.selectedThemeUpdated();
-
-        // ... (باقي الكود الخاص بحفظ الجلسة وتحميل الكاش) ...
-        sessionSaver.setText(JSON.stringify({
-            activeThemeName: themeFile
-        }));
-        cacheThemeFile.path = App.themeCacheFolderPath + `/${themeFile}.json`;
-        cacheThemeFile.reload();
-
-        // 5. الآن وبعد أن تحولت كل الارتباطات إلى الكائن الجديد، قم بحذف الكائن القديم.
-        //    لأننا المالك الوحيد له، يجب أن يتم حذفه بنجاح.
-        if (oldThemeInstance) {
-            console.log(`Destroying old theme instance '${oldThemeInstance.themeName}'.`);
-            // لا حاجة لـ Qt.callLater هنا لأننا غيرنا المراجع بالفعل.
-            // الحذف المباشر أكثر وضوحًا.
-            oldThemeInstance.destroy();
-        }
-    // =========================================================
+        _stopRunningAllProcess();
+        _performLoadAndApply(themeFile);
     }
 
-    /**
-     * يقوم بتحديث السمة الحالية بالبيانات المعدلة ثم تطبيقها على النظام.
-     * @param modifiedThemeData كائن يحتوي على الخصائص المراد تحديثها.
-     * @param saveTheme منطقي، إذا كان يجب حفظ التغييرات بشكل دائم.
-     */
     function updateAndApplyTheme(modifiedThemeData, saveTheme) {
         if (!selectedTheme || !modifiedThemeData) {
             console.error("Cannot update theme: invalid data received.");
@@ -101,10 +69,8 @@ Singleton {
         const preserveColorBindings = modifiedThemeData._enableDynamicColoring;
         console.info("Updating live theme. Preserving reactive color bindings:", preserveColorBindings);
 
-        // حقن الخصائص الجديدة في السمة الحالية
         for (const key in modifiedThemeData) {
             if (root.selectedTheme.hasOwnProperty(key)) {
-                // إذا كان التلوين الديناميكي مفعلًا، لا تقم بالكتابة فوق خصائص الألوان للحفاظ على الربط التفاعلي
                 if (preserveColorBindings && _colorPropertyKeys.includes(key)) {
                     continue;
                 }
@@ -112,88 +78,39 @@ Singleton {
             }
         }
 
-        // تطبيق الإعدادات على النظام
         _applyExternalSettings(saveTheme);
     }
 
-    //================================================================
-    // القسم 3: الحالة الداخلية والثوابت (Internal State & Constants)
-    // - خصائص للقراءة فقط تستخدم داخليًا لتنظيم منطق العمل.
-    //================================================================
-
-    readonly property var _colorPropertyKeys: ["themeName", "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor",]
-    readonly property var _dimensionPropertyKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
-    readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading2Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
-    readonly property var _systemPropertyKeys: ["_wallpaper", "_qtThemeStyle", "_kvantumTheme", "_gtkTheme", "_themeIcons", "_themeMode", "_plasmaColorScheme", "_konsoleProfile", "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_enableAccentColoring"]
-    readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
-
-    // خصائص محددة للاستعادة
-    readonly property var _wallpaperSystemPropertyKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper"]
-    readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_themeIcons"]
-    readonly property var _gtkPropertyKeys: ["_gtkTheme", "_themeIcons"]
-
-    readonly property var _desktopClockPropertyKeys: ["_desktopClockLocal", "_desktopClockFont", "_desktopClockEnabled", "_desktopClockColor", "_desktopClockFormat", "_desktopClockPosition", "_desktopClockDepthEffectEnabled", "_desktopClockDepthModel", "_desktopClockDepthOverlayPath", "_desktopClockSize", "_desktopClockSahdowColor", "_desktopClockSahdowEnabled"]
-
-    readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_systemPropertyKeys).concat(_hyprlandPropertyKeys).concat(_desktopClockPropertyKeys)
-
-    //================================================================
-    // القسم 4: معالجات دورة الحياة (Lifecycle Handlers)
-    // - يتم تشغيلها عند إنشاء المكون.
-    //================================================================
-
-    Component.onCompleted: {
-        console.info("Application starting. Loading last session...");
-        startUpTimer.start();
-    }
-
-    /**
-     * ينتقل إلى الخلفية التالية في القائمة إذا كانت الخلفيات الديناميكية مفعلة.
-     */
     function switchToNextWallpaper() {
-        if (!selectedTheme.systemSettings.enableDynamicWallpapers || wallpapersList.length === 1) {
-            console.info("Cannot switch wallpaper: Dynamic wallpapers are not enabled or list is empty.");
+        if (!selectedTheme.systemSettings.enableDynamicWallpapers || wallpapersList.length <= 1) {
+            console.info("Cannot switch wallpaper: Dynamic wallpapers are not enabled or list is too short.");
             return;
         }
         console.info("Switching to the next wallpaper manually.");
         wallpaperTimer.triggered();
-        wallpaperTimer.restart(); // إعادة تشغيل المؤقت ليبدأ العد من جديد
+        wallpaperTimer.restart();
     }
 
-    /**
-     * يستعيد إعدادات الألوان إلى القيم الافتراضية للسمة الحالية.
-     */
     function resetColorSettings() {
         console.info("Resetting color settings to default.");
         _resetPropertiesToDefault(_colorPropertyKeys);
     }
 
-    /**
-     * يستعيد إعدادات الخلفية (ديناميكية، مسار، ...) إلى القيم الافتراضية.
-     */
     function resetWallpaperSystemSettings() {
         console.info("Resetting wallpaper system settings to default.");
         _resetPropertiesToDefault(_wallpaperSystemPropertyKeys);
     }
 
-    /**
-     * يستعيد إعدادات Hyprland إلى القيم الافتراضية للسمة.
-     */
     function resetHyprlandSettings() {
         console.info("Resetting Hyprland settings to default.");
         _resetPropertiesToDefault(_hyprlandPropertyKeys);
     }
 
-    /**
-     * يستعيد إعدادات Plasma (الألوان، الأيقونات، ...) إلى القيم الافتراضية.
-     */
     function resetPlasmaSettings() {
         console.info("Resetting Plasma settings to default.");
         _resetPropertiesToDefault(_plasmaPropertyKeys);
     }
 
-    /**
-     * يستعيد إعدادات GTK (السمة، الأيقونات) إلى القيم الافتراضية.
-     */
     function resetGtkSettings() {
         console.info("Resetting GTK settings to default.");
         _resetPropertiesToDefault(_gtkPropertyKeys);
@@ -213,16 +130,97 @@ Singleton {
         resetClockSettings();
     }
 
+    function createImageOverlay(options) {
+        const settings = selectedTheme.systemSettings;
+        const cacheFolderPath = App.cacheFolderPath;
+        const cachedImageName = Utils.Helper.generateRandomString(10);
+        const newImagePath = `${cacheFolderPath}/${cachedImageName}.png`;
+
+        let currentIndex = settings.selectedWallpaperIndex;
+        const dynamicWallpaper = wallpapersList[currentIndex];
+        const wallpaper = settings.enableDynamicWallpapers ? dynamicWallpaper : settings.wallpaper;
+
+        const commandOptions = {
+            wallpaperPath: wallpaper,
+            outputPath: newImagePath,
+            model: options.model || "u2net",
+            alphaMatting: options.alphaMatting || false,
+            foregroundThreshold: options.foregroundThreshold || 240,
+            backgroundThreshold: options.backgroundThreshold || 10,
+            erodeSize: options.erodeSize || 10
+        };
+
+        createOverlayImageProcess.command = Utils.Helper.createImageOverlayRembg(commandOptions);
+        createOverlayImageProcess.start(newImagePath);
+    }
+
     //================================================================
-    // القسم 5: المنطق الداخلي (Internal Logic)
-    // - الدوال الخاصة التي تدير عملية تطبيق السمات وحفظها.
+    // Internal State Machine & Logic
     //================================================================
 
-    // 5.1. تنسيق تطبيق السمة (Theme Application Coordination)
+    function _performLoadAndApply(themeFile) {
+        if (!_originalThemeCache[themeFile]) {
+            const component = Qt.createComponent(`${themeFile}.qml`);
+            if (component.status !== Component.Ready) {
+                console.error("Failed to load theme component:", component.errorString());
+                if (component)
+                    component.destroy();
+                _finalizeThemeLoad(false);
+                return;
+            }
+            _originalThemeCache[themeFile] = component;
+        }
+        const cachedComponent = _originalThemeCache[themeFile];
+        const newThemeInstance = cachedComponent.createObject(root);
 
-    /**
-     * الدالة المنسقة الرئيسية. تقرأ من السمة الحالية وتطبق الإعدادات.
-     */
+        if (!newThemeInstance) {
+            console.error("Failed to create theme object from cached component:", themeFile);
+            _finalizeThemeLoad(false);
+            return;
+        }
+
+        const oldThemeInstance = root._activeThemeInstance;
+        root._activeThemeInstance = newThemeInstance;
+        root._currentThemeFile = themeFile;
+
+        if (oldThemeInstance) {
+            if (themeDestroyerTimer.running) {
+                themeDestroyerTimer.triggered();
+                themeDestroyerTimer.stop();
+            }
+            themeDestroyerTimer.themeToDestroy = oldThemeInstance;
+            themeDestroyerTimer.start();
+        }
+
+        sessionSaver.setText(JSON.stringify({
+            activeThemeName: themeFile
+        }));
+
+        cacheThemeFile.path = App.themeCacheFolderPath + `/${themeFile}.json`;
+        cacheThemeFile.reload();
+    }
+
+    function _onCacheLoaded(text) {
+        let data = {};
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.error("Failed to parse cache file, applying default values.", e);
+        }
+
+        updateAndApplyTheme(data, true);
+        _finalizeThemeLoad(true);
+    }
+
+    function _finalizeThemeLoad(success) {
+        if (success) {
+            console.log("Theme loading process completed successfully for:", root._currentThemeFile);
+        } else {
+            console.error("Theme loading process failed.");
+        }
+        _isThemeLoading = false;
+    }
+
     function _applyExternalSettings(saveTheme) {
         if (!root.selectedTheme)
             return;
@@ -234,8 +232,8 @@ Singleton {
         getWallpapersList.running = false;
 
         if (settings.enableDynamicWallpapers) {
-            getWallpapersList.command = Utils.Helper.getWallpapersList(root.selectedTheme.systemSettings.dynamicWallpapersPath);
-            getWallpapersList.running = true; // يبدأ عملية جلب الخلفيات وتطبيقها
+            getWallpapersList.command = Utils.Helper.getWallpapersList(settings.dynamicWallpapersPath);
+            getWallpapersList.running = true;
         } else {
             _applyStaticTheme(settings);
         }
@@ -249,67 +247,42 @@ Singleton {
         }
     }
 
-    /**
-     * يطبق الإعدادات الأساسية المشتركة بين الوضع الثابت والديناميكي.
-     */
     function _applyCoreThemeSettings(settings, wallpaperPath) {
         _changeWallpaper(wallpaperPath);
         _applyDynamicColoring(wallpaperPath, settings);
         _changeQtTheme(settings);
         _changeGtkTheme(settings);
         _changeGtk4Theme(settings);
-        _setHyprlandConfigurations(settings);
+        _setHyprlandConfigurations();
     }
 
-    /**
-     * يطبق السمة الثابتة (خلفية واحدة).
-     */
     function _applyStaticTheme(settings) {
         _applyCoreThemeSettings(settings, settings.wallpaper);
     }
 
-    // 5.2. منطق الخلفيات الديناميكية (Dynamic Wallpaper Logic)
-
-    /**
-     * يطبق الخلفية الديناميكية بناءً على وضع السمة (فاتح/داكن).
-     */
     function _applyDynamicWallpaper() {
         const settings = selectedTheme.systemSettings;
-        const themeMode = settings.themeMode;
-
         let currentIndex = settings.selectedWallpaperIndex;
 
-        if (currentIndex >= wallpapersList.length && wallpapersList.length != 1) {
-            currentIndex = 1;
-            selectedTheme._selectedWallpaperIndex = 1;
+        if (currentIndex >= wallpapersList.length && wallpapersList.length !== 0) {
+            currentIndex = 0;
+            selectedTheme._selectedWallpaperIndex = 0;
         }
 
         const selectedWallpaper = wallpapersList[currentIndex];
         _applyCoreThemeSettings(settings, selectedWallpaper);
-        _applyDynamicColoring(selectedWallpaper, settings);
 
         wallpaperTimer.running = settings.enableDynamicWallpapers || settings.enableDynamicColoring;
     }
 
     function _applyDynamicColoring(selectedWallpaper, settings) {
         if (settings.enableDynamicColoring) {
-            _dispatchCommand("Apply M4 Theming", Utils.Helper.applyM3PlasmaColor(selectedWallpaper, settings.themeMode));
+            _dispatchCommand("Apply M3 Theming", Utils.Helper.applyM3PlasmaColor(selectedWallpaper, settings.themeMode));
         }
     }
 
-    // 5.3. دوال مساعدة منخفضة المستوى (Low-level Action Helpers)
-
-    /**
-     * يرسل أمرًا تنفيذيًا عبر Hyprland.
-     */
     function _dispatchCommand(description, commandArray) {
         App.dispatchCommand(description, commandArray);
-    // if (!Array.isArray(commandArray) || commandArray.length === 1) {
-    //     console.warn(`Skipping empty command: ${description}`);
-    //     return;
-    // }
-    // console.info(description + " -> " + commandArray.join(' '));
-    // Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 
     function _changeWallpaper(path) {
@@ -347,7 +320,6 @@ Singleton {
 
     function _applyAccentColor() {
         const accentColor = selectedTheme.colors.primary;
-        // ملاحظة: استدعاء الأمر مرتين هو حل بديل لمشكلة في تطبيق اللون بشكل موثوق.
         _dispatchCommand("Plasma Accent Color", Utils.Helper.changePlasmaAccentColor(accentColor));
     }
 
@@ -358,11 +330,10 @@ Singleton {
         }
 
         const cachedComponent = _originalThemeCache[_currentThemeFile];
-
         const defaultThemeObject = cachedComponent.createObject();
 
         if (!defaultThemeObject) {
-            console.error("Failed to create temporary theme object from cached component for reset.");
+            console.error("Failed to create temporary theme object for reset.");
             return;
         }
 
@@ -376,15 +347,9 @@ Singleton {
         }
 
         defaultThemeObject.destroy();
-
         updateAndApplyTheme(modifiedData, true);
     }
 
-    // 5.4. حفظ البيانات والتخزين المؤقت (Data Persistence & Caching)
-
-    /**
-     * يجمع البيانات الحالية من السمة ويحفظها في ملف التخزين المؤقت.
-     */
     function _cacheAppliedData() {
         let dataToSave = {};
         for (const key of _allSerializableKeys) {
@@ -392,8 +357,9 @@ Singleton {
                 dataToSave[key] = root.selectedTheme[key];
             }
         }
-        cacheThemeFile.setText(JSON.stringify(dataToSave, null, 3));
+        cacheThemeFile.setText(JSON.stringify(dataToSave, null, 2));
         console.info(`Data for '${selectedTheme.themeName}' saved to ${cacheThemeFile.path}`);
+        root.selectedThemeUpdated();
     }
 
     function _stopRunningAllProcess() {
@@ -405,26 +371,23 @@ Singleton {
     }
 
     //================================================================
-    // القسم 6: المكونات الفرعية والعاملة (Child Components & Workers)
-    // - عناصر لإدارة العمليات غير المتزامنة، والمؤقتات، وملفات الإدخال/الإخراج.
+    // Child Components & Workers
     //================================================================
-
-    // 6.1. عمال إدارة الملفات (File I/O Workers)
 
     FileView {
         id: sessionLoader
         onLoaded: {
             try {
                 const session = JSON.parse(this.text());
-                root.loadTheme(session.activeThemeName || "ColorsTheme");
+                root.requestLoadTheme(session.activeThemeName || "ColorsTheme");
             } catch (e) {
                 console.error("Failed to parse session file, loading default theme.", e);
-                root.loadTheme("ColorsTheme");
+                root.requestLoadTheme("ColorsTheme");
             }
         }
         onLoadFailed: {
             console.info("Session file not found. Starting with default theme.");
-            root.loadTheme("ColorsTheme");
+            root.requestLoadTheme("ColorsTheme");
         }
     }
 
@@ -435,46 +398,32 @@ Singleton {
 
     FileView {
         id: cacheThemeFile
-        path: root.targetedCacheThemeFile
         watchChanges: false
-
         onLoaded: {
-            // if (this.path !== root.targetedCacheThemeFile) {
-            //     console.warn("Ignoring stale cache load for:", this.path);
-            //     return; // تجاهل هذه النتيجة لأنها قديمة
-            // }
-            try {
-                const data = JSON.parse(cacheThemeFile.text());
-                root.updateAndApplyTheme(data, true);
-            } catch (e) {
-                console.error("Failed to read cache file, applying default values.", e);
-                root.loadTheme("ColorsTheme");
-                root.updateAndApplyTheme({}, true);
+            if (root._isThemeLoading) {
+                _onCacheLoaded(this.text());
+            } else {
+                console.warn("Ignoring stale cache load for:", this.path);
             }
         }
         onLoadFailed: {
-            if (this.path !== root.targetedCacheThemeFile) {
-                console.warn("Ignoring stale cache load for:", this.path);
-                return; // تجاهل هذه النتيجة لأنها قديمة
+            if (root._isThemeLoading) {
+                console.info("Cache file not found. Applying default values.");
+                _onCacheLoaded("{}");
+            } else {
+                console.warn("Ignoring stale cache load failure for:", this.path);
             }
-            console.info("Cache file not found. It will be created with default values.");
-            root._cacheAppliedData();
-            root.selectedThemeUpdated();
         }
     }
 
-    // 6.2. عامل جلب الخلفيات (Wallpaper Fetcher Process)
     Process {
         id: getWallpapersList
-        command: Utils.Helper.getWallpapersList(root.selectedTheme.systemSettings.dynamicWallpapersPath)
-
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
                     root.wallpapersList = JSON.parse(this.text);
                     root._applyDynamicWallpaper();
                 } catch (e) {
-                    console.error(root.selectedTheme.systemSettings.dynamicWallpapersPath);
                     console.error("Failed to parse wallpapers list:", e);
                 }
             }
@@ -484,55 +433,27 @@ Singleton {
         }
     }
 
-    function createImageOverlay({
-        model = "u2net",
-        alphaMatting = false,
-        foregroundThreshold = 240,
-        backgroundThreshold = 10,
-        erodeSize = 10
-    }) {
-        const settings = selectedTheme.systemSettings;
-        const cacheFolderPath = App.cacheFolderPath;
-        const cachedImageName = Utils.Helper.generateRandomString(10);
-        const newImagePath = `${cacheFolderPath}/${cachedImageName}.png`;
-
-        createOverlayImageProcess.command = Utils.Helper.createImageOverlayRembg({
-            wallpaperPath: settings.wallpaper,
-            outputPath: newImagePath,
-            model: model,
-            alphaMatting: alphaMatting,
-            foregroundThreshold: foregroundThreshold,
-            backgroundThreshold: backgroundThreshold,
-            erodeSize: erodeSize
-        });
-        createOverlayImageProcess.start(newImagePath);
-    }
-
     Process {
         id: createOverlayImageProcess
-
         property string newImagePath
-
-        command: []
         stdout: StdioCollector {
             onStreamFinished: {
-                App.dispatchCommand("send notification of creation", Utils.Helper.sendNotification({
+                App.dispatchCommand("send notification", Utils.Helper.sendNotification({
                     summary: "Image created",
                     body: `Overlay image created successfully in: ${createOverlayImageProcess.newImagePath}`
                 }));
                 App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
-
                 selectedTheme._desktopClockDepthOverlayPath = createOverlayImageProcess.newImagePath;
                 _cacheAppliedData();
             }
         }
         stderr: SplitParser {
-            onRead: data => console.error("Error getting creating wallpaper overlay: ", data)
+            onRead: data => console.error("Error creating wallpaper overlay:", data)
         }
 
         function start(imagePath) {
-            createOverlayImageProcess.newImagePath = imagePath;
-            createOverlayImageProcess.running = true;
+            this.newImagePath = imagePath;
+            this.running = true;
         }
     }
 
@@ -541,7 +462,6 @@ Singleton {
         repeat: true
         running: false
         interval: root.selectedTheme?.systemSettings?.dynamicWallpapersInterval || 60000
-
         onTriggered: {
             root.selectedTheme._selectedWallpaperIndex++;
             root._applyDynamicWallpaper();
@@ -563,18 +483,27 @@ Singleton {
         id: startUpTimer
         interval: 1000
         repeat: false
-        onTriggered: {
-            sessionLoader.path = App.themeCacheFilePath;
-        }
+        onTriggered: sessionLoader.path = App.themeCacheFilePath
     }
 
     Timer {
         id: sendChangedSignalTimer
         interval: 1000
         repeat: false
+        onTriggered: root._cacheAppliedData()
+    }
+
+    Timer {
+        id: themeDestroyerTimer
+        interval: 1000
+        repeat: false
+        property var themeToDestroy: null
         onTriggered: {
-            root._cacheAppliedData();
-            root.selectedThemeUpdated();
+            if (themeToDestroy) {
+                console.info(`(Delayed) Destroying old theme instance '${themeToDestroy.themeName}'.`);
+                themeToDestroy.destroy();
+                themeToDestroy = null;
+            }
         }
     }
 }

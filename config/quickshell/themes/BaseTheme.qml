@@ -118,6 +118,7 @@ PersistentProperties {
     property bool _desktopClockSahdowEnabled: false
     property color _desktopClockSahdowColor: "#40000000"
     property color _desktopClockColor: _primary
+    property bool _desktopClockUseThemeColor: true
     property string _desktopClockLocal: "en_US"
     property string _desktopClockFormat: "hh:mm AP"
     property string _desktopClockFont: _bodyFont
@@ -244,6 +245,7 @@ PersistentProperties {
         property alias shadowEnabled: root._desktopClockSahdowEnabled
         property alias shadowColor: root._desktopClockSahdowColor
         property alias color: root._desktopClockColor
+        property alias useThemeColor: root._desktopClockUseThemeColor
         property alias local: root._desktopClockLocal
         property alias format: root._desktopClockFormat
         property alias font: root._desktopClockFont

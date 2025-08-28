@@ -156,6 +156,7 @@ PanelWindow {
             width: 350
             notification: toastRoot.notification
             onDismissClicked: hide()
+            theme: ThemeManager.selectedTheme
             onActionInvoked: index => {
                 if (toastRoot.notification) {
                     toastRoot.notification.invokeAction(index);

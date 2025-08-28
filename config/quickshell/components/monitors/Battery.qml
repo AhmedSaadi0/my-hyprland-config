@@ -11,14 +11,7 @@ TopbarCircularProgress {
     command: ["ls"] // TODO: -> use a better way than calling fake command to run the interval
     updateInterval: 1000 * 10
 
-    // value: UPower.onBattery
-    // running: false
-
     icon: ""
-
-    iconColor: ThemeManager.selectedTheme.colors.primary
-    backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
-    foregroundColor: ThemeManager.selectedTheme.colors.primary
 
     onReadHandler: data => {
         const battery = UPower.devices.values[0];

@@ -1,26 +1,22 @@
 // components/EditableField.qml
-
 import QtQuick
 import QtQuick.Controls
 
-import "root:/themes"
-
-// EditText that checks if input is a color and changes accordingly
 TextField {
     id: root
 
     topPadding: 0
     bottomPadding: 0
 
-    property color normalBackground: ThemeManager.selectedTheme.colors.topbarBgColorV2
-    property color normalForeground: ThemeManager.selectedTheme.colors.topbarFgColorV2
-    property color borderColor: ThemeManager.selectedTheme.colors.secondary
+    property color normalBackground: "transparent"
+    property color normalForeground: "white"
+    property color borderColor: "gray"
     property int borderSize: 1
 
-    property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property int topLeftRadius: 8
+    property int topRightRadius: 8
+    property int bottomLeftRadius: 8
+    property int bottomRightRadius: 8
 
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter

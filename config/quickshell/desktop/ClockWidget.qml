@@ -2,109 +2,88 @@ import QtQuick
 import Quickshell
 import QtQuick.Effects
 
-import "root:/themes"
-import "root:/components"
-
 Item {
-    id: clockComponent
+    id: root
 
-    transformOrigin: Item.Center
     property bool editMode: false
-    property bool isHovered: dragArea.hovered || resizeHandle.isHovered
+    property point clockPosition: Qt.point(100, 100)
+    property size clockSize: Qt.size(700, 501)
+    property color clockColor: "white"
+    property string clockFont: "sans-serif"
+    property string clockFormat: "hh:mm AP"
+    property string clockLocale: "en_US"
+    property bool shadowEnabled: false
+    property color shadowColor: "#40000000"
 
-    readonly property var clockLocal: Qt.locale(ThemeManager.selectedTheme.desktopClock.local)
+    signal positionChanged(point newPosition)
+    signal sizeChanged(size newSize)
+    signal editModeToggled(bool isEditing, point newPosition, size newSize)
 
-    function syncWithTheme() {
-        console.log("Syncing clock widget with current theme values.");
-
-        visible = ThemeManager.selectedTheme.desktopClock.enabled;
-        x = ThemeManager.selectedTheme.desktopClock.position.x;
-        y = ThemeManager.selectedTheme.desktopClock.position.y;
-        width = ThemeManager.selectedTheme.desktopClock.size.width;
-        height = ThemeManager.selectedTheme.desktopClock.size.height;
-
-        timeText.color = ThemeManager.selectedTheme.desktopClock.color;
-    }
-
-    Component.onCompleted: {
-        syncWithTheme();
-    }
-
-    onEditModeChanged: {
-        if (!editMode) {
-            console.log("Exiting edit mode. Saving clock position and size.");
-            const updatedData = {
-                "_desktopClockPosition": Qt.point(clockComponent.x, clockComponent.y),
-                "_desktopClockSize": Qt.size(clockComponent.width, clockComponent.height)
-            };
-            ThemeManager.updateAndApplyTheme(updatedData, true);
-        }
-    }
-
-    Connections {
-        target: ThemeManager
-        function onSelectedThemeUpdated() {
-            if (clockComponent.editMode) {
-                return;
-            }
-            changePositionTimer.start();
-        }
-    }
-
-    Timer {
-        id: changePositionTimer
-        interval: 800
-        repeat: false
-        onTriggered: {
-            visualEffectAnimation.start();
-            syncWithTheme();
-        }
-    }
+    x: clockPosition.x
+    y: clockPosition.y
+    width: clockSize.width
+    height: clockSize.height
+    transformOrigin: Item.Center
 
     SequentialAnimation {
-        id: visualEffectAnimation
+        id: saveFeedbackAnimation
         PropertyAnimation {
-            target: clockComponent
-            properties: "opacity, scale"
-            to: 0.8
-            duration: 150
-            easing.type: Easing.InQuad
+            target: root
+            property: "rotation"
+            to: -1.5
+            duration: 80
+            easing.type: Easing.InOutQuad
         }
         PropertyAnimation {
-            target: clockComponent
-            properties: "opacity, scale"
-            to: 1.0
-            duration: 600
+            target: root
+            property: "rotation"
+            to: 1.5
+            duration: 80
+            easing.type: Easing.InOutQuad
+        }
+        PropertyAnimation {
+            target: root
+            property: "rotation"
+            to: -1.5
+            duration: 80
+            easing.type: Easing.InOutQuad
+        }
+        PropertyAnimation {
+            target: root
+            property: "rotation"
+            to: 0
+            duration: 100
             easing.type: Easing.OutElastic
-            easing.amplitude: 1.2
-            easing.period: 0.8
         }
+    }
+
+    function playSaveFeedbackAnimation() {
+        saveFeedbackAnimation.start();
     }
 
     Behavior on x {
-        enabled: !clockComponent.editMode
+        enabled: !root.editMode
         SpringAnimation {
             spring: 3.0
             damping: 0.4
         }
     }
     Behavior on y {
-        enabled: !clockComponent.editMode
+        enabled: !root.editMode
         SpringAnimation {
             spring: 3.0
             damping: 0.4
         }
     }
-
     Behavior on width {
-        enabled: !clockComponent.editMode
+        enabled: !root.editMode
         NumberAnimation {
             duration: 600
             easing.type: Easing.InOutCubic
         }
     }
     Behavior on height {
-        enabled: !clockComponent.editMode
+        enabled: !root.editMode
         NumberAnimation {
             duration: 600
             easing.type: Easing.InOutCubic
@@ -122,34 +101,26 @@ Item {
         border.color: "white"
         border.width: 3
         radius: 9
-        visible: clockComponent.editMode
+        visible: root.editMode
     }
 
     Text {
         id: timeText
-
         anchors.fill: parent
         anchors.margins: 20
-
-        text: systemClock.date.toLocaleString(Qt.locale(ThemeManager.selectedTheme.desktopClock.local), ThemeManager.selectedTheme.desktopClock.format)
-        color: ThemeManager.selectedTheme.desktopClock.color
-        font.family: ThemeManager.selectedTheme.desktopClock.font
-
+        text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root.clockFormat)
+        color: root.clockColor
+        font.family: root.clockFont
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        // font.weight: Font.ExtraBold
         fontSizeMode: Text.Fit
         smooth: true
-
         font.pointSize: 500
-        // minimumPixelSize: 20
-
-        layer.enabled: ThemeManager.selectedTheme.desktopClock.shadowEnabled
+        layer.enabled: root.shadowEnabled
         layer.effect: MultiEffect {
-            id: shadow
             source: timeText
             shadowEnabled: true
-            shadowColor: ThemeManager.selectedTheme.desktopClock.shadowColor
+            shadowColor: root.shadowColor
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
@@ -162,12 +133,14 @@ Item {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 11
-        visible: clockComponent.editMode || clockComponent.isHovered
-
+        visible: root.editMode || dragArea.hovered || resizeHandle.isHovered
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            onClicked: clockComponent.editMode = !clockComponent.editMode
+            onClicked: {
+                root.editMode = !root.editMode;
+                root.editModeToggled(root.editMode, root.clockPosition, root.clockSize);
+            }
         }
     }
 
@@ -175,38 +148,35 @@ Item {
         id: dragArea
         anchors.fill: parent
         hoverEnabled: true
-
         property point startDragPos
         property point startComponentPos
-
         onPressed: mouse => {
-            if (clockComponent.editMode) {
-                startComponentPos = Qt.point(clockComponent.x, clockComponent.y);
+            if (root.editMode) {
+                startComponentPos = Qt.point(root.x, root.y);
                 startDragPos = dragArea.mapToItem(null, mouse.x, mouse.y);
                 mouse.accepted = true;
             }
         }
-
         onPositionChanged: mouse => {
-            if (pressed && clockComponent.editMode) {
+            if (pressed && root.editMode) {
                 var currentDragPos = dragArea.mapToItem(null, mouse.x, mouse.y);
                 var delta = Qt.point(currentDragPos.x - startDragPos.x, currentDragPos.y - startDragPos.y);
-
-                clockComponent.x = startComponentPos.x + delta.x;
-                clockComponent.y = startComponentPos.y + delta.y;
+                root.x = startComponentPos.x + delta.x;
+                root.y = startComponentPos.y + delta.y;
             }
         }
-
         onReleased: {
-            if (clockComponent.editMode) {
-                const updatedPosition = {
-                    "_desktopClockPosition": Qt.point(clockComponent.x, clockComponent.y)
-                };
-                ThemeManager.updateAndApplyTheme(updatedPosition, true);
+            if (root.editMode) {
+                root.positionChanged(Qt.point(root.x, root.y));
             }
         }
+        onDoubleClicked: {
+            root.editMode = !root.editMode;
 
-        onDoubleClicked: clockComponent.editMode = !clockComponent.editMode
+            const clockPosition = Qt.point(root.x, root.y);
+            const clockSize = Qt.size(root.width, root.height);
+            root.editModeToggled(root.editMode, clockPosition, clockSize);
+        }
     }
 
     Rectangle {
@@ -219,8 +189,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         anchors.margins: -5
-        visible: clockComponent.editMode
-
+        visible: root.editMode
         MouseArea {
             id: resizeMouseArea
             anchors.fill: parent
@@ -228,30 +197,22 @@ Item {
             cursorShape: Qt.SizeFDiagCursor
             property point startMousePos
             property size startComponentSize
-
             onPressed: {
                 startMousePos = mapToItem(null, mouseX, mouseY);
-                startComponentSize = Qt.size(clockComponent.width, clockComponent.height);
+                startComponentSize = Qt.size(root.width, root.height);
             }
-
             onPositionChanged: {
                 if (pressed) {
                     var currentPos = mapToItem(null, mouseX, mouseY);
                     var delta = Qt.point(currentPos.x - startMousePos.x, currentPos.y - startMousePos.y);
-
                     var newWidth = Math.max(200, startComponentSize.width + delta.x);
                     var newHeight = Math.max(150, startComponentSize.height + delta.y);
-
-                    clockComponent.width = newWidth;
-                    clockComponent.height = newHeight;
+                    root.width = newWidth;
+                    root.height = newHeight;
                 }
             }
-
             onReleased: {
-                const updatedSize = {
-                    "_desktopClockSize": Qt.size(clockComponent.width, clockComponent.height)
-                };
-                ThemeManager.updateAndApplyTheme(updatedSize, true);
+                root.sizeChanged(Qt.size(root.width, root.height));
             }
         }
     }

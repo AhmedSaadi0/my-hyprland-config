@@ -35,6 +35,7 @@ PanelWindow {
         }
         position: "top-left"
         cornerRadius: root.cornerRadius
+        shapeColor: ThemeManager.selectedTheme.colors.volOsdBgColor
     }
 
     // BarCorner {

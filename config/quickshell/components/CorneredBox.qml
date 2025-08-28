@@ -1,9 +1,6 @@
-// ملف: FinalTest.qml
 import QtQuick
 import QtQuick.Window
-// import QtQuick.Shapes
 
-// import "../../components"
 import "../themes"
 
 Rectangle {
@@ -11,7 +8,7 @@ Rectangle {
     color: "transparent"
     implicitWidth: 0
 
-    property string boxColor: ThemeManager.selectedTheme.colors.topbarColor
+    // property string boxColor: ThemeManager.selectedTheme.colors.topbarColor
 
     property int cornerWidth: 20
     property int cornerHeight: 20
@@ -23,7 +20,7 @@ Rectangle {
 
     Rectangle {
         id: centerBox
-        color: root.boxColor
+        color: ThemeManager.selectedTheme.colors.topbarColor
         anchors {
             top: parent.top
             bottom: parent.bottom
@@ -44,7 +41,7 @@ Rectangle {
             bottom: parent.bottom
         }
         position: "bottom-left"
-        shapeColor: root.boxColor
+        shapeColor: ThemeManager.selectedTheme.colors.topbarColor
         // rotation: 180
     }
 
@@ -59,7 +56,7 @@ Rectangle {
             // bottom: parent.bottom
         }
         position: "top-left"
-        shapeColor: root.boxColor
+        shapeColor: ThemeManager.selectedTheme.colors.topbarColor
         // rotation: 270
     }
 

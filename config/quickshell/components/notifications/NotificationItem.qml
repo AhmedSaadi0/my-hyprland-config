@@ -2,36 +2,38 @@
 
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Services.Notifications
+// import Quickshell.Services.Notifications
 
-import "root:/themes"
 import "root:/components"
 import "root:/config"
 
 Rectangle {
     id: root
 
+    // --- الواجهة العامة للمكون (Public API) ---
     property var notification
+    property var theme // <<< خاصية لاستقبال كائن السمة
     property string defaultIcon: App.assets.icons.notification
 
     signal dismissClicked
     signal actionInvoked(int index)
 
-    implicitHeight: contentLayout.implicitHeight + (ThemeManager.selectedTheme.dimensions.spacingLarge * 2)
-    color: ThemeManager.selectedTheme.colors.topbarBgColorV1
-    radius: ThemeManager.selectedTheme.dimensions.elementRadius
+    // --- استخدام السمة المحقونة (injected theme) مع قيم افتراضية ---
+    implicitHeight: contentLayout.implicitHeight + (root.theme ? (root.theme.dimensions.spacingLarge * 2) : 16)
+    color: root.theme ? root.theme.colors.topbarBgColorV1 : "#EEEEEE"
+    radius: root.theme ? root.theme.dimensions.elementRadius : 8
 
     ColumnLayout {
         id: contentLayout
 
         anchors.fill: parent
-        anchors.margins: ThemeManager.selectedTheme.dimensions.spacingLarge
-        spacing: ThemeManager.selectedTheme.typography.spacingMedium
+        anchors.margins: root.theme ? root.theme.dimensions.spacingLarge : 8
+        spacing: root.theme ? root.theme.typography.spacingMedium : 6
 
         // -- 1. Header Row: Close Button, App Name, Time --
         RowLayout {
             Layout.fillWidth: true
-            spacing: ThemeManager.selectedTheme.typography.spacingSmall
+            spacing: root.theme ? root.theme.typography.spacingSmall : 4
 
             Item {
                 width: 16
@@ -42,31 +44,31 @@ Rectangle {
                     text: "✕"
                     font.pixelSize: 14
                     anchors.centerIn: parent
-                    color: ThemeManager.selectedTheme.colors.primary
+                    color: root.theme ? root.theme.colors.primary : "blue"
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        root.dismissClicked(); // إرسال إشارة بدلاً من تنفيذ المنطق مباشرة
-                        enabled = false; // تعطيل الزر لمنع النقرات المتعددة
+                        root.dismissClicked();
+                        enabled = false;
                     }
                 }
             }
 
             Text {
                 text: notification ? notification.appName : ""
-                font.pixelSize: ThemeManager.selectedTheme.typography.heading4Size
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
+                font.pixelSize: root.theme ? root.theme.typography.heading4Size : 16
+                color: root.theme ? root.theme.colors.topbarFgColorV1 : "black"
                 elide: Text.ElideRight
                 Layout.fillWidth: true
             }
 
             Text {
                 text: notification ? notification.timeStr : ""
-                font.pixelSize: ThemeManager.selectedTheme.typography.small
-                color: ThemeManager.selectedTheme.colors.subtleText
+                font.pixelSize: root.theme ? root.theme.typography.small : 12
+                color: root.theme ? root.theme.colors.subtleText : "gray"
                 Layout.alignment: Qt.AlignTop
             }
         }
@@ -74,27 +76,24 @@ Rectangle {
         // -- 2. Summary Row: Icon and Title --
         RowLayout {
             Layout.fillWidth: true
-            spacing: ThemeManager.selectedTheme.typography.spacingMedium
+            spacing: root.theme ? root.theme.typography.spacingMedium : 6
             visible: notification && (notification.image || notification.summary)
 
             Image {
-
                 source: notification ? (notification.image || notification.appIcon || defaultIcon) : defaultIcon
-
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 Layout.alignment: Qt.AlignTop
                 fillMode: Image.PreserveAspectFit
                 smooth: true
-                // الرؤية تعتمد على أن المصدر ليس فارغًا (وهو ما لن يحدث مع وجود أيقونة افتراضية)
                 visible: source !== ""
             }
 
             Text {
                 text: notification ? notification.summary : ""
-                font.pixelSize: ThemeManager.selectedTheme.typography.heading4Size
+                font.pixelSize: root.theme ? root.theme.typography.heading4Size : 16
                 font.bold: true
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
+                color: root.theme ? root.theme.colors.topbarFgColorV1 : "black"
                 elide: Text.ElideRight
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
@@ -108,8 +107,8 @@ Rectangle {
             wrapMode: Text.WordWrap
             maximumLineCount: 3
             elide: Text.ElideRight
-            font.pixelSize: ThemeManager.selectedTheme.typography.medium
-            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+            font.pixelSize: root.theme ? root.theme.typography.medium : 14
+            color: root.theme ? root.theme.colors.leftMenuFgColorV1 : "darkgray"
             Layout.fillWidth: true
         }
 
@@ -117,7 +116,7 @@ Rectangle {
         RowLayout {
             Layout.fillWidth: true
             visible: notification && notification.displayActions && notification.displayActions.length > 0
-            spacing: ThemeManager.selectedTheme.typography.spacingMedium
+            spacing: root.theme ? root.theme.typography.spacingMedium : 6
 
             Repeater {
                 model: notification ? notification.displayActions : []
@@ -126,6 +125,9 @@ Rectangle {
                     text: modelData.text !== "" ? modelData.text : "Do Action"
                     Layout.fillWidth: true
                     textElide: Text.ElideRight
+
+                    // تمرير السمة إلى المكون الفرعي
+                    // theme: root.theme
 
                     onClicked: root.actionInvoked(index)
                 }

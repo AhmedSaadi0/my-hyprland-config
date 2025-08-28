@@ -1,23 +1,17 @@
 // BarCorners.qml
 import QtQuick
 
-import "root:/themes"
-
 Item {
     id: root
 
     property string position: "top-left"
     // هذا اللون الآن هو لون الشكل نفسه، وليس لون الخلفية
 
-    property color shapeColor: ThemeManager.selectedTheme.colors.topbarColor
-    property real cornerRadius: ThemeManager.selectedTheme.dimensions.baseRadius
+    property color shapeColor: palette.window
+    property real cornerRadius: 30
 
     width: cornerRadius
     height: cornerRadius
-
-    Component.onCompleted: {
-        shapeColor: ThemeManager.selectedTheme.colors.topbarColor;
-    }
 
     Canvas {
         id: cornerCanvas

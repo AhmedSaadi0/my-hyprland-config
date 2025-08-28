@@ -10,9 +10,16 @@ M3GroupBox {
     id: root
     title: "Actions & Resets"
 
-    property var workingTheme: ({})
+    property var workingTheme
 
     Layout.fillWidth: true
+
+    signal resetColorSettings
+    signal resetWallpaperSettings
+    signal resetHyprlandSettings
+    signal resetPlasmaSettings
+    signal resetGtkSettings
+    signal nextWallpaper
 
     GridLayout {
         columns: 2
@@ -21,33 +28,33 @@ M3GroupBox {
             Layout.fillWidth: true
             Layout.preferredWidth: 30
             text: "Reset Colors"
-            onClicked: ThemeManager.resetColorSettings()
+            onClicked: root.resetColorSettings()
         }
         MButton {
             Layout.fillWidth: true
             Layout.preferredWidth: 30
             text: "Reset Wallpapers"
-            onClicked: ThemeManager.resetWallpaperSystemSettings()
+            onClicked: root.resetWallpaperSettings()
         }
         MButton {
             Layout.fillWidth: true
             text: "Reset Hyprland"
-            onClicked: ThemeManager.resetHyprlandSettings()
+            onClicked: root.resetHyprlandSettings()
         }
         MButton {
             Layout.fillWidth: true
             text: "Reset Plasma/QT"
-            onClicked: ThemeManager.resetPlasmaSettings()
+            onClicked: root.resetPlasmaSettings()
         }
         MButton {
             Layout.fillWidth: true
             text: "Reset GTK"
-            onClicked: ThemeManager.resetGtkSettings()
+            onClicked: root.resetGtkSettings()
         }
         MButton {
             Layout.fillWidth: true
             text: "Next Wallpaper"
-            onClicked: ThemeManager.switchToNextWallpaper()
+            onClicked: root.nextWallpaper()
             iconText: ""
             textPreferredWidth: 7
             enabled: workingTheme._enableDynamicWallpapers

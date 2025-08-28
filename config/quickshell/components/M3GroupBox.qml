@@ -14,7 +14,8 @@ GroupBox {
     // 1. API - الخصائص الخارجية
     // ============================
     default property alias content: userContentColumn.data
-    property int cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    // property int cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property int cornerRadius: 8
 
     // ===================================
     // 2. Styling - المظهر والتصميم

@@ -1,6 +1,6 @@
-# scripts/python/create_depth_image_rembg.py (إصدار مرن ومحسّن)
+# scripts/python/create_depth_image_rembg.py
 
-import argparse  # (1) استيراد المكتبة الجديدة
+import argparse
 import sys
 from pathlib import Path
 
