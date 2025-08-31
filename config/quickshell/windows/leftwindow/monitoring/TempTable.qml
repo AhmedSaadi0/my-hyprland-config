@@ -6,7 +6,7 @@ import "root:/config"
 
 ProcessTable {
     id: batteryTable
-    height: 105
+    height: 120
     interval: 1000 * 60
     running: true
     command: App.scripts.python.devicesTempCommand

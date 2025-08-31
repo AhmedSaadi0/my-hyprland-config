@@ -12,6 +12,7 @@ import "root:/osd"
 import "root:/utils"
 import "root:/config"
 import "root:/desktop"
+import "root:/themes"
 
 ShellRoot {
     id: shellRoot

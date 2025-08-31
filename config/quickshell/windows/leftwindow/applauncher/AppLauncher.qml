@@ -40,6 +40,7 @@ ColumnLayout {
         verticalAlignment: Text.VAlignment
 
         onAccepted: {
+            clearSearchText.stop();
             if (processedModel.values.length > 1) {
                 const firstAppItem = processedModel.values[1];
 
@@ -47,9 +48,17 @@ ColumnLayout {
                     command: firstAppItem.appData.command,
                     workingDirectory: firstAppItem.appData.workingDirectory
                 });
-
-                searchField.text = "";
+                clearSearchText.start();
             }
+        }
+    }
+
+    Timer {
+        id: clearSearchText
+        interval: 700
+        repeat: false
+        onTriggered: {
+            searchField.text = "";
         }
     }
 
@@ -104,15 +113,65 @@ ColumnLayout {
             anchors.fill: parent
             model: processedModel
             clip: true
+            spacing: 0
+
+            displaced: Transition {
+                NumberAnimation {
+                    properties: "x,y"
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+            }
+
+            add: Transition {
+                ParallelAnimation {
+                    PropertyAnimation {
+                        property: "opacity"
+                        from: 0
+                        to: 1.0
+                        duration: 250
+                        easing.type: Easing.OutQuad
+                    }
+                    PropertyAnimation {
+                        property: "scale"
+                        from: 0.85
+                        to: 1.0
+                        duration: 300
+                        easing.type: Easing.OutBack
+                    }
+                }
+            }
+
+            remove: Transition {
+                ParallelAnimation {
+                    PropertyAnimation {
+                        property: "opacity"
+                        to: 0
+                        duration: 200
+                        easing.type: Easing.InQuad
+                    }
+                    PropertyAnimation {
+                        property: "scale"
+                        to: 0.85
+                        duration: 200
+                        easing.type: Easing.InCubic
+                    }
+                }
+            }
 
             delegate: Item {
+                id: delegateRoot
                 width: listView.width
                 height: modelData.isHeader ? 40 : 70
+                opacity: 1.0
+                scale: 1.0
+                transformOrigin: Item.Center
 
                 Rectangle {
                     anchors.fill: parent
-                    color: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
+                    color: ThemeManager.selectedTheme.colors.primary.alpha(0.15)
                     visible: modelData.isHeader
+                    radius: ThemeManager.selectedTheme.dimensions.baseRadius
 
                     Text {
                         text: modelData.letter !== undefined ? modelData.letter : ""
@@ -121,7 +180,7 @@ ColumnLayout {
                         anchors.leftMargin: 16
                         font.pixelSize: 18
                         font.bold: true
-                        color: ThemeManager.selectedTheme.colors.onPrimary
+                        color: ThemeManager.selectedTheme.colors.topbarFgColor
                     }
                 }
 
@@ -131,11 +190,12 @@ ColumnLayout {
                     desktopEntity: modelData.appData
 
                     onItemClicked: {
+                        clearSearchText.stop();
                         Quickshell.execDetached({
                             command: modelData.appData.command,
                             workingDirectory: modelData.appData.workingDirectory
                         });
-                        searchField.text = "";
+                        clearSearchText.start();
                     }
                 }
             }

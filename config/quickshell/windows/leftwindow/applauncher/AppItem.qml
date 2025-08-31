@@ -12,6 +12,22 @@ Item {
     width: listView.width
     height: 70
 
+    Rectangle {
+        id: hoverBg
+        anchors.fill: parent
+        anchors.topMargin: 5
+        anchors.bottomMargin: 5
+        radius: ThemeManager.selectedTheme.dimensions.baseRadius
+        color: "transparent"
+
+        Behavior on color {
+            ColorAnimation {
+                duration: 180
+                easing.type: Easing.OutQuad
+            }
+        }
+    }
+
     RowLayout {
         anchors.fill: parent
         anchors.leftMargin: 12
@@ -25,6 +41,7 @@ Item {
             Layout.alignment: Qt.AlignVCenter
             fillMode: Image.PreserveAspectFit
             source: Quickshell.iconPath(desktopEntity ? desktopEntity.icon : "application-x-executable", "application-x-executable")
+            transformOrigin: Item.Center
         }
 
         ColumnLayout {
@@ -53,7 +70,41 @@ Item {
 
     MouseArea {
         anchors.fill: parent
+        hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.itemClicked()
+
+        onClicked: {
+            root.itemClicked();
+            bounceAnim.restart();
+        }
+
+        onEntered: hoverBg.color = ThemeManager.selectedTheme.colors.primary.alpha(0.1)
+        onExited: hoverBg.color = "transparent"
+    }
+
+    SequentialAnimation {
+        id: bounceAnim
+        running: false
+        PropertyAnimation {
+            target: icon
+            property: "scale"
+            to: 0.85
+            duration: 100
+            easing.type: Easing.InOutQuad
+        }
+        PropertyAnimation {
+            target: icon
+            property: "scale"
+            to: 1.1
+            duration: 120
+            easing.type: Easing.OutQuad
+        }
+        PropertyAnimation {
+            target: icon
+            property: "scale"
+            to: 1.0
+            duration: 100
+            easing.type: Easing.OutBack
+        }
     }
 }

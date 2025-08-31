@@ -31,6 +31,7 @@ Rectangle {
     ProcessTable {
         id: cpuTable
         running: true
+        // showRows: 20
         // command: ["python", ".config/quickshell/scripts/python/top_cpu_usage.py"]
         command: App.scripts.python.topCpuUsageCommand
         title: "Cpu Usage"
@@ -45,6 +46,7 @@ Rectangle {
         id: ramTable
         interval: 1000 * 5
         running: true
+        // showRows: 20
         // command: ["python", ".config/quickshell/scripts/python/top_ram_usage.py"]
         command: App.scripts.python.topRamUsageCommand
         title: "Mem Usage"

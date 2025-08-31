@@ -10,12 +10,12 @@ SimpleTable {
     id: root
 
     width: 167
-    height: 205
+    height: 250
 
-    model: dataModel // Assign the ListModel as the table's model
-    columns: tableColumns // Assign the column definitions
+    model: dataModel
+    columns: tableColumns
 
-    rowHeight: 25
+    rowHeight: 30
     headerHeight: 30
 
     // tableBackgroundColor: palette.mid
@@ -40,6 +40,7 @@ SimpleTable {
 
     property var command: []
     property int interval: 2000
+    property int showRows: 7
     property bool running: true
     property string title: "Process"
     property string value: "%"
@@ -49,11 +50,22 @@ SimpleTable {
             var processes = JSON.parse(data);
             dataModel.clear();
 
-            for (var i = 0; i < Math.min(processes.length, 7); i++) {
-                dataModel.append({
-                    textRole: processes[i].name,
-                    valueRole: processes[i].value.toFixed(2)
-                });
+            for (var i = 0; i < Math.min(processes.length, showRows); i++) {
+                let subValue = null;
+                if (processes[i].memory_usage_mb) {
+                    subValue = `${processes[i].memory_usage_mb} MB`;
+
+                    dataModel.append({
+                        textRole: processes[i].name,
+                        valueRole: processes[i].value.toFixed(2),
+                        subRole: subValue
+                    });
+                } else {
+                    dataModel.append({
+                        textRole: processes[i].name,
+                        valueRole: processes[i].value.toFixed(2)
+                    });
+                }
             }
 
             if (dataModel.count === 0) {
@@ -81,14 +93,14 @@ SimpleTable {
             title: root.title,
             role: "textRole",
             alignment: Text.AlignLeft,
-            width: 140,
+            width: 125,
             leftMargin: 12
         },
         {
             title: root.value,
             role: "valueRole",
             alignment: Text.AlignRight,
-            width: 55,
+            width: 70,
             rightMargin: 10
         }
     ]
@@ -115,7 +127,6 @@ SimpleTable {
             }
         }
 
-        // Handle standard error output from the script
         stderr: SplitParser {
             onRead: data => {
                 console.error("خطأ سكربت المعالج:", data);
