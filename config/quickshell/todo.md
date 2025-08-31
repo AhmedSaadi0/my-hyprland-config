@@ -4,14 +4,18 @@
   - [x] System Tray (Systray)
   - [ ] Application Launcher
   - [ ] Scratchpads
+  - [ ] Game mode
 
 - **Menus**
   - [x] Left Menu Navigation
   - [x] Left Menu Animations
   - [ ] Clipboard Manager
   - [ ] Todo List
+
+- **Setting Window**
+  - [ ] Create a setting Window
   - [ ] Hyprland Control
-  - [ ] Quickshell Control (Dashboard حالياً)
+  - [ ] Quickshell Control
   - [ ] Keybindings Cheatsheet
   - [ ] Launched Apps List
 

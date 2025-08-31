@@ -228,7 +228,6 @@ Singleton {
             }
         }
 
-        console.info("CAACC " + commandArray);
         return commandArray;
     }
 
@@ -250,5 +249,13 @@ Singleton {
         }
 
         return result;
+    }
+
+    function removeUnusedCachedOverlayImages({
+        jsonDir,
+        imagesDir
+    }) {
+        const pythonCommand = Config.App.scripts.python.removeUnusedCachedOverlayImagesCommand;
+        return [...pythonCommand, "--json_dir", jsonDir, "--images_dir", imagesDir];
     }
 }

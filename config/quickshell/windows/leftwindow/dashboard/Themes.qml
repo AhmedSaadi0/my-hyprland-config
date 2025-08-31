@@ -139,6 +139,7 @@ MenuCard {
         onAccepted: {
             const folderPath = this.folder.toString().replace("file://", "");
             workingTheme._dynamicWallpapersPath = folderPath;
+            root._saveTheme();
         }
     }
 
@@ -149,6 +150,7 @@ MenuCard {
         onAccepted: {
             const filePath = file.toString().replace("file://", "");
             workingTheme._wallpaper = filePath;
+            root._saveTheme();
         }
     }
 
@@ -159,6 +161,7 @@ MenuCard {
         onAccepted: {
             const filePath = file.toString().replace("file://", "");
             workingTheme._desktopClockDepthOverlayPath = filePath;
+            root._saveTheme();
         }
     }
 
@@ -346,6 +349,7 @@ MenuCard {
                 onResetPlasmaSettings: ThemeManager.resetPlasmaSettings()
                 onResetGtkSettings: ThemeManager.resetGtkSettings()
                 onNextWallpaper: ThemeManager.switchToNextWallpaper()
+                onCleardUnusedOverlayImages: ThemeManager.cleardUnusedOverlayImages()
             }
 
             WallpaperSettings {
@@ -356,6 +360,7 @@ MenuCard {
                 onOpenFolderDialog: dynamicWallpaperFolderDialog.open()
                 onOpenFileDialog: staticWallpaperFileDialog.open()
                 onDynamicColoringChanged: root.populateColorModel(root.workingTheme)
+                onThemeChanged: root._applyTheme()
             }
 
             ClockSettings {
@@ -364,6 +369,7 @@ MenuCard {
 
                 onCreateOverlayImageButtonClicked: ThemeManager.createImageOverlay(data)
                 onOpenOverlayImageDialog: clockDepthOverlayDialog.open()
+                onThemeChanged: root._applyTheme()
             }
 
             M3GroupBox {
@@ -671,7 +677,7 @@ MenuCard {
                         Layout.fillWidth: true
                         text: "Apply"
                         iconText: ""
-                        onClicked: ThemeManager.updateAndApplyTheme(workingTheme, false)
+                        onClicked: root._applyTheme()
                         textPreferredWidth: 3
                     }
                     MButton {
@@ -679,11 +685,24 @@ MenuCard {
                         text: "Apply & Save"
                         iconText: ""
                         highlighted: true
-                        onClicked: ThemeManager.updateAndApplyTheme(workingTheme, true)
+                        onClicked: root._saveTheme()
                         textPreferredWidth: 5
                     }
                 }
             }
+        }
+    }
+
+    function _applyTheme() {
+        if (!ThemeManager._isThemeLoading) {
+            console.info("Apply");
+            ThemeManager.updateAndApplyTheme(workingTheme, false);
+        }
+    }
+
+    function _saveTheme() {
+        if (!ThemeManager._isThemeLoading) {
+            ThemeManager.updateAndApplyTheme(workingTheme, false);
         }
     }
 }

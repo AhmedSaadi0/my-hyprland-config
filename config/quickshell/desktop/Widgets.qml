@@ -21,9 +21,6 @@ PanelWindow {
 
     readonly property var clockSettings: Theme.ThemeManager.selectedTheme.desktopClock
 
-    // property point currentClockPosition: clockSettings.position
-    // property size currentClockSize: clockSettings.size
-
     property point currentClockPosition
     property size currentClockSize
 
@@ -59,6 +56,12 @@ PanelWindow {
             }
         }
     }
+
+    // DesktopWeather {
+    //     id: theWeather
+    //     clockColor: clockSettings.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary : clockSettings.color
+    //     // clockFont: clockSettings.font
+    // }
 
     Connections {
         target: Theme.ThemeManager
@@ -100,6 +103,9 @@ PanelWindow {
         onPressed: {
             if (theClock.editMode) {
                 theClock.editMode = false;
+            }
+            if (theWeather.editMode) {
+                theWeather.editMode = false;
             }
             mouse.accepted = false;
         }

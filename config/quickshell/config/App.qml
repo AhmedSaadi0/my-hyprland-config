@@ -102,6 +102,7 @@ Singleton {
             readonly property string dynamicM3: root.pythonScriptsPath + "/m3/dynamic-m3.py"
             readonly property string rembgOverylayWallpaper: root.pythonScriptsPath + "/create_depth_image_rembg.py"
             readonly property string opencvOverylayWallpaper: root.pythonScriptsPath + "/create_depth_image_opencv.py"
+            readonly property string removeUnusedCachedOverlayImages: root.pythonScriptsPath + "/overlay_cache_images_cleaner.py"
 
             // Commands
             readonly property var batteryInfoCommand: ["python", batteryInfo]
@@ -111,6 +112,7 @@ Singleton {
             readonly property var dynamicM3Command: ["python", dynamicM3]
             readonly property var rembgOverylayWallpaperCommand: ["python", rembgOverylayWallpaper]
             readonly property var opencvOverylayWallpaperCommand: ["python", opencvOverylayWallpaper]
+            readonly property var removeUnusedCachedOverlayImagesCommand: ["python", removeUnusedCachedOverlayImages]
         }
 
         readonly property QtObject bash: QtObject {

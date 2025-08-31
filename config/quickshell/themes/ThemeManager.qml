@@ -370,10 +370,20 @@ Singleton {
         sendChangedSignalTimer.stop();
     }
 
+    function cleardUnusedOverlayImages() {
+        const jsonDir = App.themeCacheFolderPath;
+        const imagesDir = App.cacheFolderPath;
+
+        removeUnusedCachedOverlayImagesProcess.command = Utils.Helper.removeUnusedCachedOverlayImages({
+            jsonDir: jsonDir,
+            imagesDir: imagesDir
+        });
+        removeUnusedCachedOverlayImagesProcess.start();
+    }
+
     //================================================================
     // Child Components & Workers
     //================================================================
-
     FileView {
         id: sessionLoader
         onLoaded: {
@@ -453,6 +463,31 @@ Singleton {
 
         function start(imagePath) {
             this.newImagePath = imagePath;
+            this.running = true;
+        }
+    }
+
+    Process {
+        id: removeUnusedCachedOverlayImagesProcess
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    console.info(this.text);
+                    App.dispatchCommand("send notification", Utils.Helper.sendNotification({
+                        summary: "Cached Images Deleted",
+                        body: this.text.trim()
+                    }));
+                    App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
+                } catch (e) {
+                    console.error("Failed to parse wallpapers list:", e);
+                }
+            }
+        }
+        stderr: SplitParser {
+            onRead: data => console.error("Error getting wallpaper list:", data)
+        }
+
+        function start(imagePath) {
             this.running = true;
         }
     }

@@ -14,6 +14,7 @@ RowLayout {
     property var selectedTheme
 
     signal editFinished(string text)
+    signal accepted(string text)
 
     Label {
         text: root.label
@@ -32,5 +33,6 @@ RowLayout {
         bottomRightRadius: selectedTheme.dimensions.elementRadius
 
         onEditingFinished: root.editFinished(text)
+        onAccepted: root.accepted(text)
     }
 }

@@ -12,8 +12,10 @@ RowLayout {
 
     property string label: ""
     property alias textValue: settingField.text
+    property var selectedTheme
 
     signal colorUpdated(var newColor)
+    signal accepted(string text)
 
     Label {
         text: root.label
@@ -23,10 +25,10 @@ RowLayout {
     EditableColorField {
         id: settingField
         Layout.fillWidth: true
-
-        normalForeground: Helper.getAccurteTextColor(workingTheme._desktopClockColor)
+        normalForeground: Helper.getAccurteTextColor(root.textValue)
         normalBackground: root.textValue
-
         onValidColorUpdated: root.colorUpdated(newColor)
+        selectedTheme: selectedTheme
+        onAccepted: root.accepted(text)
     }
 }

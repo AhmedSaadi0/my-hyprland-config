@@ -23,6 +23,7 @@ M3GroupBox {
 
     signal createOverlayImageButtonClicked(var data)
     signal openOverlayImageDialog
+    signal themeChanged
 
     GridLayout {
         columns: 1
@@ -36,6 +37,7 @@ M3GroupBox {
             isChecked: workingTheme._desktopClockEnabled
             onIsCheckedChanged: {
                 workingTheme._desktopClockEnabled = isChecked;
+                root.themeChanged();
             }
         }
 
@@ -45,6 +47,7 @@ M3GroupBox {
             isChecked: workingTheme._desktopClockUseThemeColor
             onIsCheckedChanged: {
                 workingTheme._desktopClockUseThemeColor = isChecked;
+                root.themeChanged();
             }
             enabled: _enableClockWidget.isChecked
         }
@@ -53,7 +56,12 @@ M3GroupBox {
             label: "Clock Color"
             textValue: Qt.color(workingTheme._desktopClockColor).toString()
             enabled: _enableClockWidget.isChecked && !_enableClockThemeColor.isChecked
-            onColorUpdated: workingTheme._desktopClockColor = newColor
+            onColorUpdated: {
+                workingTheme._desktopClockColor = newColor;
+            }
+            onAccepted: {
+                root.themeChanged();
+            }
         }
 
         SettingSwitch {
@@ -62,6 +70,7 @@ M3GroupBox {
             isChecked: workingTheme._desktopClockSahdowEnabled
             onIsCheckedChanged: {
                 workingTheme._desktopClockSahdowEnabled = isChecked;
+                root.themeChanged();
             }
             enabled: _enableClockWidget.isChecked
         }
@@ -69,7 +78,12 @@ M3GroupBox {
         ColorableSettingTextField {
             label: "Shadow Color"
             textValue: Qt.color(workingTheme._desktopClockSahdowColor).toString()
-            onColorUpdated: workingTheme._desktopClockSahdowColor = newColor
+            onColorUpdated: {
+                workingTheme._desktopClockSahdowColor = newColor;
+            }
+            onAccepted: {
+                root.themeChanged();
+            }
             enabled: _enableShadow.isChecked && _enableClockWidget.isChecked
         }
 
@@ -78,7 +92,12 @@ M3GroupBox {
             textValue: workingTheme._desktopClockFormat
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked
-            onEditFinished: workingTheme._desktopClockFormat = text
+            onEditFinished: {
+                workingTheme._desktopClockFormat = text;
+            }
+            onAccepted: {
+                root.themeChanged();
+            }
         }
 
         SettingTextField {
@@ -86,7 +105,12 @@ M3GroupBox {
             textValue: workingTheme._desktopClockLocal
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked
-            onEditFinished: workingTheme._desktopClockLocal = text
+            onEditFinished: {
+                workingTheme._desktopClockLocal = text;
+            }
+            onAccepted: {
+                root.themeChanged();
+            }
         }
 
         SettingTextField {
@@ -94,7 +118,12 @@ M3GroupBox {
             textValue: workingTheme._desktopClockFont
             selectedTheme: root.selectedTheme
             enabled: _enableClockWidget.isChecked
-            onEditFinished: workingTheme._desktopClockFont = text
+            onEditFinished: {
+                workingTheme._desktopClockFont = text;
+            }
+            onAccepted: {
+                root.themeChanged();
+            }
         }
 
         Rectangle {
@@ -113,6 +142,7 @@ M3GroupBox {
             isChecked: workingTheme._desktopClockDepthEffectEnabled
             onIsCheckedChanged: {
                 workingTheme._desktopClockDepthEffectEnabled = isChecked;
+                root.themeChanged();
             }
             enabled: _enableClockWidget.isChecked
         }

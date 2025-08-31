@@ -13,10 +13,10 @@ TextField {
     property color borderColor: "gray"
     property int borderSize: 1
 
-    property int topLeftRadius: 8
-    property int topRightRadius: 8
-    property int bottomLeftRadius: 8
-    property int bottomRightRadius: 8
+    property int topLeftRadius: 12
+    property int topRightRadius: 12
+    property int bottomLeftRadius: 12
+    property int bottomRightRadius: 12
 
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter

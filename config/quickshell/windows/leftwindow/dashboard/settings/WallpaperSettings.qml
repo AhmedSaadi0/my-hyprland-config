@@ -17,6 +17,7 @@ M3GroupBox {
     signal openFolderDialog
     signal openFileDialog
     signal dynamicColoringChanged
+    signal themeChanged
 
     GridLayout {
         columns: 1
@@ -29,6 +30,7 @@ M3GroupBox {
             isChecked: workingTheme._enableDynamicWallpapers
             onIsCheckedChanged: {
                 workingTheme._enableDynamicWallpapers = isChecked;
+                root.themeChanged();
             }
         }
 
@@ -39,7 +41,9 @@ M3GroupBox {
                 workingTheme._enableDynamicWallpapers = isChecked;
                 if (isChecked) {
                     root.dynamicColoringChanged();
+                    return;
                 }
+                root.themeChanged();
             }
         }
 
@@ -47,14 +51,24 @@ M3GroupBox {
             label: "Wallpapers interval (ms)"
             textValue: workingTheme._dynamicWallpapersInterval
             selectedTheme: root.selectedTheme
-            onEditFinished: workingTheme._dynamicWallpapersInterval = text
+            onEditFinished: {
+                workingTheme._dynamicWallpapersInterval = text;
+            }
+            onAccepted: {
+                root.themeChanged();
+            }
         }
 
         SettingTextField {
             label: "Selected Wallpaper (index)"
             textValue: workingTheme._selectedWallpaperIndex
             selectedTheme: root.selectedTheme
-            onEditFinished: workingTheme._selectedWallpaperIndex = text
+            onEditFinished: {
+                workingTheme._selectedWallpaperIndex = text;
+            }
+            onAccepted: {
+                root.themeChanged();
+            }
         }
 
         SettingButton {

@@ -12,7 +12,7 @@ Item {
     property size clockSize: Qt.size(700, 501)
     property color clockColor: "white"
     property string clockFont: "sans-serif"
-    property string clockFormat: "hh:mm AP"
+    property string clockFormat: "MM/dd"
     property string clockLocale: "en_US"
     property bool shadowEnabled: false
     property color shadowColor: "#40000000"
