@@ -10,7 +10,7 @@ SimpleTable {
     id: root
 
     width: 167
-    height: 250
+    height: 270
 
     model: dataModel
     columns: tableColumns
@@ -40,7 +40,7 @@ SimpleTable {
 
     property var command: []
     property int interval: 2000
-    property int showRows: 7
+    property int showRows: 8
     property bool running: true
     property string title: "Process"
     property string value: "%"
