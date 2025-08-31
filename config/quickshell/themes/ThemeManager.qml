@@ -35,6 +35,7 @@ Singleton {
 
     Component.onCompleted: {
         console.info("Application starting. Loading last session...");
+        _activeThemeInstance = ColorsTheme;
         startUpTimer.start();
     }
 

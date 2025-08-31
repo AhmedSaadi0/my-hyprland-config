@@ -150,6 +150,11 @@ PanelWindow {
                     activeIcon: "󰅇"
                     name: "Clipboard"
                 }
+                ListElement {
+                    icon: "󰀻"
+                    activeIcon: "󰵆"
+                    name: "Applications"
+                }
             }
 
             onCurrentIndexChanged: function () {

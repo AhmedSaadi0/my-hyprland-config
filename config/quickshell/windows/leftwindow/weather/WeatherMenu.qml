@@ -54,7 +54,7 @@ ColumnLayout {
 
     function canSendNotification(notificationType) {
         const now = new Date();
-        const twoHoursInMillis = 2 * 60 * 60 * 1000;
+        const twoHoursInMillis = 4 * 60 * 60 * 1000;
 
         const lastTime = lastNotificationTimes[notificationType];
 

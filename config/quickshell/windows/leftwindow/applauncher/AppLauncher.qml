@@ -1,53 +1,144 @@
-import Quickshell
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import Quickshell
+
 import "root:/themes"
 import "root:/components"
-import "./AppItem"
+import "./AppItem.qml"
 
-ScrollView {
-    id: dashboardScroller
-
-    height: parent.height
+ColumnLayout {
     width: parent.width
+    height: parent.height
+    spacing: 0
 
-    clip: true
-    contentWidth: availableWidth
+    // LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
+    // LayoutMirroring.childrenInherit: true
 
-    ScrollBar.vertical: StyledScrollBar {}
-    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+    EditableField {
+        id: searchField
+        Layout.fillWidth: true
+        // Layout.margins: 12
+        Layout.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        placeholderText: "Search for an application..."
+        font.pixelSize: 16
 
-    // This component reads all .desktop files and provides them as a model
-    DesktopEntries {
-        id: desktopEntriesModel
+        normalBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+        normalForeground: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        focusedBorderColor: ThemeManager.selectedTheme.colors.primary
 
-        // You can add filters if needed, for example, to exclude terminal apps
-        // or settings entries by using categories. For now, we show all.
+        borderColor: ThemeManager.selectedTheme.colors.primary
+        borderSize: 1
+
+        topLeftRadius: ThemeManager.selectedTheme.dimensions.baseRadius
+        topRightRadius: ThemeManager.selectedTheme.dimensions.baseRadius
+        bottomLeftRadius: ThemeManager.selectedTheme.dimensions.baseRadius
+        bottomRightRadius: ThemeManager.selectedTheme.dimensions.baseRadius
+
+        horizontalAlignment: Text.HAlignment
+        verticalAlignment: Text.VAlignment
+
+        onAccepted: {
+            if (processedModel.values.length > 1) {
+                const firstAppItem = processedModel.values[1];
+
+                Quickshell.execDetached({
+                    command: firstAppItem.appData.command,
+                    workingDirectory: firstAppItem.appData.workingDirectory
+                });
+
+                searchField.text = "";
+            }
+        }
     }
 
-    GridView {
-        id: gridView
-        anchors.fill: parent
-        anchors.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+    ScriptModel {
+        id: processedModel
 
-        cellWidth: 120
-        cellHeight: 100
+        values: {
+            const searchText = searchField.text.toLowerCase();
+            const sortedApps = [...DesktopEntries.applications.values].filter(app => app && app.name && app.noDisplay !== true).sort((a, b) => a.name.localeCompare(b.name)).filter(app => {
+                if (searchText === "")
+                    return true;
+                const nameMatch = app.name.toLowerCase().includes(searchText);
+                const commentMatch = (app.comment || "").toLowerCase().includes(searchText);
+                const genericNameMatch = (app.genericName || "").toLowerCase().includes(searchText);
+                return nameMatch || commentMatch || genericNameMatch;
+            });
 
-        // Set the model to our dynamic DesktopEntries component
-        model: desktopEntriesModel
+            let finalList = [];
+            let currentLetter = "";
 
-        // The delegate will be instantiated for each entry in the model
-        delegate: AppItem {
-            // Bind the AppItem properties to the roles provided by the model.
-            // The model provides roles like 'name', 'iconName', 'exec', 'comment', etc.
-            appName: model.name // 'name' comes from the model
-            appIcon: model.iconName // 'iconName' comes from the model
+            for (let i = 0; i < sortedApps.length; i++) {
+                const app = sortedApps[i];
+                const firstLetter = app.name.charAt(0).toUpperCase();
 
-            // We don't need to pass 'exec' because we will call the launch method directly.
+                if (firstLetter !== currentLetter) {
+                    currentLetter = firstLetter;
+                    finalList.push({
+                        isHeader: true,
+                        letter: currentLetter
+                    });
+                }
 
-            // When an item is clicked, we ask the model to launch it using its index.
-            onItemClicked: desktopEntriesModel.launch(model.index)
+                finalList.push({
+                    isHeader: false,
+                    appData: app
+                });
+            }
+
+            return finalList;
+        }
+    }
+
+    ScrollView {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        clip: true
+        contentWidth: availableWidth
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+        ListView {
+            id: listView
+            anchors.fill: parent
+            model: processedModel
+            clip: true
+
+            delegate: Item {
+                width: listView.width
+                height: modelData.isHeader ? 40 : 70
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
+                    visible: modelData.isHeader
+
+                    Text {
+                        text: modelData.letter !== undefined ? modelData.letter : ""
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 16
+                        font.pixelSize: 18
+                        font.bold: true
+                        color: ThemeManager.selectedTheme.colors.onPrimary
+                    }
+                }
+
+                AppItem {
+                    anchors.fill: parent
+                    visible: !modelData.isHeader
+                    desktopEntity: modelData.appData
+
+                    onItemClicked: {
+                        Quickshell.execDetached({
+                            command: modelData.appData.command,
+                            workingDirectory: modelData.appData.workingDirectory
+                        });
+                        searchField.text = "";
+                    }
+                }
+            }
         }
     }
 }

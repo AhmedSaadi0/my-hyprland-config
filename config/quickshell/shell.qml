@@ -65,7 +65,7 @@ ShellRoot {
 
     IpcHandler {
         id: handler
-        target: "Topbar"
+        target: "LeftBar"
 
         property bool isMenuOpen: false
         property int targetedMenu: 0
@@ -103,6 +103,11 @@ ShellRoot {
 
         function toggleNetworkingMenu() {
             targetedMenu = 4;
+            toggleMenu();
+        }
+
+        function toggleApplauncherMenu() {
+            targetedMenu = 6;
             toggleMenu();
         }
     }

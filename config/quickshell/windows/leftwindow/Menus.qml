@@ -55,6 +55,11 @@ StackView {
         Clipboard {}
     }
 
+    Component {
+        id: appLauncherComponent
+        AppLauncher {}
+    }
+
     // العناصر التي يتم إنشاؤها مرة واحدة
     property var dashboardPage
     property var notiListPage
@@ -62,6 +67,7 @@ StackView {
     property var monitorPage
     property var networkPage
     property var clipboardPage
+    property var appLauncherPage
 
     Component.onCompleted: {
         dashboardPage = dashboardComponent.createObject(stackView, {
@@ -90,12 +96,17 @@ StackView {
             // "anchors.fill": stackView
         });
 
+        appLauncherPage = appLauncherComponent.createObject(stackView, {
+            "visible": false
+            // "anchors.fill": stackView
+        });
+
         dashboardPage.visible = true;
         stackView.push(dashboardPage);
     }
 
     function getPage(index) {
-        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage][index];
+        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage, appLauncherPage][index];
     }
 
     Connections {

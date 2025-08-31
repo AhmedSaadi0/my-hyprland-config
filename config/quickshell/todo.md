@@ -2,7 +2,7 @@
 
 - **Core UI**
   - [x] System Tray (Systray)
-  - [ ] Application Launcher
+  - [x] Application Launcher
   - [ ] Scratchpads
   - [ ] Game mode
 
