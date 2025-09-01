@@ -8,12 +8,22 @@ import "root:/components"
 import "./AppItem.qml"
 
 ColumnLayout {
-    width: parent.width
+    width: parent.with
     height: parent.height
     spacing: 0
+    focus: true
 
-    // LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
-    // LayoutMirroring.childrenInherit: true
+    Component.onCompleted: {
+        forceActiveFocus();
+    }
+
+    Keys.onPressed: {
+        if (event.text && !searchField.activeFocus) {
+            searchField.forceActiveFocus();
+            searchField.append(event.text);
+            event.accepted = true;
+        }
+    }
 
     EditableField {
         id: searchField
