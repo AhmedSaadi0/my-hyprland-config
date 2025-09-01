@@ -343,7 +343,7 @@ MenuCard {
             ActionsAndResets {
                 workingTheme: root.workingTheme
 
-                onResetColorSettings: ThemeManager.resetWallpaperSystemSettings()
+                onResetColorSettings: ThemeManager.resetColorSettings()
                 onResetWallpaperSettings: ThemeManager.resetWallpaperSystemSettings()
                 onResetHyprlandSettings: ThemeManager.resetHyprlandSettings()
                 onResetPlasmaSettings: ThemeManager.resetPlasmaSettings()
