@@ -10,6 +10,7 @@ import "./AppItem.qml"
 ColumnLayout {
     width: parent.with
     height: parent.height
+    // anchors.fill: parent
     spacing: 0
     focus: true
 
@@ -20,7 +21,7 @@ ColumnLayout {
     Keys.onPressed: {
         if (event.text && !searchField.activeFocus) {
             searchField.forceActiveFocus();
-            searchField.append(event.text);
+            // searchField.append(event.text);
             event.accepted = true;
         }
     }

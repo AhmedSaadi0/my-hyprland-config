@@ -702,7 +702,7 @@ MenuCard {
 
     function _saveTheme() {
         if (!ThemeManager._isThemeLoading) {
-            ThemeManager.updateAndApplyTheme(workingTheme, false);
+            ThemeManager.updateAndApplyTheme(workingTheme, true);
         }
     }
 }
