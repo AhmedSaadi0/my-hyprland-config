@@ -86,10 +86,15 @@ ColumnLayout {
             const sortedApps = [...DesktopEntries.applications.values].filter(app => app && app.name && app.noDisplay !== true).sort((a, b) => a.name.localeCompare(b.name)).filter(app => {
                 if (searchText === "")
                     return true;
+
                 const nameMatch = app.name.toLowerCase().includes(searchText);
                 const commentMatch = (app.comment || "").toLowerCase().includes(searchText);
                 const genericNameMatch = (app.genericName || "").toLowerCase().includes(searchText);
-                return nameMatch || commentMatch || genericNameMatch;
+
+                // جديد: البحث في الفئات
+                const categoriesMatch = (app.categories || []).some(category => category.toLowerCase().includes(searchText));
+
+                return nameMatch || commentMatch || genericNameMatch || categoriesMatch;
             });
 
             let finalList = [];

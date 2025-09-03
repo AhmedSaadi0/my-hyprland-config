@@ -44,8 +44,8 @@ Rectangle {
 
     ProcessTable {
         id: ramTable
-        // interval: 1000 * 5
-        interval: 300
+        interval: 1000 * 5
+        // interval: 300
         running: true
         // showRows: 20
         // command: ["python", ".config/quickshell/scripts/python/top_ram_usage.py"]
