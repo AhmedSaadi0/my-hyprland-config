@@ -20,7 +20,7 @@ PanelWindow {
 
     exclusionMode: ExclusionMode.Ignore
 
-    WlrLayershell.namespace: "quickshell:notificationPopup"
+    WlrLayershell.namespace: "NibrasShell:notificationPopup"
     WlrLayershell.layer: WlrLayer.Overlay
 
     margins {

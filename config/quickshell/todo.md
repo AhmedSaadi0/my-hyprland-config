@@ -3,6 +3,7 @@
 - **Core UI**
   - [x] System Tray (Systray)
   - [x] Application Launcher
+  - [ ] Connection for `DesktopEntries` to listen to new installed apps
   - [ ] Scratchpads
   - [ ] Game mode
 
@@ -23,6 +24,7 @@
   - [x] Clock Widget
   - [x] Depth Effect
   - [x] Support Depth Effect for Dynamic Wallpapers
+  - [ ] Control clock size from settings and remove resizing
   - [ ] Depth effect for each wallpaper in dynamic wallpapers
   - [ ] Auto Depth Effect generation + clock adaptation
   - [ ] Weather Widget

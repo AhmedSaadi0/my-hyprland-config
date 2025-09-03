@@ -14,14 +14,15 @@ ColumnLayout {
     spacing: 0
     focus: true
 
-    Component.onCompleted: {
+    function gainFocus() {
         forceActiveFocus();
+        searchField.forceActiveFocus();
     }
 
     Keys.onPressed: {
         if (event.text && !searchField.activeFocus) {
+            searchField.append(event.text);
             searchField.forceActiveFocus();
-            // searchField.append(event.text);
             event.accepted = true;
         }
     }
@@ -62,11 +63,15 @@ ColumnLayout {
                 clearSearchText.start();
             }
         }
+
+        function append(text) {
+            searchField.text += text;
+        }
     }
 
     Timer {
         id: clearSearchText
-        interval: 700
+        interval: 100
         repeat: false
         onTriggered: {
             searchField.text = "";

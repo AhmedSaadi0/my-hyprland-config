@@ -1,231 +1,151 @@
-// TODO: -> Change into a component then create several widgets
-
+// File: DesktopClock.qml
 import QtQuick
 import Quickshell
-import QtQuick.Effects
 
 Item {
     id: root
 
+    // --- 1. الخصائص التي يستقبلها من الأب ---
+    // هذه هي "واجهة برمجة التطبيقات" للمكون الخاص بنا.
+    property point position: Qt.point(0, 0)
+    property size size: Qt.size(400, 200)
     property bool editMode: false
-    property point clockPosition: Qt.point(100, 100)
-    property size clockSize: Qt.size(700, 501)
+
+    // الخصائص الجمالية
     property color clockColor: "white"
     property string clockFont: "sans-serif"
-    property string clockFormat: "hh:mm AP"
+    property string clockFormat: "hh:mm"
     property string clockLocale: "en_US"
-    property bool shadowEnabled: false
-    property color shadowColor: "#40000000"
 
-    signal positionChanged(point newPosition)
-    signal sizeChanged(size newSize)
-    signal editModeToggled(bool isEditing, point newPosition, size newSize)
+    signal requestNewGeometry(point newPosition, size newSize)
 
-    x: clockPosition.x
-    y: clockPosition.y
-    width: clockSize.width
-    height: clockSize.height
+    // --- 3. ربط الخصائص بالعنصر ---
+    // واجهة المستخدم تعكس دائمًا قيم الخصائص أعلاه.
+    x: position.x
+    y: position.y
+    width: size.width
+    height: size.height
 
-    transformOrigin: Item.Center
+    // --- المكونات المرئية ---
 
-    SequentialAnimation {
-        id: saveFeedbackAnimation
-        PropertyAnimation {
-            target: root
-            property: "rotation"
-            to: -1.5
-            duration: 80
-            easing.type: Easing.InOutQuad
-        }
-        PropertyAnimation {
-            target: root
-            property: "rotation"
-            to: 1.5
-            duration: 80
-            easing.type: Easing.InOutQuad
-        }
-        PropertyAnimation {
-            target: root
-            property: "rotation"
-            to: -1.5
-            duration: 80
-            easing.type: Easing.InOutQuad
-        }
-        PropertyAnimation {
-            target: root
-            property: "rotation"
-            to: 0
-            duration: 100
-            easing.type: Easing.OutElastic
-        }
-    }
-
-    function playSaveFeedbackAnimation() {
-        saveFeedbackAnimation.start();
-    }
-
-    Behavior on x {
-        enabled: !root.editMode
-        SpringAnimation {
-            spring: 3.0
-            damping: 0.4
-        }
-    }
-    Behavior on y {
-        enabled: !root.editMode
-        SpringAnimation {
-            spring: 3.0
-            damping: 0.4
-        }
-    }
-
-    Behavior on width {
-        enabled: !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.InOutCubic
-        }
-    }
-
-    Behavior on height {
-        enabled: !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.InOutCubic
-        }
-    }
-
+    // ساعة النظام (غير مرئية، فقط للحصول على الوقت)
     SystemClock {
         id: systemClock
-        precision: SystemClock.Seconds
     }
 
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border.color: "white"
-        border.width: 3
-        radius: 9
-        visible: root.editMode
-    }
-
+    // نص الساعة
     Text {
         id: timeText
         anchors.fill: parent
-        anchors.margins: 20
         text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root.clockFormat)
+
+        // ربط الخصائص الجمالية
         color: root.clockColor
         font.family: root.clockFont
+
+        // لتوسيط النص وجعله يملأ المساحة
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        fontSizeMode: Text.Fit
-        smooth: true
-        font.pointSize: 500
-        layer.enabled: root.shadowEnabled
-        layer.effect: MultiEffect {
-            source: timeText
-            shadowEnabled: true
-            shadowColor: root.shadowColor
-            shadowBlur: 0.6
-            shadowVerticalOffset: 2
-            shadowHorizontalOffset: 2
-        }
-
-        Behavior on font.pointSize {
-            NumberAnimation {
-                duration: 600
-                easing.type: Easing.InOutCubic
-            }
-        }
+        font.pointSize: 500 // حجم كبير مبدئي
+        fontSizeMode: Text.Fit // سيقوم QML بتصغيره ليناسب العرض
     }
 
-    Text {
-        text: "⚙️"
-        font.pixelSize: 25
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.margins: 11
-        visible: root.editMode || dragArea.hovered || resizeHandle.isHovered
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                root.editMode = !root.editMode;
-                root.editModeToggled(root.editMode, root.clockPosition, root.clockSize);
-            }
-        }
+    // إطار يظهر في وضع التعديل
+    Rectangle {
+        visible: root.editMode
+        anchors.fill: parent
+        color: "transparent"
+        border.color: "white"
+        border.width: 2
     }
 
+    // --- 4. منطقة التفاعل (للسحب وتغيير الحجم) ---
     MouseArea {
         id: dragArea
         anchors.fill: parent
-        hoverEnabled: true
+
+        // متغيرات لتخزين نقطة بداية السحب
         property point startDragPos
         property point startComponentPos
-        onPressed: mouse => {
-            if (root.editMode) {
-                startComponentPos = Qt.point(root.x, root.y);
-                startDragPos = dragArea.mapToItem(null, mouse.x, mouse.y);
-                mouse.accepted = true;
-            }
+
+        onDoubleClicked: {
+            console.log("Double-click detected! Toggling edit mode.");
+            root.editMode = !root.editMode;
         }
+
+        onPressed: mouse => {
+            if (!root.editMode) {
+                // الإصلاح: اقبل النقرة دائمًا لمنع انتشارها للخلف.
+                // هذا يضمن أن onDoubleClicked سيعمل بشكل صحيح.
+                mouse.accepted = true;
+                return;
+            }
+
+            // هذا الكود سيعمل فقط إذا كان editMode هو true
+            startComponentPos = Qt.point(root.x, root.y);
+            startDragPos = mapToItem(null, mouse.x, mouse.y);
+            mouse.accepted = true; // قبول النقرة مهم أيضًا هنا
+        }
+
         onPositionChanged: mouse => {
             if (pressed && root.editMode) {
-                var currentDragPos = dragArea.mapToItem(null, mouse.x, mouse.y);
-                var delta = Qt.point(currentDragPos.x - startDragPos.x, currentDragPos.y - startDragPos.y);
-                root.x = startComponentPos.x + delta.x;
-                root.y = startComponentPos.y + delta.y;
+                var currentDragPos = mapToItem(null, mouse.x, mouse.y);
+                var deltaX = currentDragPos.x - startDragPos.x;
+                var deltaY = currentDragPos.y - startDragPos.y;
+                var newPos = Qt.point(startComponentPos.x + deltaX, startComponentPos.y + deltaY);
+                root.requestNewGeometry(newPos, root.size);
             }
         }
-        onReleased: {
-            if (root.editMode) {
-                root.positionChanged(Qt.point(root.x, root.y));
-            }
-        }
-        onDoubleClicked: {
-            root.editMode = !root.editMode;
 
-            const clockPosition = Qt.point(root.x, root.y);
-            const clockSize = Qt.size(root.width, root.height);
-            root.editModeToggled(root.editMode, clockPosition, clockSize);
-        }
+        // onReleased: {
+        //     if (root.editMode) {
+        //         // عند الانتهاء من السحب، نرسل الإشارة "saveGeometry" إلى الأب
+        //         root.saveGeometry(Qt.point(root.x, root.y), root.size);
+        //     }
+        // }
     }
 
+    // مقبض تغيير الحجم (مثال بسيط)
     Rectangle {
         id: resizeHandle
-        property bool isHovered: resizeMouseArea.hovered
+        visible: root.editMode
         width: 20
         height: 20
         color: "white"
         radius: 10
-        anchors.bottom: parent.bottom
         anchors.right: parent.right
-        anchors.margins: -5
-        visible: root.editMode
+        anchors.bottom: parent.bottom
+        anchors.margins: -10 // يظهر خارج الإطار قليلاً
+
         MouseArea {
-            id: resizeMouseArea
             anchors.fill: parent
-            hoverEnabled: true
             cursorShape: Qt.SizeFDiagCursor
+
             property point startMousePos
             property size startComponentSize
+
             onPressed: {
                 startMousePos = mapToItem(null, mouseX, mouseY);
                 startComponentSize = Qt.size(root.width, root.height);
             }
+
             onPositionChanged: {
                 if (pressed) {
                     var currentPos = mapToItem(null, mouseX, mouseY);
-                    var delta = Qt.point(currentPos.x - startMousePos.x, currentPos.y - startMousePos.y);
-                    var newWidth = Math.max(200, startComponentSize.width + delta.x);
-                    var newHeight = Math.max(150, startComponentSize.height + delta.y);
-                    root.width = newWidth;
-                    root.height = newHeight;
+                    var deltaX = currentPos.x - startMousePos.x;
+                    var deltaY = currentPos.y - startMousePos.y;
+
+                    var newSize = Qt.size(Math.max(100, startComponentSize.width + deltaX), Math.max(50, startComponentSize.height + deltaY));
+
+                    // إرسال الإشارة بالطلب الجديد
+                    root.requestNewGeometry(root.position, newSize);
                 }
             }
-            onReleased: {
-                root.sizeChanged(Qt.size(root.width, root.height));
-            }
+
+            // onReleased: {
+            //     // عند الانتهاء، نرسل الإشارة "saveGeometry" إلى الأب
+            //     root.saveGeometry(root.position, Qt.size(root.width, root.height));
+            // }
         }
     }
 }

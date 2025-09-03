@@ -11,17 +11,19 @@ TextField {
     leftPadding: 12
     rightPadding: 12
 
-    property color normalBackground: "transparent"
-    property color normalForeground: "white"
-    property color borderColor: "gray"
+    property var selectedTheme
+
+    property color normalBackground: selectedTheme.colors.topbarBgColorV2
+    property color normalForeground: selectedTheme.colors.topbarFgColorV2
+    property color borderColor: selectedTheme.colors.secondary
     property int borderSize: 1
 
     property color focusedBorderColor: borderColor
 
-    property int topLeftRadius: 12
-    property int topRightRadius: 12
-    property int bottomLeftRadius: 12
-    property int bottomRightRadius: 12
+    property int topLeftRadius: selectedTheme.dimensions.elementRadius
+    property int topRightRadius: selectedTheme.dimensions.elementRadius
+    property int bottomLeftRadius: selectedTheme.dimensions.elementRadius
+    property int bottomRightRadius: selectedTheme.dimensions.elementRadius
 
     color: root.normalForeground
 

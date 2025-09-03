@@ -6,8 +6,6 @@ import QtQuick
 EditableField {
     id: root
 
-    property var selectedTheme
-
     signal validColorUpdated(var newColor)
     borderColor: "transparent"
     borderSize: 0

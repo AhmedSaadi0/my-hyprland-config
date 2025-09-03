@@ -8,7 +8,7 @@ import "root:/services"
 OsdPanelWindow {
     id: root
 
-    WlrLayershell.namespace: "quickshell:volumePopup"
+    WlrLayershell.namespace: "NibrasShell:volumePopup"
     WlrLayershell.layer: WlrLayer.Overlay
 
     target: Brightness

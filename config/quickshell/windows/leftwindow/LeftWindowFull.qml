@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import QtQuick.Layouts
+// import QtQuick.Layouts
 
 import "root:/themes"
 import "root:/components"

@@ -401,6 +401,7 @@ MenuCard {
                         Layout.fillWidth: true
                         text: workingTheme._baseRadius
                         horizontalAlignment: TextInput.AlignRight
+                        selectedTheme: ThemeManager.selectedTheme
 
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
                         onEditingFinished: {
@@ -427,6 +428,7 @@ MenuCard {
                         text: "Plasma color scheme"
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._plasmaColorScheme
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -437,6 +439,7 @@ MenuCard {
                         text: "QT style (e.g., Kvantum)"
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._qtThemeStyle
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -447,6 +450,7 @@ MenuCard {
                         text: "Kvantum theme name"
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._kvantumTheme
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -457,6 +461,7 @@ MenuCard {
                         text: "Konsole profile name"
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._konsoleProfile
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -467,6 +472,7 @@ MenuCard {
                         text: "GTK theme name"
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._gtkTheme
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -477,6 +483,7 @@ MenuCard {
                         text: "Icon pack name"
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._themeIcons
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -500,6 +507,7 @@ MenuCard {
                         Layout.alignment: Qt.AlignVCenter
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._hyprBorderWidth
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -511,6 +519,7 @@ MenuCard {
                         Layout.alignment: Qt.AlignVCenter
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._hyprRounding
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -522,6 +531,7 @@ MenuCard {
                         Layout.alignment: Qt.AlignVCenter
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._hyprActiveBorder
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -533,6 +543,7 @@ MenuCard {
                         Layout.alignment: Qt.AlignVCenter
                     }
                     EditableField {
+                        selectedTheme: ThemeManager.selectedTheme
                         Layout.fillWidth: true
                         text: workingTheme._hyprInactiveBorder
                         // --- التعديل هنا: من onAccepted إلى onEditingFinished ---
@@ -570,6 +581,7 @@ MenuCard {
                                 Layout.fillWidth: true
                             }
                             EditableField {
+                                selectedTheme: ThemeManager.selectedTheme
                                 Layout.preferredWidth: 80
                                 text: workingTheme[modelData]
                                 horizontalAlignment: TextInput.AlignRight
@@ -600,6 +612,7 @@ MenuCard {
                                 Layout.fillWidth: true
                             }
                             EditableField {
+                                selectedTheme: ThemeManager.selectedTheme
                                 Layout.preferredWidth: 150
                                 text: workingTheme[modelData]
                                 horizontalAlignment: TextInput.AlignRight

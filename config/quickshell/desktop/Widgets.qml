@@ -4,6 +4,7 @@ import Quickshell
 import "root:/themes" as Theme
 import "root:/components"
 
+// TODO: -> Improve this code
 PanelWindow {
     id: desktopRoot
 
@@ -21,54 +22,51 @@ PanelWindow {
 
     readonly property var clockSettings: Theme.ThemeManager.selectedTheme.desktopClock
 
+    readonly property point themeClockPosition: clockSettings.position
+    readonly property size themeClockSize: clockSettings.size
+
     property point currentClockPosition
     property size currentClockSize
 
-    // قم بتهيئتها مرة واحدة عند اكتمال تحميل المكون
     Component.onCompleted: {
-        currentClockPosition = clockSettings.position;
-        currentClockSize = clockSettings.size;
+        currentClockPosition = themeClockPosition;
+        currentClockSize = themeClockSize;
+    }
+
+    Connections {
+        target: Theme.ThemeManager
+        function onSelectedThemeUpdated() {
+            console.log("Theme updated. Resetting clock position and size.");
+            currentClockPosition = themeClockPosition;
+            currentClockSize = themeClockSize;
+        }
     }
 
     DesktopClock {
         id: theClock
 
-        clockPosition: currentClockPosition
-        clockSize: currentClockSize
-
-        visible: clockSettings.enabled
+        position: desktopRoot.currentClockPosition
+        size: desktopRoot.currentClockSize
         editMode: false
+
         clockColor: clockSettings.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary : clockSettings.color
         clockFont: clockSettings.font
         clockFormat: clockSettings.format
         clockLocale: clockSettings.local
-        shadowEnabled: clockSettings.shadowEnabled
-        shadowColor: clockSettings.shadowColor
 
-        onEditModeToggled: (editing, newPosition, newSize) => {
-            if (!editing) {
-                const updatedData = {
-                    "_desktopClockPosition": newPosition,
-                    "_desktopClockSize": newSize
-                };
-                Theme.ThemeManager.updateAndApplyTheme(updatedData, true);
-                theClock.playSaveFeedbackAnimation();
-            }
+        onRequestNewGeometry: (newPosition, newSize) => {
+            currentClockPosition = newPosition;
+            currentClockSize = newSize;
         }
-    }
 
-    // DesktopWeather {
-    //     id: theWeather
-    //     clockColor: clockSettings.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary : clockSettings.color
-    //     // clockFont: clockSettings.font
-    // }
-
-    Connections {
-        target: Theme.ThemeManager
-        function onSelectedThemeUpdated() {
-            currentClockPosition = clockSettings.position;
-            currentClockSize = clockSettings.size;
-            foregroundImage.opacity = 0;
+        onEditModeChanged: {
+            if (!editMode) {
+                console.log("Edit mode finished. Saving geometry.");
+                Theme.ThemeManager.updateAndApplyTheme({
+                    "_desktopClockPosition": currentClockPosition,
+                    "_desktopClockSize": currentClockSize
+                }, true);
+            }
         }
     }
 
@@ -78,36 +76,34 @@ PanelWindow {
         opacity: 1
 
         visible: clockSettings.depthEffectEnabled
+        source: clockSettings.depthEffectEnabled ? clockSettings.depthOverlayPath : ""
 
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
 
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 500
-            }
-        }
-
-        onOpacityChanged: {
-            if (foregroundImage.opacity === 0 && foregroundImage.source !== clockSettings.depthOverlayPath) {
-                foregroundImage.source = clockSettings.depthOverlayPath;
-                foregroundImage.opacity = 1;
-            }
-        }
+        // onOpacityChanged: {
+        //     if (opacity === 0 && clockSettings.depthEffectEnabled) {
+        //         console.log("Opacity is 0. Updating image source and making it visible again.");
+        //
+        //         // 1. تحديث المصدر (إذا كان مختلفًا)
+        //         if (source !== clockSettings.depthOverlayPath) {
+        //             source = clockSettings.depthOverlayPath;
+        //         }
+        //
+        //         // 2. إعادة إظهار الصورة فورًا
+        //         opacity = 1;
+        //     }
+        // }
     }
 
     MouseArea {
         anchors.fill: parent
-        z: -1
-
+        z: -1 // تأكد من أنه خلف الساعة
         onPressed: {
+            // إذا كانت الساعة في وضع التعديل، قم بإلغائه
             if (theClock.editMode) {
                 theClock.editMode = false;
             }
-            if (theWeather.editMode) {
-                theWeather.editMode = false;
-            }
-            mouse.accepted = false;
         }
     }
 }

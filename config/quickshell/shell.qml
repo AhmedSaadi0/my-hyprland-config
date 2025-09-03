@@ -13,6 +13,7 @@ import "root:/utils"
 import "root:/config"
 import "root:/desktop"
 import "root:/themes"
+import "root:/windows/settings"
 
 ShellRoot {
     id: shellRoot
@@ -121,9 +122,12 @@ ShellRoot {
         model: Quickshell.screens
         Widgets {
             id: desktopWidgets
-
             required property ShellScreen modelData
             screen: modelData
         }
+    }
+
+    Main {
+        id: settingWindow
     }
 }

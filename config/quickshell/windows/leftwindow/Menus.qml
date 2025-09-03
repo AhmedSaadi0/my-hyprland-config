@@ -27,6 +27,7 @@ StackView {
 
     property int currentIndex: 0
     property int previousIndex: 0
+    readonly property int appLauncherIndex: 6
 
     // المكونات الأصلية (Component فقط)
     Component {
@@ -129,6 +130,10 @@ StackView {
                 currentIndex = newIndex;
                 stackView.replace(getPage(newIndex));
             }
+
+            if (newIndex == stackView.appLauncherIndex) {
+                appLauncherPage.gainFocus();
+            }
         }
     }
 
@@ -146,7 +151,7 @@ StackView {
             ParallelAnimation {
                 NumberAnimation {
                     property: "y"
-                    from: parent.height * 0.6
+                    from: stackView.height * 0.6
                     to: 0
                     duration: 420
                     easing.type: Easing.OutBack
@@ -175,7 +180,7 @@ StackView {
             NumberAnimation {
                 property: "y"
                 from: 0
-                to: -parent.height * 0.3
+                to: -stackView.height * 0.3
                 duration: 300
                 easing.type: Easing.InCubic
             }
@@ -210,12 +215,12 @@ StackView {
             }
             PropertyAction {
                 property: "y"
-                value: -parent.height * 0.3
+                value: -stackView.height * 0.3
             }
             ParallelAnimation {
                 NumberAnimation {
                     property: "y"
-                    from: -parent.height * 0.3
+                    from: -stackView.height * 0.3
                     to: 0
                     duration: 420
                     easing.type: Easing.OutBack
@@ -244,7 +249,7 @@ StackView {
             NumberAnimation {
                 property: "y"
                 from: 0
-                to: parent.height * 0.6
+                to: stackView.height * 0.6
                 duration: 300
                 easing.type: Easing.InCubic
             }

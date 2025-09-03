@@ -168,7 +168,7 @@ M3GroupBox {
                 background: Rectangle {
                     anchors.fill: parent
                     radius: selectedTheme.dimensions.elementRadius
-                    color: modelComboBox.enabled ? selectedTheme.colors.topbarBgColorV2 : Theme.ThemeManager.selectedTheme.colors.topbarBgColorV2.alpha(0.5)
+                    color: modelComboBox.enabled ? selectedTheme.colors.topbarBgColorV2 : selectedTheme.colors.topbarBgColorV2.alpha(0.5)
                     // border.color: modelComboBox.enabled ? selectedTheme.colors.secondary : Theme.ThemeManager.selectedTheme.colors.secondary.alpha(0.5)
                     // border.width: 1
 

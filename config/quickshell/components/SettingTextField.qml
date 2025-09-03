@@ -23,15 +23,7 @@ RowLayout {
     EditableField {
         id: settingField
         Layout.fillWidth: true
-
-        normalBackground: selectedTheme.colors.topbarBgColorV2
-        normalForeground: selectedTheme.colors.topbarFgColorV2
-        borderColor: selectedTheme.colors.secondary
-        topLeftRadius: selectedTheme.dimensions.elementRadius
-        topRightRadius: selectedTheme.dimensions.elementRadius
-        bottomLeftRadius: selectedTheme.dimensions.elementRadius
-        bottomRightRadius: selectedTheme.dimensions.elementRadius
-
+        selectedTheme: root.selectedTheme
         onEditingFinished: root.editFinished(text)
         onAccepted: root.accepted(text)
     }
