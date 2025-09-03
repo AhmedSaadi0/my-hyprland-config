@@ -53,6 +53,7 @@ PanelWindow {
         clockFont: clockSettings.font
         clockFormat: clockSettings.format
         clockLocale: clockSettings.local
+        enableAnimation: clockSettings.enableAnimation
 
         onRequestNewGeometry: (newPosition, newSize) => {
             currentClockPosition = newPosition;

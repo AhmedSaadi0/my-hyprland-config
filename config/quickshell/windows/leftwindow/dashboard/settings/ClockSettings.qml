@@ -75,6 +75,18 @@ M3GroupBox {
             enabled: _enableClockWidget.isChecked
         }
 
+        SettingSwitch {
+            id: _enableAnimation
+            label: "Enable Animation"
+            tooltip: "May cause increase in memory"
+            isChecked: workingTheme._desktopClockUseAnimation
+            onIsCheckedChanged: {
+                workingTheme._desktopClockUseAnimation = isChecked;
+                root.themeChanged();
+            }
+            enabled: _enableClockWidget.isChecked
+        }
+
         ColorableSettingTextField {
             label: "Shadow Color"
             textValue: Qt.color(workingTheme._desktopClockSahdowColor).toString()

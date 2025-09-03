@@ -1,6 +1,8 @@
 // File: DesktopClock.qml
 import QtQuick
+import QtQuick.Controls
 import Quickshell
+import org.kde.kirigami as Kirigami
 
 Item {
     id: root
@@ -10,6 +12,7 @@ Item {
     property point position: Qt.point(0, 0)
     property size size: Qt.size(400, 200)
     property bool editMode: false
+    property bool enableAnimation: false
 
     // الخصائص الجمالية
     property color clockColor: "white"
@@ -18,6 +21,7 @@ Item {
     property string clockLocale: "en_US"
 
     signal requestNewGeometry(point newPosition, size newSize)
+    signal themeChanged
 
     // --- 3. ربط الخصائص بالعنصر ---
     // واجهة المستخدم تعكس دائمًا قيم الخصائص أعلاه.
@@ -26,7 +30,39 @@ Item {
     width: size.width
     height: size.height
 
-    // --- المكونات المرئية ---
+    Behavior on x {
+        enabled: !root.editMode
+        SpringAnimation {
+            spring: 3.0
+            damping: 0.4
+        }
+    }
+    Behavior on y {
+        enabled: !root.editMode
+        SpringAnimation {
+            spring: 3.0
+            damping: 0.4
+        }
+    }
+
+    Behavior on width {
+        enabled: root.enableAnimation
+        NumberAnimation {
+            id: widthAnim
+            duration: 500
+            easing.type: Easing.InOutQuad
+            // onStopped: timeText.updateFontSize()
+        }
+    }
+    Behavior on height {
+        enabled: root.enableAnimation
+        NumberAnimation {
+            id: heightAnim
+            duration: 500
+            easing.type: Easing.InOutQuad
+            // onStopped: timeText.updateFontSize()
+        }
+    }
 
     // ساعة النظام (غير مرئية، فقط للحصول على الوقت)
     SystemClock {

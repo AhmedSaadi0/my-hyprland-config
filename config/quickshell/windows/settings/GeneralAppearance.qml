@@ -10,9 +10,10 @@ import "root:/themes"
 Kirigami.ScrollablePage {
     title: "Theme Settings"
 
-    signal applyClicked
+    // Apply will be triggered when changed are done directly
+    signal apply
+    signal resetToDefault
     signal saveClicked
-    signal revertClicked
 
     CustomColorDialog {
         id: colorDialog
@@ -42,6 +43,13 @@ Kirigami.ScrollablePage {
                 text: "Theme: MyCustomTheme"
                 font.bold: true
                 Kirigami.FormData.isSection: true
+            }
+
+            // --- الإضافة الجديدة: تفعيل لون البلازما ---
+            Controls.Switch {
+                text: "Enable plasma accent color"
+                checked: true // القيمة الافتراضية
+                Kirigami.FormData.isSection: false
             }
 
             Controls.Label {
@@ -167,32 +175,45 @@ Kirigami.ScrollablePage {
                     }
                 }
             }
+
+            // --- الإضافة الجديدة: قائمة اختيار سمة الأيقونات ---
+            Controls.Label {
+                text: "Icon Theme:"
+            }
+            Controls.ComboBox {
+                id: iconThemeComboBox
+                Layout.fillWidth: true
+                model: ["Breeze", "Papirus", "Numix"] // أمثلة لأسماء السمات
+            }
         }
     }
 
     footer: Controls.Frame {
         width: parent.width
         padding: Kirigami.Units.smallSpacing
+        background.height: 500
 
+        // --- تعديل تصميم الأزرار ---
         RowLayout {
-            anchors.right: parent.right
-            anchors.rightMargin: Kirigami.Units.largeSpacing
-
-            // --- هذا هو السطر الذي تمت إضافته ---
+            width: parent.width - Kirigami.Units.largeSpacing * 2
+            anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottomMargin: Kirigami.Units.smallSpacing
 
-            spacing: Kirigami.Units.smallSpacing
+            MButton {
+                text: "Reset to default"
+                Layout.preferredWidth: 150
+                onClicked: resetToDefault()
+            }
+            MButton {
+                text: "Cancel"
+                Layout.preferredWidth: 80
+            }
 
-            MButton {
-                text: "Revert"
-                Layout.preferredWidth: 80
-                onClicked: revertClicked()
+            // عنصر فارغ لدفع زر الحفظ إلى اليمين
+            Item {
+                Layout.fillWidth: true
             }
-            MButton {
-                text: "Apply"
-                Layout.preferredWidth: 80
-                onClicked: applyClicked()
-            }
+
             MButton {
                 text: "Save"
                 Layout.preferredWidth: 80
