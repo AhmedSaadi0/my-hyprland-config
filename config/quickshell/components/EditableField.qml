@@ -15,7 +15,7 @@ TextField {
 
     property color normalBackground: selectedTheme.colors.topbarBgColorV2
     property color normalForeground: selectedTheme.colors.topbarFgColorV2
-    property color borderColor: selectedTheme.colors.secondary
+    property color borderColor: selectedTheme.colors.secondary.alpha(0.4)
     property int borderSize: 1
 
     property color focusedBorderColor: borderColor

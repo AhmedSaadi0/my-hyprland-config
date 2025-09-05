@@ -54,6 +54,8 @@ PanelWindow {
         clockFormat: clockSettings.format
         clockLocale: clockSettings.local
         enableAnimation: clockSettings.enableAnimation
+        shadowEnabled: clockSettings.shadowEnabled
+        shadowColor: clockSettings.shadowColor
 
         onRequestNewGeometry: (newPosition, newSize) => {
             currentClockPosition = newPosition;

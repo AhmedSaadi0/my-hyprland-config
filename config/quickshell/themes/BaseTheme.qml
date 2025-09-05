@@ -48,7 +48,7 @@ PersistentProperties {
     property color _leftMenuFgColorV2: Kirigami.Theme.textColor
     property color _leftMenuFgColorV3: Kirigami.Theme.highlightedTextColor
 
-    property color _subtleTextColor: Kirigami.Theme.textColor.alpha(0.8)
+    property color _subtleTextColor: Kirigami.Theme.textColor.alpha(0.6)
 
     // OSDs
     property color _volOsdBgColor: Kirigami.Theme.backgroundColor.lighter(1.5)
@@ -67,8 +67,8 @@ PersistentProperties {
     property int _elementRadius: root._baseRadius // Reference the source property
 
     property int _spacingSmall: 4
-    property int _spacingMedium: 6
-    property int _spacingLarge: 8
+    property int _spacingMedium: 8
+    property int _spacingLarge: 12
 
     // --------------------
     // ---- Typography ----
@@ -76,26 +76,31 @@ PersistentProperties {
     property string _iconFont: "FantasqueSansM Nerd Font Propo"
     property string _bodyFont: "JF Flat"
     property int _baseFontSize: 12
-    property int _heading1Size: 22
-    property int _heading2Size: 20
-    property int _heading3Size: 18
-    property int _heading4Size: 16
-    property int _mediumFontSize: 14
-    property int _smallFontSize: 12
+    property int _heading1Size: 24
+    property int _heading2Size: 22
+    property int _heading3Size: 20
+    property int _heading4Size: 18
+    property int _mediumFontSize: 16
+    property int _smallFontSize: 14
 
     // ------------------------
     // -- System Integration --
     // ------------------------
-    property string _wallpaper: "gruvb_solarsys.png"
+    property bool _enableAccentColoring: false
     property string _qtThemeStyle: "Breeze"
-    property string _kvantumTheme: "KvGnome"
-    property string _gtkTheme: "Breeze"
-    property string _themeIcons: "breeze-dark"
-    property string _themeMode: "dark"
     property string _plasmaColorScheme: "MaterialYouDark"
+    property string _kvantumTheme: "KvGnome"
     property string _konsoleProfile: "MaterialYouAlt.profile"
 
-    property bool _enableAccentColoring: false
+    property string _gtkTheme: "Breeze"
+    property string _themeMode: "dark"
+
+    property string _themeIcons: "breeze-dark"
+
+    // -------------------------
+    // -- Wallpapers Settings --
+    // -------------------------
+    property string _wallpaper: "linux.png"
     property bool _enableDynamicColoring: false
     property bool _enableDynamicWallpapers: false
     property int _dynamicWallpapersInterval: 15 * 1000 * 60
@@ -111,9 +116,9 @@ PersistentProperties {
     property int _hyprRounding: root._baseRadius
     property string _hyprDropShadow: 'no'
 
-    // ------------------------
+    // ----------------------------
     // --- Desktop Clock Widget ---
-    // ------------------------
+    // ----------------------------
     property bool _desktopClockEnabled: true
     property bool _desktopClockSahdowEnabled: false
     property color _desktopClockSahdowColor: "#40000000"

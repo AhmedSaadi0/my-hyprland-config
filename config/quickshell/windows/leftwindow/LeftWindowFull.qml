@@ -5,6 +5,8 @@ import Quickshell
 import "root:/themes"
 import "root:/components"
 import "root:/utils"
+import "root:/config/EventNames.js" as Events
+import "root:/config"
 
 PanelWindow {
     id: root
@@ -193,6 +195,14 @@ PanelWindow {
         if (!isShown) {
             root.visible = false;
         }
+
+        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+            root.close();
+        });
+
+        EventBus.on(Events.OPEN_LEFTBAR, function () {
+            root.open();
+        });
     }
 
     function open() {

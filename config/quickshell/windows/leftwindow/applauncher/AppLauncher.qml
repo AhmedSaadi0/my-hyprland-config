@@ -6,8 +6,11 @@ import Quickshell
 import "root:/themes"
 import "root:/components"
 import "./AppItem.qml"
+import "root:/config"
+import "root:/config/EventNames.js" as Events
 
 ColumnLayout {
+    id: root
     width: parent.with
     height: parent.height
     // anchors.fill: parent
@@ -52,15 +55,9 @@ ColumnLayout {
         verticalAlignment: Text.VAlignment
 
         onAccepted: {
-            clearSearchText.stop();
             if (processedModel.values.length > 1) {
                 const firstAppItem = processedModel.values[1];
-
-                Quickshell.execDetached({
-                    command: firstAppItem.appData.command,
-                    workingDirectory: firstAppItem.appData.workingDirectory
-                });
-                clearSearchText.start();
+                root.launchSelectedApp(firstAppItem.appData.command, firstAppItem.appData.workingDirectory);
             }
         }
 
@@ -211,15 +208,21 @@ ColumnLayout {
                     desktopEntity: modelData.appData
 
                     onItemClicked: {
-                        clearSearchText.stop();
-                        Quickshell.execDetached({
-                            command: modelData.appData.command,
-                            workingDirectory: modelData.appData.workingDirectory
-                        });
-                        clearSearchText.start();
+                        root.launchSelectedApp(modelData.appData.command, modelData.appData.workingDirectory);
                     }
                 }
             }
         }
+    }
+
+    function launchSelectedApp(command, workingDirectory) {
+        clearSearchText.stop();
+        Quickshell.execDetached({
+            command: command,
+            workingDirectory: workingDirectory
+        });
+        clearSearchText.start();
+
+        EventBus.emit(Events.CLOSE_LEFTBAR);
     }
 }

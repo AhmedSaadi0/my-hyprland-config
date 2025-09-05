@@ -1,141 +1,114 @@
 import QtQuick
-import QtQuick.Controls as Controls
 import QtQuick.Layouts
+import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
-// import Quickshell
-// import Quickshell.Wayland
+import QtQuick.Dialogs
+import Qt.labs.platform
 
-import "root:/config"
 import "root:/themes"
+import "root:/config/EventNames.js" as Events
+import "root:/config"
+import "root:/components"
 
 Controls.ApplicationWindow {
     id: root
-    width: 900
-    height: 700
+    // width: 900
+    // height: 1200
     visible: false
 
     color: Kirigami.Theme.backgroundColor
 
     flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
+    title: "NibrasShellSettings"
+
+    property var workingTheme: root.copyTheme(ThemeManager.selectedTheme)
+    readonly property var themePropertyKeys: ThemeManager._allSerializableKeys
+
+    function copyTheme(themeObject) {
+        if (!themeObject)
+            return {};
+        const newTheme = {};
+        for (const key of root.themePropertyKeys) {
+            if (themeObject.hasOwnProperty(key)) {
+                newTheme[key] = themeObject[key];
+            }
+        }
+        return newTheme;
+    }
 
     NibrasShellShortcut {
+        id: openSettingsShortcut
         name: "openSettings"
         onPressed: root.visible = !root.visible
+    }
+
+    Component.onCompleted: {
+        EventBus.on(Events.OPEN_SETTINGS, function () {
+            root.visible = !root.visible;
+        });
+    }
+
+    FolderDialog {
+        id: dynamicWallpaperFolderDialog
+        title: "Please choose a wallpapers folder"
+        onAccepted: {
+            const folderPath = this.folder.toString().replace("file://", "");
+            workingTheme._dynamicWallpapersPath = folderPath;
+            root._saveTheme(true);
+        }
+    }
+
+    FileDialog {
+        id: staticWallpaperFileDialog
+        title: "Please choose a static wallpaper"
+        nameFilters: ["Image files (*.jpg *.jpeg *.png *.bmp)", "All files (*.*)"]
+        onAccepted: {
+            const filePath = file.toString().replace("file://", "");
+            workingTheme._wallpaper = filePath;
+            root._saveTheme(true);
+        }
+    }
+
+    FontDialog {
+        id: fontDialog
+        title: "Select a Font"
+        modality: Qt.ApplicationModal
+        font.pointSize: 20
+
+        property var targetedFieldName
+
+        onCurrentFontChanged: {
+            root.workingTheme[targetedFieldName] = currentFont.family;
+            root._applyTheme();
+        }
+    }
+
+    ColorDialog {
+        id: colorDialog
+        property var targetedFieldName
+
+        modality: Qt.ApplicationModal
+        title: qsTr("Chose a color")
+
+        onVisibleChanged: {
+            if (visible && targetedFieldName) {
+                color = root.workingTheme[targetedFieldName];
+            }
+        }
+
+        onAccepted: {
+            root.workingTheme[targetedFieldName] = color;
+            root._applyTheme();
+        }
     }
 
     RowLayout {
         anchors.fill: parent
         spacing: 0
 
-        // -------------------------------------
-        // 1. القائمة الجانبية (Sidebar)
-        // -------------------------------------
-        Rectangle {
-            id: sidebar
-            color: Kirigami.Theme.alternateBackgroundColor
-            radius: 12
-            Layout.preferredWidth: 240
-            Layout.fillHeight: true
-            Layout.margins: 8
-
-            Rectangle {
-                id: movingHighlight
-                x: Kirigami.Units.smallSpacing / 2
-                width: parent.width - Kirigami.Units.smallSpacing
-                height: menuListView.currentItem ? menuListView.currentItem.height : 0
-                y: menuListView.currentItem ? menuListView.currentItem.y + menuListView.anchors.topMargin : 0
-                color: Kirigami.Theme.activeBackgroundColor
-                border.color: Kirigami.Theme.neutralBackgroundColor
-                border.width: 2
-                radius: 12
-
-                Behavior on y {
-                    SpringAnimation {
-                        spring: 3
-                        damping: 0.25
-                        duration: 200
-                    }
-                }
-            }
-
-            ListView {
-                id: menuListView
-                anchors.fill: parent
-                anchors.topMargin: 2
-                clip: true
-                currentIndex: 0
-                spacing: 2
-
-                model: [
-                    {
-                        name: "المظهر العام",
-                        icon: "preferences-desktop-theme"
-                    },
-                    {
-                        name: "النظام والخلفية",
-                        icon: "preferences-system-windows"
-                    },
-                    {
-                        name: "Hyprland",
-                        icon: "preferences-desktop-display"
-                    },
-                    {
-                        name: "ساعة سطح المكتب",
-                        icon: "preferences-desktop-time"
-                    },
-                    {
-                        name: "التكامل",
-                        icon: "preferences-plugin"
-                    }
-                ]
-
-                delegate: Controls.ItemDelegate {
-                    width: parent.width
-                    height: Kirigami.Units.gridUnit * 2.5
-                    padding: Kirigami.Units.smallSpacing
-
-                    // State for hover effect
-                    property bool isHovered: false
-
-                    contentItem: RowLayout {
-                        spacing: Kirigami.Units.mediumSpacing
-
-                        Kirigami.Icon {
-                            source: model.modelData.icon
-                            color: itemLabel.color
-                        }
-
-                        Controls.Label {
-                            id: itemLabel
-                            text: model.modelData.name
-                            elide: Text.ElideRight
-                            color: menuListView.currentIndex === index ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.topbarFgColor
-                        }
-                    }
-
-                    background: Rectangle {
-                        color: menuListView.currentIndex === index ? ThemeManager.selectedTheme.colors.primary : (isHovered ? ThemeManager.selectedTheme.colors.secondary.alpha(0.4) : "transparent")
-                        border.color: menuListView.currentIndex === index ? ThemeManager.selectedTheme.colors.primary : (isHovered ? ThemeManager.selectedTheme.colors.secondary : "transparent")
-                        border.width: menuListView.currentIndex === index ? 1 : (isHovered ? 1 : 0)
-                        radius: 12
-
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onEntered: {
-                                isHovered = true;
-                            }
-                            onExited: {
-                                isHovered = false;
-                            }
-                        }
-                    }
-
-                    onClicked: {
-                        menuListView.currentIndex = index;
-                        contentStack.navigateTo(index);
-                    }
-                }
+        SidePanel {
+            onNavigateTo: index => {
+                contentStack.navigateTo(index);
             }
         }
 
@@ -146,6 +119,9 @@ Controls.ApplicationWindow {
             id: contentStack
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.topMargin: 20
+            Layout.bottomMargin: 20
+            Layout.rightMargin: 20
 
             clip: true
             smooth: true
@@ -161,27 +137,90 @@ Controls.ApplicationWindow {
 
             Component {
                 id: page1Component
-                GeneralAppearance {}
+                GeneralAppearance {
+                    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+                }
             }
 
             Component {
                 id: page2Component
-                WallpaperSettings {}
+                WallpaperSettings {
+                    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+
+                    onOpenFolderDialog: dynamicWallpaperFolderDialog.open()
+                    onOpenFileDialog: staticWallpaperFileDialog.open()
+                    onDynamicColoringChanged: {}
+
+                    onResetToDefault: ThemeManager.resetWallpaperSystemSettings()
+                    onNextWallpaperClicked: ThemeManager.switchToNextWallpaper()
+
+                    onApplyChanges: root._applyTheme()
+                    onSaveChanges: root._saveTheme(true)
+                    onCancelChanges: root._cancelChanges()
+                }
             }
 
             Component {
                 id: page3Component
-                HyprlandSettings {}
+                HyprlandSettings {
+                    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+
+                    onApplyChanges: root._applyTheme()
+                    onSaveChanges: root._saveTheme(true)
+                    onCancelChanges: root._cancelChanges()
+                    onResetToDefault: ThemeManager.resetHyprlandSettings()
+                }
             }
 
             Component {
                 id: page4Component
-                DesktopClockSettings {}
+                DesktopClockSettings {
+                    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+                    isCreatingOverlayImage: ThemeManager.isCreatingOverlayImage
+
+                    onApplyChanges: root._applyTheme()
+                    onSaveChanges: root._saveTheme(true)
+                    onCancelChanges: root._cancelChanges()
+                    onResetToDefault: ThemeManager.resetClockSettings()
+
+                    onOpenFontDialog: {
+                        fontDialog.currentFont.family = root.workingTheme._desktopClockFont;
+                        fontDialog.targetedFieldName = "_desktopClockFont";
+                        fontDialog.open();
+                    }
+
+                    onOpenClockColorDialog: {
+                        colorDialog.targetedFieldName = "_desktopClockColor";
+                        colorDialog.open();
+                    }
+
+                    onOpenShadowColorDialog: {
+                        colorDialog.targetedFieldName = "_desktopClockSahdowColor";
+                        colorDialog.open();
+                    }
+                    onCreateOverlayImageButtonClicked: ThemeManager.createImageOverlay(data)
+                    onClearUnusedCache: ThemeManager.cleardUnusedOverlayImages()
+                }
             }
 
             Component {
                 id: page5Component
-                IntegrationSettings {}
+                IntegrationSettings {
+                    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+
+                    onApplyChanges: root._applyTheme()
+                    onSaveChanges: root._saveTheme(true)
+                    onCancelChanges: root._cancelChanges()
+                    onResetToDefault: {
+                        ThemeManager.resetPlasmaSettings();
+                        ThemeManager.resetGtkSettings();
+                    }
+                }
             }
 
             function getPage(index) {
@@ -363,5 +402,21 @@ Controls.ApplicationWindow {
                 }
             }
         }
+    }
+
+    function _applyTheme() {
+        if (!ThemeManager._isThemeLoading) {
+            ThemeManager.updateAndApplyTheme(workingTheme, false);
+        }
+    }
+
+    function _saveTheme(notifySaving = false) {
+        if (!ThemeManager._isThemeLoading) {
+            ThemeManager.updateAndApplyTheme(workingTheme, true, notifySaving);
+            root.visible = false;
+        }
+    }
+    function _cancelChanges() {
+        ThemeManager.reloadTheme();
     }
 }

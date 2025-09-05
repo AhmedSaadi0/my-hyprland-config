@@ -148,7 +148,7 @@ Singleton {
             console.warn(`Skipping empty command: ${description}`);
             return;
         }
-        // console.info(description + " -> " + commandArray.join(' '));
+        console.info(description + " -> " + commandArray.join(' '));
         Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 }

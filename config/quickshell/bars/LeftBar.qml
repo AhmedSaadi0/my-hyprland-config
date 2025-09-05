@@ -9,6 +9,8 @@ import "../themes"
 import "../components"
 import "root:/utils"
 import "root:/services"
+import "root:/config/EventNames.js" as Events
+import "root:/config"
 
 PanelWindow {
     id: root
@@ -28,19 +30,13 @@ PanelWindow {
     property bool panelOpen: false
     property int activeMenuIndex: LeftMenuStatus.selectedIndex
 
-    // --- 2. خاصية لتخزين مؤشر عنصر الإشعارات ---
     property int notificationMenuIndex: -1
 
-    // --- 3. ربط الواجهة بخدمة الإشعارات ---
-    // هذا الكود يراقب التغييرات في NotifManager ويحدّث الواجهة
     Connections {
-        target: NotifManager // الهدف هو الـ Singleton الخاص بنا
+        target: NotifManager
 
-        // هذه الدالة تُستدعى تلقائياً عندما تتغير قيمة NotifManager.notificationCount
         function onNotificationCountChanged() {
-            // نتأكد من أننا وجدنا عنصر الإشعارات أولاً
             if (root.notificationMenuIndex !== -1) {
-                // نقوم بتحديث خاصية notificationCount في الموديل بكفاءة عالية
                 buttonGroup.model.set(root.notificationMenuIndex, {
                     "notificationCount": NotifManager.notificationCount
                 });
@@ -48,25 +44,25 @@ PanelWindow {
         }
     }
 
-    // --- 4. إعداد القيمة الأولية عند بدء تشغيل الواجهة ---
     Component.onCompleted: {
-        // نبحث عن عنصر "Notifications" في الموديل مرة واحدة فقط
         for (let i = 0; i < buttonGroup.model.count; i++) {
             if (buttonGroup.model.get(i).name === "Notifications") {
-                // نخزن مؤشره (index) للوصول السريع لاحقاً
                 root.notificationMenuIndex = i;
 
-                // نقوم بتعيين القيمة الأولية للعداد عند بدء التشغيل
-                // هذا مهم في حال كانت هناك إشعارات موجودة بالفعل
                 buttonGroup.model.set(i, {
                     "notificationCount": NotifManager.notificationCount
                 });
 
-                break; // نوقف البحث بعد العثور عليه
+                break;
             }
         }
 
         margins.top = -10;
+
+        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+            closePanelTimer.stop();
+            root.closePanel();
+        });
     }
 
     Connections {
@@ -122,7 +118,6 @@ PanelWindow {
                     icon: ""
                     activeIcon: ""
                     name: "Notifications"
-                    // القيمة الأولية هنا ستُحدّث فوراً عند بدء التشغيل
                     notificationCount: 0
                 }
                 ListElement {
@@ -170,5 +165,16 @@ PanelWindow {
                 LeftMenuStatus.changeIndex(newIndex);
             }
         }
+    }
+
+    function closePanel() {
+        closePanelTimer.start();
+    }
+
+    Timer {
+        id: closePanelTimer
+        interval: 600
+        repeat: false
+        onTriggered: LeftMenuStatus.changeIndex(-1)
     }
 }

@@ -14,6 +14,7 @@ Singleton {
     signal selectedThemeUpdated
 
     property bool _isThemeLoading: false
+    property bool isCreatingOverlayImage: false
     property var _activeThemeInstance: null
     property string _currentThemeFile: ""
     property var _originalThemeCache: ({})
@@ -25,13 +26,12 @@ Singleton {
     readonly property var _colorPropertyKeys: ["themeName", "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor",]
     readonly property var _dimensionPropertyKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
     readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading2Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
-    readonly property var _systemPropertyKeys: ["_wallpaper", "_qtThemeStyle", "_kvantumTheme", "_gtkTheme", "_themeIcons", "_themeMode", "_plasmaColorScheme", "_konsoleProfile", "_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_enableAccentColoring"]
     readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
     readonly property var _wallpaperSystemPropertyKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper"]
-    readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_themeIcons"]
-    readonly property var _gtkPropertyKeys: ["_gtkTheme", "_themeIcons"]
+    readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_enableAccentColoring"]
+    readonly property var _gtkPropertyKeys: ["_gtkTheme", "_themeIcons", "_themeMode"]
     readonly property var _desktopClockPropertyKeys: ["_desktopClockLocal", "_desktopClockFont", "_desktopClockEnabled", "_desktopClockColor", "_desktopClockFormat", "_desktopClockPosition", "_desktopClockDepthEffectEnabled", "_desktopClockDepthModel", "_desktopClockDepthOverlayPath", "_desktopClockSize", "_desktopClockSahdowColor", "_desktopClockSahdowEnabled", "_desktopClockUseThemeColor", "_desktopClockUseAnimation"]
-    readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_systemPropertyKeys).concat(_hyprlandPropertyKeys).concat(_desktopClockPropertyKeys).concat(_wallpaperSystemPropertyKeys)
+    readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_hyprlandPropertyKeys).concat(_desktopClockPropertyKeys).concat(_wallpaperSystemPropertyKeys).concat(_plasmaPropertyKeys).concat(_gtkPropertyKeys)
 
     Component.onCompleted: {
         console.info("Application starting. Loading last session...");
@@ -61,7 +61,12 @@ Singleton {
         _performLoadAndApply(themeFile);
     }
 
-    function updateAndApplyTheme(modifiedThemeData, saveTheme) {
+    function reloadTheme() {
+        _stopRunningAllProcess();
+    // _performLoadAndApply(_activeThemeInstance);
+    }
+
+    function updateAndApplyTheme(modifiedThemeData, saveTheme, notifySaving = false) {
         if (!selectedTheme || !modifiedThemeData) {
             console.error("Cannot update theme: invalid data received.");
             return;
@@ -79,7 +84,7 @@ Singleton {
             }
         }
 
-        _applyExternalSettings(saveTheme);
+        _applyExternalSettings(saveTheme, notifySaving);
     }
 
     function switchToNextWallpaper() {
@@ -197,7 +202,7 @@ Singleton {
             activeThemeName: themeFile
         }));
 
-        cacheThemeFile.path = App.themeCacheFolderPath + `/${themeFile}.json`;
+        cacheThemeFile.path = App.themeCacheFolderPath + `${themeFile}.json`;
         cacheThemeFile.reload();
     }
 
@@ -222,7 +227,7 @@ Singleton {
         _isThemeLoading = false;
     }
 
-    function _applyExternalSettings(saveTheme) {
+    function _applyExternalSettings(saveTheme, notifySaving = false) {
         if (!root.selectedTheme)
             return;
 
@@ -240,6 +245,7 @@ Singleton {
         }
 
         if (saveTheme) {
+            sendChangedSignalTimer.notifySaving = notifySaving;
             sendChangedSignalTimer.start();
         }
 
@@ -351,7 +357,7 @@ Singleton {
         updateAndApplyTheme(modifiedData, true);
     }
 
-    function _cacheAppliedData() {
+    function _cacheAppliedData(notifySaving = false) {
         let dataToSave = {};
         for (const key of _allSerializableKeys) {
             if (root.selectedTheme.hasOwnProperty(key)) {
@@ -359,8 +365,19 @@ Singleton {
             }
         }
         cacheThemeFile.setText(JSON.stringify(dataToSave, null, 2));
-        console.info(`Data for '${selectedTheme.themeName}' saved to ${cacheThemeFile.path}`);
+        const message = `Data for '${selectedTheme.themeName}' saved to ${cacheThemeFile.path}`;
+
+        console.info(message);
+
         root.selectedThemeUpdated();
+
+        if (notifySaving) {
+            App.dispatchCommand("send notification", Utils.Helper.sendNotification({
+                summary: "Theme saved successfully",
+                body: message
+            }));
+            App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
+        }
     }
 
     function _stopRunningAllProcess() {
@@ -456,6 +473,8 @@ Singleton {
                 App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
                 selectedTheme._desktopClockDepthOverlayPath = createOverlayImageProcess.newImagePath;
                 _cacheAppliedData();
+
+                root.isCreatingOverlayImage = false;
             }
         }
         stderr: SplitParser {
@@ -465,6 +484,7 @@ Singleton {
         function start(imagePath) {
             this.newImagePath = imagePath;
             this.running = true;
+            root.isCreatingOverlayImage = true;
         }
     }
 
@@ -473,7 +493,7 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
-                    console.info(this.text);
+                    // console.info(this.text);
                     App.dispatchCommand("send notification", Utils.Helper.sendNotification({
                         summary: "Cached Images Deleted",
                         body: this.text.trim()
@@ -526,7 +546,13 @@ Singleton {
         id: sendChangedSignalTimer
         interval: 1000
         repeat: false
-        onTriggered: root._cacheAppliedData()
+
+        property bool notifySaving: false
+
+        onTriggered: {
+            root._cacheAppliedData(notifySaving);
+            notifySaving = false;
+        }
     }
 
     Timer {

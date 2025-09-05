@@ -30,7 +30,7 @@ BaseTheme {
     //
     // // Left Menu
     // _leftMenuBgColorV1: "#282a36"
-    // _leftMenuBgColorV2: "#44475a"
+    _leftMenuBgColorV2: "#292c38" // 3f1e32
     // _leftMenuBgColorV3: "#ff79c6"
     // _leftMenuFgColorV1: "#f8f8f2"
     // _leftMenuFgColorV2: "#bd93f9"

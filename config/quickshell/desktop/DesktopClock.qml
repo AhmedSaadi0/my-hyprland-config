@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import org.kde.kirigami as Kirigami
+import QtQuick.Effects
 
 Item {
     id: root
@@ -13,6 +14,8 @@ Item {
     property size size: Qt.size(400, 200)
     property bool editMode: false
     property bool enableAnimation: false
+    property bool shadowEnabled: false
+    property color shadowColor: "#40000000"
 
     // الخصائص الجمالية
     property color clockColor: "white"
@@ -84,6 +87,16 @@ Item {
         verticalAlignment: Text.AlignVCenter
         font.pointSize: 500 // حجم كبير مبدئي
         fontSizeMode: Text.Fit // سيقوم QML بتصغيره ليناسب العرض
+
+        layer.enabled: root.shadowEnabled
+        layer.effect: MultiEffect {
+            // source: timeText
+            shadowEnabled: true
+            shadowColor: root.shadowColor
+            shadowBlur: 0.6
+            shadowVerticalOffset: 2
+            shadowHorizontalOffset: 2
+        }
     }
 
     // إطار يظهر في وضع التعديل
