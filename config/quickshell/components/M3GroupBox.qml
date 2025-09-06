@@ -58,8 +58,8 @@ GroupBox {
         width: root.availableWidth
         spacing: 0 // نتحكم في المسافات يدويًا
 
-        Item {
-            // ScrollView {
+        // Item {
+        ScrollView {
             id: contentContainer
             Layout.fillWidth: true
             Layout.fillHeight: true

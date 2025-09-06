@@ -410,7 +410,7 @@ M3GroupBox {
                             selectedTheme: root.selectedTheme
                             Layout.preferredHeight: 30
                             Layout.preferredWidth: 170
-                            onEditingFinished: workingTheme.backgroundThreshold = text
+                            onEditingFinished: root.backgroundThreshold = text
                         }
                     }
 
@@ -425,7 +425,7 @@ M3GroupBox {
                             selectedTheme: root.selectedTheme
                             Layout.preferredHeight: 30
                             Layout.preferredWidth: 170
-                            onEditingFinished: workingTheme._foregroundThreshold
+                            onEditingFinished: root.foregroundThreshold = text
                         }
                     }
 
@@ -440,7 +440,7 @@ M3GroupBox {
                             selectedTheme: root.selectedTheme
                             Layout.preferredHeight: 30
                             Layout.preferredWidth: 170
-                            onEditingFinished: workingTheme.erodeSize
+                            onEditingFinished: root.erodeSize = text
                         }
                     }
                 }

@@ -43,13 +43,13 @@ Singleton {
     // Public API
     //================================================================
 
-    function requestLoadTheme(themeFile) {
+    function requestLoadTheme(themeFile, reload = false) {
         if (_isThemeLoading) {
             console.warn(`Request to load '${themeFile}' ignored: a theme is already being loaded.`);
             return;
         }
 
-        if (_currentThemeFile === themeFile && _activeThemeInstance) {
+        if (_currentThemeFile === themeFile && _activeThemeInstance && !reload) {
             console.log("Theme already loaded:", themeFile);
             return;
         }
@@ -63,7 +63,7 @@ Singleton {
 
     function reloadTheme() {
         _stopRunningAllProcess();
-    // _performLoadAndApply(_activeThemeInstance);
+        requestLoadTheme(_currentThemeFile, true);
     }
 
     function updateAndApplyTheme(modifiedThemeData, saveTheme, notifySaving = false) {

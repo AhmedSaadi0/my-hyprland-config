@@ -134,6 +134,7 @@ Controls.ApplicationWindow {
             property var page3
             property var page4
             property var page5
+            property var page6
 
             Component {
                 id: page1Component
@@ -223,8 +224,25 @@ Controls.ApplicationWindow {
                 }
             }
 
+            Component {
+                id: page6Component
+                ColorsSettings {
+                    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+
+                    onApplyChanges: root._applyTheme()
+                    onSaveChanges: root._saveTheme(true)
+                    onCancelChanges: root._cancelChanges()
+                    onResetToDefault: ThemeManager.resetColorSettings()
+                    onOpenColorDialog: function (colorProperty) {
+                        colorDialog.targetedFieldName = colorProperty;
+                        colorDialog.open();
+                    }
+                }
+            }
+
             function getPage(index) {
-                return [page1, page2, page3, page4, page5][index];
+                return [page1, page6, page2, page3, page4, page5,][index];
             }
 
             Component.onCompleted: {
@@ -245,6 +263,10 @@ Controls.ApplicationWindow {
                     // "anchors.fill": stackView
                 });
                 page5 = page5Component.createObject(contentStack, {
+                    "visible": false
+                    // "anchors.fill": stackView
+                });
+                page6 = page6Component.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
                 });
@@ -418,5 +440,6 @@ Controls.ApplicationWindow {
     }
     function _cancelChanges() {
         ThemeManager.reloadTheme();
+        root.visible = false;
     }
 }

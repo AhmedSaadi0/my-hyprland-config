@@ -8,8 +8,6 @@ import QtQuick.Effects
 Item {
     id: root
 
-    // --- 1. الخصائص التي يستقبلها من الأب ---
-    // هذه هي "واجهة برمجة التطبيقات" للمكون الخاص بنا.
     property point position: Qt.point(0, 0)
     property size size: Qt.size(400, 200)
     property bool editMode: false
@@ -17,7 +15,6 @@ Item {
     property bool shadowEnabled: false
     property color shadowColor: "#40000000"
 
-    // الخصائص الجمالية
     property color clockColor: "white"
     property string clockFont: "sans-serif"
     property string clockFormat: "hh:mm"
@@ -26,8 +23,6 @@ Item {
     signal requestNewGeometry(point newPosition, size newSize)
     signal themeChanged
 
-    // --- 3. ربط الخصائص بالعنصر ---
-    // واجهة المستخدم تعكس دائمًا قيم الخصائص أعلاه.
     x: position.x
     y: position.y
     width: size.width
@@ -49,7 +44,7 @@ Item {
     }
 
     Behavior on width {
-        enabled: root.enableAnimation
+        enabled: root.enableAnimation && !root.editMode
         NumberAnimation {
             id: widthAnim
             duration: 500
@@ -58,7 +53,7 @@ Item {
         }
     }
     Behavior on height {
-        enabled: root.enableAnimation
+        enabled: root.enableAnimation && !root.editMode
         NumberAnimation {
             id: heightAnim
             duration: 500
@@ -67,26 +62,22 @@ Item {
         }
     }
 
-    // ساعة النظام (غير مرئية، فقط للحصول على الوقت)
     SystemClock {
         id: systemClock
     }
 
-    // نص الساعة
     Text {
         id: timeText
         anchors.fill: parent
         text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root.clockFormat)
 
-        // ربط الخصائص الجمالية
         color: root.clockColor
         font.family: root.clockFont
 
-        // لتوسيط النص وجعله يملأ المساحة
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pointSize: 500 // حجم كبير مبدئي
-        fontSizeMode: Text.Fit // سيقوم QML بتصغيره ليناسب العرض
+        font.pointSize: 500 
+        fontSizeMode: Text.Fit 
 
         layer.enabled: root.shadowEnabled
         layer.effect: MultiEffect {
@@ -99,7 +90,6 @@ Item {
         }
     }
 
-    // إطار يظهر في وضع التعديل
     Rectangle {
         visible: root.editMode
         anchors.fill: parent
@@ -108,12 +98,10 @@ Item {
         border.width: 2
     }
 
-    // --- 4. منطقة التفاعل (للسحب وتغيير الحجم) ---
     MouseArea {
         id: dragArea
         anchors.fill: parent
 
-        // متغيرات لتخزين نقطة بداية السحب
         property point startDragPos
         property point startComponentPos
 
@@ -124,16 +112,13 @@ Item {
 
         onPressed: mouse => {
             if (!root.editMode) {
-                // الإصلاح: اقبل النقرة دائمًا لمنع انتشارها للخلف.
-                // هذا يضمن أن onDoubleClicked سيعمل بشكل صحيح.
                 mouse.accepted = true;
                 return;
             }
 
-            // هذا الكود سيعمل فقط إذا كان editMode هو true
             startComponentPos = Qt.point(root.x, root.y);
             startDragPos = mapToItem(null, mouse.x, mouse.y);
-            mouse.accepted = true; // قبول النقرة مهم أيضًا هنا
+            mouse.accepted = true; 
         }
 
         onPositionChanged: mouse => {
@@ -154,7 +139,6 @@ Item {
         // }
     }
 
-    // مقبض تغيير الحجم (مثال بسيط)
     Rectangle {
         id: resizeHandle
         visible: root.editMode
@@ -164,7 +148,7 @@ Item {
         radius: 10
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: -10 // يظهر خارج الإطار قليلاً
+        anchors.margins: -10 
 
         MouseArea {
             anchors.fill: parent
@@ -186,15 +170,10 @@ Item {
 
                     var newSize = Qt.size(Math.max(100, startComponentSize.width + deltaX), Math.max(50, startComponentSize.height + deltaY));
 
-                    // إرسال الإشارة بالطلب الجديد
                     root.requestNewGeometry(root.position, newSize);
                 }
             }
 
-            // onReleased: {
-            //     // عند الانتهاء، نرسل الإشارة "saveGeometry" إلى الأب
-            //     root.saveGeometry(root.position, Qt.size(root.width, root.height));
-            // }
         }
     }
 }

@@ -228,6 +228,8 @@ Singleton {
             }
         }
 
+        console.info("Image overlay script atts -> " + commandArray);
+
         return commandArray;
     }
 

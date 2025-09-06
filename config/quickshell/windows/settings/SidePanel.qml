@@ -55,6 +55,11 @@ Rectangle {
                 icon: "preferences-desktop-theme"
             },
             {
+                name: qsTr("Color Settings") // <-- الإضافة الجديدة
+                ,
+                icon: "preferences-desktop-color"
+            },
+            {
                 name: qsTr("Wallpaper Settings"),
                 icon: "preferences-system-windows"
             },
@@ -69,7 +74,7 @@ Rectangle {
             {
                 name: qsTr("Integration Settings"),
                 icon: "preferences-plugin"
-            }
+            },
         ]
 
         delegate: Controls.ItemDelegate {
