@@ -36,6 +36,31 @@ Controls.ApplicationWindow {
         return newTheme;
     }
 
+    // function updateWorkingTheme(sourceTheme) {
+    //     if (!sourceTheme || !workingTheme)
+    //         return;
+    //
+    //     // مسح الخصائص القديمة (اختياري ولكنه جيد لتجنب بقاء قيم قديمة)
+    //     for (const key in workingTheme) {
+    //         delete workingTheme[key];
+    //     }
+    //
+    //     // نسخ الخصائص الجديدة إلى الكائن الموجود
+    //     for (const key of root.themePropertyKeys) {
+    //         if (sourceTheme.hasOwnProperty(key)) {
+    //             workingTheme[key] = sourceTheme[key];
+    //         }
+    //     }
+    // }
+
+    // Connections {
+    //     target: ThemeManager
+    //     function onSelectedThemeUpdated() {
+    //         root.updateWorkingTheme(ThemeManager.selectedTheme);
+    //     // root.workingThemeChanged();
+    //     }
+    // }
+
     NibrasShellShortcut {
         id: openSettingsShortcut
         name: "openSettings"
@@ -438,6 +463,7 @@ Controls.ApplicationWindow {
             root.visible = false;
         }
     }
+
     function _cancelChanges() {
         ThemeManager.reloadTheme();
         root.visible = false;

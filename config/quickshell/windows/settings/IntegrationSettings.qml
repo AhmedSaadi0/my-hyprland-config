@@ -99,7 +99,6 @@ M3GroupBox {
                 Layout.bottomMargin: Kirigami.Units.smallSpacing
             }
 
-            // --- خيار تطبيق لون التمييز: _enableAccentColoring ---
             SettingSwitch {
                 label: qsTr("Apply single accent color")
                 isChecked: workingTheme._enableAccentColoring

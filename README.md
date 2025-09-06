@@ -475,6 +475,30 @@ nvim .nibrasshell.json
 
 <hr />
 
+#### Settings
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/settings1.png'/>
+</p>
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/settings2.png'/>
+</p>
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/settings3.png'/>
+</p>
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/settings4.png'/>
+</p>
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/settings5.png'/>
+</p>
+
+<hr />
+
 ### Credits
 
 #### Icons and GTK Themes
