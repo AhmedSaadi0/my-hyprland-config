@@ -14,11 +14,7 @@
   - [ ] Todo List
 
 - **Setting Window**
-  - [ ] Create a setting Window
-  - [ ] Hyprland Control
-  - [ ] Quickshell Control
-  - [ ] Keybindings Cheatsheet
-  - [ ] Launched Apps List
+  - [x] Create a setting Window
 
 - **Widgets**
   - [x] Clock Widget
