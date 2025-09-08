@@ -1,3 +1,7 @@
+// windows/settings/SidePanel.qml
+
+// pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
@@ -10,7 +14,7 @@ Rectangle {
     id: root
     // color: Kirigami.Theme.alternateBackgroundColor
     color: "transparent"
-    radius: 12
+    radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     signal navigateTo(int index)
 
@@ -30,7 +34,7 @@ Rectangle {
         color: Kirigami.Theme.activeBackgroundColor
         border.color: Kirigami.Theme.neutralBackgroundColor
         border.width: 2
-        radius: 12
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
         Behavior on y {
             SpringAnimation {
@@ -50,13 +54,16 @@ Rectangle {
         spacing: 2
 
         model: [
+            // {
+            //     name: qsTr("General Settings"),
+            //     icon: "preferences-desktop-theme"
+            // },
             {
-                name: qsTr("General Settings"),
-                icon: "preferences-desktop-theme"
+                name: qsTr("Desktop Clock Settings"),
+                icon: "preferences-desktop-time"
             },
             {
-                name: qsTr("Color Settings") // <-- الإضافة الجديدة
-                ,
+                name: qsTr("Color Settings"),
                 icon: "preferences-desktop-color"
             },
             {
@@ -64,12 +71,12 @@ Rectangle {
                 icon: "preferences-system-windows"
             },
             {
-                name: qsTr("Hyprland Settings"),
-                icon: "preferences-desktop-display"
+                name: qsTr("Layout & Fonts"),
+                icon: "preferences-desktop-font"
             },
             {
-                name: qsTr("Desktop Clock Settings"),
-                icon: "preferences-desktop-time"
+                name: qsTr("Hyprland Settings"),
+                icon: "preferences-desktop-display"
             },
             {
                 name: qsTr("Integration Settings"),
@@ -105,7 +112,7 @@ Rectangle {
                 color: menuListView.currentIndex === index ? ThemeManager.selectedTheme.colors.primary : (isHovered ? ThemeManager.selectedTheme.colors.secondary.alpha(0.4) : "transparent")
                 border.color: menuListView.currentIndex === index ? ThemeManager.selectedTheme.colors.primary : (isHovered ? ThemeManager.selectedTheme.colors.secondary : "transparent")
                 border.width: menuListView.currentIndex === index ? 1 : (isHovered ? 1 : 0)
-                radius: 12
+                radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
                 MouseArea {
                     anchors.fill: parent
@@ -123,9 +130,6 @@ Rectangle {
                 menuListView.currentIndex = index;
                 root.navigateTo(index);
             }
-            // Component.onCompleted: {
-            //     root.navigateTo(1);
-            // }
         }
     }
 }

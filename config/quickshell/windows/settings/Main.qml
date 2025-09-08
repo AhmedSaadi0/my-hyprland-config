@@ -101,10 +101,20 @@ Controls.ApplicationWindow {
         font.pointSize: 20
 
         property var targetedFieldName
+        property bool updateOnChange: true
 
         onCurrentFontChanged: {
-            root.workingTheme[targetedFieldName] = currentFont.family;
-            root._applyTheme();
+            if (updateOnChange) {
+                root.workingTheme[targetedFieldName] = currentFont.family;
+                root._applyTheme();
+            }
+        }
+
+        onAccepted: {
+            if (!updateOnChange) {
+                root.workingTheme[targetedFieldName] = currentFont.family;
+                root._applyTheme();
+            }
         }
     }
 
@@ -157,15 +167,29 @@ Controls.ApplicationWindow {
             property var page1
             property var page2
             property var page3
-            property var page4
+            property var desktopClockPage
             property var page5
             property var page6
+            property var page7
 
             Component {
                 id: page1Component
                 GeneralAppearance {
                     workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
+
+                    onSaveThemeAs: function (themeName) {
+                        ThemeManager.saveThemeAs(themeName);
+                    }
+                    onImportTheme: function (selectedFile) {
+                        ThemeManager.importThemeFromFile(selectedFile);
+                    }
+                    onExportTheme: function (selectedFile) {
+                        ThemeManager.exportCurrentTheme(selectedFile);
+                    }
+                    onResetAllSettings: function () {
+                        ThemeManager.resetWholeTheme();
+                    }
                 }
             }
 
@@ -202,7 +226,7 @@ Controls.ApplicationWindow {
             }
 
             Component {
-                id: page4Component
+                id: desktopClockPageComp
                 DesktopClockSettings {
                     workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
@@ -266,15 +290,37 @@ Controls.ApplicationWindow {
                 }
             }
 
+            Component {
+                id: page7Component
+                LayoutFontSettings {
+                    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+
+                    onOpenFontDialog: function (propertyName) {
+                        fontDialog.targetedFieldName = propertyName;
+                        fontDialog.updateOnChange = false;
+                        fontDialog.open();
+                    }
+
+                    onApplyChanges: root._applyTheme()
+                    onSaveChanges: root._saveTheme(true)
+                    onCancelChanges: root._cancelChanges()
+                    onResetToDefault: {
+                        ThemeManager.resetTypographySettings();
+                        ThemeManager.resetDimensionSettings();
+                    }
+                }
+            }
+
             function getPage(index) {
-                return [page1, page6, page2, page3, page4, page5,][index];
+                return [desktopClockPage, page6, page2, page7, page3, page5][index];
             }
 
             Component.onCompleted: {
-                page1 = page1Component.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
+                // page1 = page1Component.createObject(contentStack, {
+                //     "visible": false
+                //     // "anchors.fill": stackView
+                // });
                 page2 = page2Component.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
@@ -283,7 +329,7 @@ Controls.ApplicationWindow {
                     "visible": false
                     // "anchors.fill": stackView
                 });
-                page4 = page4Component.createObject(contentStack, {
+                desktopClockPage = desktopClockPageComp.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
                 });
@@ -295,7 +341,12 @@ Controls.ApplicationWindow {
                     "visible": false
                     // "anchors.fill": stackView
                 });
-                push(page1);
+                page7 = page7Component.createObject(contentStack, {
+                    "visible": false
+                    // "anchors.fill": stackView
+                });
+
+                push(desktopClockPage);
             }
 
             function navigateTo(newIndex) {

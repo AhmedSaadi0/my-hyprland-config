@@ -12,16 +12,13 @@
   - [x] Left Menu Animations
   - [ ] Clipboard Manager
   - [ ] Todo List
-  - [ ] Keybindings Cheatsheet
 
 - **Setting Window**
-  - [x] Create a setting Window
-  - [ ] General Settings
-  - [x] Colors Settings
-  - [x] Wallpaper Settings
-  - [x] Hyprland Settings
-  - [x] Desktop Clock Settings
-  - [x] Integration Settings
+  - [ ] Create a setting Window
+  - [ ] Hyprland Control
+  - [ ] Quickshell Control
+  - [ ] Keybindings Cheatsheet
+  - [ ] Launched Apps List
 
 - **Widgets**
   - [x] Clock Widget

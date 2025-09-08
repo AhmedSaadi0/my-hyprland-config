@@ -76,12 +76,12 @@ PersistentProperties {
     property string _iconFont: "FantasqueSansM Nerd Font Propo"
     property string _bodyFont: "JF Flat"
     property int _baseFontSize: 12
-    property int _heading1Size: 24
-    property int _heading2Size: 22
-    property int _heading3Size: 20
-    property int _heading4Size: 18
-    property int _mediumFontSize: 16
-    property int _smallFontSize: 14
+    property int _heading1Size: 22
+    property int _heading2Size: 20
+    property int _heading3Size: 18
+    property int _heading4Size: 16
+    property int _mediumFontSize: 14
+    property int _smallFontSize: 12
 
     // ------------------------
     // -- System Integration --

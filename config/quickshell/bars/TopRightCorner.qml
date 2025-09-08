@@ -10,8 +10,8 @@ import "../components"
 PanelWindow {
     id: root
 
-    implicitHeight: 19
-    implicitWidth: 19
+    implicitHeight: 29
+    implicitWidth: 29
     exclusionMode: ExclusionMode.Normal
 
     focusable: false
@@ -37,7 +37,7 @@ PanelWindow {
             right: parent.right
         }
         position: "top-right"
-        cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-        shapeColor: ThemeManager.selectedTheme.colors.volOsdBgColor
+        cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius === 0 ? 0 : ThemeManager.selectedTheme.dimensions.elementRadius + 5
+        shapeColor: ThemeManager.selectedTheme.colors.topbarColor
     }
 }

@@ -260,4 +260,8 @@ Singleton {
         const pythonCommand = Config.App.scripts.python.removeUnusedCachedOverlayImagesCommand;
         return [...pythonCommand, "--json_dir", jsonDir, "--images_dir", imagesDir];
     }
+
+    function copyFile(sourcePath, destinationPath) {
+        return ['cp', '-f', `'${sourcePath}'`, `'${destinationPath}'`];
+    }
 }

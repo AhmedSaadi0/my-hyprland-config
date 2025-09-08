@@ -1,11 +1,13 @@
+// windows/settings/ColorsSettings.qml
+
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
-import QtQuick.Dialogs
 
 import "root:/components"
-import "root:/themes"
 
 M3GroupBox {
     id: root
@@ -185,7 +187,7 @@ M3GroupBox {
     }
 
     footer: RowLayout {
-        spacing: ThemeManager.selectedTheme.dimensions.spacingMedium
+        spacing: selectedTheme.dimensions.spacingMedium
 
         MButton {
             text: "Reset to default"

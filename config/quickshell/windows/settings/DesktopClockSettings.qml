@@ -6,7 +6,6 @@ import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 
 import "root:/components"
-import "root:/themes"
 
 M3GroupBox {
     id: root
@@ -472,7 +471,7 @@ M3GroupBox {
 
     // --- بداية: قسم الأزرار السفلية (حفظ، إلغاء، استعادة) ---
     footer: RowLayout {
-        spacing: ThemeManager.selectedTheme.dimensions.spacingMedium
+        spacing: selectedTheme.dimensions.spacingMedium
 
         MButton {
             text: "Reset to default"

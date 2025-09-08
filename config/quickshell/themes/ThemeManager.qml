@@ -21,11 +21,12 @@ Singleton {
     property var wallpapersList: []
 
     readonly property alias selectedTheme: root._activeThemeInstance
-    readonly property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${selectedTheme.themeName}.json`
+    // readonly property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${selectedTheme.themeName}.json`
+    readonly property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${_currentThemeFile}.json`
 
     readonly property var _colorPropertyKeys: ["themeName", "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor",]
     readonly property var _dimensionPropertyKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
-    readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading2Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
+    readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading1Size", "_heading2Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
     readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
     readonly property var _wallpaperSystemPropertyKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper"]
     readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_enableAccentColoring"]
@@ -87,6 +88,40 @@ Singleton {
         _applyExternalSettings(saveTheme, notifySaving);
     }
 
+    function exportCurrentTheme(destinationPath) {
+        console.log(`Exporting current theme '${selectedTheme.themeName}' to '${destinationPath}'`);
+
+        _cacheAppliedData(false);
+
+        const sourcePath = targetedCacheThemeFile;
+        _dispatchCommand("Exporting Theme", Utils.Helper.copyFile(sourcePath, destinationPath));
+
+        App.dispatchCommand("send notification", Utils.Helper.sendNotification({
+            summary: "Theme Exported",
+            body: `'${selectedTheme.themeName}' has been exported successfully.`
+        }));
+    }
+
+    function importThemeFromFile(sourcePath) {
+        // const themeName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.lastIndexOf('.'));
+        const destinationPath = targetedCacheThemeFile;
+        _dispatchCommand("Importing Theme", Utils.Helper.copyFile(sourcePath, destinationPath));
+        reloadTheme();
+    // requestLoadTheme(destinationPath, true);
+    }
+
+    function saveThemeAs(newName) {
+        if (!newName || newName.trim() === "") {
+            console.error("Save As failed: New name cannot be empty.");
+            return;
+        }
+
+        console.log(`Saving current theme as '${newName}'`);
+        selectedTheme.themeName = newName.trim();
+
+        _cacheAppliedData(true);
+    }
+
     function switchToNextWallpaper() {
         if (!selectedTheme.systemSettings.enableDynamicWallpapers || wallpapersList.length <= 1) {
             console.info("Cannot switch wallpaper: Dynamic wallpapers are not enabled or list is too short.");
@@ -127,6 +162,16 @@ Singleton {
         _resetPropertiesToDefault(_desktopClockPropertyKeys);
     }
 
+    function resetDimensionSettings() {
+        console.info("Resetting Desktop Clock settings to default.");
+        _resetPropertiesToDefault(_dimensionPropertyKeys);
+    }
+
+    function resetTypographySettings() {
+        console.info("Resetting Desktop Clock settings to default.");
+        _resetPropertiesToDefault(_typographyPropertyKeys);
+    }
+
     function resetWholeTheme() {
         resetColorSettings();
         resetWallpaperSystemSettings();
@@ -134,6 +179,8 @@ Singleton {
         resetPlasmaSettings();
         resetGtkSettings();
         resetClockSettings();
+        resetDimensionSettings();
+        resetTypographySettings();
     }
 
     function createImageOverlay(options) {
