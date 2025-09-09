@@ -27,7 +27,18 @@ Singleton {
     readonly property var _colorPropertyKeys: ["themeName", "_primary", "_secondary", "_onPrimary", "_onSecondary", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor",]
     readonly property var _dimensionPropertyKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
     readonly property var _typographyPropertyKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading1Size", "_heading2Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
-    readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
+    // readonly property var _hyprlandPropertyKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow"]
+    readonly property var _hyprlandPropertyKeys: [
+        // Decoration
+        "_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow",
+        // Gaps & Layout
+        "_hyprGapsIn", "_hyprGapsOut", "_hyprLayout",
+        // Animations
+        "_hyprAnimationsEnabled", "_hyprBezier", "_hyprAnimWindows", "_hyprAnimWorkspaces",
+        // Visual Effects
+        "_hyprBlurEnabled", "_hyprBlurSize", "_hyprBlurPasses", "_hyprDimInactive", "_hyprDimStrength",
+        // Shadow Enhancements
+        "_hyprShadowRange", "_hyprShadowOffset", "_hyprShadowColor"]
     readonly property var _wallpaperSystemPropertyKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper"]
     readonly property var _plasmaPropertyKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_enableAccentColoring"]
     readonly property var _gtkPropertyKeys: ["_gtkTheme", "_themeIcons", "_themeMode"]
@@ -345,12 +356,78 @@ Singleton {
 
     function _setHyprlandConfigurations() {
         const cfg = root.selectedTheme.hyprlandConfiguration;
-        const keywords = [[`general:border_size`, cfg.borderWidth], [`general:col.active_border`, `'${cfg.activeBorder}'`], [`general:col.inactive_border`, `'${cfg.inactiveBorder}'`], [`decoration:rounding`, cfg.rounding], [`decoration:drop_shadow`, cfg.dropShadow ? "yes" : "no"]];
+        console.info("Applying Hyprland configurations (individual command strategy)...");
 
-        for (const [key, value] of keywords) {
-            Hyprland.dispatch(`exec hyprctl keyword ${key} ${value}`);
+        // دالة مساعدة لتنفيذ أمر واحد بعد تنظيفه وطباعته للسجل
+        function dispatchCommand(key, value) {
+            // قم بتنظيف القيمة وإضافة علامات الاقتباس فقط إذا كانت القيمة تحتوي على مسافات أو فواصل
+            let finalValue = String(value).trim();
+            const needsQuotes = finalValue.includes(' ') || finalValue.includes(',');
+
+            if (needsQuotes) {
+                finalValue = `'${finalValue}'`;
+            }
+
+            const command = `exec hyprctl keyword ${key} ${finalValue}`;
+
+            // سجل الأمر النهائي قبل إرساله. هذا مهم جدًا للتصحيح.
+            console.log("Dispatching Hyprland Command:", command);
+            Hyprland.dispatch(command);
         }
+
+        // --- إرسال جميع الأوامر بشكل فردي ومنظم ---
+
+        // General
+        dispatchCommand('general:gaps_in', cfg.gapsIn);
+        dispatchCommand('general:gaps_out', cfg.gapsOut);
+        dispatchCommand('general:border_size', cfg.borderWidth);
+        dispatchCommand('general:col.active_border', cfg.activeBorder);
+        dispatchCommand('general:col.inactive_border', cfg.inactiveBorder);
+        dispatchCommand('general:layout', cfg.layout);
+
+        // Decoration
+        dispatchCommand('decoration:rounding', cfg.rounding);
+        dispatchCommand('decoration:drop_shadow', cfg.dropShadow);
+        dispatchCommand('decoration:shadow_range', cfg.shadowRange);
+        dispatchCommand('decoration:shadow_offset', `${cfg.shadowOffset.x} ${cfg.shadowOffset.y}`);
+        dispatchCommand('decoration:col.shadow', cfg.shadowColor);
+        dispatchCommand('decoration:dim_inactive', cfg.dimInactive ? "yes" : "no");
+        dispatchCommand('decoration:dim_strength', cfg.dimStrength);
+
+        // Blur
+        dispatchCommand('decoration:blur:enabled', cfg.blurEnabled ? "yes" : "no");
+        dispatchCommand('decoration:blur:size', cfg.blurSize);
+        dispatchCommand('decoration:blur:passes', cfg.blurPasses);
+
+        // Animations (يتم إرسالها بالترتيب الصحيح)
+        dispatchCommand('animations:enabled', cfg.animationsEnabled ? "yes" : "no");
+
+        // يتم إرسال كل سطر من Bezier كأمر منفصل
+        cfg.bezier.trim().split('\n').forEach(line => {
+            if (line.trim()) {
+                dispatchCommand('animations:bezier', line.trim());
+            }
+        });
+
+        // يتم إرسال كل قاعدة animation كأمر منفصل، وهذا يمنع الكتابة فوقها
+        if (cfg.animWindows.trim()) {
+            dispatchCommand('animations:animation', `windows, ${cfg.animWindows.trim()}`);
+        }
+        if (cfg.animWorkspaces.trim()) {
+            dispatchCommand('animations:animation', `workspaces, ${cfg.animWorkspaces.trim()}`);
+        }
+
+        console.info("Hyprland configurations application process finished.");
     }
+
+    // function _setHyprlandConfigurations() {
+    //     const cfg = root.selectedTheme.hyprlandConfiguration;
+    //     const keywords = [[`general:border_size`, cfg.borderWidth], [`general:col.active_border`, `'${cfg.activeBorder}'`], [`general:col.inactive_border`, `'${cfg.inactiveBorder}'`], [`decoration:rounding`, cfg.rounding], [`decoration:drop_shadow`, cfg.dropShadow ? "yes" : "no"]];
+    //
+    //     for (const [key, value] of keywords) {
+    //         Hyprland.dispatch(`exec hyprctl keyword ${key} ${value}`);
+    //     }
+    // }
 
     function _changeQtTheme(settings) {
         _dispatchCommand("Plasma Color", Utils.Helper.changePlasmaColor(settings.plasmaColorScheme));

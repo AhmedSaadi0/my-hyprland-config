@@ -84,7 +84,7 @@ M3GroupBox {
             font.pixelSize: selectedTheme.typography.small
             color: selectedTheme.colors.subtleText
             wrapMode: Text.WordWrap
-            Layout.preferredWidth: 500
+            Layout.preferredWidth: 620
         }
 
         ColumnLayout {

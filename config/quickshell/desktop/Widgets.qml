@@ -79,6 +79,7 @@ PanelWindow {
         opacity: 1
 
         visible: clockSettings.depthEffectEnabled
+        enabled: clockSettings.depthEffectEnabled
         source: clockSettings.depthEffectEnabled ? clockSettings.depthOverlayPath : ""
 
         anchors.fill: parent

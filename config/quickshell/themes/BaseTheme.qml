@@ -107,14 +107,38 @@ PersistentProperties {
     property string _dynamicWallpapersPath: ""
     property int _selectedWallpaperIndex: 0
 
-    // --------------------
-    // ----- Hyprland -----
-    // --------------------
+    // ===================================
+    // Hyprland Properties
+    // ===================================
+    // Decoration
     property int _hyprBorderWidth: 2
-    property string _hyprActiveBorder: 'rgba(FDBBC4ff) rgba(ff00ffff) 0deg'
-    property string _hyprInactiveBorder: 'rgba(59595900) 0deg'
-    property int _hyprRounding: root._baseRadius
-    property string _hyprDropShadow: 'no'
+    property string _hyprActiveBorder: 'rgba(FDEAB0ff) rgba(fd77e0ff) 45deg'
+    property string _hyprInactiveBorder: 'rgba(50505088)'
+    property int _hyprRounding: 16
+    property string _hyprDropShadow: 'no' // إعداداتك معطلة، لذا 'no' هو الافتراضي
+
+    // Gaps & Layout
+    property int _hyprGapsIn: 5
+    property string _hyprGapsOut: "1, 10, 10, 52"
+    property string _hyprLayout: "dwindle"
+
+    // Animations
+    property bool _hyprAnimationsEnabled: true
+    property string _hyprBezier: "decel, 0.05, 0.7, 0.1, 1"
+    property string _hyprAnimWindows: "1, 5, decel, slidefade 18%"
+    property string _hyprAnimWorkspaces: "1, 3, md_standard, slidefade 8%"
+
+    // Visual Effects (Blur & Dim)
+    property bool _hyprBlurEnabled: true
+    property int _hyprBlurSize: 4
+    property int _hyprBlurPasses: 2
+    property bool _hyprDimInactive: true
+    property double _hyprDimStrength: 0.0
+
+    // Shadow Enhancements
+    property int _hyprShadowRange: 30
+    property point _hyprShadowOffset: Qt.point(0, 0) // لا يوجد إزاحة في إعداداتك
+    property color _hyprShadowColor: "#00000044"
 
     // ----------------------------
     // --- Desktop Clock Widget ---
@@ -148,13 +172,14 @@ PersistentProperties {
         // General
         property color primary: Qt.rgba(root._primary.r, root._primary.g, root._primary.b, root._alpha)
         property color secondary: Qt.rgba(root._secondary.r, root._secondary.g, root._secondary.b, root._alpha)
-        property color onPrimary: Qt.rgba(root._onPrimary.r, root._onPrimary.g, root._onPrimary.b, root._alpha)
+        // property color onPrimary: Qt.rgba(root._onPrimary.r, root._onPrimary.g, root._onPrimary.b, root._alpha)
+        property alias onPrimary: root._onPrimary
         // property color onPrimary: {
         //     color = Helper.getAccurteTextColor(root._primary);
         //     console.info(color);
         //     return color;
         // }
-        property color onSecondary: Qt.rgba(root._onSecondary.r, root._onSecondary.g, root._onSecondary.b, root._alpha)
+        property alias onSecondary: root._onSecondary
 
         // Top Bar
         property color topbarColor: Qt.rgba(root._topbarColor.r, root._topbarColor.g, root._topbarColor.b, root._alpha)
@@ -238,11 +263,35 @@ PersistentProperties {
 
     // --- Hyprland Configuration ---
     readonly property var hyprlandConfiguration: QtObject {
+        // --- Decoration ---
         property alias borderWidth: root._hyprBorderWidth
         property alias activeBorder: root._hyprActiveBorder
         property alias inactiveBorder: root._hyprInactiveBorder
         property alias rounding: root._hyprRounding
         property alias dropShadow: root._hyprDropShadow
+
+        // --- Gaps & Layout ---
+        property alias gapsIn: root._hyprGapsIn
+        property alias gapsOut: root._hyprGapsOut
+        property alias layout: root._hyprLayout
+
+        // --- Animations ---
+        property alias animationsEnabled: root._hyprAnimationsEnabled
+        property alias bezier: root._hyprBezier
+        property alias animWindows: root._hyprAnimWindows
+        property alias animWorkspaces: root._hyprAnimWorkspaces
+
+        // --- Visual Effects ---
+        property alias blurEnabled: root._hyprBlurEnabled
+        property alias blurSize: root._hyprBlurSize
+        property alias blurPasses: root._hyprBlurPasses
+        property alias dimInactive: root._hyprDimInactive
+        property alias dimStrength: root._hyprDimStrength
+
+        // --- Shadow Enhancements ---
+        property alias shadowRange: root._hyprShadowRange
+        property alias shadowOffset: root._hyprShadowOffset
+        property alias shadowColor: root._hyprShadowColor
     }
 
     // --- Desktop Clock Widget Configuration ---

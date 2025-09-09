@@ -15,6 +15,7 @@
 
 - **Setting Window**
   - [x] Create a setting Window
+  - [x] Improve Hyprland Settings
 
 - **Widgets**
   - [x] Clock Widget

@@ -103,18 +103,18 @@ Controls.ApplicationWindow {
         property var targetedFieldName
         property bool updateOnChange: true
 
-        onCurrentFontChanged: {
-            if (updateOnChange) {
-                root.workingTheme[targetedFieldName] = currentFont.family;
-                root._applyTheme();
-            }
-        }
+        onCurrentFontChanged:
+        // if (updateOnChange) {
+        //     root.workingTheme[targetedFieldName] = currentFont.family;
+        //     root._applyTheme();
+        // }
+        {}
 
         onAccepted: {
-            if (!updateOnChange) {
-                root.workingTheme[targetedFieldName] = currentFont.family;
-                root._applyTheme();
-            }
+            // if (!updateOnChange) {
+            root.workingTheme[targetedFieldName] = currentFont.family;
+            root._applyTheme();
+            // }
         }
     }
 
@@ -164,16 +164,16 @@ Controls.ApplicationWindow {
             property int previousIndex: 0
             property int currentIndex: 0
 
-            property var page1
-            property var page2
-            property var page3
+            property var generalAppearancePage
+            property var wallpaperSettingsPage
+            property var hyprlandSettingsPage
             property var desktopClockPage
-            property var page5
-            property var page6
-            property var page7
+            property var integrationSettingsPage
+            property var colorsSettingsPage
+            property var layoutFontSettingsPage
 
             Component {
-                id: page1Component
+                id: generalAppearanceComp
                 GeneralAppearance {
                     workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
@@ -194,7 +194,7 @@ Controls.ApplicationWindow {
             }
 
             Component {
-                id: page2Component
+                id: wallpaperSettingsComp
                 WallpaperSettings {
                     workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
@@ -213,12 +213,16 @@ Controls.ApplicationWindow {
             }
 
             Component {
-                id: page3Component
+                id: hyprlandSettingsComp
                 HyprlandSettings {
                     workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
 
-                    onApplyChanges: root._applyTheme()
+                    onApplyChanges: {
+                        // ThemeManager._setHyprlandConfigurations();
+                        root._applyTheme();
+                    }
+
                     onSaveChanges: root._saveTheme(true)
                     onCancelChanges: root._cancelChanges()
                     onResetToDefault: ThemeManager.resetHyprlandSettings()
@@ -258,7 +262,7 @@ Controls.ApplicationWindow {
             }
 
             Component {
-                id: page5Component
+                id: integrationSettingsComp
                 IntegrationSettings {
                     workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
@@ -274,7 +278,7 @@ Controls.ApplicationWindow {
             }
 
             Component {
-                id: page6Component
+                id: colorsSettingsComp
                 ColorsSettings {
                     workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
@@ -291,7 +295,7 @@ Controls.ApplicationWindow {
             }
 
             Component {
-                id: page7Component
+                id: layoutFontSettingsComp
                 LayoutFontSettings {
                     workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
@@ -313,19 +317,19 @@ Controls.ApplicationWindow {
             }
 
             function getPage(index) {
-                return [desktopClockPage, page6, page2, page7, page3, page5][index];
+                return [wallpaperSettingsPage, colorsSettingsPage, layoutFontSettingsPage, desktopClockPage, hyprlandSettingsPage, integrationSettingsPage][index];
             }
 
             Component.onCompleted: {
-                // page1 = page1Component.createObject(contentStack, {
+                // generalAppearancePage = generalAppearanceComp.createObject(contentStack, {
                 //     "visible": false
                 //     // "anchors.fill": stackView
                 // });
-                page2 = page2Component.createObject(contentStack, {
+                wallpaperSettingsPage = wallpaperSettingsComp.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
                 });
-                page3 = page3Component.createObject(contentStack, {
+                hyprlandSettingsPage = hyprlandSettingsComp.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
                 });
@@ -333,20 +337,20 @@ Controls.ApplicationWindow {
                     "visible": false
                     // "anchors.fill": stackView
                 });
-                page5 = page5Component.createObject(contentStack, {
+                integrationSettingsPage = integrationSettingsComp.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
                 });
-                page6 = page6Component.createObject(contentStack, {
+                colorsSettingsPage = colorsSettingsComp.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
                 });
-                page7 = page7Component.createObject(contentStack, {
+                layoutFontSettingsPage = layoutFontSettingsComp.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
                 });
 
-                push(desktopClockPage);
+                push(wallpaperSettingsPage);
             }
 
             function navigateTo(newIndex) {

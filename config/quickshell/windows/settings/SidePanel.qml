@@ -20,8 +20,8 @@ Rectangle {
 
     Layout.preferredWidth: 240
     Layout.fillHeight: true
-    Layout.topMargin: 20
-    Layout.bottomMargin: 20
+    Layout.topMargin: 18
+    Layout.bottomMargin: 18
     Layout.rightMargin: 10
     Layout.leftMargin: 10
 
@@ -54,25 +54,21 @@ Rectangle {
         spacing: 2
 
         model: [
-            // {
-            //     name: qsTr("General Settings"),
-            //     icon: "preferences-desktop-theme"
-            // },
             {
-                name: qsTr("Desktop Clock Settings"),
-                icon: "preferences-desktop-time"
+                name: qsTr("Wallpaper Settings"),
+                icon: "preferences-system-windows"
             },
             {
                 name: qsTr("Color Settings"),
                 icon: "preferences-desktop-color"
             },
             {
-                name: qsTr("Wallpaper Settings"),
-                icon: "preferences-system-windows"
-            },
-            {
                 name: qsTr("Layout & Fonts"),
                 icon: "preferences-desktop-font"
+            },
+            {
+                name: qsTr("Desktop Clock Settings"),
+                icon: "preferences-desktop-time"
             },
             {
                 name: qsTr("Hyprland Settings"),
