@@ -19,6 +19,7 @@ Singleton {
     property string _currentThemeFile: ""
     property var _originalThemeCache: ({})
     property var wallpapersList: []
+    property bool _initialLoadComplete: false
 
     readonly property alias selectedTheme: root._activeThemeInstance
     // readonly property string targetedCacheThemeFile: App.themeCacheFolderPath + `/${selectedTheme.themeName}.json`
@@ -279,6 +280,7 @@ Singleton {
     function _finalizeThemeLoad(success) {
         if (success) {
             console.log("Theme loading process completed successfully for:", root._currentThemeFile);
+            _initialLoadComplete = true;
         } else {
             console.error("Theme loading process failed.");
         }

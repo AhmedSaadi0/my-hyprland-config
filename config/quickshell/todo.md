@@ -3,6 +3,7 @@
 - **Core UI**
   - [x] System Tray (Systray)
   - [x] Application Launcher
+  - [x] Splash Screen
   - [ ] Connection for `DesktopEntries` to listen to new installed apps
   - [ ] Scratchpads
   - [ ] Game mode
