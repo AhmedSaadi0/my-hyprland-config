@@ -477,6 +477,8 @@ nvim .nibrasshell.json
 
 #### Settings
 
+[![Watch the video](https://img.youtube.com/vi/w7taDzj4_Y8/maxresdefault.jpg)](https://youtu.be/w7taDzj4_Y8)
+
 <p align='center'>
 	<img src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/settings1.png'/>
 </p>
