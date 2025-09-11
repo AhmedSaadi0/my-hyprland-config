@@ -18,7 +18,7 @@ Item {
     implicitHeight: contentLayout.implicitHeight
 
     ToolTip.text: root.tooltip
-    ToolTip.visible: mouseArea.hovered && root.tooltip
+    ToolTip.visible: mouseArea.containsMouse && root.tooltip
     ToolTip.delay: 500
 
     RowLayout {

@@ -3,7 +3,6 @@
 - **Core UI**
   - [x] System Tray (Systray)
   - [x] Application Launcher
-  - [x] Splash Screen
   - [ ] Connection for `DesktopEntries` to listen to new installed apps
   - [ ] Scratchpads
   - [ ] Game mode
@@ -16,7 +15,12 @@
 
 - **Setting Window**
   - [x] Create a setting Window
-  - [x] Improve Hyprland Settings
+  - [x] Wallpapers Settings
+  - [x] Colors Settings
+  - [x] Layout & Fonts Settings
+  - [x] Desktop Clock Settings
+  - [x] Hyprland Settings
+  - [x] Integration Settings
 
 - **Widgets**
   - [x] Clock Widget

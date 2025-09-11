@@ -96,7 +96,7 @@ Rectangle {
                     color: itemLabel.color
                 }
 
-                Controls.Label {
+                Text {
                     id: itemLabel
                     text: model.modelData.name
                     elide: Text.ElideRight

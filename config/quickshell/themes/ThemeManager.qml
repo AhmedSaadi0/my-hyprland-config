@@ -14,6 +14,7 @@ Singleton {
     signal selectedThemeUpdated
 
     property bool _isThemeLoading: false
+    property bool _initialThemeIsReady: false
     property bool isCreatingOverlayImage: false
     property var _activeThemeInstance: null
     property string _currentThemeFile: ""
@@ -46,9 +47,11 @@ Singleton {
     readonly property var _desktopClockPropertyKeys: ["_desktopClockLocal", "_desktopClockFont", "_desktopClockEnabled", "_desktopClockColor", "_desktopClockFormat", "_desktopClockPosition", "_desktopClockDepthEffectEnabled", "_desktopClockDepthModel", "_desktopClockDepthOverlayPath", "_desktopClockSize", "_desktopClockSahdowColor", "_desktopClockSahdowEnabled", "_desktopClockUseThemeColor", "_desktopClockUseAnimation"]
     readonly property var _allSerializableKeys: _colorPropertyKeys.concat(_dimensionPropertyKeys).concat(_typographyPropertyKeys).concat(_hyprlandPropertyKeys).concat(_desktopClockPropertyKeys).concat(_wallpaperSystemPropertyKeys).concat(_plasmaPropertyKeys).concat(_gtkPropertyKeys)
 
+    signal initialThemeReady
+
     Component.onCompleted: {
         console.info("Application starting. Loading last session...");
-        _activeThemeInstance = ColorsTheme;
+        // _activeThemeInstance = ColorsTheme;
         startUpTimer.start();
     }
 
@@ -279,8 +282,13 @@ Singleton {
 
     function _finalizeThemeLoad(success) {
         if (success) {
-            console.log("Theme loading process completed successfully for:", root._currentThemeFile);
+            console.info("Theme loading process completed successfully for:", root._currentThemeFile);
             _initialLoadComplete = true;
+            if (!_initialThemeIsReady) {
+                console.log(">>>> Initial theme is now ready! Notifying the shell. <<<<");
+                _initialThemeIsReady = true;
+                initialThemeReady();
+            }
         } else {
             console.error("Theme loading process failed.");
         }

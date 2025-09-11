@@ -4,94 +4,154 @@ pragma ComponentBehavior: Bound
 import Quickshell
 import QtQuick
 import QtQuick.Window
-import QtQuick.Controls
 import Quickshell.Io
-import org.kde.kirigami as Kirigami
 
-import "root:/themes"
 import "root:/bars"
 import "root:/windows/leftwindow"
 import "root:/osd"
 import "root:/utils"
 import "root:/config"
 import "root:/desktop"
+import "root:/themes"
 import "root:/windows/settings"
 
-ApplicationWindow {
-    id: rootWindow
-    width: 1024
-    height: 768
-    visible: shellLoader.status !== Loader.Ready
-    title: "NibrasShell"
-    visibility: "FullScreen"
+ShellRoot {
+    id: shellRoot
 
-    color: Kirigami.Theme.backgroundColor
-    flags: Qt.Window | Qt.FramelessWindowHint
+    property var settingsWindowInstance: null
+    property var volumeInstance: null
+    property var brightnessInstance: null
+    property var notificationsInstance: null
+    readonly property var _selectedTheme: ThemeManager.selectedTheme
+    signal openLeftPanelRequested(int selectedIndex)
 
-    Item {
-        id: splashScreen
-        anchors.fill: parent
-        visible: shellLoader.status !== Loader.Ready
+    Component.onCompleted: {
+        if (ThemeManager.isInitialThemeReady) {
+            console.log("ThemeManager was already ready. Activating main UI immediately.");
+            activateMainUI();
+        } else {
+            console.log("Waiting for ThemeManager's initialThemeReady signal...");
+        }
+        Qt.setContextProperty("currentTheme", _selectedTheme);
+    }
 
-        opacity: shellLoader.status !== Loader.Ready ? 1 : 0
+    Connections {
+        target: ThemeManager
+        function onInitialThemeReady() {
+            console.log("ShellRoot received 'initialThemeReady' signal! Activating main UI.");
+            activateMainUI();
+        }
 
-        Behavior on opacity {
-            OpacityAnimator {
-                duration: 300
+        function onSelectedThemeChanged() {
+            Qt.setContextProperty("currentTheme", ThemeManager.selectedTheme);
+        }
+    }
+
+    function activateMainUI() {
+        if (mainUiLoader.active)
+            return;
+
+        splashScreen.visible = false;
+        mainUiLoader.active = true;
+
+        if (!settingsWindowInstance) {
+            settingsWindowInstance = settingsWindowComponent.createObject(shellRoot);
+            if (!settingsWindowInstance) {
+                console.error("CRITICAL: Failed to create the Settings window component!");
             }
         }
 
-        Text {
-            anchors.centerIn: parent
-            text: "Loading NibrasShell..."
-            color: Kirigami.Theme.textColor
-            font.pixelSize: 24
+        if (!volumeInstance) {
+            volumeInstance = volumeComponent.createObject(shellRoot);
+            if (!volumeInstance) {
+                console.error("CRITICAL: Failed to create the Volume OSD component!");
+            }
+        }
+
+        if (!brightnessInstance) {
+            brightnessInstance = brightnessComponent.createObject(shellRoot);
+            if (!brightnessInstance) {
+                console.error("CRITICAL: Failed to create the Brightness OSD component!");
+            }
+        }
+
+        if (!notificationsInstance) {
+            notificationsInstance = notificationsComponent.createObject(shellRoot);
+            if (!notificationsInstance) {
+                console.error("CRITICAL: Failed to create the Notifications component!");
+            }
+        }
+    }
+
+    SplashScreen {
+        id: splashScreen
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 500
+            }
         }
     }
 
     Loader {
-        id: shellLoader
+        id: mainUiLoader
         anchors.fill: parent
         active: false
-        sourceComponent: shellComponent
+        opacity: 0.0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 500
+            }
+        }
 
         onStatusChanged: {
             if (status === Loader.Ready) {
-                console.log("Shell component loaded successfully.");
-                item.visible = true;
+                console.log("Main UI component loaded successfully. Fading in.");
+                mainUiLoader.opacity = 1.0;
+            } else if (status === Loader.Error) {
+                console.error("CRITICAL: Failed to load the main UI component!");
             }
         }
+
+        sourceComponent: mainUiComponent
     }
 
     Component {
-        id: shellComponent
+        id: settingsWindowComponent
+        Main {}
+    }
 
-        ShellRoot {
-            id: shellRoot
-            // visible: false
+    Component {
+        id: volumeComponent
+        Volume {}
+    }
+    Component {
+        id: brightnessComponent
+        Brightness {}
+    }
+    Component {
+        id: notificationsComponent
+        Notifications {}
+    }
 
-            readonly property var _selectedTheme: ThemeManager.selectedTheme
-            Component.onCompleted: {
-                console.log("ShellRoot Component.onCompleted");
-                Qt.setContextProperty("currentTheme", _selectedTheme);
-                // visible = true;
-            }
-            Connections {
-                target: ThemeManager
-                function onSelectedThemeChanged() {
-                    Qt.setContextProperty("currentTheme", ThemeManager.selectedTheme);
-                }
-            }
+    Component {
+        id: widgetsComponent
+        Widgets {}
+    }
 
-            signal openLeftPanelRequested(int selectedIndex)
+    Component {
+        id: mainUiComponent
+        Item {
+
             Variants {
                 model: Quickshell.screens
                 Topbar {
                     id: topBarWindow
+
                     required property ShellScreen modelData
                     screen: modelData
                 }
             }
+
             Variants {
                 model: Quickshell.screens
                 TopRightCorner {
@@ -100,6 +160,7 @@ ApplicationWindow {
                     screen: modelData
                 }
             }
+
             Variants {
                 model: Quickshell.screens
                 LeftBar {
@@ -108,87 +169,88 @@ ApplicationWindow {
                     screen: modelData
                 }
             }
+
             LeftWindowFull {
                 id: leftPanelFull
             }
+
             IpcHandler {
                 id: handler
                 target: "LeftBar"
+
                 property bool isMenuOpen: false
                 property int targetedMenu: 0
                 property int openedMenu: LeftMenuStatus.selectedIndex
+
                 function toggleMenu() {
                     let menuToOpen = targetedMenu;
+
                     if (targetedMenu === openedMenu) {
                         menuToOpen = -1;
                     }
+
                     LeftMenuStatus.changeIndex(menuToOpen);
                 }
+
                 function toggleDashboardMenu() {
                     targetedMenu = 0;
                     toggleMenu();
                 }
+
                 function toggleNotificatoinsMenu() {
                     targetedMenu = 1;
                     toggleMenu();
                 }
+
                 function toggleWeatherMenu() {
                     targetedMenu = 2;
                     toggleMenu();
                 }
+
                 function toggleMonotoringMenu() {
                     targetedMenu = 3;
                     toggleMenu();
                 }
+
                 function toggleNetworkingMenu() {
                     targetedMenu = 4;
                     toggleMenu();
                 }
+
                 function toggleApplauncherMenu() {
                     targetedMenu = 6;
                     toggleMenu();
                 }
             }
-            Volume {}
-            Brightness {}
-            Notifications {}
             Variants {
                 model: Quickshell.screens
-                Widgets {
-                    id: desktopWidgets
+
+                Item {
+                    id: widgetContainer
+                    anchors.fill: parent
+
                     required property ShellScreen modelData
-                    screen: modelData
+
+                    Component.onCompleted: {
+                        const newWidgets = widgetsComponent.createObject(widgetContainer, {
+                            "modelData": modelData,
+                            "screen": modelData
+                        });
+
+                        if (!newWidgets) {
+                            console.error("Failed to create Widgets for screen:", modelData.name);
+                        }
+                    }
                 }
             }
-            Main {
-                id: settingWindow
-            }
-        }
-    }
-
-    // --- منطق تفعيل الواجهة ---
-    function activateShell() {
-        if (shellLoader.active)
-            return;
-        console.info("Activating the main shell UI...");
-        shellLoader.active = true;
-    }
-
-    Component.onCompleted: {
-        if (ThemeManager._initialLoadComplete) {
-            console.warn("ThemeManager finished before shell could connect. Activating shell directly.");
-            activateShell();
-        }
-    }
-
-    Connections {
-        target: ThemeManager
-
-        function onSelectedThemeUpdated() {
-            if (ThemeManager._initialLoadComplete && !shellLoader.active) {
-                console.info("Shell received selectedThemeUpdated signal for the first time.");
-                activateShell();
-            }
+            // Variants {
+            //     model: Quickshell.screens
+            //     Widgets {
+            //         id: desktopWidgets
+            //         required property ShellScreen modelData
+            //         screen: modelData
+            //     }
+            // }
         }
     }
 }

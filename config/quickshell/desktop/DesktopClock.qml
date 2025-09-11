@@ -1,8 +1,8 @@
 // File: DesktopClock.qml
 import QtQuick
-import QtQuick.Controls
+// import QtQuick.Controls
 import Quickshell
-import org.kde.kirigami as Kirigami
+// import org.kde.kirigami as Kirigami
 import QtQuick.Effects
 
 Item {
@@ -11,6 +11,7 @@ Item {
     property point position: Qt.point(0, 0)
     property size size: Qt.size(400, 200)
     property bool editMode: false
+    property bool pressed: false
     property bool enableAnimation: false
     property bool shadowEnabled: false
     property color shadowColor: "#40000000"
@@ -70,14 +71,15 @@ Item {
         id: timeText
         anchors.fill: parent
         text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root.clockFormat)
+        visible: !root.pressed
 
         color: root.clockColor
         font.family: root.clockFont
 
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pointSize: 500 
-        fontSizeMode: Text.Fit 
+        font.pointSize: 500
+        fontSizeMode: root.pressed ? Text.FixedSize : Text.Fit
 
         layer.enabled: root.shadowEnabled
         layer.effect: MultiEffect {
@@ -118,7 +120,7 @@ Item {
 
             startComponentPos = Qt.point(root.x, root.y);
             startDragPos = mapToItem(null, mouse.x, mouse.y);
-            mouse.accepted = true; 
+            mouse.accepted = true;
         }
 
         onPositionChanged: mouse => {
@@ -148,7 +150,7 @@ Item {
         radius: 10
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: -10 
+        anchors.margins: -10
 
         MouseArea {
             anchors.fill: parent
@@ -160,6 +162,11 @@ Item {
             onPressed: {
                 startMousePos = mapToItem(null, mouseX, mouseY);
                 startComponentSize = Qt.size(root.width, root.height);
+                root.pressed = true;
+            }
+
+            onReleased: {
+                root.pressed = false;
             }
 
             onPositionChanged: {
@@ -173,7 +180,6 @@ Item {
                     root.requestNewGeometry(root.position, newSize);
                 }
             }
-
         }
     }
 }
