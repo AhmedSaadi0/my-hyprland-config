@@ -1,7 +1,7 @@
 // ToastNotificationHandler.qml
 import QtQuick
 import Quickshell
-import QtQuick.Layouts
+// import QtQuick.Layouts
 import Quickshell.Wayland
 
 import "root:/services"

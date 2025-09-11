@@ -13,9 +13,9 @@ PanelWindow {
     // implicitHeight: 39
     // implicitWidth: 39
     exclusionMode: ExclusionMode.Normal
-
     focusable: false
-    // aboveWindows: false
+
+    aboveWindows: false
 
     color: "transparent"
 

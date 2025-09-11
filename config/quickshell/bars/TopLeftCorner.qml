@@ -13,6 +13,8 @@ PanelWindow {
     // implicitHeight: ThemeManager.selectedTheme.dimensions.elementRadius + 10
     // implicitWidth: ThemeManager.selectedTheme.dimensions.elementRadius + 10
     exclusionMode: ExclusionMode.Normal
+    focusable: false
+    aboveWindows: false
 
     // width: 300
     // width: ThemeManager.selectedTheme.dimensions.menuWidth

@@ -95,7 +95,7 @@ ShellRoot {
 
     SplashScreen {
         id: splashScreen
-        Behavior on opacity {
+        Behavior on visible {
             NumberAnimation {
                 duration: 500
             }
