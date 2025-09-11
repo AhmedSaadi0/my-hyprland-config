@@ -163,6 +163,25 @@ ShellRoot {
 
             Variants {
                 model: Quickshell.screens
+                TopLeftCorner {
+                    id: topLeftCorners
+                    required property ShellScreen modelData
+                    screen: modelData
+                }
+            }
+
+
+            Variants {
+                model: Quickshell.screens
+                BottomLeftCorner {
+                    id: bottomLeftCorner
+                    required property ShellScreen modelData
+                    screen: modelData
+                }
+            }
+
+            Variants {
+                model: Quickshell.screens
                 LeftBar {
                     id: leftBar
                     required property ShellScreen modelData

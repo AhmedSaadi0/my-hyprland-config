@@ -49,5 +49,6 @@ BaseTheme {
     // _kvantumTheme: "Tellgo"
     _gtkTheme: "Catppuccin-Latte-Standard-Blue-Light"
 
-    _hyprActiveBorder: "rgba(30, 102, 245, 1) rgba(234, 118, 203, 1) 0deg" // Blue and Pink
+    _hyprActiveBorder: "rgba(219FB5ff) rgba(E976CBff) 0deg" // Blue and Pink
+    _hyprInactiveBorder: "rgba(E6E9EFaa) 0deg"
 }

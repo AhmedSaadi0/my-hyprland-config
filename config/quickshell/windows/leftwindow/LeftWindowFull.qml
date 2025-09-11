@@ -14,7 +14,7 @@ PanelWindow {
     property bool isShown: false
     property var menuSelectorRef: menus
 
-    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 20
+    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth 
     implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
 
     exclusiveZone: ThemeManager.selectedTheme.dimensions.menuWidth - 40
@@ -63,7 +63,7 @@ PanelWindow {
 
         Column {
             id: col
-            width: parent.width - 20
+            width: parent.width 
             height: root.implicitHeight
 
             spacing: 10

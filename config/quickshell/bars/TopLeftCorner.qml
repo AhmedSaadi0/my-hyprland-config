@@ -10,14 +10,19 @@ import "root:/components"
 PanelWindow {
     id: root
 
-    implicitHeight: 20
-    implicitWidth: 25
+    // implicitHeight: ThemeManager.selectedTheme.dimensions.elementRadius + 10
+    // implicitWidth: ThemeManager.selectedTheme.dimensions.elementRadius + 10
     exclusionMode: ExclusionMode.Normal
 
     // width: 300
     // width: ThemeManager.selectedTheme.dimensions.menuWidth
 
     color: "transparent"
+
+    margins {
+        top: -10
+        left: 40
+    }
 
     property real cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius * 2
 
@@ -35,7 +40,8 @@ PanelWindow {
         }
         position: "top-left"
         cornerRadius: root.cornerRadius
-        shapeColor: ThemeManager.selectedTheme.colors.volOsdBgColor
+        shapeColor: ThemeManager.selectedTheme.colors.topbarColor
+        // shapeColor: ThemeManager.selectedTheme.colors.volOsdBgColor
     }
 
     // BarCorner {

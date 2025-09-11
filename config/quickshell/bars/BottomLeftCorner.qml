@@ -20,23 +20,23 @@ PanelWindow {
     color: "transparent"
 
     anchors {
-        right: true
-        top: true
-        // bottom: true
-        // left: true
+        // right: true
+        // top: true
+        bottom: true
+        left: true
     }
 
     margins {
-        top: -10
+        left: 40
     }
 
     BarCorner {
         id: topRightBarCorner
         anchors {
-            top: parent.top
-            right: parent.right
+            bottom: parent.bottom
+            left: parent.left
         }
-        position: "top-right"
+        position: "bottom-left"
         cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius * 2
         shapeColor: ThemeManager.selectedTheme.colors.topbarColor
     }

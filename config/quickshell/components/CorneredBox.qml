@@ -1,14 +1,17 @@
+// ملف: FinalTest.qml
 import QtQuick
 import QtQuick.Window
+// import QtQuick.Shapes
 
+// import "../../components"
 import "../themes"
 
 Rectangle {
     id: root
-    color: "transparent"
+    color: root.boxColor
     implicitWidth: 0
 
-    // property string boxColor: ThemeManager.selectedTheme.colors.topbarColor
+    property string boxColor: ThemeManager.selectedTheme.colors.topbarColor
 
     property int cornerWidth: 20
     property int cornerHeight: 20
@@ -20,7 +23,7 @@ Rectangle {
 
     Rectangle {
         id: centerBox
-        color: ThemeManager.selectedTheme.colors.topbarColor
+        color: root.boxColor
         anchors {
             top: parent.top
             bottom: parent.bottom
@@ -30,35 +33,35 @@ Rectangle {
         }
     }
 
-    BarCorner {
-        id: bottomRightBarCorner
-        width: root.cornerWidth
-        height: root.cornerHeight
-        visible: root.bottomLeftVisible
-        anchors {
-            // top: parent.top
-            right: parent.right
-            bottom: parent.bottom
-        }
-        position: "bottom-left"
-        shapeColor: ThemeManager.selectedTheme.colors.topbarColor
-        // rotation: 180
-    }
-
-    BarCorner {
-        id: topRightBarCorner
-        width: root.cornerWidth
-        height: root.cornerHeight
-        visible: root.topLeftVisible
-        anchors {
-            top: parent.top
-            right: parent.right
-            // bottom: parent.bottom
-        }
-        position: "top-left"
-        shapeColor: ThemeManager.selectedTheme.colors.topbarColor
-        // rotation: 270
-    }
+    // BarCorner {
+    //     id: bottomRightBarCorner
+    //     width: root.cornerWidth
+    //     height: root.cornerHeight
+    //     visible: root.bottomLeftVisible
+    //     anchors {
+    //         // top: parent.top
+    //         right: parent.right
+    //         bottom: parent.bottom
+    //     }
+    //     position: "bottom-left"
+    //     shapeColor: root.boxColor
+    //     // rotation: 180
+    // }
+    //
+    // BarCorner {
+    //     id: topRightBarCorner
+    //     width: root.cornerWidth
+    //     height: root.cornerHeight
+    //     visible: root.topLeftVisible
+    //     anchors {
+    //         top: parent.top
+    //         right: parent.right
+    //         // bottom: parent.bottom
+    //     }
+    //     position: "top-left"
+    //     shapeColor: root.boxColor
+    //     // rotation: 270
+    // }
 
     // BarCorner {
     //     id: topLeftBarCorner

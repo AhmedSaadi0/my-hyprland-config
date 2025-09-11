@@ -14,10 +14,11 @@ import "root:/config"
 
 PanelWindow {
     id: root
-    implicitWidth: 60
+    implicitWidth: 40
     implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
-    color: "transparent"
+    color: ThemeManager.selectedTheme.colors.topbarColor
     exclusionMode: ExclusionMode.Ignore
+
     // exclusiveZone: 45
 
     anchors {
@@ -79,12 +80,17 @@ PanelWindow {
         }
     }
 
-    CorneredBox {
-        id: containerBox
-        anchors.fill: parent
-
-        bottomRightVisible: false
-        topRightVisible: false
+    ButtonGroup {
+        id: buttonGroup
+        theme: ThemeManager.selectedTheme
+        implicitWidth: 30
+        implicitHeight: 300
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
+        useHand: true
 
         layer.enabled: true
         layer.effect: MultiEffect {
@@ -96,74 +102,61 @@ PanelWindow {
             shadowHorizontalOffset: 2
         }
 
-        ButtonGroup {
-            id: buttonGroup
-            theme: ThemeManager.selectedTheme
-            implicitWidth: 30
-            implicitHeight: 300
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.topMargin: 20
-            anchors.leftMargin: 5
-            anchors.rightMargin: 5
-            useHand: true
+        model: ListModel {
+            ListElement {
+                icon: "󰨝"
+                activeIcon: "󰕮"
+                name: "Dashboard"
+            }
+            ListElement {
+                icon: ""
+                activeIcon: ""
+                name: "Notifications"
+                notificationCount: 0
+            }
+            ListElement {
+                icon: ""
+                activeIcon: "󰅟"
+                name: "Weather"
+            }
+            ListElement {
+                icon: ""
+                activeIcon: ""
+                name: "Monitors"
+            }
+            ListElement {
+                icon: "󰲝"
+                activeIcon: "󰛳"
+                name: "Network"
+            }
+            // ListElement {
+            //     icon: "󰾰"
+            //     // activeIcon: ""
+            //     name: "Devices"
+            // }
+            ListElement {
+                icon: "󰅌"
+                activeIcon: "󰅇"
+                name: "Clipboard"
+            }
+            ListElement {
+                icon: "󰀻"
+                activeIcon: "󰵆"
+                name: "Applications"
+            }
+        }
 
-            model: ListModel {
-                ListElement {
-                    icon: "󰨝"
-                    activeIcon: "󰕮"
-                    name: "Dashboard"
-                }
-                ListElement {
-                    icon: ""
-                    activeIcon: ""
-                    name: "Notifications"
-                    notificationCount: 0
-                }
-                ListElement {
-                    icon: ""
-                    activeIcon: "󰅟"
-                    name: "Weather"
-                }
-                ListElement {
-                    icon: ""
-                    activeIcon: ""
-                    name: "Monitors"
-                }
-                ListElement {
-                    icon: "󰲝"
-                    activeIcon: "󰛳"
-                    name: "Network"
-                }
-                // ListElement {
-                //     icon: "󰾰"
-                //     // activeIcon: ""
-                //     name: "Devices"
-                // }
-                ListElement {
-                    icon: "󰅌"
-                    activeIcon: "󰅇"
-                    name: "Clipboard"
-                }
-                ListElement {
-                    icon: "󰀻"
-                    activeIcon: "󰵆"
-                    name: "Applications"
+        onCurrentIndexChanged: function () {
+            const newIndex = buttonGroup.currentIndex;
+            root.activeMenuIndex = newIndex;
+            if (newIndex === -1) {
+                root.panelOpen = false;
+            } else {
+                if (!root.panelOpen) {
+                    root.panelOpen = true;
                 }
             }
-
-            onCurrentIndexChanged: function () {
-                const newIndex = buttonGroup.currentIndex;
-                root.activeMenuIndex = newIndex;
-                if (newIndex === -1) {
-                    root.panelOpen = false;
-                } else {
-                    if (!root.panelOpen) {
-                        root.panelOpen = true;
-                    }
-                }
-                LeftMenuStatus.changeIndex(newIndex);
-            }
+            LeftMenuStatus.changeIndex(newIndex);
         }
     }
 

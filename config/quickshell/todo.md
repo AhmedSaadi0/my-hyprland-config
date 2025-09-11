@@ -37,6 +37,7 @@
 ## 🔔 الإشعارات & OSD (Notifications & OSD)
 
 - [x] Notifications
+- [ ] Improve notification osd to not block content on right side
 - [x] Notifications History Center
   - [x] Action buttons
   - [x] Race Condition Fix

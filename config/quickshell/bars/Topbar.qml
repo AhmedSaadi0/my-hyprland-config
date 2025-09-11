@@ -35,23 +35,23 @@ PanelWindow {
         color: ThemeManager.selectedTheme.colors.topbarColor
         anchors.top: parent.top
 
-        layer.enabled: true
         // layer.effect: Shadow {}
-        layer.effect: MultiEffect {
-            source: barBackground
-            anchors.fill: barBackground
-            shadowEnabled: true
-            shadowColor: Qt.rgba(0, 0, 0, 0.25)  // نفس alpha 0.25
-            shadowBlur: 0.6                      // 0.0 إلى 1.0 (كلما زادت زاد النعومة)
-            shadowVerticalOffset: 2
-            shadowHorizontalOffset: 2
-
-            // خصائص إضافية لجعل الظل يشبه CSS العصري:
-            blurEnabled: false
-            // contrast: 1.0
-            // brightness: 1.0
-            // saturation: 1.0
-        }
+        // layer.enabled: true
+        // layer.effect: MultiEffect {
+        //     source: barBackground
+        //     anchors.fill: barBackground
+        //     shadowEnabled: true
+        //     shadowColor: Qt.rgba(0, 0, 0, 0.25)  // نفس alpha 0.25
+        //     shadowBlur: 0.6                      // 0.0 إلى 1.0 (كلما زادت زاد النعومة)
+        //     shadowVerticalOffset: 2
+        //     shadowHorizontalOffset: 2
+        //
+        //     // خصائص إضافية لجعل الظل يشبه CSS العصري:
+        //     blurEnabled: false
+        //     // contrast: 1.0
+        //     // brightness: 1.0
+        //     // saturation: 1.0
+        // }
 
         z: -1
 
