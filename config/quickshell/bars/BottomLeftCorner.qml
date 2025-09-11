@@ -1,7 +1,7 @@
 // topbar/Corners.qml
 
 import Quickshell
-
+import Quickshell.Wayland
 import QtQuick
 
 import "../themes"
@@ -15,7 +15,11 @@ PanelWindow {
     exclusionMode: ExclusionMode.Normal
 
     focusable: false
-    aboveWindows: false
+    aboveWindows: true
+
+    WlrLayershell.namespace: "NibrasShell:EdgeCorner"
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+    mask: Region {}
 
     color: "transparent"
 

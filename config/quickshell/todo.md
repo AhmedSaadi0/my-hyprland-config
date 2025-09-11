@@ -3,9 +3,13 @@
 - **Core UI**
   - [x] System Tray (Systray)
   - [x] Application Launcher
+  - [x] Improve bars positioning and shadows
+  - [x] Improve edge corners
   - [ ] Connection for `DesktopEntries` to listen to new installed apps
   - [ ] Scratchpads
   - [ ] Game mode
+  - [ ] Bars Shadow Control
+  - [ ] Left Bar Width Control
 
 - **Menus**
   - [x] Left Menu Navigation
@@ -26,7 +30,6 @@
   - [x] Clock Widget
   - [x] Depth Effect
   - [x] Support Depth Effect for Dynamic Wallpapers
-  - [ ] Control clock size from settings and remove resizing
   - [ ] Depth effect for each wallpaper in dynamic wallpapers
   - [ ] Auto Depth Effect generation + clock adaptation
   - [ ] Weather Widget

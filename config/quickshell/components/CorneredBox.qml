@@ -29,7 +29,7 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
             // left: bottomLeftBarCorner.right
-            right: bottomRightBarCorner.left
+            // right: bottomRightBarCorner.left
         }
     }
 

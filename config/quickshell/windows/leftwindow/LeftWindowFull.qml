@@ -14,7 +14,7 @@ PanelWindow {
     property bool isShown: false
     property var menuSelectorRef: menus
 
-    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth 
+    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
     implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
 
     exclusiveZone: ThemeManager.selectedTheme.dimensions.menuWidth - 40
@@ -45,7 +45,7 @@ PanelWindow {
 
     margins {
         left: 40
-        top: -10
+        // top: -10
     }
 
     CorneredBox {
@@ -63,7 +63,7 @@ PanelWindow {
 
         Column {
             id: col
-            width: parent.width 
+            width: parent.width
             height: root.implicitHeight
 
             spacing: 10

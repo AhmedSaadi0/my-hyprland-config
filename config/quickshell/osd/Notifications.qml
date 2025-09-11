@@ -22,6 +22,8 @@ PanelWindow {
 
     WlrLayershell.namespace: "NibrasShell:notificationPopup"
     WlrLayershell.layer: WlrLayer.Overlay
+    // WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+    // mask: Region {}
 
     margins {
         bottom: 30

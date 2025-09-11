@@ -8,6 +8,7 @@ import Quickshell.Io
 import org.kde.kirigami as Kirigami
 
 import "root:/themes"
+import "root:/utils/helpers.js" as Helpers
 import "root:/components"
 
 MenuCard {
@@ -99,7 +100,7 @@ MenuCard {
                     Layout.preferredHeight: root.buttonHeight
                     text: root.confirmActionText
                     normalBackground: root.activeStateBackgroundColor
-                    normalForeground: root.highlightedStateTextColor
+                    normalForeground: Helpers.getAccurteTextColor(root.activeStateBackgroundColor)
                     font.family: root.iconFontFamily
                     topLeftRadius: 0
                     bottomLeftRadius: 0

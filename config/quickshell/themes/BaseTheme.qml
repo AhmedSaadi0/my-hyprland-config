@@ -119,7 +119,7 @@ PersistentProperties {
 
     // Gaps & Layout
     property int _hyprGapsIn: 5
-    property string _hyprGapsOut: "1, 10, 10, 52"
+    property string _hyprGapsOut: "10, 10, 10, 52"
     property string _hyprLayout: "dwindle"
 
     // Animations

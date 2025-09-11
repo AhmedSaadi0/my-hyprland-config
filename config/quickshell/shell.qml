@@ -13,6 +13,7 @@ import "root:/utils"
 import "root:/config"
 import "root:/desktop"
 import "root:/themes"
+import "root:/shadows"
 import "root:/windows/settings"
 
 ShellRoot {
@@ -154,9 +155,18 @@ ShellRoot {
 
             Variants {
                 model: Quickshell.screens
+                LeftbarShadowsLayer {}
+            }
+
+            Variants {
+                model: Quickshell.screens
+                TopbarShadowsLayer {}
+            }
+
+            Variants {
+                model: Quickshell.screens
                 Topbar {
                     id: topBarWindow
-
                     required property ShellScreen modelData
                     screen: modelData
                 }

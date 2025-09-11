@@ -4,6 +4,7 @@ import Quickshell
 import QtQuick
 // import QtQuick.Layouts
 import QtQuick.Effects
+import Quickshell.Wayland
 
 import "../themes"
 import "../components"
@@ -14,18 +15,24 @@ import "root:/config"
 
 PanelWindow {
     id: root
+
     implicitWidth: 40
-    implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    // implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+
     color: ThemeManager.selectedTheme.colors.topbarColor
     exclusionMode: ExclusionMode.Ignore
+
+    // WlrLayershell.layer: WlrLayer.Overlay
 
     // exclusiveZone: 45
 
     anchors {
-        // top: true
+        top: true
         left: true
         bottom: true
     }
+
+    margins.top: ThemeManager.selectedTheme.dimensions.barHeight
 
     // --- Properties ---
     property bool panelOpen: false
@@ -57,8 +64,6 @@ PanelWindow {
                 break;
             }
         }
-
-        margins.top = -10;
 
         EventBus.on(Events.CLOSE_LEFTBAR, function () {
             closePanelTimer.stop();
