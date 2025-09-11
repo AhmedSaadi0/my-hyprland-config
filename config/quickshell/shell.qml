@@ -51,7 +51,6 @@ ShellRoot {
         if (mainUiLoader.active)
             return;
 
-        splashScreen.visible = false;
         mainUiLoader.active = true;
 
         if (!settingsWindowInstance) {
@@ -80,6 +79,17 @@ ShellRoot {
             if (!notificationsInstance) {
                 console.error("CRITICAL: Failed to create the Notifications component!");
             }
+        }
+
+        splashTimer.start();
+    }
+
+    Timer {
+        id: splashTimer
+        interval: 1500
+        repeat: false
+        onTriggered: {
+            splashScreen.visible = false;
         }
     }
 
@@ -169,7 +179,6 @@ ShellRoot {
                     screen: modelData
                 }
             }
-
 
             Variants {
                 model: Quickshell.screens

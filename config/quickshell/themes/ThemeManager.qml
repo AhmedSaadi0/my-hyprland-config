@@ -397,10 +397,12 @@ Singleton {
 
         // Decoration
         dispatchCommand('decoration:rounding', cfg.rounding);
-        dispatchCommand('decoration:drop_shadow', cfg.dropShadow);
-        dispatchCommand('decoration:shadow_range', cfg.shadowRange);
-        dispatchCommand('decoration:shadow_offset', `${cfg.shadowOffset.x} ${cfg.shadowOffset.y}`);
-        dispatchCommand('decoration:col.shadow', cfg.shadowColor);
+
+        // dispatchCommand('decoration:shadow:enabled', cfg.dropShadow);
+        // dispatchCommand('decoration:shadow:range', cfg.shadowRange);
+        // dispatchCommand('decoration:shadow:offset', `${cfg.shadowOffset.x} ${cfg.shadowOffset.y}`);
+        // dispatchCommand('decoration:shadow:color', cfg.shadowColor);
+
         dispatchCommand('decoration:dim_inactive', cfg.dimInactive ? "yes" : "no");
         dispatchCommand('decoration:dim_strength', cfg.dimStrength);
 
