@@ -1,46 +1,65 @@
-import subprocess
-import time
+import json
+from collections import defaultdict
+
+import psutil
 
 
-def monitor_app_usage(interface="wlp0s20f3", duration=10):
+def get_process_connections():
     """
-    يراقب التطبيقات التي تستهلك الإنترنت في الوقت الفعلي لمدة محددة.
-    يتطلب صلاحيات الجذر (sudo).
+    يعرض قائمة بالعمليات التي لديها اتصالات شبكية مفتوحة باستخدام psutil.
     """
-    print(
-        f"بدء مراقبة استهلاك التطبيقات على {interface} لمدة {duration} ثوانٍ..."
-    )
-    print("قد يُطلب منك إدخال كلمة مرور sudo.")
-
-    command = ["sudo", "nethogs", "-t", "-d", "1", interface]
+    process_connections = defaultdict(list)
 
     try:
-        process = subprocess.Popen(
-            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
-        )
+        # احصل على جميع الاتصالات الشبكية في النظام
+        connections = psutil.net_connections(kind="inet")
 
-        start_time = time.time()
-        output_lines = []
+        for conn in connections:
+            # نريد فقط الاتصالات التي لها PID (عملية مرتبطة بها) وحالة "ESTABLISHED"
+            if conn.pid is None or conn.status != "ESTABLISHED":
+                continue
 
-        # قراءة المخرجات
-        while time.time() - start_time < duration:
-            line = process.stdout.readline()
-            if not line:
-                break
-            # تجاهل الأسطر الفارغة أو التي لا تحتوي على بيانات مفيدة
-            if line.strip() and "Refreshing" not in line:
-                # يمكنك هنا تحليل السطر لاستخراج اسم البرنامج والاستهلاك
-                print(line.strip())
-                output_lines.append(line.strip())
+            try:
+                proc = psutil.Process(conn.pid)
+                # تجاهل العمليات التي لا تملك اسم مستخدم (عمليات النظام الأساسية)
+                if proc.username() is None:
+                    continue
 
-        process.terminate()  # إنهاء عملية nethogs
-        print("\n--- انتهت المراقبة ---")
+                # أضف معلومات الاتصال إلى العملية
+                process_connections[conn.pid].append(
+                    {
+                        "local_address": f"{conn.laddr.ip}:{conn.laddr.port}",
+                        "remote_address": f"{conn.raddr.ip}:{conn.raddr.port}",
+                    }
+                )
 
-    except FileNotFoundError:
-        print("خطأ: أداة 'nethogs' غير مثبتة. يرجى تثبيتها أولاً.")
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                # تجاهل العمليات التي اختفت أو لا يمكن الوصول إليها
+                continue
+
+        # تحويل البيانات إلى صيغة JSON النهائية
+        output_list = []
+        for pid, conns in process_connections.items():
+            try:
+                proc = psutil.Process(pid)
+                output_list.append(
+                    {
+                        "pid": pid,
+                        "name": proc.name(),
+                        "user": proc.username(),
+                        "connections_count": len(conns),
+                        "connections": conns,
+                    }
+                )
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+
+        return {"status": "success", "data": output_list}
+
     except Exception as e:
-        print(f"حدث خطأ: {e}")
+        return {"status": "error", "message": str(e)}
 
 
 if __name__ == "__main__":
-    monitor_app_usage(interface="wlp0s20f3", duration=15)
+    result = get_process_connections()
+    print(json.dumps(result, indent=2, ensure_ascii=False))

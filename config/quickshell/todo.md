@@ -59,7 +59,8 @@
 ## 🧰 إدارة النظام (System & Devices)
 
 - **Network**
-  - [ ] Network Manager Interface
+  - [x] Network Manager Interface/Scripts
+  - [ ] Network Manager UI
   - [ ] VPN Status Indicator
   - [ ] Quick Wi-Fi / Airplane Toggle
 
