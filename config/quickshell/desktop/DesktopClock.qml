@@ -44,24 +44,24 @@ Item {
         }
     }
 
-    Behavior on width {
-        enabled: root.enableAnimation && !root.editMode
-        NumberAnimation {
-            id: widthAnim
-            duration: 500
-            easing.type: Easing.InOutQuad
-            // onStopped: timeText.updateFontSize()
-        }
-    }
-    Behavior on height {
-        enabled: root.enableAnimation && !root.editMode
-        NumberAnimation {
-            id: heightAnim
-            duration: 500
-            easing.type: Easing.InOutQuad
-            // onStopped: timeText.updateFontSize()
-        }
-    }
+    // Behavior on width {
+    //     enabled: root.enableAnimation && !root.editMode
+    //     NumberAnimation {
+    //         id: widthAnim
+    //         duration: 500
+    //         easing.type: Easing.InOutQuad
+    //         // onStopped: timeText.updateFontSize()
+    //     }
+    // }
+    // Behavior on height {
+    //     enabled: root.enableAnimation && !root.editMode
+    //     NumberAnimation {
+    //         id: heightAnim
+    //         duration: 500
+    //         easing.type: Easing.InOutQuad
+    //         // onStopped: timeText.updateFontSize()
+    //     }
+    // }
 
     SystemClock {
         id: systemClock

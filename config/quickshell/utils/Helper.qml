@@ -228,8 +228,6 @@ Singleton {
             }
         }
 
-        console.info("Image overlay script atts -> " + commandArray);
-
         return commandArray;
     }
 
@@ -263,5 +261,27 @@ Singleton {
 
     function copyFile(sourcePath, destinationPath) {
         return ['cp', '-f', `'${sourcePath}'`, `'${destinationPath}'`];
+    }
+
+    function listWifiCommand(wifiInterface = Config.App.networkMonitor) {
+        const pythonCommand = Config.App.scripts.python.listWifiCommand;
+        const fullCommand = [...pythonCommand, "--interface", `${wifiInterface}`];
+        console.info(fullCommand);
+
+        return fullCommand;
+    }
+
+    function connectWifiCommand({
+        ssid,
+        command = "connect",
+        password = null,
+        wifiInterface = Config.App.networkMonitor
+    }) {
+        const pythonCommand = Config.App.scripts.python.connectWifiCommand;
+        const fullCommand = [...pythonCommand, command, "--ssid", ssid, "--interface", wifiInterface];
+        if (password) {
+            fullCommand.push("--password", password);
+        }
+        return fullCommand;
     }
 }

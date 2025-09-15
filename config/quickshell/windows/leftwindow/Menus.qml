@@ -9,6 +9,7 @@ import "./monitoring" as Monitoring
 import "./weather"
 import "./applauncher"
 import "./animations"
+import "./network"
 
 import "root:/utils"
 
@@ -48,7 +49,7 @@ StackView {
     }
     Component {
         id: networkComponent
-        Dashboard.Dashboard3 {}
+        WifiList {}
     }
 
     Component {

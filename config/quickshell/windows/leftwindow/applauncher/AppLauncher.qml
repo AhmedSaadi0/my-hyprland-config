@@ -11,7 +11,7 @@ import "root:/config/EventNames.js" as Events
 
 ColumnLayout {
     id: root
-    width: parent.with
+    width: parent.width
     height: parent.height
     // anchors.fill: parent
     spacing: 0

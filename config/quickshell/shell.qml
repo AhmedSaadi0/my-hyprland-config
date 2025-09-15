@@ -155,12 +155,18 @@ ShellRoot {
 
             Variants {
                 model: Quickshell.screens
-                LeftbarShadowsLayer {}
+                LeftbarShadowsLayer {
+                    required property ShellScreen modelData
+                    screen: modelData
+                }
             }
 
             Variants {
                 model: Quickshell.screens
-                TopbarShadowsLayer {}
+                TopbarShadowsLayer {
+                    required property ShellScreen modelData
+                    screen: modelData
+                }
             }
 
             Variants {

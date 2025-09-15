@@ -186,7 +186,7 @@ def manage_connection(action, interface, profile_name=None, password=None):
     except Exception as e:
         result = {"status": "error", "message": f"حدث خطأ غير متوقع: {str(e)}"}
 
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    print(json.dumps(result))
     if result.get("status") == "error":
         sys.exit(1)
 

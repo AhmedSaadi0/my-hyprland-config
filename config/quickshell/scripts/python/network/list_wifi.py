@@ -106,10 +106,10 @@ def list_available_networks(interface: str):
         error_output = {"error": f"حدث خطأ غير متوقع: {str(e)}"}
 
     if error_output:
-        print(json.dumps(error_output, indent=2, ensure_ascii=False))
+        print(json.dumps(error_output))
         sys.exit(1)
     else:
-        print(json.dumps(networks_list, indent=2, ensure_ascii=False))
+        print(json.dumps(networks_list))
 
 
 if __name__ == "__main__":

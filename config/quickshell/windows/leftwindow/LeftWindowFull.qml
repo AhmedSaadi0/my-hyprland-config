@@ -197,18 +197,20 @@ PanelWindow {
         }
 
         EventBus.on(Events.CLOSE_LEFTBAR, function () {
-            root.close();
+            // root.close();
+            isShown = false;
         });
 
         EventBus.on(Events.OPEN_LEFTBAR, function () {
-            root.open();
+            isShown = true;
+        // root.open();
         });
     }
 
     function open() {
-        isShown = true;
+        EventBus.emit(Events.OPEN_LEFTBAR);
     }
     function close() {
-        isShown = false;
+        EventBus.emit(Events.CLOSE_LEFTBAR);
     }
 }

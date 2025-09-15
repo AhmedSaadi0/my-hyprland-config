@@ -40,7 +40,7 @@ PanelWindow {
             source: barShadow
             anchors.fill: barShadow
             shadowEnabled: true
-            shadowColor: Qt.rgba(0, 0, 0, 0.45)
+            shadowColor: Qt.rgba(0, 0, 0, 0.25)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
