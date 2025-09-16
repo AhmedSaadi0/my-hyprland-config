@@ -79,7 +79,7 @@ ColumnLayout {
                 summary: "Chance of rain",
                 body: message,
                 icon: App.assets.icons.rain,
-                tone: App.assets.audio.coldWeather
+                tone: App.assets.audio.rain
             });
         }
 
@@ -144,11 +144,9 @@ ColumnLayout {
         }
 
         function onWeatherUpdated() {
-        // ...
         }
 
         function onFetchFailed(error) {
-        // ...
         }
     }
 
@@ -171,7 +169,6 @@ ColumnLayout {
         iconCursorShape: Qt.PointingHandCursor
 
         onIconClicked: {
-            console.info("Icon has been clicked! Calling the refresh function now.");
             Weather.getWeatherData();
             rotationAnim.start();
         }

@@ -76,6 +76,7 @@ Singleton {
         readonly property QtObject audio: QtObject {
             readonly property string hotWeather: root.assetsPath + "/audio/cold-weather.mp3"
             readonly property string coldWeather: root.assetsPath + "/audio/cold-weather.mp3"
+            readonly property string rain: root.assetsPath + "/audio/rain-notification.mp3"
             readonly property string prayerTime: root.assetsPath + "/audio/prayer-notification.ogg"
             readonly property string desktopLogin: root.assetsPath + "/audio/desktop-login.mp3"
             readonly property string desktopLogout: root.assetsPath + "/audio/desktop-logout.mp3"

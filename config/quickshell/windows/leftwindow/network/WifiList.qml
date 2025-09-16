@@ -8,6 +8,7 @@ import "./WifiItem.qml"
 import "root:/config/EventNames.js" as Events
 import "root:/config"
 import "root:/utils" as Utils
+import "root:/components"
 
 ColumnLayout {
     id: root
@@ -20,6 +21,7 @@ ColumnLayout {
     property string loadingBssid: ""
     property bool forceScan: false
 
+    // Process to handle connect/disconnect/forget actions
     Process {
         id: wifiActionProcess
         stdout: StdioCollector {
@@ -58,6 +60,7 @@ ColumnLayout {
         }
     }
 
+    // Process to scan for available Wi-Fi networks
     Process {
         id: wifiScannerProcess
         command: Utils.Helper.listWifiCommand()
@@ -86,6 +89,42 @@ ColumnLayout {
         }
     }
 
+    Process {
+        id: dataUsageProcess
+        command: Utils.Helper.wifiDataUsageCommand()
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const response = JSON.parse(data);
+                    if (response.status === "success") {
+                        dataUsage.subtitle = `Start: ${response.period.start} - End: ${response.period.end}`;
+                        dataUsage.receivedData = root.formatBytes(response.usage_bytes.received);
+                        dataUsage.sentData = root.formatBytes(response.usage_bytes.sent);
+                        dataUsage.totalData = root.formatBytes(response.usage_bytes.total);
+                    } else {
+                        console.error("Data Usage Error:", response.message);
+                        dataUsage.subtitle = "Failed to load data";
+                    }
+                } catch (e) {
+                    console.error("Data Usage JSON Parse Error:", e);
+                    dataUsage.subtitle = "Error parsing data";
+                }
+            }
+        }
+
+        stderr: SplitParser {
+            onRead: data => {
+                console.error("Data Usage Stderr:", data);
+                dataUsage.subtitle = "Error executing command";
+            }
+        }
+
+        function start() {
+            this.running = true;
+        }
+    }
+
     Timer {
         id: scanTimer
         interval: 5000
@@ -100,6 +139,19 @@ ColumnLayout {
 
     ListModel {
         id: wifiModel
+    }
+
+    function formatBytes(bytes, decimals = 2) {
+        if (!+bytes)
+            return '0 Bytes';
+
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
     }
 
     function updateWifiModel(networkArray) {
@@ -133,6 +185,8 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
+        dataUsageProcess.start(); // Fetch data usage on startup
+
         EventBus.on(Events.OPEN_LEFTBAR, function () {
             wifiScannerProcess.scan();
             scanTimer.running = true;
@@ -144,6 +198,116 @@ ColumnLayout {
             scanTimer.repeat = false;
         });
     }
+
+    MenuCard {
+        id: dataUsage
+
+        Layout.fillWidth: true
+        Layout.bottomMargin: 10
+
+        cardColor: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
+
+        cardLeftPadding: 8
+        cardRightPadding: 8
+
+        title: "Data Usage"
+        subtitle: "Loading data..."
+        icon: "󰑓" // nf-md-sync
+        iconCursorShape: Qt.PointingHandCursor
+
+        property string receivedData: "..."
+        property string sentData: "..."
+        property string totalData: "..."
+
+        onIconClicked: {
+            rotationAnim.start();
+            dataUsageProcess.start();
+            wifiScannerProcess.scan();
+        }
+
+        RotationAnimation on rotation {
+            id: rotationAnim
+            target: dataUsage.iconItem
+            from: 0
+            to: 360
+            duration: 500
+            easing.type: Easing.InOutCubic
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 60
+
+            Layout.leftMargin: 10
+            Layout.rightMargin: 10
+
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+
+                Label {
+                    text: "󰁅" // nf-md-arrow_down
+                    font.family: ThemeManager.selectedTheme.fonts.icon.family
+                    font.pixelSize: 26
+                    Layout.alignment: Qt.AlignHCenter
+                }
+                Label {
+                    text: qsTr("Received")
+                    font.bold: true
+                    Layout.alignment: Qt.AlignHCenter
+                }
+                Label {
+                    text: dataUsage.receivedData
+                    Layout.alignment: Qt.AlignHCenter
+                }
+            }
+
+            // Sent Column
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+
+                Label {
+                    text: "󰁝" // nf-md-arrow_up
+                    font.family: ThemeManager.selectedTheme.fonts.icon.family
+                    font.pixelSize: 26
+                    Layout.alignment: Qt.AlignHCenter
+                }
+                Label {
+                    text: qsTr("Sent")
+                    font.bold: true
+                    Layout.alignment: Qt.AlignHCenter
+                }
+                Label {
+                    text: dataUsage.sentData
+                    Layout.alignment: Qt.AlignHCenter
+                }
+            }
+
+            // Total Column
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+
+                Label {
+                    text: "󰯙" // nf-md-swap_vertical
+                    font.family: ThemeManager.selectedTheme.fonts.icon.family
+                    font.pixelSize: 26
+                    Layout.alignment: Qt.AlignHCenter
+                }
+                Label {
+                    text: qsTr("Total")
+                    font.bold: true
+                    Layout.alignment: Qt.AlignHCenter
+                }
+                Label {
+                    text: dataUsage.totalData
+                    Layout.alignment: Qt.AlignHCenter
+                }
+            }
+        }
+    }
+    // ***** END: UPDATED DATA USAGE CARD *****
 
     ScrollView {
         Layout.fillWidth: true
@@ -213,9 +377,6 @@ ColumnLayout {
                 in_use: model.in_use
                 is_saved: model.is_saved
 
-                // expanded: listView.currentIndex === index
-                // isLoading: root.loadingBssid === model.bssid
-
                 expanded: root.expandedBssid === model.bssid
                 isLoading: root.loadingBssid === model.bssid
 
@@ -241,7 +402,7 @@ ColumnLayout {
             Label {
                 anchors.centerIn: parent
                 visible: listView.model.count === 0
-                text: "جاري البحث عن الشبكات..."
+                text: qsTr("Searching for networks ...")
                 color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.7)
             }
         }

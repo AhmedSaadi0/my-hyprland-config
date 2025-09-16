@@ -266,8 +266,6 @@ Singleton {
     function listWifiCommand(wifiInterface = Config.App.networkMonitor) {
         const pythonCommand = Config.App.scripts.python.listWifiCommand;
         const fullCommand = [...pythonCommand, "--interface", `${wifiInterface}`];
-        console.info(fullCommand);
-
         return fullCommand;
     }
 
@@ -282,6 +280,12 @@ Singleton {
         if (password) {
             fullCommand.push("--password", password);
         }
+        return fullCommand;
+    }
+
+    function wifiDataUsageCommand(wifiInterface = Config.App.networkMonitor) {
+        const pythonCommand = Config.App.scripts.python.dataUsageCommand;
+        const fullCommand = [...pythonCommand, "--interface", `${wifiInterface}`];
         return fullCommand;
     }
 }

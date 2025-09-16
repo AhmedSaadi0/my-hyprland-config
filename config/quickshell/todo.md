@@ -61,6 +61,7 @@
 - **Network**
   - [x] Network Manager Interface/Scripts
   - [x] Network Manager UI
+  - [x] Network Usage Card
   - [ ] VPN Status Indicator
   - [ ] Quick Wi-Fi / Airplane Toggle
 

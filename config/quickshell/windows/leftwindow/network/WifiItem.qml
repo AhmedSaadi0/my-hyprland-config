@@ -99,7 +99,7 @@ Item {
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
 
-                        color: root.expanded ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                        color: root.expanded ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.leftMenuFgColorV2
                         Behavior on color {
                             ColorAnimation {
                                 duration: 200
@@ -145,7 +145,7 @@ Item {
                             horizontalAlignment: Text.AlignLeft
                             verticalAlignment: Text.AlignVCenter
                             // textDirection: Qt.LeftToRight          // <<< مهم: يجبر بداية النص من اليسار
-                            color: root.expanded ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                            color: root.expanded ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.leftMenuFgColorV2
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 200
@@ -181,7 +181,7 @@ Item {
                             wrapMode: Text.NoWrap
                             horizontalAlignment: Text.AlignLeft
                             // textDirection: Qt.LeftToRight
-                            color: root.expanded ? ThemeManager.selectedTheme.colors.onPrimary.alpha(0.8) : ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.7)
+                            color: root.expanded ? ThemeManager.selectedTheme.colors.onPrimary.alpha(0.8) : ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.7)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 200
@@ -197,7 +197,7 @@ Item {
                             wrapMode: Text.NoWrap
                             horizontalAlignment: Text.AlignLeft
                             // textDirection: Qt.LeftToRight
-                            color: root.expanded ? ThemeManager.selectedTheme.colors.onPrimary.alpha(0.8) : ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.7)
+                            color: root.expanded ? ThemeManager.selectedTheme.colors.onPrimary.alpha(0.8) : ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.7)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 200
