@@ -110,6 +110,7 @@
 - [x] Dracula, Gruvbox, Catppuccin, Tokyo Night Themes
 - [x] GTK4 Theme Support
 - [ ] Halt Dynamic Wallpapers option
+- [ ] Configure Dynamic Coloring
 - [ ] Solarized, Rosé Pine, Oxocarbon Themes
 - [ ] Extend Color Schema (6 colors)
 

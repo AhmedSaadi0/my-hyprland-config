@@ -6,6 +6,9 @@ import QtQuick.Layouts
 import "root:/components/monitors" // For Tempreture, Battery, Ram, Cpu
 import "root:/themes"
 
+import "root:/config/EventNames.js" as Events
+import "root:/config"
+
 Rectangle {
     id: root
     height: 150
@@ -53,7 +56,7 @@ Rectangle {
     Component {
         id: tempComponent
         Tempreture {
-
+            id: tempProgress
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
         }
     }
@@ -70,14 +73,12 @@ Rectangle {
     Component {
         id: ramComponent
         Ram {
-
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
         }
     }
     Component {
         id: cpuComponent
         Cpu {
-
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
         }
     }
@@ -91,6 +92,7 @@ Rectangle {
         spacing: ThemeManager.selectedTheme.dimensions.smallSpacing || 5         // Spacing between each MonitorWidget
 
         MonitorWidget {
+            id: tempWidget
             Layout.fillWidth: true // Make each MonitorWidget take equal share of width
             title: "Temp" // Shorter title if space is tight
             // valueText: "100%" // Default is "100%", can be overridden or updated dynamically
@@ -130,5 +132,31 @@ Rectangle {
             monitorItemThickness: root.monitorItemThickness
             monitorItemIconFontSize: root.monitorItemIconFontSize
         }
+    }
+
+    Component.onCompleted: {
+        EventBus.on(Events.OPEN_LEFTBAR, function () {
+            root.menuIsOpened();
+        });
+
+        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+            root.menuIsClosed();
+        });
+    }
+
+    function menuIsOpened() {
+        tempComponent.constructor.running = true;
+        batComponent.constructor.running = true;
+        ramComponent.constructor.running = true;
+        cpuComponent.constructor.running = true;
+        console.info("Start Menu progresses");
+    }
+
+    function menuIsClosed() {
+        tempComponent.constructor.running = false;
+        batComponent.constructor.running = false;
+        ramComponent.constructor.running = false;
+        cpuComponent.constructor.running = false;
+        console.info("Stop Menu progresses");
     }
 }

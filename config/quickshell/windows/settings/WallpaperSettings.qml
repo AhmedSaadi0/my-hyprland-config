@@ -240,7 +240,7 @@ M3GroupBox {
     }
 
     footer: RowLayout {
-        spacing: ThemeManager.selectedTheme.dimensions.spacingMedium
+        spacing: selectedTheme.dimensions.spacingMedium
 
         MButton {
             text: "Reset to default"

@@ -89,6 +89,7 @@ ColumnLayout {
         }
     }
 
+    // Process for monthly data usage
     Process {
         id: dataUsageProcess
         command: Utils.Helper.wifiDataUsageCommand({})
@@ -98,7 +99,7 @@ ColumnLayout {
                 try {
                     const response = JSON.parse(data);
                     if (response.status === "success") {
-                        dataUsage.subtitle = `Start: ${response.period.start} - End: ${response.period.end}`;
+                        dataUsage.subtitle = `Monthly: ${response.period.start} to ${response.period.end}`;
                         dataUsage.receivedData = root.formatBytes(response.usage_bytes.received);
                         dataUsage.sentData = root.formatBytes(response.usage_bytes.sent);
                         dataUsage.totalData = root.formatBytes(response.usage_bytes.total);
@@ -121,6 +122,49 @@ ColumnLayout {
         }
 
         function start() {
+            this.running = true;
+        }
+    }
+
+    // Process for daily data usage
+    Process {
+        id: dailyDataUsageProcess
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const response = JSON.parse(data);
+                    if (response.status === "success") {
+                        dataUsage.dailyReceivedData = root.formatBytes(response.usage_bytes.received);
+                        dataUsage.dailySentData = root.formatBytes(response.usage_bytes.sent);
+                        dataUsage.dailyTotalData = root.formatBytes(response.usage_bytes.total);
+                    } else {
+                        console.error("Daily Data Usage Error:", response.message);
+                    }
+                } catch (e) {
+                    console.error("Daily Data Usage JSON Parse Error:", e);
+                }
+            }
+        }
+
+        stderr: SplitParser {
+            onRead: data => {
+                console.error("Daily Data Usage Stderr:", data);
+            }
+        }
+
+        function start() {
+            const today = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+
+            const startDate = today.toISOString().slice(0, 10);
+            const endDate = tomorrow.toISOString().slice(0, 10);
+
+            this.command = Utils.Helper.wifiDataUsageCommand({
+                startDate: startDate,
+                endDate: endDate
+            });
             this.running = true;
         }
     }
@@ -185,12 +229,12 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        dataUsageProcess.start(); // Fetch data usage on startup
-
         EventBus.on(Events.OPEN_LEFTBAR, function () {
             wifiScannerProcess.scan();
             scanTimer.running = true;
             scanTimer.repeat = true;
+            dataUsageProcess.start();
+            dailyDataUsageProcess.start();
         });
 
         EventBus.on(Events.CLOSE_LEFTBAR, function () {
@@ -199,14 +243,13 @@ ColumnLayout {
         });
     }
 
+    // ***** START: ADAPTIVE DATA USAGE CARD *****
     MenuCard {
         id: dataUsage
 
         Layout.fillWidth: true
         Layout.bottomMargin: 10
-
         cardColor: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
-
         cardLeftPadding: 8
         cardRightPadding: 8
 
@@ -218,10 +261,14 @@ ColumnLayout {
         property string receivedData: "..."
         property string sentData: "..."
         property string totalData: "..."
+        property string dailyReceivedData: "..."
+        property string dailySentData: "..."
+        property string dailyTotalData: "..."
 
         onIconClicked: {
             rotationAnim.start();
             dataUsageProcess.start();
+            dailyDataUsageProcess.start();
             wifiScannerProcess.scan();
         }
 
@@ -234,80 +281,109 @@ ColumnLayout {
             easing.type: Easing.InOutCubic
         }
 
-        RowLayout {
+        GridLayout {
             Layout.fillWidth: true
-            spacing: 60
+            columns: 3
+            columnSpacing: 10
+            rowSpacing: 8
 
-            Layout.leftMargin: 10
-            Layout.rightMargin: 10
-
-            ColumnLayout {
+            // --- HEADERS ---
+            Item {
                 Layout.fillWidth: true
-                spacing: 5
+            } // Empty cell for alignment
+            Label {
+                text: qsTr("Today")
+                font.bold: true
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+            }
+            Label {
+                text: qsTr("This Month")
+                font.bold: true
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+            }
 
+            // --- RECEIVED ROW ---
+            RowLayout {
+                spacing: 14
                 Label {
                     text: "󰁅" // nf-md-arrow_down
                     font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 26
-                    Layout.alignment: Qt.AlignHCenter
+                    font.pixelSize: 22
+                    verticalAlignment: Text.AlignVCenter
                 }
                 Label {
                     text: qsTr("Received")
                     font.bold: true
-                    Layout.alignment: Qt.AlignHCenter
-                }
-                Label {
-                    text: dataUsage.receivedData
-                    Layout.alignment: Qt.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
-
-            // Sent Column
-            ColumnLayout {
+            Label {
+                text: dataUsage.dailyReceivedData
+                Layout.alignment: Qt.AlignHCenter
                 Layout.fillWidth: true
-                spacing: 5
+            }
+            Label {
+                text: dataUsage.receivedData
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+            }
 
+            // --- SENT ROW ---
+            RowLayout {
+                spacing: 14
                 Label {
                     text: "󰁝" // nf-md-arrow_up
                     font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 26
-                    Layout.alignment: Qt.AlignHCenter
+                    font.pixelSize: 22
+                    verticalAlignment: Text.AlignVCenter
                 }
                 Label {
                     text: qsTr("Sent")
                     font.bold: true
-                    Layout.alignment: Qt.AlignHCenter
-                }
-                Label {
-                    text: dataUsage.sentData
-                    Layout.alignment: Qt.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
-
-            // Total Column
-            ColumnLayout {
+            Label {
+                text: dataUsage.dailySentData
+                Layout.alignment: Qt.AlignHCenter
                 Layout.fillWidth: true
-                spacing: 5
+            }
+            Label {
+                text: dataUsage.sentData
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+            }
 
+            // --- TOTAL ROW ---
+            RowLayout {
+                spacing: 6
                 Label {
                     text: "󰯙" // nf-md-swap_vertical
                     font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 26
-                    Layout.alignment: Qt.AlignHCenter
+                    font.pixelSize: 22
+                    verticalAlignment: Text.AlignVCenter
                 }
                 Label {
                     text: qsTr("Total")
                     font.bold: true
-                    Layout.alignment: Qt.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
-                Label {
-                    text: dataUsage.totalData
-                    Layout.alignment: Qt.AlignHCenter
-                }
+            }
+            Label {
+                text: dataUsage.dailyTotalData
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+            }
+            Label {
+                text: dataUsage.totalData
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
             }
         }
     }
-    // ***** END: UPDATED DATA USAGE CARD *****
+    // ***** END: ADAPTIVE DATA USAGE CARD *****
 
     ScrollView {
         Layout.fillWidth: true

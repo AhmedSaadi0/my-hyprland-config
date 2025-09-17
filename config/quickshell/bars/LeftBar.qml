@@ -66,7 +66,6 @@ PanelWindow {
         }
 
         EventBus.on(Events.CLOSE_LEFTBAR, function () {
-            closePanelTimer.stop();
             root.closePanel();
         });
     }

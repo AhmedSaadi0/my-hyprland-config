@@ -92,7 +92,8 @@ Item {
                     Label {
                         id: signalIcon
                         anchors.centerIn: parent
-                        font.family: "Symbols Nerd Font"    // إذا تحب تستبدلها بصور: استخدم Image
+                        // font.family: "Symbols Nerd Font"    // إذا تحب تستبدلها بصور: استخدم Image
+                        font.family: ThemeManager.selectedTheme.typography.iconFont
                         font.pixelSize: 22
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -152,7 +153,7 @@ Item {
                         }
 
                         Text {
-                            text: root.in_use ? " (متصل)" : ""
+                            text: root.in_use ? qsTr(" (Connected)") : ""
                             visible: root.in_use
                             font.pixelSize: 14
                             horizontalAlignment: Text.AlignLeft
@@ -217,7 +218,8 @@ Item {
                     Label {
                         id: savedIcon
                         anchors.centerIn: parent
-                        font.family: "Symbols Nerd Font"
+                        // font.family: "Symbols Nerd Font"
+                        font.family: ThemeManager.selectedTheme.typography.iconFont
                         font.pixelSize: 20
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -291,7 +293,7 @@ Item {
 
                 MButton {
                     Layout.fillWidth: true
-                    text: root.is_saved || root.in_use ? "نسيان" : "إلغاء"
+                    text: root.is_saved || root.in_use ? qsTr("Forget") : qsTr("Cancel")
                     topRightRadius: 0
                     bottomRightRadius: 0
                     onClicked: {
@@ -305,7 +307,7 @@ Item {
 
                 MButton {
                     Layout.fillWidth: true
-                    text: root.in_use ? "قطع الاتصال" : "اتصال"
+                    text: root.in_use ? qsTr("Disconnect") : qsTr("Connect")
                     normalBackground: ThemeManager.selectedTheme.colors.primary.darker(1.2)
                     normalForeground: ThemeManager.selectedTheme.colors.onPrimary
                     topLeftRadius: 0

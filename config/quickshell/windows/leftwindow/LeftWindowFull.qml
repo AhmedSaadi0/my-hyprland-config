@@ -202,8 +202,8 @@ PanelWindow {
         });
 
         EventBus.on(Events.OPEN_LEFTBAR, function () {
+            // root.open();
             isShown = true;
-        // root.open();
         });
     }
 

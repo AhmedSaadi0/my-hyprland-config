@@ -115,19 +115,14 @@ StackView {
         target: LeftMenuStatus
         function onSelectedIndexTargeted(newIndex) {
             if (newIndex >= 0 && newIndex !== currentIndex) {
-
-                // 2. باستخدام JavaScript، قم بتعيين الأنيميشن المناسب *قبل* استدعاء replace
                 if (newIndex > currentIndex) {
-                    // التحرك للأمام
                     stackView.replaceEnter = enterFromBottom;
                     stackView.replaceExit = exitToTop;
                 } else {
-                    // التحرك للخلف
                     stackView.replaceEnter = enterFromTop;
                     stackView.replaceExit = exitToBottom;
                 }
 
-                // 3. الآن قم بتحديث الفهرس واستدعِ replace
                 currentIndex = newIndex;
                 stackView.replace(getPage(newIndex));
             }

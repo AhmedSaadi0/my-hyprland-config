@@ -4,6 +4,7 @@ import QtQuick
 
 import "root:/components"
 import "root:/themes"
+import "root:/config/EventNames.js" as Events
 import "root:/config"
 
 Rectangle {
@@ -77,5 +78,31 @@ Rectangle {
             right: progresses.right
             topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         }
+    }
+
+    Component.onCompleted: {
+        EventBus.on(Events.OPEN_LEFTBAR, function () {
+            monotoringMenu.menuIsOpened();
+        });
+
+        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+            monotoringMenu.menuIsClosed();
+        });
+    }
+
+    function menuIsOpened() {
+        cpuTable.running = true;
+        ramTable.running = true;
+        tempTable.running = true;
+        batteryTable.running = true;
+        console.info("Start monotoring");
+    }
+
+    function menuIsClosed() {
+        cpuTable.running = false;
+        ramTable.running = false;
+        tempTable.running = false;
+        batteryTable.running = false;
+        console.info("Stop monotoring");
     }
 }
