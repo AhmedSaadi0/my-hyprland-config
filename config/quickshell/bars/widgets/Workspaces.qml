@@ -44,7 +44,7 @@ Rectangle {
 
     RowLayout {
         id: rowLayout
-        anchors.top: parent
+        anchors.top: parent.top
         spacing: 5
 
         Repeater {

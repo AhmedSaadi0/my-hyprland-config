@@ -91,7 +91,7 @@ ColumnLayout {
 
     Process {
         id: dataUsageProcess
-        command: Utils.Helper.wifiDataUsageCommand()
+        command: Utils.Helper.wifiDataUsageCommand({})
 
         stdout: StdioCollector {
             onStreamFinished: {
@@ -247,7 +247,7 @@ ColumnLayout {
 
                 Label {
                     text: "󰁅" // nf-md-arrow_down
-                    font.family: ThemeManager.selectedTheme.fonts.icon.family
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
                     font.pixelSize: 26
                     Layout.alignment: Qt.AlignHCenter
                 }
@@ -269,7 +269,7 @@ ColumnLayout {
 
                 Label {
                     text: "󰁝" // nf-md-arrow_up
-                    font.family: ThemeManager.selectedTheme.fonts.icon.family
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
                     font.pixelSize: 26
                     Layout.alignment: Qt.AlignHCenter
                 }
@@ -291,7 +291,7 @@ ColumnLayout {
 
                 Label {
                     text: "󰯙" // nf-md-swap_vertical
-                    font.family: ThemeManager.selectedTheme.fonts.icon.family
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
                     font.pixelSize: 26
                     Layout.alignment: Qt.AlignHCenter
                 }

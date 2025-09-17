@@ -89,8 +89,6 @@ Item {
                     Layout.preferredHeight: 48
                     Layout.alignment: Qt.AlignVCenter
 
-                    /* استخدمت Label (رموز) لكن داخل Item ثابت العرض.
-               إذا كانت أيقوناتك بصيغة ملف (svg/png) استبدل Label بـ Image مع preserveAspectFit */
                     Label {
                         id: signalIcon
                         anchors.centerIn: parent
@@ -109,13 +107,13 @@ Item {
                         text: {
                             const isLocked = root.security !== "None";
                             if (root.signal > 75)
-                                return isLocked ? "󰤡" : "󰤨";
+                                return isLocked ? "󰤪" : "󰤨";
                             if (root.signal > 50)
-                                return isLocked ? "󰤤" : "󰤥";
+                                return isLocked ? "󰤧" : "󰤥";
                             if (root.signal > 25)
-                                return isLocked ? "󰥎" : "󰤢";
+                                return isLocked ? "󰤤" : "󰤢";
                             if (root.signal > 0)
-                                return isLocked ? "󰥏" : "󰤟";
+                                return isLocked ? "󱛋" : "󰤟";
                             return isLocked ? "󰤬" : "󰤯";
                         }
                     }

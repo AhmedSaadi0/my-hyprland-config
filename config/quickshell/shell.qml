@@ -33,7 +33,6 @@ ShellRoot {
         } else {
             console.log("Waiting for ThemeManager's initialThemeReady signal...");
         }
-        Qt.setContextProperty("currentTheme", _selectedTheme);
     }
 
     Connections {
@@ -41,10 +40,6 @@ ShellRoot {
         function onInitialThemeReady() {
             console.log("ShellRoot received 'initialThemeReady' signal! Activating main UI.");
             activateMainUI();
-        }
-
-        function onSelectedThemeChanged() {
-            Qt.setContextProperty("currentTheme", ThemeManager.selectedTheme);
         }
     }
 
@@ -277,7 +272,7 @@ ShellRoot {
 
                     Component.onCompleted: {
                         const newWidgets = widgetsComponent.createObject(widgetContainer, {
-                            "modelData": modelData,
+                            // "modelData": modelData,
                             "screen": modelData
                         });
 

@@ -283,9 +283,19 @@ Singleton {
         return fullCommand;
     }
 
-    function wifiDataUsageCommand(wifiInterface = Config.App.networkMonitor) {
+    function wifiDataUsageCommand({
+        wifiInterface = Config.App.networkMonitor,
+        startDate = null,
+        endDate = null
+    }) {
         const pythonCommand = Config.App.scripts.python.dataUsageCommand;
-        const fullCommand = [...pythonCommand, "--interface", `${wifiInterface}`];
+        let fullCommand = [...pythonCommand, "--interface", `${wifiInterface}`];
+        if (startDate !== null) {
+            fullCommand.push("--start-date", startDate);
+        }
+        if (endDate !== null) {
+            fullCommand.push("--end-date", endDate);
+        }
         return fullCommand;
     }
 }

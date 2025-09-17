@@ -51,8 +51,8 @@ ColumnLayout {
         bottomLeftRadius: ThemeManager.selectedTheme.dimensions.baseRadius
         bottomRightRadius: ThemeManager.selectedTheme.dimensions.baseRadius
 
-        horizontalAlignment: Text.HAlignment
-        verticalAlignment: Text.VAlignment
+        // horizontalAlignment: Text.HAlignment
+        // verticalAlignment: Text.VAlignment
 
         onAccepted: {
             if (processedModel.values.length > 1) {

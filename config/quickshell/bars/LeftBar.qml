@@ -99,7 +99,7 @@ PanelWindow {
 
         layer.enabled: true
         layer.effect: MultiEffect {
-            source: containerBox
+            source: buttonGroup
             shadowEnabled: true
             shadowColor: "#40000000"
             shadowBlur: 0.6
