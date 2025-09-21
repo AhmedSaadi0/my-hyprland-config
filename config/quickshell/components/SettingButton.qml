@@ -22,8 +22,10 @@ RowLayout {
         spacing: 5
 
         MButton {
-            iconText: root.buttonIcon
             text: root.buttonText
+            iconText: root.buttonIcon
+            textPreferredWidth: 4
+            iconPreferredWidth: 1
             Layout.fillWidth: true
             onClicked: root.clicked()
             textElide: Text.ElideLeft

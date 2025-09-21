@@ -50,7 +50,7 @@ def process_image_rembg(
             with open(output_path, "wb") as o:
                 o.write(output_data)
 
-        # رسالة نجاح أكثر تفصيلاً
+        # رسالة نجاح
         print(
             f"Success (rembg model: '{model_name}', alpha_matting: {alpha_matting}): "
             f"Foreground created at '{output_path}'"

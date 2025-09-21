@@ -8,9 +8,7 @@ import "../themes"
 Rectangle {
     id: tableRoot
     implicitWidth: 400
-    // implicitHeight: childrenRect.height // Let content define implicitHeight
-    // OR, if you want a minimum default height if no content:
-    implicitHeight: headerHeight // At least the header height
+    implicitHeight: headerRowLayout.height + dataGridLayout.height
 
     clip: true
 
@@ -29,7 +27,6 @@ Rectangle {
         pixelSize: ThemeManager.selectedTheme.typography.heading4Size,
         bold: true
     })
-
     property color headerBorderColor: headerBackgroundColor
     property int headerBorderWidth: 1
     property int headerHeight: Kirigami.Units.gridUnit * 2.5
@@ -40,16 +37,21 @@ Rectangle {
     property font cellFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.medium
     })
-
     property var cellElideMode: Text.ElideRight
     property var cellWrapMode: Text.NoWrap
+
+    // --- Properties for Sub-Value Text ---
+    property color subCellTextColor: Kirigami.Theme.positiveTextColor
+    property font subCellFont: Qt.font({
+        pixelSize: ThemeManager.selectedTheme.typography.small - 3
+    })
 
     // --- General Cell Properties ---
     property color cellBackgroundColor: Kirigami.Theme.backgroundColor
     property color alternatingCellBackgroundColor: Kirigami.Theme.alternateBackgroundColor
     property color cellBorderColor: Kirigami.Theme.positiveBackgroundColor
     property int cellBorderWidth: 1
-    property int rowHeight: Kirigami.Units.gridUnit * 2
+    property int rowHeight: Kirigami.Units.gridUnit * 3
     property int cellColumnSpacing: 0
     property int cellRowSpacing: 1
 
@@ -66,33 +68,26 @@ Rectangle {
     radius: tableRadius
 
     ColumnLayout {
-        id: tableContentLayout // Renamed for clarity
-        // anchors.fill: parent // REMOVE THIS if you don't want it to stretch vertically
-        // Instead, anchor to top and let it take its natural height
-        anchors.top: parent.top
+        id: tableContentLayout
         anchors.left: parent.left
         anchors.right: parent.right
-        // Its height will be determined by its children (headerRowLayout + dataGridLayout)
-        // width: parent.width // Still take full width
-
+        anchors.top: parent.top
         spacing: 0
 
         RowLayout {
             id: headerRowLayout
-            // width: parent.width // This parent is now tableContentLayout
-            Layout.fillWidth: true // Ensure it takes the width of tableContentLayout
+            Layout.fillWidth: true
             height: tableRoot.headerHeight
             spacing: tableRoot.headerCellSpacing
 
-            Repeater { /* ... header delegate ... */
+            Repeater {
                 id: headerRepeater
                 model: tableRoot.columns
                 delegate: Rectangle {
+                    // ... (Header delegate remains unchanged) ...
                     readonly property var columnDef: modelData
-
                     readonly property bool isFirstCellInRow: index === 0
                     readonly property bool isLastCellInRow: index === (headerRepeater.model.length - 1)
-
                     Layout.preferredHeight: tableRoot.headerHeight
                     Layout.preferredWidth: columnDef.width ? columnDef.width : ((headerRowLayout.width - (tableRoot.headerCellSpacing * (tableRoot.columns.length - 1))) / (tableRoot.columns.length || 1))
                     Layout.fillWidth: true
@@ -100,10 +95,8 @@ Rectangle {
                     border.color: tableRoot.headerBorderColor
                     border.width: tableRoot.headerBorderWidth > 0 && (tableRoot.showVerticalGridLines || tableRoot.showHorizontalGridLines) ? tableRoot.headerBorderWidth : 0
                     clip: true
-
                     topLeftRadius: isFirstCellInRow ? tableRadius : 0
                     topRightRadius: isLastCellInRow ? tableRadius : 0
-
                     Text {
                         text: columnDef.title
                         font: columnDef.headerFont !== undefined ? columnDef.headerFont : tableRoot.headerFont
@@ -124,16 +117,12 @@ Rectangle {
 
         GridLayout {
             id: dataGridLayout
-            Layout.fillWidth: true // Take width of tableContentLayout
-            // DO NOT USE Layout.fillHeight: true if you want it to take natural height
-            // Its height will be sum of rowHeights + rowSpacings
-            // Or, if you want scrolling within a fixed data area, this would be different
-
+            Layout.fillWidth: true
             columns: tableRoot.columns.length > 0 ? tableRoot.columns.length : 1
             columnSpacing: tableRoot.cellColumnSpacing
             rowSpacing: tableRoot.cellRowSpacing
 
-            Repeater { /* ... data delegate ... */
+            Repeater {
                 id: allDataCellsRepeater
                 model: (tableRoot.model && tableRoot.columns.length > 0) ? (tableRoot.model.count * tableRoot.columns.length) : 0
                 delegate: Rectangle {
@@ -141,49 +130,53 @@ Rectangle {
                     readonly property int colIndex: index % tableRoot.columns.length
                     readonly property var columnDef: tableRoot.columns[colIndex]
                     readonly property var rowData: tableRoot.model.get(rowIndex)
-
-                    // --- NEW: Logic for identifying cell position ---
                     readonly property bool isFirstCellInCol: colIndex === 0
                     readonly property bool isLastCellInCol: colIndex === (tableRoot.columns.length - 1)
-                    // Check if the current row index is the last one in the model
                     readonly property bool isLastRow: (tableRoot.model && rowIndex === (tableRoot.model.count - 1))
 
-                    Layout.preferredHeight: tableRoot.rowHeight // Fixed height for data rows
+                    readonly property bool hasSubValue: !!(rowData && rowData.subRole) && isLastCellInCol
+
+                    Layout.preferredHeight: tableRoot.rowHeight
                     Layout.preferredWidth: columnDef.width ? columnDef.width : ((dataGridLayout.width - (tableRoot.cellColumnSpacing * (tableRoot.columns.length - 1))) / (tableRoot.columns.length || 1))
                     Layout.fillWidth: true
                     color: rowIndex % 2 === 0 ? tableRoot.cellBackgroundColor : tableRoot.alternatingCellBackgroundColor
                     border.color: tableRoot.cellBorderColor
                     border.width: (tableRoot.cellBorderWidth > 0 && (tableRoot.showVerticalGridLines || tableRoot.showHorizontalGridLines)) ? tableRoot.cellBorderWidth : 0
                     clip: true
-
-                    // --- NEW: Apply radius to bottom corners of the last row ---
-                    // A cell gets a bottom-left radius if it's in the first column AND the last row.
                     bottomLeftRadius: (isFirstCellInCol && isLastRow) ? tableRoot.tableRadius : 0
-                    // A cell gets a bottom-right radius if it's in the last column AND the last row.
                     bottomRightRadius: (isLastCellInCol && isLastRow) ? tableRoot.tableRadius : 0
 
-                    // For debugging
-                    // color: {
-                    //     const randomInt = Math.floor(Math.random() * 16777216);
-                    //     // Convert the integer to a hexadecimal string and pad with zeros if needed
-                    //     const hexColor = "#" + randomInt.toString(16).padStart(6, "0");
-                    //     return hexColor;
-                    // }
-
-                    Text {
-                        text: rowData && columnDef ? (rowData[columnDef.role] ?? "") : ""
-                        font: columnDef.cellFont !== undefined ? columnDef.cellFont : tableRoot.cellFont
-                        color: columnDef.cellTextColor !== undefined ? columnDef.cellTextColor : tableRoot.cellTextColor
-                        elide: columnDef.cellElideMode !== undefined ? columnDef.cellElideMode : tableRoot.cellElideMode
-                        wrapMode: columnDef.cellWrapMode !== undefined ? columnDef.cellWrapMode : tableRoot.cellWrapMode
-                        horizontalAlignment: columnDef.alignment !== undefined ? columnDef.alignment : Text.AlignLeft
-                        verticalAlignment: columnDef.cellVerticalAlignment !== undefined ? columnDef.cellVerticalAlignment : Text.AlignVCenter
+                    ColumnLayout {
                         anchors.verticalCenter: parent.verticalCenter
-
                         anchors.left: parent.left
                         anchors.leftMargin: columnDef.leftMargin !== undefined ? columnDef.leftMargin : tableRoot.cellLeftMargin
                         anchors.right: parent.right
                         anchors.rightMargin: columnDef.rightMargin !== undefined ? columnDef.rightMargin : tableRoot.cellRightMargin
+
+                        spacing: -8
+
+                        Text {
+                            text: rowData && columnDef ? (rowData[columnDef.role] ?? "") : ""
+                            font: columnDef.cellFont !== undefined ? columnDef.cellFont : tableRoot.cellFont
+                            color: columnDef.cellTextColor !== undefined ? columnDef.cellTextColor : tableRoot.cellTextColor
+                            elide: columnDef.cellElideMode !== undefined ? columnDef.cellElideMode : tableRoot.cellElideMode
+                            wrapMode: columnDef.cellWrapMode !== undefined ? columnDef.cellWrapMode : tableRoot.cellWrapMode
+                            horizontalAlignment: columnDef.alignment !== undefined ? columnDef.alignment : Text.AlignLeft
+                            Layout.alignment: horizontalAlignment
+                        }
+
+                        Text {
+                            readonly property int mainAlignment: columnDef.alignment !== undefined ? columnDef.alignment : Text.AlignLeft
+
+                            visible: hasSubValue
+                            text: hasSubValue ? rowData.subRole : ""
+                            font: columnDef.subCellFont !== undefined ? columnDef.subCellFont : tableRoot.subCellFont
+                            color: columnDef.subCellTextColor !== undefined ? columnDef.subCellTextColor : tableRoot.subCellTextColor
+                            elide: columnDef.cellElideMode !== undefined ? columnDef.cellElideMode : tableRoot.cellElideMode
+                            wrapMode: columnDef.cellWrapMode !== undefined ? columnDef.cellWrapMode : tableRoot.cellWrapMode
+                            horizontalAlignment: mainAlignment
+                            Layout.alignment: mainAlignment
+                        }
                     }
                 }
             }

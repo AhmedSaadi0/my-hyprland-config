@@ -7,7 +7,9 @@ import QtQuick.Controls
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
 import "./weather"
+import "./applauncher"
 import "./animations"
+import "./network"
 
 import "root:/utils"
 
@@ -26,6 +28,7 @@ StackView {
 
     property int currentIndex: 0
     property int previousIndex: 0
+    readonly property int appLauncherIndex: 6
 
     // المكونات الأصلية (Component فقط)
     Component {
@@ -46,12 +49,17 @@ StackView {
     }
     Component {
         id: networkComponent
-        Dashboard.Dashboard3 {}
+        WifiList {}
     }
 
     Component {
         id: clipboardComponent
         Clipboard {}
+    }
+
+    Component {
+        id: appLauncherComponent
+        AppLauncher {}
     }
 
     // العناصر التي يتم إنشاؤها مرة واحدة
@@ -61,6 +69,7 @@ StackView {
     property var monitorPage
     property var networkPage
     property var clipboardPage
+    property var appLauncherPage
 
     Component.onCompleted: {
         dashboardPage = dashboardComponent.createObject(stackView, {
@@ -89,33 +98,37 @@ StackView {
             // "anchors.fill": stackView
         });
 
+        appLauncherPage = appLauncherComponent.createObject(stackView, {
+            "visible": false
+            // "anchors.fill": stackView
+        });
+
         dashboardPage.visible = true;
         stackView.push(dashboardPage);
     }
 
     function getPage(index) {
-        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage][index];
+        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage, appLauncherPage][index];
     }
 
     Connections {
         target: LeftMenuStatus
         function onSelectedIndexTargeted(newIndex) {
             if (newIndex >= 0 && newIndex !== currentIndex) {
-
-                // 2. باستخدام JavaScript، قم بتعيين الأنيميشن المناسب *قبل* استدعاء replace
                 if (newIndex > currentIndex) {
-                    // التحرك للأمام
                     stackView.replaceEnter = enterFromBottom;
                     stackView.replaceExit = exitToTop;
                 } else {
-                    // التحرك للخلف
                     stackView.replaceEnter = enterFromTop;
                     stackView.replaceExit = exitToBottom;
                 }
 
-                // 3. الآن قم بتحديث الفهرس واستدعِ replace
                 currentIndex = newIndex;
                 stackView.replace(getPage(newIndex));
+            }
+
+            if (newIndex == stackView.appLauncherIndex) {
+                appLauncherPage.gainFocus();
             }
         }
     }
@@ -134,7 +147,7 @@ StackView {
             ParallelAnimation {
                 NumberAnimation {
                     property: "y"
-                    from: parent.height * 0.6
+                    from: stackView.height * 0.6
                     to: 0
                     duration: 420
                     easing.type: Easing.OutBack
@@ -163,7 +176,7 @@ StackView {
             NumberAnimation {
                 property: "y"
                 from: 0
-                to: -parent.height * 0.3
+                to: -stackView.height * 0.3
                 duration: 300
                 easing.type: Easing.InCubic
             }
@@ -198,12 +211,12 @@ StackView {
             }
             PropertyAction {
                 property: "y"
-                value: -parent.height * 0.3
+                value: -stackView.height * 0.3
             }
             ParallelAnimation {
                 NumberAnimation {
                     property: "y"
-                    from: -parent.height * 0.3
+                    from: -stackView.height * 0.3
                     to: 0
                     duration: 420
                     easing.type: Easing.OutBack
@@ -232,7 +245,7 @@ StackView {
             NumberAnimation {
                 property: "y"
                 from: 0
-                to: parent.height * 0.6
+                to: stackView.height * 0.6
                 duration: 300
                 easing.type: Easing.InCubic
             }

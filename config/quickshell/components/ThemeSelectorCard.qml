@@ -6,6 +6,8 @@ import QtQuick.Controls
 import org.kde.kirigami as Kirigami
 
 import "root:/themes"
+import "root:/config/EventNames.js" as Events
+import "root:/config"
 
 Rectangle {
     id: card
@@ -59,20 +61,25 @@ Rectangle {
                 text: ""
                 // iconText: "" // أيقونة الوضع الفاتح
                 Layout.fillWidth: true
-                onClicked: ThemeManager.requestLoadTheme(card.lightThemeName)
-                isActive: ThemeManager.selectedTheme.themeName === card.lightThemeName
                 topRightRadius: 0
                 bottomRightRadius: 0
+                isActive: ThemeManager.selectedTheme.themeName === card.lightThemeName
+                onClicked: {
+                    ThemeManager.requestLoadTheme(card.lightThemeName);
+                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                }
             }
 
             MButton {
                 text: "󰖔"
                 Layout.fillWidth: true
-                onClicked: ThemeManager.requestLoadTheme(card.darkThemeName)
-                isActive: ThemeManager.selectedTheme.themeName === card.darkThemeName
-
                 topLeftRadius: 0
                 bottomLeftRadius: 0
+                isActive: ThemeManager.selectedTheme.themeName === card.darkThemeName
+                onClicked: {
+                    ThemeManager.requestLoadTheme(card.darkThemeName);
+                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                }
             }
         }
     }

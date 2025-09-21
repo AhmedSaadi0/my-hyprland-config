@@ -1,7 +1,7 @@
 // ToastNotificationHandler.qml
 import QtQuick
 import Quickshell
-import QtQuick.Layouts
+// import QtQuick.Layouts
 import Quickshell.Wayland
 
 import "root:/services"
@@ -20,8 +20,10 @@ PanelWindow {
 
     exclusionMode: ExclusionMode.Ignore
 
-    WlrLayershell.namespace: "quickshell:notificationPopup"
+    WlrLayershell.namespace: "NibrasShell:notificationPopup"
     WlrLayershell.layer: WlrLayer.Overlay
+    // WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+    // mask: Region {}
 
     margins {
         bottom: 30

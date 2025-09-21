@@ -8,7 +8,7 @@ BaseTheme {
     id: darkTheme
 
     themeName: "CatppuccinDark"
-    _themeMode: "light"
+    _themeMode: "dark"
 
     _wallpaper: App.assets.getWallpaperPath("CatppuccinDark.png")
 
@@ -30,7 +30,7 @@ BaseTheme {
     _topbarFgColorV3: "#cdd6f4" // Text
 
     _leftMenuBgColorV1: "#1e1e2e" // Base
-    _leftMenuBgColorV2: "#181825" // Mantle
+    _leftMenuBgColorV2: "#2b2b42" // Mantle
     // خلفية العنصر النشط أغمق قليلاً من البقية للتمييز
     _leftMenuBgColorV3: "#45475a" // Surface1
 

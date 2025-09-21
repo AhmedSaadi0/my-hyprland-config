@@ -6,12 +6,12 @@
 
 ## This branch will use [quickshell](https://quickshell.outfoxxed.me/)
 
-If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSaadi0/my-hyprland-config/blob/main)
+If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSaadi0/nibrasshell/blob/main)
 
 <details>
 <summary>العربية</summary>
 
-**ملاحظة:** هذه الإعدادات لا تزال في [مرحلة التطوير](https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/config/quickshell/todo.md)، وسأقوم بإضافة المزيد من الميزات بصورة مستمرة عندما يتاح لدي وقت أكثر.
+**ملاحظة:** هذه الإعدادات لا تزال في [مرحلة التطوير](https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/config/quickshell/todo.md)، وسأقوم بإضافة المزيد من الميزات بصورة مستمرة عندما يتاح لدي وقت أكثر.
 
 ### ملاحظة
 
@@ -43,6 +43,8 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 - lm_sensors
 - copyq
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
+- vnstat
+- nethogs
 
 ### برامج اختيارية
 
@@ -75,7 +77,7 @@ sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 
 # تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
 sudo dnf install ffmpeg --allowerasing
-sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh
 
 # تفعيل مستودع هيبر لاند
 sudo dnf copr enable solopasha/hyprland
@@ -215,7 +217,7 @@ nvim .nibrasshell.json
 
 <summary>English</summary>
 
-**Note:** This configuration is a [work in progress](https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/config/quickshell/todo.md), and I will continue to add more features as time permits.
+**Note:** This configuration is a [work in progress](https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/config/quickshell/todo.md), and I will continue to add more features as time permits.
 
 ### Note
 
@@ -246,6 +248,8 @@ It is recommended to use this setup with KDE applications for the best experienc
 - lm_sensors
 - copyq
 - [KDE Material You Colors](https://github.com/luisbocanegra/kde-material-you-colors)
+- vnstat
+- nethogs
 
 ### Optional dependencies:
 
@@ -278,7 +282,7 @@ sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 
 # Install needed apps with other supporting apps like media support
 sudo dnf install ffmpeg --allowerasing
-sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh
 
 # Enable Hyprland repository
 sudo dnf copr enable solopasha/hyprland
@@ -325,7 +329,7 @@ pip install rembg[gpu] pillow
     cp ~/.config/fish/config.fish ~/.config/fish/config.back.fish
 
     # copy files
-    cp -r my-hyprland-config ~/.config/hypr
+    cp -r nibrasshell ~/.config/hypr
     cp -r ~/.config/hypr/config/quickshell ~/.config/quickshell
     cp -r ~/.config/hypr/config/wofi ~/.config/wofi
     cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
@@ -418,7 +422,7 @@ nvim .nibrasshell.json
 #### Catppuccin dark
 
 <p align='center'>
-	<img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/Catppuccin-dark.png'/>
+	<img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png'/>
 </p>
 
 <hr />
@@ -426,11 +430,11 @@ nvim .nibrasshell.json
 #### M3
 
 <p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/m3-light.png'/>
+	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-light.png'/>
 </p>
 
 <p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/m3-dark.png'/>
+	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-dark.png'/>
 </p>
 
 <hr />
@@ -438,11 +442,11 @@ nvim .nibrasshell.json
 #### Nord
 
 <p align='center'>
-	<img alt='Nord' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/nord-light.png'/>
+	<img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-light.png'/>
 </p>
 
 <p align='center'>
-	<img alt='Nord' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/nord-dark.png'/>
+	<img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-dark.png'/>
 </p>
 
 <hr />
@@ -450,7 +454,7 @@ nvim .nibrasshell.json
 #### Dracula Light
 
 <p align='center'>
-	<img alt='Dracula' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/dracula-light.png'/>
+	<img alt='Dracula' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/dracula-light.png'/>
 </p>
 
 <hr />
@@ -458,11 +462,11 @@ nvim .nibrasshell.json
 #### Gruvbox
 
 <p align='center'>
-	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/gruvbox-light.png'/>
+	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-light.png'/>
 </p>
 
 <p align='center'>
-	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/gruvbox-dark.png'/>
+	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-dark.png'/>
 </p>
 
 <hr />
@@ -470,7 +474,33 @@ nvim .nibrasshell.json
 #### TokyoNight Dark
 
 <p align='center'>
-	<img alt='TokyoNight' src='https://github.com/AhmedSaadi0/my-hyprland-config/blob/quickshell/screenshots/tokyonight.png'/>
+	<img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png'/>
+</p>
+
+<hr />
+
+#### Settings
+
+[Watch a video](https://youtu.be/w7taDzj4_Y8)
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings1.png'/>
+</p>
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings2.png'/>
+</p>
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings3.png'/>
+</p>
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings4.png'/>
+</p>
+
+<p align='center'>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings5.png'/>
 </p>
 
 <hr />

@@ -228,7 +228,6 @@ Singleton {
             }
         }
 
-        console.info("CAACC " + commandArray);
         return commandArray;
     }
 
@@ -250,5 +249,53 @@ Singleton {
         }
 
         return result;
+    }
+
+    function removeUnusedCachedOverlayImages({
+        jsonDir,
+        imagesDir
+    }) {
+        const pythonCommand = Config.App.scripts.python.removeUnusedCachedOverlayImagesCommand;
+        return [...pythonCommand, "--json_dir", jsonDir, "--images_dir", imagesDir];
+    }
+
+    function copyFile(sourcePath, destinationPath) {
+        return ['cp', '-f', `'${sourcePath}'`, `'${destinationPath}'`];
+    }
+
+    function listWifiCommand(wifiInterface = Config.App.networkMonitor) {
+        const pythonCommand = Config.App.scripts.python.listWifiCommand;
+        const fullCommand = [...pythonCommand, "--interface", `${wifiInterface}`];
+        return fullCommand;
+    }
+
+    function connectWifiCommand({
+        ssid,
+        command = "connect",
+        password = null,
+        wifiInterface = Config.App.networkMonitor
+    }) {
+        const pythonCommand = Config.App.scripts.python.connectWifiCommand;
+        const fullCommand = [...pythonCommand, command, "--ssid", ssid, "--interface", wifiInterface];
+        if (password) {
+            fullCommand.push("--password", password);
+        }
+        return fullCommand;
+    }
+
+    function wifiDataUsageCommand({
+        wifiInterface = Config.App.networkMonitor,
+        startDate = null,
+        endDate = null
+    }) {
+        const pythonCommand = Config.App.scripts.python.dataUsageCommand;
+        let fullCommand = [...pythonCommand, "--interface", `${wifiInterface}`];
+        if (startDate !== null) {
+            fullCommand.push("--start-date", startDate);
+        }
+        if (endDate !== null) {
+            fullCommand.push("--end-date", endDate);
+        }
+        return fullCommand;
     }
 }

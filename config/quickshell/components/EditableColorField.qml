@@ -1,9 +1,6 @@
 // components/EditableColorField.qml
 
 import QtQuick
-import QtQuick.Controls
-
-import "root:/themes"
 
 // EditText that checks if input is a color and changes accordingly
 EditableField {
@@ -16,6 +13,11 @@ EditableField {
     onAccepted: {
         validateColor(root.text);
     }
+
+    topLeftRadius: selectedTheme.dimensions.baseRadius
+    topRightRadius: selectedTheme.dimensions.baseRadius
+    bottomLeftRadius: selectedTheme.dimensions.baseRadius
+    bottomRightRadius: selectedTheme.dimensions.baseRadius
 
     function validateColor(inputText) {
         try {

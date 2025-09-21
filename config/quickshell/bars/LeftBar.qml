@@ -4,43 +4,47 @@ import Quickshell
 import QtQuick
 // import QtQuick.Layouts
 import QtQuick.Effects
+import Quickshell.Wayland
 
 import "../themes"
 import "../components"
 import "root:/utils"
 import "root:/services"
+import "root:/config/EventNames.js" as Events
+import "root:/config"
 
 PanelWindow {
     id: root
-    implicitWidth: 60
-    implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
-    color: "transparent"
+
+    implicitWidth: 40
+    // implicitHeight: screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+
+    color: ThemeManager.selectedTheme.colors.topbarColor
     exclusionMode: ExclusionMode.Ignore
+
+    // WlrLayershell.layer: WlrLayer.Overlay
+
     // exclusiveZone: 45
 
     anchors {
-        // top: true
+        top: true
         left: true
         bottom: true
     }
+
+    margins.top: ThemeManager.selectedTheme.dimensions.barHeight
 
     // --- Properties ---
     property bool panelOpen: false
     property int activeMenuIndex: LeftMenuStatus.selectedIndex
 
-    // --- 2. خاصية لتخزين مؤشر عنصر الإشعارات ---
     property int notificationMenuIndex: -1
 
-    // --- 3. ربط الواجهة بخدمة الإشعارات ---
-    // هذا الكود يراقب التغييرات في NotifManager ويحدّث الواجهة
     Connections {
-        target: NotifManager // الهدف هو الـ Singleton الخاص بنا
+        target: NotifManager
 
-        // هذه الدالة تُستدعى تلقائياً عندما تتغير قيمة NotifManager.notificationCount
         function onNotificationCountChanged() {
-            // نتأكد من أننا وجدنا عنصر الإشعارات أولاً
             if (root.notificationMenuIndex !== -1) {
-                // نقوم بتحديث خاصية notificationCount في الموديل بكفاءة عالية
                 buttonGroup.model.set(root.notificationMenuIndex, {
                     "notificationCount": NotifManager.notificationCount
                 });
@@ -48,25 +52,22 @@ PanelWindow {
         }
     }
 
-    // --- 4. إعداد القيمة الأولية عند بدء تشغيل الواجهة ---
     Component.onCompleted: {
-        // نبحث عن عنصر "Notifications" في الموديل مرة واحدة فقط
         for (let i = 0; i < buttonGroup.model.count; i++) {
             if (buttonGroup.model.get(i).name === "Notifications") {
-                // نخزن مؤشره (index) للوصول السريع لاحقاً
                 root.notificationMenuIndex = i;
 
-                // نقوم بتعيين القيمة الأولية للعداد عند بدء التشغيل
-                // هذا مهم في حال كانت هناك إشعارات موجودة بالفعل
                 buttonGroup.model.set(i, {
                     "notificationCount": NotifManager.notificationCount
                 });
 
-                break; // نوقف البحث بعد العثور عليه
+                break;
             }
         }
 
-        margins.top = -10;
+        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+            root.closePanel();
+        });
     }
 
     Connections {
@@ -83,16 +84,21 @@ PanelWindow {
         }
     }
 
-    CorneredBox {
-        id: containerBox
-        anchors.fill: parent
-
-        bottomRightVisible: false
-        topRightVisible: false
+    ButtonGroup {
+        id: buttonGroup
+        theme: ThemeManager.selectedTheme
+        implicitWidth: 30
+        implicitHeight: 300
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
+        useHand: true
 
         layer.enabled: true
         layer.effect: MultiEffect {
-            source: containerBox
+            source: buttonGroup
             shadowEnabled: true
             shadowColor: "#40000000"
             shadowBlur: 0.6
@@ -100,70 +106,72 @@ PanelWindow {
             shadowHorizontalOffset: 2
         }
 
-        ButtonGroup {
-            id: buttonGroup
-            theme: ThemeManager.selectedTheme
-            implicitWidth: 30
-            implicitHeight: 300
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.topMargin: 20
-            anchors.leftMargin: 5
-            anchors.rightMargin: 5
-            useHand: true
-
-            model: ListModel {
-                ListElement {
-                    icon: "󰨝"
-                    activeIcon: "󰕮"
-                    name: "Dashboard"
-                }
-                ListElement {
-                    icon: ""
-                    activeIcon: ""
-                    name: "Notifications"
-                    // القيمة الأولية هنا ستُحدّث فوراً عند بدء التشغيل
-                    notificationCount: 0
-                }
-                ListElement {
-                    icon: ""
-                    activeIcon: "󰅟"
-                    name: "Weather"
-                }
-                ListElement {
-                    icon: ""
-                    activeIcon: ""
-                    name: "Monitors"
-                }
-                ListElement {
-                    icon: "󰲝"
-                    activeIcon: "󰛳"
-                    name: "Network"
-                }
-                // ListElement {
-                //     icon: "󰾰"
-                //     // activeIcon: ""
-                //     name: "Devices"
-                // }
-                ListElement {
-                    icon: "󰅌"
-                    activeIcon: "󰅇"
-                    name: "Clipboard"
-                }
+        model: ListModel {
+            ListElement {
+                icon: "󰨝"
+                activeIcon: "󰕮"
+                name: "Dashboard"
             }
-
-            onCurrentIndexChanged: function () {
-                const newIndex = buttonGroup.currentIndex;
-                root.activeMenuIndex = newIndex;
-                if (newIndex === -1) {
-                    root.panelOpen = false;
-                } else {
-                    if (!root.panelOpen) {
-                        root.panelOpen = true;
-                    }
-                }
-                LeftMenuStatus.changeIndex(newIndex);
+            ListElement {
+                icon: ""
+                activeIcon: ""
+                name: "Notifications"
+                notificationCount: 0
+            }
+            ListElement {
+                icon: ""
+                activeIcon: "󰅟"
+                name: "Weather"
+            }
+            ListElement {
+                icon: ""
+                activeIcon: ""
+                name: "Monitors"
+            }
+            ListElement {
+                icon: "󰲝"
+                activeIcon: "󰛳"
+                name: "Network"
+            }
+            // ListElement {
+            //     icon: "󰾰"
+            //     // activeIcon: ""
+            //     name: "Devices"
+            // }
+            ListElement {
+                icon: "󰅌"
+                activeIcon: "󰅇"
+                name: "Clipboard"
+            }
+            ListElement {
+                icon: "󰀻"
+                activeIcon: "󰵆"
+                name: "Applications"
             }
         }
+
+        onCurrentIndexChanged: function () {
+            const newIndex = buttonGroup.currentIndex;
+            root.activeMenuIndex = newIndex;
+            if (newIndex === -1) {
+                root.panelOpen = false;
+            } else {
+                if (!root.panelOpen) {
+                    root.panelOpen = true;
+                }
+            }
+            LeftMenuStatus.changeIndex(newIndex);
+        }
+    }
+
+    function closePanel() {
+        closePanelTimer.start();
+    }
+
+    Timer {
+        id: closePanelTimer
+        interval: 600
+        repeat: false
+        onTriggered: LeftMenuStatus.changeIndex(-1)
     }
 }

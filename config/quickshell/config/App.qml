@@ -76,6 +76,7 @@ Singleton {
         readonly property QtObject audio: QtObject {
             readonly property string hotWeather: root.assetsPath + "/audio/cold-weather.mp3"
             readonly property string coldWeather: root.assetsPath + "/audio/cold-weather.mp3"
+            readonly property string rain: root.assetsPath + "/audio/rain-notification.mp3"
             readonly property string prayerTime: root.assetsPath + "/audio/prayer-notification.ogg"
             readonly property string desktopLogin: root.assetsPath + "/audio/desktop-login.mp3"
             readonly property string desktopLogout: root.assetsPath + "/audio/desktop-logout.mp3"
@@ -94,14 +95,25 @@ Singleton {
 
     readonly property QtObject scripts: QtObject {
         readonly property QtObject python: QtObject {
-            // Files
+            // Monotoring
             readonly property string batteryInfo: root.pythonScriptsPath + "/battery_info.py"
             readonly property string devicesTemp: root.pythonScriptsPath + "/devices_temp.py"
             readonly property string topCpuUsage: root.pythonScriptsPath + "/top_cpu_usage.py"
             readonly property string topRamUsage: root.pythonScriptsPath + "/top_ram_usage.py"
+
+            // Wallpaper coloring
             readonly property string dynamicM3: root.pythonScriptsPath + "/m3/dynamic-m3.py"
+
+            // Depth effect
             readonly property string rembgOverylayWallpaper: root.pythonScriptsPath + "/create_depth_image_rembg.py"
             readonly property string opencvOverylayWallpaper: root.pythonScriptsPath + "/create_depth_image_opencv.py"
+            readonly property string removeUnusedCachedOverlayImages: root.pythonScriptsPath + "/overlay_cache_images_cleaner.py"
+
+            // WIFI
+            readonly property string listWifi: root.pythonScriptsPath + "/network/list_wifi.py"
+            readonly property string connectWifi: root.pythonScriptsPath + "/network/connect_wifi.py"
+            readonly property string dataUsage: root.pythonScriptsPath + "/network/data_usage.py"
+            readonly property string liveUsage: root.pythonScriptsPath + "/network/live_usage.py"
 
             // Commands
             readonly property var batteryInfoCommand: ["python", batteryInfo]
@@ -111,6 +123,12 @@ Singleton {
             readonly property var dynamicM3Command: ["python", dynamicM3]
             readonly property var rembgOverylayWallpaperCommand: ["python", rembgOverylayWallpaper]
             readonly property var opencvOverylayWallpaperCommand: ["python", opencvOverylayWallpaper]
+            readonly property var removeUnusedCachedOverlayImagesCommand: ["python", removeUnusedCachedOverlayImages]
+
+            readonly property var listWifiCommand: ["python", listWifi]
+            readonly property var liveUsageCommand: ["python", liveUsage]
+            readonly property var dataUsageCommand: ["python", dataUsage]
+            readonly property var connectWifiCommand: ["python", connectWifi]
         }
 
         readonly property QtObject bash: QtObject {
@@ -146,7 +164,7 @@ Singleton {
             console.warn(`Skipping empty command: ${description}`);
             return;
         }
-        // console.info(description + " -> " + commandArray.join(' '));
+        console.info(description + " -> " + commandArray.join(' '));
         Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 }

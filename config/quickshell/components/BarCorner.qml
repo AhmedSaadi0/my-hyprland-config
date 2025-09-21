@@ -5,7 +5,7 @@ Item {
     id: root
 
     property string position: "top-left"
-    // هذا اللون الآن هو لون الشكل نفسه، وليس لون الخلفية
+    // لون الشكل
 
     property color shapeColor: palette.window
     property real cornerRadius: 30
@@ -26,7 +26,7 @@ Item {
             // --- منطق الرسم الجديد باستخدام quadraticCurveTo ---
 
             if (root.position === "top-left") {
-                // وصفك: خط أعلى، خط أيسر، منحنى مقعر يربط النهايتين
+                // خط أعلى، خط أيسر، منحنى مقعر يربط النهايتين
                 ctx.moveTo(width, 0); // ابدأ من أعلى اليمين
                 ctx.lineTo(0, 0);     // خط إلى أعلى اليسار
                 ctx.lineTo(0, height);    // خط إلى أسفل اليسار
@@ -34,7 +34,7 @@ Item {
                 // باستخدام نقطة التحكم (0, 0) لسحبه للداخل
                 ctx.quadraticCurveTo(0, 0, width, 0);
             } else if (root.position === "top-right") {
-                // وصفك: خط أعلى، خط أيمن، منحنى مقعر
+                // خط أعلى، خط أيمن، منحنى مقعر
                 ctx.moveTo(0, 0);
                 ctx.lineTo(width, 0);
                 ctx.lineTo(width, height);

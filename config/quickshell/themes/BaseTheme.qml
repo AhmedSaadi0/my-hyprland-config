@@ -48,7 +48,7 @@ PersistentProperties {
     property color _leftMenuFgColorV2: Kirigami.Theme.textColor
     property color _leftMenuFgColorV3: Kirigami.Theme.highlightedTextColor
 
-    property color _subtleTextColor: Kirigami.Theme.textColor.alpha(0.8)
+    property color _subtleTextColor: Kirigami.Theme.textColor.alpha(0.6)
 
     // OSDs
     property color _volOsdBgColor: Kirigami.Theme.backgroundColor.lighter(1.5)
@@ -67,8 +67,8 @@ PersistentProperties {
     property int _elementRadius: root._baseRadius // Reference the source property
 
     property int _spacingSmall: 4
-    property int _spacingMedium: 6
-    property int _spacingLarge: 8
+    property int _spacingMedium: 8
+    property int _spacingLarge: 12
 
     // --------------------
     // ---- Typography ----
@@ -86,39 +86,69 @@ PersistentProperties {
     // ------------------------
     // -- System Integration --
     // ------------------------
-    property string _wallpaper: "gruvb_solarsys.png"
+    property bool _enableAccentColoring: false
     property string _qtThemeStyle: "Breeze"
-    property string _kvantumTheme: "KvGnome"
-    property string _gtkTheme: "Breeze"
-    property string _themeIcons: "breeze-dark"
-    property string _themeMode: "dark"
     property string _plasmaColorScheme: "MaterialYouDark"
+    property string _kvantumTheme: "KvGnome"
     property string _konsoleProfile: "MaterialYouAlt.profile"
 
-    property bool _enableAccentColoring: false
+    property string _gtkTheme: "Breeze"
+    property string _themeMode: "dark"
+
+    property string _themeIcons: "breeze-dark"
+
+    // -------------------------
+    // -- Wallpapers Settings --
+    // -------------------------
+    property string _wallpaper: "linux.png"
     property bool _enableDynamicColoring: false
     property bool _enableDynamicWallpapers: false
     property int _dynamicWallpapersInterval: 15 * 1000 * 60
     property string _dynamicWallpapersPath: ""
     property int _selectedWallpaperIndex: 0
 
-    // --------------------
-    // ----- Hyprland -----
-    // --------------------
+    // ===================================
+    // Hyprland Properties
+    // ===================================
+    // Decoration
     property int _hyprBorderWidth: 2
-    property string _hyprActiveBorder: 'rgba(FDBBC4ff) rgba(ff00ffff) 0deg'
-    property string _hyprInactiveBorder: 'rgba(59595900) 0deg'
-    property int _hyprRounding: root._baseRadius
-    property string _hyprDropShadow: 'no'
+    property string _hyprActiveBorder: 'rgba(FDEAB0ff) rgba(fd77e0ff) 45deg'
+    property string _hyprInactiveBorder: 'rgba(50505088)'
+    property int _hyprRounding: 16
+    property string _hyprDropShadow: 'no' // إعداداتك معطلة، لذا 'no' هو الافتراضي
 
-    // ------------------------
+    // Gaps & Layout
+    property int _hyprGapsIn: 5
+    property string _hyprGapsOut: "10, 10, 10, 52"
+    property string _hyprLayout: "dwindle"
+
+    // Animations
+    property bool _hyprAnimationsEnabled: true
+    property string _hyprBezier: "decel, 0.05, 0.7, 0.1, 1"
+    property string _hyprAnimWindows: "1, 5, decel, slidefade 18%"
+    property string _hyprAnimWorkspaces: "1, 3, md_standard, slidefade 8%"
+
+    // Visual Effects (Blur & Dim)
+    property bool _hyprBlurEnabled: true
+    property int _hyprBlurSize: 4
+    property int _hyprBlurPasses: 2
+    property bool _hyprDimInactive: true
+    property double _hyprDimStrength: 0.0
+
+    // Shadow Enhancements
+    property int _hyprShadowRange: 30
+    property point _hyprShadowOffset: Qt.point(0, 0) // لا يوجد إزاحة في إعداداتك
+    property color _hyprShadowColor: "#00000044"
+
+    // ----------------------------
     // --- Desktop Clock Widget ---
-    // ------------------------
+    // ----------------------------
     property bool _desktopClockEnabled: true
     property bool _desktopClockSahdowEnabled: false
     property color _desktopClockSahdowColor: "#40000000"
     property color _desktopClockColor: _primary
     property bool _desktopClockUseThemeColor: true
+    property bool _desktopClockUseAnimation: false
     property string _desktopClockLocal: "en_US"
     property string _desktopClockFormat: "hh:mm AP"
     property string _desktopClockFont: _bodyFont
@@ -142,13 +172,14 @@ PersistentProperties {
         // General
         property color primary: Qt.rgba(root._primary.r, root._primary.g, root._primary.b, root._alpha)
         property color secondary: Qt.rgba(root._secondary.r, root._secondary.g, root._secondary.b, root._alpha)
-        property color onPrimary: Qt.rgba(root._onPrimary.r, root._onPrimary.g, root._onPrimary.b, root._alpha)
+        // property color onPrimary: Qt.rgba(root._onPrimary.r, root._onPrimary.g, root._onPrimary.b, root._alpha)
+        property alias onPrimary: root._onPrimary
         // property color onPrimary: {
         //     color = Helper.getAccurteTextColor(root._primary);
         //     console.info(color);
         //     return color;
         // }
-        property color onSecondary: Qt.rgba(root._onSecondary.r, root._onSecondary.g, root._onSecondary.b, root._alpha)
+        property alias onSecondary: root._onSecondary
 
         // Top Bar
         property color topbarColor: Qt.rgba(root._topbarColor.r, root._topbarColor.g, root._topbarColor.b, root._alpha)
@@ -232,11 +263,35 @@ PersistentProperties {
 
     // --- Hyprland Configuration ---
     readonly property var hyprlandConfiguration: QtObject {
+        // --- Decoration ---
         property alias borderWidth: root._hyprBorderWidth
         property alias activeBorder: root._hyprActiveBorder
         property alias inactiveBorder: root._hyprInactiveBorder
         property alias rounding: root._hyprRounding
         property alias dropShadow: root._hyprDropShadow
+
+        // --- Gaps & Layout ---
+        property alias gapsIn: root._hyprGapsIn
+        property alias gapsOut: root._hyprGapsOut
+        property alias layout: root._hyprLayout
+
+        // --- Animations ---
+        property alias animationsEnabled: root._hyprAnimationsEnabled
+        property alias bezier: root._hyprBezier
+        property alias animWindows: root._hyprAnimWindows
+        property alias animWorkspaces: root._hyprAnimWorkspaces
+
+        // --- Visual Effects ---
+        property alias blurEnabled: root._hyprBlurEnabled
+        property alias blurSize: root._hyprBlurSize
+        property alias blurPasses: root._hyprBlurPasses
+        property alias dimInactive: root._hyprDimInactive
+        property alias dimStrength: root._hyprDimStrength
+
+        // --- Shadow Enhancements ---
+        property alias shadowRange: root._hyprShadowRange
+        property alias shadowOffset: root._hyprShadowOffset
+        property alias shadowColor: root._hyprShadowColor
     }
 
     // --- Desktop Clock Widget Configuration ---
@@ -246,6 +301,7 @@ PersistentProperties {
         property alias shadowColor: root._desktopClockSahdowColor
         property alias color: root._desktopClockColor
         property alias useThemeColor: root._desktopClockUseThemeColor
+        property alias enableAnimation: root._desktopClockUseAnimation
         property alias local: root._desktopClockLocal
         property alias format: root._desktopClockFormat
         property alias font: root._desktopClockFont

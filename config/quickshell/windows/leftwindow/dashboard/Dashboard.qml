@@ -6,42 +6,32 @@ import QtQuick.Layouts
 import "root:/themes"
 import "root:/components"
 
-ScrollView {
+ColumnLayout {
     id: dashboardScroller
 
     // width: parent.width
     height: parent.height
+    width: dashboardScroller.availableWidth
+    spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-    clip: true
-
-    // anchors.fill: parent
-    contentWidth: availableWidth
-
-    ScrollBar.vertical: StyledScrollBar {
-        interactive: false
+    Themes {
+        id: themes
+        Layout.fillWidth: true
     }
 
-    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+    PowerProfiles {
+        id: powerProfiles
+        Layout.fillWidth: true
+    }
 
-    ColumnLayout {
-        width: dashboardScroller.availableWidth
-        spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+    Item {
+        Layout.fillHeight: true
+    }
 
-        Themes {
-            id: themes
-            Layout.fillWidth: true
-        }
-
-        PowerProfiles {
-            id: powerProfiles
-            Layout.fillWidth: true
-        }
-
-        PowerOptions {
-            id: powerOptions
-            Layout.fillWidth: true
-            // Layout.topMargin: 10 // يمكن إضافة مسافة علوية لبعض الفصل
-            Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin - 10
-        }
+    PowerOptions {
+        id: powerOptions
+        Layout.fillWidth: true
+        // Layout.topMargin: 10 // يمكن إضافة مسافة علوية لبعض الفصل
+        Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin - 10
     }
 }

@@ -2,18 +2,29 @@
 
 - **Core UI**
   - [x] System Tray (Systray)
-  - [ ] Application Launcher
+  - [x] Application Launcher
+  - [x] Improve bars positioning and shadows
+  - [x] Improve edge corners
+  - [ ] Connection for `DesktopEntries` to listen to new installed apps
   - [ ] Scratchpads
+  - [ ] Game mode
+  - [ ] Bars Shadow Control
+  - [ ] Left Bar Width Control
 
 - **Menus**
   - [x] Left Menu Navigation
   - [x] Left Menu Animations
   - [ ] Clipboard Manager
   - [ ] Todo List
-  - [ ] Hyprland Control
-  - [ ] Quickshell Control (Dashboard حالياً)
-  - [ ] Keybindings Cheatsheet
-  - [ ] Launched Apps List
+
+- **Setting Window**
+  - [x] Create a setting Window
+  - [x] Wallpapers Settings
+  - [x] Colors Settings
+  - [x] Layout & Fonts Settings
+  - [x] Desktop Clock Settings
+  - [x] Hyprland Settings
+  - [x] Integration Settings
 
 - **Widgets**
   - [x] Clock Widget
@@ -29,6 +40,7 @@
 ## 🔔 الإشعارات & OSD (Notifications & OSD)
 
 - [x] Notifications
+- [ ] Improve notification osd to not block content on right side
 - [x] Notifications History Center
   - [x] Action buttons
   - [x] Race Condition Fix
@@ -47,7 +59,9 @@
 ## 🧰 إدارة النظام (System & Devices)
 
 - **Network**
-  - [ ] Network Manager Interface
+  - [x] Network Manager Interface/Scripts
+  - [x] Network Manager UI
+  - [x] Network Usage Card
   - [ ] VPN Status Indicator
   - [ ] Quick Wi-Fi / Airplane Toggle
 
@@ -96,6 +110,7 @@
 - [x] Dracula, Gruvbox, Catppuccin, Tokyo Night Themes
 - [x] GTK4 Theme Support
 - [ ] Halt Dynamic Wallpapers option
+- [ ] Configure Dynamic Coloring
 - [ ] Solarized, Rosé Pine, Oxocarbon Themes
 - [ ] Extend Color Schema (6 colors)
 

@@ -182,5 +182,7 @@ CircularProgress {
     Component.onDestruction: {
         updateTimer.stop();
         processId.running = false;
+        updateTimer.destroy();
+        processId.destroy();
     }
 }

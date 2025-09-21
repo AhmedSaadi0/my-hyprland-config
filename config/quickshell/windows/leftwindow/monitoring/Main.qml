@@ -4,6 +4,7 @@ import QtQuick
 
 import "root:/components"
 import "root:/themes"
+import "root:/config/EventNames.js" as Events
 import "root:/config"
 
 Rectangle {
@@ -31,6 +32,7 @@ Rectangle {
     ProcessTable {
         id: cpuTable
         running: true
+        // showRows: 20
         // command: ["python", ".config/quickshell/scripts/python/top_cpu_usage.py"]
         command: App.scripts.python.topCpuUsageCommand
         title: "Cpu Usage"
@@ -44,7 +46,9 @@ Rectangle {
     ProcessTable {
         id: ramTable
         interval: 1000 * 5
+        // interval: 300
         running: true
+        // showRows: 20
         // command: ["python", ".config/quickshell/scripts/python/top_ram_usage.py"]
         command: App.scripts.python.topRamUsageCommand
         title: "Mem Usage"
@@ -74,5 +78,31 @@ Rectangle {
             right: progresses.right
             topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         }
+    }
+
+    Component.onCompleted: {
+        EventBus.on(Events.OPEN_LEFTBAR, function () {
+            monotoringMenu.menuIsOpened();
+        });
+
+        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+            monotoringMenu.menuIsClosed();
+        });
+    }
+
+    function menuIsOpened() {
+        cpuTable.running = true;
+        ramTable.running = true;
+        tempTable.running = true;
+        batteryTable.running = true;
+        console.info("Start monotoring");
+    }
+
+    function menuIsClosed() {
+        cpuTable.running = false;
+        ramTable.running = false;
+        tempTable.running = false;
+        batteryTable.running = false;
+        console.info("Stop monotoring");
     }
 }
