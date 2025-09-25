@@ -21,7 +21,7 @@ Rectangle {
         fillMode: Image.PreserveAspectCrop
 
         anchors {
-            // topMargin: 2
+            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin /2
             top: parent.top
             horizontalCenter: parent.horizontalCenter
         }

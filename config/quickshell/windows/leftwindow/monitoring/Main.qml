@@ -95,7 +95,7 @@ Rectangle {
         ramTable.running = true;
         tempTable.running = true;
         batteryTable.running = true;
-        console.info("Start monotoring");
+        console.info("Start menu monotoring tables");
     }
 
     function menuIsClosed() {
@@ -103,6 +103,6 @@ Rectangle {
         ramTable.running = false;
         tempTable.running = false;
         batteryTable.running = false;
-        console.info("Stop monotoring");
+        console.info("Stop menu monotoring tables");
     }
 }

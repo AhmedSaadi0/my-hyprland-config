@@ -122,6 +122,7 @@
 - [x] Improve Menu Cards
 - [x] Improve Menus Navigation
 - [x] Improve Animations (Menu, Notifications, Navigation)
+- [ ] Control the way menu is opened (reserve space or like floating)
 
 ---
 

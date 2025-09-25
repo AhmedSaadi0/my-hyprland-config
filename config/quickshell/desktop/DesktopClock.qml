@@ -8,6 +8,7 @@ import QtQuick.Effects
 Item {
     id: root
 
+    // ... (كل الخصائص كما هي) ...
     property point position: Qt.point(0, 0)
     property size size: Qt.size(400, 200)
     property bool editMode: false
@@ -29,6 +30,10 @@ Item {
     width: size.width
     height: size.height
 
+    // [تغيير 1]: عندما يتغير حجم العنصر، نعيد تشغيل المؤقت
+    onWidthChanged: resizeDebounceTimer.restart()
+    onHeightChanged: resizeDebounceTimer.restart()
+
     Behavior on x {
         enabled: !root.editMode
         SpringAnimation {
@@ -44,34 +49,16 @@ Item {
         }
     }
 
-    // Behavior on width {
-    //     enabled: root.enableAnimation && !root.editMode
-    //     NumberAnimation {
-    //         id: widthAnim
-    //         duration: 500
-    //         easing.type: Easing.InOutQuad
-    //         // onStopped: timeText.updateFontSize()
-    //     }
-    // }
-    // Behavior on height {
-    //     enabled: root.enableAnimation && !root.editMode
-    //     NumberAnimation {
-    //         id: heightAnim
-    //         duration: 500
-    //         easing.type: Easing.InOutQuad
-    //         // onStopped: timeText.updateFontSize()
-    //     }
-    // }
-
     SystemClock {
         id: systemClock
     }
 
+    // [تغيير 2]: لم نعد نستخدم Component ديناميكي، بل ننشئ النص مباشرة
+    // هذا أفضل بكثير للأداء في حالتك
     Text {
         id: timeText
         anchors.fill: parent
         text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root.clockFormat)
-        visible: !root.pressed
 
         color: root.clockColor
         font.family: root.clockFont
@@ -79,16 +66,31 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.pointSize: 500
-        fontSizeMode: root.pressed ? Text.FixedSize : Text.Fit
+        fontSizeMode: Text.Fit
 
-        layer.enabled: root.shadowEnabled
+        // ملاحظة: قد يكون تعطيل التأثيرات أثناء تغيير الحجم مفيدًا أيضًا
+        layer.enabled: root.shadowEnabled && !root.pressed
         layer.effect: MultiEffect {
-            // source: timeText
             shadowEnabled: true
             shadowColor: root.shadowColor
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
+        }
+    }
+
+    // [تغيير 3]: مؤقت لتأخير عملية التحديث المكلفة
+    Timer {
+        id: resizeDebounceTimer
+        // انتظر 250 ميلي ثانية من التوقف قبل التحديث
+        interval: 250
+        repeat: false
+        onTriggered: {
+            console.log("Debounced resize finished. Forcing text re-layout.");
+            // هذه خدعة لإجبار العنصر على إعادة رسم نفسه بالكامل
+            // وإعادة حساب fontSizeMode
+            timeText.visible = false;
+            timeText.visible = true;
         }
     }
 
@@ -103,7 +105,7 @@ Item {
     MouseArea {
         id: dragArea
         anchors.fill: parent
-
+        // ... (كود السحب كما هو، لا حاجة للتغيير هنا) ...
         property point startDragPos
         property point startComponentPos
 
@@ -132,17 +134,11 @@ Item {
                 root.requestNewGeometry(newPos, root.size);
             }
         }
-
-        // onReleased: {
-        //     if (root.editMode) {
-        //         // عند الانتهاء من السحب، نرسل الإشارة "saveGeometry" إلى الأب
-        //         root.saveGeometry(Qt.point(root.x, root.y), root.size);
-        //     }
-        // }
     }
 
     Rectangle {
         id: resizeHandle
+        // ... (كود مقبض تغيير الحجم كما هو) ...
         visible: root.editMode
         width: 20
         height: 20
@@ -167,6 +163,7 @@ Item {
 
             onReleased: {
                 root.pressed = false;
+                // [تغيير 4]: لم نعد بحاجة لإعادة الإنشاء هنا
             }
 
             onPositionChanged: {
@@ -174,9 +171,7 @@ Item {
                     var currentPos = mapToItem(null, mouseX, mouseY);
                     var deltaX = currentPos.x - startMousePos.x;
                     var deltaY = currentPos.y - startMousePos.y;
-
                     var newSize = Qt.size(Math.max(100, startComponentSize.width + deltaX), Math.max(50, startComponentSize.height + deltaY));
-
                     root.requestNewGeometry(root.position, newSize);
                 }
             }

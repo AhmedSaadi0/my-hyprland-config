@@ -32,6 +32,6 @@ ColumnLayout {
         id: powerOptions
         Layout.fillWidth: true
         // Layout.topMargin: 10 // يمكن إضافة مسافة علوية لبعض الفصل
-        Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin - 10
+        Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2
     }
 }

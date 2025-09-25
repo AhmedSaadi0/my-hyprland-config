@@ -165,7 +165,11 @@ PanelWindow {
     }
 
     function closePanel() {
-        closePanelTimer.start();
+        if (closePanelTimer !== undefined) {
+            closePanelTimer.start();
+        } else {
+            LeftMenuStatus.changeIndex(-1);
+        }
     }
 
     Timer {
