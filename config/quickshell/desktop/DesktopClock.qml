@@ -8,7 +8,6 @@ import QtQuick.Effects
 Item {
     id: root
 
-    // ... (كل الخصائص كما هي) ...
     property point position: Qt.point(0, 0)
     property size size: Qt.size(400, 200)
     property bool editMode: false
@@ -30,7 +29,6 @@ Item {
     width: size.width
     height: size.height
 
-    // [تغيير 1]: عندما يتغير حجم العنصر، نعيد تشغيل المؤقت
     onWidthChanged: resizeDebounceTimer.restart()
     onHeightChanged: resizeDebounceTimer.restart()
 
@@ -53,8 +51,6 @@ Item {
         id: systemClock
     }
 
-    // [تغيير 2]: لم نعد نستخدم Component ديناميكي، بل ننشئ النص مباشرة
-    // هذا أفضل بكثير للأداء في حالتك
     Text {
         id: timeText
         anchors.fill: parent
@@ -68,7 +64,6 @@ Item {
         font.pointSize: 500
         fontSizeMode: Text.Fit
 
-        // ملاحظة: قد يكون تعطيل التأثيرات أثناء تغيير الحجم مفيدًا أيضًا
         layer.enabled: root.shadowEnabled && !root.pressed
         layer.effect: MultiEffect {
             shadowEnabled: true
@@ -79,16 +74,12 @@ Item {
         }
     }
 
-    // [تغيير 3]: مؤقت لتأخير عملية التحديث المكلفة
     Timer {
         id: resizeDebounceTimer
-        // انتظر 250 ميلي ثانية من التوقف قبل التحديث
         interval: 250
         repeat: false
         onTriggered: {
             console.log("Debounced resize finished. Forcing text re-layout.");
-            // هذه خدعة لإجبار العنصر على إعادة رسم نفسه بالكامل
-            // وإعادة حساب fontSizeMode
             timeText.visible = false;
             timeText.visible = true;
         }
@@ -105,7 +96,6 @@ Item {
     MouseArea {
         id: dragArea
         anchors.fill: parent
-        // ... (كود السحب كما هو، لا حاجة للتغيير هنا) ...
         property point startDragPos
         property point startComponentPos
 
@@ -138,7 +128,6 @@ Item {
 
     Rectangle {
         id: resizeHandle
-        // ... (كود مقبض تغيير الحجم كما هو) ...
         visible: root.editMode
         width: 20
         height: 20
@@ -163,7 +152,6 @@ Item {
 
             onReleased: {
                 root.pressed = false;
-                // [تغيير 4]: لم نعد بحاجة لإعادة الإنشاء هنا
             }
 
             onPositionChanged: {

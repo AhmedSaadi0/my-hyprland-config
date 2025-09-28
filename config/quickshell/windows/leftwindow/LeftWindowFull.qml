@@ -23,7 +23,7 @@ PanelWindow {
     visible: false
 
     // focusable: menus.currentIndex == 0 || menus.currentIndex == 6
-    focusable: menus.currentIndex == 0 || menus.currentIndex == 6 || menus.currentIndex == 4
+    focusable: menus.currentIndex == 6 || menus.currentIndex == 4
     exclusionMode: ExclusionMode.Ignore
     // exclusionMode: ExclusionMode.Auto
 
@@ -56,7 +56,6 @@ PanelWindow {
         implicitHeight: parent.height
 
         radius: ThemeManager.selectedTheme.dimensions.elementRadius * 1.3
-
         border.color: ThemeManager.selectedTheme.colors.primary
         border.width: 2
 
@@ -283,7 +282,6 @@ PanelWindow {
 
         // opacity: 1.0
         // scale: 0.98
-        x: -50
 
         // layer.enabled: true
         // layer.effect: Shadow {}

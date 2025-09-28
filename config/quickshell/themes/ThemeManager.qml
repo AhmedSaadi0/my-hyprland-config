@@ -364,6 +364,16 @@ Singleton {
         _dispatchCommand("Changing Wallpaper", Utils.Helper.changeWallpaper(path));
     }
 
+    function getCurrentWallpaper() {
+        const settings = selectedTheme.systemSettings;
+
+        let currentIndex = settings.selectedWallpaperIndex;
+        const dynamicWallpaper = wallpapersList[currentIndex];
+        const wallpaper = settings.enableDynamicWallpapers ? dynamicWallpaper : settings.wallpaper;
+
+        return wallpaper;
+    }
+
     function _setHyprlandConfigurations() {
         const cfg = root.selectedTheme.hyprlandConfiguration;
         console.info("Applying Hyprland configurations (individual command strategy)...");
