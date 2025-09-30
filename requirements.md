@@ -58,7 +58,6 @@ cp -r ~/.config/hypr/config/quickshell ~/.config/quickshell
 cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
 cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
 
-# نسخ اعدادت easyeffects
 sudo chmod +x ~/.config/hypr/scripts/*
 sudo chmod +x ~/.config/quickshell/scripts/*
 
@@ -78,10 +77,12 @@ cp -r ~/.config/hypr/config/.fonts/* ~/.fonts
 - Extract all icons in `~/.config/hypr/config/icons/` to icons folder -> `~/.local/share/icons`
 - Extract all themes in `~/.config/hypr/config/gtk-themes/` to themes folder
 
-### `.nibrasshell.json`
+### Project config file
+
+`~/.nibrasshell.json`
 
 ```bash
-nvim .nibrasshell.json
+nvim ~/.nibrasshell.json
 ```
 
 - must contain correct setup
