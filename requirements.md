@@ -50,6 +50,7 @@ pip install rembg[gpu] pillow psutil
 - ~/.config/quickshell/
 - ~/.config/easyeffects
 - ~/.config/fish/config.fish
+- ~/.nibrasshell.json
 
 ```bash
 # نسخ الملفات
