@@ -108,7 +108,7 @@ sudo dnf install plasma-desktop ark kate dolphin
 - نحتاج مكتبه `rembg` و `pillow` لانشاء الصور ذات تاثير العمق
 
 ```bash
-pip install rembg[gpu] pillow
+pip install rembg[gpu] pillow psutil
 ```
 
 #### استخرج جميع الثيمات في المجلد `config/gtk-themes/` الى `~/.themes`
@@ -312,7 +312,7 @@ sudo dnf install plasma-desktop ark kate dolphin
 - we need `rembg` and `pillow` to create the needed images to apply depth effect
 
 ```bash
-pip install rembg[gpu] pillow
+pip install rembg[gpu] pillow psutil
 ```
 
 #### Extract all themes in `config/gtk-themes/` to `~/.themes`
