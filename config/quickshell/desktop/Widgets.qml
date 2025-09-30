@@ -4,7 +4,6 @@ import Quickshell
 import "root:/themes" as Theme
 import "root:/components"
 
-// TODO: -> Improve this code
 PanelWindow {
     id: desktopRoot
 
@@ -22,53 +21,58 @@ PanelWindow {
 
     readonly property var clockSettings: Theme.ThemeManager.selectedTheme.desktopClock
 
-    readonly property point themeClockPosition: clockSettings.position
-    readonly property size themeClockSize: clockSettings.size
+    // Conditional properties - only valid when clock is enabled
+    readonly property point themeClockPosition: clockSettings?.enabled ? clockSettings.position : Qt.point(0, 0)
+    readonly property size themeClockSize: clockSettings?.enabled ? clockSettings.size : Qt.size(0, 0)
 
-    property point currentClockPosition
-    property size currentClockSize
+    property point currentClockPosition: themeClockPosition
+    property size currentClockSize: themeClockSize
 
-    Component.onCompleted: {
-        currentClockPosition = themeClockPosition;
-        currentClockSize = themeClockSize;
-    }
+    // Dynamic clock creation/destruction based on enabled property
+    Loader {
+        id: clockLoader
+        active: clockSettings?.enabled || false
+        sourceComponent: clockComponent
 
-    Connections {
-        target: Theme.ThemeManager
-        function onSelectedThemeUpdated() {
-            console.log("Theme updated. Resetting clock position and size.");
-            currentClockPosition = themeClockPosition;
-            currentClockSize = themeClockSize;
+        onLoaded: {
+            // Initialize position and size when clock is created
+            desktopRoot.currentClockPosition = desktopRoot.themeClockPosition;
+            desktopRoot.currentClockSize = desktopRoot.themeClockSize;
         }
     }
 
-    DesktopClock {
-        id: theClock
+    Component {
+        id: clockComponent
 
-        position: desktopRoot.currentClockPosition
-        size: desktopRoot.currentClockSize
-        editMode: false
+        DesktopClock {
+            id: theClock
 
-        clockColor: clockSettings.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary : clockSettings.color
-        clockFont: clockSettings.font
-        clockFormat: clockSettings.format
-        clockLocale: clockSettings.local
-        enableAnimation: clockSettings.enableAnimation
-        shadowEnabled: clockSettings.shadowEnabled
-        shadowColor: clockSettings.shadowColor
+            position: desktopRoot.currentClockPosition
+            size: desktopRoot.currentClockSize
+            editMode: false
 
-        onRequestNewGeometry: (newPosition, newSize) => {
-            currentClockPosition = newPosition;
-            currentClockSize = newSize;
-        }
+            // Safe property access with fallbacks
+            clockColor: clockSettings?.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary : (clockSettings?.color || "white")
+            clockFont: clockSettings?.font || "Arial"
+            clockFormat: clockSettings?.format || "hh:mm:ss"
+            clockLocale: clockSettings?.local || "en_US"
+            enableAnimation: clockSettings?.enableAnimation || false
+            shadowEnabled: clockSettings?.shadowEnabled || false
+            shadowColor: clockSettings?.shadowColor || "black"
 
-        onEditModeChanged: {
-            if (!editMode) {
-                console.log("Edit mode finished. Saving geometry.");
-                Theme.ThemeManager.updateAndApplyTheme({
-                    "_desktopClockPosition": currentClockPosition,
-                    "_desktopClockSize": currentClockSize
-                }, true);
+            onRequestNewGeometry: (newPosition, newSize) => {
+                desktopRoot.currentClockPosition = newPosition;
+                desktopRoot.currentClockSize = newSize;
+            }
+
+            onEditModeChanged: {
+                if (!editMode) {
+                    console.log("Edit mode finished. Saving geometry.");
+                    Theme.ThemeManager.updateAndApplyTheme({
+                        "_desktopClockPosition": desktopRoot.currentClockPosition,
+                        "_desktopClockSize": desktopRoot.currentClockSize
+                    }, true);
+                }
             }
         }
     }
@@ -78,35 +82,37 @@ PanelWindow {
         z: 2
         opacity: 1
 
-        visible: clockSettings.depthEffectEnabled
-        enabled: clockSettings.depthEffectEnabled
-        source: clockSettings.depthEffectEnabled ? clockSettings.depthOverlayPath : ""
+        // Only show depth effect if clock is enabled AND depth effect is enabled
+        visible: (clockSettings?.enabled && clockSettings?.depthEffectEnabled) || false
+        enabled: visible
+        source: visible ? (clockSettings?.depthOverlayPath || "") : ""
 
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
-
-        // onOpacityChanged: {
-        //     if (opacity === 0 && clockSettings.depthEffectEnabled) {
-        //         console.log("Opacity is 0. Updating image source and making it visible again.");
-        //
-        //         // 1. تحديث المصدر (إذا كان مختلفًا)
-        //         if (source !== clockSettings.depthOverlayPath) {
-        //             source = clockSettings.depthOverlayPath;
-        //         }
-        //
-        //         // 2. إعادة إظهار الصورة فورًا
-        //         opacity = 1;
-        //     }
-        // }
     }
 
     MouseArea {
         anchors.fill: parent
-        z: -1 // تأكد من أنه خلف الساعة
+        z: -1
+
         onPressed: {
-            // إذا كانت الساعة في وضع التعديل، قم بإلغائه
-            if (theClock.editMode) {
-                theClock.editMode = false;
+            // Only handle click if clock is loaded and in edit mode
+            if (clockLoader.item?.editMode) {
+                clockLoader.item.editMode = false;
+            }
+        }
+    }
+
+    Connections {
+        target: Theme.ThemeManager
+
+        function onSelectedThemeUpdated() {
+            console.log("Theme updated. Resetting clock position and size.");
+
+            // Only update if clock is enabled
+            if (clockSettings?.enabled) {
+                desktopRoot.currentClockPosition = desktopRoot.themeClockPosition;
+                desktopRoot.currentClockSize = desktopRoot.themeClockSize;
             }
         }
     }
