@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import json
+
 # --- Import necessary libraries ---
 import os
 import shutil
 import subprocess
 import sys
 from datetime import datetime
-import json
 
 # --- Define colors for terminal output ---
 GREEN = "\033[0;32m"
@@ -150,11 +151,15 @@ def install_dependencies(distro, install_optional=False):
             "sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
         )
         run_command_verbose("sudo dnf copr enable -y solopasha/hyprland")
-        run_command_verbose("sudo dnf copr enable -y errornointernet/quickshell")
+        run_command_verbose(
+            "sudo dnf copr enable -y errornointernet/quickshell"
+        )
         run_command_verbose(
             "sudo dnf copr enable -y luisbocanegra/kde-material-you-colors"
         )
-        run_command_verbose("sudo dnf install -y hyprland quickshell kde-material-you-colors")
+        run_command_verbose(
+            "sudo dnf install -y hyprland quickshell kde-material-you-colors"
+        )
 
         required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
@@ -187,7 +192,8 @@ def backup_configs():
     if os.path.exists(fish_config_path):
         os.makedirs(os.path.join(backup_dir, "fish"), exist_ok=True)
         shutil.copy(
-            fish_config_path, os.path.join(backup_dir, "fish", "config.back.fish")
+            fish_config_path,
+            os.path.join(backup_dir, "fish", "config.back.fish"),
         )
     print(f"{GREEN}{msg('backup_created')} {backup_dir}{NC}")
 
@@ -234,11 +240,6 @@ def set_plasma_font():
                 f"{RED}Warning: Could not execute a font command. Is 'kwrite-tools' installed?{NC}"
             )
             break
-    # Apply the changes immediately
-    try:
-        run_command("dbus-send --dest=org.kde.KWin --reply-timeout=1000 /KWin reconfigure")
-    except SystemExit:
-        print(f"{RED}Warning: Could not reload KWin config. Please log out and back in to see font changes.{NC}")
 
 
 # Interactive function to create the user's JSON config file.
@@ -259,14 +260,17 @@ def create_user_config_file():
     # Auto-detect and select network interface
     try:
         interfaces = [i for i in os.listdir("/sys/class/net") if i != "lo"]
-        if not interfaces: raise IndexError
+        if not interfaces:
+            raise IndexError
         print(f"{YELLOW}{msg('prompt_network_select')}{NC}")
         for idx, iface in enumerate(interfaces):
             print(f"  {idx + 1}. {iface}")
         choice = int(input("> ")) - 1
         config["networkMonitor"] = interfaces[choice]
     except (IndexError, ValueError, FileNotFoundError):
-        print(f"{RED}Could not detect network interface. Please edit ~/.nibrasshell.json manually.{NC}")
+        print(
+            f"{RED}Could not detect network interface. Please edit ~/.nibrasshell.json manually.{NC}"
+        )
         config["networkMonitor"] = "wlp0s20f3"  # Default fallback
 
     config["darkM3WallpaperPath"] = input(msg("prompt_dark_wallpapers"))
@@ -282,7 +286,23 @@ def create_user_config_file():
     config["changePlasmaColor"] = True
     config["networkTimeout"] = 300
     config["networkInterval"] = 1000
-    config["scripts"] = { "dynamicM3Py": None, "get_wallpapers": None, "createThumbnail": None, "gtk_theme": None, "systemInfo": None, "deviceLocal": None, "cpu": None, "ram": None, "deviceTemp": None, "hardwareInfo": None, "cpuUsage": None, "ramUsage": None, "cpuCores": None, "devicesTemp2": None, "playerctl": None }
+    config["scripts"] = {
+        "dynamicM3Py": None,
+        "get_wallpapers": None,
+        "createThumbnail": None,
+        "gtk_theme": None,
+        "systemInfo": None,
+        "deviceLocal": None,
+        "cpu": None,
+        "ram": None,
+        "deviceTemp": None,
+        "hardwareInfo": None,
+        "cpuUsage": None,
+        "ramUsage": None,
+        "cpuCores": None,
+        "devicesTemp2": None,
+        "playerctl": None,
+    }
 
     # Write the config to a JSON file
     file_path = os.path.join(home_dir, ".nibrasshell.json")
@@ -304,28 +324,59 @@ def install_nibrasshell():
 
     # Copy main config folders
     shutil.copytree(script_dir, hypr_dest_dir, dirs_exist_ok=True)
-    shutil.copytree(os.path.join(hypr_dest_dir, "config", "quickshell"), os.path.join(config_dir, "quickshell"), dirs_exist_ok=True)
-    shutil.copytree(os.path.join(hypr_dest_dir, "config", "easyeffects"), os.path.join(config_dir, "easyeffects"), dirs_exist_ok=True)
+    shutil.copytree(
+        os.path.join(hypr_dest_dir, "config", "quickshell"),
+        os.path.join(config_dir, "quickshell"),
+        dirs_exist_ok=True,
+    )
+    shutil.copytree(
+        os.path.join(hypr_dest_dir, "config", "easyeffects"),
+        os.path.join(config_dir, "easyeffects"),
+        dirs_exist_ok=True,
+    )
     os.makedirs(os.path.join(config_dir, "fish"), exist_ok=True)
-    shutil.copy(os.path.join(hypr_dest_dir, "config", "config.fish"), os.path.join(config_dir, "fish", "config.fish"))
+    shutil.copy(
+        os.path.join(hypr_dest_dir, "config", "config.fish"),
+        os.path.join(config_dir, "fish", "config.fish"),
+    )
 
     # Copy and extract themes, icons, and fonts
     print(YELLOW + "Setting up themes, icons, and fonts..." + NC)
     base_config_src = os.path.join(hypr_dest_dir, "config")
     fonts_dest = os.path.join(home_dir, ".fonts")
     os.makedirs(fonts_dest, exist_ok=True)
-    shutil.copytree(os.path.join(base_config_src, ".fonts"), fonts_dest, dirs_exist_ok=True)
-    extract_archives(os.path.join(base_config_src, "gtk-themes"), os.path.join(home_dir, ".themes"))
-    extract_archives(os.path.join(base_config_src, "icons"), os.path.join(local_share_dir, "icons"))
+    shutil.copytree(
+        os.path.join(base_config_src, ".fonts"), fonts_dest, dirs_exist_ok=True
+    )
+    extract_archives(
+        os.path.join(base_config_src, "gtk-themes"),
+        os.path.join(home_dir, ".themes"),
+    )
+    extract_archives(
+        os.path.join(base_config_src, "icons"),
+        os.path.join(local_share_dir, "icons"),
+    )
     konsole_dest = os.path.join(local_share_dir, "konsole")
     os.makedirs(konsole_dest, exist_ok=True)
-    shutil.copytree(os.path.join(base_config_src, "konsole"), konsole_dest, dirs_exist_ok=True)
+    shutil.copytree(
+        os.path.join(base_config_src, "konsole"),
+        konsole_dest,
+        dirs_exist_ok=True,
+    )
     colors_dest = os.path.join(local_share_dir, "color-schemes")
     os.makedirs(colors_dest, exist_ok=True)
-    shutil.copytree(os.path.join(base_config_src, "plasma-colors"), colors_dest, dirs_exist_ok=True)
+    shutil.copytree(
+        os.path.join(base_config_src, "plasma-colors"),
+        colors_dest,
+        dirs_exist_ok=True,
+    )
     kvantum_dest = os.path.join(config_dir, "Kvantum")
     os.makedirs(kvantum_dest, exist_ok=True)
-    shutil.copytree(os.path.join(base_config_src, "kvantum-themes"), kvantum_dest, dirs_exist_ok=True)
+    shutil.copytree(
+        os.path.join(base_config_src, "kvantum-themes"),
+        kvantum_dest,
+        dirs_exist_ok=True,
+    )
 
     # Apply system fonts
     set_plasma_font()
@@ -362,14 +413,20 @@ def uninstall_nibrasshell():
             backup_base_dir = os.path.join(config_dir, "nibrasshell_backups")
             if os.path.exists(backup_base_dir) and os.listdir(backup_base_dir):
                 all_backups = sorted(os.listdir(backup_base_dir), reverse=True)
-                latest_backup_dir = os.path.join(backup_base_dir, all_backups[0])
-                print(f"{YELLOW}{msg('restoring_backup')} {latest_backup_dir}{NC}")
+                latest_backup_dir = os.path.join(
+                    backup_base_dir, all_backups[0]
+                )
+                print(
+                    f"{YELLOW}{msg('restoring_backup')} {latest_backup_dir}{NC}"
+                )
 
                 for item in os.listdir(latest_backup_dir):
                     src_path = os.path.join(latest_backup_dir, item)
                     dest_path = os.path.join(config_dir, item)
                     if os.path.isdir(src_path):
-                        shutil.copytree(src_path, dest_path, dirs_exist_ok=True)
+                        shutil.copytree(
+                            src_path, dest_path, dirs_exist_ok=True
+                        )
             else:
                 print(f"{RED}{msg('no_backup_found')}{NC}")
         print(f"{GREEN}{msg('uninstall_complete')}{NC}")
@@ -378,8 +435,12 @@ def uninstall_nibrasshell():
 # Function to prevent the script from being run as root.
 def check_for_root():
     if os.geteuid() == 0:
-        print(f"{RED}Error: Do not run this script with sudo or as the root user.{NC}")
-        print(f"{YELLOW}Please run it as your normal user: python3 install.py{NC}")
+        print(
+            f"{RED}Error: Do not run this script with sudo or as the root user.{NC}"
+        )
+        print(
+            f"{YELLOW}Please run it as your normal user: python3 install.py{NC}"
+        )
         sys.exit(1)
 
 
