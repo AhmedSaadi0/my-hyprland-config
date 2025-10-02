@@ -509,39 +509,25 @@ nvim .nibrasshell.json
 
 #### Icons and GTK Themes
 
-<a href="https://www.pling.com/p/2037657/" title="BeautySolar">BeautySolar Icons</a>
+<a href="https://www.pling.com/p/1327720/" title="Gruvbox icon theme">Gruvbox icon theme</a>
+
+<a href="https://www.pling.com/p/2110189/" title="Vivid-Dark-Icons">Vivid-Dark-Icons</a>
+
+<a href="https://www.pling.com/p/1279924/" title="Tela-icon-theme">Tela-icon-theme</a>
+
+<a href="https://www.pling.com/p/1937741/" title="Zafiro Nord Dark Blue">Zafiro Nord Dark Blue</a>
+
+<a href="https://www.pling.com/p/2014092/" title="Zafiro Nord Light Blue">Zafiro Nord Light Blue</a>
+
+<a href="https://www.pling.com/p/2259441/" title="Zafiro Dracula">Zafiro Dracula</a>
 
 <a href="https://www.pling.com/p/2090548/" title="Shades of purple Kvantum">Shades of purple Kvantum</a>
 
 <a href="https://www.pling.com/p/2074105/" title="Shades of purple GTK">Shades of purple GTK</a>
 
-<a href="https://www.pling.com/p/2110189/" title="Vivid-Dark-Icons">Vivid-Dark-Icons</a>
-
-<a href="https://www.pling.com/p/1326889/" title="Kimi">Kimi GTK Theme</a>
-
-<a href="https://www.pling.com/p/1956870/" title="Zafiro-Nord-Dark-Black">Zafiro-Nord-Dark-Black Icons</a>
-
-<a href="https://www.pling.com/p/1248852/" title="Cabinet">Cabinet GTK Theme</a>
-
-<a href="https://www.pling.com/p/1256209/" title="Kora">Kora Icons</a>
-
-<a href="https://www.pling.com/p/1148695/" title="La Capitaine">La Capitaine Icons</a>
-
 <a href="https://www.pling.com/p/1681315/" title="TokyoNight">TokyoNight GTK Theme</a>
 
-<a href="https://www.pling.com/p/1436570/" title="Infinity-Dark-Icons">Infinity-Dark-Icons</a>
-
 <a href="https://www.pling.com/p/1687249/" title="Dracula">Dracula GTK Theme</a>
-
-<a href="https://www.pling.com/p/2078427/" title="Gradient-Dark-Icons">Gradient-Dark-Icons</a>
-
-<a href="https://www.pling.com/p/1877058/" title="Rowaita icons">Rowaita icons</a>
-
-<a href="https://www.pling.com/p/1891521/" title="Jasper-gtk-theme">Jasper-gtk-theme</a>
-
-<a href="https://www.pling.com/p/1658156/" title="Victory-gtk-theme">Victory-gtk-theme</a>
-
-<a href="https://store.kde.org/p/2106379" title="Windows11 icon theme">Windows11 icon theme</a>
 
 #### PNG Icons
 
