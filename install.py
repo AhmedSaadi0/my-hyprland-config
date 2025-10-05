@@ -182,7 +182,7 @@ def install_dependencies(distro, install_optional=False):
         run_command_verbose(
             "sudo xbps-install -S"
         )
-        required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs"
+        required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz"
         # discord not packaged for Void Linux
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop kvantum firefox"
         command = f"sudo xbps-install -y  {required_pkgs}"
