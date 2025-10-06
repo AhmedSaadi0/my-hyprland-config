@@ -124,7 +124,7 @@ Item {
                         anchors.centerIn: parent
                         property int oldCount: -1
 
-                        onTextChanged: {
+                        onTextChanged: function () {
                             if (oldCount !== -1 && oldCount !== text) {
                                 textAnimation.restart();
                             }

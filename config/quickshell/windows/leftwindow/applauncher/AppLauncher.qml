@@ -19,13 +19,15 @@ ColumnLayout {
 
     function gainFocus() {
         forceActiveFocus();
-        searchField.forceActiveFocus();
+        focusTimer.start();
+    // searchField.forceActiveFocus();
     }
 
-    Keys.onPressed: {
+    Keys.onPressed: event => {
         if (event.text && !searchField.activeFocus) {
             searchField.append(event.text);
-            searchField.forceActiveFocus();
+            // searchField.forceActiveFocus();
+            focusTimer.start();
             event.accepted = true;
         }
     }
@@ -73,6 +75,12 @@ ColumnLayout {
         onTriggered: {
             searchField.text = "";
         }
+    }
+
+    Timer {
+        id: focusTimer
+        interval: 10
+        onTriggered: searchField.forceActiveFocus()
     }
 
     ScriptModel {

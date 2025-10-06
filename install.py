@@ -106,7 +106,7 @@ MESSAGES = {
         "exit": "5. Ukončit",
         "choose_option": "Vyberte možnost: ",
         "distro_check_fail": "Chyba: Tento skript podporuje pouze Fedoru, Void a Arch Linux.",
-        "installing_deps": "Instalace závislostí..." ,
+        "installing_deps": "Instalace závislostí...",
         "backing_up": "Zálohování existujících konfigurací...",
         "backup_created": "Záloha vytvořena v:",
         "installing_nibrasshell": "Kopírování a nastavení souborů NibrasShell...",
@@ -214,16 +214,20 @@ def install_dependencies(distro, install_optional=False):
         command = f"yay -S {required_pkgs}"
     if distro == "void":
         # ... Missing kde-material-you-colors package
-        print(YELLOW + "Adding Void extra repository with hyprland (https://github.com/Encoded14/void-extra)" + NC)
+        print(
+            YELLOW
+            + "Adding Void extra repository with hyprland (https://github.com/Encoded14/void-extra)"
+            + NC
+        )
         run_command_verbose(
             "echo repository=https://raw.githubusercontent.com/Encoded14/void-extra/repository-x86_64-glibc | sudo tee /etc/xbps.d/20-void-extra.conf"
         )
-        run_command_verbose(
-            "sudo xbps-install -S"
-        )
+        run_command_verbose("sudo xbps-install -S")
         required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz swww jq"
         # discord not packaged for Void Linux
-        optional_pkgs = "strawberry easyeffects blueman telegram-desktop kvantum firefox"
+        optional_pkgs = (
+            "strawberry easyeffects blueman telegram-desktop kvantum firefox"
+        )
         command = f"sudo xbps-install -y  {required_pkgs}"
         if install_optional:
             command += f" {optional_pkgs}"
@@ -451,6 +455,9 @@ def install_nibrasshell():
 
     # Prompt user for personal settings
     create_user_config_file()
+
+    print(YELLOW + "Installing python needed packages using pip")
+    run_command("pip install rembg[gpu] pillow psutil")
 
     print(f"{GREEN}{msg('install_complete')}{NC}")
     print(f"{YELLOW}{msg('reboot_prompt')}{NC}")

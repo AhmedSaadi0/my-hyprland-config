@@ -173,7 +173,7 @@ Singleton {
             onStreamFinished: {
                 const output = this.text;
                 if (output && output.trim() !== "") {
-                    parseWeatherData(output);
+                    root.parseWeatherData(output);
                 } else {
                     isLoading = false;
                     fetchFailed("Received empty data from the server.");

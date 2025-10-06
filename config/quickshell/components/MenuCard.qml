@@ -109,7 +109,7 @@ Pane {
                 MouseArea {
                     anchors.fill: iconElement
                     cursorShape: root.iconCursorShape
-                    onClicked: {
+                    onClicked: function (mouse) {
                         root.iconClicked(mouse);
                     }
                 }
@@ -125,8 +125,8 @@ Pane {
 
             Layout.leftMargin: root.cardLeftPadding
             Layout.rightMargin: root.cardRightPadding
+            Layout.preferredHeight: 1
 
-            height: 1
             color: Qt.rgba(root.textColor.r, root.textColor.g, root.textColor.b, 0.2)
         }
 

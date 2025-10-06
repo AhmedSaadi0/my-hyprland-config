@@ -52,7 +52,7 @@ PanelWindow {
             editMode: false
 
             // Safe property access with fallbacks
-            clockColor: clockSettings?.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary : (clockSettings?.color || "white")
+            clockColor: clockSettings?.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary.alpha(0.7) : (clockSettings?.color || "white")
             clockFont: clockSettings?.font || "Arial"
             clockFormat: clockSettings?.format || "hh:mm:ss"
             clockLocale: clockSettings?.local || "en_US"

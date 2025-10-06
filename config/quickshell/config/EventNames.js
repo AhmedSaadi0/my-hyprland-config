@@ -8,3 +8,5 @@ var LEFTBAR_IS_OPEN = "leftbarIsOpen";
 var LEFTBAR_IS_CLOSED = "leftbarIsClosed";
 
 var LEFTBAR_INDEX_CHANGED = "leftbarIsIndexChanged";
+
+var OPEN_CHEATSHEET = "openCheatsheet";

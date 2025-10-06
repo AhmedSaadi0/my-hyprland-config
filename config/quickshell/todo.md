@@ -10,6 +10,8 @@
   - [ ] Game mode
   - [ ] Bars Shadow Control
   - [ ] Left Bar Width Control
+  - [ ] Remove `LeftMenuStatus` and Use `EventBus`
+  - [x] Cheatsheet menu
 
 - **Menus**
   - [x] Left Menu Navigation
