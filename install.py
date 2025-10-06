@@ -27,7 +27,7 @@ MESSAGES = {
         "create_config": "4. Create/Edit User Config",
         "exit": "5. Exit",
         "choose_option": "Choose an option: ",
-        "distro_check_fail": "Error: This script only supports Fedora and Arch Linux.",
+        "distro_check_fail": "Error: This script only supports Fedora, Void and Arch Linux.",
         "installing_deps": "Installing dependencies...",
         "backing_up": "Backing up existing configurations...",
         "backup_created": "Backup created at:",
@@ -171,7 +171,7 @@ def run_command_verbose(command):
         sys.exit(1)
 
 
-# Function to detect the user's Linux distribution (Fedora or Arch).
+# Function to detect the user's Linux distribution (Fedora, Void or Arch).
 def detect_distro():
     if os.path.exists("/etc/os-release"):
         with open("/etc/os-release") as f:
@@ -212,6 +212,19 @@ def install_dependencies(distro, install_optional=False):
         required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
         command = f"yay -S {required_pkgs}"
+    if distro == "void":
+        # ... Missing kde-material-you-colors package
+        print(YELLOW + "Adding Void extra repository with hyprland (https://github.com/Encoded14/void-extra)" + NC)
+        run_command_verbose(
+            "echo repository=https://raw.githubusercontent.com/Encoded14/void-extra/repository-x86_64-glibc | sudo tee /etc/xbps.d/20-void-extra.conf"
+        )
+        run_command_verbose(
+            "sudo xbps-install -S"
+        )
+        required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz swww jq"
+        # discord not packaged for Void Linux
+        optional_pkgs = "strawberry easyeffects blueman telegram-desktop kvantum firefox"
+        command = f"sudo xbps-install -y  {required_pkgs}"
         if install_optional:
             command += f" {optional_pkgs}"
         print(YELLOW + "Installing main packages..." + NC)
@@ -495,7 +508,7 @@ def check_for_root():
 # Function to display the dependency installation sub-menu.
 def show_dependency_menu():
     distro = detect_distro()
-    if distro not in ["arch", "fedora"]:
+    if distro not in ["arch", "fedora", "void"]:
         print(f"{RED}{msg('distro_check_fail')}{NC}")
         return
 
