@@ -161,14 +161,23 @@ def install_dependencies(distro, install_optional=False):
             "sudo dnf install -y hyprland quickshell kde-material-you-colors"
         )
 
-        required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs"
+        required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs swww jq"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
         command = f"sudo dnf install -y {required_pkgs}"
         if install_optional:
             command += f" {optional_pkgs}"
         print(YELLOW + "Installing main packages..." + NC)
         run_command_verbose(command)
-    # ... You can add Arch Linux commands here if needed
+    if distro == "arch":
+        print(YELLOW + "Starting Arch installer")
+        required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww"
+        optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
+        command = f"yay -S {required_pkgs}"
+        if install_optional:
+            command += f" {optional_pkgs}"
+        print(YELLOW + "Installing main packages..." + NC)
+        run_command_verbose(command)
+
     print(f"{GREEN}Dependencies installed successfully.{NC}")
 
 
