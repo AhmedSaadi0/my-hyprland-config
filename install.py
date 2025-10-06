@@ -16,7 +16,7 @@ YELLOW = "\033[1;33m"
 RED = "\033[0;31m"
 NC = "\033[0m"  # No Color
 
-# --- Dictionary for all text in both languages ---
+# --- Dictionary for all text in languages ---
 MESSAGES = {
     "en": {
         "choose_lang": "Choose your language:",
@@ -95,6 +95,45 @@ MESSAGES = {
         "prompt_country": "أدخل اسم دولتك: ",
         "prompt_use_prayer": "هل تريد تفعيل ودجت مواقيت الصلاة؟ (ن/ل): ",
         "config_saved": "تم حفظ ملف الإعدادات في ~/.nibrasshell.json",
+    },
+    "cs": {
+        "choose_lang": "Vyberte si jazyk:",
+        "main_menu_title": "Instalační skript NibrasShell",
+        "install_deps_menu": "1. Nainstalovat závislosti",
+        "install_local": "2. Nainstalovat NibrasShell",
+        "uninstall": "3. Odinstalovat NibrasShell",
+        "create_config": "4. Vytvořit/upravit konfiguraci uživatele",
+        "exit": "5. Ukončit",
+        "choose_option": "Vyberte možnost: ",
+        "distro_check_fail": "Chyba: Tento skript podporuje pouze Fedoru, Void a Arch Linux.",
+        "installing_deps": "Instalace závislostí..." ,
+        "backing_up": "Zálohování existujících konfigurací...",
+        "backup_created": "Záloha vytvořena v:",
+        "installing_nibrasshell": "Kopírování a nastavení souborů NibrasShell...",
+        "install_complete": "Nastavení NibrasShell dokončeno.",
+        "reboot_prompt": "Doporučujeme restartovat systém.",
+        "uninstall_prompt": "Opravdu chcete odinstalovat NibrasShell? (y/n) ",
+        "uninstalling": "Odinstalování NibrasShell...",
+        "restore_prompt": "Chcete obnovit poslední zálohu? (y/n) ",
+        "restoring_backup": "Obnovení zálohy z:",
+        "uninstall_complete": "NibrasShell byl odinstalován.",
+        "no_backup_found": "Nebyly nalezeny žádné zálohy k obnovení.",
+        "invalid_option": "Neplatná volba, zkuste to znovu.",
+        "deps_menu_title": "Nabídka instalace závislostí",
+        "install_required_only": "1. Nainstalovat pouze požadované závislosti",
+        "install_all_deps": "2. Nainstalujte všechny (požadované + volitelné) závislosti",
+        "config_creation_title": "--- Konfigurace uživatele ---",
+        "config_prompt": "Toto vás provede vytvořením souboru ~/.nibrasshell.json.",
+        "prompt_username": "Zadejte své jméno (pro uvítací zprávu): ",
+        "prompt_subtitle": "Zadejte krátký podtitul (volitelné): ",
+        "prompt_profile_pic": "Zadejte úplnou cestu k vaší profilové fotografii: ",
+        "prompt_network_select": "Vyberte své primární síťové rozhraní:",
+        "prompt_dark_wallpapers": "Zadejte cestu k adresáři s tmavými tapetami: ",
+        "prompt_light_wallpapers": "Zadejte cestu k adresáři světlých tapet: ",
+        "prompt_city": "Zadejte své město pro počasí/časy modliteb: ",
+        "prompt_country": "Zadejte svou zemi: ",
+        "prompt_use_prayer": "Povolit widget modlitebních časů? (y/n): ",
+        "config_saved": "Konfigurační soubor uložen do ~/.nibrasshell.json",
     },
 }
 
@@ -479,12 +518,15 @@ def show_dependency_menu():
 def main():
     check_for_root()
     global LANG
-    print(f"{GREEN}Choose your language / اختر لغتك:{NC}")
+    print(f"{GREEN}Choose your language / اختر لغتك / Vyberte jazyk:{NC}")
     print("1. English")
     print("2. العربية")
+    print("3. Česky")
     lang_choice = input("> ")
     if lang_choice == "2":
         LANG = "ar"
+    if lang_choice == "3":
+        LANG = "cs"
 
     while True:
         print("\n" + "=" * 45)
