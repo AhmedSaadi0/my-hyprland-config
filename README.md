@@ -17,6 +17,19 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 
 يُفضل استخدام هذا الإعداد مع تطبيقات KDE للحصول على أفضل تجربة. إذا اخترت استخدام تطبيقات أخرى، فلا بأس بذلك، ولكن ستحتاج إلى ضبط الإعدادات يدوياً إذا لم يكن لديها ثيم مشابه لبقية التطبيقات.
 
+## التثبيت
+
+### الطريقة التلقائية (موصى به)
+
+بعد استنساخ المستودع، قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات `.nibrasshell.json`:
+
+```bash
+python install.py
+```
+
+<details>
+<summary><strong>التثبيت اليدوي (اضغط للفتح)</strong></summary>
+
 ### برامج ضرورية
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
@@ -55,19 +68,6 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 - discord
 - kvantum
 - firefox
-
-## التثبيت
-
-### الطريقة التلقائية (موصى به)
-
-بعد استنساخ المستودع، قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات `.nibrasshell.json`:
-
-```bash
-python install.py
-```
-
-<details>
-<summary><strong>التثبيت اليدوي (اضغط للفتح)</strong></summary>
 
 ### تثبيت البرامج لمستخدمي Arch:
 
@@ -242,6 +242,21 @@ nvim .nibrasshell.json
 
 It is recommended to use this setup with KDE applications for the best experience. If you choose to use other applications, that is fine, but you will need to theme them manually if they do not have a theme similar to the rest of the applications.
 
+## Installing
+
+### Automatic Method (Recommended)
+
+After cloning the repository, run the installation script. It will handle everything, including the creation of the `.nibrasshell.json` config file:
+
+```bash
+python install.py
+```
+
+<details>
+<summary><strong>Manual Installation (Click to expand)</strong></summary>
+
+### Required dependencies:
+
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
 - [Quickshell](https://quickshell.outfoxxed.me/docs/guide/install-setup/)
 - network-manager-applet
@@ -277,21 +292,6 @@ It is recommended to use this setup with KDE applications for the best experienc
 - discord
 - kvantum
 - firefox
-
-## Installing
-
-### Automatic Method (Recommended)
-
-After cloning the repository, run the installation script. It will handle everything, including the creation of the `.nibrasshell.json` config file:
-
-```bash
-python install.py
-```
-
-<details>
-<summary><strong>Manual Installation (Click to expand)</strong></summary>
-
-### Arch Users:
 
 ### Arch Users:
 
