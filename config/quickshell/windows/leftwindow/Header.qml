@@ -1,5 +1,6 @@
 import QtQuick
 import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 // import org.kde.kirigami as Kirigami
 
 import "root:/themes"
@@ -62,6 +63,7 @@ Rectangle {
             leftMargin: 8
             rightMargin: 8
         }
+
         // layer.enabled: true
         // layer.effect: OpacityMask {
         //     // The mask source needs to be opaque where the content is visible

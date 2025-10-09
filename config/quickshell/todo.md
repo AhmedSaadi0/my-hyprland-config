@@ -6,7 +6,6 @@
   - [x] Improve bars positioning and shadows
   - [x] Improve edge corners
   - [ ] Connection for `DesktopEntries` to listen to new installed apps
-  - [ ] Scratchpads
   - [ ] Game mode
   - [ ] Bars Shadow Control
   - [ ] Left Bar Width Control

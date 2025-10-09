@@ -73,11 +73,11 @@ PanelWindow {
         case 64:
             return "Super";
         case 65:
-            return "Super + Ctrl";
-        case 68:
-            return "Super + Alt";
-        case 72:
             return "Super + Shift";
+        case 68:
+            return "Super + Ctrl";
+        case 72:
+            return "Super + Alt";
         case 9:
             return "Ctrl + Alt";
         default:
@@ -110,7 +110,7 @@ PanelWindow {
     property var categorizedShortcuts: {
         var categories = {};
         // Show all bindings
-        var filtered = hyprBinds //.filter(bind => bind.has_description);
+        var filtered = hyprBinds; //.filter(bind => bind.has_description);
 
         filtered.forEach(function (bind) {
             if (!categories[bind.modmask]) {

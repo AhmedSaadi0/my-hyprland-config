@@ -152,6 +152,7 @@ Item {
 
             onReleased: {
                 root.pressed = false;
+                // [تغيير 4]: لم نعد بحاجة لإعادة الإنشاء هنا
             }
 
             onPositionChanged: {
