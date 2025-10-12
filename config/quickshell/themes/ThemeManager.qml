@@ -467,6 +467,7 @@ Singleton {
     }
 
     function _changeGtk4Theme(settings) {
+        _dispatchCommand("GTK Color Schema", Utils.Helper.changeGtkColorSchemeTheme(settings.themeMode));
         _dispatchCommand("GTK 4 Theme", Utils.Helper.removeOldGtk4Theme());
         _dispatchCommand("GTK 4 Theme", Utils.Helper.changeGtk4Theme(settings.gtkTheme));
     }

@@ -102,6 +102,11 @@ Singleton {
         return ['gsettings', 'set', 'org.gnome.desktop.interface', 'gtk-theme', themeName];
     }
 
+    function changeGtkColorSchemeTheme(themeName) {
+        // This command sets the theme for both GTK3 and GTK4 in most modern environments.
+        return ['gsettings', 'set', 'org.gnome.desktop.interface', 'color-scheme', `prefer-${themeName}`];
+    }
+
     function removeOldGtk4Theme() {
         return ['find', '-P', '~/.config/gtk-4.0/', '-mindepth', '1', '!', '-name', '"settings.ini"', '-delete'];
     }
