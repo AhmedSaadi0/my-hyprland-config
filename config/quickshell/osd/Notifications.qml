@@ -13,7 +13,8 @@ PanelWindow {
     id: root
 
     implicitWidth: 370
-    implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    // implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    height: popupContainer.contentHeight
 
     color: "transparent"
     visible: popupModel.count > 0
@@ -33,7 +34,7 @@ PanelWindow {
     }
 
     anchors {
-        bottom: true
+        // bottom: true
         right: true
         top: true
     }

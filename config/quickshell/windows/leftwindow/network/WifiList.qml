@@ -24,6 +24,7 @@ ColumnLayout {
     // Process to handle connect/disconnect/forget actions
     Process {
         id: wifiActionProcess
+        property bool closeLeftbar: false
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
@@ -32,6 +33,10 @@ ColumnLayout {
                         console.log("Wifi Action Success:", response.message);
                         listView.currentIndex = -1;
                         root.expandedBssid = "";
+
+                        if (wifiActionProcess.closeLeftbar) {
+                            EventBus.emit(Events.CLOSE_LEFTBAR);
+                        }
 
                         root.forceScan = true;
                         wifiScannerProcess.scan();
@@ -53,8 +58,9 @@ ColumnLayout {
             }
         }
 
-        function startAction(fullCommand) {
+        function startAction(fullCommand, closeLeftbar = false) {
             root.loadingBssid = root.expandedBssid;
+            this.closeLeftbar = closeLeftbar;
             this.command = fullCommand;
             this.running = true;
         }
@@ -490,7 +496,7 @@ ColumnLayout {
             command: "connect",
             password: password
         });
-        wifiActionProcess.startAction(command);
+        wifiActionProcess.startAction(command, true);
     }
 
     function disconnectFromWifi(ssid) {

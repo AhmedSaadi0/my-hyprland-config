@@ -1,6 +1,6 @@
 import QtQuick
 import Qt5Compat.GraphicalEffects
-import QtQuick.Effects
+import QtQuick.Effects //  مهم جداً في Qt 6
 // import org.kde.kirigami as Kirigami
 
 import "root:/themes"
