@@ -66,7 +66,11 @@ PanelWindow {
         }
 
         EventBus.on(Events.CLOSE_LEFTBAR, function () {
-            closePanel();
+            try {
+                closePanel();
+            } catch (error) {
+                LeftMenuStatus.changeIndex(-1);
+            }
         });
     }
 
@@ -168,12 +172,12 @@ PanelWindow {
     //     id: bottomButtonGroup
     //     theme: ThemeManager.selectedTheme
     //     implicitWidth: 30
-    //     implicitHeight: 100 
+    //     implicitHeight: 100
     //     anchors.left: parent.left
-    //     anchors.bottom: parent.bottom 
+    //     anchors.bottom: parent.bottom
     //     anchors.leftMargin: 5
     //     anchors.rightMargin: 5
-    //     // anchors.bottomMargin: 20 
+    //     // anchors.bottomMargin: 20
     //     useHand: true
     //
     //     model: ListModel {
