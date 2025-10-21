@@ -58,6 +58,14 @@ Singleton {
         return command;
     }
 
+    // TODO: -> Check this later
+    function changePlasmaFont({
+        font,
+        type = "font"
+    }) {
+        return ['kwriteconfig6', '--file', 'kdeglobals', '--group', 'General', '--key', type, '"JF Flat,11,-1,5,50,0,0,0,0,0"', font];
+    }
+
     /**
      * @function changePlasmaIcons
      * @description Generates a command to apply an icon theme.
@@ -92,6 +100,11 @@ Singleton {
     function changeGtkTheme(themeName) {
         // This command sets the theme for both GTK3 and GTK4 in most modern environments.
         return ['gsettings', 'set', 'org.gnome.desktop.interface', 'gtk-theme', themeName];
+    }
+
+    function changeGtkColorSchemeTheme(themeName) {
+        // This command sets the theme for both GTK3 and GTK4 in most modern environments.
+        return ['gsettings', 'set', 'org.gnome.desktop.interface', 'color-scheme', `prefer-${themeName}`];
     }
 
     function removeOldGtk4Theme() {

@@ -45,7 +45,8 @@ BaseTheme {
     _plasmaColorScheme: "NibrasCatppuccinDark"
     _konsoleProfile: "CatppuccinDark.profile"
 
-    _themeIcons: "Catppuccin-Latte"
+    // _themeIcons: "Catppuccin-Latte"
+    _themeIcons: "Vivid-Dark-Icons"
     // _kvantumTheme: "Tellgo"
     _gtkTheme: "Catppuccin-Mocha-Standard-Blue-Dark"
 

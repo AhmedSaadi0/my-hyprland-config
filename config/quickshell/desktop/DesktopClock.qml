@@ -29,6 +29,9 @@ Item {
     width: size.width
     height: size.height
 
+    onWidthChanged: resizeDebounceTimer.restart()
+    onHeightChanged: resizeDebounceTimer.restart()
+
     Behavior on x {
         enabled: !root.editMode
         SpringAnimation {
@@ -44,25 +47,6 @@ Item {
         }
     }
 
-    // Behavior on width {
-    //     enabled: root.enableAnimation && !root.editMode
-    //     NumberAnimation {
-    //         id: widthAnim
-    //         duration: 500
-    //         easing.type: Easing.InOutQuad
-    //         // onStopped: timeText.updateFontSize()
-    //     }
-    // }
-    // Behavior on height {
-    //     enabled: root.enableAnimation && !root.editMode
-    //     NumberAnimation {
-    //         id: heightAnim
-    //         duration: 500
-    //         easing.type: Easing.InOutQuad
-    //         // onStopped: timeText.updateFontSize()
-    //     }
-    // }
-
     SystemClock {
         id: systemClock
     }
@@ -71,7 +55,6 @@ Item {
         id: timeText
         anchors.fill: parent
         text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root.clockFormat)
-        visible: !root.pressed
 
         color: root.clockColor
         font.family: root.clockFont
@@ -79,16 +62,26 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.pointSize: 500
-        fontSizeMode: root.pressed ? Text.FixedSize : Text.Fit
+        fontSizeMode: Text.Fit
 
-        layer.enabled: root.shadowEnabled
+        layer.enabled: root.shadowEnabled && !root.pressed
         layer.effect: MultiEffect {
-            // source: timeText
             shadowEnabled: true
             shadowColor: root.shadowColor
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
+        }
+    }
+
+    Timer {
+        id: resizeDebounceTimer
+        interval: 250
+        repeat: false
+        onTriggered: {
+            console.log("Debounced resize finished. Forcing text re-layout.");
+            timeText.visible = false;
+            timeText.visible = true;
         }
     }
 
@@ -103,7 +96,6 @@ Item {
     MouseArea {
         id: dragArea
         anchors.fill: parent
-
         property point startDragPos
         property point startComponentPos
 
@@ -132,13 +124,6 @@ Item {
                 root.requestNewGeometry(newPos, root.size);
             }
         }
-
-        // onReleased: {
-        //     if (root.editMode) {
-        //         // عند الانتهاء من السحب، نرسل الإشارة "saveGeometry" إلى الأب
-        //         root.saveGeometry(Qt.point(root.x, root.y), root.size);
-        //     }
-        // }
     }
 
     Rectangle {
@@ -167,6 +152,7 @@ Item {
 
             onReleased: {
                 root.pressed = false;
+                // [تغيير 4]: لم نعد بحاجة لإعادة الإنشاء هنا
             }
 
             onPositionChanged: {
@@ -174,9 +160,7 @@ Item {
                     var currentPos = mapToItem(null, mouseX, mouseY);
                     var deltaX = currentPos.x - startMousePos.x;
                     var deltaY = currentPos.y - startMousePos.y;
-
                     var newSize = Qt.size(Math.max(100, startComponentSize.width + deltaX), Math.max(50, startComponentSize.height + deltaY));
-
                     root.requestNewGeometry(root.position, newSize);
                 }
             }

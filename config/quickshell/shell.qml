@@ -16,6 +16,8 @@ import "root:/themes"
 import "root:/shadows"
 import "root:/windows/settings"
 
+import "root:/windows/cheatsheet" as Cheatsheet
+
 ShellRoot {
     id: shellRoot
 
@@ -211,6 +213,10 @@ ShellRoot {
 
             LeftWindowFull {
                 id: leftPanelFull
+            }
+
+            Cheatsheet.Main {
+                id: cheatsheetPanel
             }
 
             IpcHandler {

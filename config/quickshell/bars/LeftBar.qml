@@ -66,7 +66,11 @@ PanelWindow {
         }
 
         EventBus.on(Events.CLOSE_LEFTBAR, function () {
-            root.closePanel();
+            try {
+                closePanel();
+            } catch (error) {
+                LeftMenuStatus.changeIndex(-1);
+            }
         });
     }
 
@@ -88,7 +92,7 @@ PanelWindow {
         id: buttonGroup
         theme: ThemeManager.selectedTheme
         implicitWidth: 30
-        implicitHeight: 300
+        implicitHeight: 900
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: 20
@@ -164,8 +168,41 @@ PanelWindow {
         }
     }
 
+    // ButtonGroup {
+    //     id: bottomButtonGroup
+    //     theme: ThemeManager.selectedTheme
+    //     implicitWidth: 30
+    //     implicitHeight: 100
+    //     anchors.left: parent.left
+    //     anchors.bottom: parent.bottom
+    //     anchors.leftMargin: 5
+    //     anchors.rightMargin: 5
+    //     // anchors.bottomMargin: 20
+    //     useHand: true
+    //
+    //     model: ListModel {
+    //     }
+    //
+    //     onCurrentIndexChanged: {
+    //         const newIndex = bottomButtonGroup.currentIndex ;
+    //         root.activeMenuIndex = newIndex;
+    //         if (newIndex === -1) {
+    //             root.panelOpen = false;
+    //         } else {
+    //             if (!root.panelOpen) {
+    //                 root.panelOpen = true;
+    //             }
+    //         }
+    //         LeftMenuStatus.changeIndex(newIndex + 7);
+    //     }
+    // }
+
     function closePanel() {
-        closePanelTimer.start();
+        if (closePanelTimer !== undefined) {
+            closePanelTimer.start();
+        } else {
+            LeftMenuStatus.changeIndex(-1);
+        }
     }
 
     Timer {

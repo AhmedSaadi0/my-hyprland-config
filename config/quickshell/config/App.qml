@@ -8,7 +8,7 @@ import Quickshell.Hyprland
 Singleton {
     id: root
 
-    readonly property string mainPath: Quickshell.shellRoot
+    readonly property string mainPath: Quickshell.shellDir
     readonly property var homePath: mainPath.split(".")[0]
     readonly property var configFilePath: homePath + ".nibrasshell.json"
     readonly property string assetsPath: mainPath + "/assets"

@@ -6,10 +6,11 @@
   - [x] Improve bars positioning and shadows
   - [x] Improve edge corners
   - [ ] Connection for `DesktopEntries` to listen to new installed apps
-  - [ ] Scratchpads
   - [ ] Game mode
   - [ ] Bars Shadow Control
   - [ ] Left Bar Width Control
+  - [ ] Remove `LeftMenuStatus` and Use `EventBus`
+  - [x] Cheatsheet menu
 
 - **Menus**
   - [x] Left Menu Navigation
@@ -122,6 +123,7 @@
 - [x] Improve Menu Cards
 - [x] Improve Menus Navigation
 - [x] Improve Animations (Menu, Notifications, Navigation)
+- [ ] Control the way menu is opened (reserve space or like floating)
 
 ---
 

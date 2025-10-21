@@ -17,6 +17,19 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 
 يُفضل استخدام هذا الإعداد مع تطبيقات KDE للحصول على أفضل تجربة. إذا اخترت استخدام تطبيقات أخرى، فلا بأس بذلك، ولكن ستحتاج إلى ضبط الإعدادات يدوياً إذا لم يكن لديها ثيم مشابه لبقية التطبيقات.
 
+## التثبيت
+
+### الطريقة التلقائية (موصى به)
+
+بعد استنساخ المستودع، قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات `.nibrasshell.json`:
+
+```bash
+python install.py
+```
+
+<details>
+<summary><strong>التثبيت اليدوي (اضغط للفتح)</strong></summary>
+
 ### برامج ضرورية
 
 - [Hyprland](https://wiki.hyprland.org/Getting-Started/Installation/)
@@ -55,8 +68,6 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 - discord
 - kvantum
 - firefox
-
-## التثبيت
 
 ### تثبيت البرامج لمستخدمي Arch:
 
@@ -108,7 +119,7 @@ sudo dnf install plasma-desktop ark kate dolphin
 - نحتاج مكتبه `rembg` و `pillow` لانشاء الصور ذات تاثير العمق
 
 ```bash
-pip install rembg[gpu] pillow
+pip install rembg[gpu] pillow psutil
 ```
 
 #### استخرج جميع الثيمات في المجلد `config/gtk-themes/` الى `~/.themes`
@@ -213,6 +224,14 @@ nvim .nibrasshell.json
 
 </details>
 
+## اختصارات لوحة المفاتيح
+
+| الاختصار    | الوظيفة                                           |
+| :---------- | :------------------------------------------------ |
+| `Super + /` | فتح قائمة الـ Cheatsheet وستجد فيها كل الاختصارات |
+
+</details>
+
 <details>
 
 <summary>English</summary>
@@ -222,6 +241,19 @@ nvim .nibrasshell.json
 ### Note
 
 It is recommended to use this setup with KDE applications for the best experience. If you choose to use other applications, that is fine, but you will need to theme them manually if they do not have a theme similar to the rest of the applications.
+
+## Installing
+
+### Automatic Method (Recommended)
+
+After cloning the repository, run the installation script. It will handle everything, including the creation of the `.nibrasshell.json` config file:
+
+```bash
+python install.py
+```
+
+<details>
+<summary><strong>Manual Installation (Click to expand)</strong></summary>
 
 ### Required dependencies:
 
@@ -260,8 +292,6 @@ It is recommended to use this setup with KDE applications for the best experienc
 - discord
 - kvantum
 - firefox
-
-## Installing:
 
 ### Arch Users:
 
@@ -312,7 +342,7 @@ sudo dnf install plasma-desktop ark kate dolphin
 - we need `rembg` and `pillow` to create the needed images to apply depth effect
 
 ```bash
-pip install rembg[gpu] pillow
+pip install rembg[gpu] pillow psutil
 ```
 
 #### Extract all themes in `config/gtk-themes/` to `~/.themes`
@@ -417,140 +447,60 @@ nvim .nibrasshell.json
 
 </details>
 
-# First look - لقطة اوليه
+## Keybindings
 
-#### Catppuccin dark
+| Keybinding  | Action                                                          |
+| :---------- | :-------------------------------------------------------------- |
+| `Super + /` | Open Cheatsheet menu and there you will see all the keybindings |
 
-<p align='center'>
-	<img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png'/>
-</p>
+</details>
 
-<hr />
+# Screenshots - لقطات شاشة
 
-#### M3
+|                                                          M3 Light                                                          |                                                         M3 Dark                                                          |
+| :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
+| <img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-light.png'/> | <img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-dark.png'/> |
 
-<p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-light.png'/>
-</p>
+|                                                  Nord Light                                                   |                                                  Nord Dark                                                   |
+| :-----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
+| <img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-light.png'/> | <img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-dark.png'/> |
 
-<p align='center'>
-	<img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-dark.png'/>
-</p>
+|                                                    Gruvbox Light                                                    |                                                    Gruvbox Dark                                                    |
+| :-----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+| <img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-light.png'/> | <img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-dark.png'/> |
 
-<hr />
+|                                                        Catppuccin Dark                                                        |                                                   TokyoNight Dark                                                   |
+| :---------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png'/> | <img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png'/> |
 
-#### Nord
-
-<p align='center'>
-	<img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-light.png'/>
-</p>
-
-<p align='center'>
-	<img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-dark.png'/>
-</p>
-
-<hr />
-
-#### Dracula Light
-
-<p align='center'>
-	<img alt='Dracula' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/dracula-light.png'/>
-</p>
-
-<hr />
-
-#### Gruvbox
-
-<p align='center'>
-	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-light.png'/>
-</p>
-
-<p align='center'>
-	<img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-dark.png'/>
-</p>
-
-<hr />
-
-#### TokyoNight Dark
-
-<p align='center'>
-	<img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png'/>
-</p>
-
-<hr />
-
-#### Settings
+### Settings - الإعدادات
 
 [Watch a video](https://youtu.be/w7taDzj4_Y8)
 
 <p align='center'>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings1.png'/>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings1.png' width="48%"/>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings2.png' width="48%"/>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings3.png' width="48%"/>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings4.png' width="48%"/>
 </p>
 
-<p align='center'>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings2.png'/>
-</p>
+---
 
-<p align='center'>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings3.png'/>
-</p>
+# Credits - الحقوق
 
-<p align='center'>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings4.png'/>
-</p>
+### Icons and GTK Themes
 
-<p align='center'>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings5.png'/>
-</p>
+- [Gruvbox icon theme](https://www.pling.com/p/1327720/)
+- [Vivid-Dark-Icons](https://www.pling.com/p/2110189/)
+- [Tela-icon-theme](https://www.pling.com/p/1279924/)
+- [Zafiro Nord Icons](https://www.pling.com/p/1937741/)
+- [Dracula GTK Theme](https://www.pling.com/p/1687249/)
+- [TokyoNight GTK Theme](https://www.pling.com/p/1681315/)
+- [Shades of purple GTK/Kvantum](https://www.pling.com/p/2074105/)
 
-<hr />
+### PNG Icons from Flaticon
 
-### Credits
-
-#### Icons and GTK Themes
-
-<a href="https://www.pling.com/p/2037657/" title="BeautySolar">BeautySolar Icons</a>
-
-<a href="https://www.pling.com/p/2090548/" title="Shades of purple Kvantum">Shades of purple Kvantum</a>
-
-<a href="https://www.pling.com/p/2074105/" title="Shades of purple GTK">Shades of purple GTK</a>
-
-<a href="https://www.pling.com/p/2110189/" title="Vivid-Dark-Icons">Vivid-Dark-Icons</a>
-
-<a href="https://www.pling.com/p/1326889/" title="Kimi">Kimi GTK Theme</a>
-
-<a href="https://www.pling.com/p/1956870/" title="Zafiro-Nord-Dark-Black">Zafiro-Nord-Dark-Black Icons</a>
-
-<a href="https://www.pling.com/p/1248852/" title="Cabinet">Cabinet GTK Theme</a>
-
-<a href="https://www.pling.com/p/1256209/" title="Kora">Kora Icons</a>
-
-<a href="https://www.pling.com/p/1148695/" title="La Capitaine">La Capitaine Icons</a>
-
-<a href="https://www.pling.com/p/1681315/" title="TokyoNight">TokyoNight GTK Theme</a>
-
-<a href="https://www.pling.com/p/1436570/" title="Infinity-Dark-Icons">Infinity-Dark-Icons</a>
-
-<a href="https://www.pling.com/p/1687249/" title="Dracula">Dracula GTK Theme</a>
-
-<a href="https://www.pling.com/p/2078427/" title="Gradient-Dark-Icons">Gradient-Dark-Icons</a>
-
-<a href="https://www.pling.com/p/1877058/" title="Rowaita icons">Rowaita icons</a>
-
-<a href="https://www.pling.com/p/1891521/" title="Jasper-gtk-theme">Jasper-gtk-theme</a>
-
-<a href="https://www.pling.com/p/1658156/" title="Victory-gtk-theme">Victory-gtk-theme</a>
-
-<a href="https://store.kde.org/p/2106379" title="Windows11 icon theme">Windows11 icon theme</a>
-
-#### PNG Icons
-
-<a href="https://www.flaticon.com/free-icons/foggy" title="foggy icons">Foggy icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/high-voltage" title="high voltage icons">High voltage icons created by Muhammad Atif - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/wind" title="wind icons">Wind icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/rain" title="rain icons">Rain icons created by Freepik - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/notification" title="notification icons">Notification icons created by Freepik - Flaticon</a>
+- Foggy icons by [Freepik](https://www.flaticon.com/free-icons/foggy)
+- High voltage icons by [Muhammad Atif](https://www.flaticon.com/free-icons/high-voltage)
+- Wind and Rain icons by [Freepik](https://www.flaticon.com/free-icons/wind)
+- Notification icons by [Freepik](https://www.flaticon.com/free-icons/notification)

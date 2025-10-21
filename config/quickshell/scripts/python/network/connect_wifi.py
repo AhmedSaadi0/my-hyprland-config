@@ -72,10 +72,10 @@ def manage_connection(action, interface, profile_name=None, password=None):
                     "message": f"تم الاتصال بنجاح بشبكة {profile_name}.",
                 }
             else:  # إذا فشل الاتصال المباشر، نستخدم الطريقة الموثوقة
-                print(
-                    "الاتصال المباشر فشل، سيتم استخدام الطريقة الموثوقة (Add/Up)...",
-                    file=sys.stderr,
-                )
+                # print(
+                #     "الاتصال المباشر فشل، سيتم استخدام الطريقة الموثوقة (Add/Up)...",
+                #     file=sys.stderr,
+                # )
 
                 # التحقق مما إذا كان ملف التعريف موجودًا بالفعل
                 check_proc = subprocess.run(

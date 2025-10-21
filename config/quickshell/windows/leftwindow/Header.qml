@@ -1,5 +1,6 @@
 import QtQuick
 import Qt5Compat.GraphicalEffects
+import QtQuick.Effects //  مهم جداً في Qt 6
 // import org.kde.kirigami as Kirigami
 
 import "root:/themes"
@@ -12,16 +13,18 @@ Rectangle {
     height: 270
     color: "transparent"
 
+    property string wallpaper: ThemeManager.getCurrentWallpaper() !== undefined ? ThemeManager.getCurrentWallpaper() : ""
+
     Image {
         id: backgroundImage
-        source: App.darkM3WallpaperPath + "/thumbnail.jpg"
+        source: wallpaper
         width: ThemeManager.selectedTheme.dimensions.menuWidth - 14
         height: 200
         clip: true
         fillMode: Image.PreserveAspectCrop
 
         anchors {
-            // topMargin: 2
+            topMargin: (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2) - 1
             top: parent.top
             horizontalCenter: parent.horizontalCenter
         }
@@ -60,6 +63,7 @@ Rectangle {
             leftMargin: 8
             rightMargin: 8
         }
+
         // layer.enabled: true
         // layer.effect: OpacityMask {
         //     // The mask source needs to be opaque where the content is visible
@@ -125,10 +129,10 @@ Rectangle {
             horizontalCenter: profileDetail.horizontalCenter
             topMargin: -(profileImage.width / 2)
         }
-        layer.enabled: true
-        layer.effect: Shadow {
-            alpha: 0.4
-        }
+        // layer.enabled: true
+        // layer.effect: Shadow {
+        //     alpha: 0.4
+        // }
     }
 
     Text {
@@ -143,11 +147,11 @@ Rectangle {
             horizontalCenter: profileImage.horizontalCenter
         }
         smooth: true
-        layer.enabled: true
-        layer.effect:
+        // layer.enabled: true
+        // layer.effect:
+        // Shadow {}
         // alpha: 0.5
         // radius: 3
-        Shadow {}
     }
 
     Text {
@@ -159,9 +163,9 @@ Rectangle {
             horizontalCenter: profileImage.horizontalCenter
         }
         smooth: true
-        layer.enabled: true
-        layer.effect:
+        // layer.enabled: true
+        // layer.effect:
+        // Shadow {}
         // alpha: 0.5
-        Shadow {}
     }
 }
