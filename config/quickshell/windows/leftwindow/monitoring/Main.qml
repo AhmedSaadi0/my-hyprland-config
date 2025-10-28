@@ -91,18 +91,22 @@ Rectangle {
     }
 
     function menuIsOpened() {
-        cpuTable.running = true;
-        ramTable.running = true;
-        tempTable.running = true;
-        batteryTable.running = true;
-        console.info("Start menu monotoring tables");
+        if (!cpuTable.running) {
+            cpuTable.running = true;
+            ramTable.running = true;
+            tempTable.running = true;
+            batteryTable.running = true;
+            console.info("Start menu monotoring tables");
+        }
     }
 
     function menuIsClosed() {
-        cpuTable.running = false;
-        ramTable.running = false;
-        tempTable.running = false;
-        batteryTable.running = false;
-        console.info("Stop menu monotoring tables");
+        if (cpuTable.running) {
+            cpuTable.running = false;
+            ramTable.running = false;
+            tempTable.running = false;
+            batteryTable.running = false;
+            console.info("Stop menu monotoring tables");
+        }
     }
 }

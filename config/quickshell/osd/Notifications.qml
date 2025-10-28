@@ -12,12 +12,13 @@ import "root:/themes"
 PanelWindow {
     id: root
 
-    implicitWidth: 370
+    implicitWidth: 400
     // implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
-    height: popupContainer.contentHeight
+    implicitHeight: popupContainer.contentHeight
 
     color: "transparent"
     visible: popupModel.count > 0
+    // opacity: visible ? 1.0 : 0.0
 
     exclusionMode: ExclusionMode.Ignore
 
@@ -25,6 +26,20 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     // WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
     // mask: Region {}
+
+    Behavior on implicitHeight {
+        NumberAnimation {
+            duration: 400
+            easing.type: Easing.OutCubic
+        }
+    }
+
+    Behavior on implicitWidth {
+        NumberAnimation {
+            duration: 400
+            easing.type: Easing.OutCubic
+        }
+    }
 
     margins {
         bottom: 30
@@ -96,6 +111,21 @@ PanelWindow {
         layer.enabled: true
         layer.effect: Shadow {}
 
+        SequentialAnimation {
+            id: progressAnimation
+            running: true
+            loops: 1
+
+            NumberAnimation {
+                target: notificationItem
+                property: "progress"
+                from: 0
+                to: 1
+                duration: hideTimer.interval
+                easing.type: Easing.Linear
+            }
+        }
+
         ParallelAnimation {
             id: parallelShowAnimation
 
@@ -148,8 +178,11 @@ PanelWindow {
             onHoveredChanged: {
                 if (hovered) {
                     hideTimer.stop();
+                    notificationItem.progress = 0
+                    progressAnimation.stop();
                 } else {
                     hideTimer.restart();
+                    progressAnimation.start();
                 }
             }
         }
@@ -157,6 +190,7 @@ PanelWindow {
         NotificationItem {
             id: notificationItem
             width: 350
+            visibleProgress: true
             notification: toastRoot.notification
             onDismissClicked: hide()
             theme: ThemeManager.selectedTheme
@@ -171,13 +205,15 @@ PanelWindow {
 
     ListView {
         id: popupContainer
+
         implicitWidth: root.implicitWidth
         implicitHeight: root.implicitHeight
+
 
         spacing: 8
         model: popupModel
         interactive: false
-        clip: true
+        clip: false
 
         // anchors.top: parent.top
 
@@ -235,5 +271,7 @@ PanelWindow {
                 }
             }
         }
+
+        footer: Item { height: 40 }
     }
 }

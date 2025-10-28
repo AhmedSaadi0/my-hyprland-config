@@ -6,17 +6,16 @@ import QtQuick
 import QtQuick.Window
 import Quickshell.Io
 
-import "root:/bars"
 import "root:/windows/leftwindow"
+import "root:/windows/settings"
+import "root:/windows/cheatsheet"
+import "root:/bars"
 import "root:/osd"
 import "root:/utils"
 import "root:/config"
 import "root:/desktop"
 import "root:/themes"
 import "root:/shadows"
-import "root:/windows/settings"
-
-import "root:/windows/cheatsheet" as Cheatsheet
 
 ShellRoot {
     id: shellRoot
@@ -215,7 +214,7 @@ ShellRoot {
                 id: leftPanelFull
             }
 
-            Cheatsheet.Main {
+            Cheatsheet {
                 id: cheatsheetPanel
             }
 

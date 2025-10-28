@@ -145,18 +145,22 @@ Rectangle {
     }
 
     function menuIsOpened() {
-        tempComponent.constructor.running = true;
-        batComponent.constructor.running = true;
-        ramComponent.constructor.running = true;
-        cpuComponent.constructor.running = true;
-        console.info("Start Menu progresses");
+        if (!tempComponent.constructor.running) {
+            tempComponent.constructor.running = true;
+            batComponent.constructor.running = true;
+            ramComponent.constructor.running = true;
+            cpuComponent.constructor.running = true;
+            console.info("Start Menu progresses");
+        }
     }
 
     function menuIsClosed() {
-        tempComponent.constructor.running = false;
-        batComponent.constructor.running = false;
-        ramComponent.constructor.running = false;
-        cpuComponent.constructor.running = false;
-        console.info("Stop Menu progresses");
+        if (!tempComponent.constructor.running) {
+            tempComponent.constructor.running = false;
+            batComponent.constructor.running = false;
+            ramComponent.constructor.running = false;
+            cpuComponent.constructor.running = false;
+            console.info("Stop Menu progresses");
+        }
     }
 }
