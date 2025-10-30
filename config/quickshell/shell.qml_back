@@ -6,15 +6,16 @@ import QtQuick
 import QtQuick.Window
 import Quickshell.Io
 
-import "root:/bars"
 import "root:/windows/leftwindow"
+import "root:/windows/settings"
+import "root:/windows/cheatsheet"
+import "root:/bars"
 import "root:/osd"
 import "root:/utils"
 import "root:/config"
 import "root:/desktop"
 import "root:/themes"
 import "root:/shadows"
-import "root:/windows/settings"
 
 ShellRoot {
     id: shellRoot
@@ -211,6 +212,10 @@ ShellRoot {
 
             LeftWindowFull {
                 id: leftPanelFull
+            }
+
+            Cheatsheet {
+                id: cheatsheetPanel
             }
 
             IpcHandler {

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# TODO: -> split into several files and use clean code standard
+
 import json
 
 # --- Import necessary libraries ---
@@ -23,9 +25,10 @@ MESSAGES = {
         "main_menu_title": "NibrasShell Installation Script",
         "install_deps_menu": "1. Install Dependencies",
         "install_local": "2. Install NibrasShell",
-        "uninstall": "3. Uninstall NibrasShell",
-        "create_config": "4. Create/Edit User Config",
-        "exit": "5. Exit",
+        "update_quickshell": "3. Update QuickShell",
+        "uninstall": "4. Uninstall NibrasShell",
+        "create_config": "5. Create/Edit User Config",
+        "exit": "6. Exit",
         "choose_option": "Choose an option: ",
         "distro_check_fail": "Error: This script only supports Fedora, Void and Arch Linux.",
         "installing_deps": "Installing dependencies...",
@@ -56,15 +59,20 @@ MESSAGES = {
         "prompt_country": "Enter your country: ",
         "prompt_use_prayer": "Enable prayer times widget? (y/n): ",
         "config_saved": "Configuration file saved to ~/.nibrasshell.json",
+        "updating_quickshell": "Updating QuickShell...",
+        "update_complete": "QuickShell update complete.",
+        "pulling_updates": "Pulling latest updates from git...",
+        "copying_files": "Copying QuickShell files...",
     },
     "ar": {
         "choose_lang": "اختر لغتك:",
         "main_menu_title": "سكربت تثبيت NibrasShell",
         "install_deps_menu": "1. تثبيت المتطلبات",
         "install_local": "2. تثبيت الواجهة",
-        "uninstall": "3. حذف الواجهة",
-        "create_config": "4. إنشاء/تعديل ملف الإعدادات",
-        "exit": "5. خروج",
+        "update_quickshell": "3. تحديث QuickShell",
+        "uninstall": "4. حذف الواجهة",
+        "create_config": "5. إنشاء/تعديل ملف الإعدادات",
+        "exit": "6. خروج",
         "choose_option": "اختر أحد الخيارات: ",
         "distro_check_fail": "خطأ: هذا السكربت يدعم فقط توزيعات فيدورا وآرش لينكس.",
         "installing_deps": "جاري تثبيت المتطلبات...",
@@ -95,15 +103,20 @@ MESSAGES = {
         "prompt_country": "أدخل اسم دولتك: ",
         "prompt_use_prayer": "هل تريد تفعيل ودجت مواقيت الصلاة؟ (ن/ل): ",
         "config_saved": "تم حفظ ملف الإعدادات في ~/.nibrasshell.json",
+        "updating_quickshell": "جاري تحديث QuickShell...",
+        "update_complete": "اكتمل تحديث QuickShell.",
+        "pulling_updates": "جاري سحب آخر التحديثات من git...",
+        "copying_files": "جاري نسخ ملفات QuickShell...",
     },
     "cs": {
         "choose_lang": "Vyberte si jazyk:",
         "main_menu_title": "Instalační skript NibrasShell",
         "install_deps_menu": "1. Nainstalovat závislosti",
         "install_local": "2. Nainstalovat NibrasShell",
-        "uninstall": "3. Odinstalovat NibrasShell",
-        "create_config": "4. Vytvořit/upravit konfiguraci uživatele",
-        "exit": "5. Ukončit",
+        "update_quickshell": "3. Aktualizovat QuickShell",
+        "uninstall": "4. Odinstalovat NibrasShell",
+        "create_config": "5. Vytvořit/upravit konfiguraci uživatele",
+        "exit": "6. Ukončit",
         "choose_option": "Vyberte možnost: ",
         "distro_check_fail": "Chyba: Tento skript podporuje pouze Fedoru, Void a Arch Linux.",
         "installing_deps": "Instalace závislostí...",
@@ -134,6 +147,10 @@ MESSAGES = {
         "prompt_country": "Zadejte svou zemi: ",
         "prompt_use_prayer": "Povolit widget modlitebních časů? (y/n): ",
         "config_saved": "Konfigurační soubor uložen do ~/.nibrasshell.json",
+        "updating_quickshell": "Aktualizace QuickShell...",
+        "update_complete": "Aktualizace QuickShell dokončena.",
+        "pulling_updates": "Stahování nejnovějších aktualizací z gitu...",
+        "copying_files": "Kopírování souborů QuickShell...",
     },
 }
 
@@ -463,6 +480,47 @@ def install_nibrasshell():
     print(f"{YELLOW}{msg('reboot_prompt')}{NC}")
 
 
+def update_quickshell():
+    print(f"{YELLOW}{msg('updating_quickshell')}{NC}")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    home_dir = os.path.expanduser("~")
+    config_dir = os.path.join(home_dir, ".config")
+
+    # 1. Git Pull
+    print(f"{YELLOW}{msg('pulling_updates')}{NC}")
+    try:
+        # Change to the script's directory to run git pull
+        os.chdir(script_dir)
+        run_command_verbose("git pull")
+    except Exception as e:
+        print(f"{RED}Error during 'git pull': {e}{NC}")
+        return
+    finally:
+        # It's good practice to return to the original directory
+        # though it might not be strictly necessary if the script exits.
+        os.chdir(os.path.expanduser("~"))
+
+    # 2. Copy only the quickshell files
+    print(f"{YELLOW}{msg('copying_files')}{NC}")
+    source_quickshell_dir = os.path.join(script_dir, "config", "quickshell")
+    dest_quickshell_dir = os.path.join(config_dir, "quickshell")
+
+    if not os.path.exists(source_quickshell_dir):
+        print(f"{RED}Source directory not found: {source_quickshell_dir}{NC}")
+        return
+
+    # Create destination directory if it doesn't exist
+    os.makedirs(dest_quickshell_dir, exist_ok=True)
+
+    try:
+        shutil.copytree(
+            source_quickshell_dir, dest_quickshell_dir, dirs_exist_ok=True
+        )
+        print(f"{GREEN}{msg('update_complete')}{NC}")
+    except Exception as e:
+        print(f"{RED}Error copying files: {e}{NC}")
+
+
 # Function to uninstall NibrasShell and restore backups.
 def uninstall_nibrasshell():
     confirm = input(f"{YELLOW}{msg('uninstall_prompt')}{NC}").lower()
@@ -554,6 +612,7 @@ def main():
         print("=" * 45)
         print(msg("install_deps_menu"))
         print(msg("install_local"))
+        print(msg("update_quickshell"))
         print(msg("uninstall"))
         print(msg("create_config"))
         print(msg("exit"))
@@ -565,10 +624,12 @@ def main():
         elif choice == "2":
             install_nibrasshell()
         elif choice == "3":
-            uninstall_nibrasshell()
+            update_quickshell()
         elif choice == "4":
-            create_user_config_file()
+            uninstall_nibrasshell()
         elif choice == "5":
+            create_user_config_file()
+        elif choice == "6":
             break
         else:
             print(f"{RED}{msg('invalid_option')}{NC}")

@@ -10,15 +10,15 @@ import "root:/config"
 Rectangle {
     id: root
 
-    // --- الواجهة العامة للمكون (Public API) ---
     property var notification
-    property var theme // <<< خاصية لاستقبال كائن السمة
+    property var theme
     property string defaultIcon: App.assets.icons.notification
+    property real progress: 0.0
+    property bool visibleProgress: false
 
     signal dismissClicked
     signal actionInvoked(int index)
 
-    // --- استخدام السمة المحقونة (injected theme) مع قيم افتراضية ---
     implicitHeight: contentLayout.implicitHeight + (root.theme ? (root.theme.dimensions.spacingLarge * 2) : 16)
     color: root.theme ? root.theme.colors.topbarBgColorV1 : "#EEEEEE"
     radius: root.theme ? root.theme.dimensions.elementRadius : 8
@@ -36,12 +36,26 @@ Rectangle {
             spacing: root.theme ? root.theme.typography.spacingSmall : 4
 
             Item {
-                width: 16
-                height: 16
+                width: 20
+                height: 20
                 Layout.alignment: Qt.AlignVCenter
 
+                CircularProgress {
+                    id: dismissProgress
+                    anchors.centerIn: parent
+                    width: parent.width + 2
+                    height: parent.height + 2
+                    thickness: 2
+                    margin: 1
+                    value: root.progress
+                    foregroundColor: root.theme ? root.theme.colors.primary : "blue"
+                    backgroundColor: root.theme ? root.theme.colors.primary.alpha(0.3) : "#330000FF"
+                    visible: root.visibleProgress
+                }
+
                 Text {
-                    text: "✕"
+                    text: ""
+                    font.family: theme.typography.iconFont
                     font.pixelSize: 14
                     anchors.centerIn: parent
                     color: root.theme ? root.theme.colors.primary : "blue"

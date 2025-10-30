@@ -231,7 +231,7 @@ Item {
                             }
                         }
 
-                        text: "󰓃"
+                        text: "󱣫"
                         opacity: (root.is_saved && !root.in_use) ? 1.0 : 0.0
                         // keep enabled false when not used if you rely على enabled elsewhere
                     }

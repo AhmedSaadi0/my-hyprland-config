@@ -41,7 +41,7 @@
 ## 🔔 الإشعارات & OSD (Notifications & OSD)
 
 - [x] Notifications
-- [ ] Improve notification osd to not block content on right side
+- [x] Improve notification osd to not block content on right side
 - [x] Notifications History Center
   - [x] Action buttons
   - [x] Race Condition Fix
@@ -49,7 +49,6 @@
   - [x] Responsive Timer
   - [x] Sound with Notifications
   - [x] DND
-
 - [x] Sound OSD
 - [x] Brightness OSD
 - [x] Battery Status OSD
@@ -124,6 +123,7 @@
 - [x] Improve Menus Navigation
 - [x] Improve Animations (Menu, Notifications, Navigation)
 - [ ] Control the way menu is opened (reserve space or like floating)
+- [ ] Toggle Buttons for (Wi-Fi, Bluetooth, Gammastep, Gaming Mode ... etc)
 
 ---
 
