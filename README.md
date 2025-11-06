@@ -122,6 +122,30 @@ sudo dnf install plasma-desktop ark kate dolphin
 pip install rembg[gpu] pillow psutil
 ```
 
+### الان يمكنك استخدام سكربت التثبيت واختيار رقم 2
+
+```bash
+python install.py
+Choose your language / اختر لغتك / Vyberte jazyk:
+1. English
+2. العربية
+3. Česky
+> 2
+
+=============================================
+سكربت تثبيت NibrasShell
+=============================================
+1. تثبيت المتطلبات
+2. تثبيت الواجهة
+3. تحديث QuickShell
+4. حذف الواجهة
+5. إنشاء/تعديل ملف الإعدادات
+6. خروج
+اختر أحد الخيارات: 2
+```
+
+### في حال لم يعمل السكربت الان اكمل مع التثبيت اليدوي
+
 #### استخرج جميع الثيمات في المجلد `config/gtk-themes/` الى `~/.themes`
 
 ### اعداد الملفات:
@@ -344,6 +368,30 @@ sudo dnf install plasma-desktop ark kate dolphin
 ```bash
 pip install rembg[gpu] pillow psutil
 ```
+
+### Now you can use the install script option 2
+
+```bash
+$ python install.py
+Choose your language / اختر لغتك / Vyberte jazyk:
+1. English
+2. العربية
+3. Česky
+> 1
+
+=============================================
+NibrasShell Installation Script
+=============================================
+1. Install Dependencies
+2. Install NibrasShell
+3. Update QuickShell
+4. Uninstall NibrasShell
+5. Create/Edit User Config
+6. Exit
+Choose an option: 2
+```
+
+### in case the install script still did not work you can continue
 
 #### Extract all themes in `config/gtk-themes/` to `~/.themes`
 
