@@ -66,7 +66,8 @@
   - [ ] Quick Wi-Fi / Airplane Toggle
 
 - **Devices**
-  - [ ] Audio Devices Control
+  - [x] Audio Devices Control
+  - [ ] Audio Devices Animations
   - [ ] Screen / Display Settings
   - [ ] Bluetooth Manager UI
   - [ ] Battery & Power Profiles Integration

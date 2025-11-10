@@ -9,6 +9,9 @@ import "root:/themes"
 import "root:/config/EventNames.js" as Events
 import "root:/config"
 import "root:/components"
+import "./audio"
+
+import Quickshell.Services.Pipewire
 
 Controls.ApplicationWindow {
     id: root
@@ -98,7 +101,7 @@ Controls.ApplicationWindow {
         id: fontDialog
         title: "Select a Font"
         modality: Qt.ApplicationModal
-        font.pointSize: 20
+        // currentFont.pointSize: 20
 
         property var targetedFieldName
         property bool updateOnChange: true
@@ -171,6 +174,8 @@ Controls.ApplicationWindow {
             property var integrationSettingsPage
             property var colorsSettingsPage
             property var layoutFontSettingsPage
+            property var audioDevicesSettingsPage
+            property var monitorsSettingsPage
 
             Component {
                 id: generalAppearanceComp
@@ -316,8 +321,24 @@ Controls.ApplicationWindow {
                 }
             }
 
+            Component {
+                id: audioDevicesSettingsComp
+                AudioDevices {
+                    //    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+                }
+            }
+
+            Component {
+                id: monitorsSettingsComp
+                MonitorsSettings {
+                    workingTheme: root.workingTheme
+                    selectedTheme: ThemeManager.selectedTheme
+                }
+            }
+
             function getPage(index) {
-                return [wallpaperSettingsPage, colorsSettingsPage, layoutFontSettingsPage, desktopClockPage, hyprlandSettingsPage, integrationSettingsPage][index];
+                return [wallpaperSettingsPage, colorsSettingsPage, layoutFontSettingsPage, desktopClockPage, hyprlandSettingsPage, integrationSettingsPage, audioDevicesSettingsPage, monitorsSettingsPage][index];
             }
 
             Component.onCompleted: {
@@ -349,7 +370,14 @@ Controls.ApplicationWindow {
                     "visible": false
                     // "anchors.fill": stackView
                 });
-
+                audioDevicesSettingsPage = audioDevicesSettingsComp.createObject(contentStack, {
+                    "visible": false
+                    // "anchors.fill": stackView
+                });
+                monitorsSettingsPage = monitorsSettingsComp.createObject(contentStack, {
+                    "visible": false
+                    // "anchors.fill": stackView
+                });
                 push(wallpaperSettingsPage);
             }
 

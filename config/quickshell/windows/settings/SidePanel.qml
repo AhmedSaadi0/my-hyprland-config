@@ -30,35 +30,34 @@ Rectangle {
         text: qsTr("Settings")
         font.bold: true
         font.pixelSize: 24
-        color: ThemeManager.selectedTheme.colors.topbarFgColor 
+        color: ThemeManager.selectedTheme.colors.topbarFgColor
         anchors {
             top: parent.top
         }
     }
 
-    // Rectangle {
-    //     id: movingHighlight
-    //     x: Kirigami.Units.smallSpacing / 2
-    //     width: parent.width - Kirigami.Units.smallSpacing
-    //     height: menuListView.currentItem ? menuListView.currentItem.height : 0
-    //     y: menuListView.currentItem ? menuListView.currentItem.y + menuListView.anchors.topMargin : 0
-    //     color: Kirigami.Theme.activeBackgroundColor
-    //     border.color: Kirigami.Theme.neutralBackgroundColor
-    //     border.width: 2
-    //     radius: ThemeManager.selectedTheme.dimensions.elementRadius
-    //
-    //     anchors {
-    //         top: headerTitle.bottom
-    //     }
-    //
-    //     Behavior on y {
-    //         SpringAnimation {
-    //             spring: 3
-    //             damping: 0.25
-    //             duration: 200
-    //         }
-    //     }
-    // }
+    Rectangle {
+        id: movingHighlight
+        width: parent.width - 10
+        height: menuListView.currentItem ? menuListView.currentItem.height : 0
+        x: 0 + 5
+        y: menuListView.currentItem ? menuListView.currentItem.y + menuListView.anchors.topMargin : 0
+
+        color: ThemeManager.selectedTheme.colors.primary
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius
+
+        Behavior on y {
+            SpringAnimation {
+                spring: 3
+                damping: 0.25
+            }
+        }
+        Behavior on height {
+            SmoothedAnimation {
+                duration: 200
+            }
+        }
+    }
 
     ListView {
         id: menuListView
@@ -71,13 +70,13 @@ Rectangle {
         model: [
             {
                 name: qsTr("Appearance"),
-                type: "header" // هذا عنصر عنوان
+                type: "header"
             },
             {
                 name: qsTr("Wallpaper Settings"),
                 icon: "preferences-system-windows",
-                type: "item", // هذا عنصر عادي
-                pageIndex: 0  // فهرس الصفحة للانتقال
+                type: "item",
+                pageIndex: 0
             },
             {
                 name: qsTr("Color Settings"),
@@ -111,7 +110,7 @@ Rectangle {
             },
             {
                 name: qsTr("Devices"),
-                type: "header" // عنوان القسم الثاني
+                type: "header"
             },
             {
                 name: qsTr("Audio Devices"),
@@ -142,20 +141,17 @@ Rectangle {
         delegate: Controls.ItemDelegate {
             width: parent.width
 
-            height: model.modelData.type === "header" 
-                    ? Kirigami.Units.gridUnit * 1.8 
-                    : Kirigami.Units.gridUnit * 2.5
+            height: model.modelData.type === "header" ? Kirigami.Units.gridUnit * 1.8 : Kirigami.Units.gridUnit * 2.5
 
             padding: model.modelData.type === "header" ? Kirigami.Units.smallSpacing : 0
             leftPadding: model.modelData.type === "header" ? Kirigami.Units.largeSpacing : Kirigami.Units.smallSpacing
 
             enabled: model.modelData.type === "item"
 
-            // State for hover effect
             property bool isHovered: false
 
             RowLayout {
-                width: parent.width // اجعل RowLayout يملأ عرض الحاوية الأب
+                width: parent.width
                 visible: model.modelData.type === "header"
 
                 Text {
@@ -167,16 +163,14 @@ Rectangle {
                 }
 
                 Rectangle {
-                    // هذا هو الخط
-                    Layout.fillWidth: true // هذا يجعل الخط يملأ كل المساحة المتبقية
-                    Layout.alignment: Qt.AlignVCenter // لمحاذاة الخط عموديًا في المنتصف
-                    height: 1 // سماكة الخط
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignVCenter
+                    height: 1
                     color: Kirigami.Theme.textColor
                     opacity: 0.5
                 }
 
-                // خاصية الـ spacing في RowLayout تضيف هامشًا بين النص والخط
-                spacing: 10 // يمكنك تعديل هذه القيمة حسب الحاجة
+                spacing: 10
             }
 
             contentItem: RowLayout {
@@ -208,20 +202,37 @@ Rectangle {
             }
 
             background: Rectangle {
+                id: bgRect
                 color: menuListView.currentIndex === index ? ThemeManager.selectedTheme.colors.primary : (isHovered ? ThemeManager.selectedTheme.colors.secondary.alpha(0.4) : "transparent")
-                border.color: menuListView.currentIndex === index ? ThemeManager.selectedTheme.colors.primary : (isHovered ? ThemeManager.selectedTheme.colors.secondary : "transparent")
-                border.width: menuListView.currentIndex === index ? 1 : (isHovered ? 1 : 0)
+                // width: 20
+                // border.color: menuListView.currentIndex === index ? ThemeManager.selectedTheme.colors.primary : (isHovered ? ThemeManager.selectedTheme.colors.secondary : "transparent")
+                // border.width: menuListView.currentIndex === index ? 1 : (isHovered ? 1 : 0)
                 radius: ThemeManager.selectedTheme.dimensions.elementRadius
+
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 500
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+                Behavior on border.color {
+                    ColorAnimation {
+                        duration: 500
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+                Behavior on border.width {
+                    NumberAnimation {
+                        duration: 400
+                        easing.type: Easing.InOutQuad
+                    }
+                }
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: model.modelData.type === "item" ? true : false;
-                    onEntered: {
-                        isHovered = model.modelData.type === "item" ? true : false;
-                    }
-                    onExited: {
-                        isHovered = model.modelData.type === "item" ? false : true ;
-                    }
+                    hoverEnabled: model.modelData.type === "item"
+                    onEntered: isHovered = model.modelData.type === "item"
+                    onExited: isHovered = false
                 }
             }
 

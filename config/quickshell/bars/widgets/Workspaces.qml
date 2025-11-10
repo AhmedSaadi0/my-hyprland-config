@@ -10,8 +10,8 @@ Rectangle {
     property int underlineHeight: 2
     property int itemWidth: 33
     property int fontSize: 18
-    property var activeIcons: ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰆈", "󱍙", "󰺵", "󱋡", "󰙨"]
-    property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰆉", "󱍚", "󰺶", "󱋢", "󰤑"]
+    property var activeIcons: ["", "󰿣", "󰂔", "󰉋", "󱙋", "󰭹", "󱍙", "󰺵", "󱋡", "󰙨"]
+    property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰻞", "󱍚", "󰺶", "󱋢", "󰤑"]
     property int focusedId: Hyprland.focusedWorkspace !== null ? Hyprland.focusedWorkspace.id : 0
 
     readonly property var workspaceIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -20,9 +20,13 @@ Rectangle {
     property var focusedItem: null
 
     height: parent.height
-    width: rowLayout.implicitWidth + 20
+    width: rowLayout.implicitWidth
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
     color: ThemeManager.selectedTheme.colors.topbarBgColorV1
+
+    anchors {
+        rightMargin: 5
+    }
 
     onFocusedIdChanged: {
         for (let i = 0; i < rowLayout.children.length; ++i) {
@@ -48,8 +52,6 @@ Rectangle {
         spacing: 5
 
         Repeater {
-            // --- (تحسين) ---
-            // استخدام الخاصية المحسوبة مسبقًا
             model: workspaceRectangle.reversedWorkspaceIds
 
             delegate: MouseArea {
@@ -125,8 +127,8 @@ Rectangle {
     Rectangle {
         id: slidingIndicator
 
-        x: workspaceRectangle.focusedItem ? rowLayout.x + workspaceRectangle.focusedItem.x : -width
-        width: workspaceRectangle.focusedItem ? workspaceRectangle.focusedItem.width : 0
+        x: workspaceRectangle.focusedItem ? rowLayout.x + workspaceRectangle.focusedItem.x + 2 : -width
+        width: workspaceRectangle.focusedItem ? workspaceRectangle.focusedItem.width - 4 : 0
 
         height: workspaceRectangle.underlineHeight
         anchors.bottom: parent.bottom

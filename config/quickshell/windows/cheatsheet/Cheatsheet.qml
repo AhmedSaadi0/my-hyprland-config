@@ -12,8 +12,8 @@ import "root:/config"
 PanelWindow {
     id: root
     visible: false
-    width: 1400
-    height: 900
+    implicitWidth: 1400
+    implicitHeight: 900
     color: "transparent"
 
     Process {
