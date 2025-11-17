@@ -90,9 +90,11 @@ Controls.ApplicationWindow {
         id: staticWallpaperFileDialog
         title: "Please choose a static wallpaper"
         nameFilters: ["Image files (*.jpg *.jpeg *.png *.bmp)", "All files (*.*)"]
+        property var targetedFieldName
         onAccepted: {
             const filePath = file.toString().replace("file://", "");
-            workingTheme._wallpaper = filePath;
+            // workingTheme._wallpaper = filePath;
+            root.workingTheme[targetedFieldName] = filePath;
             root._saveTheme(true);
         }
     }
@@ -205,7 +207,10 @@ Controls.ApplicationWindow {
                     selectedTheme: ThemeManager.selectedTheme
 
                     onOpenFolderDialog: dynamicWallpaperFolderDialog.open()
-                    onOpenFileDialog: staticWallpaperFileDialog.open()
+                    onOpenFileDialog: {
+                        staticWallpaperFileDialog.targetedFieldName = "_wallpaper";
+                        staticWallpaperFileDialog.open();
+                    }
                     onDynamicColoringChanged: {}
 
                     onResetToDefault: ThemeManager.resetWallpaperSystemSettings()
@@ -261,6 +266,12 @@ Controls.ApplicationWindow {
                         colorDialog.targetedFieldName = "_desktopClockSahdowColor";
                         colorDialog.open();
                     }
+
+                    onOpenOverlayFileDialog: {
+                        staticWallpaperFileDialog.targetedFieldName = "_desktopClockDepthOverlayPath";
+                        staticWallpaperFileDialog.open();
+                    }
+
                     onCreateOverlayImageButtonClicked: ThemeManager.createImageOverlay(data)
                     onClearUnusedCache: ThemeManager.cleardUnusedOverlayImages()
                 }
@@ -326,6 +337,7 @@ Controls.ApplicationWindow {
                 AudioDevices {
                     //    workingTheme: root.workingTheme
                     selectedTheme: ThemeManager.selectedTheme
+                    onClose: root.visible = false
                 }
             }
 

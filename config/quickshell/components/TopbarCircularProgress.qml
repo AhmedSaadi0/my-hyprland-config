@@ -11,9 +11,11 @@ CircularProgress {
     width: 22
     height: 20
 
-    startAt: 0.4
-    endAt: 0.1
+    // startAt: 0.4
+    // endAt: 0.1
+
     value: 0.0
+
     inverted: true
     rounded: true
 
@@ -26,6 +28,7 @@ CircularProgress {
     property int iconFontSize: 11
     property color iconColor: palette.accent
     property var command
+    property bool activetProcess: true
     property int updateInterval: 1000
     property var onReadHandler: function (data) {
         var percent = parseFloat(data);
@@ -137,6 +140,7 @@ CircularProgress {
     Process {
         id: processId
         command: root.command
+        running: root.activetProcess
 
         stdout: SplitParser {
             onRead: data => {

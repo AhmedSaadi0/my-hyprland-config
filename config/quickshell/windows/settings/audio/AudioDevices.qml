@@ -22,6 +22,8 @@ M3GroupBox {
     property var workingTheme
     property var selectedTheme
 
+    signal close
+
     // هذا الجزء ممتاز ولا يحتاج لتغيير
     readonly property var nodes: Pipewire.nodes.values.reduce((acc, node) => {
         if (!node.isStream) {
@@ -129,5 +131,15 @@ M3GroupBox {
 
     footer: RowLayout {
         spacing: selectedTheme.dimensions.spacingMedium
+        Item {
+            Layout.fillWidth: true
+        }
+
+        MButton {
+            text: "Close"
+            Layout.preferredWidth: 80
+            highlighted: true
+            onClicked: close()
+        }
     }
 }

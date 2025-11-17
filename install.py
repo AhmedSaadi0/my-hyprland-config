@@ -198,6 +198,32 @@ def detect_distro():
     return None
 
 
+# TODO: -> not in use yes, Needs testing
+def is_arch_based():
+    """
+    Is Arch or based on Arch
+    """
+    try:
+        with open("/etc/os-release", "r") as f:
+            lines = f.readlines()
+
+        os_info = {
+            k.strip(): v.strip().strip('"')
+            for k, v in (line.split("=", 1) for line in lines if "=" in line)
+        }
+
+        if os_info.get("ID") == "arch":
+            return True
+
+        if "arch" in os_info.get("ID_LIKE", "").split():
+            return True
+
+    except FileNotFoundError:
+        return False
+
+    return False
+
+
 # Function to install all necessary packages.
 def install_dependencies(distro, install_optional=False):
     print(f"{YELLOW}{msg('installing_deps')}{NC}")
@@ -218,7 +244,7 @@ def install_dependencies(distro, install_optional=False):
         )
 
         required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs swww jq"
-        optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
+        optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox python3.13"
         command = f"sudo dnf install -y {required_pkgs}"
         if install_optional:
             command += f" {optional_pkgs}"

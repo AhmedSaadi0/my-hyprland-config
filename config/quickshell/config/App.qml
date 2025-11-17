@@ -121,7 +121,7 @@ Singleton {
             readonly property var topCpuUsageCommand: ["python", topCpuUsage]
             readonly property var topRamUsageCommand: ["python", topRamUsage]
             readonly property var dynamicM3Command: ["python", dynamicM3]
-            readonly property var rembgOverylayWallpaperCommand: ["python", rembgOverylayWallpaper]
+            readonly property var rembgOverylayWallpaperCommand: ["python3.13", rembgOverylayWallpaper]
             readonly property var opencvOverylayWallpaperCommand: ["python", opencvOverylayWallpaper]
             readonly property var removeUnusedCachedOverlayImagesCommand: ["python", removeUnusedCachedOverlayImages]
 

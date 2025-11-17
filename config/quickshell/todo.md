@@ -114,6 +114,7 @@
 - [ ] Configure Dynamic Coloring
 - [ ] Solarized, Rosé Pine, Oxocarbon Themes
 - [ ] Extend Color Schema (6 colors)
+- [ ] Control Material 3 moent from settings
 
 ---
 
