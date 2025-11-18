@@ -250,12 +250,12 @@ def install_dependencies(distro, install_optional=False):
             command += f" {optional_pkgs}"
         print(YELLOW + "Installing main packages..." + NC)
         run_command_verbose(command)
-    if distro == "arch":
+    elif is_arch_based():
         print(YELLOW + "Starting Arch installer")
         required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
         command = f"yay -S {required_pkgs}"
-    if distro == "void":
+    elif distro == "void":
         # ... Missing kde-material-you-colors package
         print(
             YELLOW
