@@ -5,8 +5,9 @@
   - [x] Application Launcher
   - [x] Improve bars positioning and shadows
   - [x] Improve edge corners
+  - [ ] Connection for `DesktopEntries` to listen to new installed apps
   - [ ] Game mode
-  - [x] Bars Shadow Control
+  - [ ] Bars Shadow Control
   - [ ] Left Bar Width Control
   - [ ] Remove `LeftMenuStatus` and Use `EventBus`
   - [x] Cheatsheet menu
@@ -32,8 +33,8 @@
   - [x] Support Depth Effect for Dynamic Wallpapers
   - [ ] Depth effect for each wallpaper in dynamic wallpapers
   - [ ] Auto Depth Effect generation + clock adaptation
-  - [ ] Weather Widget
-  - [ ] Music Widget
+  - [x] Weather Widget
+  - [x] Music Widget
 
 ---
 
@@ -84,9 +85,9 @@
   - [ ] Hijri Date Display
 
 - **Music**
-  - [ ] Dynamic Island Support
-  - [ ] Cava Visualization
-  - [ ] Media Controls Widget
+  - [x] Dynamic Island Support
+  - [x] Cava Visualization
+  - [x] Media Controls Widget
   - [ ] Lyrics Display (Live sync)
 
 - **AI**
@@ -132,3 +133,4 @@
 
 - [x] Create Component for Theme Settings Text & Label
 - [x] Wallpaper Settings: TextField update before save
+- [ ] Move Non Genral Components to Correct Location: ex-> SettingSwitch to windows/settings/widgets

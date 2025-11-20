@@ -1,133 +1,71 @@
 import Quickshell
 import QtQuick
-import QtQuick.Layouts
-import Quickshell.Wayland
+import QtQuick.Layouts 1.15
+import Quickshell.Services.Mpris
 
 import "root:/themes"
 import "root:/components"
 import "root:/services"
+import "./widgets"
 
 PanelWindow {
     id: dynamicIsland
 
     color: "transparent"
-    implicitHeight: 350
+    implicitHeight: 400
     exclusionMode: ExclusionMode.Ignore
-    mask: Region {
-        item: islandRect
-    }
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
-
     anchors {
         top: true
         left: true
         right: true
     }
-    // --- المتغيرات ---
-    property string currentMode: "idle"
-    property int dropDistance: ThemeManager.selectedTheme.dimensions.barHeight
+    mask: Region {
+        item: islandRect
+    }
 
-    // حالة التفاعل
+    property string stateMode: "idle"
+    property string activeTab: "weather"
+
+    property int barFullHeight: ThemeManager.selectedTheme.dimensions.barHeight
+    property int idleWidgetHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
+    property int centeredTopMargin: (barFullHeight - idleWidgetHeight) / 2
+    property int droppedTopMargin: barFullHeight + 10
+
+    property int activePlayerIndex: 0
+    property var playersList: Mpris.players.values
+    property var activePlayer: {
+        if (playersList.length === 0)
+            return null;
+        if (activePlayerIndex >= playersList.length)
+            activePlayerIndex = 0;
+        return playersList[activePlayerIndex];
+    }
+    property bool hasActivePlayer: activePlayer !== null
+
     property bool isHovered: false
     property bool isInteracting: false
 
-    // ---------------------------------------------------------
-    // دالة مركزية لإظهار الـ OSD (الصوت/السطوع) بشروط محددة
-    // ---------------------------------------------------------
-    function showOverlay(modeName) {
-        // الشرط 1: إذا كان المستخدم يضغط ويسحب بيده حالياً، لا تقاطع عمله
-        if (isInteracting)
-            return;
-
-        // الشرط 2: إذا كان الماوس فوق الجزيرة، لا تغير الوضع (ربما المستخدم يقرأ إشعاراً)
-        if (isHovered)
-            return;
-
-        // الحل الجذري: نوقف مؤقت "فترة السماح" القديم لكي لا يغلق الجزيرة في وجه الإشعار الجديد
-        hoverGraceTimer.stop();
-
-        // نطبق الوضع الجديد
-        currentMode = modeName;
-
-        // نعيد تشغيل مؤقت الإخفاء (2 ثانية)
-        osdHideTimer.restart();
+    function cyclePlayers() {
+        if (playersList.length > 1)
+            activePlayerIndex = (activePlayerIndex + 1) % playersList.length;
     }
 
-    // دالة الفحص التلقائي للإغلاق
-    function checkAutoClose() {
-        if (!isInteracting && !isHovered) {
-            hoverGraceTimer.restart();
-        } else {
-            hoverGraceTimer.stop();
-        }
+    function expand(tabName) {
+        activeTab = tabName;
+        stateMode = "expanded";
     }
 
-    // مؤقت 1: فترة السماح عند خروج الماوس (1.5 ثانية)
-    Timer {
-        id: hoverGraceTimer
-        interval: 1500
-        repeat: false
-        onTriggered: {
-            if (!dynamicIsland.isInteracting && !dynamicIsland.isHovered) {
-                dynamicIsland.returnToIdle();
-            }
-        }
+    function collapse() {
+        stateMode = "idle";
     }
 
-    // مؤقت 2: إخفاء OSD الصوت/السطوع (2 ثانية)
-    Timer {
-        id: osdHideTimer
-        interval: 1000
-        repeat: false
-        onTriggered: {
-            // عند الانتهاء، نتأكد مرة أخرى أننا لسنا بصدد استخدام الجزيرة
-            checkAutoClose();
-        }
-    }
-
-    function returnToIdle() {
-        // نعود للوضع الافتراضي فقط إذا لم نكن نتفاعل
-        if (!isInteracting) {
-            dynamicIsland.currentMode = "idle";
-        }
-    }
-
-    // مراقب لانتهاء التفاعل اليدوي
-    onIsInteractingChanged: {
-        if (!isInteracting) {
-            checkAutoClose();
-        } else {
-            hoverGraceTimer.stop();
-            osdHideTimer.stop();
-        }
-    }
-
-    // --- الاتصال بالخدمات (تم التحديث لاستخدام الدالة الجديدة) ---
-
-    Connections {
-        target: Audio
-        function onVolumeChanged() {
-            // نرسل طلب إظهار الصوت للدالة المركزية لتقوم بالفحص
-            dynamicIsland.showOverlay("volume");
-        }
-    }
-
-    Connections {
-        target: Brightness
-        function onBrightnessChanged() {
-            dynamicIsland.showOverlay("brightness");
-        }
-    }
-
-    // --- جسم الجزيرة ---
     Rectangle {
         id: islandRect
 
-        color: "transparent"
-        clip: true
-
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
+        color: "transparent"
+        clip: true
 
         gradient: Gradient {
             orientation: Gradient.Horizontal
@@ -141,97 +79,75 @@ PanelWindow {
             }
         }
 
-        // MouseArea الرئيسية
+        Behavior on width {
+            enabled: stateMode === "idle"
+            NumberAnimation {
+                duration: 400
+                easing.type: Easing.OutBack
+                easing.overshoot: 0.8
+            }
+        }
+
         MouseArea {
             id: islandMouseArea
             anchors.fill: parent
             hoverEnabled: true
             preventStealing: false
 
-            onEntered: {
-                if (currentMode !== "idle") {
-                    dynamicIsland.isHovered = true;
-                    hoverGraceTimer.stop();
-                    osdHideTimer.stop();
-                }
-            }
-
-            onExited: {
-                dynamicIsland.isHovered = false;
-                checkAutoClose();
-            }
+            onEntered: dynamicIsland.isHovered = true
+            onExited: dynamicIsland.isHovered = false
         }
 
-        // --- الحالات ---
-        state: currentMode
+        IdleBar {
+            id: idleBar
+            anchors.fill: parent
+
+            opacity: stateMode === "idle" ? 1 : 0
+            visible: opacity > 0
+
+            isListening: stateMode === "idle"
+
+            activePlayer: dynamicIsland.activePlayer
+            onRequestExpand: mode => dynamicIsland.expand(mode)
+        }
+
+        ExpandedContainer {
+            id: expandedContainer
+            anchors.fill: parent
+            opacity: stateMode === "expanded" ? 1 : 0
+            visible: opacity > 0
+
+            currentTab: dynamicIsland.activeTab
+            activePlayer: dynamicIsland.activePlayer
+
+            onTabChanged: newTab => dynamicIsland.activeTab = newTab
+            onCloseRequested: dynamicIsland.collapse()
+        }
+
+        state: stateMode
 
         states: [
             State {
                 name: "idle"
                 PropertyChanges {
                     target: islandRect
-                    width: clockText.width + 40
-                    height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
+                    height: dynamicIsland.idleWidgetHeight
+                    anchors.topMargin: dynamicIsland.centeredTopMargin
+
+                    width: idleBar.clockTextWidth + 40
+
                     radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                    anchors.topMargin: 5
-                }
-                PropertyChanges {
-                    target: clockContainer
-                    opacity: 1
-                }
-                PropertyChanges {
-                    target: volumeContainer
-                    opacity: 0
-                }
-                PropertyChanges {
-                    target: brightnessContainer
-                    opacity: 0
                 }
             },
             State {
-                name: "volume"
+                name: "expanded"
                 PropertyChanges {
                     target: islandRect
-                    width: 300
-                    height: 60
-                    // radius: 30
+                    height: expandedContainer.implicitHeight
+                    anchors.topMargin: dynamicIsland.droppedTopMargin
+
+                    width: 400
                     radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                    anchors.topMargin: dynamicIsland.dropDistance + 10
-                }
-                PropertyChanges {
-                    target: clockContainer
-                    opacity: 0
-                }
-                PropertyChanges {
-                    target: volumeContainer
-                    opacity: 1
-                }
-                PropertyChanges {
-                    target: brightnessContainer
-                    opacity: 0
-                }
-            },
-            State {
-                name: "brightness"
-                PropertyChanges {
-                    target: islandRect
-                    width: 300
-                    height: 60
-                    // radius: 30
-                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                    anchors.topMargin: dynamicIsland.dropDistance + 10
-                }
-                PropertyChanges {
-                    target: clockContainer
-                    opacity: 0
-                }
-                PropertyChanges {
-                    target: volumeContainer
-                    opacity: 0
-                }
-                PropertyChanges {
-                    target: brightnessContainer
-                    opacity: 1
                 }
             }
         ]
@@ -240,110 +156,18 @@ PanelWindow {
             ParallelAnimation {
                 NumberAnimation {
                     property: "anchors.topMargin"
-                    duration: 300
-                    easing.type: Easing.OutCubic
+                    duration: 400
+                    easing.type: Easing.OutQuart
                 }
                 NumberAnimation {
                     properties: "width, height"
-                    duration: 400
+                    duration: 450
                     easing.type: Easing.OutBack
+                    easing.overshoot: 0.7
                 }
                 NumberAnimation {
                     property: "radius"
                     duration: 400
-                }
-                NumberAnimation {
-                    targets: [clockContainer, volumeContainer, brightnessContainer]
-                    property: "opacity"
-                    duration: 200
-                }
-            }
-        }
-
-        // --- المحتويات ---
-
-        // 1. الساعة
-        Item {
-            id: clockContainer
-            anchors.centerIn: parent
-            width: clockText.width
-            height: parent.height
-            visible: opacity > 0
-            SystemClock {
-                id: clock
-                precision: SystemClock.Minutes
-            }
-            Text {
-                id: clockText
-                text: clock.date.toLocaleString(Qt.locale(), "hh:mm AP - dddd, dd MMMM yyyy")
-                font.bold: true
-                color: ThemeManager.selectedTheme.colors.onPrimary
-                anchors.centerIn: parent
-                verticalAlignment: Text.AlignVCenter
-            }
-        }
-
-        // 2. الصوت
-        Item {
-            id: volumeContainer
-            anchors.fill: parent
-            anchors.leftMargin: 13
-            anchors.rightMargin: 13
-            anchors.bottomMargin: 8
-            visible: opacity > 0
-
-            SystemControlWidget {
-                id: volWidget
-                anchors.fill: parent
-                value: Audio.volume
-                accentColor: ThemeManager.selectedTheme.colors.onPrimary
-
-                onPressedChanged: dynamicIsland.isInteracting = pressed
-
-                icon: {
-                    if (Audio.muted)
-                        return "";
-                    if (value < 0.30)
-                        return "";
-                    if (value < 0.70)
-                        return "";
-                    return "";
-                }
-
-                onUserChangedValue: v => Audio.setVolume(v)
-            }
-        }
-
-        // 3. السطوع
-        Item {
-            id: brightnessContainer
-            anchors.fill: parent
-            anchors.leftMargin: 13
-            anchors.rightMargin: 13
-            anchors.bottomMargin: 8
-
-            visible: opacity > 0
-
-            SystemControlWidget {
-                id: briWidget
-                anchors.fill: parent
-                value: Brightness.brightness
-                accentColor: ThemeManager.selectedTheme.colors.onPrimary
-
-                onPressedChanged: dynamicIsland.isInteracting = pressed
-
-                icon: {
-                    if (value < 0.30)
-                        return "󰃞";
-                    if (value < 0.70)
-                        return "󰃟";
-                    return "󰃠";
-                }
-
-                onUserChangedValue: v => {
-                    const mon = Brightness.getMonitorForScreen();
-                    if (mon)
-                        mon.setBrightness(v);
                 }
             }
         }
