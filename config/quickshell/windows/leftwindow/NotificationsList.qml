@@ -48,7 +48,7 @@ Item {
                 text: qsTr("Notifications")
                 font.bold: true
                 font.pixelSize: 16
-                color: ThemeManager.selectedTheme.colors.textPrimary
+                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
                 Layout.alignment: Qt.AlignVCenter
             }
 
@@ -135,13 +135,15 @@ Item {
                     text: "󰂚" // أيقونة الجرس
                     font: ThemeManager.selectedTheme.typography.iconFont
                     // font.pixelSize: 48
-                    color: ThemeManager.selectedTheme.colors.textSecondary
+                    // color: ThemeManager.selectedTheme.colors.textSecondary
+                    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
                     Layout.alignment: Qt.AlignHCenter
                 }
                 Text {
                     text: qsTr("No Notifications")
                     font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.textSecondary
+                    // color: ThemeManager.selectedTheme.colors.textSecondary
+                    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
                     Layout.alignment: Qt.AlignHCenter
                 }
             }
