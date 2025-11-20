@@ -5,9 +5,8 @@
   - [x] Application Launcher
   - [x] Improve bars positioning and shadows
   - [x] Improve edge corners
-  - [ ] Connection for `DesktopEntries` to listen to new installed apps
   - [ ] Game mode
-  - [ ] Bars Shadow Control
+  - [x] Bars Shadow Control
   - [ ] Left Bar Width Control
   - [ ] Remove `LeftMenuStatus` and Use `EventBus`
   - [x] Cheatsheet menu

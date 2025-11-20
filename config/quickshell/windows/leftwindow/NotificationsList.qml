@@ -35,8 +35,8 @@ Item {
     // --- التصميم ---
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 10 // هوامش لترتيب المحتوى عن الحواف
-        spacing: 10
+        // anchorsjmargins: 10 // هوامش لترتيب المحتوى عن الحواف
+        // spacing: 10
 
         // 1. شريط العنوان والأدوات (Header)
         RowLayout {
