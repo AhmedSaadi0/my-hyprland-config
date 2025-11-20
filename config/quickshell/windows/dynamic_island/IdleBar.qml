@@ -10,6 +10,7 @@ import "./widgets"
 
 Item {
     id: root
+    clip: true
 
     signal requestExpand(string mode)
 
@@ -26,17 +27,28 @@ Item {
     property bool hasActivePlayer: activePlayer !== null
 
     property real clockTextWidth: {
+        // 1. نحسب عرض الساعة الحالية (كمرجع)
+        let currentClockW = clockTxt.implicitWidth;
+
         let centerW = 0;
+
         if (activeMode === "clock") {
-            centerW = clockTxt.implicitWidth;
+            centerW = currentClockW;
         } else {
-            centerW = overlayIconTxt.implicitWidth + overlayMainTxt.implicitWidth + 20;
+            // نحن في وضع المعلومات (صوت/سطوع/موسيقى)
+            let infoW = overlayIconTxt.implicitWidth + overlayMainTxt.implicitWidth + 20;
+
+            // نختار القيمة الأكبر بين:
+            // 1. عرض المعلومات الفعلي
+            // 2. عرض الساعة (لكي لا ينكمش البار فجأة)
+            // 3. حد أدنى ثابت (مثلاً 150px) لضمان أن شريط التقدم له مساحة كافية للظهور
+            centerW = Math.max(infoW, Math.max(currentClockW, 150));
         }
 
         let sideIconsW = 0;
-        sideIconsW += 30;
+        sideIconsW += 30; // الطقس
         if (hasActivePlayer)
-            sideIconsW += 30;
+            sideIconsW += 30; // الموسيقى
 
         return centerW + sideIconsW + 10;
     }
@@ -200,15 +212,22 @@ Item {
     RowLayout {
         id: widgetContainer
         anchors.fill: parent
-        anchors.leftMargin: 15
-        anchors.rightMargin: 15
-        spacing: 10
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        clip: true
 
+        spacing: 5
+
+        // -------------------
+        // ----- Weather -----
+        // -------------------
         Item {
+            id: weatherItem
             Layout.preferredWidth: 24
             Layout.fillHeight: true
 
             Text {
+                id: weatherIconText
                 anchors.centerIn: parent
 
                 text: Weather.weatherIcon !== "" ? Weather.weatherIcon : "☁"
@@ -236,6 +255,10 @@ Item {
             }
         }
 
+        // --------------------
+        // ------ Center ------
+        // Clock, volume progress, brightness progress, and information
+        // --------------------
         Item {
             id: centerContainer
             Layout.fillWidth: true
@@ -270,7 +293,7 @@ Item {
             Item {
                 id: overlayItem
                 anchors.centerIn: parent
-                width: overlayRow.implicitWidth
+                width: widgetContainer.implicitWidth
                 height: parent.height
 
                 opacity: 0
@@ -367,6 +390,9 @@ Item {
             }
         }
 
+        // -------------------
+        // ----- Media -------
+        // -------------------
         Item {
             Layout.preferredWidth: 24
             Layout.fillHeight: true

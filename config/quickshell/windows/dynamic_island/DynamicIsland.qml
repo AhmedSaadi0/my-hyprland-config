@@ -32,22 +32,26 @@ PanelWindow {
     property int droppedTopMargin: barFullHeight + 10
 
     property int activePlayerIndex: 0
-    property var playersList: Mpris.players.values
+    property var playersArray: Mpris.players.values
+
     property var activePlayer: {
-        if (playersList.length === 0)
+        if (playersArray.length === 0)
             return null;
-        if (activePlayerIndex >= playersList.length)
+        // حماية الاندكس
+        if (activePlayerIndex >= playersArray.length)
             activePlayerIndex = 0;
-        return playersList[activePlayerIndex];
+        return playersArray[activePlayerIndex];
     }
+
     property bool hasActivePlayer: activePlayer !== null
 
     property bool isHovered: false
     property bool isInteracting: false
 
     function cyclePlayers() {
-        if (playersList.length > 1)
-            activePlayerIndex = (activePlayerIndex + 1) % playersList.length;
+        if (playersArray.length > 1) {
+            activePlayerIndex = (activePlayerIndex + 1) % playersArray.length;
+        }
     }
 
     function expand(tabName) {
@@ -120,8 +124,11 @@ PanelWindow {
             currentTab: dynamicIsland.activeTab
             activePlayer: dynamicIsland.activePlayer
 
+            playersCount: dynamicIsland.playersArray.length
+
             onTabChanged: newTab => dynamicIsland.activeTab = newTab
             onCloseRequested: dynamicIsland.collapse()
+            onSwitchPlayerRequested: dynamicIsland.cyclePlayers()
         }
 
         state: stateMode

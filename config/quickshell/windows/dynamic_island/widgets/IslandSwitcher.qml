@@ -16,7 +16,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        radius: height / 2
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius
         color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
 
         Rectangle {
@@ -27,7 +27,7 @@ Item {
 
             x: root.currentTab === "weather" ? 2 : (parent.width / 2) + 2
 
-            radius: height / 2
+            radius: ThemeManager.selectedTheme.dimensions.elementRadius
             color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
 
             Behavior on x {

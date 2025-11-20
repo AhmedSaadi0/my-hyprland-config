@@ -1,16 +1,15 @@
 import QtQuick
-import QtQuick.Layouts 1.15
+import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import Quickshell.Services.Mpris
 
 import "root:/themes"
 import "root:/components"
+import "root:/config"
 
 Item {
     id: root
-
-    implicitHeight: 180
 
     property var player: null
     property int availablePlayersCount: 0
@@ -29,6 +28,39 @@ Item {
     property alias pressed: mouseArea.pressed
 
     signal switchPlayerClicked
+
+    implicitHeight: 180
+
+    NibrasShellShortcut {
+        id: nextSongShortcut
+        name: "nextSong"
+        onPressed: root.player.next()
+    }
+
+    NibrasShellShortcut {
+        id: previousSongShortcut
+        name: "previousSong"
+        onPressed: root.player.previous()
+    }
+
+    NibrasShellShortcut {
+        id: togglePlayingShortcut
+        name: "togglePlaying"
+        onPressed: root.player.togglePlaying()
+    }
+
+    NibrasShellShortcut {
+        id: switchPlayerShortcut
+        name: "switchPlayer"
+        onPressed: root.switchPlayerClicked()
+    }
+
+
+    NibrasShellShortcut {
+        id: stopPlayShortcut
+        name: "stopPlay"
+        onPressed: root.player.stop()
+    }
 
     Timer {
         interval: 1000
@@ -54,69 +86,67 @@ Item {
 
     RowLayout {
         anchors.fill: parent
-
-        anchors.leftMargin: 24
-        anchors.rightMargin: 24
-        anchors.topMargin: 20
-        anchors.bottomMargin: 30
+        anchors.rightMargin: 15
+        anchors.leftMargin: 15
+        anchors.bottomMargin: 10
         spacing: 20
 
-        Item {
-            Layout.preferredWidth: 100
-            Layout.fillHeight: true
+        Rectangle {
+            Layout.preferredWidth: 90
+            Layout.preferredHeight: 90
+            Layout.alignment: Qt.AlignVCenter
 
-            Rectangle {
-                width: 100
-                height: 100
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
-                clip: true
+            radius: ThemeManager.selectedTheme.dimensions.elementRadius
+            color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
+            clip: true
 
+            Image {
+                anchors.fill: parent
+                source: root.albumArt
+                fillMode: Image.PreserveAspectCrop
+                visible: status === Image.Ready && source !== ""
+            }
+
+            Text {
                 anchors.centerIn: parent
-
-                Image {
-                    anchors.fill: parent
-                    source: root.albumArt
-                    fillMode: Image.PreserveAspectCrop
-                    visible: status === Image.Ready && source !== ""
-                }
-
-                Text {
-                    anchors.centerIn: parent
-                    visible: parent.children[0].status !== Image.Ready || root.albumArt === ""
-                    text: "󰝚"
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 40
-                    color: ThemeManager.selectedTheme.colors.onPrimary
-                }
+                visible: parent.children[0].status !== Image.Ready || root.albumArt === ""
+                text: "󰝚"
+                font.family: ThemeManager.selectedTheme.typography.iconFont
+                font.pixelSize: 35
+                color: ThemeManager.selectedTheme.colors.onPrimary
             }
         }
 
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.alignment: Qt.AlignVCenter
             spacing: 0
 
             RowLayout {
                 Layout.fillWidth: true
+                spacing: 10
 
                 Rectangle {
-                    height: 20
-                    width: appIconRow.width + 12
-                    radius: 10
+                    height: 22
+                    width: appIdentityRow.implicitWidth + 16
+                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
                     color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
 
                     Row {
-                        id: appIconRow
+                        id: appIdentityRow
                         anchors.centerIn: parent
-                        spacing: 4
+                        spacing: 6
+
                         Text {
                             text: ""
                             font.family: ThemeManager.selectedTheme.typography.iconFont
-                            color: ThemeManager.selectedTheme.colors.onPrimary
                             font.pixelSize: 10
+                            color: ThemeManager.selectedTheme.colors.onPrimary
+                            opacity: 0.8
                             anchors.verticalCenter: parent.verticalCenter
                         }
+
                         Text {
                             text: root.identity
                             font.bold: true
@@ -133,18 +163,21 @@ Item {
 
                 MButton {
                     visible: root.availablePlayersCount > 1
-                    text: ""
+
+                    text: "󰌳"
                     font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 14
+                    font.pixelSize: 12
 
                     implicitWidth: 24
                     implicitHeight: 24
+
                     normalBackground: "transparent"
                     normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-                    hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
+                    hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
 
                     ToolTip.visible: hovered
                     ToolTip.text: "Switch Player"
+                    ToolTip.delay: 500
 
                     onClicked: root.switchPlayerClicked()
                 }
@@ -231,6 +264,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter
                 spacing: 25
+                Layout.bottomMargin: 2
 
                 MButton {
                     text: ""
@@ -252,10 +286,7 @@ Item {
                     font.pixelSize: 24
                     implicitWidth: 45
                     implicitHeight: 45
-                    topLeftRadius: 23
-                    topRightRadius: 23
-                    bottomLeftRadius: 23
-                    bottomRightRadius: 23
+
                     normalBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
                     hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.3)
                     normalForeground: ThemeManager.selectedTheme.colors.onPrimary

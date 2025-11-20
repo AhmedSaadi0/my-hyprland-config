@@ -11,10 +11,11 @@ Item {
 
     property string currentTab: "weather"
     property var activePlayer: null
+    property int playersCount: 0
 
     signal tabChanged(string newTab)
-
     signal closeRequested
+    signal switchPlayerRequested
 
     implicitHeight: mainLayout.implicitHeight + 20
 
@@ -33,11 +34,6 @@ Item {
         normalBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
 
         normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-
-        topLeftRadius: 12
-        topRightRadius: 12
-        bottomLeftRadius: 12
-        bottomRightRadius: 12
 
         onClicked: root.closeRequested()
 
@@ -94,14 +90,21 @@ Item {
                 id: mediaWidget
                 width: parent.width
                 height: implicitHeight
+
                 player: root.activePlayer
+
+                availablePlayersCount: root.playersCount
+                // -------------------------------
+
                 opacity: root.currentTab === "media" ? 1 : 0
                 visible: opacity > 0
+
                 Behavior on opacity {
                     NumberAnimation {
                         duration: 200
                     }
                 }
+
                 transform: Translate {
                     x: root.currentTab === "media" ? 0 : 50
                     Behavior on x {
@@ -111,6 +114,8 @@ Item {
                         }
                     }
                 }
+
+                onSwitchPlayerClicked: root.switchPlayerRequested()
             }
         }
     }
