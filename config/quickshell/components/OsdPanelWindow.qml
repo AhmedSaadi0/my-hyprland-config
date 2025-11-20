@@ -104,7 +104,8 @@ PanelWindow {
             implicitWidth: 200
             implicitHeight: 50
             color: root.bgColor
-            radius: 15
+            radius: ThemeManager.selectedTheme.dimensions.elementRadius
+
             y: 50
             opacity: 0
             anchors.horizontalCenter: parent.horizontalCenter

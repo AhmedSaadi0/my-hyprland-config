@@ -7,6 +7,7 @@ import QtQuick.Window
 import Quickshell.Io
 
 import "root:/windows/leftwindow"
+import "root:/windows/dynamic_island"
 import "root:/windows/settings"
 import "root:/windows/cheatsheet"
 import "root:/bars"
@@ -21,8 +22,8 @@ ShellRoot {
     id: shellRoot
 
     property var settingsWindowInstance: null
-    property var volumeInstance: null
-    property var brightnessInstance: null
+    // property var volumeInstance: null
+    // property var brightnessInstance: null
     property var notificationsInstance: null
     readonly property var _selectedTheme: ThemeManager.selectedTheme
     signal openLeftPanelRequested(int selectedIndex)
@@ -57,19 +58,19 @@ ShellRoot {
             }
         }
 
-        if (!volumeInstance) {
-            volumeInstance = volumeComponent.createObject(shellRoot);
-            if (!volumeInstance) {
-                console.error("CRITICAL: Failed to create the Volume OSD component!");
-            }
-        }
+        // if (!volumeInstance) {
+        //     volumeInstance = volumeComponent.createObject(shellRoot);
+        //     if (!volumeInstance) {
+        //         console.error("CRITICAL: Failed to create the Volume OSD component!");
+        //     }
+        // }
 
-        if (!brightnessInstance) {
-            brightnessInstance = brightnessComponent.createObject(shellRoot);
-            if (!brightnessInstance) {
-                console.error("CRITICAL: Failed to create the Brightness OSD component!");
-            }
-        }
+        // if (!brightnessInstance) {
+        //     brightnessInstance = brightnessComponent.createObject(shellRoot);
+        //     if (!brightnessInstance) {
+        //         console.error("CRITICAL: Failed to create the Brightness OSD component!");
+        //     }
+        // }
 
         if (!notificationsInstance) {
             notificationsInstance = notificationsComponent.createObject(shellRoot);
@@ -127,14 +128,16 @@ ShellRoot {
         Main {}
     }
 
-    Component {
-        id: volumeComponent
-        Volume {}
-    }
-    Component {
-        id: brightnessComponent
-        Brightness {}
-    }
+    // Component {
+    //     id: volumeComponent
+    //     Volume {}
+    // }
+    // Component {
+    //     id: brightnessComponent
+    //     Brightness {}
+    // }
+    //
+    //
     Component {
         id: notificationsComponent
         Notifications {}
@@ -148,6 +151,15 @@ ShellRoot {
     Component {
         id: mainUiComponent
         Item {
+
+            Variants {
+                model: Quickshell.screens
+                DynamicIsland {
+                    id: dynamicIsland
+                    required property ShellScreen modelData
+                    screen: modelData
+                }
+            }
 
             Variants {
                 model: Quickshell.screens
@@ -287,6 +299,7 @@ ShellRoot {
                     }
                 }
             }
+
             // Variants {
             //     model: Quickshell.screens
             //     Widgets {
