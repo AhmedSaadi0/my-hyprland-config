@@ -64,6 +64,7 @@
   - [x] Network Usage Card
   - [ ] VPN Status Indicator
   - [ ] Quick Wi-Fi / Airplane Toggle
+  - [ ] Monitor Selection
 
 - **Devices**
   - [x] Audio Devices Control

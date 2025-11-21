@@ -17,6 +17,48 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 
 يُفضل استخدام هذا الإعداد مع تطبيقات KDE للحصول على أفضل تجربة. إذا اخترت استخدام تطبيقات أخرى، فلا بأس بذلك، ولكن ستحتاج إلى ضبط الإعدادات يدوياً إذا لم يكن لديها ثيم مشابه لبقية التطبيقات.
 
+## ✨ المميزات الرئيسية
+
+تقدم NibrasShell تجربة متكاملة تتجاوز مجرد الشكل الجمالي:
+
+### 1. 🎨 ثيمات متعددة جاهزة
+
+تتضمن الواجهة مجموعة من أشهر الثيمات المجهزة مسبقاً:
+
+- Dracula, Gruvbox, Nord, Material3, Catppuccin, TokyoNight.
+
+### 2. ⚙️ تخصيص
+
+تعديل كل شيء تقريباً:
+
+- تغيير الألوان والخلفيات بسهولة.
+- التحكم بإعدادات Hyprland الأساسية من واجهة المستخدم.
+- توليد ألوان النظام بناءً على الخلفية (Material You).
+
+### 3. 💊 الكبسولة الذكية (The Smart Capsule)
+
+مركز تحكم تفاعلي:
+
+- **مشغل موسيقى متطور:** دعم لتعدد المشغلات مع Visualizer متحرك.
+- **إشعارات مدمجة:** التحكم بالصوت والسطوع يتم داخل الشريط (Inline) دون حجب الشاشة.
+- **طقس وتفاعل:** الوصول السريع لمعلومات الطقس والتحكم بالنظام.
+<p align="center">
+  <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule Demo" width="100%">
+</p>
+
+### 4. ⛈️ تنبيهات الطقس
+
+نظام إشعارات ينبهك بحالات الطقس القاسية فور حدوثها:
+
+- تنبيهات للصقيع، المطر الغزير، الثلوج، الرعد، والرياح القوية.
+
+### 5. 📡 مدير الشبكة
+
+- عرض سرعة الإنترنت الحالية.
+- حساب استهلاك البيانات (يومي / شهري).
+
+---
+
 ## التثبيت
 
 ### الطريقة التلقائية (موصى به)
@@ -265,6 +307,48 @@ nvim .nibrasshell.json
 ### Note
 
 It is recommended to use this setup with KDE applications for the best experience. If you choose to use other applications, that is fine, but you will need to theme them manually if they do not have a theme similar to the rest of the applications.
+
+## ✨ Key Features
+
+NibrasShell offers a complete desktop experience, not just a look:
+
+### 1. 🎨 Instant Theme Switching
+
+Pre-configured, high-quality themes:
+
+- Dracula, Gruvbox, Nord, Material3, Catppuccin, TokyoNight.
+
+### 2. ⚙️ Ultimate Customizability
+
+Allows deep personalization:
+
+- Easily change colors and wallpapers.
+- Tweak Hyprland settings directly from the UI.
+- Dynamic system colors based on your wallpaper (Material You).
+
+### 3. 💊 The Smart Capsule
+
+An interactive control hub:
+
+- **Advanced Media Player:** Multi-player support with a live visualizer.
+- **Non-Intrusive OSD:** Volume and brightness changes happen _inline_ (inside the bar) to keep your view clear.
+- **Smart Interactions:** Quick access to weather and system controls.
+<p align="center">
+  <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule Demo" width="100%">
+</p>
+
+### 4. ⛈️ Weather Alerts
+
+Notification system that alerts you to severe conditions:
+
+- Instant alerts for Frost, Rain, Snow, Thunderstorms, and High Winds.
+
+### 5. 📡 Network Dashboard
+
+- Real-time speed monitoring.
+- **Data Usage Tracking:** Monitor your daily and monthly consumption.
+
+---
 
 ## Installing
 

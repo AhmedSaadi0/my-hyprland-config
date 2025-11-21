@@ -180,9 +180,9 @@ Item {
     function showMediaInfoStatus() {
         if (!activePlayer)
             return;
-        var isPlaying = activePlayer.isPlaying;
-        var status = isPlaying ? "Playing" : "Paused";
-        var icon = isPlaying ? "" : "";
+        // var isPlaying = activePlayer.isPlaying;
+        // var status = isPlaying ? "Playing" : "Paused";
+        // var icon = isPlaying ? "" : "";
 
         root.overlayIcon = icon;
         root.overlayText = status;

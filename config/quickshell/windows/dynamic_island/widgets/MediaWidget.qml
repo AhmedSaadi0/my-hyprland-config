@@ -55,7 +55,6 @@ Item {
         onPressed: root.switchPlayerClicked()
     }
 
-
     NibrasShellShortcut {
         id: stopPlayShortcut
         name: "stopPlay"
