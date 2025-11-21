@@ -5,12 +5,11 @@
   - [x] Application Launcher
   - [x] Improve bars positioning and shadows
   - [x] Improve edge corners
-  - [ ] Connection for `DesktopEntries` to listen to new installed apps
+  - [x] Cheatsheet menu
   - [ ] Game mode
   - [ ] Bars Shadow Control
   - [ ] Left Bar Width Control
   - [ ] Remove `LeftMenuStatus` and Use `EventBus`
-  - [x] Cheatsheet menu
 
 - **Menus**
   - [x] Left Menu Navigation
@@ -31,10 +30,10 @@
   - [x] Clock Widget
   - [x] Depth Effect
   - [x] Support Depth Effect for Dynamic Wallpapers
-  - [ ] Depth effect for each wallpaper in dynamic wallpapers
-  - [ ] Auto Depth Effect generation + clock adaptation
   - [x] Weather Widget
   - [x] Music Widget
+  - [ ] Depth effect for each wallpaper in dynamic wallpapers
+  - [ ] Auto Depth Effect generation + clock adaptation
 
 ---
 
@@ -86,7 +85,7 @@
   - [ ] Hijri Date Display
 
 - **Music**
-  - [x] Dynamic Island Support
+  - [x] Dynamic Island Support - (Smart cap)
   - [x] Cava Visualization
   - [x] Media Controls Widget
   - [ ] Lyrics Display (Live sync)
@@ -113,18 +112,18 @@
 - [x] GTK4 Theme Support
 - [ ] Halt Dynamic Wallpapers option
 - [ ] Configure Dynamic Coloring
+  - [ ] Control Material 3 moent from settings
 - [ ] Solarized, Rosé Pine, Oxocarbon Themes
 - [ ] Extend Color Schema (6 colors)
-- [ ] Control Material 3 moent from settings
 
 ---
 
 ## 🧠 تحسينات وتجربة المستخدم (Productivity & UX)
 
-- [ ] Keyboard Layout Switch Indicator
 - [x] Improve Menu Cards
 - [x] Improve Menus Navigation
 - [x] Improve Animations (Menu, Notifications, Navigation)
+- [ ] Keyboard Layout Switch Indicator
 - [ ] Control the way menu is opened (reserve space or like floating)
 - [ ] Toggle Buttons for (Wi-Fi, Bluetooth, Gammastep, Gaming Mode ... etc)
 
@@ -134,4 +133,12 @@
 
 - [x] Create Component for Theme Settings Text & Label
 - [x] Wallpaper Settings: TextField update before save
-- [ ] Move Non Genral Components to Correct Location: ex-> SettingSwitch to windows/settings/widgets
+- [ ] Move Non General Components to Correct Location: ex-> SettingSwitch to windows/settings/widgets
+
+---
+
+## Smart Cap
+
+- [ ] Add const values to statuses (media, weather, info, clock)
+- [ ] Improve weather info (color be same as weather condition, add gif that represents current weather)
+- [ ] Add Battery info and expanded

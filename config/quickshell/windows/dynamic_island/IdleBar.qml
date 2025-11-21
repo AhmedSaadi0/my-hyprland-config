@@ -53,6 +53,18 @@ Item {
         return centerW + sideIconsW + 10;
     }
 
+    onIsListeningChanged: {
+        if (!isListening) {
+            // 1. إيقاف العد التنازلي فوراً
+            revertTimer.stop();
+
+            // 2. (اختياري ولكنه أفضل) إعادة الوضع للساعة في الخلفية
+            // حتى عندما تغلق الجزيرة لاحقاً، تجد الساعة بانتظارك وليس نص الأغنية القديم
+            root.activeMode = "clock";
+            root.showProgress = false;
+        }
+    }
+
     Timer {
         id: revertTimer
         interval: 3000
@@ -118,10 +130,11 @@ Item {
             showMediaInfo();
         }
         function onPlaybackStatusChanged() {
-            showMediaInfoStatus();
+            showMediaInfo();
+        // showMediaInfoStatus();
         }
         function onIsPlayingChanged() {
-            showMediaInfoStatus();
+        // showMediaInfoStatus();
         }
     }
 
@@ -180,9 +193,9 @@ Item {
     function showMediaInfoStatus() {
         if (!activePlayer)
             return;
-        // var isPlaying = activePlayer.isPlaying;
-        // var status = isPlaying ? "Playing" : "Paused";
-        // var icon = isPlaying ? "" : "";
+        var isPlaying = activePlayer.isPlaying;
+        var status = isPlaying ? "Playing" : "Paused";
+        var icon = isPlaying ? "" : "";
 
         root.overlayIcon = icon;
         root.overlayText = status;
