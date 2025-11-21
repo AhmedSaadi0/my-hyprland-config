@@ -6,6 +6,7 @@ import Quickshell.Services.Mpris
 import "root:/themes"
 import "root:/components"
 import "root:/services"
+import "root:/config"
 import "./widgets"
 
 PanelWindow {
@@ -61,6 +62,30 @@ PanelWindow {
 
     function collapse() {
         stateMode = "idle";
+    }
+
+    NibrasShellShortcut {
+        id: toggleMediaIsland
+        name: "toggleMediaIsland"
+        onPressed: {
+            if (activeTab === "media" && stateMode === "expanded") {
+                collapse();
+            } else {
+                expand("media");
+            }
+        }
+    }
+
+    NibrasShellShortcut {
+        id: toggleWeatherIsland
+        name: "toggleWeatherIsland"
+        onPressed: {
+            if (activeTab === "weather" && stateMode === "expanded") {
+                collapse();
+            } else {
+                expand("weather");
+            }
+        }
     }
 
     Rectangle {

@@ -1,3 +1,4 @@
+// bars/systemtray/TrayItem.qml
 pragma ComponentBehavior: Bound
 
 import QtQuick

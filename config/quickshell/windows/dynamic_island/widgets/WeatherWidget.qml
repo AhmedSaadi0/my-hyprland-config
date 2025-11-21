@@ -82,10 +82,9 @@ Item {
 
                 delegate: ColumnLayout {
                     Layout.fillWidth: true
-                    spacing: 5
+                    spacing: 15
 
                     Text {
-
                         text: modelData.dayName ? modelData.dayName.substring(0, 3).toUpperCase() : ""
                         font.pixelSize: 11
                         font.bold: true

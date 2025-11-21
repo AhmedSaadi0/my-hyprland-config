@@ -36,7 +36,7 @@ Item {
             centerW = currentClockW;
         } else {
             // نحن في وضع المعلومات (صوت/سطوع/موسيقى)
-            let infoW = overlayIconTxt.implicitWidth + overlayMainTxt.implicitWidth + 20;
+            let infoW = overlayIconTxt.implicitWidth + overlayMainTxt.implicitWidth;
 
             // نختار القيمة الأكبر بين:
             // 1. عرض المعلومات الفعلي
@@ -46,9 +46,9 @@ Item {
         }
 
         let sideIconsW = 0;
-        sideIconsW += 30; // الطقس
+        sideIconsW += 20; // الطقس
         if (hasActivePlayer)
-            sideIconsW += 30; // الموسيقى
+            sideIconsW += 20; // الموسيقى
 
         return centerW + sideIconsW + 10;
     }
@@ -229,7 +229,6 @@ Item {
             Text {
                 id: weatherIconText
                 anchors.centerIn: parent
-
                 text: Weather.weatherIcon !== "" ? Weather.weatherIcon : "☁"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
                 font.pixelSize: 18
