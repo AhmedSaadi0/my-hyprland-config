@@ -1,3 +1,5 @@
+// windows/dynamic_island/IdleBar.qml
+
 import QtQuick
 import QtQuick.Layouts 1.15
 import QtQuick.Controls
@@ -10,88 +12,99 @@ import "./widgets"
 
 Item {
     id: root
-    clip: true
+
+    // ============================================================
+    //  CONFIGURATION (Edit these values to change appearance) TODO: -> Control them using ThemeManager
+    // ============================================================
+
+    // -- Animations --
+    property int animSpeedFast: 250      // Progress bar, fades
+    property int animSpeedNormal: 300    // Slide movements
+    property int animSpeedSlow: 600      // Background fade in/out
+    property int colorCycleDuration: 2000 // Time between color shifts in music bg
+    property int infoDisplayTime: 3000   // How long info stays before reverting to clock
+
+    // -- Colors (Music Background Gradient Phases) --
+    // Phase 1: Blue/Cyan
+    property color p1_start: "#4facfe"
+    property color p1_mid: "#00f2fe"
+    property color p1_end: "#a18cd1"
+
+    // Phase 2: Sunset
+    property color p2_start: "#fa709a"
+    property color p2_mid: "#fee140"
+    property color p2_end: "#ff0844"
+
+    // Phase 3: Neon/Deep
+    property color p3_start: "#30cfd0"
+    property color p3_mid: "#B9429F"
+    property color p3_end: "#5b86e5"
+
+    // -- Layout & Fonts --
+    property real elementRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property int fontSizeIcon: 18
+    property int fontSizeText: 14
+    property int layoutSpacing: 5
+
+    // ============================================================
+    //  STATE & LOGIC VARIABLES (Do not edit manually)
+    // ============================================================
+    clip: true // Ensures content stays inside rounded corners
 
     signal requestExpand(string mode)
 
     property bool isListening: true
-
-    property string activeMode: "clock"
+    property string activeMode: "clock" // "clock" or "info"
     property string overlayIcon: ""
     property string overlayText: ""
 
     property real progressValue: 0.0
     property bool showProgress: false
+    property bool isHoverMode: false
 
-    property var activePlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
+    property var activePlayer: null
     property bool hasActivePlayer: activePlayer !== null
 
+    // Music playing state (Uncomment the readonly property in production)
+    property bool isMusicPlaying: activePlayer ? activePlayer.isPlaying : false
+    // readonly property bool isMusicPlaying: activePlayer && activePlayer.playbackStatus === Mpris.PlaybackStatus.Playing
+
+    // Calculate width dynamically based on content
     property real clockTextWidth: {
-        // 1. نحسب عرض الساعة الحالية (كمرجع)
         let currentClockW = clockTxt.implicitWidth;
-
         let centerW = 0;
-
-        if (activeMode === "clock") {
+        if (activeMode === "clock" || isHoverMode) {
             centerW = currentClockW;
         } else {
-            // نحن في وضع المعلومات (صوت/سطوع/موسيقى)
             let infoW = overlayIconTxt.implicitWidth + overlayMainTxt.implicitWidth;
-
-            // نختار القيمة الأكبر بين:
-            // 1. عرض المعلومات الفعلي
-            // 2. عرض الساعة (لكي لا ينكمش البار فجأة)
-            // 3. حد أدنى ثابت (مثلاً 150px) لضمان أن شريط التقدم له مساحة كافية للظهور
             centerW = Math.max(infoW, Math.max(currentClockW, 150));
         }
-
-        let sideIconsW = 0;
-        sideIconsW += 20; // الطقس
+        let sideIconsW = 40;
         if (hasActivePlayer)
-            sideIconsW += 20; // الموسيقى
-
+            sideIconsW += 20;
         return centerW + sideIconsW + 10;
     }
 
+    // ============================================================
+    //  LOGIC HANDLERS (Timers & Connections)
+    // ============================================================
+
     onIsListeningChanged: {
         if (!isListening) {
-            // 1. إيقاف العد التنازلي فوراً
             revertTimer.stop();
-
-            // 2. (اختياري ولكنه أفضل) إعادة الوضع للساعة في الخلفية
-            // حتى عندما تغلق الجزيرة لاحقاً، تجد الساعة بانتظارك وليس نص الأغنية القديم
             root.activeMode = "clock";
             root.showProgress = false;
         }
     }
 
+    // Timer to revert back to clock after showing info
     Timer {
         id: revertTimer
-        interval: 3000
+        interval: root.infoDisplayTime
         repeat: false
         onTriggered: {
             root.activeMode = "clock";
             root.showProgress = false;
-        }
-    }
-
-    Rectangle {
-        id: progressBar
-        height: parent.height
-        width: parent.width * root.progressValue
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.25)
-
-        visible: root.activeMode === "info" && root.showProgress
-
-        Behavior on width {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.OutQuad
-            }
         }
     }
 
@@ -125,23 +138,17 @@ Item {
         target: activePlayer
         ignoreUnknownSignals: true
         enabled: root.isListening
-
         function onMetadataChanged() {
             showMediaInfo();
         }
         function onPlaybackStatusChanged() {
             showMediaInfo();
-        // showMediaInfoStatus();
-        }
-        function onIsPlayingChanged() {
-        // showMediaInfoStatus();
         }
     }
 
     Connections {
         target: Weather
         enabled: root.isListening
-
         function onChanceOfRainNotified(msg) {
             showWeatherAlert("", "Rain Expected");
         }
@@ -165,6 +172,7 @@ Item {
         }
     }
 
+    // Helper Functions
     function showWeatherAlert(icon, text) {
         root.overlayIcon = icon;
         root.overlayText = text;
@@ -178,28 +186,8 @@ Item {
             return;
         var title = activePlayer.trackTitle || "Unknown";
         var artist = activePlayer.trackArtist || "";
-
         root.overlayIcon = "󰝚";
-        if (artist !== "")
-            root.overlayText = artist + " - " + title;
-        else
-            root.overlayText = title;
-
-        root.showProgress = false;
-        root.activeMode = "info";
-        revertTimer.restart();
-    }
-
-    function showMediaInfoStatus() {
-        if (!activePlayer)
-            return;
-        var isPlaying = activePlayer.isPlaying;
-        var status = isPlaying ? "Playing" : "Paused";
-        var icon = isPlaying ? "" : "";
-
-        root.overlayIcon = icon;
-        root.overlayText = status;
-
+        root.overlayText = (artist !== "") ? artist + " - " + title : title;
         root.showProgress = false;
         root.activeMode = "info";
         revertTimer.restart();
@@ -214,6 +202,7 @@ Item {
             return "";
         return "";
     }
+
     function getBrightnessIcon(val) {
         if (val < 0.30)
             return "󰃞";
@@ -222,18 +211,175 @@ Item {
         return "󰃠";
     }
 
+    // ============================================================
+    //  VISUAL LAYERS
+    // ============================================================
+
+    // 1. Music Animated Background
+    Rectangle {
+        id: musicInternalBg
+        anchors.fill: parent
+        radius: root.elementRadius
+        opacity: root.isMusicPlaying ? 1.0 : 0.0
+        visible: opacity > 0
+
+        gradient: Gradient {
+            orientation: Gradient.Horizontal
+            GradientStop {
+                id: gradStart
+                position: 0.0
+                color: root.p1_start
+            }
+            GradientStop {
+                id: gradMid
+                position: 0.5
+                color: root.p1_mid
+            }
+            GradientStop {
+                id: gradEnd
+                position: 1.0
+                color: root.p1_end
+            }
+        }
+
+        SequentialAnimation {
+            running: root.isMusicPlaying
+            loops: Animation.Infinite
+
+            // Shift to Phase 2
+            ParallelAnimation {
+                ColorAnimation {
+                    target: gradStart
+                    property: "color"
+                    to: root.p2_start
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+                ColorAnimation {
+                    target: gradMid
+                    property: "color"
+                    to: root.p2_mid
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+                ColorAnimation {
+                    target: gradEnd
+                    property: "color"
+                    to: root.p2_end
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+            }
+            // Shift to Phase 3
+            ParallelAnimation {
+                ColorAnimation {
+                    target: gradStart
+                    property: "color"
+                    to: root.p3_start
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+                ColorAnimation {
+                    target: gradMid
+                    property: "color"
+                    to: root.p3_mid
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+                ColorAnimation {
+                    target: gradEnd
+                    property: "color"
+                    to: root.p3_end
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+            }
+            // Return to Phase 1
+            ParallelAnimation {
+                ColorAnimation {
+                    target: gradStart
+                    property: "color"
+                    to: root.p1_start
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+                ColorAnimation {
+                    target: gradMid
+                    property: "color"
+                    to: root.p1_mid
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+                ColorAnimation {
+                    target: gradEnd
+                    property: "color"
+                    to: root.p1_end
+                    duration: root.colorCycleDuration
+                    easing.type: Easing.InOutSine
+                }
+            }
+        }
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: root.animSpeedSlow
+            }
+        }
+    }
+
+    // 2. Glossy Shine Overlay
+    Rectangle {
+        anchors.fill: parent
+        radius: root.elementRadius
+        color: "transparent"
+        opacity: root.isMusicPlaying ? 1.0 : 0.0
+        gradient: Gradient {
+            orientation: Gradient.Vertical
+            GradientStop {
+                position: 0.0
+                color: "#40FFFFFF"
+            }
+            GradientStop {
+                position: 0.5
+                color: "transparent"
+            }
+            GradientStop {
+                position: 1.0
+                color: "#10000000"
+            }
+        }
+    }
+
+    // 3. Progress Bar (Volume/Brightness)
+    Rectangle {
+        id: progressBar
+        height: parent.height
+        width: parent.width * root.progressValue
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        radius: root.elementRadius
+        color: "#FFFFFF"
+        opacity: 0.3
+        visible: root.activeMode === "info" && root.showProgress
+
+        Behavior on width {
+            NumberAnimation {
+                duration: root.animSpeedFast
+                easing.type: Easing.OutQuad
+            }
+        }
+    }
+
+    // 4. Main Content Row (Weather, Clock, Media)
     RowLayout {
         id: widgetContainer
         anchors.fill: parent
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
+        anchors.leftMargin: 15
+        anchors.rightMargin: 15
         clip: true
+        spacing: root.layoutSpacing
 
-        spacing: 5
-
-        // -------------------
-        // ----- Weather -----
-        // -------------------
+        // -- Weather Widget --
         Item {
             id: weatherItem
             Layout.preferredWidth: 24
@@ -244,14 +390,10 @@ Item {
                 anchors.centerIn: parent
                 text: Weather.weatherIcon !== "" ? Weather.weatherIcon : "☁"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
-                font.pixelSize: 18
+                font.pixelSize: root.fontSizeIcon
+                font.bold: true
                 color: ThemeManager.selectedTheme.colors.onPrimary
-                opacity: weatherMouse.containsMouse ? 1.0 : 0.7
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: 150
-                    }
-                }
+                opacity: weatherMouse.containsMouse ? 1.0 : 0.9
             }
 
             MouseArea {
@@ -260,23 +402,29 @@ Item {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: root.requestExpand("weather")
-
-                ToolTip.visible: hovered
-                ToolTip.text: Weather.currentTemp + "° - " + Weather.weatherDescription
-                ToolTip.delay: 500
+                onEntered: {
+                    revertTimer.stop();
+                    root.overlayIcon = Weather.weatherIcon !== "" ? Weather.weatherIcon : "☁";
+                    root.overlayText = Weather.currentTemp + "° - " + Weather.weatherDescription;
+                    root.isHoverMode = true;
+                    root.showProgress = false;
+                    root.activeMode = "info";
+                }
+                onExited: {
+                    root.isHoverMode = false;
+                    root.activeMode = "clock";
+                }
             }
         }
 
-        // --------------------
-        // ------ Center ------
-        // Clock, volume progress, brightness progress, and information
-        // --------------------
+        // -- Center Container (Swaps between Clock & Info) --
         Item {
             id: centerContainer
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
 
+            // Clock View
             Item {
                 id: clockItem
                 anchors.centerIn: parent
@@ -296,18 +444,18 @@ Item {
                     anchors.centerIn: parent
                     text: sysClock.date.toLocaleString(Qt.locale(), "hh:mm AP - dddd, dd MMMM yyyy")
                     font.bold: true
-                    font.pixelSize: 14
+                    font.pixelSize: root.fontSizeText
                     color: ThemeManager.selectedTheme.colors.onPrimary
                     verticalAlignment: Text.AlignVCenter
                 }
             }
 
+            // Info View (Notification/Player/Progress)
             Item {
                 id: overlayItem
                 anchors.centerIn: parent
                 width: widgetContainer.implicitWidth
                 height: parent.height
-
                 opacity: 0
                 transform: Translate {
                     id: overlayTrans
@@ -323,27 +471,25 @@ Item {
                         id: overlayIconTxt
                         text: root.overlayIcon
                         font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 14
+                        font.pixelSize: root.fontSizeText
                         color: ThemeManager.selectedTheme.colors.onPrimary
                         anchors.verticalCenter: parent.verticalCenter
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     Text {
                         id: overlayMainTxt
                         text: root.overlayText
                         font.bold: true
-                        font.pixelSize: 14
+                        font.pixelSize: root.fontSizeText
                         color: ThemeManager.selectedTheme.colors.onPrimary
                         anchors.verticalCenter: parent.verticalCenter
-                        verticalAlignment: Text.AlignVCenter
-
                         width: Math.min(implicitWidth, 500)
                         elide: Text.ElideRight
                     }
                 }
             }
 
+            // State Handling for Animations
             states: [
                 State {
                     name: "clock"
@@ -391,20 +537,18 @@ Item {
                 ParallelAnimation {
                     NumberAnimation {
                         property: "opacity"
-                        duration: 200
+                        duration: root.animSpeedFast
                     }
                     NumberAnimation {
                         property: "y"
-                        duration: 300
+                        duration: root.animSpeedNormal
                         easing.type: Easing.OutCubic
                     }
                 }
             }
         }
 
-        // -------------------
-        // ----- Media -------
-        // -------------------
+        // -- Media Widget --
         Item {
             Layout.preferredWidth: 24
             Layout.fillHeight: true
@@ -412,9 +556,8 @@ Item {
 
             MusicVisualizer {
                 anchors.centerIn: parent
-
                 playing: root.activePlayer && root.activePlayer.isPlaying
-                opacity: mediaMouse.containsMouse ? 1.0 : 0.7
+                opacity: mediaMouse.containsMouse ? 1.0 : 0.9
             }
 
             MouseArea {
@@ -423,6 +566,22 @@ Item {
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: root.requestExpand("media")
+                onEntered: {
+                    if (root.activePlayer) {
+                        revertTimer.stop();
+                        var title = root.activePlayer.trackTitle || "Unknown";
+                        var artist = root.activePlayer.trackArtist || "";
+                        root.overlayIcon = "󰝚";
+                        root.overlayText = (artist !== "") ? artist + " - " + title : title;
+                        root.isHoverMode = true;
+                        root.showProgress = false;
+                        root.activeMode = "info";
+                    }
+                }
+                onExited: {
+                    root.isHoverMode = false;
+                    root.activeMode = "clock";
+                }
             }
         }
     }

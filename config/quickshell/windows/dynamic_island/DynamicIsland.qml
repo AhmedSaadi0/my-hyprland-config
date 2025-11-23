@@ -1,7 +1,9 @@
+// windows/dynamic_island/DynamicIsland.qml
+
 import Quickshell
 import QtQuick
-import QtQuick.Layouts 1.15
-import Quickshell.Services.Mpris
+import QtQuick.Layouts
+import Quickshell.Hyprland
 
 import "root:/themes"
 import "root:/components"
@@ -32,27 +34,19 @@ PanelWindow {
     property int centeredTopMargin: (barFullHeight - idleWidgetHeight) / 2
     property int droppedTopMargin: barFullHeight + 10
 
-    property int activePlayerIndex: 0
-    property var playersArray: Mpris.players.values
+    property var activePlayer: MediaController.activePlayer
+    property int playersCount: MediaController.playersCount
 
-    property var activePlayer: {
-        if (playersArray.length === 0)
-            return null;
-        // حماية الاندكس
-        if (activePlayerIndex >= playersArray.length)
-            activePlayerIndex = 0;
-        return playersArray[activePlayerIndex];
-    }
+    // property int activePlayerIndex: 0
+    // property var playersArray: Mpris.players.values
 
-    property bool hasActivePlayer: activePlayer !== null
+    // property bool hasActivePlayer: activePlayer !== null
 
     property bool isHovered: false
     property bool isInteracting: false
 
     function cyclePlayers() {
-        if (playersArray.length > 1) {
-            activePlayerIndex = (activePlayerIndex + 1) % playersArray.length;
-        }
+        MediaController.cyclePlayers();
     }
 
     function expand(tabName) {
@@ -67,6 +61,7 @@ PanelWindow {
     NibrasShellShortcut {
         id: toggleMediaIsland
         name: "toggleMediaIsland"
+        // enabled: dynamicIsland.isPrimaryScreen
         onPressed: {
             if (activeTab === "media" && stateMode === "expanded") {
                 collapse();
@@ -147,9 +142,8 @@ PanelWindow {
             visible: opacity > 0
 
             currentTab: dynamicIsland.activeTab
-            activePlayer: dynamicIsland.activePlayer
 
-            playersCount: dynamicIsland.playersArray.length
+            playersCount: dynamicIsland.playersCount
 
             onTabChanged: newTab => dynamicIsland.activeTab = newTab
             onCloseRequested: dynamicIsland.collapse()

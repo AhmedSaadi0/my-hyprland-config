@@ -10,7 +10,6 @@ Item {
     id: root
 
     property string currentTab: "weather"
-    property var activePlayer: null
     property int playersCount: 0
 
     signal tabChanged(string newTab)
@@ -90,8 +89,6 @@ Item {
                 id: mediaWidget
                 width: parent.width
                 height: implicitHeight
-
-                player: root.activePlayer
 
                 availablePlayersCount: root.playersCount
                 // -------------------------------

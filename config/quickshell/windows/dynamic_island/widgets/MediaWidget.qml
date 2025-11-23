@@ -11,7 +11,8 @@ import "root:/config"
 Item {
     id: root
 
-    property var player: null
+    // property var player: null
+    readonly property var player: MediaController.activePlayer
     property int availablePlayersCount: 0
 
     readonly property string identity: (player && player.identity) ? player.identity : "Media Player"
@@ -31,35 +32,35 @@ Item {
 
     implicitHeight: 180
 
-    NibrasShellShortcut {
-        id: nextSongShortcut
-        name: "nextSong"
-        onPressed: root.player.next()
-    }
-
-    NibrasShellShortcut {
-        id: previousSongShortcut
-        name: "previousSong"
-        onPressed: root.player.previous()
-    }
-
-    NibrasShellShortcut {
-        id: togglePlayingShortcut
-        name: "togglePlaying"
-        onPressed: root.player.togglePlaying()
-    }
-
-    NibrasShellShortcut {
-        id: switchPlayerShortcut
-        name: "switchPlayer"
-        onPressed: root.switchPlayerClicked()
-    }
-
-    NibrasShellShortcut {
-        id: stopPlayShortcut
-        name: "stopPlay"
-        onPressed: root.player.stop()
-    }
+    // NibrasShellShortcut {
+    //     id: nextSongShortcut
+    //     name: "nextSong"
+    //     onPressed: root.player.next()
+    // }
+    //
+    // NibrasShellShortcut {
+    //     id: previousSongShortcut
+    //     name: "previousSong"
+    //     onPressed: root.player.previous()
+    // }
+    //
+    // NibrasShellShortcut {
+    //     id: togglePlayingShortcut
+    //     name: "togglePlaying"
+    //     onPressed: root.player.togglePlaying()
+    // }
+    //
+    // NibrasShellShortcut {
+    //     id: switchPlayerShortcut
+    //     name: "switchPlayer"
+    //     onPressed: root.switchPlayerClicked()
+    // }
+    //
+    // NibrasShellShortcut {
+    //     id: stopPlayShortcut
+    //     name: "stopPlay"
+    //     onPressed: root.player.stop()
+    // }
 
     Timer {
         interval: 1000
@@ -178,7 +179,8 @@ Item {
                     ToolTip.text: "Switch Player"
                     ToolTip.delay: 500
 
-                    onClicked: root.switchPlayerClicked()
+                    // onClicked: root.switchPlayerClicked()
+                    onClicked: MediaController.cyclePlayers()
                 }
             }
 
@@ -276,7 +278,8 @@ Item {
                     hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
                     enabled: root.player && root.player.canGoPrevious
                     opacity: enabled ? 1 : 0.5
-                    onClicked: root.player.previous()
+                    // onClicked: root.player.previous()
+                    onClicked: MediaController.previous()
                 }
 
                 MButton {
@@ -290,7 +293,8 @@ Item {
                     hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.3)
                     normalForeground: ThemeManager.selectedTheme.colors.onPrimary
                     enabled: root.player && root.player.canTogglePlaying
-                    onClicked: root.player.togglePlaying()
+                    // onClicked: root.player.togglePlaying()
+                    onClicked: MediaController.togglePlaying()
                 }
 
                 MButton {
@@ -304,7 +308,8 @@ Item {
                     hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
                     enabled: root.player && root.player.canGoNext
                     opacity: enabled ? 1 : 0.5
-                    onClicked: root.player.next()
+                    // onClicked: root.player.next()
+                    onClicked: MediaController.next()
                 }
             }
         }

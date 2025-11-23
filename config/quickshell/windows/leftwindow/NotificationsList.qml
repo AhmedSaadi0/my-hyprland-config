@@ -10,7 +10,6 @@ import "root:/components/notifications"
 Item {
     id: root
 
-    // --- البيانات والمنطق ---
     ListModel {
         id: notifModel
     }
@@ -25,6 +24,8 @@ Item {
         function onNotificationClosed(smartNotifObject) {
             for (let i = 0; i < notifModel.count; ++i) {
                 if (notifModel.get(i).smartNotif === smartNotifObject) {
+                    if (notifView)
+                        notifView.triggerSway();
                     notifModel.remove(i);
                     break;
                 }
@@ -32,18 +33,13 @@ Item {
         }
     }
 
-    // --- التصميم ---
     ColumnLayout {
         anchors.fill: parent
-        // anchorsjmargins: 10 // هوامش لترتيب المحتوى عن الحواف
-        // spacing: 10
 
-        // 1. شريط العنوان والأدوات (Header)
         RowLayout {
             Layout.fillWidth: true
             spacing: 5
 
-            // العنوان + العداد
             Text {
                 text: qsTr("Notifications")
                 font.bold: true
@@ -52,7 +48,6 @@ Item {
                 Layout.alignment: Qt.AlignVCenter
             }
 
-            // شارة العداد (تظهر فقط عند وجود إشعارات)
             Rectangle {
                 visible: notifModel.count > 0
                 width: countTxt.width + 10
@@ -65,46 +60,37 @@ Item {
                     anchors.centerIn: parent
                     text: notifModel.count
                     color: ThemeManager.selectedTheme.colors.onPrimary
-                    font.pixelSize: 11
+                    font.pixelSize: 12
                     font.bold: true
                 }
             }
 
-            // فراغ لدفع الأزرار لجهة اليمين
             Item {
                 Layout.fillWidth: true
             }
 
-            // الأزرار (تم فصلها لتكون أجمل بصرياً بدلاً من التصاقها)
-
-            // زر مسح الكل
             MButton {
                 text: qsTr("Clear All")
                 implicitHeight: 30
                 implicitWidth: 80
-                visible: notifModel.count > 0 // يختفي إذا لم تكن هناك إشعارات
+                visible: notifModel.count > 0
                 onClicked: NotifManager.clearAllNotifs()
             }
 
-            // زر عدم الإزعاج (DND)
             MButton {
                 text: NotifManager.dndEnabled ? "󰂛" : "󰂚"
                 font: ThemeManager.selectedTheme.typography.iconFont
                 implicitWidth: 35
                 implicitHeight: 30
-                // يمكنك استخدام لون مختلف في الخلفية إذا كان MButton يدعم خاصية color
-                // color: NotifManager.dndEnabled ? ThemeManager.selectedTheme.colors.primary : ...
 
                 onClicked: NotifManager.toggleDnd()
 
-                // إضافة ToolTip إذا أردت
                 ToolTip.visible: hovered
                 ToolTip.text: NotifManager.dndEnabled ? "Disable DND" : "Enable DND"
                 ToolTip.delay: 500
             }
         }
 
-        // فاصل
         Rectangle {
             Layout.fillWidth: true
             height: 1
@@ -112,13 +98,11 @@ Item {
             opacity: 0.3
         }
 
-        // 2. منطقة المحتوى (تجمع بين القائمة وحالة الفراغ)
         Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
 
-            // أ: حالة الفراغ (تظهر عند عدم وجود إشعارات)
             ColumnLayout {
                 anchors.centerIn: parent
                 spacing: 10
@@ -132,28 +116,25 @@ Item {
                 }
 
                 Text {
-                    text: "󰂚" // أيقونة الجرس
+                    text: "󰂚"
                     font: ThemeManager.selectedTheme.typography.iconFont
-                    // font.pixelSize: 48
-                    // color: ThemeManager.selectedTheme.colors.textSecondary
+
                     color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
                     Layout.alignment: Qt.AlignHCenter
                 }
                 Text {
                     text: qsTr("No Notifications")
                     font.pixelSize: 14
-                    // color: ThemeManager.selectedTheme.colors.textSecondary
+
                     color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
                     Layout.alignment: Qt.AlignHCenter
                 }
             }
 
-            // ب: القائمة الفعلية
             ScrollView {
                 anchors.fill: parent
                 visible: notifModel.count > 0
 
-                // إخفاء شريط التمرير الأفقي
                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
                 ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
@@ -164,12 +145,36 @@ Item {
 
                     spacing: 12
                     topMargin: 35
-                    // bottomMargin: 24
 
-                    // الحفاظ على العناصر في الذاكرة لمنع التقطيع
                     cacheBuffer: 2000
+                    property real swayOffset: 0
 
-                    // --- 1. حركة إعادة الترتيب (نحتفظ بها هنا لأنها وظيفة القائمة) ---
+                    function triggerSway() {
+                        swayAnim.restart();
+                    }
+
+                    SequentialAnimation {
+                        id: swayAnim
+
+                        NumberAnimation {
+                            target: notifView
+                            property: "swayOffset"
+                            to: 15
+                            duration: 150
+                            easing.type: Easing.OutQuad
+                        }
+
+                        NumberAnimation {
+                            target: notifView
+                            property: "swayOffset"
+                            to: 0
+                            duration: 600
+                            easing.type: Easing.OutElastic
+                            easing.period: 0.8
+                            easing.amplitude: 0.5
+                        }
+                    }
+
                     displaced: Transition {
                         NumberAnimation {
                             properties: "y"
@@ -178,7 +183,6 @@ Item {
                         }
                     }
 
-                    // --- 2. حركة الحذف (نحتفظ بها هنا لتنسيق إغلاق الفراغ) ---
                     remove: Transition {
                         SequentialAnimation {
                             ParallelAnimation {
@@ -208,40 +212,38 @@ Item {
                         }
                     }
 
-                    // --- 3. الديليجيت (Delegate) ---
                     delegate: Item {
                         id: wrapper
                         width: notifView.width
-                        // نربط ارتفاع الغلاف بارتفاع الإشعار الفعلي لضمان عمل القائمة بشكل صحيح
+
                         height: actualItem.implicitHeight
 
-                        // هذا هو العنصر الفعلي
+                        transform: Translate {
+                            x: notifView.swayOffset
+                        }
+
                         NotificationItem {
                             id: actualItem
                             width: wrapper.width
 
-                            // --- الحالة الأولية (مخفي) ---
                             opacity: 0
                             scale: 0.85
                             transform: Translate {
                                 y: -30
-                            } // نستخدم Translate بدلاً من y لتجنب مشاكل التخطيط
+                            }
 
-                            // --- أنيميشن الدخول المستقل (Android 16 Style) ---
                             ParallelAnimation {
                                 id: entryAnim
-                                running: true // يعمل تلقائياً بمجرد إنشاء العنصر
+                                running: true
 
-                                // 1. الشفافية (مضمونة الوصول لـ 1)
                                 NumberAnimation {
                                     target: actualItem
                                     property: "opacity"
                                     to: 1
-                                    duration: 250 // سريعة جداً
+                                    duration: 250
                                     easing.type: Easing.Linear
                                 }
 
-                                // 2. التكبير (فيزياء)
                                 NumberAnimation {
                                     target: actualItem
                                     property: "scale"
@@ -251,7 +253,6 @@ Item {
                                     easing.overshoot: 1.0
                                 }
 
-                                // 3. الهبوط (فيزياء)
                                 NumberAnimation {
                                     target: actualItem.transform
                                     property: "y"
@@ -261,9 +262,6 @@ Item {
                                 }
                             }
 
-                            // --- صمام أمان (Safety Valve) ---
-                            // في حال حدوث أي خطأ في الأنيميشن بسبب الضغط الشديد،
-                            // هذا المؤقت سيجبر العنصر على الظهور بعد جزء من الثانية
                             Timer {
                                 interval: 300
                                 running: true
@@ -271,7 +269,6 @@ Item {
                                 onTriggered: actualItem.opacity = 1
                             }
 
-                            // --- البيانات والوظائف ---
                             notification: model.smartNotif
                             theme: ThemeManager.selectedTheme
 

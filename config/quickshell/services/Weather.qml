@@ -244,10 +244,10 @@ Singleton {
             const data = JSON.parse(jsonData);
 
             // Section 1: Current Condition
-            const current = data?.current_condition?.[0];
+            const current = data?.current_condition[0];
             currentTemp = parseInt(current?.temp_C) || 0;
             feelsLike = parseInt(current?.FeelsLikeC) || 0;
-            weatherDescription = current?.weatherDesc?.[0]?.value || "Not available";
+            weatherDescription = current?.weatherDesc[0]?.value || "Not available";
             weatherCode = current?.weatherCode || "113";
             humidity = parseInt(current?.humidity) || 0;
             windSpeed = parseInt(current?.windspeedKmph) || 0;
@@ -257,12 +257,12 @@ Singleton {
             uvIndex = parseInt(current?.uvIndex) || 0;
 
             // Section 2: Location Info
-            const area = data?.nearest_area?.[0];
-            areaName = area?.areaName?.[0]?.value || "Unknown location";
-            countryName = area?.country?.[0]?.value || "";
+            const area = data?.nearest_area[0];
+            areaName = area?.areaName[0]?.value || "Unknown location";
+            countryName = area?.country[0]?.value || "";
 
             // Section 3: Astronomical Data
-            const astronomy = data?.weather?.[0]?.astronomy?.[0];
+            const astronomy = data?.weather[0]?.astronomy[0];
             sunrise = astronomy?.sunrise || "N/A";
             sunset = astronomy?.sunset || "N/A";
             moonPhase = astronomy?.moon_phase || "N/A";
@@ -275,7 +275,7 @@ Singleton {
             let dailyData = [];
             if (data?.weather && Array.isArray(data.weather)) {
                 for (let day of data.weather) {
-                    const representativeHour = day?.hourly?.[4] || day?.hourly?.[0];
+                    const representativeHour = day?.hourly[4] || day?.hourly[0];
                     dailyData.push({
                         date: day?.date || "",
                         dayName: getDayName(day?.date),
@@ -283,7 +283,7 @@ Singleton {
                         maxTemp: parseInt(day?.maxtempC) || 0,
                         avgTemp: parseInt(day?.avgtempC) || 0,
                         weatherCode: representativeHour?.weatherCode || "113",
-                        description: representativeHour?.weatherDesc?.[0]?.value || "...",
+                        description: representativeHour?.weatherDesc[0]?.value || "...",
                         icon: getWeatherIcon(representativeHour?.weatherCode || "113", true) // Assume day for forecast icons
                     });
                 }
@@ -292,7 +292,7 @@ Singleton {
 
             // Section 5: Hourly Forecast
             let hourlyData = [];
-            const todayHourly = data?.weather?.[0]?.hourly;
+            const todayHourly = data?.weather[0]?.hourly;
             if (todayHourly && Array.isArray(todayHourly)) {
                 for (let hour of todayHourly) {
                     const timeStr = (parseInt(hour.time) / 100).toString().padStart(2, '0') + ":00";
@@ -300,7 +300,7 @@ Singleton {
                         time: timeStr,
                         temp: parseInt(hour?.tempC) || 0,
                         weatherCode: hour?.weatherCode || "113",
-                        description: hour?.weatherDesc?.[0]?.value || "...",
+                        description: hour?.weatherDesc[0]?.value || "...",
                         chanceOfRain: parseInt(hour?.chanceofrain) || 0,
                         chanceOfSnow: parseInt(hour?.chanceofsnow) || 0,
                         chanceOfFrost: parseInt(hour?.chanceoffrost) || 0,
