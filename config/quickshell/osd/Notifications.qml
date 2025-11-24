@@ -66,10 +66,10 @@ PanelWindow {
         width: notificationItem.width
         height: notificationItem.height
 
-        transformOrigin: Item.Center 
+        transformOrigin: Item.Center
         opacity: 0
-        scale: 0.9 
-        x: 150     
+        scale: 0.9
+        x: 150
 
         Component.onCompleted: {
             show();
@@ -102,21 +102,18 @@ PanelWindow {
             }
         }
 
-        
         ParallelAnimation {
             id: parallelShowAnimation
 
-            
             NumberAnimation {
                 target: toastRoot
                 property: "x"
                 to: 0
                 duration: 500
                 easing.type: Easing.OutBack
-                easing.overshoot: 1.2 
+                easing.overshoot: 1.2
             }
 
-            
             NumberAnimation {
                 target: toastRoot
                 property: "scale"
@@ -134,22 +131,19 @@ PanelWindow {
             }
         }
 
-        
         ParallelAnimation {
             id: parallelHideAnimation
             onStopped: toastRoot.requestRemove()
 
-            
             NumberAnimation {
                 target: toastRoot
                 property: "x"
-                to: toastRoot.width * 0.5 
+                to: toastRoot.width * 0.5
                 duration: 300
-                easing.type: Easing.InBack 
+                easing.type: Easing.InBack
                 easing.overshoot: 1.0
             }
 
-            
             NumberAnimation {
                 target: toastRoot
                 property: "scale"
@@ -169,7 +163,7 @@ PanelWindow {
 
         Timer {
             id: hideTimer
-            interval: 4000 
+            interval: 4000
             repeat: false
             onTriggered: hide()
         }
@@ -180,8 +174,7 @@ PanelWindow {
                     hideTimer.stop();
                     notificationItem.progress = 0;
                     progressAnimation.stop();
-                    
-                    toastRoot.scale = 1.02;
+                    // toastRoot.scale = 1.02;
                 } else {
                     hideTimer.restart();
                     progressAnimation.start();
@@ -216,9 +209,9 @@ PanelWindow {
         id: popupContainer
 
         implicitWidth: root.implicitWidth
-        height: contentHeight 
+        height: contentHeight
 
-        spacing: 10 
+        spacing: 10
         model: popupModel
         interactive: false
         clip: false
@@ -226,14 +219,12 @@ PanelWindow {
         leftMargin: 25
         rightMargin: 25
 
-        
-        
         displaced: Transition {
             SpringAnimation {
                 property: "y"
-                spring: 3.0     
-                damping: 0.2    
-                epsilon: 0.25   
+                spring: 3.0
+                damping: 0.2
+                epsilon: 0.25
             }
         }
 

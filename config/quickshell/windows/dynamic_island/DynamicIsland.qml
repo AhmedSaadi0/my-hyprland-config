@@ -172,7 +172,7 @@ PanelWindow {
                     height: expandedContainer.implicitHeight
                     anchors.topMargin: dynamicIsland.droppedTopMargin
 
-                    width: 400
+                    width: 420
                     radius: ThemeManager.selectedTheme.dimensions.elementRadius
                 }
             }

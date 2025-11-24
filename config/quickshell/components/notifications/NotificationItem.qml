@@ -2,8 +2,6 @@
 
 import QtQuick
 import QtQuick.Layouts
-// import Quickshell.Services.Notifications
-
 import "root:/components"
 import "root:/config"
 
@@ -16,6 +14,9 @@ Rectangle {
     property real progress: 0.0
     property bool visibleProgress: false
 
+    // --- التعديل 1: نربط الخاصية بـ الـ MouseArea بالأسفل ---
+    property bool dismissPressed: closeBtnMouseArea.pressed
+
     signal dismissClicked
     signal actionInvoked(int index)
 
@@ -25,12 +26,11 @@ Rectangle {
 
     ColumnLayout {
         id: contentLayout
-
         anchors.fill: parent
         anchors.margins: root.theme ? root.theme.dimensions.spacingLarge : 8
         spacing: root.theme ? root.theme.typography.spacingMedium : 6
 
-        // -- 1. Header Row: Close Button, App Name, Time --
+        // -- 1. Header Row --
         RowLayout {
             Layout.fillWidth: true
             spacing: root.theme ? root.theme.typography.spacingSmall : 4
@@ -54,6 +54,7 @@ Rectangle {
                 }
 
                 Text {
+                    id: closeBtn
                     text: ""
                     font.family: theme.typography.iconFont
                     font.pixelSize: 14
@@ -62,6 +63,8 @@ Rectangle {
                 }
 
                 MouseArea {
+                    // --- التعديل 2: إضافة ID هنا ---
+                    id: closeBtnMouseArea
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
@@ -71,6 +74,7 @@ Rectangle {
                 }
             }
 
+            // ... (باقي العناصر كما هي بدون تغيير) ...
             Text {
                 text: notification ? notification.appName : ""
                 font.pixelSize: root.theme ? root.theme.typography.heading4Size : 16
@@ -87,7 +91,7 @@ Rectangle {
             }
         }
 
-        // -- 2. Summary Row: Icon and Title --
+        // -- 2. Summary Row --
         RowLayout {
             Layout.fillWidth: true
             spacing: root.theme ? root.theme.typography.spacingMedium : 6
@@ -139,10 +143,6 @@ Rectangle {
                     text: modelData.text !== "" ? modelData.text : "Do Action"
                     Layout.fillWidth: true
                     textElide: Text.ElideRight
-
-                    // تمرير السمة إلى المكون الفرعي
-                    // theme: root.theme
-
                     onClicked: root.actionInvoked(index)
                 }
             }

@@ -4,6 +4,8 @@ import QtQuick.Controls
 import QtQuick.Controls.Material
 import Quickshell.Services.Mpris
 
+// استيراد الخدمات
+import "root:/services"
 import "root:/themes"
 import "root:/components"
 import "root:/config"
@@ -11,9 +13,30 @@ import "root:/config"
 Item {
     id: root
 
-    // property var player: null
+    // ============================================================
+    //  1. CONFIGURATION (Style) - لم يتم تغيير الألوان
+    // ============================================================
+    QtObject {
+        id: style
+        property color textPrimary: ThemeManager.selectedTheme.colors.onPrimary
+        property color textSecondary: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.7)
+        property color bgSurface: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
+        property color bgHover: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
+
+        property string iconFont: ThemeManager.selectedTheme.typography.iconFont
+        property int fontSizeTitle: 15
+        property int fontSizeSub: 13
+        property int fontSizeTiny: 10
+        property real radius: ThemeManager.selectedTheme.dimensions.elementRadius
+    }
+
+    // ============================================================
+    //  2. LOGIC & STATE - نفس المنطق السابق تماماً
+    // ============================================================
+    signal switchPlayerClicked
+
     readonly property var player: MediaController.activePlayer
-    property int availablePlayersCount: 0
+    property int availablePlayersCount: MediaController.players.length
 
     readonly property string identity: (player && player.identity) ? player.identity : "Media Player"
     readonly property string title: (player && player.trackTitle) ? player.trackTitle : "No Media"
@@ -28,39 +51,9 @@ Item {
     property bool isScrubbing: seekSlider.pressed
     property alias pressed: mouseArea.pressed
 
-    signal switchPlayerClicked
-
-    implicitHeight: 180
-
-    // NibrasShellShortcut {
-    //     id: nextSongShortcut
-    //     name: "nextSong"
-    //     onPressed: root.player.next()
-    // }
-    //
-    // NibrasShellShortcut {
-    //     id: previousSongShortcut
-    //     name: "previousSong"
-    //     onPressed: root.player.previous()
-    // }
-    //
-    // NibrasShellShortcut {
-    //     id: togglePlayingShortcut
-    //     name: "togglePlaying"
-    //     onPressed: root.player.togglePlaying()
-    // }
-    //
-    // NibrasShellShortcut {
-    //     id: switchPlayerShortcut
-    //     name: "switchPlayer"
-    //     onPressed: root.switchPlayerClicked()
-    // }
-    //
-    // NibrasShellShortcut {
-    //     id: stopPlayShortcut
-    //     name: "stopPlay"
-    //     onPressed: root.player.stop()
-    // }
+    // الأبعاد المطلوبة
+    implicitHeight: 160
+    // implicitWidth: 410
 
     Timer {
         interval: 1000
@@ -84,20 +77,25 @@ Item {
         preventStealing: false
     }
 
+    // ============================================================
+    //  3. VISUAL LAYOUT
+    // ============================================================
+
     RowLayout {
         anchors.fill: parent
-        anchors.rightMargin: 15
-        anchors.leftMargin: 15
-        anchors.bottomMargin: 10
-        spacing: 20
+        anchors.margins: 15
+        spacing: 15
 
+        // ------------------------------------
+        // القسم الأيسر: صورة الألبوم (كبيرة)
+        // ------------------------------------
         Rectangle {
-            Layout.preferredWidth: 90
-            Layout.preferredHeight: 90
+            Layout.preferredHeight: 130
+            Layout.preferredWidth: 130
             Layout.alignment: Qt.AlignVCenter
 
-            radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
+            radius: style.radius
+            color: style.bgSurface
             clip: true
 
             Image {
@@ -107,135 +105,114 @@ Item {
                 visible: status === Image.Ready && source !== ""
             }
 
+            // أيقونة افتراضية في حال عدم وجود صورة
             Text {
                 anchors.centerIn: parent
                 visible: parent.children[0].status !== Image.Ready || root.albumArt === ""
                 text: "󰝚"
-                font.family: ThemeManager.selectedTheme.typography.iconFont
-                font.pixelSize: 35
-                color: ThemeManager.selectedTheme.colors.onPrimary
+                font.family: style.iconFont
+                font.pixelSize: 40
+                color: style.textPrimary
+                opacity: 0.5
             }
         }
 
+        // ------------------------------------
+        // القسم الأيمن: التفاصيل والتحكم
+        // ------------------------------------
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignVCenter
-            spacing: 0
+            spacing: 2 // تقليل المسافات لجعل التصميم مدمجاً
 
+            // 1. العنوان والفنان + اسم المشغل
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 10
 
-                Rectangle {
-                    height: 22
-                    width: appIdentityRow.implicitWidth + 16
-                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                    color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 0
 
-                    Row {
-                        id: appIdentityRow
-                        anchors.centerIn: parent
-                        spacing: 6
+                    // اسم المشغل بخط صغير جداً
+                    Text {
+                        text: root.identity
+                        font.pixelSize: 9
+                        color: style.textSecondary
+                        opacity: 0.8
+                        font.bold: true
+                        font.capitalization: Font.AllUppercase
+                    }
 
-                        Text {
-                            text: ""
-                            font.family: ThemeManager.selectedTheme.typography.iconFont
-                            font.pixelSize: 10
-                            color: ThemeManager.selectedTheme.colors.onPrimary
-                            opacity: 0.8
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
+                    // العنوان
+                    Text {
+                        text: root.title
+                        Layout.fillWidth: true
+                        font.bold: true
+                        font.pixelSize: 16
+                        color: style.textPrimary
+                        elide: Text.ElideRight
+                    }
 
-                        Text {
-                            text: root.identity
-                            font.bold: true
-                            font.pixelSize: 10
-                            color: ThemeManager.selectedTheme.colors.onPrimary
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
+                    // الفنان
+                    Text {
+                        text: root.artist
+                        Layout.fillWidth: true
+                        font.pixelSize: 12
+                        color: style.textSecondary
+                        elide: Text.ElideRight
                     }
                 }
 
-                Item {
-                    Layout.fillWidth: true
-                }
-
+                // زر تبديل المشغل (في الزاوية العلوية اليمنى)
                 MButton {
                     visible: root.availablePlayersCount > 1
-
                     text: "󰌳"
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 12
-
+                    font.family: style.iconFont
+                    font.pixelSize: 14
                     implicitWidth: 24
                     implicitHeight: 24
-
                     normalBackground: "transparent"
-                    normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-                    hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
-
-                    ToolTip.visible: hovered
-                    ToolTip.text: "Switch Player"
-                    ToolTip.delay: 500
-
-                    // onClicked: root.switchPlayerClicked()
+                    normalForeground: style.textSecondary
                     onClicked: MediaController.cyclePlayers()
+                    Layout.alignment: Qt.AlignTop | Qt.AlignRight
                 }
             }
 
+            // مسافة مرنة لدفع العناصر للأسفل قليلاً
             Item {
                 Layout.fillHeight: true
             }
 
+            // 2. شريط التقدم والوقت
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 2
+                spacing: -5 // تقليل المسافة بين السلايدر والنص
 
-                Text {
-                    text: root.title
+                RowLayout {
                     Layout.fillWidth: true
-                    font.bold: true
-                    font.pixelSize: 15
-                    color: ThemeManager.selectedTheme.colors.onPrimary
-                    elide: Text.ElideRight
-                }
-                Text {
-                    text: root.artist
-                    Layout.fillWidth: true
-                    font.pixelSize: 13
-                    color: ThemeManager.selectedTheme.colors.onPrimary
-                    opacity: 0.7
-                    elide: Text.ElideRight
-                }
-            }
-
-            Item {
-                Layout.fillHeight: true
-            }
-
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: 8
-
-                Text {
-                    text: root.formatTime(root.position)
-                    font.pixelSize: 10
-                    font.bold: true
-                    color: ThemeManager.selectedTheme.colors.onPrimary
+                    Text {
+                        text: root.formatTime(root.position)
+                        font.pixelSize: 9
+                        color: style.textSecondary
+                    }
+                    Item {
+                        Layout.fillWidth: true
+                    }
+                    Text {
+                        text: root.formatTime(root.length)
+                        font.pixelSize: 9
+                        color: style.textSecondary
+                    }
                 }
 
-                Slider {
+                FlatSlider {
                     id: seekSlider
                     Layout.fillWidth: true
                     Layout.preferredHeight: 10
+                    value: (!pressed) ? root.progress : value
+                    enableChangeOnWheel: false
 
-                    from: 0.0
-                    to: 1.0
-                    Binding on value {
-                        when: !seekSlider.pressed
-                        value: root.progress
-                    }
                     onMoved: {
                         if (root.player && root.player.canSeek) {
                             if (root.player.positionSupported)
@@ -245,71 +222,100 @@ Item {
                             root.player.positionChanged();
                         }
                     }
-                    Material.accent: ThemeManager.selectedTheme.colors.onPrimary
-                    Material.theme: Material.Dark
-                }
 
-                Text {
-                    text: root.formatTime(root.length)
-                    font.pixelSize: 10
-                    font.bold: true
-                    color: ThemeManager.selectedTheme.colors.onPrimary
+                    activeColor: style.textPrimary
+                    inactiveColor: style.bgSurface
+                    lineWidth: 4
                 }
             }
 
-            Item {
-                Layout.fillHeight: true
-            }
-
+            // 3. أزرار التحكم + الصوت (في صف واحد)
             RowLayout {
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter
-                spacing: 25
-                Layout.bottomMargin: 2
+                Layout.topMargin: 5
+                spacing: 10
 
-                MButton {
-                    text: ""
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 20
-                    implicitWidth: 35
-                    implicitHeight: 35
-                    normalBackground: "transparent"
-                    normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-                    hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
-                    enabled: root.player && root.player.canGoPrevious
-                    opacity: enabled ? 1 : 0.5
-                    // onClicked: root.player.previous()
-                    onClicked: MediaController.previous()
+                // أزرار التحكم
+                RowLayout {
+                    spacing: 15
+                    MButton {
+                        text: ""
+                        font.family: style.iconFont
+                        font.pixelSize: 18
+                        implicitWidth: 30
+                        implicitHeight: 30
+                        normalBackground: "transparent"
+                        normalForeground: style.textPrimary
+                        enabled: root.player && root.player.canGoPrevious
+                        opacity: enabled ? 1 : 0.5
+                        onClicked: MediaController.previous()
+                    }
+
+                    // زر التشغيل بخلفية دائرية
+                    MButton {
+                        text: root.isPlaying ? "" : ""
+                        font.family: style.iconFont
+                        font.pixelSize: 20
+                        implicitWidth: 50
+                        implicitHeight: 40
+                        // radius: 18
+                        normalBackground: style.bgSurface
+                        hoveredBackground: style.bgHover
+                        normalForeground: style.textPrimary
+                        enabled: root.player && root.player.canTogglePlaying
+                        onClicked: MediaController.togglePlaying()
+                    }
+
+                    MButton {
+                        text: ""
+                        font.family: style.iconFont
+                        font.pixelSize: 18
+                        implicitWidth: 30
+                        implicitHeight: 30
+                        normalBackground: "transparent"
+                        normalForeground: style.textPrimary
+                        enabled: root.player && root.player.canGoNext
+                        opacity: enabled ? 1 : 0.5
+                        onClicked: MediaController.next()
+                    }
                 }
 
-                MButton {
-                    text: root.isPlaying ? "" : ""
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 24
-                    implicitWidth: 45
-                    implicitHeight: 45
+                Item {
+                    Layout.fillWidth: true
+                } // دافع للمسافة
 
-                    normalBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
-                    hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.3)
-                    normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-                    enabled: root.player && root.player.canTogglePlaying
-                    // onClicked: root.player.togglePlaying()
-                    onClicked: MediaController.togglePlaying()
-                }
+                // التحكم بالصوت (صغير وأنيق)
+                RowLayout {
+                    spacing: 10
 
-                MButton {
-                    text: ""
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 20
-                    implicitWidth: 35
-                    implicitHeight: 35
-                    normalBackground: "transparent"
-                    normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-                    hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
-                    enabled: root.player && root.player.canGoNext
-                    opacity: enabled ? 1 : 0.5
-                    // onClicked: root.player.next()
-                    onClicked: MediaController.next()
+                    Text {
+                        text: Audio.muted ? "" : (Audio.volume > 0.5 ? "" : "")
+                        font.family: style.iconFont
+                        font.pixelSize: 14
+                        color: style.textSecondary
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: Audio.setVolume(Audio.volume > 0 ? 0 : 0.5)
+                        }
+                    }
+
+                    FlatSlider {
+                        Layout.preferredWidth: 50
+                        Layout.preferredHeight: 20
+
+                        value: Audio.volume
+                        onMoved: Audio.setVolume(value)
+
+                        onValueChanged: {
+                            if (Audio.volume !== value) {
+                                Audio.setVolume(value);
+                            }
+                        }
+
+                        activeColor: style.textSecondary
+                        inactiveColor: style.bgSurface
+                        lineWidth: 4
+                    }
                 }
             }
         }

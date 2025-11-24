@@ -63,7 +63,7 @@ Item {
     property bool isHoverMode: false
 
     property var activePlayer: null
-    property bool hasActivePlayer: activePlayer !== null
+    // property bool hasActivePlayer: activePlayer !== null
 
     // Music playing state (Uncomment the readonly property in production)
     property bool isMusicPlaying: activePlayer ? activePlayer.isPlaying : false
@@ -80,8 +80,8 @@ Item {
             centerW = Math.max(infoW, Math.max(currentClockW, 150));
         }
         let sideIconsW = 40;
-        if (hasActivePlayer)
-            sideIconsW += 20;
+        // if (hasActivePlayer)
+        sideIconsW += 20; // Make music player visiable all the time for better look
         return centerW + sideIconsW + 10;
     }
 
@@ -328,27 +328,27 @@ Item {
     }
 
     // 2. Glossy Shine Overlay
-    Rectangle {
-        anchors.fill: parent
-        radius: root.elementRadius
-        color: "transparent"
-        opacity: root.isMusicPlaying ? 1.0 : 0.0
-        gradient: Gradient {
-            orientation: Gradient.Vertical
-            GradientStop {
-                position: 0.0
-                color: "#40FFFFFF"
-            }
-            GradientStop {
-                position: 0.5
-                color: "transparent"
-            }
-            GradientStop {
-                position: 1.0
-                color: "#10000000"
-            }
-        }
-    }
+    // Rectangle {
+    //     anchors.fill: parent
+    //     radius: root.elementRadius
+    //     color: "transparent"
+    //     opacity: root.isMusicPlaying ? 1.0 : 0.0
+    //     gradient: Gradient {
+    //         orientation: Gradient.Vertical
+    //         GradientStop {
+    //             position: 0.0
+    //             color: "#40FFFFFF"
+    //         }
+    //         GradientStop {
+    //             position: 0.5
+    //             color: "transparent"
+    //         }
+    //         GradientStop {
+    //             position: 1.0
+    //             color: "#10000000"
+    //         }
+    //     }
+    // }
 
     // 3. Progress Bar (Volume/Brightness)
     Rectangle {
@@ -392,7 +392,7 @@ Item {
                 font.family: ThemeManager.selectedTheme.typography.iconFont
                 font.pixelSize: root.fontSizeIcon
                 font.bold: true
-                color: ThemeManager.selectedTheme.colors.onPrimary
+                color: root.isMusicPlaying ? "#000000" : ThemeManager.selectedTheme.colors.onPrimary
                 opacity: weatherMouse.containsMouse ? 1.0 : 0.9
             }
 
@@ -445,7 +445,7 @@ Item {
                     text: sysClock.date.toLocaleString(Qt.locale(), "hh:mm AP - dddd, dd MMMM yyyy")
                     font.bold: true
                     font.pixelSize: root.fontSizeText
-                    color: ThemeManager.selectedTheme.colors.onPrimary
+                    color: root.isMusicPlaying ? "#000000" : ThemeManager.selectedTheme.colors.onPrimary
                     verticalAlignment: Text.AlignVCenter
                 }
             }
@@ -472,7 +472,7 @@ Item {
                         text: root.overlayIcon
                         font.family: ThemeManager.selectedTheme.typography.iconFont
                         font.pixelSize: root.fontSizeText
-                        color: ThemeManager.selectedTheme.colors.onPrimary
+                        color: root.isMusicPlaying ? "#000000" : ThemeManager.selectedTheme.colors.onPrimary
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
@@ -481,7 +481,7 @@ Item {
                         text: root.overlayText
                         font.bold: true
                         font.pixelSize: root.fontSizeText
-                        color: ThemeManager.selectedTheme.colors.onPrimary
+                        color: root.isMusicPlaying ? "#000000" : ThemeManager.selectedTheme.colors.onPrimary
                         anchors.verticalCenter: parent.verticalCenter
                         width: Math.min(implicitWidth, 500)
                         elide: Text.ElideRight
@@ -552,7 +552,7 @@ Item {
         Item {
             Layout.preferredWidth: 24
             Layout.fillHeight: true
-            visible: root.hasActivePlayer
+            // visible: root.hasActivePlayer
 
             MusicVisualizer {
                 anchors.centerIn: parent

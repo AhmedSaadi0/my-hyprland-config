@@ -19,7 +19,7 @@ Row {
 
             height: 4
             radius: 1.5
-            color: ThemeManager.selectedTheme.colors.onPrimary
+            color: root.playing ? "#000000" : ThemeManager.selectedTheme.colors.onPrimary
             anchors.bottom: parent.bottom
 
             SequentialAnimation {

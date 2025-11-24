@@ -1,5 +1,3 @@
-// components/MButton.qml
-
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -15,6 +13,7 @@ Button {
     property string iconText: ""
     property bool showIcon: iconText !== ""
 
+    // خصائص المحاذاة (كما هي)
     property var textHorizontalAlignment: showIcon ? Text.AlignRight : Text.AlignHCenter
     property var textVerticalAlignment: Text.AlignVCenter
     property int textPreferredWidth: 3
@@ -33,15 +32,16 @@ Button {
     property string originalText: text
     property string activeText: ""
 
+    // الألوان
     property var disabledBackground: Kirigami.Theme.negativeBackgroundColor
-    property var downBackground: Kirigami.Theme.hoverColor.darker(1.15)
+    // جعل لون الضغط أغمق قليلاً من لون التحويم
+    property var downBackground: Qt.darker(root.hoveredBackground, 1.2)
     property var hoveredBackground: Kirigami.Theme.hoverColor
-    property var normalBackground: Kirigami.Theme.activeBackgroundColor // Original value
+    property var normalBackground: Kirigami.Theme.activeBackgroundColor
     property var activeBackground: ThemeManager.selectedTheme.colors.primary
 
     property var disabledForeground: Kirigami.Theme.highlightColor.darker(0.5)
     property var downForeground: Kirigami.Theme.highlightColor.lighter(1.8)
-    // property var hoveredForeground: ThemeManager.selectedTheme.colors.onPrimary
     property var normalForeground: Kirigami.Theme.textColor
     property var activeForeground: ThemeManager.selectedTheme.colors.onPrimary
 
@@ -49,6 +49,20 @@ Button {
     property int topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+
+    // ---------------------------------------------------------
+    // 1. إضافة تأثير الانكماش (Scale Animation)
+    // ---------------------------------------------------------
+    // ينكمش الزر إلى 92% من حجمه عند الضغط
+    scale: root.down ? 0.92 : 1.0
+
+    Behavior on scale {
+        NumberAnimation {
+            duration: 150
+            easing.type: Easing.OutQuad // حركة ناعمة وسريعة
+        }
+    }
+    // ---------------------------------------------------------
 
     ToolTip.text: root.text
     ToolTip.visible: root.hovered && root.showTooltip
@@ -68,9 +82,6 @@ Button {
             verticalAlignment: root.textVerticalAlignment
             Layout.fillWidth: true
             Layout.preferredWidth: root.textPreferredWidth
-
-            // onTruncatedChanged: root.textIsTruncated == truncated
-
             Layout.leftMargin: root.textLeftMargin
             Layout.rightMargin: root.textRightMargin
 
@@ -83,12 +94,26 @@ Button {
                         buttonMainText.text = root.activeText;
                     }
                     return root.activeForeground;
+                    // إضافة تغيير لون النص عند الضغط
+                } else if (root.down) {
+                    return root.downForeground;
                 } else if (root.hovered) {
                     let bg = root.hoveredBackground;
-                    let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-                    return luminance > 0.5 ? "black" : "white";
+                    // حساب التباين للون الخط
+                    if (bg && typeof bg.r !== 'undefined') {
+                        let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
+                        return luminance > 0.5 ? "black" : "white";
+                    }
+                    return "white"; // Fallback
                 } else {
                     return root.normalForeground;
+                }
+            }
+
+            // إضافة انميشن لتغيير اللون
+            Behavior on color {
+                ColorAnimation {
+                    duration: 200
                 }
             }
         }
@@ -104,9 +129,14 @@ Button {
             color: buttonMainText.color
             Layout.fillWidth: root.showIcon
             Layout.preferredWidth: root.iconPreferredWidth
-
             Layout.leftMargin: root.iconLeftMargin
             Layout.rightMargin: root.iconRightMargin
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 200
+                }
+            }
         }
     }
 
@@ -116,15 +146,19 @@ Button {
         bottomLeftRadius: root.bottomLeftRadius
         bottomRightRadius: root.bottomRightRadius
 
+        // ---------------------------------------------------------
+        // 2. تصحيح منطق الألوان لتفعيل لون الضغط
+        // ---------------------------------------------------------
         color: {
             if (!root.enabled) {
                 return root.disabledBackground;
-                // } else if (myCustomButton.down || myCustomButton.pressed) {
-                //     return myCustomButton.downBackground;
-            } else if (root.hovered) {
-                return root.hoveredBackground;
+            } else if (root.down) {
+                // تفعيل لون الخلفية عند الضغط
+                return root.downBackground;
             } else if (root.isActive) {
                 return root.activeBackground;
+            } else if (root.hovered) {
+                return root.hoveredBackground;
             } else {
                 return root.normalBackground;
             }
@@ -132,18 +166,20 @@ Button {
 
         Behavior on color {
             ColorAnimation {
-                duration: 400
+                duration: 200 // جعل الاستجابة أسرع قليلاً (كانت 400)
                 easing.type: Easing.OutQuad
             }
         }
+
+        // إضافة حدود ناعمة عند التركيز (اختياري)
+        // border.width: root.activeFocus ? 2 : 0
+        // border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.5)
     }
 
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
-
         cursorShape: root.cursorShape
-
         propagateComposedEvents: true
         acceptedButtons: Qt.NoButton
     }
