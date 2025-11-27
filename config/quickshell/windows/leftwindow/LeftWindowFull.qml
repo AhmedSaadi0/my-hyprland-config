@@ -16,7 +16,7 @@ PanelWindow {
 
     exclusionMode: ExclusionMode.Ignore
 
-    focusable: menus.currentIndex == 10 || menus.currentIndex == 4
+    focusable: menus.currentIndex == 9 || menus.currentIndex == 4
 
     anchors {
         top: true

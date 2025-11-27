@@ -1,0 +1,1 @@
+var DASHBOARD_MENU_INDEX = 0;
