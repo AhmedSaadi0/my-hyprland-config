@@ -589,25 +589,25 @@ nvim .nibrasshell.json
 
 # Screenshots - لقطات شاشة
 
-|                                                          M3 Light                                                          |                                                         M3 Dark                                                          |
-| :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
-| <img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-light.png'/> | <img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-dark.png'/> |
+|                                                                M3 Light                                                                |                                                               M3 Dark                                                                |
+| :------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="M3 Light screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-light.png" width="400"/> | <img alt="M3 Dark screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-dark.png" width="400"/> |
 
-|                                                  Nord Light                                                   |                                                  Nord Dark                                                   |
-| :-----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
-| <img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-light.png'/> | <img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-dark.png'/> |
+|                                                                 Nord Light                                                                 |                                                                Nord Dark                                                                 |
+| :----------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="Nord Light screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-light.png" width="400"/> | <img alt="Nord Dark screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-dark.png" width="400"/> |
 
-|                                                    Gruvbox Light                                                    |                                                    Gruvbox Dark                                                    |
-| :-----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
-| <img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-light.png'/> | <img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-dark.png'/> |
+|                                                                  Gruvbox Light                                                                   |                                                                  Gruvbox Dark                                                                  |
+| :----------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="Gruvbox Light screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-light.png" width="400"/> | <img alt="Gruvbox Dark screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-dark.png" width="400"/> |
 
-|                                                       Catppuccin Light                                                        |                                                      Catppuccin Dark                                                      |
-| :---------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
-| <img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png'/> | <img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-light.png'/> |
+|                                                              Catppuccin Light                                                               |                                                              Catppuccin Dark                                                              |
+| :-----------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="Catppuccin Light" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-light.jpg" width="400"/> | <img alt="Catppuccin Dark" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png" width="400"/> |
 
-|                                                        TokyoNight Light                                                        |                                                   TokyoNight Dark                                                   |
-| :----------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
-| <img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight-light.png'/> | <img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png'/> |
+|                                                              TokyoNight Light                                                               |                                                           TokyoNight Dark                                                            |
+| :-----------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="TokyoNight Light" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight-light.jpg" width="400"/> | <img alt="TokyoNight Dark" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png" width="400"/> |
 
 <p align="center">
   <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/deer.jpg" alt="Depth effect" width="100%">
