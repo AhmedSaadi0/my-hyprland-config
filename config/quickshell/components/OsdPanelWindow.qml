@@ -111,7 +111,10 @@ PanelWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             // anchors.verticalCenter: parent.verticalCenter
 
-            layer.enabled: true
+            // layer.enabled: true
+
+            layer.enabled: root.visible
+            layer.smooth: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowBlur: 1.1

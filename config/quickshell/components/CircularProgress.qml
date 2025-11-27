@@ -18,9 +18,25 @@ Item {
     implicitWidth: 20
     implicitHeight: 20
 
+    property bool enableAnimation: true
+    property real _animatedValue: value
+
+    // هذا هو كود الأنميشن
+    Behavior on _animatedValue {
+        enabled: root.enableAnimation
+        NumberAnimation {
+            duration: 800             // مدة الحركة بالميلي ثانية
+            easing.type: Easing.OutCubic // نوع الحركة (سلسة في النهاية)
+        }
+    }
+
+    // إعادة الرسم عند تغير القيمة المتحركة
+    on_AnimatedValueChanged: canvas.requestPaint()
+
+    // بقية التريغرز كما هي
     onStartAtChanged: canvas.requestPaint()
     onEndAtChanged: canvas.requestPaint()
-    onValueChanged: canvas.requestPaint()
+    // onValueChanged: canvas.requestPaint() // لم نعد بحاجة لهذا لأن _animatedValue ستقوم بالمهمة
     onThicknessChanged: canvas.requestPaint()
     onMarginChanged: canvas.requestPaint()
     onInvertedChanged: canvas.requestPaint()
@@ -47,7 +63,9 @@ Item {
                 return 2 * Math.PI * percent;
             }
 
-            var normalizedValue = Math.max(0, Math.min(1, root.value));
+            // --- التعديل هنا: استخدام _animatedValue بدلاً من value ---
+            var normalizedValue = Math.max(0, Math.min(1, root._animatedValue));
+
             var startAngle = (root.startAt % 1 + 1) % 1;
             var endAngle = (root.endAt % 1 + 1) % 1;
             var isFullCircle = Math.abs(startAngle - endAngle) < 1e-10;

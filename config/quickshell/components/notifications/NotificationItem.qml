@@ -51,6 +51,7 @@ Rectangle {
                     foregroundColor: root.theme ? root.theme.colors.primary : "blue"
                     backgroundColor: root.theme ? root.theme.colors.primary.alpha(0.3) : "#330000FF"
                     visible: root.visibleProgress
+                    enableAnimation: false
                 }
 
                 Text {

@@ -9,7 +9,7 @@ Item {
     id: root
 
     // الأبعاد الثابتة
-    implicitHeight: 160
+    implicitHeight: 170
 
     // ============================================================
     //  STYLE CONFIGURATION

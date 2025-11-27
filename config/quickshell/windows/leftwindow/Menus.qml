@@ -28,7 +28,7 @@ StackView {
 
     property int currentIndex: 0
     property int previousIndex: 0
-    readonly property int appLauncherIndex: 6
+    readonly property int appLauncherIndex: 9
 
     // المكونات الأصلية (Component فقط)
     Component {
@@ -108,7 +108,7 @@ StackView {
     }
 
     function getPage(index) {
-        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage, appLauncherPage][index];
+        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage, null, null, null, appLauncherPage][index];
     }
 
     Connections {

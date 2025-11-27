@@ -98,15 +98,15 @@ CircularProgress {
             anchors.fill: parent
         }
 
-        ToolTip {
-            text: Math.round(root.value * 100) + "%"
-            visible: _mouseArea.containsMouse
-            contentWidth: 30
-            // x: root.mapFromItem(textItem, 0, 0).x
-            // y: root.mapFromItem(textItem, 0, textItem.height).y + 40
-            x: parent.x
-            y: parent.y //+ 40
-        }
+        // ToolTip {
+        //     text: Math.round(root.value * 100) + "%"
+        //     visible: _mouseArea.containsMouse
+        //     contentWidth: 30
+        //     // x: root.mapFromItem(textItem, 0, 0).x
+        //     // y: root.mapFromItem(textItem, 0, textItem.height).y + 40
+        //     x: parent.x
+        //     y: parent.y //+ 40
+        // }
     }
 
     // ToolTip

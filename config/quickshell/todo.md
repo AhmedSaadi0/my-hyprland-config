@@ -112,7 +112,7 @@
 - [x] GTK4 Theme Support
 - [ ] Halt Dynamic Wallpapers option
 - [ ] Configure Dynamic Coloring
-  - [ ] Control Material 3 moent from settings
+  - [ ] Control Material 3 `scheme_variant` from settings
 - [ ] Solarized, Rosé Pine, Oxocarbon Themes
 - [ ] Extend Color Schema (6 colors)
 

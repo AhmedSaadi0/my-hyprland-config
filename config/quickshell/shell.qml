@@ -274,7 +274,7 @@ ShellRoot {
                 }
 
                 function toggleApplauncherMenu() {
-                    targetedMenu = 6;
+                    targetedMenu = 9;
                     toggleMenu();
                 }
             }

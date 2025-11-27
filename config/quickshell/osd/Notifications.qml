@@ -85,7 +85,8 @@ PanelWindow {
             parallelHideAnimation.start();
         }
 
-        layer.enabled: true
+        layer.enabled: root.visible
+        layer.smooth: true
         layer.effect: Shadow {}
 
         SequentialAnimation {
