@@ -601,9 +601,21 @@ nvim .nibrasshell.json
 | :-----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
 | <img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-light.png'/> | <img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-dark.png'/> |
 
-|                                                        Catppuccin Dark                                                        |                                                   TokyoNight Dark                                                   |
-| :---------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
-| <img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png'/> | <img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png'/> |
+|                                                       Catppuccin Light                                                        |                                                      Catppuccin Dark                                                      |
+| :---------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------: |
+| <img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png'/> | <img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-light.png'/> |
+
+|                                                        TokyoNight Light                                                        |                                                   TokyoNight Dark                                                   |
+| :----------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight-light.png'/> | <img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png'/> |
+
+<p align="center">
+  <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/deer.jpg" alt="Depth effect" width="100%">
+</p>
+
+<p align="center">
+  <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule Demo" width="100%">
+</p>
 
 ### Settings - الإعدادات
 
