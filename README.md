@@ -610,11 +610,18 @@ nvim .nibrasshell.json
 | <img alt="TokyoNight Light" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight-light.jpg" width="400"/> | <img alt="TokyoNight Dark" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png" width="400"/> |
 
 <p align="center">
-  <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/deer.jpg" alt="Depth effect" width="100%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule Demo" width="100%">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/deer.jpg" alt="Depth effect" width="400"><br>
+        <strong>Depth effect</strong>
+      </td>
+      <td align="center">
+        <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule" width="400"><br>
+        <strong>Smart Capsule</strong>
+      </td>
+    </tr>
+  </table>
 </p>
 
 ### Settings - الإعدادات
