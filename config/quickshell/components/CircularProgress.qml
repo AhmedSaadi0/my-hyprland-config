@@ -63,7 +63,6 @@ Item {
                 return 2 * Math.PI * percent;
             }
 
-            // --- التعديل هنا: استخدام _animatedValue بدلاً من value ---
             var normalizedValue = Math.max(0, Math.min(1, root._animatedValue));
 
             var startAngle = (root.startAt % 1 + 1) % 1;

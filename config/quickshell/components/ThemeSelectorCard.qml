@@ -66,7 +66,8 @@ Rectangle {
                 isActive: ThemeManager.selectedTheme.themeName === card.lightThemeName
                 onClicked: {
                     ThemeManager.requestLoadTheme(card.lightThemeName);
-                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                    closeMenu.start();
+                    // EventBus.emit(Events.CLOSE_LEFTBAR);
                 }
             }
 
@@ -78,9 +79,18 @@ Rectangle {
                 isActive: ThemeManager.selectedTheme.themeName === card.darkThemeName
                 onClicked: {
                     ThemeManager.requestLoadTheme(card.darkThemeName);
-                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                    closeMenu.start();
                 }
             }
+        }
+    }
+
+    Timer {
+        id: closeMenu
+        interval: 600
+        repeat: false
+        onTriggered: {
+            EventBus.emit(Events.CLOSE_LEFTBAR);
         }
     }
 }

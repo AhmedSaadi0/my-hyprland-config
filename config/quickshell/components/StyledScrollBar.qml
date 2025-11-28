@@ -8,7 +8,6 @@ ScrollBar {
     id: root
 
     contentItem: Rectangle {
-        // تم التعديل من StyledRect إلى Rectangle
         implicitWidth: 6
 
         // نفس منطق الشفافية الذكي

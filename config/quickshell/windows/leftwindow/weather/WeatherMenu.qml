@@ -316,7 +316,6 @@ ColumnLayout {
             //     gradient: Gradient {
             //         GradientStop {
             //             position: 0.0
-            //             // تعديل الشفافية هنا مباشرة
             //             color: {
             //                 let c = feelsLikeCard.tempColor;
             //                 c.a = 0.2;

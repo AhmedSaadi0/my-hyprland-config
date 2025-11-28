@@ -4,6 +4,7 @@ import "root:/themes"
 import "root:/components"
 import "root:/utils"
 import "root:/config/EventNames.js" as Events
+import "root:/config/ConstValues.js" as Consts
 import "root:/config"
 
 PanelWindow {
@@ -15,8 +16,7 @@ PanelWindow {
     visible: false
 
     exclusionMode: ExclusionMode.Ignore
-
-    focusable: menus.currentIndex == 9 || menus.currentIndex == 4
+    focusable: menus.currentIndex == Consts.APPLICATIONS_MENU_INDEX || menus.currentIndex == Consts.NETWORK_MENU_INDEX
 
     anchors {
         top: true
@@ -68,7 +68,8 @@ PanelWindow {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
 
-        layer.enabled: root.visible && opacity > 0
+        layer.enabled: root.visible && opacity === 0
+        // layer.enabled: opacity < 1.0 && opacity > 0.0
         // layer.enabled: true
         layer.smooth: true
 
@@ -175,9 +176,16 @@ PanelWindow {
 
         EventBus.on(Events.CLOSE_LEFTBAR, function () {
             isShown = false;
+            EventBus.emit(Events.LEFT_MENU_IS_CLOSED);
         });
-        EventBus.on(Events.OPEN_LEFTBAR, function () {
-            isShown = true;
+
+        EventBus.on(Events.OPEN_LEFTBAR, function (newIndex) {
+            if (newIndex === -1) {
+                isShown = false;
+            } else {
+                isShown = true;
+                EventBus.emit(Events.LEFT_MENU_IS_OPENED, newIndex);
+            }
         });
     }
 
@@ -186,8 +194,10 @@ PanelWindow {
         function onSelectedIndexTargeted(newIndex) {
             if (newIndex === -1) {
                 isShown = false;
+                EventBus.emit(Events.LEFT_MENU_IS_CLOSED);
             } else {
                 isShown = true;
+                EventBus.emit(Events.LEFT_MENU_IS_OPENED, newIndex);
             }
         }
     }

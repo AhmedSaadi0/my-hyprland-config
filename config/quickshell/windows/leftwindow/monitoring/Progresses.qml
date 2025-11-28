@@ -135,11 +135,11 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        EventBus.on(Events.OPEN_LEFTBAR, function () {
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, function () {
             root.menuIsOpened();
         });
 
-        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+        EventBus.on(Events.LEFT_MENU_IS_CLOSED, function () {
             root.menuIsClosed();
         });
     }

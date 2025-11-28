@@ -361,7 +361,8 @@ Singleton {
     }
 
     function _changeWallpaper(path) {
-        _dispatchCommand("Changing Wallpaper", Utils.Helper.changeWallpaper(path));
+    // NOTE: -> Wallpaper is now added by quickshell in `desktop/Widgets.qml`
+    // _dispatchCommand("Changing Wallpaper", Utils.Helper.changeWallpaper(path));
     }
 
     function getCurrentWallpaper() {

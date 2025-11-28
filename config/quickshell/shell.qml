@@ -17,6 +17,8 @@ import "root:/config"
 import "root:/desktop"
 import "root:/themes"
 import "root:/shadows"
+import "root:/config/ConstValues.js" as Consts
+import "root:/config/EventNames.js" as Events
 
 ShellRoot {
     id: shellRoot
@@ -84,7 +86,7 @@ ShellRoot {
 
     Timer {
         id: splashTimer
-        interval: 1500
+        interval: 1000
         repeat: false
         onTriggered: {
             splashScreen.visible = false;
@@ -245,36 +247,42 @@ ShellRoot {
                         menuToOpen = -1;
                     }
 
+                    EventBus.emit(Events.OPEN_LEFTBAR, menuToOpen)
                     LeftMenuStatus.changeIndex(menuToOpen);
                 }
 
                 function toggleDashboardMenu() {
-                    targetedMenu = 0;
+                    targetedMenu = Consts.DASHBOARD_MENU_INDEX;
                     toggleMenu();
                 }
 
                 function toggleNotificatoinsMenu() {
-                    targetedMenu = 1;
+                    targetedMenu = Consts.NOTIFICATION_MENU_INDEX;
                     toggleMenu();
                 }
 
                 function toggleWeatherMenu() {
-                    targetedMenu = 2;
+                    targetedMenu = Consts.WEATHER_MENU_INDEX;
                     toggleMenu();
                 }
 
                 function toggleMonotoringMenu() {
-                    targetedMenu = 3;
+                    targetedMenu = Consts.MONIROTS_MENU_INDEX;
                     toggleMenu();
                 }
 
                 function toggleNetworkingMenu() {
-                    targetedMenu = 4;
+                    targetedMenu = Consts.NETWORK_MENU_INDEX;
+                    toggleMenu();
+                }
+
+                function toggleAiMenu() {
+                    targetedMenu = Consts.AI_BOT_MENU_INDEX;
                     toggleMenu();
                 }
 
                 function toggleApplauncherMenu() {
-                    targetedMenu = 9;
+                    targetedMenu = Consts.APPLICATIONS_MENU_INDEX;
                     toggleMenu();
                 }
             }

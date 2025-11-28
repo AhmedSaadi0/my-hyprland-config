@@ -12,6 +12,8 @@ import "./animations"
 import "./network"
 
 import "root:/utils"
+import "root:/config"
+import "root:/config/EventNames.js" as Events
 
 StackView {
     id: stackView
@@ -105,15 +107,8 @@ StackView {
 
         dashboardPage.visible = true;
         stackView.push(dashboardPage);
-    }
 
-    function getPage(index) {
-        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage, null, null, null, appLauncherPage][index];
-    }
-
-    Connections {
-        target: LeftMenuStatus
-        function onSelectedIndexTargeted(newIndex) {
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, function (newIndex) {
             if (newIndex >= 0 && newIndex !== currentIndex) {
                 if (newIndex > currentIndex) {
                     stackView.replaceEnter = enterFromBottom;
@@ -130,8 +125,19 @@ StackView {
             if (newIndex == stackView.appLauncherIndex) {
                 appLauncherPage.gainFocus();
             }
-        }
+        });
+
     }
+
+    function getPage(index) {
+        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage, null, null, null, null, appLauncherPage][index];
+    }
+
+    // Connections {
+    //     target: LeftMenuStatus
+    //     function onSelectedIndexTargeted(newIndex) {
+    //     }
+    // }
 
     Transition {
         id: enterFromBottom

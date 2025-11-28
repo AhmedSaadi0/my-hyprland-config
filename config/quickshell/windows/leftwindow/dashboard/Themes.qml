@@ -119,14 +119,20 @@ MenuCard {
 
             MButton {
                 text: "Colors"
-                onClicked: ThemeManager.requestLoadTheme("ColorsTheme")
+                onClicked: {
+                    ThemeManager.requestLoadTheme("ColorsTheme");
+                    closeMenu.start();
+                }
                 Layout.fillWidth: true
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "ColorsTheme"
             }
             MButton {
                 text: "Deer"
-                onClicked: ThemeManager.requestLoadTheme("DeerTheme")
+                onClicked: {
+                    ThemeManager.requestLoadTheme("DeerTheme");
+                    closeMenu.start();
+                }
                 Layout.fillWidth: true
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "DeerTheme"
@@ -198,6 +204,15 @@ MenuCard {
                     EventBus.emit(Events.CLOSE_LEFTBAR);
                 }
             }
+        }
+    }
+
+    Timer {
+        id: closeMenu
+        interval: 600
+        repeat: false
+        onTriggered: {
+            EventBus.emit(Events.CLOSE_LEFTBAR);
         }
     }
 }

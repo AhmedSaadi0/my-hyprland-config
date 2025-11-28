@@ -14,7 +14,6 @@ Rectangle {
     property real progress: 0.0
     property bool visibleProgress: false
 
-    // --- التعديل 1: نربط الخاصية بـ الـ MouseArea بالأسفل ---
     property bool dismissPressed: closeBtnMouseArea.pressed
 
     signal dismissClicked
@@ -64,7 +63,6 @@ Rectangle {
                 }
 
                 MouseArea {
-                    // --- التعديل 2: إضافة ID هنا ---
                     id: closeBtnMouseArea
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor

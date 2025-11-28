@@ -235,7 +235,7 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        EventBus.on(Events.OPEN_LEFTBAR, function () {
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, function () {
             wifiScannerProcess.scan();
             scanTimer.running = true;
             scanTimer.repeat = true;
@@ -243,7 +243,7 @@ ColumnLayout {
             dailyDataUsageProcess.start();
         });
 
-        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+        EventBus.on(Events.LEFT_MENU_IS_CLOSED, function () {
             scanTimer.running = false;
             scanTimer.repeat = false;
         });
