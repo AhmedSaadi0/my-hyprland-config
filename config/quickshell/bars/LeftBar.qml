@@ -99,12 +99,12 @@ PanelWindow {
     // [المجموعة السفلية - التطبيقات]
     ListModel {
         id: bottomModel
-        ListElement {
-            icon: ""
-            activeIcon: ""
-            name: "Favorites"
-            notificationCount: 0
-        }
+        // ListElement {
+        //     icon: ""
+        //     activeIcon: ""
+        //     name: "Favorites"
+        //     notificationCount: 0
+        // }
         ListElement {
             icon: "󰀻"
             activeIcon: "󰵆"
@@ -255,7 +255,7 @@ PanelWindow {
         id: middleButtonGroup
         theme: ThemeManager.selectedTheme
         implicitWidth: 30
-        // visible: false
+        visible: false
 
         // التموضع في المنتصف تماماً
         anchors.centerIn: parent

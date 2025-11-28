@@ -126,11 +126,10 @@ StackView {
                 appLauncherPage.gainFocus();
             }
         });
-
     }
 
     function getPage(index) {
-        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage, null, null, null, null, appLauncherPage][index];
+        return [dashboardPage, notiListPage, weatherPage, monitorPage, networkPage, clipboardPage, null, null, null, appLauncherPage][index];
     }
 
     // Connections {

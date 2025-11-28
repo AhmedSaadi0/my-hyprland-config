@@ -38,33 +38,36 @@ Item {
     width: size.width
     height: size.height
 
-    // حركة ناعمة للموقع والحجم (تمنع اهتزاز الإطار الخارجي)
     Behavior on x {
-        enabled: root._isReady && !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.OutQuart
+        enabled: !root.editMode
+        SpringAnimation {
+            spring: 4.5
+            damping: 0.2
+            epsilon: 0.25
         }
     }
     Behavior on y {
-        enabled: root._isReady && !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.OutQuart
+        enabled: !root.editMode
+        SpringAnimation {
+            spring: 4.5
+            damping: 0.2
+            epsilon: 0.25
         }
     }
+
+    // نجعل الحجم (Width/Height) أبطأ قليلاً ليعطي تأثير تمدد جميل
     Behavior on width {
-        enabled: root._isReady && !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.OutQuart
+        enabled: !root.editMode
+        SpringAnimation {
+            spring: 4.0
+            damping: 0.3
         }
     }
     Behavior on height {
-        enabled: root._isReady && !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.OutQuart
+        enabled: !root.editMode
+        SpringAnimation {
+            spring: 4.0
+            damping: 0.3
         }
     }
 
