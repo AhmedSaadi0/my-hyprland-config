@@ -236,12 +236,10 @@ def install_dependencies(distro, install_optional=False):
         run_command_verbose(
             "sudo dnf copr enable -y errornointernet/quickshell"
         )
-        run_command_verbose(
-            "sudo dnf copr enable -y luisbocanegra/kde-material-you-colors"
-        )
-        run_command_verbose(
-            "sudo dnf install -y hyprland quickshell kde-material-you-colors"
-        )
+        # run_command_verbose(
+        #     "sudo dnf copr enable -y luisbocanegra/kde-material-you-colors"
+        # )
+        run_command_verbose("sudo dnf install -y hyprland quickshell")
 
         required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs swww jq"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox python3.13"
@@ -500,7 +498,10 @@ def install_nibrasshell():
     create_user_config_file()
 
     print(YELLOW + "Installing python needed packages using pip")
-    run_command("pip install rembg[gpu] pillow psutil")
+    run_command("pip install pillow psutil")
+    run_command(
+        "python3.13 -m pip install 'rembg[gpu]' kde-material-you-colors"
+    )
 
     print(f"{GREEN}{msg('install_complete')}{NC}")
     print(f"{YELLOW}{msg('reboot_prompt')}{NC}")
