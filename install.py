@@ -497,9 +497,11 @@ def install_nibrasshell():
     # Prompt user for personal settings
     create_user_config_file()
 
-    # TODO: -> move to install_dependencies part
+    # TODO: -> move to install_dependencies part only for fedora
     print(YELLOW + "Installing python needed packages using pip")
     run_command("pip install pillow psutil")
+    run_command("curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py")
+    run_command("python3.13 get-pip.py")
     run_command("python3.13 -m pip install 'rembg[gpu]'")
 
     print(f"{GREEN}{msg('install_complete')}{NC}")
