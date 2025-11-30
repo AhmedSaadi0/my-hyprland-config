@@ -4,7 +4,6 @@
 # TODO: -> split into several files and use clean code standard
 
 import json
-
 # --- Import necessary libraries ---
 import os
 import shutil
@@ -63,6 +62,11 @@ MESSAGES = {
         "update_complete": "QuickShell update complete.",
         "pulling_updates": "Pulling latest updates from git...",
         "copying_files": "Copying QuickShell files...",
+        "dnf_error": "Error: DNF failed to install packages.",
+        "dnf_conflict_prompt": "How do you want to resolve the conflict?",
+        "opt_allow_erasing": "1. Allow erasing conflicting packages (--allowerasing)",
+        "opt_skip_broken": "2. Skip broken/conflicting packages (--skip-broken)",
+        "opt_cancel": "3. Cancel installation",
     },
     "ar": {
         "choose_lang": "اختر لغتك:",
@@ -107,6 +111,11 @@ MESSAGES = {
         "update_complete": "اكتمل تحديث QuickShell.",
         "pulling_updates": "جاري سحب آخر التحديثات من git...",
         "copying_files": "جاري نسخ ملفات QuickShell...",
+        "dnf_error": "خطأ: فشل DNF في تثبيت الحزم.",
+        "dnf_conflict_prompt": "كيف تريد معالجة التعارض؟",
+        "opt_allow_erasing": "1. السماح باستبدال الحزم المتعارضة (--allowerasing)",
+        "opt_skip_broken": "2. تخطي الحزم المعطوبة/المتعارضة (--skip-broken)",
+        "opt_cancel": "3. إلغاء التثبيت",
     },
     "cs": {
         "choose_lang": "Vyberte si jazyk:",
@@ -151,6 +160,11 @@ MESSAGES = {
         "update_complete": "Aktualizace QuickShell dokončena.",
         "pulling_updates": "Stahování nejnovějších aktualizací z gitu...",
         "copying_files": "Kopírování souborů QuickShell...",
+        "dnf_error": "Chyba: DNF se nepodařilo nainstalovat balíčky.",
+        "dnf_conflict_prompt": "Jak chcete vyřešit konflikt?",
+        "opt_allow_erasing": "1. Povolit vymazání konfliktních balíčků (--allowerasing)",
+        "opt_skip_broken": "2. Přeskočit poškozené balíčky (--skip-broken)",
+        "opt_cancel": "3. Zrušit instalaci",
     },
 }
 
@@ -241,13 +255,24 @@ def install_dependencies(distro, install_optional=False):
         # )
         run_command_verbose("sudo dnf install -y hyprland quickshell")
 
-        required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs swww jq"
-        optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox python3.13"
+        required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs swww jq dbus-devel python3-devel python3.13"
+        optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
         command = f"sudo dnf install -y {required_pkgs}"
         if install_optional:
             command += f" {optional_pkgs}"
         print(YELLOW + "Installing main packages..." + NC)
         run_command_verbose(command)
+
+        print(YELLOW + "Installing python needed packages using pip")
+        run_command("pip install pillow psutil")
+        run_command("pipx install kde-material-you-colors")
+        # to get python 3.13
+        # needed for `rembg`
+        run_command(
+            "curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py"
+        )
+        run_command("python3.13 get-pip.py")
+        run_command("python3.13 -m pip install 'rembg[gpu]'")
     elif is_arch_based():
         print(YELLOW + "Starting Arch installer")
         required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww"
@@ -264,7 +289,7 @@ def install_dependencies(distro, install_optional=False):
             "echo repository=https://raw.githubusercontent.com/Encoded14/void-extra/repository-x86_64-glibc | sudo tee /etc/xbps.d/20-void-extra.conf"
         )
         run_command_verbose("sudo xbps-install -S")
-        required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz swww jq"
+        required_pkgs = hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz swww jq"
         # discord not packaged for Void Linux
         optional_pkgs = (
             "strawberry easyeffects blueman telegram-desktop kvantum firefox"
@@ -496,13 +521,6 @@ def install_nibrasshell():
 
     # Prompt user for personal settings
     create_user_config_file()
-
-    # TODO: -> move to install_dependencies part only for fedora
-    print(YELLOW + "Installing python needed packages using pip")
-    run_command("pip install pillow psutil")
-    run_command("curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py")
-    run_command("python3.13 get-pip.py")
-    run_command("python3.13 -m pip install 'rembg[gpu]'")
 
     print(f"{GREEN}{msg('install_complete')}{NC}")
     print(f"{YELLOW}{msg('reboot_prompt')}{NC}")
