@@ -4,13 +4,15 @@ import QtQuick
 import Quickshell.Io
 import org.kde.kirigami as Kirigami
 
-// import "../themes"
-
 SimpleTable {
     id: root
 
-    width: 167
-    height: 270
+    // تحسين: استخدام implicit بدلاً من الحجم الثابت لمرونة أكبر
+    implicitWidth: 167
+    implicitHeight: 270
+
+    // width: 167
+    // height: 270
 
     model: dataModel
     columns: tableColumns
@@ -18,9 +20,7 @@ SimpleTable {
     rowHeight: 30
     headerHeight: 30
 
-    // tableBackgroundColor: palette.mid
     tableBorderWidth: 0
-
     showVerticalGridLines: false
     showHorizontalGridLines: false
 
@@ -42,47 +42,70 @@ SimpleTable {
     property int interval: 2000
     property int showRows: 8
     property bool running: true
-    property string title: "Process"
+    property string title: qsTr("Process")
     property string value: "%"
 
-    property var onReadHandler: function (data) {
-        try {
-            var processes = JSON.parse(data);
-            dataModel.clear();
+    property int highValueAlert: 50
 
-            for (var i = 0; i < Math.min(processes.length, showRows); i++) {
-                let subValue = null;
-                if (processes[i].memory_usage_mb) {
-                    subValue = `${processes[i].memory_usage_mb} MB`;
+    signal highUsageProcess(var processInfo)
 
-                    dataModel.append({
-                        textRole: processes[i].name,
-                        valueRole: processes[i].value.toFixed(2),
-                        subRole: subValue
-                    });
-                } else {
-                    dataModel.append({
-                        textRole: processes[i].name,
-                        valueRole: processes[i].value.toFixed(2)
-                    });
-                }
+    // دالة مساعدة لتحديث النموذج
+    function updateModel(processes) {
+        dataModel.clear();
+
+        // حماية ضد البيانات الفارغة
+        if (!processes || processes.length === 0) {
+            dataModel.append({
+                textRole: qsTr("No processes available"),
+                valueRole: "0.00",
+                subRole: ""
+            });
+            return;
+        }
+
+        for (var i = 0; i < Math.min(processes.length, showRows); i++) {
+            let subValue = "";
+            let processValue = processes[i].value;
+            let processName = processes[i].name;
+
+            // التحقق من وجود القيمة قبل استخدامها
+            if (processes[i].memory_usage_mb !== undefined) {
+                subValue = `${processes[i].memory_usage_mb} MB`;
             }
 
-            if (dataModel.count === 0) {
-                dataModel.append({
-                    textRole: "لا عمليات متاحة",
-                    valueRole: "0.00"
+            dataModel.append({
+                textRole: processName || qsTr("Unknown"),
+                valueRole: (processValue !== undefined) ? Number(processValue).toFixed(2) : "0.00",
+                subRole: subValue
+            });
+
+            if (processValue >= highValueAlert) {
+                root.highUsageProcess({
+                    appName: processName,
+                    usage: processValue
                 });
             }
+        }
+    }
+
+    property var onReadHandler: function (data) {
+        if (!data)
+            return; // تجاهل البيانات الفارغة
+
+        try {
+            var processes = JSON.parse(data);
+            updateModel(processes);
         } catch (e) {
-            console.error("خطأ في تحليل JSON من سكربت المعالج:", e.message);
-            console.error("البيانات المستلمة التي سببت الخطأ:", data);
-            // Display an error message in the table if parsing fails
-            if (dataModel.count === 0 || dataModel.get(0).textRole !== "خطأ في التحليل") {
+            console.error("JSON Parsing Error:", e.message);
+            console.error("Received Data:", data);
+
+            // عرض رسالة خطأ فقط إذا لم يكن هناك بيانات سابقة أو الخطأ مختلف
+            if (dataModel.count === 0 || dataModel.get(0).textRole !== qsTr("Parsing Error")) {
                 dataModel.clear();
                 dataModel.append({
-                    textRole: "خطأ في التحليل",
-                    valueRole: "N/A"
+                    textRole: qsTr("Parsing Error"),
+                    valueRole: "N/A",
+                    subRole: ""
                 });
             }
         }
@@ -93,77 +116,98 @@ SimpleTable {
             title: root.title,
             role: "textRole",
             alignment: Text.AlignLeft,
-            width: 125,
+            width: root.width * 0.65 // تحسين: عرض نسبي بدلاً من ثابت
+            ,
             leftMargin: 12
         },
         {
             title: root.value,
             role: "valueRole",
             alignment: Text.AlignRight,
-            width: 70,
+            width: root.width * 0.35 // تحسين: عرض نسبي
+            ,
             rightMargin: 10
         }
     ]
 
-    // ListModel to hold the process data
     ListModel {
         id: dataModel
-        // Initial placeholder data while waiting for the script to run
         ListElement {
-            textRole: "جاري تحميل البيانات..."
+            textRole: "Loading data..." // سيتم ترجمتها عند العرض إذا استخدمت qsTr في الـ Delegate أو هنا كـ string
             valueRole: "0.00"
+            subRole: ""
         }
     }
 
     Process {
         id: process
         command: root.command
-        running: root.running
+        // running: يتم التحكم به يدوياً عبر المؤقت
 
         stdout: SplitParser {
-            splitMarker: ""
-            onRead: data => {
-                root.onReadHandler(data.trim());
-            }
+            splitMarker: "" // يقرأ الكل دفعة واحدة، تأكد أن السكربت يطبع JSON مرة واحدة ويغلق
+            onRead: data => root.onReadHandler(data.trim())
         }
 
         stderr: SplitParser {
             onRead: data => {
-                console.error("خطأ سكربت المعالج:", data);
-                // Display a script error message in the table
-                if (dataModel.count === 0 || dataModel.get(0).textRole !== "خطأ في السكربت") {
+                console.error("Script Error:", data);
+                if (dataModel.count === 0 || dataModel.get(0).textRole !== qsTr("Script Error")) {
                     dataModel.clear();
                     dataModel.append({
-                        textRole: "خطأ في السكربت",
-                        valueRole: "N/A"
+                        textRole: qsTr("Script Error"),
+                        valueRole: "N/A",
+                        subRole: ""
                     });
                 }
             }
         }
+
+        // تحسين: عند انتهاء العملية، ابدأ المؤقت ليعيد تشغيلها
+        onExited: (code, status) => {
+            if (root.running) {
+                refreshTimer.start();
+            }
+        }
     }
 
-    // Timer to trigger the CPU usage process periodically
+    // Timer logic update: Wait -> Run Process -> Wait -> Run Process
     Timer {
         id: refreshTimer
         interval: root.interval
-        repeat: true
+        repeat: false // يعمل مرة واحدة بعد انتهاء العملية
         running: false
 
         onTriggered: {
-            process.running = root.running;
+            if (root.running) {
+                // إعادة تشغيل العملية
+                process.running = false; // Reset state
+                process.running = true;
+            }
         }
     }
 
-    // Ensure initial data is loaded immediately when the component is ready
+    // مراقبة خاصية running الرئيسية
+    onRunningChanged: {
+        if (running) {
+            process.running = true;
+        } else {
+            process.running = false;
+            refreshTimer.stop();
+        }
+    }
+
     Component.onCompleted: {
-        if (root.running) {
-            refreshTimer.start();
-        }
-        process.running = root.running;
-    }
+        // تحديث النص الأولي ليكون مترجماً
+        dataModel.clear();
+        dataModel.append({
+            textRole: qsTr("Loading data..."),
+            valueRole: "0.00",
+            subRole: ""
+        });
 
-    Component.onDestruction: {
-        refreshTimer.stop();
-        process.running = root.running;
+        if (root.running) {
+            process.running = true;
+        }
     }
 }

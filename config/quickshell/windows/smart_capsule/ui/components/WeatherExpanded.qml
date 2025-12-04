@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Layouts 1.15
+import QtQuick.Layouts
 import QtQuick.Controls
 
 import "root:/themes"
@@ -8,7 +8,6 @@ import "root:/services"
 Item {
     id: root
 
-    // الأبعاد الثابتة
     implicitHeight: 170
 
     // ============================================================
@@ -62,8 +61,8 @@ Item {
         // --------------------------------------------------------
         ColumnLayout {
             Layout.fillHeight: true
-            Layout.preferredWidth: 230 // عرض ثابت لمنع الانهيار
-            Layout.maximumWidth: 230   // منع التمدد الزائد
+            Layout.preferredWidth: 230
+            Layout.maximumWidth: 230
             Layout.alignment: Qt.AlignVCenter
             spacing: -10
 

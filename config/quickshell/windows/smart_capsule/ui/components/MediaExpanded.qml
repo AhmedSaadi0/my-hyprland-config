@@ -3,19 +3,16 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Shapes 1.15
-import Quickshell.Services.Mpris
 
-// استيراد الخدمات
-import "root:/services"
 import "root:/themes"
+import "root:/services"
 import "root:/components"
-import "root:/config"
 
 Item {
     id: root
 
     // ============================================================
-    //  1. CONFIGURATION (Style)
+    //  1. CONFIGURATION (Style from ThemeManager)
     // ============================================================
     QtObject {
         id: style
@@ -33,33 +30,30 @@ Item {
     }
 
     // ============================================================
-    //  2. LOGIC & STATE
+    //  2. LOGIC & STATE (Bound to MusicService)
     // ============================================================
-    signal switchPlayerClicked
 
-    readonly property var player: MediaController.activePlayer
-    property int availablePlayersCount: MediaController.players.length
+    readonly property bool hasPlayer: MusicService.hasPlayer
+    readonly property bool isPlaying: MusicService.isPlaying
+    readonly property string title: MusicService.title
+    readonly property string artist: MusicService.artist
+    readonly property string coverArt: MusicService.coverArt
+    readonly property string identity: MusicService.activePlayer ? MusicService.activePlayer.identity : "Media Player"
 
-    readonly property string identity: (player && player.identity) ? player.identity : "Media Player"
-    readonly property string title: (player && player.trackTitle) ? player.trackTitle : "No Media"
-    readonly property string artist: (player && player.trackArtist) ? player.trackArtist : "Unknown Artist"
-    readonly property string albumArt: (player && player.trackArtUrl) ? player.trackArtUrl : ""
-    readonly property bool isPlaying: player ? player.isPlaying : false
+    property var player: MusicService.activePlayer
 
     readonly property double position: player ? player.position : 0
     readonly property double length: (player && player.length > 0) ? player.length : 1
     readonly property double progress: position / length
 
     property bool isScrubbing: seekSlider.pressed
-    property alias pressed: mouseArea.pressed
 
-    // الأبعاد الأصلية
     implicitHeight: 170
-    // implicitWidth: 410
+    implicitWidth: 380
 
     Timer {
         interval: 1000
-        running: root.player && root.player.playbackState === MprisPlaybackState.Playing && !root.isScrubbing
+        running: root.isPlaying && !root.isScrubbing
         repeat: true
         onTriggered: if (root.player)
             root.player.positionChanged()
@@ -73,17 +67,11 @@ Item {
         return m + ":" + (s < 10 ? "0" + s : s);
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        preventStealing: false
-    }
-
     // ============================================================
-    //  3. ANIMATED COMPONENTS (مع ضبط الأحجام الأصلية داخلها)
+    //  3. COMPONENTS (Local Components)
     // ============================================================
 
-    // --- مكون النص المتحرك (Queue) ---
+    // --- مكون النص المتحرك (Queue Text) ---
     component QueueText: Item {
         property string text: ""
         property font font
@@ -137,10 +125,9 @@ Item {
                 id: slideAnim
                 target: slideContainer
                 property: "x"
-                to: -root.width // ديناميكي
+                to: -root.width
                 duration: 400
                 easing.type: Easing.OutCirc
-
                 onFinished: {
                     currentText.text = nextText.text;
                     slideContainer.x = 0;
@@ -157,8 +144,7 @@ Item {
         }
     }
 
-    // --- زر التشغيل المتحول (Morphing) ---
-    // تم ضبطه ليطابق أبعاد MButton الأصلية (50x40) وحجم الخط (20)
+    // --- زر التشغيل المتحول (Morphing Play Button) ---
     component MorphPlayButton: MouseArea {
         property bool playing: false
         property color iconColor: "white"
@@ -167,11 +153,10 @@ Item {
         implicitHeight: 40
         hoverEnabled: true
 
-        // الخلفية (مطابقة لـ MButton الأصلي)
         Rectangle {
             anchors.fill: parent
             color: parent.pressed ? style.bgActive : (parent.containsMouse ? style.bgHover : style.bgSurface)
-            radius: height / 2 // ليكون دائرياً من الجوانب كما هو شائع، أو يمكن جعلها style.radius
+            radius: style.radius
             Behavior on color {
                 ColorAnimation {
                     duration: 150
@@ -179,23 +164,17 @@ Item {
             }
         }
 
-        // الأيقونة المتحولة
         Item {
             anchors.centerIn: parent
             width: 20
-            height: 20 // حجم الحاوية للأيقونة
+            height: 20
             clip: true
-            smooth: true
 
-            // Pause Icon (||)
+            // Pause Icon
             Item {
                 anchors.fill: parent
                 opacity: playing ? 1 : 0
                 rotation: playing ? 0 : -90
-                // scale: playing ? 1 : 0.5
-
-                clip: true
-                smooth: true
                 Behavior on opacity {
                     NumberAnimation {
                         duration: 250
@@ -207,14 +186,7 @@ Item {
                         easing.type: Easing.OutBack
                     }
                 }
-                // Behavior on scale {
-                //     NumberAnimation {
-                //         duration: 400
-                //         easing.type: Easing.OutBack
-                //     }
-                // }
 
-                // رسم خطي Pause يطابق حجم أيقونة الخط 20 تقريباً
                 Rectangle {
                     x: 5
                     height: 16
@@ -233,20 +205,15 @@ Item {
                 }
             }
 
-            // Play Icon (Triangle)
+            // Play Icon
             Text {
                 anchors.centerIn: parent
-                text: "" // نفس الأيقونة المستخدمة في الكود الأصلي
+                text: ""
                 font.family: style.iconFont
-                font.pixelSize: 20 // نفس الحجم الأصلي
+                font.pixelSize: 20
                 color: iconColor
-
-                clip: true
-                smooth: true
                 opacity: playing ? 0 : 1
                 rotation: playing ? 90 : 0
-                // scale: playing ? 0.5 : 1
-
                 Behavior on opacity {
                     NumberAnimation {
                         duration: 250
@@ -258,12 +225,6 @@ Item {
                         easing.type: Easing.OutBack
                     }
                 }
-                // Behavior on scale {
-                //     NumberAnimation {
-                //         duration: 400
-                //         easing.type: Easing.OutBack
-                //     }
-                // }
             }
         }
     }
@@ -275,16 +236,13 @@ Item {
     RowLayout {
         anchors.fill: parent
         anchors.margins: 15
-        spacing: 15 // نفس المسافة الأصلية
+        spacing: 15
 
-        // ------------------------------------
-        // صورة الألبوم
-        // ------------------------------------
+        // --- Cover Art ---
         Rectangle {
             Layout.preferredHeight: 130
             Layout.preferredWidth: 130
             Layout.alignment: Qt.AlignVCenter
-
             radius: style.radius
             color: style.bgSurface
             clip: true
@@ -292,7 +250,7 @@ Item {
             Image {
                 id: albumImage
                 anchors.fill: parent
-                source: root.albumArt
+                source: root.coverArt
                 fillMode: Image.PreserveAspectCrop
 
                 onSourceChanged: {
@@ -325,87 +283,83 @@ Item {
 
             Text {
                 anchors.centerIn: parent
-                visible: albumImage.opacity < 0.1
+                visible: albumImage.status !== Image.Ready || root.coverArt === ""
                 text: "󰝚"
                 font.family: style.iconFont
-                font.pixelSize: 40 // نفس الحجم الأصلي
+                font.pixelSize: 40
                 color: style.textPrimary
                 opacity: 0.5
             }
         }
 
-        // ------------------------------------
-        // القسم الأيمن
-        // ------------------------------------
+        // --- Right Section (Info & Controls) ---
         ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignVCenter
-            spacing: 0 // نفس المسافة الأصلية
+            spacing: 0
 
-            // 1. العنوان والفنان
+            // 1. Info Row (Title, Artist, Player Name)
             RowLayout {
                 Layout.fillWidth: true
 
                 ColumnLayout {
                     Layout.fillWidth: true
-                    spacing: 0 // نفس المسافة الأصلية
+                    spacing: 0
 
-                    // اسم المشغل
                     QueueText {
                         text: root.identity
-                        pixelSize: 9 // الأصلي
+                        pixelSize: 9
                         color: style.textSecondary
                         opacityValue: 0.8
                         fontBold: true
                         capitalization: Font.AllUppercase
                     }
 
-                    // العنوان
                     QueueText {
                         text: root.title
                         fontBold: true
-                        pixelSize: 14 // الأصلي
+                        pixelSize: 14
                         color: style.textPrimary
                     }
 
-                    // الفنان
                     QueueText {
                         text: root.artist
-                        pixelSize: 12 // الأصلي
+                        pixelSize: 12
                         color: style.textSecondary
                     }
                 }
 
+                // Switch Player Button
                 MButton {
-                    visible: root.availablePlayersCount > 1
+                    // visible: MusicService._players.length > 1 // يمكن استخدام الخاصية الخاصة من الخدمة
                     text: "󰌳"
                     font.family: style.iconFont
-                    font.pixelSize: 14 // الأصلي
+                    font.pixelSize: 14
                     implicitWidth: 24
                     implicitHeight: 24
                     normalBackground: "transparent"
                     normalForeground: style.textSecondary
-                    onClicked: MediaController.cyclePlayers()
+                    onClicked: MusicService.cyclePlayers()
                     Layout.alignment: Qt.AlignTop | Qt.AlignRight
                 }
             }
 
-            // فاصل
+            // Spacer
             Item {
                 Layout.fillHeight: true
             }
 
-            // 2. شريط التقدم
+            // 2. Progress Slider
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: -5 // نفس المسافة الأصلية
+                spacing: -5
 
                 RowLayout {
                     Layout.fillWidth: true
                     Text {
                         text: root.formatTime(root.position)
-                        font.pixelSize: 9 // الأصلي
+                        font.pixelSize: 9
                         color: style.textSecondary
                     }
                     Item {
@@ -413,7 +367,7 @@ Item {
                     }
                     Text {
                         text: root.formatTime(root.length)
-                        font.pixelSize: 9 // الأصلي
+                        font.pixelSize: 9
                         color: style.textSecondary
                     }
                 }
@@ -421,9 +375,11 @@ Item {
                 FlatSlider {
                     id: seekSlider
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 10 // الأصلي
+                    Layout.preferredHeight: 10
+
                     value: (!pressed) ? root.progress : value
                     enableChangeOnWheel: false
+
                     onMoved: {
                         if (root.player && root.player.canSeek) {
                             if (root.player.positionSupported)
@@ -433,53 +389,54 @@ Item {
                             root.player.positionChanged();
                         }
                     }
+
                     activeColor: style.textPrimary
                     inactiveColor: style.bgSurface
                     lineWidth: 4
                 }
             }
 
-            // 3. أزرار التحكم والصوت
+            // 3. Controls (Media Buttons & Volume)
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 5 // الأصلي
-                spacing: 10 // الأصلي
+                Layout.topMargin: 5
+                spacing: 10
 
+                // Media Buttons
                 RowLayout {
-                    spacing: 15 // الأصلي
+                    spacing: 15
 
                     MButton {
                         text: ""
                         font.family: style.iconFont
-                        font.pixelSize: 18 // الأصلي
+                        font.pixelSize: 18
                         implicitWidth: 30
                         implicitHeight: 30
                         normalBackground: "transparent"
                         normalForeground: style.textPrimary
-                        enabled: root.player && root.player.canGoPrevious
+                        // enabled: root.player && root.player.canGoPrevious
                         opacity: enabled ? 1 : 0.5
-                        onClicked: MediaController.previous()
+                        onClicked: MusicService.prev()
                     }
 
-                    // زر التشغيل (المتحول) - تم ضبط أبعاده داخلياً لتطابق الأصلي
                     MorphPlayButton {
                         playing: root.isPlaying
                         iconColor: style.textPrimary
-                        enabled: root.player && root.player.canTogglePlaying
-                        onClicked: MediaController.togglePlaying()
+                        // enabled: root.player && root.player.canTogglePlaying
+                        onClicked: MusicService.toggle()
                     }
 
                     MButton {
                         text: ""
                         font.family: style.iconFont
-                        font.pixelSize: 18 // الأصلي
+                        font.pixelSize: 18
                         implicitWidth: 30
                         implicitHeight: 30
                         normalBackground: "transparent"
                         normalForeground: style.textPrimary
-                        enabled: root.player && root.player.canGoNext
+                        // enabled: root.player && root.player.canGoNext
                         opacity: enabled ? 1 : 0.5
-                        onClicked: MediaController.next()
+                        onClicked: MusicService.next()
                     }
                 }
 
@@ -487,14 +444,14 @@ Item {
                     Layout.fillWidth: true
                 }
 
-                // التحكم بالصوت
+                // Volume Control (Using SystemService)
                 RowLayout {
-                    spacing: 10 // الأصلي
+                    spacing: 10
 
                     Text {
                         text: Audio.muted ? "" : (Audio.volume > 0.5 ? "" : "")
                         font.family: style.iconFont
-                        font.pixelSize: 14 // الأصلي
+                        font.pixelSize: 14
                         color: style.textSecondary
                         MouseArea {
                             anchors.fill: parent
@@ -504,8 +461,8 @@ Item {
 
                     FlatSlider {
                         id: volSlider
-                        Layout.preferredWidth: 50 // الأصلي
-                        Layout.preferredHeight: 20 // الأصلي
+                        Layout.preferredWidth: 50
+                        Layout.preferredHeight: 20
 
                         Component.onCompleted: volSlider.value = Audio.volume
                         Connections {

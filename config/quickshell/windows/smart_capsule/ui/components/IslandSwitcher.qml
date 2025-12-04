@@ -1,8 +1,7 @@
 import QtQuick
-import QtQuick.Layouts 1.15
-import QtQuick.Controls
-
+import QtQuick.Layouts
 import "root:/themes"
+import "./components"
 
 Item {
     id: root

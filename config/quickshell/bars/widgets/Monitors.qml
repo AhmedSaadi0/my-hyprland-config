@@ -16,7 +16,7 @@ RowLayout {
         icon: "󰃠"
         value: Brightness.brightness
         iconFontSize: 10
-        activetProcess: false
+        activeProcess: false
         iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
 
         onValueChanged: function () {
@@ -42,7 +42,7 @@ RowLayout {
         icon: ""
         value: Audio.volume
         iconFontSize: 10
-        activetProcess: false
+        activeProcess: false
 
         iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
         backgroundColor: ThemeManager.selectedTheme.colors.secondary.alpha(0.2)

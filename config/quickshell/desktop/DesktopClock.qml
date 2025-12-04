@@ -11,7 +11,7 @@ Item {
     property bool editMode: false
     property bool pressed: false
 
-    // إعدادات الثيم (المصدر الخارجي)
+    // إعدادات الثيم
     property bool enableAnimation: false
     property bool shadowEnabled: false
     property color shadowColor: "#40000000"
@@ -190,9 +190,20 @@ Item {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: root.shadowColor
-                shadowBlur: 0.6
-                shadowVerticalOffset: 2
-                shadowHorizontalOffset: 2
+
+                // 1. التنعيم الكامل للحصول على تأثير التوهج
+                shadowBlur: 1.0
+
+                // 2. التحكم في كثافة اللون (0.0 إلى 1.0)
+                // زدنا القيمة قليلاً لأن التنعيم يوزع اللون فيجعله باهتاً
+                shadowOpacity: 0.8
+
+                // 3. جعل الظل في المنتصف تماماً
+                shadowVerticalOffset: 0
+                shadowHorizontalOffset: 0
+
+                // 4. عدم تغيير الحجم لمنع التشوه
+                shadowScale: 1.0
             }
         }
     }

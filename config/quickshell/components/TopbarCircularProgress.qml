@@ -11,9 +11,6 @@ CircularProgress {
     width: 22
     height: 20
 
-    // startAt: 0.4
-    // endAt: 0.1
-
     value: 0.0
 
     inverted: true
@@ -22,14 +19,19 @@ CircularProgress {
     backgroundColor: palette.accent.alpha(0.4)
     foregroundColor: palette.accent
 
-    property bool running: true
+    // توحيد التحكم: نستخدم activeProcess فقط للتحكم في التشغيل
+    property bool activeProcess: true
+
     property string icon: ""
     property string iconFontFamily: "FantasqueSansM Nerd Font Propo"
     property int iconFontSize: 11
     property color iconColor: palette.accent
-    property var command
-    property bool activetProcess: true
+    property var command: []
     property int updateInterval: 1000
+
+    // إبقاء glowIcon كما هو
+    property bool glowIcon: false
+
     property var onReadHandler: function (data) {
         var percent = parseFloat(data);
         if (!isNaN(percent)) {
@@ -38,10 +40,10 @@ CircularProgress {
             console.warn("ReusableCpuCircularProgress: onReadHandler received non-numeric data:", data);
         }
     }
-    property bool glowIcon: false
 
     Text {
         id: textitem
+        // الأحجام كما هي
         width: 20
         height: 30
         anchors.centerIn: parent
@@ -51,96 +53,73 @@ CircularProgress {
         font.family: root.iconFontFamily
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        layer.enabled: true
         z: 2
 
+        // --- التوهج المحسن (ناعم وخفيف) ---
         // Glow {
-        //     id: textItemGlow
-        //     active: isCharging
+        //     id: iconGlow
+        //     anchors.fill: textitem
+        //     source: textitem
+        //
+        //     // التعديلات هنا:
+        //     radius: 5          // تصغير الحجم ليتناسب مع الأيقونة الصغيرة
+        //     samples: 10        // دقة التنعيم
+        //     spread: 0.1        // قيمة قليلة تجعل التوهج ينتشر بنعومة (ليس حاداً)
+        //     color: "yellow"    // يمكنك تغييره لـ palette.accent ليتناسق مع الثيم
+        //     transparentBorder: true
+        //
+        //     visible: root.glowIcon
+        //     z: -1 // خلف النص
+        //
+        //     // أنميشن هادئ جداً
+        //     SequentialAnimation on opacity {
+        //         running: root.glowIcon
+        //         loops: Animation.Infinite
+        //         alwaysRunToEnd: true
+        //
+        //         // التوهج يتنفس بين شبه مخفي (0.1) ومتوسط (0.6)
+        //         // لا يصل أبداً لـ 1.0 لتجنب "حرق" العين
+        //         NumberAnimation {
+        //             to: 0.6
+        //             duration: 1200
+        //             easing.type: Easing.InOutSine
+        //         }
+        //         NumberAnimation {
+        //             to: 0.1
+        //             duration: 1200
+        //             easing.type: Easing.InOutSine
+        //         }
+        //     }
         // }
 
-        Loader {
-            id: glowLoader
-            anchors.fill: parent // Glow effect doesn't take space, but for completeness
-            active: root.glowIcon
-            sourceComponent: glowComponentInstance // Set when active
-
-        }
-
-        Component {
-            id: glowComponentInstance
-            Glow {
-                color: "yellow"
-                radius: 16
-                samples: 16
-                transparentBorder: true
-                enabled: false
-            }
-        }
-
-        SequentialAnimation on opacity {
-            id: glowAnimation
-            NumberAnimation {
-                to: 0.3
-                duration: 1000
-            }
-            NumberAnimation {
-                to: 1.0
-                duration: 1000
-            }
-            loops: Animation.Infinite
-            running: root.glowIcon
-        }
-
-        MouseArea {
-            id: _mouseArea
-            hoverEnabled: true
-            anchors.fill: parent
-        }
-
+        // MouseArea {
+        //     id: _mouseArea
+        //     anchors.fill: parent
+        //     hoverEnabled: true
+        // }
+        //
         // ToolTip {
-        //     text: Math.round(root.value * 100) + "%"
         //     visible: _mouseArea.containsMouse
-        //     contentWidth: 30
-        //     // x: root.mapFromItem(textItem, 0, 0).x
-        //     // y: root.mapFromItem(textItem, 0, textItem.height).y + 40
-        //     x: parent.x
-        //     y: parent.y //+ 40
+        //     delay: 500
+        //     text: Math.round(root.value * 100) + "%"
+        //
+        //     contentItem: Text {
+        //         text: parent.text
+        //         color: root.iconColor
+        //         font.pixelSize: 12
+        //     }
+        //     background: Rectangle {
+        //         color: palette.window
+        //         border.color: palette.mid
+        //         radius: 4
+        //     }
         // }
     }
-
-    // ToolTip
-    // PanelWindow {
-    //     id: hoverWindow
-    //     visible: false
-    //     width: 100
-    //     height: 30
-    //     anchors {
-    //         top: parent.top
-    //         left: parent.left
-    //         right: parent.right
-    //         bottom: parent.bottom
-    //     }
-    //
-    //     Rectangle {
-    //         anchors.fill: parent
-    //         color: palette.window
-    //         border.color: palette.accent
-    //         radius: 4
-    //     }
-    //
-    //     Text {
-    //         text: Math.round(root.value * 100) + "%"
-    //         color: palette.text
-    //         font.pixelSize: 20
-    //         anchors.centerIn: parent
-    //     }
-    // }
 
     Process {
         id: processId
         command: root.command
-        running: root.activetProcess
+        running: root.activeProcess // ربط مباشر بـ activeProcess
 
         stdout: SplitParser {
             onRead: data => {
@@ -156,37 +135,18 @@ CircularProgress {
         id: updateTimer
         interval: root.updateInterval
         repeat: true
-        running: false
+        running: root.activeProcess // يعمل طالما العملية نشطة
 
         onTriggered: {
-            processId.running = running;
+            // إعادة تفعيل العملية لجلب بيانات جديدة
+            processId.running = false;
+            processId.running = true;
         }
     }
 
-    // MouseArea {
-    //     id: hoverArea
-    //     anchors.fill: parent
-    //     hoverEnabled: true
-    //
-    //     onEntered: {
-    //         hoverWindow.visible = true;
-    //         // hoverWindow.x = parent.width + 8; // Offset from the widget
-    //         // hoverWindow.y = 0;
-    //     }
-    //     onExited: hoverWindow.visible = false
-    // }
-
-    Component.onCompleted: {
-        if (running) {
-            updateTimer.start();
-        }
-        processId.running = running;
-    }
-
+    // تنظيف عند التدمير
     Component.onDestruction: {
         updateTimer.stop();
         processId.running = false;
-        updateTimer.destroy();
-        processId.destroy();
     }
 }

@@ -97,13 +97,37 @@ Rectangle {
             visible: notification && (notification.image || notification.summary)
 
             Image {
-                source: notification ? (notification.image || notification.appIcon || defaultIcon) : defaultIcon
+                id: notifImage
+
+                property string rawIcon: notification ? (notification.image || notification.appIcon || "") : ""
+
+                source: {
+                    if (rawIcon === "")
+                        return defaultIcon;
+
+                    // إذا كان يحتوي على "/" أو يبدأ بـ "file://" فهو مسار ملف
+                    if (rawIcon.indexOf("/") !== -1 || rawIcon.indexOf("file://") === 0) {
+                        return rawIcon;
+                    }
+
+                    // عدا ذلك، هو اسم أيقونة نظام، نستخدم بادئة الثيم
+                    return "image://theme/" + rawIcon;
+                }
+
                 Layout.preferredWidth: 24
                 Layout.preferredHeight: 24
                 Layout.alignment: Qt.AlignTop
                 fillMode: Image.PreserveAspectFit
                 smooth: true
-                visible: source !== ""
+                visible: status === Image.Ready // إخفاء الصورة حتى تجهز لتجنب الوميض
+
+                // 2. نظام حماية (Fallback) في حال فشل التحميل
+                onStatusChanged: {
+                    if (status === Image.Error) {
+                        console.warn("Notification Image Failed:", rawIcon, "- Reverting to default.");
+                        source = defaultIcon;
+                    }
+                }
             }
 
             Text {

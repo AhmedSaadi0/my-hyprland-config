@@ -157,7 +157,7 @@ ShellRoot {
             Variants {
                 model: Quickshell.screens
                 SmartCapsule {
-                    id: dynamicIsland
+                    id: smartCapsule
                     required property ShellScreen modelData
                     screen: modelData
                 }
@@ -286,6 +286,7 @@ ShellRoot {
                     toggleMenu();
                 }
             }
+
             Variants {
                 model: Quickshell.screens
 

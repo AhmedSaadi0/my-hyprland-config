@@ -16,6 +16,9 @@
   - [x] Left Menu Animations
   - [ ] Clipboard Manager
   - [ ] Todo List
+  - [ ] AI Bots
+  - [ ] Notes
+  - [ ] Favorite Apps
 
 - **Setting Window**
   - [x] Create a setting Window
@@ -25,6 +28,7 @@
   - [x] Desktop Clock Settings
   - [x] Hyprland Settings
   - [x] Integration Settings
+  - [ ] Control `.nibrasshell.json`
 
 - **Widgets**
   - [x] Clock Widget
@@ -34,6 +38,7 @@
   - [x] Music Widget
   - [ ] Depth effect for each wallpaper in dynamic wallpapers
   - [ ] Auto Depth Effect generation + clock adaptation
+  - [ ] Cava With Depth Effect when music in on
 
 ---
 
@@ -121,8 +126,8 @@
 ## 🧠 تحسينات وتجربة المستخدم (Productivity & UX)
 
 - [x] Improve Menu Cards
-- [x] Improve Menus Navigation
 - [x] Improve Animations (Menu, Notifications, Navigation)
+- [ ] Improve Menus Navigation
 - [ ] Keyboard Layout Switch Indicator
 - [ ] Control the way menu is opened (reserve space or like floating)
 - [ ] Toggle Buttons for (Wi-Fi, Bluetooth, Gammastep, Gaming Mode ... etc)
@@ -142,3 +147,5 @@
 - [ ] Add const values to statuses (media, weather, info, clock)
 - [ ] Improve weather info (color be same as weather condition, add gif that represents current weather)
 - [ ] Add Battery info and expanded
+- [ ] Animated eye that looks at you each houre
+- [ ] Add fuzzy clock to organize the day
