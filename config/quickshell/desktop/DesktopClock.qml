@@ -20,8 +20,6 @@ Item {
     property string clockFormat: "hh:mm"
     property string clockLocale: "en_US"
 
-    // ================= خصائص العرض الداخلية (المحمية) =================
-    // هذه الخصائص هي التي تربط النص بها، ولن تتغير إلا عبر الأنيميشن
     property color _displayedColor: root.clockColor
     property string _displayedFont: root.clockFont
     property string _displayedFormat: root.clockFormat
@@ -55,7 +53,6 @@ Item {
         }
     }
 
-    // نجعل الحجم (Width/Height) أبطأ قليلاً ليعطي تأثير تمدد جميل
     Behavior on width {
         enabled: !root.editMode
         SpringAnimation {
@@ -71,12 +68,8 @@ Item {
         }
     }
 
-    // ================= منطق الانتقال السحري (Morph Transition) =================
-
-    // هذه الدالة تستدعى عند تغيير أي خاصية في الثيم
     function updateClockStyle() {
         if (!root._isReady) {
-            // في البداية، طبق القيم فوراً
             root._displayedColor = root.clockColor;
             root._displayedFont = root.clockFont;
             root._displayedFormat = root.clockFormat;
@@ -89,12 +82,10 @@ Item {
         }
     }
 
-    // مراقبة التغييرات الخارجية
     onClockColorChanged: updateClockStyle()
     onClockFontChanged: updateClockStyle()
     onClockFormatChanged: updateClockStyle()
 
-    // أنيميشن التحول (Morph)
     SequentialAnimation {
         id: styleChangeAnim
 
@@ -133,15 +124,13 @@ Item {
                 to: 1
                 duration: 350
                 easing.type: Easing.OutBack
-                // overshoot: 0.8
-            } // overshoot يعطي ارتداداً خفيفاً جميلاً
+            }
             NumberAnimation {
                 target: contentContainer
                 property: "scale"
                 to: 1
                 duration: 350
                 easing.type: Easing.OutBack
-                // overshoot: 0.8
             }
         }
     }
@@ -151,18 +140,15 @@ Item {
         id: systemClock
     }
 
-    // ================= حاوية المحتوى (للتطبيق الأنيميشن عليها) =================
     Item {
         id: contentContainer
         anchors.fill: parent
-        // نقطة التحول من المنتصف
         transformOrigin: Item.Center
 
         Text {
             id: timeText
             anchors.centerIn: parent
 
-            // نربط النص بالخصائص الداخلية (_displayed) بدلاً من الخارجية
             text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root._displayedFormat)
             color: root._displayedColor
             font.family: root._displayedFont
@@ -177,7 +163,6 @@ Item {
             property real widthRatio: (root.width / implicitWidth)
             property real heightRatio: (root.height / implicitHeight)
 
-            // مقياس النص يعتمد على الحجم الحالي
             scale: Math.min(widthRatio, heightRatio) * 0.95
 
             antialiasing: true
@@ -194,11 +179,8 @@ Item {
                 // 1. التنعيم الكامل للحصول على تأثير التوهج
                 shadowBlur: 1.0
 
-                // 2. التحكم في كثافة اللون (0.0 إلى 1.0)
-                // زدنا القيمة قليلاً لأن التنعيم يوزع اللون فيجعله باهتاً
                 shadowOpacity: 0.8
 
-                // 3. جعل الظل في المنتصف تماماً
                 shadowVerticalOffset: 0
                 shadowHorizontalOffset: 0
 

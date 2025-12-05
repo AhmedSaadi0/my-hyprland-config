@@ -40,7 +40,7 @@ Item {
         if (!CapsuleManager.changeWidth) {
             return root.width;
         }
-        var clockW = hiddenClockText.implicitWidth;
+        var clockW = clockText.implicitWidth;
         var infoW = showInfo ? infoRow.implicitWidth : 0;
         var contentW = Math.max(clockW, infoW);
         return Math.max(contentW + 100, 330);
@@ -256,14 +256,6 @@ Item {
         // }
         clip: true
 
-        Text {
-            id: hiddenClockText
-            visible: false
-            text: Qt.formatDateTime(new Date(), "hh:mm AP - dddd, dd MMMM yyyy")
-            font.bold: true
-            font.pixelSize: 14
-        }
-
         // A. Clock
         Row {
             id: clockRow
@@ -293,6 +285,7 @@ Item {
                 precision: SystemClock.Minutes
             }
             Text {
+                id: clockText
                 // text: Qt.formatDateTime(sysClock.date, "hh:mm AP - dddd, dd MMMM yyyy")
                 text: sysClock.date.toLocaleString(Qt.locale(), "hh:mm AP - dddd, dd MMMM yyyy")
                 font.bold: true
