@@ -82,7 +82,7 @@ QtObject {
 
     property var _prevSongCall: NibrasShellShortcut {
         name: "previousSong"
-        onPressed: prev()
+        onPressed: previous()
     }
 
     property var _toggleSongCall: NibrasShellShortcut {

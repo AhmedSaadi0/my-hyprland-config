@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
+
 import "root:/themes"
+import "root:/components"
 import "./components"
 
 Item {
@@ -12,23 +14,24 @@ Item {
     signal closeRequested
 
     implicitWidth: 400
-    implicitHeight: 180
+    implicitHeight: 185
 
     // زر الإغلاق (X)
-    Text {
+    MButton {
         anchors.top: parent.top
         anchors.right: parent.right
-        anchors.margins: 15
+        anchors.rightMargin: 15
+        anchors.leftMargin: 14
         text: "✕"
-        color: ThemeManager.selectedTheme.colors.onSurface
-        opacity: 0.6
-        font.pixelSize: 14
-        z: 10
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: root.closeRequested()
-        }
+        font: ThemeManager.selectedTheme.typography.iconFont
+        implicitWidth: 34
+        implicitHeight: 30
+        onClicked: root.closeRequested()
+        normalBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
+        normalForeground: ThemeManager.selectedTheme.colors.onPrimary
+        hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
+        downForeground: ThemeManager.selectedTheme.colors.onPrimary
+        cursorShape: Qt.PointingHandCursor
     }
 
     // التخطيط الرئيسي

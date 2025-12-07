@@ -74,7 +74,7 @@ PanelWindow {
 
         // إذا كنا موسعين، العرض 400 ثابت. إذا كنا مغلقين، نتبع المحتوى.
         width: stateMode === C.STATE_EXPANDED ? 410 : idleBar.requiredWidth
-        height: stateMode === C.STATE_EXPANDED ? 230 : dynamicIsland.idleWidgetHeight
+        height: stateMode === C.STATE_EXPANDED ? 220 : dynamicIsland.idleWidgetHeight
 
         // الخلفية
         gradient: Gradient {
