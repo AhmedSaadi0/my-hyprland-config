@@ -28,7 +28,8 @@ Singleton {
     property color bgColor2: ThemeManager.selectedTheme.colors.secondary
     property color fgColor: ThemeManager.selectedTheme.colors.onPrimary
 
-    property var _timer: Timer {
+    Timer {
+        id: _timer
         interval: 4000 // Default timeout
         repeat: false
         onTriggered: root.reset()
@@ -185,9 +186,15 @@ Singleton {
         changeWidth = true;
         changeHeight = false;
 
-        bgColor1 = ThemeManager.selectedTheme.colors.primary;
-        bgColor2 = ThemeManager.selectedTheme.colors.secondary;
-        fgColor = ThemeManager.selectedTheme.colors.onPrimary;
+        bgColor1 = Qt.binding(function () {
+            return ThemeManager.selectedTheme.colors.primary;
+        });
+        bgColor2 = Qt.binding(function () {
+            return ThemeManager.selectedTheme.colors.secondary;
+        });
+        fgColor = Qt.binding(function () {
+            return ThemeManager.selectedTheme.colors.onPrimary;
+        });
     }
 
     // ========================================================================
