@@ -71,6 +71,7 @@ MESSAGES = {
         "gemini_api_key": "Enter Gemini API Key: ",
         "music_ai_api_key": "Enter Gemini API Key For Music Analytics:",
         "weather_ai_api_key": "Enter Gemini API Key For Weather Analytics:",
+        "ai_preferred_language": "Enter Preferred AI Response Language:",
     },
     "ar": {
         "choose_lang": "اختر لغتك:",
@@ -123,6 +124,7 @@ MESSAGES = {
         "gemini_api_key": "أدخل مفتاح Gemini API: ",
         "music_ai_api_key": "أدخل مفتاح Gemini API لتحليل الموسيقى: ",
         "weather_ai_api_key": "أدخل مفتاح Gemini API لتحليل الطقس: ",
+        "ai_preferred_language": "أدخل اللغة المفضلة لاستجابة الذكاء الاصطناعي:",
     },
     "cs": {
         "choose_lang": "Vyberte si jazyk:",
@@ -175,6 +177,7 @@ MESSAGES = {
         "gemini_api_key": "Zadejte Gemini API klíč: ",
         "music_ai_api_key": "Zadejte Gemini API klíč pro analýzu hudby: ",
         "weather_ai_api_key": "Zadejte Gemini API klíč pro analýzu počasí: ",
+        "ai_preferred_language": "Zadejte preferovaný jazyk odpovědi AI:",
     },
 }
 
@@ -476,6 +479,7 @@ def create_user_config_file():
     config["geminiApiKey"] = input(msg("gemini_api_key"))
     config["musicAiApiKey"] = input(msg("music_ai_api_key"))
     config["weatherAiApiKey"] = input(msg("weather_ai_api_key"))
+    config["aiPreferredLanguage"] = input(msg("ai_preferred_language"))
 
     config["scripts"] = {
         "dynamicM3Py": None,
