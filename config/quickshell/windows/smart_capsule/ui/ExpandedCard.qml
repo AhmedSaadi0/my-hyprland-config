@@ -115,4 +115,43 @@ Item {
             }
         }
     }
+
+    AIEyes {
+        id: testEyes
+        eyeColor: ThemeManager.selectedTheme.colors.onPrimary
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.topMargin: 5
+        anchors.rightMargin: 10
+        anchors.leftMargin: 10
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.requestExpand("media")
+            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
+
+            onEntered: {
+                let infoText = MusicService.activePlayer.identity;
+                if (root.isMusicPlaying) {
+                    infoText = MusicService.fullInfo;
+                }
+                CapsuleManager.request({
+                    priority: C.HOVER,
+                    source: C.SRC_MUSIC,
+                    icon: "󰝚",
+                    text: infoText,
+                    timeout: 0,
+                    changeW: false
+                });
+
+                EyeController.showEmotion("happy", 2000);
+            }
+
+            onExited: {
+                CapsuleManager.reset();
+            }
+        }
+    }
 }

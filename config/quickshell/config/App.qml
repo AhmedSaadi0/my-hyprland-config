@@ -5,6 +5,8 @@ import Quickshell.Io
 import Quickshell
 import Quickshell.Hyprland
 
+import "root:/utils"
+
 Singleton {
     id: root
 
@@ -13,11 +15,12 @@ Singleton {
     readonly property var configFilePath: homePath + ".nibrasshell.json"
     readonly property string assetsPath: mainPath + "/assets"
     readonly property string bashScriptsPath: mainPath + "/scripts"
-    readonly property string pythonScriptsPath: mainPath + "/scripts/python"
     readonly property string wallpapersPath: assetsPath + "/wallpapers"
     readonly property string cacheFolderPath: homePath + ".cache/nibrasshell"
     readonly property string themeCacheFilePath: cacheFolderPath + "/theme.json"
     readonly property string themeCacheFolderPath: cacheFolderPath + "/themes/"
+    readonly property string pythonScriptsPath: mainPath + "/scripts/python"
+    readonly property string pythonPath: cacheFolderPath + "/venv/bin/python"
 
     // --------------------------------------------------------------
     property string username: "Username"
@@ -31,8 +34,12 @@ Singleton {
     property string country: "yemen"
     property string weatherLocation: "sanaa"
     property bool usePrayerTimes: true
-    // -------------------------------------------------------------------------
+    property string geminiApiKey: ""
+    property string weatherAiApiKey: ""
+    property string musicAiApiKey: ""
+    property string aiPreferredLanguage: "English"
 
+    // -------------------------------------------------------------------------
     Component.onCompleted: {
         Hyprland.dispatch(`exec mkdir -p ${cacheFolderPath}`);
         Hyprland.dispatch(`exec mkdir -p ${themeCacheFolderPath}`);
@@ -54,6 +61,10 @@ Singleton {
             root.country = fileContents.country;
             root.weatherLocation = fileContents.weatherLocation;
             root.usePrayerTimes = fileContents.usePrayerTimes;
+            root.geminiApiKey = fileContents.geminiApiKey;
+            root.weatherAiApiKey = fileContents.weatherAiApiKey;
+            root.musicAiApiKey = fileContents.musicAiApiKey;
+            root.aiPreferredLanguage = fileContents.aiPreferredLanguage;
         }
     }
 
@@ -81,11 +92,18 @@ Singleton {
             readonly property string desktopLogin: root.assetsPath + "/audio/desktop-login.mp3"
             readonly property string desktopLogout: root.assetsPath + "/audio/desktop-logout.mp3"
             readonly property string highEnergyRate: root.assetsPath + "/audio/warning-sound.mp3"
-            readonly property string warning: root.assetsPath + "/audio/warning-sound.mp3"
             readonly property string highVoltage: root.assetsPath + "/audio/warning-sound.mp3"
             readonly property string highTempWarning: root.assetsPath + "/audio/warning-sound.mp3"
             readonly property string notificationAlert: root.assetsPath + "/audio/new-notification.mp3"
             readonly property string cpuHighUsage: root.assetsPath + "/audio/cpu_high_usage.wav"
+            readonly property string smartCapsuleNotification: root.assetsPath + "/audio/smart_capsule.mp3"
+            readonly property string smartCapsuleWarning: root.assetsPath + "/audio/warning-sound.mp3"
+            readonly property string smartCapsuleCritical: root.assetsPath + "/audio/warning-sound.mp3"
+
+            function playTone(tone) {
+                const command = Helper.playSoundCommand(tone);
+                dispatchCommand(`play tone -> ${tone}`, command);
+            }
         }
 
         function getWallpaperPath(wallpaper) {
@@ -115,20 +133,27 @@ Singleton {
             readonly property string dataUsage: root.pythonScriptsPath + "/network/data_usage.py"
             readonly property string liveUsage: root.pythonScriptsPath + "/network/live_usage.py"
 
-            // Commands
-            readonly property var batteryInfoCommand: ["python", batteryInfo]
-            readonly property var devicesTempCommand: ["python", devicesTemp]
-            readonly property var topCpuUsageCommand: ["python", topCpuUsage]
-            readonly property var topRamUsageCommand: ["python", topRamUsage]
-            readonly property var dynamicM3Command: ["python", dynamicM3]
-            readonly property var rembgOverylayWallpaperCommand: ["python3.13", rembgOverylayWallpaper]
-            readonly property var opencvOverylayWallpaperCommand: ["python", opencvOverylayWallpaper]
-            readonly property var removeUnusedCachedOverlayImagesCommand: ["python", removeUnusedCachedOverlayImages]
+            // AI
+            readonly property string mainAI: root.pythonScriptsPath + "/ai/main.py"
 
-            readonly property var listWifiCommand: ["python", listWifi]
-            readonly property var liveUsageCommand: ["python", liveUsage]
-            readonly property var dataUsageCommand: ["python", dataUsage]
-            readonly property var connectWifiCommand: ["python", connectWifi]
+            // Commands
+            readonly property var batteryInfoCommand: [pythonPath, batteryInfo]
+            readonly property var devicesTempCommand: [pythonPath, devicesTemp]
+            readonly property var topCpuUsageCommand: [pythonPath, topCpuUsage]
+            readonly property var topRamUsageCommand: [pythonPath, topRamUsage]
+            readonly property var dynamicM3Command: [pythonPath, dynamicM3]
+            readonly property var rembgOverylayWallpaperCommand: [pythonPath, rembgOverylayWallpaper]
+            readonly property var opencvOverylayWallpaperCommand: [pythonPath, opencvOverylayWallpaper]
+            readonly property var removeUnusedCachedOverlayImagesCommand: [pythonPath, removeUnusedCachedOverlayImages]
+
+            readonly property var listWifiCommand: [pythonPath, listWifi]
+            readonly property var liveUsageCommand: [pythonPath, liveUsage]
+            readonly property var dataUsageCommand: [pythonPath, dataUsage]
+            readonly property var connectWifiCommand: [pythonPath, connectWifi]
+
+            readonly property var callGemini: [pythonPath, mainAI, "--api_key", geminiApiKey, "--preferred_language", root.aiPreferredLanguage]
+            readonly property var callWeatherAi: [pythonPath, mainAI, "--api_key", weatherAiApiKey, "--preferred_language", root.aiPreferredLanguage]
+            readonly property var callMusicAi: [pythonPath, mainAI, "--api_key", musicAiApiKey, "--preset", "music", "--preferred_language", root.aiPreferredLanguage]
         }
 
         readonly property QtObject bash: QtObject {

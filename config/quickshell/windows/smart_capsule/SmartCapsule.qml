@@ -3,8 +3,9 @@ import QtQuick
 import "root:/themes"
 import "root:/config"
 import "root:/config/ConstValues.js" as C
-import "./ui"
-import "./ui/components"
+import "root:/windows/smart_capsule/logic"
+import "root:/windows/smart_capsule/ui"
+import "root:/windows/smart_capsule/ui/components"
 
 PanelWindow {
     id: dynamicIsland
@@ -69,23 +70,39 @@ PanelWindow {
         id: islandRect
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        color: "transparent"
+        // color: "transparent"
         clip: true
 
         // إذا كنا موسعين، العرض 400 ثابت. إذا كنا مغلقين، نتبع المحتوى.
         width: stateMode === C.STATE_EXPANDED ? 410 : idleBar.requiredWidth
-        height: stateMode === C.STATE_EXPANDED ? 220 : dynamicIsland.idleWidgetHeight
+        height: stateMode === C.STATE_EXPANDED ? 220 : idleBar.requiredHeight
 
         // الخلفية
         gradient: Gradient {
             orientation: Gradient.Horizontal
+
             GradientStop {
                 position: 0.0
-                color: ThemeManager.selectedTheme.colors.primary
+                color: CapsuleManager.bgColor1
+
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 500
+                        easing.type: Easing.InOutQuad
+                    }
+                }
             }
+
             GradientStop {
                 position: 1.0
-                color: ThemeManager.selectedTheme.colors.secondary
+                color: CapsuleManager.bgColor2
+
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 500
+                        easing.type: Easing.InOutQuad
+                    }
+                }
             }
         }
 

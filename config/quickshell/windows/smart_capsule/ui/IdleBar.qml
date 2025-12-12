@@ -8,8 +8,8 @@ import Quickshell.Io
 import "root:/themes"
 import "root:/config/ConstValues.js" as C
 import "root:/services"
-import "./components"
-import "../logic"
+import "root:/windows/smart_capsule/ui/components"
+import "root:/windows/smart_capsule/logic"
 
 Item {
     id: root
@@ -30,7 +30,7 @@ Item {
     readonly property bool isMusicPlaying: MusicService.isPlaying
     readonly property bool showInfo: CapsuleManager.currentPriority > C.IDLE
 
-    readonly property color themeColor: ThemeManager.selectedTheme ? ThemeManager.selectedTheme.colors.onPrimary : "white"
+    readonly property color themeColor: CapsuleManager.fgColor
     readonly property color contentColor: isMusicPlaying ? "#000000" : themeColor
 
     implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
@@ -44,6 +44,41 @@ Item {
         var infoW = showInfo ? infoRow.implicitWidth : 0;
         var contentW = Math.max(clockW, infoW);
         return Math.max(contentW + 100, 330);
+    }
+
+    property real requiredHeight: {
+        return calculateHeight();
+    }
+
+    function calculateHeight() {
+        // 1. الطول الأساسي (الحد الأدنى)
+        const minHeight = ThemeManager.selectedTheme.dimensions.barWidgetsHeight;
+
+        // 2. طول العيون
+        const eyesH = EyeController.currentEmotion === "idle" || "music" ? 0 : aiEyes.implicitHeight;
+
+        // 3. طول النص
+        // نتحقق أولاً هل المعلومات معروضة (showInfo)
+        const textH = CapsuleManager.changeHeight ? (infoText.implicitHeight) : 0;
+
+        // إرجاع القيمة الأكبر بين الثلاثة
+        const currentHeight = Math.max(minHeight, eyesH, textH);
+        return currentHeight;
+    }
+
+    Connections {
+        target: CapsuleManager
+        function onChangeHeightChanged() {
+            requiredHeight = calculateHeight();
+        }
+    }
+
+    // أنيميشن لجعل التغيير ناعماً
+    Behavior on implicitHeight {
+        NumberAnimation {
+            duration: 300
+            easing.type: Easing.OutBack
+        }
     }
 
     // ============================================================
@@ -184,7 +219,7 @@ Item {
         anchors.leftMargin: 15
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
-        width: 30
+        width: 10
 
         WeatherIcon {
             anchors.centerIn: parent
@@ -199,7 +234,14 @@ Item {
 
                 onEntered: {
                     if (Weather) {
-                        CapsuleManager.request(C.HOVER, C.SRC_WEATHER, Weather.weatherIcon, Weather.currentTemp + "° - " + Weather.weatherDescription, 0, false, 0, false);
+                        CapsuleManager.request({
+                            priority: C.HOVER,
+                            source: C.SRC_WEATHER,
+                            icon: Weather.weatherIcon,
+                            text: Weather.currentTemp + "° - " + Weather.weatherDescription,
+                            timeout: 0,
+                            changeW: false
+                        });
                     }
                 }
 
@@ -213,15 +255,19 @@ Item {
     // 2. Music (Right)
     Item {
         anchors.right: parent.right
-        anchors.rightMargin: 15
+        anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
-        width: 30
+        width: 10
 
-        Visualizer {
-            anchors.centerIn: parent
-            playing: root.isMusicPlaying
-            barColor: root.contentColor
+        AIEyes {
+            id: aiEyes
+            eyeColor: root.contentColor
+            // anchors.centerIn: parent
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenterOffset: root.isMusicPlaying && EyeController.currentEmotion === "music" ? 0 : 3
+
             MouseArea {
                 anchors.fill: parent
                 onClicked: root.requestExpand("media")
@@ -229,11 +275,20 @@ Item {
                 hoverEnabled: true
 
                 onEntered: {
+                    let infoText = MusicService.activePlayer.identity;
                     if (root.isMusicPlaying) {
-                        CapsuleManager.request(C.HOVER, C.SRC_MUSIC, "󰝚", MusicService.fullInfo, 0, false, 0, false);
-                    } else {
-                        CapsuleManager.request(C.HOVER, C.SRC_MUSIC, "󰝚", MusicService.activePlayer.identity, 0, false, 0, false);
+                        infoText = MusicService.fullInfo;
                     }
+                    CapsuleManager.request({
+                        priority: C.HOVER,
+                        source: C.SRC_MUSIC,
+                        icon: "󰝚",
+                        text: infoText,
+                        timeout: 0,
+                        changeW: false
+                    });
+
+                    EyeController.showEmotion("happy", 2000);
                 }
 
                 onExited: {
@@ -246,14 +301,9 @@ Item {
     // 3. Center (Clock / Info)
     Item {
         anchors.centerIn: parent
-        height: 20
+        // height: 20
+        height: infoText.height
         width: showInfo ? infoRow.implicitWidth : clockRow.implicitWidth
-        // Behavior on width {
-        //     NumberAnimation {
-        //         duration: 300
-        //         easing.type: Easing.OutBack
-        //     }
-        // }
         clip: true
 
         // A. Clock
@@ -284,6 +334,7 @@ Item {
                 id: sysClock
                 precision: SystemClock.Minutes
             }
+
             Text {
                 id: clockText
                 // text: Qt.formatDateTime(sysClock.date, "hh:mm AP - dddd, dd MMMM yyyy")
@@ -327,13 +378,19 @@ Item {
             }
 
             Text {
+                id: infoText
                 text: CapsuleManager.displayText
                 font.bold: true
-                font.pixelSize: root.fontSizeText
+                // font.pixelSize: root.fontSizeText
                 anchors.verticalCenter: parent.verticalCenter
                 color: root.contentColor
-                elide: Text.ElideRight
+                // elide: Text.ElideRight
+                wrapMode: Text.Wrap
                 width: Math.min(implicitWidth, CapsuleManager.changeWidth ? 500 : 220)
+
+                // onTextChanged: {
+                //     root.calculateHeight();
+                // }
             }
         }
     }

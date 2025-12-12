@@ -201,6 +201,25 @@ PanelWindow {
             contentHeight: flow.height
             clip: true
 
+            ScrollBar.vertical: ScrollBar {
+                parent: mainFlickable
+                anchors {
+                    top: mainFlickable.top
+                    right: mainFlickable.right
+                    bottom: mainFlickable.bottom
+                }
+                policy: ScrollBar.AsNeeded
+                width: 8
+                background: Rectangle {
+                    color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+                    radius: 4
+                }
+                contentItem: Rectangle {
+                    color: ThemeManager.selectedTheme.colors.primary
+                    radius: 4
+                }
+            }
+
             Flow {
                 id: flow
                 width: mainFlickable.width
@@ -363,24 +382,7 @@ PanelWindow {
         }
 
         // شريط التمرير الرئيسي
-        ScrollBar.vertical: ScrollBar {
-            parent: mainFlickable
-            anchors {
-                top: mainFlickable.top
-                right: mainFlickable.right
-                bottom: mainFlickable.bottom
-            }
-            policy: ScrollBar.AsNeeded
-            width: 8
-            background: Rectangle {
-                color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-                radius: 4
-            }
-            contentItem: Rectangle {
-                color: ThemeManager.selectedTheme.colors.primary
-                radius: 4
-            }
-        }
+
     }
 
     // دالة لتنسيق المفتاح بشكل جميل

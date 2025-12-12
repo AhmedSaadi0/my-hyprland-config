@@ -13,7 +13,6 @@ Singleton {
     // ========================================================================
     // 0. Icon Dictionaries
     // ========================================================================
-
     property var sun_icon_dic: ({
             395: '',
             392: '',
@@ -117,7 +116,7 @@ Singleton {
         })
 
     // ========================================================================
-    // 1. Prperties
+    // 1. Properties
     // ========================================================================
     property bool isLoading: true
     property string lastUpdated: ""
@@ -127,7 +126,7 @@ Singleton {
     property int feelsLike: 0
     property string weatherDescription: "Loading..."
     property string weatherCode: "113"
-    property string weatherIcon: "" // Default sun icon
+    property string weatherIcon: ""
     property int humidity: 0
     property int windSpeed: 0
     property string windDirection: ""
@@ -139,6 +138,18 @@ Singleton {
     property string moonPhase: "..."
     property var dailyForecast: []
     property var hourlyForecast: []
+
+    // Smart data
+    property var aiAnalysistData: {}
+
+    property string aiSmartIcon: ""
+    property color aiBgColor1
+    property color aiBgColor2
+    property color aiFgColor
+    property string aiSummaryText: ""
+    property string aiTrendBadge: ""
+    property var aiTags: []
+    property bool aiIsUrgent: false
 
     // ========================================================================
     // 2. Signals
@@ -155,25 +166,26 @@ Singleton {
     signal chanceOfWindyNotified(string message)
     signal chanceOfHotWeatherNotified(string message)
 
+    signal aiAnalysisCompleted(var aiData)
+    signal aiUrgentAlertReceived(string title, string message)
+
     // ========================================================================
     // 3. Logic
     // ========================================================================
     function getWeatherData() {
         const location = App.weather.location;
-        // const local = App.weather.language;
-
         getWeatherProcess.command = ['curl', `https://wttr.in/${location}?format=j1`];
         getWeatherProcess.running = true;
     }
 
     Process {
         id: getWeatherProcess
-        // command: ['curl', 'https://wttr.in/Sanaa?format=j1']
         stdout: StdioCollector {
             onStreamFinished: {
                 const output = this.text;
                 if (output && output.trim() !== "") {
                     root.parseWeatherData(output);
+                    root.analyzeWithAI(output);
                 } else {
                     isLoading = false;
                     fetchFailed("Received empty data from the server.");
@@ -185,7 +197,124 @@ Singleton {
         }
     }
 
-    // --- Helper functions for icon selection ---
+    // --- Helper functions for AI ---
+    function analyzeWithAI(jsonString) {
+        const command = App.scripts.python.callWeatherAi;
+        const data = JSON.parse(jsonString);
+
+        // التحقق من وجود البيانات الأساسية وبيانات الطقس لليوم الحالي
+        if (data.current_condition && data.nearest_area && data.request && data.weather && data.weather.length > 0) {
+
+            // إنشاء كائن جديد يحتوي على البيانات المطلوبة فقط
+            const filteredData = {
+                current_condition: data.current_condition,
+                nearest_area: data.nearest_area,
+                request: data.request,
+                weather: [
+                    {
+                        date: data.weather[0].date,
+                        hourly: data.weather[0].hourly,
+                        maxtempC: data.weather[0].maxtempC,
+                        mintempC: data.weather[0].mintempC,
+                        astronomy: data.weather[0].astronomy,
+                        avgtempC: data.weather[0].avgtempC
+                    }
+                ]
+            };
+
+            // تحويل الكائن الجديد إلى نص JSON
+            const message = JSON.stringify(filteredData);
+
+            // console.info("TO SEND -> " + message);
+
+            // TODO: -> control model from settings app
+            aiProcess.command = [...command, "--provider", "gemini", "--model", "gemini-robotics-er-1.5-preview", "--preset", "weather", "--message", message];
+            aiProcess.running = true;
+        } else {
+            console.error("لم يتم العثور على البيانات المطلوبة أو أن التنسيق غير متوقع.");
+        }
+    }
+
+    Process {
+        id: aiProcess
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.aiAnalysistData = this.text;
+            }
+        }
+
+        onRunningChanged: {
+            if (!running && root.aiAnalysistData !== "") {
+                root.handleAIResponse();
+            }
+        }
+
+        stderr: SplitParser {
+            onRead: data => console.error("AI Process Error:", data)
+        }
+    }
+
+    function handleAIResponse() {
+        try {
+            console.info("AI FINISHED: " + root.aiAnalysistData);
+
+            // 1. تحليل الرد الخارجي (الذي يحتوي على success و response)
+            var result = JSON.parse(root.aiAnalysistData);
+
+            if (result.success) {
+                var aiData;
+
+                // 2. التحقق من نوع البيانات داخل response
+                if (typeof result.response === "string") {
+                    // الحالة القديمة: إذا كان نصاً، نظفه وحلله
+                    var cleanJson = result.response.replace(/```json/g, "").replace(/```/g, "").trim();
+                    aiData = JSON.parse(cleanJson);
+                } else {
+                    // الحالة الجديدة (المحسنة): إذا كان كائناً، استخدمه مباشرة
+                    aiData = result.response;
+                }
+
+                // 3. تحديث الخصائص بأمان
+                // نستخدم Optional Chaining (?.) لتجنب الأخطاء إذا كانت القيم ناقصة
+                root.aiSmartIcon = aiData.ui?.icon || "";
+                root.aiBgColor1 = aiData.ui?.bg_color1 || null;
+                root.aiBgColor2 = aiData.ui?.bg_color2 || null;
+                root.aiFgColor = aiData.ui?.fg_color || null;
+
+                // التعامل مع اختلاف تسمية المفاتيح (summary_text vs arabic_text) حسب البرومبت
+                root.aiSummaryText = aiData.smart_summary?.summary_text || aiData.smart_summary?.arabic_text || "";
+                root.aiTrendBadge = aiData.smart_summary?.trend_badge || "";
+                root.aiTags = aiData.smart_summary?.tags || [];
+                root.aiIsUrgent = aiData.urgent_alert || false;
+
+                // إطلاق السيقنالات
+                aiAnalysisCompleted(aiData);
+
+                if (root.aiIsUrgent) {
+                    aiUrgentAlertReceived(aiData.ui?.title || "تنبيه جوي", root.aiSummaryText);
+                }
+
+                // --- Smart Polling Logic ---
+                if (aiData.system_control && aiData.system_control.next_check_minutes) {
+                    var nextMinutes = aiData.system_control.next_check_minutes;
+                    console.info(`🕒 Smart Polling: Next check in ${nextMinutes} minutes. Reason: ${aiData.system_control.reason}`);
+
+                    // تحديث التايمر
+                    refreshTimer.interval = nextMinutes * 60 * 1000;
+                    refreshTimer.restart();
+                }
+            } else {
+                console.error("AI Script Reported Error: " + result.error);
+            }
+        } catch (e) {
+            console.error("Failed to parse AI response logic: " + e);
+            console.trace(); // مفيد لمعرفة مكان الخطأ بالضبط
+
+            refreshTimer.interval = 15 * 60 * 1000;
+            refreshTimer.restart();
+        }
+    }
 
     // Parses a time string like "06:30 AM" into a comparable Date object
     function _parseTime(timeStr) {
@@ -199,13 +328,10 @@ Singleton {
         const minutes = parseInt(parts[2], 10);
         const ampm = parts[3].toUpperCase();
 
-        if (ampm === "PM" && hours < 12) {
+        if (ampm === "PM" && hours < 12)
             hours += 12;
-        }
-        if (ampm === "AM" && hours === 12) {
-            // Midnight case
+        if (ampm === "AM" && hours === 12)
             hours = 0;
-        }
 
         const date = new Date();
         date.setHours(hours, minutes, 0, 0);
@@ -218,24 +344,16 @@ Singleton {
         const sunriseTime = _parseTime(sunriseStr);
         const sunsetTime = _parseTime(sunsetStr);
 
-        // If parsing fails, default to daytime
         if (!sunriseTime || !sunsetTime) {
             console.warn("Could not parse sunrise/sunset times. Defaulting to daytime.");
             return true;
         }
-
         return now >= sunriseTime && now < sunsetTime;
     }
 
     // Gets the appropriate weather icon
     function getWeatherIcon(code, isDay) {
-        if (isDay) {
-            // Returns default sun icon if code not found
-            return sun_icon_dic[code] || '';
-        } else {
-            // Returns default moon icon if code not found
-            return moon_icon_dic[code] || '';
-        }
+        return isDay ? (sun_icon_dic[code] || '') : (moon_icon_dic[code] || '');
     }
 
     function parseWeatherData(jsonData) {
@@ -243,7 +361,6 @@ Singleton {
         try {
             const data = JSON.parse(jsonData);
 
-            // Section 1: Current Condition
             const current = data?.current_condition[0];
             currentTemp = parseInt(current?.temp_C) || 0;
             feelsLike = parseInt(current?.FeelsLikeC) || 0;
@@ -256,22 +373,18 @@ Singleton {
             visibility = parseInt(current?.visibility) || 0;
             uvIndex = parseInt(current?.uvIndex) || 0;
 
-            // Section 2: Location Info
             const area = data?.nearest_area[0];
             areaName = area?.areaName[0]?.value || "Unknown location";
             countryName = area?.country[0]?.value || "";
 
-            // Section 3: Astronomical Data
             const astronomy = data?.weather[0]?.astronomy[0];
             sunrise = astronomy?.sunrise || "N/A";
             sunset = astronomy?.sunset || "N/A";
             moonPhase = astronomy?.moon_phase || "N/A";
 
-            // --- Determine correct icon based on day/night ---
             const isDay = _isDayTime(sunrise, sunset);
             weatherIcon = getWeatherIcon(weatherCode, isDay);
 
-            // Section 4: Daily Forecast
             let dailyData = [];
             if (data?.weather && Array.isArray(data.weather)) {
                 for (let day of data.weather) {
@@ -284,13 +397,12 @@ Singleton {
                         avgTemp: parseInt(day?.avgtempC) || 0,
                         weatherCode: representativeHour?.weatherCode || "113",
                         description: representativeHour?.weatherDesc[0]?.value || "...",
-                        icon: getWeatherIcon(representativeHour?.weatherCode || "113", true) // Assume day for forecast icons
+                        icon: getWeatherIcon(representativeHour?.weatherCode || "113", true)
                     });
                 }
             }
             dailyForecast = dailyData;
 
-            // Section 5: Hourly Forecast
             let hourlyData = [];
             const todayHourly = data?.weather[0]?.hourly;
             if (todayHourly && Array.isArray(todayHourly)) {
@@ -315,12 +427,12 @@ Singleton {
             }
             hourlyForecast = hourlyData;
 
+            checkWeatherConditions();
             lastUpdated = new Date().toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             });
             console.log("✅ Weather data parsed successfully for:", areaName);
-            checkWeatherConditions();
             isLoading = false;
             weatherUpdated();
         } catch (e) {
@@ -352,13 +464,10 @@ Singleton {
 
         let maxRain = 0, maxSnow = 0, maxFrost = 0, maxFog = 0;
         let maxThunder = 0, maxWindy = 0, maxHotTemp = 0;
-
-        // البدء بقيم أولية عالية للمتغيرات الصغرى
         let minRain = 101, minSnow = 101, minFrost = 101, minFog = 101;
         let minThunder = 101, minWindy = 101, minHotTemp = 101;
 
         for (const hour of hourlyForecast) {
-            // حساب القيم القصوى
             if (hour.chanceOfRain > maxRain)
                 maxRain = hour.chanceOfRain;
             if (hour.chanceOfSnow > maxSnow)
@@ -374,7 +483,6 @@ Singleton {
             if (hour.chanceOfHotTemp > maxHotTemp)
                 maxHotTemp = hour.chanceOfHotTemp;
 
-            // حساب القيم الصغرى
             if (hour.chanceOfRain < minRain)
                 minRain = hour.chanceOfRain;
             if (hour.chanceOfSnow < minSnow)
@@ -391,38 +499,31 @@ Singleton {
                 minHotTemp = hour.chanceOfHotTemp;
         }
 
-        // --== إرسال الإشعارات مع النطاق الكامل (الأدنى والأقصى) ==--
-
-        if (maxRain > 10) {
+        if (maxRain > 10)
             chanceOfRainNotified(`Min chance of rain today is ${minRain} max is ${maxRain}%`);
-        }
-        if (maxSnow > 20) {
+        if (maxSnow > 20)
             chanceOfSnowNotified(`Min chance of snow today is ${minSnow}% max is ${maxSnow}%`);
-        }
-        if (maxFrost > 10) {
+        if (maxFrost > 10)
             chanceOfFrostNotified(`Warning: Chance of frost today is between ${minFrost}% and ${maxFrost}%`);
-        }
-        if (maxFog > 10) {
+        if (maxFog > 10)
             chanceOfFogNotified(`Warning: High chance of fog, ranging from ${minFog}% to ${maxFog}%`);
-        }
-        if (maxThunder > 10) {
+        if (maxThunder > 10)
             chanceOfThunderNotified(`Warning: Thunderstorm chance today is between ${minThunder}% and ${maxThunder}%`);
-        }
-        if (maxWindy > 10) {
+        if (maxWindy > 10)
             chanceOfWindyNotified(`It might get windy today, with chances from ${minWindy}% to ${maxWindy}%`);
-        }
-        if (maxHotTemp > 10) {
+        if (maxHotTemp > 10)
             chanceOfHotWeatherNotified(`Warning: High temperature expected. Chance is between ${minHotTemp}% and ${maxHotTemp}%`);
-        }
     }
 
     // ========================================================================
     // 4. Automation
     // ========================================================================
     Timer {
-        interval: 900000 // 15 minutes
+        id: refreshTimer
+        interval: 900000 // 15 دقيقة افتراضياً
         running: true
-        repeat: true
+        repeat: false
+
         onTriggered: {
             console.info("Timer triggered: Refreshing weather data...");
             getWeatherData();

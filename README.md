@@ -130,7 +130,7 @@ sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 
 # تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
 sudo dnf install ffmpeg --allowerasing
-sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13 python3.13-devel
 
 # تفعيل مستودع هيبر لاند
 sudo dnf copr enable solopasha/hyprland
@@ -140,10 +140,6 @@ sudo dnf install hyprland hyprshot hyprpicker wl-clipboard swww
 # تفعيل مستودع كويك شل
 sudo dnf copr enable errornointernet/quickshell
 sudo dnf install quickshell
-
-# تفعيل مستودع material-you-colors
-sudo dnf copr enable luisbocanegra/kde-material-you-colors
-sudo dnf install kde-material-you-colors
 
 # تثبيت plasma-desktop - غير الزامي
 sudo dnf install plasma-desktop ark kate dolphin
@@ -161,7 +157,9 @@ sudo dnf install plasma-desktop ark kate dolphin
 - نحتاج مكتبه `rembg` و `pillow` لانشاء الصور ذات تاثير العمق
 
 ```bash
-pip install rembg[gpu] pillow psutil
+python3.13 -m venv ~/.cache/nibrasshell/venv
+~/.cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools
+~/.cache/nibrasshell/venv/bin/pip install -r .config/quickshell/scripts/python/requirements-3.13.txt
 ```
 
 ### الان يمكنك استخدام سكربت التثبيت واختيار رقم 2
@@ -420,7 +418,7 @@ sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 
 # Install needed apps with other supporting apps like media support
 sudo dnf install ffmpeg --allowerasing
-sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13 python3.13-devel
 
 # Enable Hyprland repository
 sudo dnf copr enable solopasha/hyprland
@@ -429,10 +427,6 @@ sudo dnf install hyprland hyprshot hyprpicker wl-clipboard swww
 # Enable Quickshell repository
 sudo dnf copr enable errornointernet/quickshell
 sudo dnf install quickshell
-
-# material-you-colors
-sudo dnf copr enable luisbocanegra/kde-material-you-colors
-sudo dnf install kde-material-you-colors
 
 # Install plasma-desktop for its apps - Optional
 sudo dnf install plasma-desktop ark kate dolphin
@@ -450,7 +444,9 @@ sudo dnf install plasma-desktop ark kate dolphin
 - we need `rembg` and `pillow` to create the needed images to apply depth effect
 
 ```bash
-pip install rembg[gpu] pillow psutil
+python3.13 -m venv ~/.cache/nibrasshell/venv
+~/.cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools
+~/.cache/nibrasshell/venv/bin/pip install -r .config/quickshell/scripts/python/requirements-3.13.txt
 ```
 
 ### Now you can use the install script option 2

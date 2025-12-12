@@ -55,6 +55,7 @@ Singleton {
     function applyM3PlasmaColor(selectedWallpaperPath, themeMode) {
         const scriptCommand = Config.App.scripts.python.dynamicM3Command;
         const command = [...scriptCommand, `'${selectedWallpaperPath}'`, "-m", themeMode];
+        console.info(command);
         return command;
     }
 

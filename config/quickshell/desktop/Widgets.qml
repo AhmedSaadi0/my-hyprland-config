@@ -431,10 +431,12 @@ PanelWindow {
             desktopRoot.currentClockPosition = desktopRoot.themeClockPosition;
             desktopRoot.currentClockSize = desktopRoot.themeClockSize;
         }
-        let startWall = Theme.ThemeManager.getCurrentWallpaper();
-        let startOverlay = (clockSettings?.depthEffectEnabled) ? (clockSettings?.depthOverlayPath || "") : "";
-        bg1.source = startWall;
-        fg1.source = startOverlay;
+        if (Theme.ThemeManager.getCurrentWallpaper()) {
+            let startWall = Theme.ThemeManager.getCurrentWallpaper();
+            let startOverlay = (clockSettings?.depthEffectEnabled) ? (clockSettings?.depthOverlayPath || "") : "";
+            bg1.source = startWall;
+            fg1.source = startOverlay;
+        }
         showChannel1 = true;
     }
 

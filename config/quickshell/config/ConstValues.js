@@ -12,18 +12,19 @@ var FAVIORTE_APPS_MENU_INDEX = 9;
 var APPLICATIONS_MENU_INDEX = 9;
 
 // --- Smart Capsule Priorities (مستويات الأهمية) ---
-var IDLE = 0; // الساعة (الوضع الافتراضي)
-var HOVER = 1; // عند تمرير الماوس
-var TRANSIENT = 2; // تنبيهات سريعة (صوت، سطوع، تغيير أغنية)
-var WARNING = 3; // تحذيرات (بطارية، طقس)
-var CRITICAL = 4; // أخطاء حرجة
+const IDLE = 0; // الساعة (الوضع الافتراضي)
+const HOVER = 1; // عند تمرير الماوس
+const TRANSIENT = 2; // تنبيهات سريعة (صوت، سطوع، تغيير أغنية)
+const NOTIFICATION = 3;
+const WARNING = 4; // تحذيرات (بطارية، طقس)
+const CRITICAL = 5; // أخطاء حرجة
 
 // --- Data Sources (مصادر البيانات) ---
-var SRC_MUSIC = "music";
-var SRC_SYSTEM = "system";
-var SRC_BATTERY = "battery";
-var SRC_WEATHER = "weather";
+const SRC_MUSIC = "music";
+const SRC_SYSTEM = "system";
+const SRC_BATTERY = "battery";
+const SRC_WEATHER = "weather";
 
 // --- Capsule States (حالة النافذة) ---
-var STATE_IDLE = "idle";
-var STATE_EXPANDED = "expanded";
+const STATE_IDLE = "idle";
+const STATE_EXPANDED = "expanded";

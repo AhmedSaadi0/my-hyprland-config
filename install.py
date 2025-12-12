@@ -68,6 +68,9 @@ MESSAGES = {
         "opt_allow_erasing": "1. Allow erasing conflicting packages (--allowerasing)",
         "opt_skip_broken": "2. Skip broken/conflicting packages (--skip-broken)",
         "opt_cancel": "3. Cancel installation",
+        "gemini_api_key": "Enter Gemini API Key: ",
+        "music_ai_api_key": "Enter Gemini API Key For Music Analytics:",
+        "weather_ai_api_key": "Enter Gemini API Key For Weather Analytics:",
     },
     "ar": {
         "choose_lang": "اختر لغتك:",
@@ -117,6 +120,9 @@ MESSAGES = {
         "opt_allow_erasing": "1. السماح باستبدال الحزم المتعارضة (--allowerasing)",
         "opt_skip_broken": "2. تخطي الحزم المعطوبة/المتعارضة (--skip-broken)",
         "opt_cancel": "3. إلغاء التثبيت",
+        "gemini_api_key": "أدخل مفتاح Gemini API: ",
+        "music_ai_api_key": "أدخل مفتاح Gemini API لتحليل الموسيقى: ",
+        "weather_ai_api_key": "أدخل مفتاح Gemini API لتحليل الطقس: ",
     },
     "cs": {
         "choose_lang": "Vyberte si jazyk:",
@@ -166,6 +172,9 @@ MESSAGES = {
         "opt_allow_erasing": "1. Povolit vymazání konfliktních balíčků (--allowerasing)",
         "opt_skip_broken": "2. Přeskočit poškozené balíčky (--skip-broken)",
         "opt_cancel": "3. Zrušit instalaci",
+        "gemini_api_key": "Zadejte Gemini API klíč: ",
+        "music_ai_api_key": "Zadejte Gemini API klíč pro analýzu hudby: ",
+        "weather_ai_api_key": "Zadejte Gemini API klíč pro analýzu počasí: ",
     },
 }
 
@@ -242,6 +251,10 @@ def is_arch_based():
 # Function to install all necessary packages.
 def install_dependencies(distro, install_optional=False):
     print(f"{YELLOW}{msg('installing_deps')}{NC}")
+
+    # ---------------------------------------------------------
+    # 1. تثبيت حزم النظام (System Packages) حسب التوزيعة
+    # ---------------------------------------------------------
     if distro == "fedora":
         print(YELLOW + "Enabling RPM Fusion and COPR repositories..." + NC)
         run_command_verbose(
@@ -251,57 +264,97 @@ def install_dependencies(distro, install_optional=False):
         run_command_verbose(
             "sudo dnf copr enable -y errornointernet/quickshell"
         )
-        # run_command_verbose(
-        #     "sudo dnf copr enable -y luisbocanegra/kde-material-you-colors"
-        # )
         run_command_verbose("sudo dnf install -y hyprland quickshell")
 
-        required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs swww jq dbus-devel python3-devel python3.13"
+        required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs swww jq dbus-devel python3-devel python3.13 python3.13-devel"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
+
         command = f"sudo dnf install -y {required_pkgs}"
         if install_optional:
             command += f" {optional_pkgs}"
-        print(YELLOW + "Installing main packages..." + NC)
+
+        print(YELLOW + "Installing main packages (Fedora)..." + NC)
         run_command_verbose(command)
 
-        print(YELLOW + "Installing python needed packages using pip")
-        run_command("pip install pillow psutil")
-        run_command("pipx install kde-material-you-colors")
-        # to get python 3.13
-        # needed for `rembg`
-        run_command(
-            "curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py"
-        )
-        run_command("python3.13 get-pip.py")
-        run_command("python3.13 -m pip install 'rembg[gpu]'")
     elif is_arch_based():
-        print(YELLOW + "Starting Arch installer")
-        required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww"
+        print(YELLOW + "Starting Arch installer" + NC)
+        # في آرتش: python هي الحزمة الكاملة وتشمل headers (لا يوجد dev)
+        # حالياً python في آرتش هي 3.13
+        required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww python"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
-        command = f"yay -S {required_pkgs}"
+
+        command = f"yay -S --noconfirm {required_pkgs}"
+        if install_optional:
+            command += f" {optional_pkgs}"
+
+        print(YELLOW + "Installing main packages (Arch)..." + NC)
+        run_command_verbose(command)
+
     elif distro == "void":
-        # ... Missing kde-material-you-colors package
-        print(
-            YELLOW
-            + "Adding Void extra repository with hyprland (https://github.com/Encoded14/void-extra)"
-            + NC
-        )
+        print(YELLOW + "Adding Void extra repository..." + NC)
         run_command_verbose(
             "echo repository=https://raw.githubusercontent.com/Encoded14/void-extra/repository-x86_64-glibc | sudo tee /etc/xbps.d/20-void-extra.conf"
         )
-        run_command_verbose("sudo xbps-install -S")
-        required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz swww jq"
-        # discord not packaged for Void Linux
+        run_command_verbose("sudo xbps-install -Sy")
+
+        required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz swww jq python3 python3-devel python313"
         optional_pkgs = (
             "strawberry easyeffects blueman telegram-desktop kvantum firefox"
         )
-        command = f"sudo xbps-install -y  {required_pkgs}"
+
+        command = f"sudo xbps-install -y {required_pkgs}"
         if install_optional:
             command += f" {optional_pkgs}"
-        print(YELLOW + "Installing main packages..." + NC)
+
+        print(YELLOW + "Installing main packages (Void)..." + NC)
         run_command_verbose(command)
 
+    # ---------------------------------------------------------
+    # ملاحظة: نتحقق أولاً من اسم الأمر المناسب لبايثون
+
+    python_cmd = get_python_command()
+    print(YELLOW + f"Detected Python command: {python_cmd}" + NC)
+
+    print(YELLOW + "Creating NibrasShell env..." + NC)
+    # --clear تحذف البيئة القديمة إذا كانت موجودة لضمان التوافق
+    run_command(f"{python_cmd} -m venv .cache/nibrasshell/venv --clear")
+
+    print(YELLOW + "Installing python needed packages using env pip..." + NC)
+    # تحديث أدوات pip داخل البيئة الوهمية (مهم جداً لحل مشكلة البناء)
+    run_command(
+        ".cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools"
+    )
+
+    # تثبيت المتطلبات
+    run_command(
+        ".cache/nibrasshell/venv/bin/pip install -r .config/quickshell/scripts/python/requirements-3.13.txt"
+    )
+
     print(f"{GREEN}Dependencies installed successfully.{NC}")
+
+
+def get_python_command():
+    """
+    يبحث عن أمر بايثون المناسب للإصدار 3.13
+    """
+    # 1. المحاولة الأولى: البحث الصريح عن python3.13 (موجود في فيدورا وبعض التوزيعات)
+    if shutil.which("python3.13"):
+        return "python3.13"
+
+    # 2. المحاولة الثانية: التحقق مما إذا كان python3 هو الإصدار 3.13 (شائع في آرتش)
+    if shutil.which("python3"):
+        try:
+            version_output = subprocess.check_output(
+                ["python3", "--version"], text=True
+            ).strip()
+            # الناتج يكون مثلاً: Python 3.13.1
+            if "3.13" in version_output:
+                return "python3"
+        except Exception:
+            pass
+
+    # 3. إذا فشل كل شيء، نستخدم python3 ونأمل خيراً (أو يمكنك إرجاع None ورفع خطأ)
+    return "python3"
 
 
 # Function to back up existing configuration files.
@@ -410,6 +463,7 @@ def create_user_config_file():
     config["weatherLocation"] = input(msg("prompt_city"))
     config["city"] = config["weatherLocation"]
     config["country"] = input(msg("prompt_country"))
+    config["country"] = input(msg("prompt_country"))
 
     use_prayer_ans = input(msg("prompt_use_prayer")).lower()
     config["usePrayerTimes"] = use_prayer_ans in ["y", "yes", "ن", "نعم"]
@@ -418,6 +472,11 @@ def create_user_config_file():
     config["changePlasmaColor"] = True
     config["networkTimeout"] = 300
     config["networkInterval"] = 1000
+
+    config["geminiApiKey"] = input(msg("gemini_api_key"))
+    config["musicAiApiKey"] = input(msg("music_ai_api_key"))
+    config["weatherAiApiKey"] = input(msg("weather_ai_api_key"))
+
     config["scripts"] = {
         "dynamicM3Py": None,
         "get_wallpapers": None,

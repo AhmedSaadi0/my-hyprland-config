@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import "root:/themes"
-import "./components"
 
 Item {
     id: root

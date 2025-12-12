@@ -22,7 +22,7 @@ Item {
         property color bgHover: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
         property color bgActive: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.3)
 
-        property string iconFont: ThemeManager.selectedTheme.typography.iconFont
+        property string iconFont: (ThemeManager.selectedTheme && ThemeManager.selectedTheme.typography) ? ThemeManager.selectedTheme.typography.iconFont : ""
         property int fontSizeTitle: 15
         property int fontSizeSub: 13
         property int fontSizeTiny: 10
@@ -209,7 +209,7 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: ""
-                font.family: style.iconFont
+                font.family: style.iconFont || ""
                 font.pixelSize: 20
                 color: iconColor
                 opacity: playing ? 0 : 1
