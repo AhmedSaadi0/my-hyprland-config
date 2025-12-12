@@ -255,7 +255,7 @@ PanelWindow {
         id: middleButtonGroup
         theme: ThemeManager.selectedTheme
         implicitWidth: 30
-        // visible: false
+        visible: false
 
         // التموضع في المنتصف تماماً
         anchors.centerIn: parent
