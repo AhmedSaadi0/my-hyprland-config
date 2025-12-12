@@ -384,9 +384,10 @@ Item {
                 // font.pixelSize: root.fontSizeText
                 anchors.verticalCenter: parent.verticalCenter
                 color: root.contentColor
-                // elide: Text.ElideRight
-                wrapMode: Text.Wrap
                 width: Math.min(implicitWidth, CapsuleManager.changeWidth ? 500 : 220)
+
+                wrapMode: CapsuleManager.changeHeight ? Text.Wrap : Text.NoWrap
+                elide: CapsuleManager.changeHeight ? Text.ElideNone : Text.ElideRight
 
                 // onTextChanged: {
                 //     root.calculateHeight();

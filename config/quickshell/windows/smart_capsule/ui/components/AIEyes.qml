@@ -709,9 +709,9 @@ Item {
             name: "focused"
             PropertyChanges {
                 target: leftEye
-                eyeW: 6
-                eyeH: 6
-                eyeR: 3
+                eyeW: 7
+                eyeH: 7
+                eyeR: 4
                 browY: 0
                 browAngle: 5
                 browW: 8 // حاجب منخفض ومائل قليلاً للداخل
@@ -719,9 +719,9 @@ Item {
             }
             PropertyChanges {
                 target: rightEye
-                eyeW: 6
-                eyeH: 6
-                eyeR: 3
+                eyeW: 7
+                eyeH: 7
+                eyeR: 4
                 browY: 0
                 browAngle: -5
                 browW: 8

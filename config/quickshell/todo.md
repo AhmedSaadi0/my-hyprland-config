@@ -6,6 +6,7 @@
   - [x] Improve bars positioning and shadows
   - [x] Improve edge corners
   - [x] Cheatsheet menu
+  - [x] Start AI Integration
   - [ ] Game mode
   - [ ] Bars Shadow Control
   - [ ] Left Bar Width Control
@@ -144,8 +145,10 @@
 
 ## Smart Cap
 
-- [ ] Add const values to statuses (media, weather, info, clock)
-- [ ] Improve weather info (color be same as weather condition, add gif that represents current weather)
-- [ ] Add Battery info and expanded
-- [ ] Animated eye that looks at you each houre
+- [x] Improve weather info (color be same as weather condition, add gif that represents current weather)
+- [x] Animated eye that looks like a robot
+- [x] AI Weather Alerts And Analysts
+- [x] AI Audiophile and Media Critic
+- [x] Add const values to statuses (media, weather, info, clock)
+- [x] Add Battery info
 - [ ] Add fuzzy clock to organize the day

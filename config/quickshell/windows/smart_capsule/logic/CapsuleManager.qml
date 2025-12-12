@@ -22,6 +22,7 @@ Singleton {
     property bool showProgress: false
     property bool changeWidth: true
     property bool changeHeight: false
+    property int _lastAlertLevel: -1
 
     property color bgColor1: ThemeManager.selectedTheme.colors.primary
     property color bgColor2: ThemeManager.selectedTheme.colors.secondary
@@ -147,16 +148,15 @@ Singleton {
             // --- التنفيذ ---
             request({
                 priority: priorityLevel,
-                source: C.SRC_SYSTEM // مصدر وهمي
-                ,
+                source: C.SRC_SYSTEM,
                 icon: randomIcon,
                 text: randomText,
-                timeout: 5000 // 5 ثواني
-                ,
+                timeout: 5000,
                 bgColor1: randomTheme.bg1,
                 bgColor2: randomTheme.bg2,
                 fgColor: randomTheme.fg,
-                playTone: true
+                playTone: true,
+                changeH: true
             });
 
             // تغيير العيون
@@ -193,7 +193,7 @@ Singleton {
     // ========================================================================
     // 1. Music Service Monitor
     // ========================================================================
-    property var _musicConn: Connections {
+    Connections {
         target: MusicService
 
         // --== FIXED SYNTAX ==--
@@ -224,25 +224,15 @@ Singleton {
     // ========================================================================
     // 2. System Service Monitor (Volume, Brightness, Battery)
     // ========================================================================
-    property var _systemConn: Connections {
+    Connections {
         target: SystemService
 
-        // --== FIXED SYNTAX ==--
-        function onVolumeChanged() {
-            request({
-                priority: C.TRANSIENT,
-                source: C.SRC_SYSTEM,
-                icon: SystemService.volumeIcon,
-                text: `${Math.round(SystemService.volume * 100)}%`,
-                progress: SystemService.volume,
-                withProgress: true,
-                timeout: 2000
-            });
-        }
-
-        // --== FIXED SYNTAX ==--
         function onBrightnessChanged() {
-            request({
+            if (typeof EyeController !== "undefined") {
+                EyeController.showEmotion("focused", 1000);
+            }
+
+            root.request({
                 priority: C.TRANSIENT,
                 source: C.SRC_SYSTEM,
                 icon: SystemService.brightnessIcon,
@@ -253,27 +243,215 @@ Singleton {
             });
         }
 
-        // --== FIXED SYNTAX ==--
-        function onBatteryStateChanged() {
-            if (SystemService.batteryState === 1) {
-                // 1 = Charging
-                request({
-                    priority: C.WARNING,
+        function onIsChargingChanged() {
+            if (SystemService.isCharging) {
+                root._lastAlertLevel = -1;
+
+                if (typeof EyeController !== "undefined")
+                    EyeController.showEmotion("happy", 4000);
+
+                let colors = getColorsForState("success");
+
+                root.request({
+                    priority: C.NOTIFICATION,
                     source: C.SRC_BATTERY,
                     icon: SystemService.batteryIcon,
-                    text: `Charging ${Math.round(SystemService.batteryPercent * 100)}%`,
-                    progress: SystemService.batteryPercent,
-                    withProgress: true,
-                    timeout: 4000
+                    text: `Charging: ${Math.round(SystemService.batteryPercent * 100)}%`,
+                    bgColor1: colors.bg1,
+                    bgColor2: colors.bg2,
+                    fgColor: colors.fg,
+                    timeout: 3000
                 });
             }
+        }
+
+        // الصوت (أزرق - Info)
+        function onVolumeChanged() {
+            if (typeof EyeController !== "undefined")
+                EyeController.showEmotion("wink", 1000);
+
+            let colors = getColorsForState("info"); // أزرق هادئ
+
+            root.request({
+                priority: C.TRANSIENT,
+                source: C.SRC_SYSTEM,
+                icon: SystemService.volumeIcon,
+                text: `${Math.round(SystemService.volume * 100)}%`,
+                progress: SystemService.volume,
+                withProgress: true,
+                bgColor1: colors.bg1,
+                bgColor2: colors.bg2,
+                fgColor: colors.fg,
+                timeout: 2000
+            });
+        }
+
+        function onBatteryPercentChanged() {
+            if (SystemService.isCharging) {
+                root._lastAlertLevel = -1;
+                return;
+            }
+
+            const currentPct = Math.round(SystemService.batteryPercent * 100);
+
+            // القائمة مرتبة تنازلياً
+            const alertLevels = [40, 30, 20, 15, 10, 8, 7, 6, 5, 4, 3];
+
+            // ---------------------------------------------------------
+            // 1. معالجة التشغيل لأول مرة (Initialization)
+            // ---------------------------------------------------------
+            if (root._lastAlertLevel === -1) {
+                // إذا فتحنا الجهاز والبطارية 20، لا نريد تنبيه الـ 40 والـ 30
+                // نضبط آخر مستوى ليكون النسبة الحالية
+                root._lastAlertLevel = currentPct;
+
+                if (currentPct <= 20) {
+                    triggerBatteryAlert(currentPct);
+                }
+                return;
+            }
+
+            // ---------------------------------------------------------
+            // 2. مراقبة الهبوط (Discharge Logic)
+            // ---------------------------------------------------------
+            for (let i = 0; i < alertLevels.length; i++) {
+                let lvl = alertLevels[i];
+
+                // الشرط:
+                // 1. النسبة الحالية وصلت للمستوى أو تحته (مثلاً 20 <= 20)
+                // 2. التنبيه السابق كان عند مستوى أعلى (مثلاً 21 > 20)
+                // هذا يضمن أننا عبرنا "خط" التنبيه للتو
+
+                if (currentPct <= lvl && root._lastAlertLevel > lvl) {
+                    root._lastAlertLevel = lvl; // تحديث للحماية من التكرار
+                    triggerBatteryAlert(lvl);
+
+                    console.info("Battery Alert Triggered at: " + lvl);
+                    break; // نكتفي بتنبيه واحد (لأقرب مستوى)
+                }
+            }
+
+            // تحديث حالة "آخر مستوى" دائماً لمواكبة النزول الطبيعي
+            // مثلاً: نزلنا من 25 إلى 24 (لا يوجد تنبيه)، يجب أن يصبح _lastAlertLevel=24
+            // لكي يعمل الشرط (24 > 22) عندما نصل لـ 22
+            if (currentPct < root._lastAlertLevel) {
+                root._lastAlertLevel = currentPct;
+            }
+        }
+    }
+
+    function triggerBatteryAlert(level) {
+        let alertType = "info"; // الافتراضي
+        let priority = C.NOTIFICATION;
+        let msg = `Battery at ${level}%`;
+
+        let emotion = "bored";
+        let timeout = 4000;
+
+        // --- المنطق ---
+        if (level <= 25) {
+            alertType = "warning"; // سيجلب اللون البرتقالي
+            emotion = "suspicious";
+            priority = C.WARNING;
+        }
+
+        if (level <= 20) {
+            alertType = "warning";
+            emotion = "sad";
+            msg = `Low Battery (${level}%). Please plug in.`;
+        }
+
+        if (level <= 10) {
+            alertType = "critical"; // سيجلب اللون الأحمر
+            emotion = "shocked";
+            priority = C.CRITICAL;
+            msg = `Critical Battery (${level}%)!`;
+            timeout = 6000;
+        }
+
+        if (level <= 5) {
+            alertType = "critical";
+            emotion = "dead";
+            msg = `Battery Dying (${level}%)... Goodbye?`;
+            timeout = 8000;
+        }
+
+        // 1. جلب الألوان المناسبة للحالة
+        let colors = getColorsForState(alertType);
+
+        // 2. تحديث العيون
+        if (typeof EyeController !== "undefined") {
+            EyeController.showEmotion(emotion, timeout);
+        }
+
+        // 3. إرسال الطلب بالألوان الجديدة
+        root.request({
+            priority: priority,
+            source: C.SRC_BATTERY,
+            icon: SystemService.batteryIcon,
+            text: msg,
+            progress: level / 100.0,
+            withProgress: true,
+            timeout: timeout,
+            playTone: true,
+            // تطبيق الألوان هنا
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg
+        });
+    }
+
+    function getColorsForState(state) {
+        switch (state) {
+        case "critical":
+            return {
+                bg1: "#B00020",
+                bg2: "#D32F2F",
+                fg: "#FFFFFF"
+            };
+        case "warning":
+            return {
+                bg1: "#FF9800",
+                bg2: "#FFC107",
+                fg: "#000000"
+            };
+        case "success":
+            return {
+                bg1: "#00695C",
+                bg2: "#2E7D32",
+                fg: "#FFFFFF"
+            };
+        case "info":
+            return {
+                bg1: "#0277BD",
+                bg2: "#0091EA",
+                fg: "#FFFFFF"
+            };
+        case "ai":
+            return {
+                bg1: "#6200EA",
+                bg2: "#7C4DFF",
+                fg: "#FFFFFF"
+            };
+        case "music":
+            return {
+                bg1: "#880E4F",
+                bg2: "#1A237E",
+                fg: "#FFFFFF"
+            };
+        default:
+            return {
+                bg1: ThemeManager.selectedTheme.colors.primary,
+                bg2: ThemeManager.selectedTheme.colors.secondary,
+                fg: ThemeManager.selectedTheme.colors.onPrimary
+            };
         }
     }
 
     // ========================================================================
     // 3. Weather Service Monitor (The Smart Part)
     // ========================================================================
-    property var _weatherConn: Connections {
+    Connections {
         target: Weather
 
         function onAiAnalysisCompleted(aiData) {
@@ -285,7 +463,7 @@ Singleton {
             const bgColor2 = aiData.ui.bg_color2;
             // const fgColor = Helper.getAccurteTextColor(bgColor);
             const fgColor = aiData.ui.fg_color;
-            EyeController.showEmotion(emotion, timeout);
+            EyeController.showEmotion(emotion, emotion === "wink" ? 700 : timeout);
 
             const defaultAttrs = {
                 text: aiData.smart_summary.summary_text,

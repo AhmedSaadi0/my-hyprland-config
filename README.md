@@ -265,7 +265,10 @@ nvim .nibrasshell.json
   "city": "sanaa",
   "country": "yemen",
   "usePrayerTimes": true,
-  "changePlasmaColor": true,
+  "geminiApiKey": "",
+  "musicAiApiKey": "", // الذكاء الاصطناعي: خبير الصوتيات وناقد الوسائط
+  "weatherAiApiKey": "", // الذكاء الاصطناعي: محلل الطقس والتنبيهات
+  "aiPreferredLanguage": "Arabic", // اللغة المستخدمة في الرد
   "scripts": {
     "dynamicM3Py": null,
     "get_wallpapers": null,
@@ -552,7 +555,10 @@ nvim .nibrasshell.json
   "city": "sanaa",
   "country": "yemen",
   "usePrayerTimes": true,
-  "changePlasmaColor": true,
+  "geminiApiKey": "",
+  "musicAiApiKey": "", // AI Audiophile and Media Critic
+  "weatherAiApiKey": "", // AI Weather Alerts And Analysts
+  "aiPreferredLanguage": "English", // To response with
   "scripts": {
     "dynamicM3Py": null,
     "get_wallpapers": null,
