@@ -1,7 +1,8 @@
 pragma Singleton
 import QtQuick
+import Quickshell
 
-Item {
+Singleton {
     id: controller
 
     // ================= المدخلات =================
@@ -68,7 +69,6 @@ Item {
             console.log("Resetting eye state to default...");
             controller._forcedEmotion = "";
             controller._isThinking = false;
-            // بمجرد تصفير هذين المتغيرين، الـ currentEmotion سيعود تلقائياً لـ idle أو music
         }
     }
 }

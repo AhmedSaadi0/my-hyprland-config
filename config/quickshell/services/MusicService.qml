@@ -1,4 +1,3 @@
-// services/MusicService.qml
 pragma Singleton
 
 import QtQuick
@@ -7,20 +6,18 @@ import Quickshell.Io
 import Quickshell.Services.Mpris
 
 import "root:/config"
-import "root:/windows/smart_capsule/logic"
-import "root:/config/ConstValues.js" as C
+import "root:/services"
 
 Singleton {
     id: root
 
     // ============================================================
-    //  PROPERTIES (البيانات العامة)
+    //  SIGNALS
     // ============================================================
+    signal analysisCompleted(string emotion, string comment)
 
     readonly property var players: Mpris.players.values
     property int activeIndex: 0
-
-    // المشغل النشط
     readonly property var activePlayer: (players.length > 0) ? players[activeIndex < players.length ? activeIndex : 0] : null
     readonly property bool hasPlayer: activePlayer !== null
     readonly property bool isPlaying: activePlayer ? activePlayer.isPlaying : false
@@ -28,104 +25,235 @@ Singleton {
     // بيانات الأغنية
     readonly property string title: (activePlayer && activePlayer.trackTitle) ? activePlayer.trackTitle : "Unknown"
     readonly property string artist: (activePlayer && activePlayer.trackArtist) ? activePlayer.trackArtist : ""
-    readonly property string coverArt: (activePlayer && activePlayer.trackArtUrl) ? activePlayer.trackArtUrl : ""
 
-    // المفتاح الفريد للأغنية (سنستخدمه للبحث في الذاكرة)
+    // المفتاح الفريد للأغنية
     readonly property string fullInfo: artist ? (artist + " - " + title) : title
+
+    // لتتبع الأغنية التي تم تحليلها مؤخراً لمنع التكرار عند الاستئناف العادي
+    property string lastProcessedSong: ""
 
     readonly property double position: activePlayer ? activePlayer.position : 0
     readonly property double length: (activePlayer && activePlayer.length > 0) ? activePlayer.length : 1
-    readonly property double progress: position / length
+
+    // سجل التشغيل (للسياق فقط)
+    property var recentTracks: []
 
     // ============================================================
-    //  CACHING SYSTEM (نظام الذاكرة والاقتصاد)
+    //  مراقبة التغييرات
     // ============================================================
-
-    // الحد الأقصى للأغاني المحفوظة
-    readonly property int maxCacheSize: 50
-
-    // تخزين البيانات: المفتاح هو fullInfo والقيمة هي {emotion, comment}
-    property var analysisCache: ({})
-
-    // مصفوفة لتتبع الترتيب (FIFO) لحذف الأقدم عند الامتلاء
-    property var cacheKeys: []
-
-    // ============================================================
-    //  LOGIC (المنطق ومراقبة التغييرات)
-    // ============================================================
-
     onPlayersChanged: {
         if (activeIndex >= players.length)
             activeIndex = 0;
     }
 
-    onIsPlayingChanged: {
-        EyeController.isMusicPlaying = isPlaying;
-        // إذا اشتغلت الموسيقى وكانت غير محللة مؤخراً، ننتظر قليلاً ثم نحلل
-        if (isPlaying) {
-            analysisDebouncer.restart();
-        }
-    }
-
-    // عند تغير العنوان أو الفنان، نعيد تصفير المؤقت لنتأكد أن المستخدم استقر
-    // هذا يحل مشكلة تحليل الأغنية السابقة لأن المؤقت سيعاد تشغيله مع كل ضغطة زر
     onFullInfoChanged: {
+        // عند تغيير الأغنية، نقوم بتصفير المتغير لتجهيز التحليل الجديد
+        if (fullInfo && fullInfo !== "Unknown") {
+            console.info("[DEBUG] New song detected:", fullInfo);
+            // ملاحظة: لم نعد نضيفها للهيستوري هنا، سنضيفها بعد التعليق
+        }
+
         if (isPlaying) {
             analysisDebouncer.restart();
         }
     }
 
-    // مؤقت الانتظار (Debounce Timer)
+    onIsPlayingChanged: {
+        console.info("[DEBUG] IsPlaying changed to:", isPlaying);
+        if (isPlaying) {
+            // الحالة 1: أغنية جديدة (تم التعامل معها عبر onFullInfoChanged وتعتمد على Debouncer)
+
+            // الحالة 2: استئناف أغنية (Resume)
+            // نعرف ذلك إذا كانت الأغنية الحالية هي نفسها التي تم تحليلها آخر مرة
+            if (root.fullInfo === root.lastProcessedSong) {
+                // تفعيل المنطق العشوائي للاستئناف
+                root.checkRandomResumeComment();
+            } else {
+                // أغنية جديدة وبدأ التشغيل، المؤقت سيتكفل بالأمر
+                analysisDebouncer.restart();
+            }
+        }
+    }
+
+    // ============================================================
+    //  المنطق والمؤقتات
+    // ============================================================
     Timer {
         id: analysisDebouncer
-        interval: 3000 // الانتظار 3 ثواني
+        interval: 3000
         repeat: false
         onTriggered: {
-            root.processCurrentSong();
+            root.processCurrentSong(false); // false تعني هذا ليس تعليق استئناف
         }
     }
 
-    // الدالة الرئيسية التي تقرر: هل نستخدم الذاكرة أم نستدعي الذكاء الاصطناعي؟
-    function processCurrentSong() {
-        if (!root.fullInfo || root.fullInfo === "Unknown" || !root.isPlaying)
-            return;
+    // دالة التحقق العشوائي عند الاستئناف (Pause -> Play)
+    function checkRandomResumeComment() {
+        // توليد رقم عشوائي بين 0 و 1
+        // نريد احتمالية قليلة (مثلاً 15% أي تقريباً 1 من كل 7 مرات)
+        // إذا كان الرقم أكبر من 0.85 تحقق الشرط
+        if (Math.random() > 0.85) {
+            console.info("[DEBUG] Random Resume Triggered!");
+            root.processCurrentSong(true); // true تعني هذا تعليق استئناف
+        } else {
+            console.info("[DEBUG] Random Resume Skipped (Saving tokens).");
+        }
+    }
 
-        console.info("Processing song:", root.fullInfo);
-
-        // 1. فحص الذاكرة (Cache Hit)
-        if (root.analysisCache.hasOwnProperty(root.fullInfo)) {
-            console.info("Cache HIT! retrieving data for:", root.fullInfo);
-            var cachedData = root.analysisCache[root.fullInfo];
-
-            // تطبيق النتائج فوراً بدون استدعاء AI
-            root.applyAnalysisResult(cachedData.emotion, cachedData.comment);
+    function processCurrentSong(isResumeContext) {
+        if (!root.fullInfo || root.fullInfo === "Unknown" || !root.isPlaying) {
             return;
         }
 
-        // 2. إذا لم توجد، نستدعي الـ AI (Cache Miss)
-        console.info("Cache MISS. Calling AI...");
-        root.analyzeWithAI();
+        // تم إلغاء التحقق من الذاكرة (Cache) هنا بناءً على طلبك
+        // سيتم طلب تحليل جديد في كل مرة
+
+        root.analyzeWithAI(isResumeContext);
     }
 
     // ============================================================
-    //  CONTROLS (التحكم)
+    //  الذكاء الاصطناعي
     // ============================================================
-    // ملاحظة: تم إزالة analyzeWithAI من هنا لأن الـ Timer سيتكفل بالأمر تلقائياً
-    // عند تغير العنوان (activePlayer.next يغير العنوان -> onFullInfoChanged -> Timer)
+    function analyzeWithAI(isResumeContext) {
+        if (!App.scripts.python || !App.scripts.python.callMusicAi)
+            return;
 
+        // نحفظ اسم الأغنية التي نعالجها الآن
+        aiProcess.currentProcessingInfo = root.fullInfo;
+
+        // --- بناء السياق ---
+        const currentTime = new Date().toLocaleTimeString(Qt.locale(), "hh:mm ap");
+
+        // حساب مدة التشغيل الحالية للدقيقة (للاستئناف)
+        console.info(`[DEBUG] Formatting time for position: ${root.position}`);
+        const timestamp = formatTime(root.position);
+        const resumeTimeStr = isResumeContext ? `Resumed at timestamp ${timestamp}` : "Start of track";
+        console.info(`[DEBUG] resumeTimeStr: ${resumeTimeStr}`);
+
+        // --- البحث في التاريخ (History Check) ---
+        // نبحث هل هذه الأغنية موجودة في القائمة السابقة؟
+        let historyContextMsg = "First time playing in this session.";
+
+        // نبحث عن الأغنية في القائمة
+        // index 0 هو آخر أغنية تم تشغيلها، index 1 التي قبلها...
+        let lastIndex = root.recentTracks.indexOf(root.fullInfo);
+
+        if (lastIndex !== -1) {
+            // وجدنا الأغنية في السجل
+            // إذا كانت في الرقم 0، يعني تم تشغيلها قبل أغنية واحدة (أو إعادة تشغيل فورية)
+            let songsAgo = lastIndex + 1;
+            historyContextMsg = `User played this specific song ${songsAgo} tracks ago. Mention this repetition in the comment.`;
+        }
+
+        // تحويل قائمة الهيستوري لنص
+        const historyStr = root.recentTracks.slice(0, 5).join(", ");
+
+        // بناء الرسالة بناء على هل هو تشغيل جديد أم استئناف
+        let message = "";
+
+        if (isResumeContext) {
+            // رسالة الاستئناف (مختصرة)
+            message = `
+            Action: User RESUMED playback.
+            Song: ${title} by ${artist}
+            Resume Time: ${resumeTimeStr}
+            `;
+        } else {
+            // رسالة الأغنية الجديدة الكاملة
+            message = `
+            Current Song: ${title} by ${artist}
+            Context:
+            - Time: ${currentTime}
+            - Play History: [${historyStr}]
+            - Repetition Info: ${historyContextMsg}`;
+        }
+
+        console.info(`[DEBUG] message to send -> ${message}`);
+
+        const command = App.scripts.python.callMusicAi;
+        aiProcess.command = [...command, "--provider", "gemini", "--model", "gemini-robotics-er-1.5-preview", "--message", message];
+        aiProcess.running = true;
+    }
+
+    // ============================================================
+    //  معالجة الرد
+    // ============================================================
+
+    Process {
+        id: aiProcess
+        property string currentProcessingInfo: ""
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    var result = JSON.parse(this.text.toString());
+
+                    if (result.success && result.response) {
+                        const emotion = result.response.emotion.toString().trim();
+                        const comment = result.response.comment.toString().trim();
+
+                        // إرسال الإشارة للواجهة
+                        root.analysisCompleted(emotion, comment);
+
+                        // === التغيير هنا: الحفظ في السجل بعد استلام التعليق ===
+                        // نتأكد أننا لا نضيف تكرار متتالي لنفس الأغنية في قمة القائمة لتجنب الفوضى
+                        // لكنك طلبت أن ترى الهيستوري عند التشغيل التالي، لذا سنضيفها.
+
+                        // نضيف الأغنية التي تم الانتهاء من تحليلها الآن إلى الهيستوري
+                        if (aiProcess.currentProcessingInfo !== "") {
+                            root.addToHistory(aiProcess.currentProcessingInfo);
+                            // تحديث المتغير لمنع تكرار التحليل في حالة الـ Resume
+                            root.lastProcessedSong = aiProcess.currentProcessingInfo;
+                        }
+                    }
+                } catch (e) {
+                    console.error("[DEBUG] Error:", e);
+                }
+            }
+        }
+    }
+
+    // ============================================================
+    //  دوال مساعدة
+    // ============================================================
+
+    function addToHistory(trackName) {
+        // الحماية من التكرار المباشر (اختياري، يمكنك إزالته إذا أردت تسجيل كل مرة حتى لو أعدت الأغنية فوراً)
+        // لكن ليكون منطق "قبل 2 أغاني" صحيحاً، يفضل عدم تسجيل التكرار الفوري كإدخال جديد إلا إذا انتقلت لأغنية أخرى
+        // السطر التالي يمنع تسجيل الأغنية إذا كانت هي نفسها آخر أغنية مسجلة
+        if (recentTracks.length > 0 && recentTracks[0] === trackName)
+            return;
+
+        var newHistory = [trackName];
+        // نحتفظ بآخر 20 أغنية
+        for (var i = 0; i < recentTracks.length && i < 19; i++) {
+            newHistory.push(recentTracks[i]);
+        }
+        recentTracks = newHistory;
+        console.info("[DEBUG] History Updated. Last played:", trackName);
+    }
+
+    function formatTime(secondsInput) {
+        // بما أن القيمة 196.087 فهذا يعني أنها ثواني
+        let totalSeconds = Math.floor(secondsInput);
+
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+
+        // إضافة صفر إذا كانت الثواني خانة واحدة (مثلاً 5 تصبح 05)
+        let secStr = seconds < 10 ? "0" + seconds : seconds;
+
+        return minutes + ":" + secStr;
+    }
+
+    // دوال التحكم بالمشغل (كما هي)
     function next() {
-        if (activePlayer) {
+        if (activePlayer)
             activePlayer.next();
-            CapsuleManager.reset();
-            EyeController.showEmotion("happy", 1500);
-        }
     }
     function previous() {
-        if (activePlayer) {
+        if (activePlayer)
             activePlayer.previous();
-            CapsuleManager.reset();
-            EyeController.showEmotion("happy", 1500);
-        }
     }
     function toggle() {
         if (activePlayer)
@@ -135,113 +263,21 @@ Singleton {
         if (activePlayer)
             activePlayer.stop();
     }
-    function cyclePlayers() {
-        if (players.length > 1)
-            activeIndex = (activeIndex + 1) % players.length;
-    }
 
-    property var _nextSongCall: NibrasShellShortcut {
+    NibrasShellShortcut {
         name: "nextSong"
         onPressed: root.next()
     }
-    property var _prevSongCall: NibrasShellShortcut {
+    NibrasShellShortcut {
         name: "previousSong"
         onPressed: previous()
     }
-    property var _toggleSongCall: NibrasShellShortcut {
+    NibrasShellShortcut {
         name: "togglePlaying"
         onPressed: toggle()
     }
-    property var _stopPlayerCall: NibrasShellShortcut {
+    NibrasShellShortcut {
         name: "stopPlay"
         onPressed: stop()
-    }
-
-    // ============================================================
-    //  AI PROCESSING & RESULTS
-    // ============================================================
-
-    function applyAnalysisResult(emotion, comment) {
-        const timeout = 15 * 1000;
-
-        EyeController.showEmotion(emotion, timeout);
-        CapsuleManager.request({
-            priority: C.NOTIFICATION,
-            source: C.SRC_MUSIC,
-            icon: "󰝚",
-            text: comment,
-            timeout: timeout,
-            changeW: true,
-            playTone: false
-        });
-    }
-
-    // دالة إضافة للذاكرة
-    function addToCache(key, emotion, comment) {
-        // إذا كان موجوداً مسبقاً لا نفعل شيئاً (أو نحدثه)
-        if (analysisCache.hasOwnProperty(key))
-            return;
-
-        // إضافة للمصفوفة والـ Map
-        cacheKeys.push(key);
-        analysisCache[key] = {
-            emotion: emotion,
-            comment: comment
-        };
-
-        // التنظيف إذا تجاوزنا الحد (FIFO)
-        if (cacheKeys.length > maxCacheSize) {
-            var oldKey = cacheKeys.shift(); // حذف أقدم عنصر من المصفوفة
-            delete analysisCache[oldKey];   // حذفه من الـ Map
-            console.info("Cache limit reached. Removed oldest song:", oldKey);
-        }
-    }
-
-    function analyzeWithAI() {
-        // نأخذ نسخة من العنوان الحالي كي نستخدمها كمفتاح عند الحفظ
-        // (مهم جداً في حال تغيرت الأغنية أثناء عمل الـ Process)
-        aiProcess.currentProcessingInfo = root.fullInfo;
-
-        const command = App.scripts.python.callMusicAi;
-        const message = `Title: ${title}, Artist:${artist}`;
-
-        aiProcess.command = [...command, "--provider", "gemini", "--model", "gemini-robotics-er-1.5-preview", "--message", message];
-        aiProcess.running = true;
-    }
-
-    Process {
-        id: aiProcess
-        // خاصية مؤقتة لتذكر اسم الأغنية التي يتم تحليلها الآن
-        property string currentProcessingInfo: ""
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                console.info("AI Raw Response: " + this.text);
-                var result = JSON.parse(this.text.toString());
-
-                if (result.success) {
-                    var response = result.response;
-                    if (response) {
-                        const emotion = response.emotion.toString().trim();
-                        const comment = response.comment.toString().trim();
-
-                        // 1. عرض النتيجة
-                        root.applyAnalysisResult(emotion, comment);
-
-                        // 2. الحفظ في الذاكرة (للمستقبل)
-                        // نستخدم العنوان الذي بدأنا به العملية وليس العنوان الحالي (لتفادي الأخطاء إذا قلب المستخدم بسرعة)
-                        if (aiProcess.currentProcessingInfo !== "") {
-                            root.addToCache(aiProcess.currentProcessingInfo, emotion, comment);
-                        }
-                    }
-                } else {
-                    console.error("AI Error:", result.error);
-                }
-            }
-        }
-
-        stderr: SplitParser {
-            onRead: data => console.error("AI Process Error:", data)
-        }
     }
 }

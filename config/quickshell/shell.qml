@@ -17,6 +17,7 @@ import "root:/config"
 import "root:/desktop"
 import "root:/themes"
 import "root:/shadows"
+import "root:/windows/smart_capsule/logic"
 import "root:/config/ConstValues.js" as Consts
 import "root:/config/EventNames.js" as Events
 

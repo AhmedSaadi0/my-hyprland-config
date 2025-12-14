@@ -24,6 +24,8 @@ PanelWindow {
 
     property string stateMode: C.STATE_IDLE
     property string activeTab: "media"
+    property var _coordinator: CapsuleCoordinator
+    property var _coordinatorTester: CapsuleTester
 
     // Margins
     property int barFullHeight: ThemeManager.selectedTheme.dimensions.barHeight

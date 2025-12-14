@@ -29,23 +29,6 @@ Item {
         }
     }
 
-    // تحديث اللون عند تغير الحالة
-    // onStateChanged: {
-    //     // if (state === "angry")
-    //     //     eyeColor = "#FF4444";
-    //     // else
-    //     // // أحمر
-    //     // if (state === "sad")
-    //     //     eyeColor = "#4444FF";
-    //     // else
-    //     // // أزرق
-    //     // if (state === "love")
-    //     //     eyeColor = "#FF69B4";
-    //     // else
-    //     //     // وردي
-    //     eyeColor = "white"; // اللون الطبيعي
-    // }
-
     NibrasShellShortcut {
         name: "setIdle"
         onPressed: {
@@ -129,7 +112,7 @@ Item {
     NibrasShellShortcut {
         name: "setWink"
         onPressed: {
-            EyeController.showEmotion("wink", 700);
+            EyeController.showEmotion("wink");
         }
     }
 
@@ -175,50 +158,71 @@ Item {
     // =========================================================
     // 2. المنطق والدوال المساعدة (LOGIC & HELPER FUNCTIONS)
     // =========================================================
+    SequentialAnimation {
+        id: winkLoopAnim
+        running: root.state === "wink"
+        loops: Animation.Infinite
+        alwaysRunToEnd: false
+
+        // 1. ثبات الغمزة (مغلقة) لفترة
+        PauseAnimation {
+            duration: 800
+        }
+
+        // 2. فتح العين بسرعة (انتهاء الغمزة)
+        NumberAnimation {
+            target: rightEye
+            property: "eyeH"
+            to: 12 // نفس ارتفاع العين اليسرى
+            duration: 150
+            easing.type: Easing.OutQuad
+        }
+
+        // 3. بقاء العين مفتوحة قليلاً
+        PauseAnimation {
+            duration: 1000
+        }
+
+        // 4. إغلاق العين (غمزة جديدة)
+        NumberAnimation {
+            target: rightEye
+            property: "eyeH"
+            to: 2 // الارتفاع المغلق
+            duration: 150
+            easing.type: Easing.InQuad
+        }
+
+        // 5. تكرار بعد فترة عشوائية أو ثابتة (هنا نكرر)
+    }
 
     // دالة: إجبار العين على أخذ شكل الحالة الحالية (لإصلاح العين بعد الرمش)
     function fixEyeState() {
-        // 1. إعادة ربط الخصائص بالـ State
-        leftEye.eyeH = Qt.binding(function () {
-            return leftEye.eyeH;
-        });
-        rightEye.eyeH = Qt.binding(function () {
-            return rightEye.eyeH;
-        });
-
-        // 2. تحديث الحالة لفرض إعادة الرسم
+        // إعادة التعيين لإجبار التحديث
         var current = root.state;
-        root.state = "";      // نلغي الحالة لحظياً
-        root.state = current; // نعيد تفعيلها
+        root.state = "";
+        root.state = current;
     }
 
     // دالة: إعادة تعيين روابط الخصائص
-    function resetEyeBindings() {
-        leftEye.eyeH = Qt.binding(function () {
-            return leftEye.eyeH;
-        });
-        rightEye.eyeH = Qt.binding(function () {
-            return rightEye.eyeH;
-        });
-    }
+    // function resetEyeBindings() {
+    //     leftEye.eyeH = Qt.binding(function () {
+    //         return leftEye.eyeH;
+    //     });
+    //     rightEye.eyeH = Qt.binding(function () {
+    //         return rightEye.eyeH;
+    //     });
+    // }
 
     Connections {
         target: EyeController
-
         function onCurrentEmotionChanged() {
-            // 1. تحديث الحالة
             root.state = EyeController.currentEmotion;
-
-            // 2. إيقاف الرمش إذا كان يعمل
-            if (blinkAnim.running) {
-                blinkAnim.stop();
+            // نوقف الرمش العشوائي إذا كانت الحالة خاصة
+            if (root.state === "thinking" || root.state === "wink" || root.state === "sleeping") {
+                blinkTimer.stop();
+            } else {
+                blinkTimer.restart();
             }
-
-            // 3. إصلاح شكل العين فوراً
-            root.fixEyeState();
-
-            // 4. إعادة تشغيل مؤقت الرمش
-            blinkTimer.restart();
         }
     }
 
@@ -260,14 +264,6 @@ Item {
             animDur: 200
         }
     }
-
-    // ب) نقاط التفكير
-    // ThinkingDots {
-    //     anchors.centerIn: parent
-    //     visible: root.emotion === "thinking"
-    //     opacity: visible ? 1 : 0
-    //     color: root.eyeColor
-    // }
 
     // ج) معادل الموسيقى (Visualizer)
     Row {
@@ -328,17 +324,14 @@ Item {
 
         onEntered: {
             EyeController.isHovered = true;
-            // CapsuleManager.request(...)
         }
 
         onExited: {
             EyeController.isHovered = false;
-            // CapsuleManager.reset(...)
         }
 
         onClicked: {
             EyeController.think(2000);
-            // root.requestExpand(...)
         }
     }
 
@@ -348,7 +341,8 @@ Item {
     Timer {
         id: blinkTimer
         interval: 3000
-        running: root.emotion !== "thinking" && root.emotion !== "sleeping" && root.emotion !== "music"
+        // لا يرمش في الحالات التي تتطلب عيون مغلقة أو خاصة
+        running: root.emotion !== "thinking" && root.emotion !== "sleeping" && root.emotion !== "music" && root.emotion !== "wink"
         repeat: true
         onTriggered: {
             blinkAnim.start();
@@ -358,7 +352,6 @@ Item {
 
     SequentialAnimation {
         id: blinkAnim
-        // 1. الإغلاق
         ParallelAnimation {
             NumberAnimation {
                 target: leftEye
@@ -373,11 +366,9 @@ Item {
                 duration: 50
             }
         }
-        // 2. الانتظار
         PauseAnimation {
             duration: 100
         }
-        // 3. الاستعادة
         ScriptAction {
             script: root.fixEyeState()
         }
@@ -423,7 +414,7 @@ Item {
                 eyeR: 0
                 browY: -2
                 browAngle: 0
-                browW: 14
+                browW: 13
                 isHappyShape: true
             }
             PropertyChanges {
@@ -433,12 +424,12 @@ Item {
                 eyeR: 0
                 browY: -2
                 browAngle: 0
-                browW: 14
+                browW: 13
                 isHappyShape: true
             }
             PropertyChanges {
                 target: eyesRow
-                spacing: 6
+                spacing: 4
             }
         },
         State {
@@ -446,7 +437,7 @@ Item {
             PropertyChanges {
                 target: leftEye
                 eyeW: 10
-                eyeH: 4
+                eyeH: 7
                 eyeR: 2
                 browY: -2
                 browAngle: 15
@@ -627,18 +618,16 @@ Item {
                 eyeH: 12
                 eyeR: 6
                 browY: -4
-                browAngle: 0
-                browW: 10
-                isHappyShape: false // عين مفتوحة
+                browAngle: 10 // رفع الحاجب قليلاً للتعبير
+                isHappyShape: false
             }
             PropertyChanges {
                 target: rightEye
                 eyeW: 12
-                eyeH: 2
-                eyeR: 1 // عين مغلقة (خط)
-                browY: 1
+                eyeH: 2 // البداية مغلقة، والأنيميشن winkLoopAnim سيتولى الحركة
+                eyeR: 6
+                browY: -2 // الحاجب نازل مع الغمزة
                 browAngle: 0
-                browW: 10
                 isHappyShape: false
             }
             PropertyChanges {
@@ -650,28 +639,35 @@ Item {
             name: "bored"
             PropertyChanges {
                 target: leftEye
-                eyeW: 8
-                eyeH: 4
-                eyeR: 1
-                browY: -1
+                eyeW: 12 // عين عريضة قليلاً
+                eyeH: 5  // نصف مغلقة (Normal Height ~10)
+                eyeR: 2  // زوايا أقل استدارة
+
+                // الحواجب منخفضة ومسطحة تماماً
+                browY: -1 // قريبة جداً من العين
                 browAngle: 0
-                browW: 8
+                browW: 12
+                showBrow: true
+
                 isHappyShape: false
             }
             PropertyChanges {
                 target: rightEye
-                eyeW: 8
-                eyeH: 4
-                eyeR: 1
+                eyeW: 12
+                eyeH: 5
+                eyeR: 2
+
                 browY: -1
                 browAngle: 0
-                browW: 8
+                browW: 12
+                showBrow: true
+
                 isHappyShape: false
             }
             PropertyChanges {
                 target: eyesRow
-                spacing: 4
-            }
+                spacing: 7
+            } // تباعد العيون قليلاً يوحي بالشرود
         },
         State {
             name: "love"
@@ -709,60 +705,89 @@ Item {
             name: "focused"
             PropertyChanges {
                 target: leftEye
-                eyeW: 7
-                eyeH: 7
-                eyeR: 4
-                browY: 0
-                browAngle: 5
-                browW: 8 // حاجب منخفض ومائل قليلاً للداخل
+                // أبعاد العين الإجمالية
+                eyeW: 14
+                eyeH: 10 // ارتفاع كلي متوسط
+                eyeR: 0
+
+                // === ضبط الحاجب (الأهم) ===
+                // إنزاله لأسفل ليلامس أعلى العين تقريباً
+                browY: 1
+                // زاوية ميلان خفيفة (ليست حادة مثل الغضب 25، بل خفيفة 8)
+                browAngle: 8
+                browW: 12
+                showBrow: true
+
+                // إطفاء الأشكال الأخرى
                 isHappyShape: false
+                isHeartShape: false
+                isSadShape: false
+                isThinkingShape: false
+                isDeadShape: false
+                isListeningShape: false
+
+                // تشغيل شكل التحديق
+                isFocusedShape: true
             }
             PropertyChanges {
                 target: rightEye
-                eyeW: 7
-                eyeH: 7
-                eyeR: 4
-                browY: 0
-                browAngle: -5
-                browW: 8
+                eyeW: 14
+                eyeH: 10
+                eyeR: 0
+
+                // الحاجب الأيمن
+                browY: 1
+                browAngle: -8 // عكس الزاوية
+                browW: 12
+                showBrow: true
+
                 isHappyShape: false
+                isHeartShape: false
+                isSadShape: false
+                isThinkingShape: false
+                isDeadShape: false
+                isListeningShape: false
+
+                isFocusedShape: true
             }
             PropertyChanges {
                 target: eyesRow
-                spacing: 4
+                spacing: 6 // تقريب العيون قليلاً يزيد من حدة التركيز
             }
         },
         State {
             name: "thinking"
             PropertyChanges {
                 target: leftEye
-                eyeW: 12 // حجم كبير ومناسب للدوران
-                eyeH: 12
-                eyeR: 5
-                browY: -2
+                eyeW: 14
+                eyeH: 14 // حجم مناسب للنقاط
+                eyeR: 0
+                // الحاجب الأيسر عادي
+                browY: -3
                 browAngle: 0
-                browW: 9
+                browW: 10
+                showBrow: true
+                // تفعيل شكل التفكير
+                isThinkingShape: true
                 isHappyShape: false
-                isHeartShape: false
-                isSadShape: false
-                isThinkingShape: true // <-- تفعيل الشكل الجديد
             }
             PropertyChanges {
                 target: rightEye
-                eyeW: 12 // حجم كبير ومناسب للدوران
-                eyeH: 12
-                eyeR: 5
-                browY: -2
-                browAngle: 0
-                browW: 9
+                eyeW: 14
+                eyeH: 14
+                eyeR: 0
+                // الحاجب الأيمن مرفوع للأعلى (تعبير فضولي)
+                browY: -6 // رفعة قوية
+                browAngle: -15 // ميلان
+                browW: 10
+                showBrow: true
+
+                isThinkingShape: true
                 isHappyShape: false
-                isHeartShape: false
-                isSadShape: false
-                isThinkingShape: true // <-- تفعيل الشكل الجديد
             }
             PropertyChanges {
                 target: eyesRow
-                spacing: 4
+                spacing: 5
             }
         },
         State {

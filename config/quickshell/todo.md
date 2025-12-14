@@ -151,4 +151,6 @@
 - [x] AI Audiophile and Media Critic
 - [x] Add const values to statuses (media, weather, info, clock)
 - [x] Add Battery info
-- [ ] Add fuzzy clock to organize the day
+- [ ] Add fuzzy clock to organize the day, connected to ai if available
+- [ ] Sends more data (last played 2,3 songs, time of the day, volume percentage, output device name ... etc) to ai when media is opened to make the judge more funny
+- [ ] New Reaction when memory is full or cpu is high, use ai to tell the user whats wrong
