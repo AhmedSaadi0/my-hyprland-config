@@ -186,28 +186,56 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
+                    // 1. التحويل الأول: من مخرجات السكربت العام
                     var result = JSON.parse(this.text.toString());
 
                     if (result.success && result.response) {
-                        const emotion = result.response.emotion.toString().trim();
-                        const comment = result.response.comment.toString().trim();
+                        var finalResponse = result.response;
 
-                        // إرسال الإشارة للواجهة
+                        // 2. معالجة الحالة: إذا كان الرد عبارة عن نص (String) وليس كائن (Object)
+                        if (typeof finalResponse === 'string') {
+                            console.info("[DEBUG] Response is a string, attempting to parse inner JSON...");
+
+                            // تنظيف النص من علامات الـ Markdown مثل ```json و ```
+                            var cleanJson = finalResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+
+                            // محاولة إصلاح خطأ شائع حيث يضيف AI نصاً بعد القوس }
+                            // نأخذ النص من أول { إلى آخر }
+                            var firstBrace = cleanJson.indexOf("{");
+                            var lastBrace = cleanJson.lastIndexOf("}");
+
+                            if (firstBrace !== -1 && lastBrace !== -1) {
+                                cleanJson = cleanJson.substring(firstBrace, lastBrace + 1);
+                            }
+
+                            try {
+                                finalResponse = JSON.parse(cleanJson);
+                            } catch (e2) {
+                                console.error("[DEBUG] Inner JSON Parse Failed:", e2);
+                                console.error("[DEBUG] Bad content:", cleanJson);
+                                return; // توقف هنا
+                            }
+                        }
+
+                        // الآن finalResponse هو كائن نظيف بالتأكيد
+                        const emotion = finalResponse.emotion ? finalResponse.emotion.toString().trim() : "thinking";
+                        const comment = finalResponse.comment ? finalResponse.comment.toString().trim() : "...";
+
+                        console.info("[DEBUG] Final Result -> Emotion:", emotion, "| Comment:", comment);
+
+                        // إرسال الإشارة
                         root.analysisCompleted(emotion, comment);
 
-                        // === التغيير هنا: الحفظ في السجل بعد استلام التعليق ===
-                        // نتأكد أننا لا نضيف تكرار متتالي لنفس الأغنية في قمة القائمة لتجنب الفوضى
-                        // لكنك طلبت أن ترى الهيستوري عند التشغيل التالي، لذا سنضيفها.
-
-                        // نضيف الأغنية التي تم الانتهاء من تحليلها الآن إلى الهيستوري
+                        // إضافة للهيستوري
                         if (aiProcess.currentProcessingInfo !== "") {
                             root.addToHistory(aiProcess.currentProcessingInfo);
-                            // تحديث المتغير لمنع تكرار التحليل في حالة الـ Resume
                             root.lastProcessedSong = aiProcess.currentProcessingInfo;
                         }
+                    } else {
+                        console.error("[DEBUG] AI returned success:false or missing response.", result);
                     }
                 } catch (e) {
-                    console.error("[DEBUG] Error:", e);
+                    console.error("[DEBUG] Fatal JSON Parse Error:", e);
                 }
             }
         }

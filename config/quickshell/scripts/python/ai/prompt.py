@@ -220,4 +220,10 @@ Combine **Song Quality** + **Context** + **Action** to trigger a Mode:
   "emotion": "Select emotion based on judgement + context",
   "comment": "Natural reaction integrating context/resume-action if relevant (max 25 words)"
 }
+
+### CRITICAL OUTPUT RULES
+1.  **NO Markdown:** Do NOT use ```json or ``` code blocks.
+2.  **NO Decoration:** Do NOT add text before or after the JSON.
+3.  **Clean JSON:** Ensure the output starts with `{` and ends with `}`.
+4.  **Language:** Ensure the values inside JSON are in "$aiPreferredLanguage".
 """
