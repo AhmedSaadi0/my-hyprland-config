@@ -14,7 +14,7 @@ Singleton {
     // ============================================================
     //  SIGNALS
     // ============================================================
-    signal analysisCompleted(string emotion, string comment)
+    signal analysisCompleted(string emotion, string comment, var tags)
 
     readonly property var players: Mpris.players.values
     property int activeIndex: 0
@@ -159,6 +159,8 @@ Singleton {
                 try {
                     var result = JSON.parse(this.text.toString());
 
+                    console.info(`[MusicService][DEBUG] -> ai row result ${this.text.toString()}`);
+
                     if (result.success && result.response) {
                         var finalResponse = result.response;
 
@@ -185,10 +187,11 @@ Singleton {
 
                         const emotion = finalResponse.emotion ? finalResponse.emotion.toString().trim() : "thinking";
                         const comment = finalResponse.comment ? finalResponse.comment.toString().trim() : "...";
+                        const tags = finalResponse.tags ? finalResponse.tags : [];
 
                         console.info("[DEBUG] Final Result -> Emotion:", emotion, "| Comment:", comment);
 
-                        root.analysisCompleted(emotion, comment);
+                        root.analysisCompleted(emotion, comment, tags);
 
                         if (aiProcess.currentProcessingInfo !== "") {
                             root.addToHistory(aiProcess.currentProcessingInfo);

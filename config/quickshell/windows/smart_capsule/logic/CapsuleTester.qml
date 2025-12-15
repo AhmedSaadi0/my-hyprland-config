@@ -117,25 +117,39 @@ Singleton {
         name: "testCapsuleMusic"
         onPressed: {
             const musicScenarios = [
+                // 1. نص متوسط + تاقات قليلة (الوضع الطبيعي)
                 {
                     emotion: "happy",
-                    comment: "إيقاع هذه الأغنية يرفع المعنويات! يبدو أنك في مزاج جيد."
+                    comment: "إيقاع هذه الأغنية يرفع المعنويات! يبدو أنك في مزاج جيد.",
+                    tags: ["Pop", "Energy", "Hits"]
                 },
+
+                // 2. نص طويل جداً + تاقات قليلة (اختبار التفاف النص Text Wrap)
                 {
                     emotion: "sad",
-                    comment: "كلمات الأغنية تعبر عن حنين عميق للماضي.."
+                    comment: "كلمات الأغنية تعبر عن حنين عميق للماضي، اللحن يمزج بين الشجن والأمل بطريقة فنية معقدة تلامس المشاعر.",
+                    tags: ["Classic", "Soul"]
                 },
-                {
-                    emotion: "thinking",
-                    comment: "التركيب الموسيقي هنا معقد جداً، مزيج بين الجاز والكلاسيك."
-                },
+
+                // 3. نص قصير + تاقات كثيرة جداً (اختبار نزول التاقات لأسطر جديدة Flow Wrap)
                 {
                     emotion: "shocked",
-                    comment: "واو! هذا السولو للجيتار سريع جداً ومذهل!"
+                    comment: "واو! هذا السولو للجيتار سريع جداً ومذهل!",
+                    tags: ["Rock", "Metal", "Guitar", "Solo", "Fast", "Live", "Concert", "Electric", "Band", "Legend"]
                 },
+
+                // 4. نص طويل + تاقات كثيرة (اختبار أقصى تمدد للطول والعرض Stress Test)
+                {
+                    emotion: "thinking",
+                    comment: "التركيب الموسيقي هنا معقد جداً، مزيج بين الجاز والكلاسيك يخلق تجربة استماع فريدة تتطلب تركيزاً عالياً لفهم الطبقات.",
+                    tags: ["Jazz", "Classic", "Fusion", "Instrumental", "Piano", "Saxophone", "Bass", "Rhythm", "Theory", "Art"]
+                },
+
+                // 5. نص قصير + بدون تاقات (اختبار أن المساحة السفلية تختفي تماماً)
                 {
                     emotion: "listening",
-                    comment: "هدوء البيانو يساعد على التركيز العميق."
+                    comment: "هدوء البيانو يساعد على التركيز العميق.",
+                    tags: []
                 }
             ];
 
@@ -144,7 +158,7 @@ Singleton {
             console.log("🧪 Test: Music AI -> Emotion:", data.emotion);
 
             // إرسال البيانات للمنسق
-            CapsuleCoordinator.handleMusicAnalysis(data.emotion, data.comment);
+            CapsuleCoordinator.handleMusicAnalysis(data.emotion, data.comment, data.tags);
         }
     }
 

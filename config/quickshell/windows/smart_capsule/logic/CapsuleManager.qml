@@ -26,6 +26,7 @@ Singleton {
     property color bgColor1: ThemeManager.selectedTheme.colors.primary
     property color bgColor2: ThemeManager.selectedTheme.colors.secondary
     property color fgColor: ThemeManager.selectedTheme.colors.onPrimary
+    property var tagsModel: []
 
     Timer {
         id: _timer
@@ -48,19 +49,21 @@ Singleton {
         playTone = true,
         bgColor1 = ThemeManager.selectedTheme.colors.primary,
         bgColor2 = ThemeManager.selectedTheme.colors.secondary,
-        fgColor = ThemeManager.selectedTheme.colors.onPrimary
+        fgColor = ThemeManager.selectedTheme.colors.onPrimary,
+        tags = []
     }) {
         if (priority >= currentPriority || currentPriority === C.IDLE) {
-            currentPriority = priority;
-            activeSource = source;
-            displayIcon = icon;
-            displayText = text;
-            progressValue = progress;
-            showProgress = withProgress;
-            changeWidth = changeW;
+            root.currentPriority = priority;
+            root.activeSource = source;
+            root.displayIcon = icon;
+            root.displayText = text;
+            root.progressValue = progress;
+            root.showProgress = withProgress;
+            root.changeWidth = changeW;
             root.bgColor1 = bgColor1;
             root.bgColor2 = bgColor2;
             root.fgColor = fgColor;
+            root.tagsModel = tags;
 
             if (priority > C.TRANSIENT) {
                 changeHeight = changeH ? changeH : true;

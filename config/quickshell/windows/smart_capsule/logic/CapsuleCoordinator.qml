@@ -53,8 +53,8 @@ Singleton {
                 root.notifyBasicMusicInfo();
             }
         }
-        function onAnalysisCompleted(emotion, comment) {
-            root.handleMusicAnalysis(emotion, comment);
+        function onAnalysisCompleted(emotion, comment, tags) {
+            root.handleMusicAnalysis(emotion, comment, tags);
         }
 
         // function onResumeCommentReceived(emotion, comment) {
@@ -110,6 +110,7 @@ Singleton {
 
         const priority = aiData.urgent_alert ? C.WARNING : C.NOTIFICATION;
         const icon = aiData.urgent_alert ? "" : ui.icon;
+        const tags = Weather.aiTags;
 
         CapsuleManager.request({
             priority: priority,
@@ -119,12 +120,13 @@ Singleton {
             timeout: root._weatherTimeout,
             bgColor1: ui.bg_color1,
             bgColor2: ui.bg_color2,
-            fgColor: ui.fg_color
+            fgColor: ui.fg_color,
+            tags: tags
         });
     }
 
     // 2. Music Logic
-    function handleMusicAnalysis(emotion, comment) {
+    function handleMusicAnalysis(emotion, comment, tags) {
         console.info("Coordinator: Handling Music AI Analysis -> " + emotion);
 
         root.updateEyes(emotion, root._musicAnalysisTimeout);
@@ -140,7 +142,8 @@ Singleton {
             changeH: true,
             bgColor1: colors.bg1,
             bgColor2: colors.bg2,
-            fgColor: colors.fg
+            fgColor: colors.fg,
+            tags: tags
         });
     }
 
@@ -171,7 +174,8 @@ Singleton {
             text: `${Math.round(SystemService.brightness * 100)}%`,
             progress: SystemService.brightness,
             withProgress: true,
-            timeout: root._sysOsdTimeout
+            timeout: root._sysOsdTimeout,
+            changeW: false
         });
     }
 
@@ -190,7 +194,8 @@ Singleton {
             bgColor1: colors.bg1,
             bgColor2: colors.bg2,
             fgColor: colors.fg,
-            timeout: root._sysOsdTimeout
+            timeout: root._sysOsdTimeout,
+            changeW: false
         });
     }
 

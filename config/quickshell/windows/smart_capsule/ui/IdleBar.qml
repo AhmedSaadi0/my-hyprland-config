@@ -33,38 +33,29 @@ Item {
     readonly property color themeColor: CapsuleManager.fgColor
     readonly property color contentColor: isMusicPlaying ? "#000000" : themeColor
 
-    implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
-
-    // --- Width Logic ---
     property real requiredWidth: {
-        if (!CapsuleManager.changeWidth) {
-            return root.width;
-        }
-        var clockW = clockText.implicitWidth;
-        var infoW = showInfo ? infoRow.implicitWidth : 0;
-        var contentW = Math.max(clockW, infoW);
-        return Math.max(contentW + 100, 330);
+        if (!showInfo)
+            return Math.max(clockRow.implicitWidth + 100, 330);
+        if (!CapsuleManager.changeWidth)
+            return 330;
+
+        return Math.max(mainColumn.width + 100, 330);
     }
 
     property real requiredHeight: {
-        return calculateHeight();
-    }
-
-    function calculateHeight() {
         const minHeight = ThemeManager.selectedTheme.dimensions.barWidgetsHeight;
-        const eyesH = EyeController.currentEmotion === "idle" || "music" ? 0 : aiEyes.implicitHeight;
-        const textH = CapsuleManager.changeHeight ? (infoText.implicitHeight) : 0;
-        const currentHeight = Math.max(minHeight, eyesH, textH);
-        return currentHeight;
-    }
 
-    Connections {
-        target: CapsuleManager
-        function onChangeHeightChanged() {
-            requiredHeight = calculateHeight();
+        const eyesH = (EyeController.currentEmotion === "idle" || "music") ? 0 : (aiEyes.implicitHeight + 20);
+
+        var contentH = 0;
+        if (showInfo && CapsuleManager.changeHeight) {
+            contentH = mainColumn.height + 25;
         }
+
+        return Math.max(minHeight, eyesH, contentH);
     }
 
+    implicitHeight: requiredHeight
     Behavior on implicitHeight {
         NumberAnimation {
             duration: 300
@@ -72,17 +63,12 @@ Item {
         }
     }
 
-    // ============================================================
-    // Music Backgrounds
-    // ============================================================
     Rectangle {
         id: musicAnimatedBg
         anchors.fill: parent
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-
         opacity: root.isMusicPlaying ? 1.0 : 0.0
         visible: opacity > 0
-
         gradient: Gradient {
             orientation: Gradient.Horizontal
             GradientStop {
@@ -101,7 +87,6 @@ Item {
                 color: root.p1_end
             }
         }
-
         SequentialAnimation {
             running: root.isMusicPlaying && parent.visible
             loops: Animation.Infinite
@@ -182,7 +167,6 @@ Item {
         }
     }
 
-    // Progress Bar
     Rectangle {
         id: progressBar
         height: parent.height
@@ -200,29 +184,20 @@ Item {
         }
     }
 
-    // ============================================================
-    //  Content
-    // ============================================================
-
-    // 1. Weather (Left)
     Item {
         anchors.left: parent.left
         anchors.leftMargin: 15
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
         width: 10
-
         WeatherIcon {
             anchors.centerIn: parent
             contentColor: root.contentColor
-
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
                 cursorShape: Qt.PointingHandCursor
-
                 onClicked: root.requestExpand("weather")
-
                 onEntered: {
                     if (Weather) {
                         CapsuleManager.request({
@@ -235,36 +210,28 @@ Item {
                         });
                     }
                 }
-
-                onExited: {
-                    CapsuleManager.reset();
-                }
+                onExited: CapsuleManager.reset()
             }
         }
     }
 
-    // 2. AI&Music (Right)
     Item {
         anchors.right: parent.right
         anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
         width: 10
-
         AIEyes {
             id: aiEyes
             eyeColor: root.contentColor
-            // anchors.centerIn: parent
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenterOffset: root.isMusicPlaying && EyeController.currentEmotion === "music" ? 0 : 3
-
             MouseArea {
                 anchors.fill: parent
                 onClicked: root.requestExpand("media")
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
-
                 onEntered: {
                     let infoText = MusicService.activePlayer.identity;
                     if (root.isMusicPlaying) {
@@ -280,31 +247,27 @@ Item {
                         progress: (MusicService.progress * 100),
                         showProgress: true
                     });
-
                     EyeController.showEmotion("happy", 2000);
                 }
-
-                onExited: {
-                    CapsuleManager.reset();
-                }
+                onExited: CapsuleManager.reset()
             }
         }
     }
 
-    // 3. Center (Clock / Info)
     Item {
+        id: centerItem
         anchors.centerIn: parent
-        // height: 20
-        height: infoText.height
-        width: showInfo ? infoRow.implicitWidth : clockRow.implicitWidth
-        clip: true
 
-        // A. Clock
+        clip: false
+
+        width: showInfo ? mainColumn.width : clockRow.implicitWidth
+        height: showInfo ? mainColumn.height : clockRow.implicitHeight
+
         Row {
             id: clockRow
             anchors.centerIn: parent
             spacing: 5
-
+            visible: !root.showInfo
             opacity: !root.showInfo ? 1 : 0
 
             transform: Translate {
@@ -316,7 +279,6 @@ Item {
                     }
                 }
             }
-
             Behavior on opacity {
                 NumberAnimation {
                     duration: 250
@@ -327,10 +289,8 @@ Item {
                 id: sysClock
                 precision: SystemClock.Minutes
             }
-
             Text {
                 id: clockText
-                // text: Qt.formatDateTime(sysClock.date, "hh:mm AP - dddd, dd MMMM yyyy")
                 text: sysClock.date.toLocaleString(Qt.locale(), "hh:mm AP - dddd, dd MMMM yyyy")
                 font.bold: true
                 font.pixelSize: 14
@@ -338,12 +298,14 @@ Item {
             }
         }
 
-        // B. Info
-        Row {
-            id: infoRow
-            anchors.centerIn: parent
-            spacing: 8
+        Item {
+            id: contentContainer
 
+            anchors.centerIn: parent
+            width: mainColumn.width
+            height: mainColumn.height
+
+            visible: root.showInfo
             opacity: root.showInfo ? 1 : 0
 
             transform: Translate {
@@ -355,7 +317,6 @@ Item {
                     }
                 }
             }
-
             Behavior on opacity {
                 NumberAnimation {
                     duration: 250
@@ -363,28 +324,92 @@ Item {
             }
 
             Text {
-                text: CapsuleManager.displayIcon
-                font.family: ThemeManager.selectedTheme.typography.iconFont
-                font.pixelSize: 14
-                color: root.contentColor
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            Text {
-                id: infoText
+                id: dummyTextMeasurement
+                visible: false
                 text: CapsuleManager.displayText
                 font.bold: true
-                // font.pixelSize: root.fontSizeText
+            }
+
+            Column {
+                id: mainColumn
+                spacing: 4
+
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                color: root.contentColor
-                width: Math.min(implicitWidth, CapsuleManager.changeWidth ? 500 : 220)
 
-                wrapMode: CapsuleManager.changeHeight ? Text.Wrap : Text.NoWrap
-                elide: CapsuleManager.changeHeight ? Text.ElideNone : Text.ElideRight
+                width: {
+                    if (!CapsuleManager.changeWidth)
+                        return 220;
+                    var contentNeeded = dummyTextMeasurement.implicitWidth + 30;
+                    return Math.max(220, Math.min(contentNeeded, 500));
+                }
 
-                // onTextChanged: {
-                //     root.calculateHeight();
-                // }
+                Row {
+                    id: infoRow
+                    spacing: 8
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: parent.width
+
+                    Text {
+                        id: iconText
+                        text: CapsuleManager.displayIcon
+                        font.family: ThemeManager.selectedTheme.typography.iconFont
+                        font.pixelSize: 14
+                        color: root.contentColor
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Text {
+                        id: infoText
+                        text: CapsuleManager.displayText
+                        font.bold: true
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: root.contentColor
+
+                        width: parent.width - (iconText.implicitWidth + infoRow.spacing)
+
+                        wrapMode: CapsuleManager.changeHeight ? Text.Wrap : Text.NoWrap
+                        elide: CapsuleManager.changeHeight ? Text.ElideNone : Text.ElideRight
+                        horizontalAlignment: Text.AlignLeft
+                    }
+                }
+
+                Flow {
+                    id: tagsFlow
+                    spacing: 5
+                    width: parent.width
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    flow: Flow.LeftToRight
+
+                    visible: CapsuleManager.tagsModel.length > 0
+
+                    Repeater {
+                        model: CapsuleManager.tagsModel
+                        delegate: Rectangle {
+                            height: 18
+                            width: Math.min(tagText.implicitWidth + 16, tagsFlow.width)
+                            radius: height / 2
+                            color: {
+                                var colors = ["#FF6F61", "#6B5B95", "#88B04B"];
+                                return colors[index % colors.length];
+                            }
+                            opacity: 0.9
+
+                            Text {
+                                id: tagText
+                                text: modelData
+                                anchors.centerIn: parent
+                                color: "white"
+                                font.pixelSize: 10
+                                font.bold: true
+                                font.family: ThemeManager.selectedTheme.typography.mainFont
+                                elide: Text.ElideRight
+                                width: parent.width - 8
+                                horizontalAlignment: Text.AlignHCenter
+                            }
+                        }
+                    }
+                }
             }
         }
     }
