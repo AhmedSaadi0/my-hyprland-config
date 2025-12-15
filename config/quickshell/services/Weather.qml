@@ -259,36 +259,28 @@ Singleton {
         try {
             console.info("AI FINISHED: " + root.aiAnalysistData);
 
-            // 1. تحليل الرد الخارجي (الذي يحتوي على success و response)
             var result = JSON.parse(root.aiAnalysistData);
 
             if (result.success) {
                 var aiData;
 
-                // 2. التحقق من نوع البيانات داخل response
                 if (typeof result.response === "string") {
-                    // الحالة القديمة: إذا كان نصاً، نظفه وحلله
                     var cleanJson = result.response.replace(/```json/g, "").replace(/```/g, "").trim();
                     aiData = JSON.parse(cleanJson);
                 } else {
-                    // الحالة الجديدة (المحسنة): إذا كان كائناً، استخدمه مباشرة
                     aiData = result.response;
                 }
 
-                // 3. تحديث الخصائص بأمان
-                // نستخدم Optional Chaining (?.) لتجنب الأخطاء إذا كانت القيم ناقصة
                 root.aiSmartIcon = aiData.ui?.icon || "";
                 root.aiBgColor1 = aiData.ui?.bg_color1 || null;
                 root.aiBgColor2 = aiData.ui?.bg_color2 || null;
                 root.aiFgColor = aiData.ui?.fg_color || null;
 
-                // التعامل مع اختلاف تسمية المفاتيح (summary_text vs arabic_text) حسب البرومبت
                 root.aiSummaryText = aiData.smart_summary?.summary_text || aiData.smart_summary?.arabic_text || "";
                 root.aiTrendBadge = aiData.smart_summary?.trend_badge || "";
                 root.aiTags = aiData.smart_summary?.tags || [];
                 root.aiIsUrgent = aiData.urgent_alert || false;
 
-                // إطلاق السيقنالات
                 aiAnalysisCompleted(aiData);
 
                 if (root.aiIsUrgent) {

@@ -54,34 +54,13 @@ Singleton {
             }
         }
         function onAnalysisCompleted(emotion, comment) {
-            // نستدعي دالة المعالجة التي يمكن للاختبار استخدامها أيضاً
             root.handleMusicAnalysis(emotion, comment);
         }
 
-        function onResumeCommentReceived(emotion, comment) {
-            console.info("Coordinator: Resume Comment -> " + emotion);
-            root.handleMusicAnalysis(emotion, comment);
-
-        // // تحديث العيون (ربما حركة غمزة سريعة)
-        // root.updateEyes("wink", 4000);
-        //
-        // // عرض الكبسولة (بلون مختلف قليلاً لتمييز الحدث)
-        // let colors = getColorsForState("ai"); // أو لون مخصص
-        // CapsuleManager.request({
-        //     priority: C.NOTIFICATION,
-        //     source: C.SRC_MUSIC,
-        //     icon: "" // أيقونة Play
-        //     ,
-        //     text: comment,
-        //     timeout: 5000,
-        //     changeW: true,
-        //     changeH: true // نفتحها لنعرض التعليق الظريف
-        //     ,
-        //     bgColor1: colors.bg1,
-        //     bgColor2: colors.bg2,
-        //     fgColor: colors.fg
-        // });
-        }
+        // function onResumeCommentReceived(emotion, comment) {
+        //     console.info("Coordinator: Resume Comment -> " + emotion);
+        //     root.handleMusicAnalysis(emotion, comment);
+        // }
     }
 
     Binding {
@@ -197,9 +176,9 @@ Singleton {
     }
 
     function handleVolumeChange() {
-        if (currentPriority <= C.TRANSIENT) {
-            root.updateEyes("wink", root._sysEyeReactDuration);
-        }
+        // if (currentPriority <= C.TRANSIENT) {
+        //     root.updateEyes("wink", root._sysEyeReactDuration);
+        // }
         let colors = getColorsForState("info");
         CapsuleManager.request({
             priority: C.TRANSIENT,

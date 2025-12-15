@@ -51,17 +51,9 @@ Item {
     }
 
     function calculateHeight() {
-        // 1. الطول الأساسي (الحد الأدنى)
         const minHeight = ThemeManager.selectedTheme.dimensions.barWidgetsHeight;
-
-        // 2. طول العيون
         const eyesH = EyeController.currentEmotion === "idle" || "music" ? 0 : aiEyes.implicitHeight;
-
-        // 3. طول النص
-        // نتحقق أولاً هل المعلومات معروضة (showInfo)
         const textH = CapsuleManager.changeHeight ? (infoText.implicitHeight) : 0;
-
-        // إرجاع القيمة الأكبر بين الثلاثة
         const currentHeight = Math.max(minHeight, eyesH, textH);
         return currentHeight;
     }
@@ -73,7 +65,6 @@ Item {
         }
     }
 
-    // أنيميشن لجعل التغيير ناعماً
     Behavior on implicitHeight {
         NumberAnimation {
             duration: 300
@@ -89,7 +80,6 @@ Item {
         anchors.fill: parent
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
-        // تظهر فقط عند تشغيل الموسيقى
         opacity: root.isMusicPlaying ? 1.0 : 0.0
         visible: opacity > 0
 
@@ -194,6 +184,7 @@ Item {
 
     // Progress Bar
     Rectangle {
+        id: progressBar
         height: parent.height
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
         color: "white"
@@ -252,7 +243,7 @@ Item {
         }
     }
 
-    // 2. Music (Right)
+    // 2. AI&Music (Right)
     Item {
         anchors.right: parent.right
         anchors.rightMargin: 20
@@ -285,7 +276,9 @@ Item {
                         icon: "󰝚",
                         text: infoText,
                         timeout: 0,
-                        changeW: false
+                        changeW: false,
+                        progress: (MusicService.progress * 100),
+                        showProgress: true
                     });
 
                     EyeController.showEmotion("happy", 2000);

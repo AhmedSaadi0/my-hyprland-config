@@ -1,7 +1,35 @@
 import argparse
 import json
+import re
 
 from config import PRESETS, get_provider
+
+
+def extract_and_clean_json(raw_text):
+    if not raw_text:
+        return None
+
+    try:
+        # 1. إزالة علامات المارك داون الصريحة أولاً
+        clean_text = re.sub(r"```json\s*", "", raw_text, flags=re.IGNORECASE)
+        clean_text = re.sub(r"```\s*", "", clean_text)
+
+        # 2. البحث عن أول قوس '{' وآخر قوس '}'
+        # هذا يتجاهل أي نصوص ثرثرة (Chatter) قبل أو بعد الكود
+        start_idx = clean_text.find("{")
+        end_idx = clean_text.rfind("}")
+
+        if start_idx != -1 and end_idx != -1:
+            # قص النص ليكون من البداية للنهاية الصحيحة فقط
+            json_str = clean_text[start_idx : end_idx + 1]
+
+            # 3. محاولة التحويل إلى كائن بايثون
+            return json.loads(json_str)
+        else:
+            return None
+
+    except Exception:
+        return None
 
 
 def main():
@@ -22,11 +50,9 @@ def main():
 
     args = parser.parse_args()
 
-    # القيمة الافتراضية للرد ستكون نصاً فارغاً
     output = {"success": False, "response": None, "error": ""}
 
     try:
-        # إعداد المتغيرات
         final_system = args.system_instruction
         final_temp = args.temperature if args.temperature is not None else 0.7
         final_json_mode = args.json_mode
@@ -45,28 +71,17 @@ def main():
         except:
             history = []
 
-        # التوليد
         llm = get_provider(args, final_system, final_temp, final_json_mode)
         raw_response_text, _ = llm.generate(args.message, history)
 
-        # ---------------------------------------------------------
-        # التعديل الهام هنا: تحويل النص إلى Object إذا كان JSON Mode
-        # ---------------------------------------------------------
-        final_response_data = raw_response_text  # الافتراضي: نص
+        final_response_data = raw_response_text
 
         if final_json_mode:
-            try:
-                # تنظيف النص من علامات الماركداون
-                clean_text = (
-                    raw_response_text.replace("```json", "")
-                    .replace("```", "")
-                    .strip()
-                )
-                # تحويل النص إلى قاموس بايثون حقيقي (Dict)
-                # هذا ما سيجعل المخرجات نظيفة وبدون \n \"
-                final_response_data = json.loads(clean_text)
-            except json.JSONDecodeError:
-                # إذا فشل التحويل، نبقيها كنص كما هي لتظهر كخطأ أو محتوى عادي
+            cleaned_obj = extract_and_clean_json(raw_response_text)
+
+            if cleaned_obj is not None:
+                final_response_data = cleaned_obj
+            else:
                 pass
 
         output["success"] = True
@@ -76,7 +91,7 @@ def main():
     except Exception as e:
         output["error"] = str(e)
 
-    # طباعة الجيسون النهائي
+    # ensure_ascii=False يضمن ظهور الحروف العربية بشكل صحيح وليس رموزاً
     print(json.dumps(output, ensure_ascii=False))
 
 

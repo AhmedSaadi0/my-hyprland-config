@@ -25,17 +25,16 @@ Singleton {
     // بيانات الأغنية
     readonly property string title: (activePlayer && activePlayer.trackTitle) ? activePlayer.trackTitle : "Unknown"
     readonly property string artist: (activePlayer && activePlayer.trackArtist) ? activePlayer.trackArtist : ""
+    readonly property string coverArt: (activePlayer && activePlayer.trackArtUrl) ? activePlayer.trackArtUrl : ""
 
-    // المفتاح الفريد للأغنية
     readonly property string fullInfo: artist ? (artist + " - " + title) : title
 
-    // لتتبع الأغنية التي تم تحليلها مؤخراً لمنع التكرار عند الاستئناف العادي
     property string lastProcessedSong: ""
 
     readonly property double position: activePlayer ? activePlayer.position : 0
     readonly property double length: (activePlayer && activePlayer.length > 0) ? activePlayer.length : 1
+    readonly property double progress: position / length
 
-    // سجل التشغيل (للسياق فقط)
     property var recentTracks: []
 
     // ============================================================
@@ -47,10 +46,8 @@ Singleton {
     }
 
     onFullInfoChanged: {
-        // عند تغيير الأغنية، نقوم بتصفير المتغير لتجهيز التحليل الجديد
         if (fullInfo && fullInfo !== "Unknown") {
             console.info("[DEBUG] New song detected:", fullInfo);
-            // ملاحظة: لم نعد نضيفها للهيستوري هنا، سنضيفها بعد التعليق
         }
 
         if (isPlaying) {
@@ -61,15 +58,9 @@ Singleton {
     onIsPlayingChanged: {
         console.info("[DEBUG] IsPlaying changed to:", isPlaying);
         if (isPlaying) {
-            // الحالة 1: أغنية جديدة (تم التعامل معها عبر onFullInfoChanged وتعتمد على Debouncer)
-
-            // الحالة 2: استئناف أغنية (Resume)
-            // نعرف ذلك إذا كانت الأغنية الحالية هي نفسها التي تم تحليلها آخر مرة
             if (root.fullInfo === root.lastProcessedSong) {
-                // تفعيل المنطق العشوائي للاستئناف
                 root.checkRandomResumeComment();
             } else {
-                // أغنية جديدة وبدأ التشغيل، المؤقت سيتكفل بالأمر
                 analysisDebouncer.restart();
             }
         }
@@ -80,18 +71,14 @@ Singleton {
     // ============================================================
     Timer {
         id: analysisDebouncer
-        interval: 3000
+        interval: 1000 * 10
         repeat: false
         onTriggered: {
             root.processCurrentSong(false); // false تعني هذا ليس تعليق استئناف
         }
     }
 
-    // دالة التحقق العشوائي عند الاستئناف (Pause -> Play)
     function checkRandomResumeComment() {
-        // توليد رقم عشوائي بين 0 و 1
-        // نريد احتمالية قليلة (مثلاً 15% أي تقريباً 1 من كل 7 مرات)
-        // إذا كان الرقم أكبر من 0.85 تحقق الشرط
         if (Math.random() > 0.85) {
             console.info("[DEBUG] Random Resume Triggered!");
             root.processCurrentSong(true); // true تعني هذا تعليق استئناف
@@ -105,9 +92,6 @@ Singleton {
             return;
         }
 
-        // تم إلغاء التحقق من الذاكرة (Cache) هنا بناءً على طلبك
-        // سيتم طلب تحليل جديد في كل مرة
-
         root.analyzeWithAI(isResumeContext);
     }
 
@@ -118,48 +102,35 @@ Singleton {
         if (!App.scripts.python || !App.scripts.python.callMusicAi)
             return;
 
-        // نحفظ اسم الأغنية التي نعالجها الآن
         aiProcess.currentProcessingInfo = root.fullInfo;
 
-        // --- بناء السياق ---
         const currentTime = new Date().toLocaleTimeString(Qt.locale(), "hh:mm ap");
 
-        // حساب مدة التشغيل الحالية للدقيقة (للاستئناف)
         console.info(`[DEBUG] Formatting time for position: ${root.position}`);
         const timestamp = formatTime(root.position);
         const resumeTimeStr = isResumeContext ? `Resumed at timestamp ${timestamp}` : "Start of track";
         console.info(`[DEBUG] resumeTimeStr: ${resumeTimeStr}`);
 
-        // --- البحث في التاريخ (History Check) ---
-        // نبحث هل هذه الأغنية موجودة في القائمة السابقة؟
-        let historyContextMsg = "First time playing in this session.";
+        let historyContextMsg = "";
 
-        // نبحث عن الأغنية في القائمة
-        // index 0 هو آخر أغنية تم تشغيلها، index 1 التي قبلها...
         let lastIndex = root.recentTracks.indexOf(root.fullInfo);
 
         if (lastIndex !== -1) {
-            // وجدنا الأغنية في السجل
-            // إذا كانت في الرقم 0، يعني تم تشغيلها قبل أغنية واحدة (أو إعادة تشغيل فورية)
             let songsAgo = lastIndex + 1;
             historyContextMsg = `User played this specific song ${songsAgo} tracks ago. Mention this repetition in the comment.`;
         }
 
-        // تحويل قائمة الهيستوري لنص
         const historyStr = root.recentTracks.slice(0, 5).join(", ");
 
-        // بناء الرسالة بناء على هل هو تشغيل جديد أم استئناف
         let message = "";
 
         if (isResumeContext) {
-            // رسالة الاستئناف (مختصرة)
             message = `
             Action: User RESUMED playback.
             Song: ${title} by ${artist}
             Resume Time: ${resumeTimeStr}
             `;
         } else {
-            // رسالة الأغنية الجديدة الكاملة
             message = `
             Current Song: ${title} by ${artist}
             Context:
@@ -186,21 +157,16 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
-                    // 1. التحويل الأول: من مخرجات السكربت العام
                     var result = JSON.parse(this.text.toString());
 
                     if (result.success && result.response) {
                         var finalResponse = result.response;
 
-                        // 2. معالجة الحالة: إذا كان الرد عبارة عن نص (String) وليس كائن (Object)
                         if (typeof finalResponse === 'string') {
                             console.info("[DEBUG] Response is a string, attempting to parse inner JSON...");
 
-                            // تنظيف النص من علامات الـ Markdown مثل ```json و ```
                             var cleanJson = finalResponse.replace(/```json/g, "").replace(/```/g, "").trim();
 
-                            // محاولة إصلاح خطأ شائع حيث يضيف AI نصاً بعد القوس }
-                            // نأخذ النص من أول { إلى آخر }
                             var firstBrace = cleanJson.indexOf("{");
                             var lastBrace = cleanJson.lastIndexOf("}");
 
@@ -217,16 +183,13 @@ Singleton {
                             }
                         }
 
-                        // الآن finalResponse هو كائن نظيف بالتأكيد
                         const emotion = finalResponse.emotion ? finalResponse.emotion.toString().trim() : "thinking";
                         const comment = finalResponse.comment ? finalResponse.comment.toString().trim() : "...";
 
                         console.info("[DEBUG] Final Result -> Emotion:", emotion, "| Comment:", comment);
 
-                        // إرسال الإشارة
                         root.analysisCompleted(emotion, comment);
 
-                        // إضافة للهيستوري
                         if (aiProcess.currentProcessingInfo !== "") {
                             root.addToHistory(aiProcess.currentProcessingInfo);
                             root.lastProcessedSong = aiProcess.currentProcessingInfo;
@@ -244,16 +207,12 @@ Singleton {
     // ============================================================
     //  دوال مساعدة
     // ============================================================
-
     function addToHistory(trackName) {
-        // الحماية من التكرار المباشر (اختياري، يمكنك إزالته إذا أردت تسجيل كل مرة حتى لو أعدت الأغنية فوراً)
-        // لكن ليكون منطق "قبل 2 أغاني" صحيحاً، يفضل عدم تسجيل التكرار الفوري كإدخال جديد إلا إذا انتقلت لأغنية أخرى
-        // السطر التالي يمنع تسجيل الأغنية إذا كانت هي نفسها آخر أغنية مسجلة
         if (recentTracks.length > 0 && recentTracks[0] === trackName)
             return;
 
-        var newHistory = [trackName];
-        // نحتفظ بآخر 20 أغنية
+        const timeNow = new Date().toLocaleTimeString(Qt.locale(), "hh:mm ap");
+        var newHistory = [`${trackName}:: Played at${timeNow}`];
         for (var i = 0; i < recentTracks.length && i < 19; i++) {
             newHistory.push(recentTracks[i]);
         }
@@ -262,19 +221,16 @@ Singleton {
     }
 
     function formatTime(secondsInput) {
-        // بما أن القيمة 196.087 فهذا يعني أنها ثواني
         let totalSeconds = Math.floor(secondsInput);
 
         let minutes = Math.floor(totalSeconds / 60);
         let seconds = totalSeconds % 60;
 
-        // إضافة صفر إذا كانت الثواني خانة واحدة (مثلاً 5 تصبح 05)
         let secStr = seconds < 10 ? "0" + seconds : seconds;
 
         return minutes + ":" + secStr;
     }
 
-    // دوال التحكم بالمشغل (كما هي)
     function next() {
         if (activePlayer)
             activePlayer.next();
@@ -290,6 +246,10 @@ Singleton {
     function stop() {
         if (activePlayer)
             activePlayer.stop();
+    }
+    function cyclePlayers() {
+        if (players.length > 1)
+            activeIndex = (activeIndex + 1) % players.length;
     }
 
     NibrasShellShortcut {

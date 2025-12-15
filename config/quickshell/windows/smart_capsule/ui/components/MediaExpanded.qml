@@ -42,9 +42,9 @@ Item {
 
     property var player: MusicService.activePlayer
 
-    readonly property double position: player ? player.position : 0
-    readonly property double length: (player && player.length > 0) ? player.length : 1
-    readonly property double progress: position / length
+    readonly property double progress: MusicService.progress
+    readonly property double position: MusicService.position
+    readonly property double length: MusicService.length
 
     property bool isScrubbing: seekSlider.pressed
 

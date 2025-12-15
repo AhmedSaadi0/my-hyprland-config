@@ -763,9 +763,9 @@ Item {
                 eyeH: 14 // حجم مناسب للنقاط
                 eyeR: 0
                 // الحاجب الأيسر عادي
-                browY: -3
+                browY: -2
                 browAngle: 0
-                browW: 10
+                browW: 14
                 showBrow: true
                 // تفعيل شكل التفكير
                 isThinkingShape: true
@@ -777,9 +777,9 @@ Item {
                 eyeH: 14
                 eyeR: 0
                 // الحاجب الأيمن مرفوع للأعلى (تعبير فضولي)
-                browY: -6 // رفعة قوية
+                browY: -4 // رفعة قوية
                 browAngle: -15 // ميلان
-                browW: 10
+                browW: 14
                 showBrow: true
 
                 isThinkingShape: true

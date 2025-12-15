@@ -11,6 +11,7 @@
   - [ ] Bars Shadow Control
   - [ ] Left Bar Width Control
   - [ ] Remove `LeftMenuStatus` and Use `EventBus`
+  - [ ] Support gif as wallpapers
 
 - **Menus**
   - [x] Left Menu Navigation
@@ -152,5 +153,12 @@
 - [x] Add const values to statuses (media, weather, info, clock)
 - [x] Add Battery info
 - [ ] Add fuzzy clock to organize the day, connected to ai if available
+- [ ] Ai eyes shows details on expanded cards as well
+
+---
+
+## AI
+
 - [ ] Sends more data (last played 2,3 songs, time of the day, volume percentage, output device name ... etc) to ai when media is opened to make the judge more funny
 - [ ] New Reaction when memory is full or cpu is high, use ai to tell the user whats wrong
+- [ ] connect fuzzy clock with ai
