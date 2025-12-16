@@ -156,7 +156,6 @@ M3GroupBox {
             Layout.fillWidth: true
             spacing: selectedTheme.dimensions.spacingMedium
 
-            // === [تعديل] الاسم والسب تيتل في صف واحد ===
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 15
