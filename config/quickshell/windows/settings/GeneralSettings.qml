@@ -23,9 +23,6 @@ M3GroupBox {
     readonly property string defaultWeatherPersona: "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user safety and comfort."
     readonly property string defaultMusicPersona: "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
 
-    // ====================================================================
-    // 1. كائن القيم المؤقتة
-    // ====================================================================
     QtObject {
         id: tempConfig
         property string username: ""
@@ -159,29 +156,44 @@ M3GroupBox {
             Layout.fillWidth: true
             spacing: selectedTheme.dimensions.spacingMedium
 
-            Controls.Label {
-                text: qsTr("Username")
-                font.bold: true
-            }
-            EditableField {
+            // === [تعديل] الاسم والسب تيتل في صف واحد ===
+            RowLayout {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                text: tempConfig.username
-                selectedTheme: root.selectedTheme
-                onEditingFinished: tempConfig.username = text
-            }
+                spacing: 15
 
-            Controls.Label {
-                text: qsTr("Subtitle / Quote")
-                font.bold: true
+                // Username
+                ColumnLayout {
+                    Layout.preferredWidth: 100
+                    Controls.Label {
+                        text: qsTr("Username")
+                        font.bold: true
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 30
+                        text: tempConfig.username
+                        selectedTheme: root.selectedTheme
+                        onEditingFinished: tempConfig.username = text
+                    }
+                }
+
+                // Subtitle
+                ColumnLayout {
+                    Layout.preferredWidth: 250
+                    Controls.Label {
+                        text: qsTr("Subtitle / Quote")
+                        font.bold: true
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 30
+                        text: tempConfig.subtitle
+                        selectedTheme: root.selectedTheme
+                        onEditingFinished: tempConfig.subtitle = text
+                    }
+                }
             }
-            EditableField {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                text: tempConfig.subtitle
-                selectedTheme: root.selectedTheme
-                onEditingFinished: tempConfig.subtitle = text
-            }
+            // ==========================================
 
             Controls.Label {
                 text: qsTr("Profile Picture")
@@ -219,25 +231,15 @@ M3GroupBox {
         }
 
         ColumnLayout {
-            Layout.fillWidth: true
+            Layout.preferredWidth: 590
             spacing: selectedTheme.dimensions.spacingMedium
 
+            // === [تعديل] الدولة والمدينة وموقع الطقس في صف واحد ===
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 10
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    Controls.Label {
-                        text: qsTr("City")
-                        font.bold: true
-                    }
-                    EditableField {
-                        Layout.fillWidth: true
-                        text: tempConfig.city
-                        selectedTheme: root.selectedTheme
-                        onEditingFinished: tempConfig.city = text
-                    }
-                }
+                spacing: 15
+
+                // Country
                 ColumnLayout {
                     Layout.fillWidth: true
                     Controls.Label {
@@ -251,18 +253,38 @@ M3GroupBox {
                         onEditingFinished: tempConfig.country = text
                     }
                 }
-            }
 
-            Controls.Label {
-                text: qsTr("Weather Location (API Name)")
-                font.bold: true
+                // City
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Controls.Label {
+                        text: qsTr("City")
+                        font.bold: true
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: tempConfig.city
+                        selectedTheme: root.selectedTheme
+                        onEditingFinished: tempConfig.city = text
+                    }
+                }
+
+                // Weather Location
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Controls.Label {
+                        text: qsTr("Weather Location (API)")
+                        font.bold: true
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: tempConfig.weatherLocation
+                        selectedTheme: root.selectedTheme
+                        onEditingFinished: tempConfig.weatherLocation = text
+                    }
+                }
             }
-            EditableField {
-                Layout.fillWidth: true
-                text: tempConfig.weatherLocation
-                selectedTheme: root.selectedTheme
-                onEditingFinished: tempConfig.weatherLocation = text
-            }
+            // ====================================================
 
             SettingSwitch {
                 label: qsTr("Enable Prayer Times")
@@ -301,14 +323,11 @@ M3GroupBox {
                 onEditingFinished: tempConfig.aiPreferredLanguage = text
             }
 
-            // ============================================================
-            // 2. Weather Persona Block
-            // ============================================================
+            // Weather Persona
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
 
-                // Header + Reset Button
                 RowLayout {
                     Layout.fillWidth: true
                     Controls.Label {
@@ -327,16 +346,12 @@ M3GroupBox {
                     }
                 }
 
-                // Weather TextArea
                 Controls.TextArea {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 80
                     wrapMode: TextEdit.Wrap
-
                     text: tempConfig.weatherPersona
                     onEditingFinished: tempConfig.weatherPersona = text
-
-                    // Theme Integration
                     color: selectedTheme.colors.leftMenuFgColorV1
                     selectedTextColor: selectedTheme.colors.onPrimary
                     selectionColor: selectedTheme.colors.primary
@@ -355,22 +370,18 @@ M3GroupBox {
                     }
                 }
 
-                // Hint Label
                 Controls.Label {
-                    text: qsTr("Describe who presents the weather (e.g., 'A poetic optimist', 'A sarcastic robot').")
+                    text: qsTr("Describe who presents the weather.")
                     font.pixelSize: selectedTheme.typography.small
                     color: selectedTheme.colors.subtleText
                 }
             }
 
-            // ============================================================
-            // 3. Music Persona Block
-            // ============================================================
+            // Music Persona
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
 
-                // Header + Reset Button
                 RowLayout {
                     Layout.fillWidth: true
                     Controls.Label {
@@ -389,16 +400,12 @@ M3GroupBox {
                     }
                 }
 
-                // Music TextArea
                 Controls.TextArea {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 80
                     wrapMode: TextEdit.Wrap
-
                     text: tempConfig.musicPersona
                     onEditingFinished: tempConfig.musicPersona = text
-
-                    // Theme Integration
                     color: selectedTheme.colors.leftMenuFgColorV1
                     selectedTextColor: selectedTheme.colors.onPrimary
                     selectionColor: selectedTheme.colors.primary
@@ -417,18 +424,14 @@ M3GroupBox {
                     }
                 }
 
-                // Hint Label
                 Controls.Label {
-                    text: qsTr("Describe your music companion (e.g., 'A harsh critic', 'A supportive friend').")
+                    text: qsTr("Describe your music companion.")
                     font.pixelSize: selectedTheme.typography.small
                     color: selectedTheme.colors.subtleText
                 }
             }
 
-            // ----------------------------------------------------
             // API Keys
-            // ----------------------------------------------------
-
             Controls.Label {
                 text: qsTr("Gemini API Key")
                 font.bold: true
@@ -454,7 +457,7 @@ M3GroupBox {
             }
 
             Controls.Label {
-                text: qsTr("Weather/Music Specific Keys (Optional)")
+                text: qsTr("Specific Keys (Optional)")
                 font.bold: true
             }
             RowLayout {
