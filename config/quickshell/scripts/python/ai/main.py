@@ -90,6 +90,7 @@ def main():
         "--provider", choices=["gemini", "openai", "deepseek"], default=None
     )
     parser.add_argument("--preferred_language", default="Arabic")
+    parser.add_argument("--user_persona", default="You are Nibras")
 
     args = parser.parse_args()
 

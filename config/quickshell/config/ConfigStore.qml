@@ -36,10 +36,12 @@ QtObject {
         atomicWrites: true
 
         onLoaded: {
+            console.info("SSSSS -> "+this.text());
             if (!text() || text().trim() === "")
                 return;
             try {
                 const data = JSON.parse(text());
+
                 store.updateProperties(data);
             } catch (e) {
                 console.error("JSON Parse Error: " + e);

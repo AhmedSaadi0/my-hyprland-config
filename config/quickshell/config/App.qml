@@ -143,8 +143,8 @@ Singleton {
             readonly property var connectWifiCommand: [pythonPath, connectWifi]
 
             readonly property var callGemini: [pythonPath, mainAI, "--api_key", geminiApiKey, "--preferred_language", root.aiPreferredLanguage]
-            readonly property var callWeatherAi: [pythonPath, mainAI, "--api_key", weatherAiApiKey, "--preferred_language", root.aiPreferredLanguage]
-            readonly property var callMusicAi: [pythonPath, mainAI, "--api_key", musicAiApiKey, "--preset", "music", "--preferred_language", root.aiPreferredLanguage]
+            readonly property var callWeatherAi: [pythonPath, mainAI, "--api_key", weatherAiApiKey, "--preferred_language", root.aiPreferredLanguage, "--user_persona", root.weatherPersona]
+            readonly property var callMusicAi: [pythonPath, mainAI, "--api_key", musicAiApiKey, "--preset", "music", "--preferred_language", root.aiPreferredLanguage, "--user_persona", root.musicPersona]
         }
 
         readonly property QtObject bash: QtObject {

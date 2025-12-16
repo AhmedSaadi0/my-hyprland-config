@@ -20,7 +20,7 @@ M3GroupBox {
 
     property var selectedTheme
 
-    readonly property string defaultWeatherPersona: "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user's safety and comfort."
+    readonly property string defaultWeatherPersona: "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user safety and comfort."
     readonly property string defaultMusicPersona: "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
 
     // ====================================================================
@@ -200,6 +200,7 @@ M3GroupBox {
                 MButton {
                     text: "Browse"
                     Layout.preferredWidth: 80
+                    Layout.preferredHeight: 30
                     onClicked: profilePicDialog.open()
                 }
             }
