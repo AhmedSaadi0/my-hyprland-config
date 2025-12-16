@@ -22,22 +22,37 @@ Singleton {
     readonly property string pythonScriptsPath: mainPath + "/scripts/python"
     readonly property string pythonPath: cacheFolderPath + "/venv/bin/python"
 
+    property ConfigStore config: ConfigStore {
+        configPath: root.configFilePath
+    }
+
     // --------------------------------------------------------------
-    property string username: "Username"
-    property string subtitle: "subtitle"
-    property string profilePicture: "file://" + assetsPath + "/icons/profile-modified.png"
-    property string networkMonitor: "wlp0s20f3"
-    property int networkInterval: 400
-    property string darkM3WallpaperPath: homePath + "wallpapers/dark/"
-    property string lightM3WallpaperPath: homePath + "wallpapers/light/"
-    property string city: "sanaa"
-    property string country: "yemen"
-    property string weatherLocation: "sanaa"
-    property bool usePrayerTimes: true
-    property string geminiApiKey: ""
-    property string weatherAiApiKey: ""
-    property string musicAiApiKey: ""
-    property string aiPreferredLanguage: "English"
+    property alias username: root.config.username
+    property alias subtitle: root.config.subtitle
+    property alias profilePicture: root.config.profilePicture
+    property alias networkMonitor: root.config.networkMonitor
+    property alias networkInterval: root.config.networkInterval
+    property alias city: root.config.city
+    property alias country: root.config.country
+    property alias weatherLocation: root.config.weatherLocation
+    property alias usePrayerTimes: root.config.usePrayerTimes
+    property alias geminiApiKey: root.config.geminiApiKey
+    property alias weatherAiApiKey: root.config.weatherAiApiKey
+    property alias musicAiApiKey: root.config.musicAiApiKey
+    property alias aiPreferredLanguage: root.config.aiPreferredLanguage
+    property alias weatherPersona: root.config.weatherPersona
+    property alias musicPersona: root.config.musicPersona
+
+    property string darkM3WallpaperPath: root.config.darkM3WallpaperPath || homePath + "wallpapers/dark/"
+    property string lightM3WallpaperPath: root.config.lightM3WallpaperPath || homePath + "wallpapers/light/"
+
+    function updateConfig(key, value) {
+        root.config.set(key, value);
+    }
+
+    function updateConfigMultiple(dataObject) {
+        root.config.setMultiple(dataObject);
+    }
 
     // -------------------------------------------------------------------------
     Component.onCompleted: {
@@ -45,30 +60,6 @@ Singleton {
         Hyprland.dispatch(`exec mkdir -p ${themeCacheFolderPath}`);
     }
 
-    FileView {
-        id: fileView
-        path: Qt.resolvedUrl(root.configFilePath)
-        onLoaded: {
-            const fileContents = JSON.parse(fileView.text());
-            root.username = fileContents.username;
-            root.subtitle = fileContents.subtitle !== undefined ? fileContents.subtitle : "";
-            root.profilePicture = fileContents.profilePicture;
-            root.networkMonitor = fileContents.networkMonitor;
-            root.networkInterval = fileContents.networkInterval;
-            root.darkM3WallpaperPath = fileContents.darkM3WallpaperPath;
-            root.lightM3WallpaperPath = fileContents.lightM3WallpaperPath;
-            root.city = fileContents.city;
-            root.country = fileContents.country;
-            root.weatherLocation = fileContents.weatherLocation;
-            root.usePrayerTimes = fileContents.usePrayerTimes;
-            root.geminiApiKey = fileContents.geminiApiKey;
-            root.weatherAiApiKey = fileContents.weatherAiApiKey;
-            root.musicAiApiKey = fileContents.musicAiApiKey;
-            root.aiPreferredLanguage = fileContents.aiPreferredLanguage;
-        }
-    }
-
-    // كائن لتنظيم مسارات الأصول (Assets)
     readonly property QtObject assets: QtObject {
         readonly property QtObject icons: QtObject {
             readonly property string notification: root.assetsPath + "/icons/notification.png"

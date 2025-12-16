@@ -7,7 +7,7 @@ from openai_provider import OpenAIProvider
 # -----------------------------------------------------------------------------
 PRESETS = {
     "weather": {
-        "system_instruction": prompt.WEATHER_SYSTEM_PROMPT,
+        "system_instruction": prompt.WEATHER_MASTER_PROMPT,
         "json_mode": True,  # الطقس يحتاج دائماً JSON
         "temperature": 0.4,  # نحتاج دقة أكثر وإبداعاً أقل
     },
@@ -22,9 +22,9 @@ PRESETS = {
         "temperature": 0.7,
     },
     "music": {
-        "system_instruction": prompt.MUSIC_ASSISTANT_PROMPT,
+        "system_instruction": prompt.MUSIC_MASTER_PROMPT,
         "json_mode": True,
-        "temperature": 0.9,
+        "temperature": 0.5,
     },
 }
 
@@ -39,11 +39,16 @@ def get_provider(
     final_json_mode,
 ):
     preferred_language = args.preferred_language or "English"
+    user_persona = args.user_persona or ""
 
     final_system_instruction = final_system_instruction.replace(
         "$aiPreferredLanguage",
         preferred_language,
+    ).replace(
+        "{USER_PERSONA}",
+        user_persona,
     )
+
     common_args = {
         "api_key": args.api_key,
         "model": args.model,

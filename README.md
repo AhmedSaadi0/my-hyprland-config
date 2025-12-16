@@ -259,8 +259,6 @@ nvim .nibrasshell.json
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
-  "darkM3WallpaperPath": "/home/ahmed/wallpapers/dark",
-  "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
   "weatherLocation": "sanaa",
   "city": "sanaa",
   "country": "yemen",
@@ -269,23 +267,8 @@ nvim .nibrasshell.json
   "musicAiApiKey": "", // الذكاء الاصطناعي: خبير الصوتيات وناقد الوسائط
   "weatherAiApiKey": "", // الذكاء الاصطناعي: محلل الطقس والتنبيهات
   "aiPreferredLanguage": "Arabic", // اللغة المستخدمة في الرد
-  "scripts": {
-    "dynamicM3Py": null,
-    "get_wallpapers": null,
-    "createThumbnail": null,
-    "gtk_theme": null,
-    "systemInfo": null,
-    "deviceLocal": null,
-    "cpu": null,
-    "ram": null,
-    "deviceTemp": null,
-    "hardwareInfo": null,
-    "cpuUsage": null,
-    "ramUsage": null,
-    "cpuCores": null,
-    "devicesTemp2": null,
-    "playerctl": null
-  }
+  "weatherPersona": "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user'\''s safety and comfort.",
+  "musicPersona": "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
 }
 ```
 
@@ -549,8 +532,6 @@ nvim .nibrasshell.json
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
-  "darkM3WallpaperPath": "/home/ahmed/wallpapers/dark",
-  "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
   "weatherLocation": "sanaa",
   "city": "sanaa",
   "country": "yemen",
@@ -559,23 +540,8 @@ nvim .nibrasshell.json
   "musicAiApiKey": "", // AI Audiophile and Media Critic
   "weatherAiApiKey": "", // AI Weather Alerts And Analysts
   "aiPreferredLanguage": "English", // To response with
-  "scripts": {
-    "dynamicM3Py": null,
-    "get_wallpapers": null,
-    "createThumbnail": null,
-    "gtk_theme": null,
-    "systemInfo": null,
-    "deviceLocal": null,
-    "cpu": null,
-    "ram": null,
-    "deviceTemp": null,
-    "hardwareInfo": null,
-    "cpuUsage": null,
-    "ramUsage": null,
-    "cpuCores": null,
-    "devicesTemp2": null,
-    "playerctl": null
-  }
+  "weatherPersona": "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user'\''s safety and comfort.",
+  "musicPersona": "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
 }
 ```
 

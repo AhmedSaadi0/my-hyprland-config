@@ -29,7 +29,7 @@ Singleton {
     property var tagsModel: []
 
     Timer {
-        id: _timer
+        id: resetTimer
         interval: 4000 // Default timeout
         repeat: false
         onTriggered: root.reset()
@@ -71,10 +71,10 @@ Singleton {
                 changeHeight = false;
             }
 
-            _timer.stop();
+            resetTimer.stop();
             if (timeout > 0) {
-                _timer.interval = timeout;
-                _timer.start();
+                resetTimer.interval = timeout;
+                resetTimer.start();
             }
 
             if (playTone) {
@@ -111,5 +111,21 @@ Singleton {
         fgColor = Qt.binding(function () {
             return ThemeManager.selectedTheme.colors.onPrimary;
         });
+    }
+
+    function stopRestTimer() {
+        resetTimer.stop();
+    }
+
+    function startRestTimer(newTimer = null) {
+        if (newTimer) {
+            resetTimer.interval = newTimer;
+        }
+
+        resetTimer.start();
+    }
+
+    function restartRestTimer() {
+        resetTimer.restart();
     }
 }

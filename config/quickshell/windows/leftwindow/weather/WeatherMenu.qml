@@ -231,10 +231,11 @@ Flickable {
 
         // --- AI Smart Summary Card ---
         MenuCard {
+            id: smartWeatherDetailsCard
             Layout.fillWidth: true
             visible: contentColumn.isAiDataAvailable && Weather.aiSummaryText
             cardColor: Weather.aiBgColor1
-            textColor: Weather.aiFgColor
+            textColor: Helper.getAccurteTextColor(Weather.aiBgColor1)
             icon: "󱙺"
             title: Weather.aiTrendBadge
 
@@ -255,7 +256,7 @@ Flickable {
                 text: Weather.aiSummaryText
                 wrapMode: Text.WordWrap
                 font.pixelSize: 14
-                color: Weather.aiFgColor
+                color: Helper.getAccurteTextColor(Weather.aiBgColor1)
             }
 
             Flow {
@@ -275,7 +276,7 @@ Flickable {
                             anchors.centerIn: parent
                             text: modelData
                             font.pixelSize: 12
-                            color: Weather.aiFgColor
+                            color: Helper.getAccurteTextColor(Weather.aiBgColor1)
                         }
                     }
                 }

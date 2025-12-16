@@ -69,6 +69,19 @@ Rectangle {
 
         model: [
             {
+                name: qsTr("General"),
+                type: "header"
+            },
+            {
+                name: qsTr("General Configuration"),
+                icon: "preferences-system" // أيقونة الإعدادات العامة
+                ,
+                type: "item",
+                pageIndex: 0 // الصفحة رقم 0 في StackView
+            },
+
+            // --- القسم السابق: المظهر (تم تحديث الـ pageIndex) ---
+            {
                 name: qsTr("Appearance"),
                 type: "header"
             },
@@ -76,38 +89,40 @@ Rectangle {
                 name: qsTr("Wallpaper Settings"),
                 icon: "preferences-system-windows",
                 type: "item",
-                pageIndex: 0
+                pageIndex: 1 // كان 0 أصبح 1
             },
             {
                 name: qsTr("Color Settings"),
                 icon: "preferences-desktop-color",
                 type: "item",
-                pageIndex: 1
+                pageIndex: 2 // كان 1 أصبح 2
             },
             {
                 name: qsTr("Layout & Fonts"),
                 icon: "preferences-desktop-font",
                 type: "item",
-                pageIndex: 2
+                pageIndex: 3 // كان 2 أصبح 3
             },
             {
                 name: qsTr("Desktop Clock Settings"),
                 icon: "preferences-desktop-time",
                 type: "item",
-                pageIndex: 3
+                pageIndex: 4 // ...
             },
             {
                 name: qsTr("Hyprland Settings"),
                 icon: "preferences-desktop-display",
                 type: "item",
-                pageIndex: 4
+                pageIndex: 5
             },
             {
                 name: qsTr("Integration Settings"),
                 icon: "preferences-plugin",
                 type: "item",
-                pageIndex: 5
+                pageIndex: 6
             },
+
+            // --- قسم الأجهزة ---
             {
                 name: qsTr("Devices"),
                 type: "header"
@@ -116,25 +131,25 @@ Rectangle {
                 name: qsTr("Audio Devices"),
                 icon: "audio-card",
                 type: "item",
-                pageIndex: 6
+                pageIndex: 7
             },
             {
                 name: qsTr("Display Devices"),
                 icon: "video-display",
                 type: "item",
-                pageIndex: 7
+                pageIndex: 8
             },
             {
                 name: qsTr("Capture Devices"),
                 icon: "camera-web",
                 type: "item",
-                pageIndex: 8
+                pageIndex: 9
             },
             {
                 name: qsTr("Usb Peripherals"),
                 icon: "drive-removable-media-usb",
                 type: "item",
-                pageIndex: 9
+                pageIndex: 10
             }
         ]
 

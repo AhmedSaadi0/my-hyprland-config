@@ -323,6 +323,20 @@ Item {
                 }
             }
 
+            MouseArea {
+                anchors.fill: parent
+
+                hoverEnabled: true
+
+                onEntered: {
+                    CapsuleManager.stopRestTimer();
+                }
+
+                onExited: {
+                    CapsuleManager.startRestTimer(3000);
+                }
+            }
+
             Text {
                 id: dummyTextMeasurement
                 visible: false
@@ -402,7 +416,7 @@ Item {
                                 color: "white"
                                 font.pixelSize: 10
                                 font.bold: true
-                                font.family: ThemeManager.selectedTheme.typography.mainFont
+                                // font.family: ThemeManager.selectedTheme.typography.mainFont
                                 elide: Text.ElideRight
                                 width: parent.width - 8
                                 horizontalAlignment: Text.AlignHCenter

@@ -169,6 +169,7 @@ Controls.ApplicationWindow {
             property int previousIndex: 0
             property int currentIndex: 0
 
+            property var generalSettingsPage
             property var generalAppearancePage
             property var wallpaperSettingsPage
             property var hyprlandSettingsPage
@@ -178,6 +179,21 @@ Controls.ApplicationWindow {
             property var layoutFontSettingsPage
             property var audioDevicesSettingsPage
             property var monitorsSettingsPage
+
+            Component {
+                id: generalSettingsComp
+                GeneralSettings {
+                    selectedTheme: ThemeManager.selectedTheme
+
+                    onSaveChanges: {
+                        root.visible = false;
+                    }
+
+                    onCancelChanges: {
+                        root.visible = false;
+                    }
+                }
+            }
 
             Component {
                 id: generalAppearanceComp
@@ -350,7 +366,7 @@ Controls.ApplicationWindow {
             }
 
             function getPage(index) {
-                return [wallpaperSettingsPage, colorsSettingsPage, layoutFontSettingsPage, desktopClockPage, hyprlandSettingsPage, integrationSettingsPage, audioDevicesSettingsPage, monitorsSettingsPage][index];
+                return [generalSettingsPage, wallpaperSettingsPage, colorsSettingsPage, layoutFontSettingsPage, desktopClockPage, hyprlandSettingsPage, integrationSettingsPage, audioDevicesSettingsPage, monitorsSettingsPage][index];
             }
 
             Component.onCompleted: {
@@ -358,6 +374,9 @@ Controls.ApplicationWindow {
                 //     "visible": false
                 //     // "anchors.fill": stackView
                 // });
+                generalSettingsPage = generalSettingsComp.createObject(contentStack, {
+                    "visible": false
+                });
                 wallpaperSettingsPage = wallpaperSettingsComp.createObject(contentStack, {
                     "visible": false
                     // "anchors.fill": stackView
@@ -390,7 +409,7 @@ Controls.ApplicationWindow {
                     "visible": false
                     // "anchors.fill": stackView
                 });
-                push(wallpaperSettingsPage);
+                push(generalSettingsPage);
             }
 
             function navigateTo(newIndex) {
