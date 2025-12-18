@@ -33,7 +33,7 @@ Singleton {
 
     property string aiComment: ""
     property string aiEmotion: ""
-    property var aiTags: ["test", "hi"]
+    property var aiTags: []
 
     readonly property double position: activePlayer ? activePlayer.position : 0
     readonly property double length: (activePlayer && activePlayer.length > 0) ? activePlayer.length : 1
