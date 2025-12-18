@@ -16,7 +16,11 @@ PanelWindow {
         right: true
     }
     color: "transparent"
-    implicitHeight: 400
+
+    // التعديل 1: جعل ارتفاع النافذة الكلي مرناً ليتسع للمحتوى الطويل جداً
+    // نضمن أن تكون على الأقل 400، أو بحجم الكرت + الهوامش
+    implicitHeight: Math.max(400, islandRect.height + islandRect.anchors.topMargin + 20)
+
     exclusionMode: ExclusionMode.Ignore
     mask: Region {
         item: islandRect
@@ -41,6 +45,8 @@ PanelWindow {
 
     function collapse() {
         stateMode = C.STATE_IDLE;
+        // عند الإغلاق، نطلب من الكرت الداخلي إغلاق طبقة الذكاء الاصطناعي أيضاً
+        expandedContainer.showAiOverlay = false;
     }
 
     NibrasShellShortcut {
@@ -72,12 +78,11 @@ PanelWindow {
         id: islandRect
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        // color: "transparent"
         clip: true
 
-        // إذا كنا موسعين، العرض 400 ثابت. إذا كنا مغلقين، نتبع المحتوى.
-        width: stateMode === C.STATE_EXPANDED ? 410 : idleBar.requiredWidth
-        height: stateMode === C.STATE_EXPANDED ? 220 : idleBar.requiredHeight
+        // التعديل 2: الربط الديناميكي بالأبعاد الضمنية (Implicit) للكرت الداخلي
+        width: stateMode === C.STATE_EXPANDED ? expandedContainer.implicitWidth : idleBar.requiredWidth
+        height: stateMode === C.STATE_EXPANDED ? expandedContainer.implicitHeight : idleBar.requiredHeight
 
         // الخلفية
         gradient: Gradient {
@@ -86,7 +91,6 @@ PanelWindow {
             GradientStop {
                 position: 0.0
                 color: CapsuleManager.bgColor1
-
                 Behavior on color {
                     ColorAnimation {
                         duration: 500
@@ -98,7 +102,6 @@ PanelWindow {
             GradientStop {
                 position: 1.0
                 color: CapsuleManager.bgColor2
-
                 Behavior on color {
                     ColorAnimation {
                         duration: 500
@@ -114,14 +117,11 @@ PanelWindow {
             anchors.fill: parent
             visible: stateMode === C.STATE_IDLE
             opacity: visible ? 1 : 0
-
-            // عند الاختفاء، يتلاشى بسرعة
             Behavior on opacity {
                 NumberAnimation {
                     duration: 200
                 }
             }
-
             onRequestExpand: mode => dynamicIsland.expand(mode)
         }
 
@@ -129,7 +129,10 @@ PanelWindow {
         ExpandedCard {
             id: expandedContainer
             anchors.centerIn: parent
-            width: 410
+
+            // التعديل 3: إزالة العرض الثابت (width: 410)
+            // نترك الكرت يحدد عرضه بنفسه (400 أو 450)
+            // width: 410  <-- محذوف
 
             visible: stateMode === C.STATE_EXPANDED
             opacity: visible ? 1 : 0
@@ -145,11 +148,12 @@ PanelWindow {
         }
 
         // --- Animations ---
+        // تحسين الأنيميشن ليكون أكثر مرونة مع التغيرات الكبيرة في الحجم
         Behavior on width {
             NumberAnimation {
                 duration: 450
                 easing.type: Easing.OutBack
-                easing.overshoot: 0.8
+                easing.overshoot: 0.6 // تقليل الارتداد قليلاً للنصوص الطويلة
             }
         }
 
@@ -157,12 +161,11 @@ PanelWindow {
             NumberAnimation {
                 duration: 450
                 easing.type: Easing.OutBack
-                easing.overshoot: 0.8
+                easing.overshoot: 0.6
             }
         }
 
         // التحكم في الموقع (Top Margin)
-        // عند التوسيع ينزل للأسفل قليلاً
         anchors.topMargin: stateMode === C.STATE_EXPANDED ? dynamicIsland.droppedTopMargin : dynamicIsland.centeredTopMargin
 
         Behavior on anchors.topMargin {

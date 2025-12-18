@@ -1,3 +1,5 @@
+// config/ConfigStore.qml
+
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -8,8 +10,9 @@ QtObject {
 
     property string configPath: ""
 
+    signal settingsLoaded
+
     // --------------------------------------------------------
-    // الخصائص (نقلناها هنا)
     property string username: "Username"
     property string subtitle: ""
     property string profilePicture: ""
@@ -26,6 +29,9 @@ QtObject {
     property string musicAiApiKey: ""
     property string aiPreferredLanguage: "English"
 
+    property string weatherAiModel: "gemini-flash-lite-latest"
+    property string musicAiModel: "gemini-flash-lite-latest"
+
     property string weatherPersona: "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user's safety and comfort."
     property string musicPersona: "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
 
@@ -36,7 +42,6 @@ QtObject {
         atomicWrites: true
 
         onLoaded: {
-            console.info("SSSSS -> "+this.text());
             if (!text() || text().trim() === "")
                 return;
             try {
@@ -105,13 +110,16 @@ QtObject {
             store.musicAiApiKey = data.musicAiApiKey;
         if (data.aiPreferredLanguage !== undefined)
             store.aiPreferredLanguage = data.aiPreferredLanguage;
-
         if (data.weatherPersona !== undefined)
             store.weatherPersona = data.weatherPersona;
-
         if (data.musicPersona !== undefined)
             store.musicPersona = data.musicPersona;
+        if (data.weatherAiModel !== undefined)
+            store.weatherAiModel = data.weatherAiModel;
+        if (data.musicAiModel !== undefined)
+            store.musicAiModel = data.musicAiModel;
 
+        store.settingsLoaded();
         console.info("Config reloaded successfully.");
     }
 
@@ -155,7 +163,7 @@ QtObject {
     }
 
     function saveToFile(data) {
-        var jsonString = JSON.stringify(data, null, 2).replace(/'/g, "'\\''");
+        var jsonString = JSON.stringify(data, null, 2);
         fileWatcher.setText(jsonString);
     }
 }

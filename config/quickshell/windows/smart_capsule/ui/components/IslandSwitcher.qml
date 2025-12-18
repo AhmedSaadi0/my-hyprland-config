@@ -6,6 +6,7 @@ Item {
     id: root
 
     property string currentTab: "weather"
+    property color fgColor: ThemeManager.selectedTheme.colors.onPrimary
 
     signal tabClicked(string tab)
 
@@ -54,7 +55,7 @@ Item {
                 text: "☁"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
                 font.pixelSize: 16
-                color: ThemeManager.selectedTheme.colors.onPrimary
+                color: root.fgColor
                 opacity: root.currentTab === "weather" ? 1.0 : 0.5
                 Behavior on opacity {
                     NumberAnimation {
@@ -77,7 +78,7 @@ Item {
                 text: "󰝚"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
                 font.pixelSize: 16
-                color: ThemeManager.selectedTheme.colors.onPrimary
+                color: root.fgColor
                 opacity: root.currentTab === "media" ? 1.0 : 0.5
                 Behavior on opacity {
                     NumberAnimation {

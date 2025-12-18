@@ -31,6 +31,10 @@ Singleton {
 
     property string lastProcessedSong: ""
 
+    property string aiComment: ""
+    property string aiEmotion: ""
+    property var aiTags: ["test", "hi"]
+
     readonly property double position: activePlayer ? activePlayer.position : 0
     readonly property double length: (activePlayer && activePlayer.length > 0) ? activePlayer.length : 1
     readonly property double progress: position / length
@@ -142,7 +146,7 @@ Singleton {
         console.info(`[DEBUG] message to send -> ${message}`);
 
         const command = App.scripts.python.callMusicAi;
-        aiProcess.command = [...command, "--provider", "gemini", "--model", "gemini-robotics-er-1.5-preview", "--message", message];
+        aiProcess.command = [...command, "--provider", "gemini", "--message", message];
         aiProcess.running = true;
     }
 
@@ -181,13 +185,17 @@ Singleton {
                             } catch (e2) {
                                 console.error("[DEBUG] Inner JSON Parse Failed:", e2);
                                 console.error("[DEBUG] Bad content:", cleanJson);
-                                return; // توقف هنا
+                                return;
                             }
                         }
 
                         const emotion = finalResponse.emotion ? finalResponse.emotion.toString().trim() : "thinking";
                         const comment = finalResponse.comment ? finalResponse.comment.toString().trim() : "...";
                         const tags = finalResponse.tags ? finalResponse.tags : [];
+
+                        root.aiEmotion = emotion;
+                        root.aiComment = comment;
+                        root.aiTags = tags;
 
                         console.info("[DEBUG] Final Result -> Emotion:", emotion, "| Comment:", comment);
 

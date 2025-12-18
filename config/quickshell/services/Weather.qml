@@ -143,10 +143,12 @@ Singleton {
     property var aiAnalysistData: {}
 
     property string aiSmartIcon: ""
+    property string aiEmotion: ""
     property color aiBgColor1
     property color aiBgColor2
     property color aiFgColor
     property string aiSummaryText: ""
+    property string aiSmartPollingDetails: ""
     property string aiTrendBadge: ""
     property var aiTags: []
     property bool aiIsUrgent: false
@@ -202,14 +204,14 @@ Singleton {
         const command = App.scripts.python.callWeatherAi;
         const data = JSON.parse(jsonString);
 
-        // التحقق من وجود البيانات الأساسية وبيانات الطقس لليوم الحالي
-        if (data.current_condition && data.nearest_area && data.request && data.weather && data.weather.length > 0) {
+        const currentTime = new Date().toLocaleTimeString(Qt.locale(), "hh:mm ap");
 
-            // إنشاء كائن جديد يحتوي على البيانات المطلوبة فقط
+        if (data.current_condition && data.nearest_area && data.request && data.weather && data.weather.length > 0) {
             const filteredData = {
                 current_condition: data.current_condition,
                 nearest_area: data.nearest_area,
                 request: data.request,
+                current_time: currentTime,
                 weather: [
                     {
                         date: data.weather[0].date,
@@ -222,13 +224,9 @@ Singleton {
                 ]
             };
 
-            // تحويل الكائن الجديد إلى نص JSON
             const message = JSON.stringify(filteredData);
 
-            // console.info("TO SEND -> " + message);
-
-            // TODO: -> control model from settings app
-            aiProcess.command = [...command, "--provider", "gemini", "--model", "gemini-robotics-er-1.5-preview", "--preset", "weather", "--message", message];
+            aiProcess.command = [...command, "--message", message];
             aiProcess.running = true;
         } else {
             console.error("لم يتم العثور على البيانات المطلوبة أو أن التنسيق غير متوقع.");
@@ -280,6 +278,7 @@ Singleton {
                 root.aiTrendBadge = aiData.smart_summary?.trend_badge || "";
                 root.aiTags = aiData.smart_summary?.tags || [];
                 root.aiIsUrgent = aiData.urgent_alert || false;
+                root.aiEmotion = aiData.ui.emotion || "";
 
                 aiAnalysisCompleted(aiData);
 
@@ -287,12 +286,11 @@ Singleton {
                     aiUrgentAlertReceived(aiData.ui?.title || "تنبيه جوي", root.aiSummaryText);
                 }
 
-                // --- Smart Polling Logic ---
                 if (aiData.system_control && aiData.system_control.next_check_minutes) {
                     var nextMinutes = aiData.system_control.next_check_minutes;
-                    console.info(`🕒 Smart Polling: Next check in ${nextMinutes} minutes. Reason: ${aiData.system_control.reason}`);
+                    aiSmartPollingDetails = `🕒 Smart Polling: Next check in ${nextMinutes} minutes. Reason: ${aiData.system_control.reason}`;
+                    console.info(aiSmartPollingDetails);
 
-                    // تحديث التايمر
                     refreshTimer.interval = nextMinutes * 60 * 1000;
                     refreshTimer.restart();
                 }
@@ -301,7 +299,7 @@ Singleton {
             }
         } catch (e) {
             console.error("Failed to parse AI response logic: " + e);
-            console.trace(); // مفيد لمعرفة مكان الخطأ بالضبط
+            console.trace();
 
             refreshTimer.interval = 15 * 60 * 1000;
             refreshTimer.restart();
@@ -512,7 +510,7 @@ Singleton {
     // ========================================================================
     Timer {
         id: refreshTimer
-        interval: 900000 // 15 دقيقة افتراضياً
+        interval: 900000
         running: true
         repeat: false
 

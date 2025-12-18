@@ -22,8 +22,20 @@ Singleton {
     readonly property string pythonScriptsPath: mainPath + "/scripts/python"
     readonly property string pythonPath: cacheFolderPath + "/venv/bin/python"
 
+    property var availableGeminiMusicModels: []
+    property var availableGeminiWeatherModels: []
+
     property ConfigStore config: ConfigStore {
         configPath: root.configFilePath
+
+        onSettingsLoaded: {
+            if (root.geminiApiKey !== "" || root.weatherAiApiKey !== "" || root.musicAiApiKey !== "") {
+                console.info("Settings loaded, triggering initial models fetch...");
+                root.modelsManager.refreshAll();
+            } else {
+                console.warn("Settings loaded but no API keys found. Skipping model fetch.");
+            }
+        }
     }
 
     // --------------------------------------------------------------
@@ -43,6 +55,9 @@ Singleton {
     property alias weatherPersona: root.config.weatherPersona
     property alias musicPersona: root.config.musicPersona
 
+    property alias weatherAiModel: root.config.weatherAiModel
+    property alias musicAiModel: root.config.musicAiModel
+
     property string darkM3WallpaperPath: root.config.darkM3WallpaperPath || homePath + "wallpapers/dark/"
     property string lightM3WallpaperPath: root.config.lightM3WallpaperPath || homePath + "wallpapers/light/"
 
@@ -58,6 +73,67 @@ Singleton {
     Component.onCompleted: {
         Hyprland.dispatch(`exec mkdir -p ${cacheFolderPath}`);
         Hyprland.dispatch(`exec mkdir -p ${themeCacheFolderPath}`);
+    }
+
+    readonly property QtObject modelsManager: QtObject {
+        id: manager
+
+        property bool isLoading: false
+        property string lastError: ""
+
+        function refreshAll() {
+            if (manager.isLoading)
+                return;
+
+            console.info("Starting to refresh AI models...");
+            manager.isLoading = true;
+            manager.lastError = "";
+
+            fetchMusicModelsProcess.running = true;
+            fetchWeatherModelsProcess.running = true;
+        }
+
+        function parseOutput(output, type) {
+            if (!output || output.trim() === "")
+                return;
+
+            try {
+                const data = JSON.parse(output);
+
+                let modelsList = [];
+
+                if (data.models && Array.isArray(data.models)) {
+                    modelsList = data.models.map(function (item) {
+                        return item.name;
+                    });
+                } else if (Array.isArray(data)) {
+                    modelsList = data;
+                }
+
+                if (modelsList.length > 0) {
+                    if (type === "music") {
+                        root.availableGeminiMusicModels = modelsList;
+                        console.info(`Updated Music Models: ${modelsList.length} found.`);
+                    } else if (type === "weather") {
+                        root.availableGeminiWeatherModels = modelsList;
+                        console.info(`Updated Weather Models: ${modelsList.length} found.`);
+                    }
+                } else {
+                    console.warn(`[Warning] No models found inside '${type}' JSON response.`);
+                }
+            } catch (e) {
+                console.error(`[Error] Failed to parse ${type} models JSON:`, e);
+                console.debug("Output start:", output.substring(0, 100));
+                manager.lastError = `Error parsing ${type} models`;
+            }
+        }
+
+        function checkFinished() {
+            if (!fetchMusicModelsProcess.running && !fetchWeatherModelsProcess.running) {
+                manager.isLoading = false;
+                console.info("Finished refreshing models.");
+            }
+        }
     }
 
     readonly property QtObject assets: QtObject {
@@ -126,6 +202,7 @@ Singleton {
 
             // AI
             readonly property string mainAI: root.pythonScriptsPath + "/ai/main.py"
+            readonly property string listGemini: root.pythonScriptsPath + "/ai/list-gemini.py"
 
             // Commands
             readonly property var batteryInfoCommand: [pythonPath, batteryInfo]
@@ -142,9 +219,11 @@ Singleton {
             readonly property var dataUsageCommand: [pythonPath, dataUsage]
             readonly property var connectWifiCommand: [pythonPath, connectWifi]
 
-            readonly property var callGemini: [pythonPath, mainAI, "--api_key", geminiApiKey, "--preferred_language", root.aiPreferredLanguage]
-            readonly property var callWeatherAi: [pythonPath, mainAI, "--api_key", weatherAiApiKey, "--preferred_language", root.aiPreferredLanguage, "--user_persona", root.weatherPersona]
-            readonly property var callMusicAi: [pythonPath, mainAI, "--api_key", musicAiApiKey, "--preset", "music", "--preferred_language", root.aiPreferredLanguage, "--user_persona", root.musicPersona]
+            readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", "gemini"]
+
+            readonly property var callGemini: [...initialAiCommand, "--api_key", geminiApiKey]
+            readonly property var callWeatherAi: [...initialAiCommand, "--api_key", weatherAiApiKey, "--preset", "weather", "--user_persona", root.weatherPersona, "--model", root.weatherAiModel]
+            readonly property var callMusicAi: [...initialAiCommand, "--api_key", musicAiApiKey, "--preset", "music", "--user_persona", root.musicPersona, "--model", root.musicAiModel]
         }
 
         readonly property QtObject bash: QtObject {
@@ -182,5 +261,35 @@ Singleton {
         }
         console.info(description + " -> " + commandArray.join(' '));
         Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
+    }
+
+    Process {
+        id: fetchMusicModelsProcess
+
+        command: [root.pythonPath, root.scripts.python.listGemini, "--api_key", root.musicAiApiKey]
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.modelsManager.parseOutput(this.text.toString(), "music");
+            }
+        }
+
+        onRunningChanged: if (!running)
+            root.modelsManager.checkFinished()
+    }
+
+    Process {
+        id: fetchWeatherModelsProcess
+
+        command: [root.pythonPath, root.scripts.python.listGemini, "--api_key", root.weatherAiApiKey]
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.modelsManager.parseOutput(this.text.toString(), "weather");
+            }
+        }
+
+        onRunningChanged: if (!running)
+            root.modelsManager.checkFinished()
     }
 }

@@ -7,6 +7,7 @@ import QtQuick.Shapes 1.15
 import "root:/themes"
 import "root:/services"
 import "root:/components"
+import "root:/windows/smart_capsule/logic"
 
 Item {
     id: root
@@ -16,11 +17,11 @@ Item {
     // ============================================================
     QtObject {
         id: style
-        property color textPrimary: ThemeManager.selectedTheme.colors.onPrimary
-        property color textSecondary: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.7)
-        property color bgSurface: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
-        property color bgHover: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
-        property color bgActive: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.3)
+        property color textPrimary: CapsuleManager.fgColor
+        property color textSecondary: textPrimary.alpha(0.7)
+        property color bgSurface: textPrimary.alpha(0.1)
+        property color bgHover: textPrimary.alpha(0.2)
+        property color bgActive: textPrimary.alpha(0.3)
 
         property string iconFont: (ThemeManager.selectedTheme && ThemeManager.selectedTheme.typography) ? ThemeManager.selectedTheme.typography.iconFont : ""
         property int fontSizeTitle: 15

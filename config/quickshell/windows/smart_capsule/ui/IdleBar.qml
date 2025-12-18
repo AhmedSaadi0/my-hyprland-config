@@ -6,10 +6,11 @@ import Quickshell
 import Quickshell.Io
 
 import "root:/themes"
-import "root:/config/ConstValues.js" as C
 import "root:/services"
 import "root:/windows/smart_capsule/ui/components"
 import "root:/windows/smart_capsule/logic"
+import "root:/config/ConstValues.js" as C
+import "root:/utils/helpers.js" as Helper
 
 Item {
     id: root
@@ -185,34 +186,112 @@ Item {
     }
 
     Item {
+        id: leftIconArea
         anchors.left: parent.left
         anchors.leftMargin: 15
         anchors.verticalCenter: parent.verticalCenter
-        height: parent.height
-        width: 10
-        WeatherIcon {
+        height: 24
+        width: 24
+
+        state: CapsuleManager.currentPriority > C.HOVER ? "INFO_MODE" : "WEATHER_MODE"
+
+        Item {
+            id: weatherContainer
             anchors.centerIn: parent
-            contentColor: root.contentColor
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: root.requestExpand("weather")
-                onEntered: {
-                    if (Weather) {
-                        CapsuleManager.request({
-                            priority: C.HOVER,
-                            source: C.SRC_WEATHER,
-                            icon: Weather.weatherIcon,
-                            text: Weather.currentTemp + "° - " + Weather.weatherDescription,
-                            timeout: 0,
-                            changeW: false
-                        });
+            width: parent.width
+            height: parent.height
+
+            opacity: 0
+            scale: 0.5
+            visible: opacity > 0
+
+            WeatherIcon {
+                anchors.centerIn: parent
+                contentColor: root.contentColor
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+
+                    enabled: parent.parent.opacity > 0.5
+
+                    onClicked: root.requestExpand("weather")
+                    onEntered: {
+                        if (Weather) {
+                            CapsuleManager.request({
+                                priority: C.HOVER,
+                                source: C.SRC_WEATHER,
+                                icon: Weather.weatherIcon,
+                                text: Weather.currentTemp + "° - " + Weather.weatherDescription,
+                                timeout: 0,
+                                changeW: false
+                            });
+                        }
+                    }
+                    onExited: {
+                        CapsuleManager.reset();
                     }
                 }
-                onExited: CapsuleManager.reset()
             }
         }
+
+        Text {
+            id: infoIcon
+            anchors.centerIn: parent
+
+            text: CapsuleManager.displayIcon
+            font.family: ThemeManager.selectedTheme.typography.iconFont
+            font.pixelSize: 18
+            color: root.contentColor
+
+            opacity: 0
+            scale: 0.5
+            visible: opacity > 0
+        }
+
+        states: [
+            State {
+                name: "WEATHER_MODE"
+                PropertyChanges {
+                    target: weatherContainer
+                    opacity: 1
+                    scale: 1
+                }
+                PropertyChanges {
+                    target: infoIcon
+                    opacity: 0
+                    scale: 0.5
+                }
+            },
+            State {
+                name: "INFO_MODE"
+                PropertyChanges {
+                    target: weatherContainer
+                    opacity: 0
+                    scale: 0.5
+                }
+                PropertyChanges {
+                    target: infoIcon
+                    opacity: 1
+                    scale: 1
+                }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                from: "*"
+                to: "*"
+                ParallelAnimation {
+                    NumberAnimation {
+                        properties: "opacity, scale"
+                        duration: 300
+                        easing.type: Easing.OutBack
+                    }
+                }
+            }
+        ]
     }
 
     Item {
@@ -233,6 +312,9 @@ Item {
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onEntered: {
+                    if (CapsuleManager.currentPriority > C.HOVER)
+                        return;
+
                     let infoText = MusicService.activePlayer.identity;
                     if (root.isMusicPlaying) {
                         infoText = MusicService.fullInfo;
@@ -249,7 +331,12 @@ Item {
                     });
                     EyeController.showEmotion("happy", 2000);
                 }
-                onExited: CapsuleManager.reset()
+                onExited: {
+                    if (CapsuleManager.currentPriority > C.HOVER)
+                        return;
+
+                    CapsuleManager.reset();
+                }
             }
         }
     }
@@ -365,22 +452,13 @@ Item {
                     width: parent.width
 
                     Text {
-                        id: iconText
-                        text: CapsuleManager.displayIcon
-                        font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 14
-                        color: root.contentColor
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-
-                    Text {
                         id: infoText
                         text: CapsuleManager.displayText
                         font.bold: true
                         anchors.verticalCenter: parent.verticalCenter
                         color: root.contentColor
 
-                        width: parent.width - (iconText.implicitWidth + infoRow.spacing)
+                        width: parent.width - (infoIcon.implicitWidth + infoRow.spacing)
 
                         wrapMode: CapsuleManager.changeHeight ? Text.Wrap : Text.NoWrap
                         elide: CapsuleManager.changeHeight ? Text.ElideNone : Text.ElideRight
@@ -398,22 +476,23 @@ Item {
                     visible: CapsuleManager.tagsModel.length > 0
 
                     Repeater {
+                        id: tagsRepeater
                         model: CapsuleManager.tagsModel
                         delegate: Rectangle {
+                            id: tagsRectangle
                             height: 18
                             width: Math.min(tagText.implicitWidth + 16, tagsFlow.width)
                             radius: height / 2
-                            color: {
-                                var colors = ["#FF6F61", "#6B5B95", "#88B04B"];
-                                return colors[index % colors.length];
-                            }
-                            opacity: 0.9
+
+                            opacity: mouseArea.pressed ? 0.7 : 0.9
+                            property var colors: ["#FF6F61", "#6B5B95", "#4facfe", "#88B04B", "#00f2fe", "#fa709a", "#fee140", "#ffaaff", "#30cfd0", "#B9429F", "#5b86e5"]
+                            color: colors[index % colors.length]
 
                             Text {
                                 id: tagText
                                 text: modelData
                                 anchors.centerIn: parent
-                                color: "white"
+                                color: Helper.getAccurteTextColor(tagsRectangle.color)
                                 font.pixelSize: 10
                                 font.bold: true
                                 // font.family: ThemeManager.selectedTheme.typography.mainFont
@@ -421,6 +500,20 @@ Item {
                                 width: parent.width - 8
                                 horizontalAlignment: Text.AlignHCenter
                             }
+
+                            MouseArea {
+                                id: mouseArea
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+
+                                onClicked: {
+                                    var searchQuery = encodeURIComponent(modelData);
+                                    var youtubeUrl = "https://www.youtube.com/results?search_query=" + searchQuery;
+
+                                    Qt.openUrlExternally(youtubeUrl);
+                                }
+                            }
+                            // ------------------
                         }
                     }
                 }

@@ -4,6 +4,7 @@ import QtQuick.Controls
 
 import "root:/themes"
 import "root:/services"
+import "root:/windows/smart_capsule/logic"
 
 Item {
     id: root
@@ -15,10 +16,10 @@ Item {
     // ============================================================
     property QtObject style: QtObject {
         id: style
-        property color primary: ThemeManager.selectedTheme.colors.onPrimary
-        property color secondary: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.7)
-        property color accent: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.9)
-        property color divider: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.15)
+        property color primary: CapsuleManager.fgColor
+        property color secondary: CapsuleManager.fgColor.alpha(0.7)
+        property color accent: CapsuleManager.fgColor.alpha(0.9)
+        property color divider: CapsuleManager.fgColor.alpha(0.15)
 
         property string iconFont: ThemeManager.selectedTheme.typography.iconFont
 

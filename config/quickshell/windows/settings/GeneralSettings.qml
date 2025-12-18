@@ -40,6 +40,8 @@ M3GroupBox {
         property string musicAiApiKey: ""
         property string weatherPersona: ""
         property string musicPersona: ""
+        property string weatherAiModel: ""
+        property string musicAiModel: ""
     }
 
     // ====================================================================
@@ -106,6 +108,12 @@ M3GroupBox {
         tempConfig.weatherPersona = App.weatherPersona || defaultWeatherPersona;
         tempConfig.musicPersona = App.musicPersona || defaultMusicPersona;
 
+        tempConfig.weatherAiModel = App.weatherAiModel;
+        tempConfig.musicAiModel = App.musicAiModel;
+
+        if (App.availableGeminiWeatherModels.length === 0)
+            App.modelsManager.refreshAll();
+
         refreshNetworkList();
     }
 
@@ -125,7 +133,9 @@ M3GroupBox {
             "weatherAiApiKey": tempConfig.weatherAiApiKey,
             "musicAiApiKey": tempConfig.musicAiApiKey,
             "weatherPersona": tempConfig.weatherPersona,
-            "musicPersona": tempConfig.musicPersona
+            "musicPersona": tempConfig.musicPersona,
+            "weatherAiModel": tempConfig.weatherAiModel,
+            "musicAiModel": tempConfig.musicAiModel
         };
 
         App.updateConfigMultiple(dataToSave);
@@ -233,7 +243,6 @@ M3GroupBox {
             Layout.preferredWidth: 590
             spacing: selectedTheme.dimensions.spacingMedium
 
-            // === [تعديل] الدولة والمدينة وموقع الطقس في صف واحد ===
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 15
@@ -308,7 +317,9 @@ M3GroupBox {
             Layout.fillWidth: true
             spacing: selectedTheme.dimensions.spacingMedium
 
+            // -------------------------------------------------------------------------
             // 1. Preferred Language
+            // -------------------------------------------------------------------------
             Controls.Label {
                 text: qsTr("Preferred Language")
                 font.bold: true
@@ -322,7 +333,9 @@ M3GroupBox {
                 onEditingFinished: tempConfig.aiPreferredLanguage = text
             }
 
-            // Weather Persona
+            // -------------------------------------------------------------------------
+            // 2. Weather Persona
+            // -------------------------------------------------------------------------
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
@@ -344,26 +357,29 @@ M3GroupBox {
                         onClicked: tempConfig.weatherPersona = defaultWeatherPersona
                     }
                 }
-
-                Controls.TextArea {
+                Controls.ScrollView {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 80
-                    wrapMode: TextEdit.Wrap
-                    text: tempConfig.weatherPersona
-                    onEditingFinished: tempConfig.weatherPersona = text
-                    color: selectedTheme.colors.leftMenuFgColorV1
-                    selectedTextColor: selectedTheme.colors.onPrimary
-                    selectionColor: selectedTheme.colors.primary
-                    font.pixelSize: selectedTheme.typography.small
+                    clip: true
 
-                    background: Rectangle {
-                        color: selectedTheme.colors.leftMenuBgColorV1
-                        radius: selectedTheme.dimensions.baseRadius / 2
-                        border.width: parent.activeFocus ? 1 : 0
-                        border.color: selectedTheme.colors.primary
-                        Behavior on border.width {
-                            NumberAnimation {
-                                duration: 100
+                    Controls.TextArea {
+                        wrapMode: TextEdit.Wrap
+                        text: tempConfig.weatherPersona
+                        onEditingFinished: tempConfig.weatherPersona = text
+                        color: selectedTheme.colors.leftMenuFgColorV1
+                        selectedTextColor: selectedTheme.colors.onPrimary
+                        selectionColor: selectedTheme.colors.primary
+                        font.pixelSize: selectedTheme.typography.small
+
+                        background: Rectangle {
+                            color: selectedTheme.colors.leftMenuBgColorV1
+                            radius: selectedTheme.dimensions.baseRadius / 2
+                            border.width: parent.activeFocus ? 1 : 0
+                            border.color: selectedTheme.colors.primary
+                            Behavior on border.width {
+                                NumberAnimation {
+                                    duration: 100
+                                }
                             }
                         }
                     }
@@ -376,7 +392,9 @@ M3GroupBox {
                 }
             }
 
-            // Music Persona
+            // -------------------------------------------------------------------------
+            // 3. Music Persona
+            // -------------------------------------------------------------------------
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
@@ -399,25 +417,29 @@ M3GroupBox {
                     }
                 }
 
-                Controls.TextArea {
+                Controls.ScrollView {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 80
-                    wrapMode: TextEdit.Wrap
-                    text: tempConfig.musicPersona
-                    onEditingFinished: tempConfig.musicPersona = text
-                    color: selectedTheme.colors.leftMenuFgColorV1
-                    selectedTextColor: selectedTheme.colors.onPrimary
-                    selectionColor: selectedTheme.colors.primary
-                    font.pixelSize: selectedTheme.typography.small
+                    clip: true
 
-                    background: Rectangle {
-                        color: selectedTheme.colors.leftMenuBgColorV1
-                        radius: selectedTheme.dimensions.baseRadius / 2
-                        border.width: parent.activeFocus ? 1 : 0
-                        border.color: selectedTheme.colors.primary
-                        Behavior on border.width {
-                            NumberAnimation {
-                                duration: 100
+                    Controls.TextArea {
+                        wrapMode: TextEdit.Wrap
+                        text: tempConfig.musicPersona
+                        onEditingFinished: tempConfig.musicPersona = text
+                        color: selectedTheme.colors.leftMenuFgColorV1
+                        selectedTextColor: selectedTheme.colors.onPrimary
+                        selectionColor: selectedTheme.colors.primary
+                        font.pixelSize: selectedTheme.typography.small
+
+                        background: Rectangle {
+                            color: selectedTheme.colors.leftMenuBgColorV1
+                            radius: selectedTheme.dimensions.baseRadius / 2
+                            border.width: parent.activeFocus ? 1 : 0
+                            border.color: selectedTheme.colors.primary
+                            Behavior on border.width {
+                                NumberAnimation {
+                                    duration: 100
+                                }
                             }
                         }
                     }
@@ -430,45 +452,89 @@ M3GroupBox {
                 }
             }
 
-            // API Keys
+            // -------------------------------------------------------------------------
+            // 4. API Keys & Models Configuration (New Layout)
+            // -------------------------------------------------------------------------
+            Kirigami.Separator {
+                Layout.topMargin: selectedTheme.dimensions.spacingLarge
+                Layout.fillWidth: true
+            }
+
+            // Header with Refresh Button
+            RowLayout {
+                Layout.fillWidth: true
+                Controls.Label {
+                    text: qsTr("API Keys & Models")
+                    font.bold: true
+                    font.pixelSize: selectedTheme.typography.heading3Size
+                }
+                Item {
+                    Layout.fillWidth: true
+                } // Spacer
+
+                MButton {
+                    text: App.modelsManager.isLoading ? "Loading..." : "Refresh Models"
+                    iconText: "󰑐"
+                    enabled: !App.modelsManager.isLoading
+                    onClicked: App.modelsManager.refreshAll()
+                    Layout.preferredHeight: 30
+                    iconPreferredWidth: 1
+                    Layout.preferredWidth: 150
+                }
+            }
+
+            // Error Message (if any)
             Controls.Label {
-                text: qsTr("Gemini API Key")
+                visible: App.modelsManager.lastError !== ""
+                text: "Error: " + App.modelsManager.lastError
+                color: selectedTheme.colors.error
+                font.pixelSize: selectedTheme.typography.small
+            }
+
+            // --- A. General Key (Fallback) ---
+            // Controls.Label {
+            //     text: qsTr("General Gemini Key (Fallback)")
+            //     font.bold: true
+            //     Layout.topMargin: 5
+            // }
+            // RowLayout {
+            //     Layout.fillWidth: true
+            //     spacing: 5
+            //     EditableField {
+            //         Layout.fillWidth: true
+            //         text: tempConfig.geminiApiKey
+            //         selectedTheme: root.selectedTheme
+            //         echoMode: geminiShowBtn.checked ? TextInput.Normal : TextInput.Password
+            //         placeholderText: "Used if specific keys are empty"
+            //         onEditingFinished: tempConfig.geminiApiKey = text
+            //     }
+            //     MButton {
+            //         id: geminiShowBtn
+            //         checkable: true
+            //         text: checked ? "👁️" : "🔒"
+            //         Layout.preferredWidth: 30
+            //         Layout.preferredHeight: 30
+            //     }
+            // }
+
+            // --- B. Weather Configuration ---
+            Controls.Label {
+                text: qsTr("Weather Configuration")
                 font.bold: true
                 Layout.topMargin: 10
             }
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 5
-                EditableField {
-                    Layout.fillWidth: true
-                    text: tempConfig.geminiApiKey
-                    selectedTheme: root.selectedTheme
-                    echoMode: geminiShowBtn.checked ? TextInput.Normal : TextInput.Password
-                    onEditingFinished: tempConfig.geminiApiKey = text
-                }
-                MButton {
-                    id: geminiShowBtn
-                    checkable: true
-                    text: checked ? "👁️" : "🔒"
-                    Layout.preferredWidth: 30
-                    Layout.preferredHeight: 30
-                }
-            }
-
-            Controls.Label {
-                text: qsTr("Specific Keys (Optional)")
-                font.bold: true
-            }
-            RowLayout {
-                Layout.fillWidth: true
                 spacing: 10
 
+                // 1. Weather API Key
                 RowLayout {
                     Layout.fillWidth: true
+                    Layout.preferredWidth: 3
                     spacing: 5
                     EditableField {
                         Layout.fillWidth: true
-                        placeholderText: "Weather API Key"
+                        placeholderText: "Specific Weather API Key"
                         text: tempConfig.weatherAiApiKey
                         selectedTheme: root.selectedTheme
                         echoMode: weatherShowBtn.checked ? TextInput.Normal : TextInput.Password
@@ -477,18 +543,49 @@ M3GroupBox {
                     MButton {
                         id: weatherShowBtn
                         checkable: true
-                        text: checked ? "👁️" : "🔒"
+                        text: checked ? "" : ""
+                        font.family: selectedTheme.typography.iconFont
                         Layout.preferredWidth: 30
                         Layout.preferredHeight: 30
                     }
                 }
 
+                // 2. Weather Model Selector
+                SettingsComboBox {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 2
+                    Layout.preferredHeight: 30
+
+                    model: App.availableGeminiWeatherModels
+
+                    currentIndex: model.indexOf(tempConfig.weatherAiModel)
+
+                    displayText: currentIndex === -1 ? (tempConfig.weatherAiModel || "Select Model") : currentText
+
+                    onActivated: index => tempConfig.weatherAiModel = textAt(index)
+
+                    enabled: !App.modelsManager.isLoading
+                }
+            }
+
+            // --- C. Music Configuration ---
+            Controls.Label {
+                text: qsTr("Music Configuration")
+                font.bold: true
+                Layout.topMargin: 5
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 10
+
+                // 1. Music API Key
                 RowLayout {
                     Layout.fillWidth: true
+                    Layout.preferredWidth: 3
                     spacing: 5
                     EditableField {
                         Layout.fillWidth: true
-                        placeholderText: "Music API Key"
+                        placeholderText: "Specific Music API Key"
                         text: tempConfig.musicAiApiKey
                         selectedTheme: root.selectedTheme
                         echoMode: musicShowBtn.checked ? TextInput.Normal : TextInput.Password
@@ -497,10 +594,28 @@ M3GroupBox {
                     MButton {
                         id: musicShowBtn
                         checkable: true
-                        text: checked ? "👁️" : "🔒"
+                        text: checked ? "" : ""
+                        font.family: selectedTheme.typography.iconFont
                         Layout.preferredWidth: 30
                         Layout.preferredHeight: 30
                     }
+                }
+
+                // 2. Music Model Selector
+                SettingsComboBox {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 2
+                    Layout.preferredHeight: 30
+
+                    model: App.availableGeminiMusicModels
+
+                    currentIndex: model.indexOf(tempConfig.musicAiModel)
+
+                    displayText: currentIndex === -1 ? (tempConfig.musicAiModel || "Select Model") : currentText
+
+                    onActivated: index => tempConfig.musicAiModel = textAt(index)
+
+                    enabled: !App.modelsManager.isLoading
                 }
             }
         }

@@ -1,157 +1,377 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 
 import "root:/themes"
 import "root:/components"
-import "./components"
+import "root:/config/ConstValues.js" as C
+import "root:/windows/smart_capsule/logic"
+import "root:/windows/smart_capsule/ui/components"
+import "root:/services"
 
 Item {
     id: root
 
-    // هذه الخاصية يتم التحكم بها من SmartCapsule وأيضاً من المبدل الداخلي
     property string currentTab: "media"
+    property bool showAiOverlay: false
 
     signal closeRequested
 
-    implicitWidth: 400
-    implicitHeight: 185
+    readonly property int minWidth: 400
+    readonly property int minHeight: 220
 
-    // زر الإغلاق (X)
+    implicitWidth: showAiOverlay ? 400 : minWidth
+
+    implicitHeight: showAiOverlay ? Math.max(minHeight, aiContentLayout.implicitHeight + 80) : minHeight
+
+    Behavior on implicitHeight {
+        NumberAnimation {
+            duration: 400
+            easing.type: Easing.OutBack
+        }
+    }
+    Behavior on implicitWidth {
+        NumberAnimation {
+            duration: 400
+            easing.type: Easing.OutBack
+        }
+    }
+
+    onVisibleChanged: {
+        if (!root.visible) {
+            showAiOverlay = false;
+        }
+    }
+
+    // زر الإغلاق
     MButton {
         anchors.top: parent.top
         anchors.right: parent.right
+        anchors.topMargin: 15
         anchors.rightMargin: 15
-        anchors.leftMargin: 14
+        anchors.leftMargin: 15
         text: "✕"
         font: ThemeManager.selectedTheme.typography.iconFont
         implicitWidth: 34
         implicitHeight: 30
         onClicked: root.closeRequested()
-        normalBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
-        normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-        hoveredBackground: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
-        downForeground: ThemeManager.selectedTheme.colors.onPrimary
+        normalBackground: CapsuleManager.fgColor.alpha(0.1)
+        normalForeground: CapsuleManager.fgColor
+        hoveredBackground: CapsuleManager.fgColor.alpha(0.2)
+        downForeground: CapsuleManager.fgColor
         cursorShape: Qt.PointingHandCursor
+        z: 20
     }
 
-    // التخطيط الرئيسي
     ColumnLayout {
         anchors.fill: parent
-        // anchors.margins: 10
+        anchors.topMargin: 15
         spacing: 0
 
-        Behavior on Layout.preferredHeight {
-            NumberAnimation {
-                duration: 300
-                easing.type: Easing.OutBack
+        // 1. المبدل (Switcher)
+        IslandSwitcher {
+            Layout.alignment: Qt.AlignHCenter
+            fgColor: CapsuleManager.fgColor
+            currentTab: root.currentTab
+            onTabClicked: tab => {
+                root.currentTab = tab;
+                if (root.showAiOverlay)
+                    updateAiEmotion();
             }
         }
 
-        // 1. المبدل (Switcher) في الأعلى والوسط
-        IslandSwitcher {
-            Layout.alignment: Qt.AlignHCenter
-
-            // ربط الحالة
-            currentTab: root.currentTab
-
-            // عند النقر، نغير التبويب الحالي
-            onTabClicked: tab => root.currentTab = tab
-        }
-
-        // 2. منطقة المحتوى (Stack)
+        // 2. منطقة المحتوى
         Item {
+            id: contentArea
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            // Media View
-            MediaExpanded {
+            // --- المحتوى العادي (Media / Weather) ---
+            Item {
                 anchors.fill: parent
-                // visible: root.currentTab === "media"
-                // opacity: visible ? 1 : 0
-
-                opacity: root.currentTab === "media" ? 1 : 0
-                visible: opacity > 0
-
+                opacity: root.showAiOverlay ? 0.1 : 1
                 Behavior on opacity {
                     NumberAnimation {
-                        duration: 200
+                        duration: 300
                     }
                 }
 
-                transform: Translate {
-                    x: root.currentTab === "media" ? 0 : 50
-                    Behavior on x {
+                MediaExpanded {
+                    anchors.fill: parent
+                    opacity: root.currentTab === "media" ? 1 : 0
+                    visible: opacity > 0
+                    Behavior on opacity {
                         NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutCubic
+                            duration: 200
+                        }
+                    }
+                    transform: Translate {
+                        x: root.currentTab === "media" ? 0 : 50
+                        Behavior on x {
+                            NumberAnimation {
+                                duration: 300
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+                    }
+                }
+
+                WeatherExpanded {
+                    anchors.fill: parent
+                    opacity: root.currentTab === "weather" ? 1 : 0
+                    visible: opacity > 0
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 200
+                        }
+                    }
+                    transform: Translate {
+                        x: root.currentTab === "weather" ? 0 : -50
+                        Behavior on x {
+                            NumberAnimation {
+                                duration: 300
+                                easing.type: Easing.OutCubic
+                            }
                         }
                     }
                 }
             }
 
-            // Weather View
-            WeatherExpanded {
+            // ---------------------------------------------------------
+            // 3. طبقة الذكاء الاصطناعي (AI Overlay)
+            // ---------------------------------------------------------
+            Rectangle {
+                id: aiOverlay
                 anchors.fill: parent
-                // visible: root.currentTab === "weather"
-                // opacity: visible ? 1 : 0
+                anchors.leftMargin: 10
+                anchors.rightMargin: 10
+                anchors.topMargin: 10
+                anchors.bottomMargin: 10
 
-                opacity: root.currentTab === "weather" ? 1 : 0
-                visible: opacity > 0
+                radius: 12
+                color: "transparent"
+                border.color: CapsuleManager.fgColor.alpha(0.2)
+                border.width: 1
+
+                visible: root.showAiOverlay
+                opacity: visible ? 1 : 0
+                scale: visible ? 1 : 0.95
+
+                gradient: Gradient {
+                    orientation: Gradient.Horizontal
+                    GradientStop {
+                        position: 0.0
+                        color: CapsuleManager.bgColor1.alpha(0.85)
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 500
+                            }
+                        }
+                    }
+                    GradientStop {
+                        position: 1.0
+                        color: CapsuleManager.bgColor2.alpha(0.85)
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 500
+                            }
+                        }
+                    }
+                }
 
                 Behavior on opacity {
                     NumberAnimation {
-                        duration: 200
+                        duration: 250
                     }
                 }
-                transform: Translate {
-                    x: root.currentTab === "weather" ? 0 : -50
-                    Behavior on x {
-                        NumberAnimation {
-                            duration: 300
-                            easing.type: Easing.OutCubic
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 250
+                        easing.type: Easing.OutBack
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: root.showAiOverlay = false
+                    propagateComposedEvents: false
+                }
+
+                ColumnLayout {
+                    id: aiContentLayout
+
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.margins: 15
+
+                    spacing: 10
+
+                    // العنوان + Badge
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 10
+
+                        Text {
+                            text: "✨ AI Insight"
+                            font.bold: true
+                            font.pixelSize: 12
+                            color: CapsuleManager.fgColor.alpha(0.6)
                         }
+
+                        Rectangle {
+                            visible: root.currentTab === "weather" && Weather.aiTrendBadge !== ""
+                            color: CapsuleManager.fgColor.alpha(0.1)
+                            radius: 4
+                            Layout.preferredHeight: 18
+                            Layout.preferredWidth: badgeText.implicitWidth + 10
+                            Text {
+                                id: badgeText
+                                anchors.centerIn: parent
+                                text: Weather.aiTrendBadge
+                                color: CapsuleManager.fgColor
+                                font.pixelSize: 10
+                                font.bold: true
+                            }
+                        }
+                        Item {
+                            Layout.fillWidth: true
+                        }
+                    }
+
+                    // النص الأساسي
+                    Text {
+                        Layout.fillWidth: true
+                        wrapMode: Text.Wrap
+
+                        text: {
+                            if (root.currentTab === "weather") {
+                                return Weather.aiSummaryText || "No weather analysis available.";
+                            } else {
+                                return MusicService.aiComment || "Listening to the vibes...";
+                            }
+                        }
+                        color: CapsuleManager.fgColor
+                        font.pixelSize: 14
+                        lineHeight: 1.2
+                    }
+
+                    Text {
+                        visible: root.currentTab === "weather" && Weather.aiSmartPollingDetails !== ""
+                        Layout.fillWidth: true
+                        text: "⏱ " + Weather.aiSmartPollingDetails
+                        color: CapsuleManager.fgColor.alpha(0.5)
+                        font.pixelSize: 10
+
+                        wrapMode: Text.Wrap
+                    }
+
+                    // الوسوم
+                    Flow {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: parent.width
+                        spacing: 5
+
+                        property var currentTags: {
+                            if (root.currentTab === "weather")
+                                return Weather.aiTags;
+                            else
+                                return MusicService.aiTags;
+                        }
+
+                        Repeater {
+                            model: parent.currentTags
+
+                            delegate: Rectangle {
+                                id: tagRect
+                                height: 20
+                                width: tagTxt.implicitWidth + 16
+                                radius: 10
+
+                                readonly property bool isClickable: root.currentTab === "media"
+
+                                color: isClickable && tagMouseArea.containsMouse ? CapsuleManager.fgColor.alpha(0.3) : CapsuleManager.fgColor.alpha(0.1)
+
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 100
+                                    }
+                                }
+
+                                Text {
+                                    id: tagTxt
+                                    text: modelData
+                                    anchors.centerIn: parent
+                                    color: CapsuleManager.fgColor
+                                    font.pixelSize: 10
+                                }
+
+                                MouseArea {
+                                    id: tagMouseArea
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    enabled: parent.isClickable
+                                    cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+
+                                    onClicked: {
+                                        Qt.openUrlExternally("https://www.youtube.com/results?search_query=" + encodeURIComponent(modelData));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Item {
+                        Layout.preferredHeight: 5
                     }
                 }
             }
         }
     }
 
+    // العيون
     AIEyes {
-        id: testEyes
-        eyeColor: ThemeManager.selectedTheme.colors.onPrimary
-
+        id: mainEyes
+        eyeColor: CapsuleManager.fgColor
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.topMargin: 5
+        anchors.topMargin: 20
         anchors.rightMargin: 10
         anchors.leftMargin: 10
 
         MouseArea {
             anchors.fill: parent
-            onClicked: root.requestExpand("media")
             cursorShape: Qt.PointingHandCursor
             hoverEnabled: true
 
-            onEntered: {
-                let infoText = MusicService.activePlayer.identity;
-                if (root.isMusicPlaying) {
-                    infoText = MusicService.fullInfo;
+            onClicked: {
+                root.showAiOverlay = !root.showAiOverlay;
+                if (root.showAiOverlay) {
+                    root.updateAiEmotion();
+                } else {
+                    EyeController.showEmotion("wink", 1000);
                 }
-                CapsuleManager.request({
-                    priority: C.HOVER,
-                    source: C.SRC_MUSIC,
-                    icon: "󰝚",
-                    text: infoText,
-                    timeout: 0,
-                    changeW: false
-                });
-
-                EyeController.showEmotion("happy", 2000);
             }
-
-            onExited: {
-                CapsuleManager.reset();
+            onEntered: parent.scale = 1.1
+            onExited: parent.scale = 1.0
+        }
+        Behavior on scale {
+            NumberAnimation {
+                duration: 150
+                easing.type: Easing.OutBack
             }
         }
+    }
+
+    function updateAiEmotion() {
+        let emotion = "";
+        if (root.currentTab === "weather")
+            emotion = Weather.aiEmotion;
+        else
+            emotion = MusicService.aiEmotion;
+
+        if (emotion === "" || emotion === undefined)
+            emotion = "happy";
+        EyeController.showEmotion(emotion, 5000);
     }
 }
