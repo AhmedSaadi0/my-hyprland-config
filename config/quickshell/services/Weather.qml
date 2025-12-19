@@ -201,108 +201,79 @@ Singleton {
 
     // --- Helper functions for AI ---
     function analyzeWithAI(jsonString) {
-        const command = App.scripts.python.callWeatherAi;
-        const data = JSON.parse(jsonString);
-
-        const currentTime = new Date().toLocaleTimeString(Qt.locale(), "hh:mm ap");
-
-        if (data.current_condition && data.nearest_area && data.request && data.weather && data.weather.length > 0) {
-            const filteredData = {
-                current_condition: data.current_condition,
-                nearest_area: data.nearest_area,
-                request: data.request,
-                current_time: currentTime,
-                weather: [
-                    {
-                        date: data.weather[0].date,
-                        hourly: data.weather[0].hourly,
-                        maxtempC: data.weather[0].maxtempC,
-                        mintempC: data.weather[0].mintempC,
-                        astronomy: data.weather[0].astronomy,
-                        avgtempC: data.weather[0].avgtempC
-                    }
-                ]
-            };
-
-            const message = JSON.stringify(filteredData);
-
-            aiProcess.command = [...command, "--message", message];
-            aiProcess.running = true;
-        } else {
-            console.error("لم يتم العثور على البيانات المطلوبة أو أن التنسيق غير متوقع.");
-        }
-    }
-
-    Process {
-        id: aiProcess
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                root.aiAnalysistData = this.text;
-            }
-        }
-
-        onRunningChanged: {
-            if (!running && root.aiAnalysistData !== "") {
-                root.handleAIResponse();
-            }
-        }
-
-        stderr: SplitParser {
-            onRead: data => console.error("AI Process Error:", data)
-        }
-    }
-
-    function handleAIResponse() {
+        // 1. تجهيز البيانات (Data Preparation)
         try {
-            console.info("AI FINISHED: " + root.aiAnalysistData);
+            const data = JSON.parse(jsonString);
+            const currentTime = new Date().toLocaleTimeString(Qt.locale(), "hh:mm ap");
 
-            var result = JSON.parse(root.aiAnalysistData);
+            if (data.current_condition && data.nearest_area && data.request && data.weather && data.weather.length > 0) {
+                const filteredData = {
+                    current_condition: data.current_condition,
+                    nearest_area: data.nearest_area,
+                    request: data.request,
+                    current_time: currentTime,
+                    weather: [
+                        {
+                            date: data.weather[0].date,
+                            hourly: data.weather[0].hourly,
+                            maxtempC: data.weather[0].maxtempC,
+                            mintempC: data.weather[0].mintempC,
+                            astronomy: data.weather[0].astronomy,
+                            avgtempC: data.weather[0].avgtempC
+                        }
+                    ]
+                };
 
-            if (result.success) {
-                var aiData;
+                const message = JSON.stringify(filteredData);
+                const command = App.scripts.python.callWeatherAi;
 
-                if (typeof result.response === "string") {
-                    var cleanJson = result.response.replace(/```json/g, "").replace(/```/g, "").trim();
-                    aiData = JSON.parse(cleanJson);
-                } else {
-                    aiData = result.response;
-                }
+                console.info("[Weather] Sending filtered data to AI Gateway...");
 
-                root.aiSmartIcon = aiData.ui?.icon || "";
-                root.aiBgColor1 = aiData.ui?.bg_color1 || null;
-                root.aiBgColor2 = aiData.ui?.bg_color2 || null;
-                root.aiFgColor = aiData.ui?.fg_color || null;
+                // 2. الاتصال عبر AiService
+                AiService.sendRequest(command, ["--message", message], function (aiData) {
+                    // aiData هو كائن نظيف تماماً الآن
+                    console.info("[Weather] AI Success.");
 
-                root.aiSummaryText = aiData.smart_summary?.summary_text || aiData.smart_summary?.arabic_text || "";
-                root.aiTrendBadge = aiData.smart_summary?.trend_badge || "";
-                root.aiTags = aiData.smart_summary?.tags || [];
-                root.aiIsUrgent = aiData.urgent_alert || false;
-                root.aiEmotion = aiData.ui.emotion || "";
+                    // تعبئة البيانات
+                    root.aiAnalysistData = aiData;
+                    root.aiSmartIcon = aiData.ui?.icon || "";
+                    root.aiBgColor1 = aiData.ui?.bg_color1 || null;
+                    root.aiBgColor2 = aiData.ui?.bg_color2 || null;
+                    root.aiFgColor = aiData.ui?.fg_color || null;
 
-                aiAnalysisCompleted(aiData);
+                    root.aiSummaryText = aiData.smart_summary?.summary_text || aiData.smart_summary?.arabic_text || "";
+                    root.aiTrendBadge = aiData.smart_summary?.trend_badge || "";
+                    root.aiTags = aiData.smart_summary?.tags || [];
+                    root.aiIsUrgent = aiData.urgent_alert || false;
+                    root.aiEmotion = aiData.ui?.emotion || "";
 
-                if (root.aiIsUrgent) {
-                    aiUrgentAlertReceived(aiData.ui?.title || "تنبيه جوي", root.aiSummaryText);
-                }
+                    // إرسال الإشارات
+                    root.aiAnalysisCompleted(aiData);
 
-                if (aiData.system_control && aiData.system_control.next_check_minutes) {
-                    var nextMinutes = aiData.system_control.next_check_minutes;
-                    aiSmartPollingDetails = `🕒 Smart Polling: Next check in ${nextMinutes} minutes. Reason: ${aiData.system_control.reason}`;
-                    console.info(aiSmartPollingDetails);
+                    if (root.aiIsUrgent) {
+                        root.aiUrgentAlertReceived(aiData.ui?.title || "تنبيه جوي", root.aiSummaryText);
+                    }
 
-                    refreshTimer.interval = nextMinutes * 60 * 1000;
+                    // منطق Smart Polling (تغيير وقت التحديث القادم بناء على الطقس)
+                    if (aiData.system_control && aiData.system_control.next_check_minutes) {
+                        var nextMinutes = aiData.system_control.next_check_minutes;
+                        root.aiSmartPollingDetails = `🕒 Smart Polling: Next check in ${nextMinutes} minutes. Reason: ${aiData.system_control.reason}`;
+                        console.info(root.aiSmartPollingDetails);
+
+                        refreshTimer.interval = nextMinutes * 60 * 1000;
+                        refreshTimer.restart();
+                    }
+                }, function (errorMsg) {
+                    console.error("[Weather] AI Failed: " + errorMsg);
+                    // في حال الفشل، نعود للتحديث الافتراضي (مثلاً كل 15 دقيقة)
+                    refreshTimer.interval = 15 * 60 * 1000;
                     refreshTimer.restart();
-                }
+                });
             } else {
-                console.error("AI Script Reported Error: " + result.error);
+                console.error("Missing required weather fields for AI analysis.");
             }
         } catch (e) {
-            console.error("Failed to parse AI response logic: " + e);
-            console.trace();
-
-            refreshTimer.interval = 15 * 60 * 1000;
-            refreshTimer.restart();
+            console.error("Error preparing data for AI: " + e.message);
         }
     }
 

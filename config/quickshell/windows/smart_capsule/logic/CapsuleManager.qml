@@ -85,11 +85,11 @@ Singleton {
 
     function playSmartCapsuleTone(priority) {
         const nibrasAudio = App.assets.audio;
-        if (priority == C.NOTIFICATION) {
+        if (priority === C.NOTIFICATION) {
             nibrasAudio.playTone(nibrasAudio.smartCapsuleNotification);
-        } else if (priority == C.WARNING) {
+        } else if (priority === C.WARNING) {
             nibrasAudio.playTone(nibrasAudio.smartCapsuleWarning);
-        } else if (priority == C.CRITICAL) {
+        } else if (priority === C.CRITICAL) {
             nibrasAudio.playTone(nibrasAudio.smartCapsuleCritical);
         }
     }

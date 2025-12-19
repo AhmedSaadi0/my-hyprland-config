@@ -1,164 +1,116 @@
-## 🎨 الواجهة (UI & UX)
+# 🚀 Development Roadmap
+
+## 💊 Smart Capsule & AI (Priority)
+
+_Focus on the unique features of the capsule._
+
+- **Visuals & Customization**
+  - [ ] **🎨 Smart Capsule Color Customization**: Add specific settings to control capsule background, border, and text colors independently of the main theme.
+  - [ ] **Fuzzy Clock**: Add a fuzzy clock logic to organize the day (e.g., "Work Time", "Rest"), connected to AI.
+
+- **AI Logic**
+  - [ ] **System Reactions**: Trigger AI reactions when RAM is full or CPU is high (using AI to explain the issue humorously).
+  - [ ] **Clipboard AI**: AI summarizer for copied text.
+  - [ ] **Connect Fuzzy Clock**: Link the fuzzy clock states with AI responses.
+
+---
+
+## 🎨 UI & Theming
+
+_Visual improvements and customization options._
 
 - **Core UI**
-  - [x] System Tray (Systray)
-  - [x] Application Launcher
-  - [x] Improve bars positioning and shadows
-  - [x] Improve edge corners
-  - [x] Cheatsheet menu
-  - [x] Start AI Integration
-  - [ ] Game mode
-  - [ ] Bars Shadow Control
-  - [ ] Left Bar Width Control
-  - [ ] Remove `LeftMenuStatus` and Use `EventBus`
-  - [ ] Support gif as wallpapers
+  - [ ] **Game Mode**: Toggle to enable high performance.
+  - [ ] **GIF Wallpapers**: Support `.gif` files as wallpapers.
+  - [ ] **Bar Customization**: Controls for Bar Shadows & Left Bar Width.
+  - [ ] **Depth Effect**:
+    - [ ] Auto-generation of depth effect.
+    - [ ] Support depth effect for _each_ wallpaper in dynamic folders.
+    - [ ] Cava (Visualizer) integration with Depth Effect.
 
-- **Menus**
-  - [x] Left Menu Navigation
-  - [x] Left Menu Animations
-  - [ ] Clipboard Manager
-  - [ ] Todo List
-  - [ ] AI Bots
-  - [ ] Notes
-  - [ ] Favorite Apps
-
-- **Setting Window**
-  - [x] Create a setting Window
-  - [x] Wallpapers Settings
-  - [x] Colors Settings
-  - [x] Layout & Fonts Settings
-  - [x] Desktop Clock Settings
-  - [x] Hyprland Settings
-  - [x] Integration Settings
-  - [ ] Control `.nibrasshell.json`
-
-- **Widgets**
-  - [x] Clock Widget
-  - [x] Depth Effect
-  - [x] Support Depth Effect for Dynamic Wallpapers
-  - [x] Weather Widget
-  - [x] Music Widget
-  - [ ] Depth effect for each wallpaper in dynamic wallpapers
-  - [ ] Auto Depth Effect generation + clock adaptation
-  - [ ] Cava With Depth Effect when music in on
+- **Themes**
+  - [ ] **Dynamic Coloring Control**: Configure Material 3 `scheme_variant` via settings.
+  - [ ] **New Themes**: Solarized, Rosé Pine, Oxocarbon.
+  - [ ] **Extended Colors**: Expand color schema to 6 colors.
+  - [ ] **Halt Dynamic Wallpapers**: Option to pause automatic wallpaper cycling.
 
 ---
 
-## 🔔 الإشعارات & OSD (Notifications & OSD)
+## 🧰 Productivity & Widgets
 
-- [x] Notifications
-- [x] Improve notification osd to not block content on right side
-- [x] Notifications History Center
-  - [x] Action buttons
-  - [x] Race Condition Fix
-  - [x] Dismissal Sync
-  - [x] Responsive Timer
-  - [x] Sound with Notifications
-  - [x] DND
-- [x] Sound OSD
-- [x] Brightness OSD
-- [x] Battery Status OSD
-- [x] Volume & Brightness Animations
+_Tools and applets._
 
----
+- **Menus & Popups**
+  - [ ] **Clipboard Manager**: UI for clipboard history.
+  - [ ] **Todo List**: Built-in simple task manager.
+  - [ ] **Notes**: Quick note-taking widget.
+  - [ ] **Favorite Apps**: Quick launch section.
+  - [ ] **AI Bots**: Menu for different AI assistants.
+  - [ ] **Menu Logic**: Option to control opening style (Reserve space vs. Floating).
 
-## 🧰 إدارة النظام (System & Devices)
-
-- **Network**
-  - [x] Network Manager Interface/Scripts
-  - [x] Network Manager UI
-  - [x] Network Usage Card
-  - [ ] VPN Status Indicator
-  - [ ] Quick Wi-Fi / Airplane Toggle
-  - [ ] Monitor Selection
-
-- **Devices**
-  - [x] Audio Devices Control
-  - [ ] Audio Devices Animations
-  - [ ] Screen / Display Settings
-  - [ ] Bluetooth Manager UI
-  - [ ] Battery & Power Profiles Integration
+- **Service Widgets**
+  - [ ] **Prayer Times**: Notification & Widget + Hijri Date.
+  - [ ] **Music Lyrics**: Live sync lyrics display.
 
 ---
 
-## 🌤️ الخدمات (Services)
+## ⚙️ System & Devices
 
-- **Weather**
-  - [x] Weather Service (Backend)
-  - [x] Severe Weather Alerts
+_Hardware control and system indicators._
 
-- **Prayer Time**
-  - [ ] Prayer Time Notifications & Widget
-  - [ ] Hijri Date Display
-
-- **Music**
-  - [x] Dynamic Island Support - (Smart cap)
-  - [x] Cava Visualization
-  - [x] Media Controls Widget
-  - [ ] Lyrics Display (Live sync)
-
-- **AI**
-  - [ ] AI API Support
-  - [ ] Quick AI Assistant (Prompt overlay)
-  - [ ] Clipboard AI Summarizer
+- **Connectivity & Hardware**
+  - [ ] **Bluetooth Manager**: Full UI for Bluetooth devices.
+  - [ ] **Display Settings**: Monitor selection and resolution control.
+  - [ ] **VPN Indicator**: Status icon for VPN.
+  - [ ] **Quick Toggles**: Wi-Fi, Airplane Mode, Gammastep buttons.
+  - [ ] **Keyboard Layout**: Indicator for current language.
+  - [ ] **Power**: Battery & Power Profiles integration.
 
 ---
 
-## 🎨 الثيمات والتخصيص (Themes & Personalization)
+## 🛠️ Code Refactoring
 
-- [x] Theme Service
-- [x] Automatic Wallpaper Changer
-- [x] Material 3 (M3) Dynamic Coloring
-- [x] Dynamic Wallpaper Folders
-- [x] Feature Control Window
-- [x] Config File
-- [x] Custom Full Themes
-- [x] Reset Theme Fix + Colors Reset
-- [x] Add more controls (radius, hyprland settings)
-- [x] Dracula, Gruvbox, Catppuccin, Tokyo Night Themes
+_Internal code improvements._
+
+- [ ] **EventBus**: Remove `LeftMenuStatus` and replace with `EventBus`.
+- [ ] **Structure**: Move non-general components (e.g., `SettingSwitch`) to their correct specific directories.
+
+---
+
+# ✅ Completed (Archive)
+
+<details>
+<summary>Click to view completed tasks</summary>
+
+**Smart Capsule & AI**
+
+- [x] Dynamic Island Support
+- [x] AI Weather Analysts & Alerts
+- [x] AI Audiophile (Media Critic)
+- [x] Animated Robot Eye
+- [x] Battery & Status Info
+- [x] Expanded cards details
+
+**UI & UX**
+
+- [x] System Tray & Launcher
+- [x] Edge Corners & Shadows
+- [x] Notification Center & History (Fixed Race Conditions)
+- [x] OSD (Volume, Brightness, Battery)
+- [x] Cheatsheet Menu
+
+**Theming**
+
+- [x] Material 3 Dynamic Coloring
+- [x] Automatic Wallpaper Changer & Folders
 - [x] GTK4 Theme Support
-- [ ] Halt Dynamic Wallpapers option
-- [ ] Configure Dynamic Coloring
-  - [ ] Control Material 3 `scheme_variant` from settings
-- [ ] Solarized, Rosé Pine, Oxocarbon Themes
-- [ ] Extend Color Schema (6 colors)
+- [x] Major Themes (Dracula, Tokyo Night, etc.)
+- [x] Settings Window (Wallpapers, Colors, Fonts, Hyprland)
 
----
+**System**
 
-## 🧠 تحسينات وتجربة المستخدم (Productivity & UX)
-
-- [x] Improve Menu Cards
-- [x] Improve Animations (Menu, Notifications, Navigation)
-- [ ] Improve Menus Navigation
-- [ ] Keyboard Layout Switch Indicator
-- [ ] Control the way menu is opened (reserve space or like floating)
-- [ ] Toggle Buttons for (Wi-Fi, Bluetooth, Gammastep, Gaming Mode ... etc)
-
----
-
-## 🛠️ تحسين الكود (Code Improvements)
-
-- [x] Create Component for Theme Settings Text & Label
-- [x] Wallpaper Settings: TextField update before save
-- [ ] Move Non General Components to Correct Location: ex-> SettingSwitch to windows/settings/widgets
-
----
-
-## Smart Cap
-
-- [x] Improve weather info (color be same as weather condition, add gif that represents current weather)
-- [x] Animated eye that looks like a robot
-- [x] AI Weather Alerts And Analysts
-- [x] AI Audiophile and Media Critic
-- [x] Add const values to statuses (media, weather, info, clock)
-- [x] Add Battery info
-- [ ] Add fuzzy clock to organize the day, connected to ai if available
-- [ ] Ai eyes shows details on expanded cards as well
-
----
-
-## AI
-
-- [ ] Sends more data (last played 2,3 songs, time of the day, volume percentage, output device name ... etc) to ai when media is opened to make the judge more funny
-- [ ] New Reaction when memory is full or cpu is high, use ai to tell the user whats wrong
-- [ ] connect fuzzy clock with ai
+- [x] Network Manager UI
+- [x] Audio Devices Control
+- [x] Weather Service (Backend)
+- [x] Config File Control (`.nibrasshell.json`)
+</details>

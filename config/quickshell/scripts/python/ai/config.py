@@ -1,3 +1,6 @@
+import datetime
+import platform
+
 import prompt
 from gemini_provider import GeminiProvider
 from openai_provider import OpenAIProvider
@@ -29,6 +32,17 @@ PRESETS = {
 }
 
 
+def get_system_details():
+    now = datetime.datetime.now()
+    return {
+        "{CURRENT_DATE}": now.strftime("%Y-%m-%d"),
+        "{CURRENT_TIME}": now.strftime("%H:%M"),
+        "{DAY_NAME}": now.strftime("%A"),
+        "{OS_INFO}": f"{platform.system()} {platform.release()} {platform.freedesktop_os_release()}",
+        "{YEAR}": str(now.year),
+    }
+
+
 # -----------------------------------------------------------------------------
 # 4. Factory & Main Logic
 # -----------------------------------------------------------------------------
@@ -40,14 +54,19 @@ def get_provider(
 ):
     preferred_language = args.preferred_language or "English"
     user_persona = args.user_persona or ""
+    sys_details = get_system_details()
 
-    final_system_instruction = final_system_instruction.replace(
-        "$aiPreferredLanguage",
-        preferred_language,
-    ).replace(
-        "{USER_PERSONA}",
-        user_persona,
-    )
+    replacements = {
+        "$aiPreferredLanguage": preferred_language,
+        "{USER_PERSONA}": user_persona,
+        **sys_details,
+    }
+
+    for key, value in replacements.items():
+        if key in final_system_instruction:
+            final_system_instruction = final_system_instruction.replace(
+                key, str(value)
+            )
 
     common_args = {
         "api_key": args.api_key,
@@ -65,4 +84,5 @@ def get_provider(
     if args.provider == "deepseek" and not base_url:
         base_url = "https://api.deepseek.com"
 
+    # TODO: -> test logic
     return OpenAIProvider(base_url=base_url, **common_args)

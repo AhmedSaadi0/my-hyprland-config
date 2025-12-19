@@ -1,8 +1,14 @@
+// services/SystemService.qml
+
 pragma Singleton
 import QtQuick
+import Quickshell
 import Quickshell.Services.UPower
+import Quickshell.Io
 
-QtObject {
+import "root:/config"
+
+Singleton {
     id: root
 
     // --- Audio ---
@@ -32,23 +38,18 @@ QtObject {
     readonly property var _bat: UPower.displayDevice ?? (UPower.devices.values.length > 0 ? UPower.devices.values[0] : null)
 
     readonly property real batteryPercent: _bat ? _bat.percentage : 0
-    // 1: Charging, 2: Discharging, 4: Full
     readonly property int batteryState: _bat ? _bat.state : 0
     readonly property bool isCharging: batteryState === 1 || batteryState === 4
 
-    // منطق الأيقونات الخاص بك (تم نقله إلى هنا)
     readonly property string batteryIcon: {
         const dischargeIcons = ['󰁺', '󰁻', '󰁼', '󰁽', '󰁾', '󰁿', '󰂀', '󰂁', '󰂂', '󰁹'];
         const chargeIcons = ['󰢜', '󰂆', '󰂇', '󰂈', '󰢝', '󰂉', '󰢞', '󰂊', '󰂋', '󰂅'];
 
-        // تحويل النسبة (0.0 - 1.0) إلى فهرس (0 - 9)
         let index = Math.min(9, Math.floor(batteryPercent * 10));
 
-        // تصحيح القيم الصغيرة جداً
         if (batteryPercent > 0 && index < 0)
             index = 0;
 
-        // حماية من الخطأ إذا كانت المصفوفة فارغة أو الفهرس غير صحيح
         if (index < 0 || index > 9)
             return "󰂃";
 
@@ -56,6 +57,94 @@ QtObject {
             return chargeIcons[index];
         } else {
             return dischargeIcons[index];
+        }
+    }
+
+    property real cpuUsage: 0.0
+    property real ramUsage: 0.0
+    readonly property real highLoadThreshold: 0.85
+    readonly property bool isCpuHigh: cpuUsage >= highLoadThreshold
+    readonly property bool isRamHigh: ramUsage >= highLoadThreshold
+
+    signal cpuAlert(real value)
+    signal ramAlert(real value)
+
+    signal cpuNormal
+    signal ramNormal
+
+    onIsCpuHighChanged: {
+        if (isCpuHigh) {
+            cpuAlert(cpuUsage);
+        } else {
+            cpuNormal();
+        }
+    }
+
+    onIsRamHighChanged: {
+        if (isRamHigh) {
+            ramAlert(ramUsage);
+        } else {
+            ramNormal();
+        }
+    }
+
+    Process {
+        id: cpuProc
+        command: App.scripts.bash.cpuCommand
+
+        stdout: SplitParser {
+            onRead: data => {
+                var val = parseFloat(data.trim());
+                if (!isNaN(val)) {
+                    root.cpuUsage = val / 100.0;
+                }
+            }
+        }
+    }
+
+    Process {
+        id: ramProc
+        command: App.scripts.bash.ramCommand
+
+        stdout: SplitParser {
+            onRead: data => {
+                var val = parseFloat(data.trim());
+                if (!isNaN(val)) {
+                    root.ramUsage = val / 100.0;
+                }
+            }
+        }
+    }
+
+    Timer {
+        id: _updateTimer
+        interval: 2000
+        repeat: true
+        running: true
+        triggeredOnStart: true
+        onTriggered: {
+            if (cpuProc) {
+                cpuProc.running = false;
+                cpuProc.running = true;
+            }
+            if (ramProc) {
+                ramProc.running = false;
+                ramProc.running = true;
+            }
+        }
+    }
+
+    NibrasShellShortcut {
+        name: "testHighCpu"
+        onPressed: {
+            cpuAlert(0.5);
+        }
+    }
+
+    NibrasShellShortcut {
+        name: "testHighRam"
+        onPressed: {
+            ramAlert(0.50);
         }
     }
 }

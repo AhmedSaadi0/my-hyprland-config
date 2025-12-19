@@ -106,113 +106,78 @@ Singleton {
         if (!App.scripts.python || !App.scripts.python.callMusicAi)
             return;
 
-        aiProcess.currentProcessingInfo = root.fullInfo;
-
+        // تجهيز بيانات السياق (كما كانت)
+        const currentSongInfo = root.fullInfo; // حفظنا الاسم الحالي للتحقق لاحقاً
         const currentTime = new Date().toLocaleTimeString(Qt.locale(), "hh:mm ap");
-
-        console.info(`[DEBUG] Formatting time for position: ${root.position}`);
         const timestamp = formatTime(root.position);
         const resumeTimeStr = isResumeContext ? `Resumed at timestamp ${timestamp}` : "Start of track";
-        console.info(`[DEBUG] resumeTimeStr: ${resumeTimeStr}`);
 
+        // تجهيز التاريخ (History)
         let historyContextMsg = "";
-
         let lastIndex = root.recentTracks.indexOf(root.fullInfo);
-
         if (lastIndex !== -1) {
             let songsAgo = lastIndex + 1;
             historyContextMsg = `User played this specific song ${songsAgo} tracks ago. Mention this repetition in the comment.`;
         }
-
         const historyStr = root.recentTracks.slice(0, 5).join(", ");
 
-        let message = "";
+        // جلب مستوى الصوت من خدمة النظام
+        let volume = "Unknown";
+        try {
+            if (typeof SystemService !== "undefined")
+                volume = Math.round(SystemService.volume * 100) + "%";
+        } catch (e) {}
 
+        let player = activePlayer ? activePlayer.identity : "Unknown";
+
+        // بناء الرسالة
+        let message = "";
         if (isResumeContext) {
             message = `
             Action: User RESUMED playback.
             Song: ${title} by ${artist}
             Resume Time: ${resumeTimeStr}
+            Volume: ${volume}
+            Player: ${player}
             `;
         } else {
             message = `
             Current Song: ${title} by ${artist}
             Context:
             - Time: ${currentTime}
+            - Volume: ${volume}
+            - Player: ${player}
             - Play History: [${historyStr}]
             - Repetition Info: ${historyContextMsg}`;
         }
 
-        console.info(`[DEBUG] message to send -> ${message}`);
+        console.info(`[MusicService] Sending to AI Gateway...`);
 
+        // =========================================================
+        // الاتصال عبر AiService
+        // =========================================================
         const command = App.scripts.python.callMusicAi;
-        aiProcess.command = [...command, "--provider", "gemini", "--message", message];
-        aiProcess.running = true;
-    }
+        const args = ["--provider", "gemini", "--message", message];
 
-    // ============================================================
-    //  معالجة الرد
-    // ============================================================
+        AiService.sendRequest(command, args, function (data) {
+            const emotion = data.emotion ? data.emotion.toString().trim() : "thinking";
+            const comment = data.comment ? data.comment.toString().trim() : "...";
+            const tags = data.tags ? data.tags : [];
 
-    Process {
-        id: aiProcess
-        property string currentProcessingInfo: ""
+            root.aiEmotion = emotion;
+            root.aiComment = comment;
+            root.aiTags = tags;
 
-        stdout: StdioCollector {
-            onStreamFinished: {
-                try {
-                    var result = JSON.parse(this.text.toString());
+            console.info("[MusicService] AI Success -> Emotion:", emotion);
+            root.analysisCompleted(emotion, comment, tags);
 
-                    console.info(`[MusicService][DEBUG] -> ai row result ${this.text.toString()}`);
-
-                    if (result.success && result.response) {
-                        var finalResponse = result.response;
-
-                        if (typeof finalResponse === 'string') {
-                            console.info("[DEBUG] Response is a string, attempting to parse inner JSON...");
-
-                            var cleanJson = finalResponse.replace(/```json/g, "").replace(/```/g, "").trim();
-
-                            var firstBrace = cleanJson.indexOf("{");
-                            var lastBrace = cleanJson.lastIndexOf("}");
-
-                            if (firstBrace !== -1 && lastBrace !== -1) {
-                                cleanJson = cleanJson.substring(firstBrace, lastBrace + 1);
-                            }
-
-                            try {
-                                finalResponse = JSON.parse(cleanJson);
-                            } catch (e2) {
-                                console.error("[DEBUG] Inner JSON Parse Failed:", e2);
-                                console.error("[DEBUG] Bad content:", cleanJson);
-                                return;
-                            }
-                        }
-
-                        const emotion = finalResponse.emotion ? finalResponse.emotion.toString().trim() : "thinking";
-                        const comment = finalResponse.comment ? finalResponse.comment.toString().trim() : "...";
-                        const tags = finalResponse.tags ? finalResponse.tags : [];
-
-                        root.aiEmotion = emotion;
-                        root.aiComment = comment;
-                        root.aiTags = tags;
-
-                        console.info("[DEBUG] Final Result -> Emotion:", emotion, "| Comment:", comment);
-
-                        root.analysisCompleted(emotion, comment, tags);
-
-                        if (aiProcess.currentProcessingInfo !== "") {
-                            root.addToHistory(aiProcess.currentProcessingInfo);
-                            root.lastProcessedSong = aiProcess.currentProcessingInfo;
-                        }
-                    } else {
-                        console.error("[DEBUG] AI returned success:false or missing response.", result);
-                    }
-                } catch (e) {
-                    console.error("[DEBUG] Fatal JSON Parse Error:", e);
-                }
+            if (currentSongInfo !== "") {
+                root.addToHistory(currentSongInfo);
+                root.lastProcessedSong = currentSongInfo;
             }
-        }
+        }, function (errorMessage) {
+            console.error("[MusicService] AI Failed via Gateway: " + errorMessage);
+        });
     }
 
     // ============================================================

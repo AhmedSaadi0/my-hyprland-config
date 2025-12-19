@@ -1,21 +1,19 @@
-// components/monitors/Ram.qml
-
 import QtQuick
 import org.kde.kirigami as Kirigami
-
 import "root:/components"
-import "root:/config"
+import "root:/services"
 
 TopbarCircularProgress {
-    id: cpuUsage
-    // command: ["sh", "-c", "~/.config/quickshell/scripts/ram_usage.sh"]
-    command: App.scripts.bash.ramCommand
-    updateInterval: 1000 * 20
+    id: ramUsage
+
+    activeProcess: false
+
+    value: SystemService.ramUsage
 
     icon: ""
-    iconColor: Kirigami.Theme.positiveTextColor
     iconFontSize: 10
 
-    backgroundColor: Kirigami.Theme.positiveTextColor.alpha(0.4)
-    foregroundColor: Kirigami.Theme.positiveTextColor
+    iconColor: SystemService.isRamHigh ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.positiveTextColor
+    foregroundColor: SystemService.isRamHigh ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.positiveTextColor
+    backgroundColor: SystemService.isRamHigh ? Kirigami.Theme.negativeTextColor.alpha(0.5) : Kirigami.Theme.positiveTextColor.alpha(0.2)
 }

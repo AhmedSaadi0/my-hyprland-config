@@ -34,6 +34,8 @@ Singleton {
     property int _batTimeoutCritical: 6000
     property int _batTimeoutDying: 8000
 
+    property int _resourceAlertTimeout: 5000
+
     // ========================================================================
     // 🔒 Internal State
     // ========================================================================
@@ -83,6 +85,12 @@ Singleton {
         }
         function onBatteryPercentChanged() {
             root.monitorBatteryDischarge();
+        }
+        function onCpuAlert(value) {
+            root.handleResourceAlert("CPU", value);
+        }
+        function onRamAlert(value) {
+            root.handleResourceAlert("RAM", value);
         }
     }
 
@@ -293,7 +301,48 @@ Singleton {
             progress: level / 100.0,
             withProgress: true,
             timeout: timeout,
-            playTone: true,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg
+        });
+    }
+
+    function handleResourceAlert(type, value) {
+        var pct = Math.round(value * 100);
+
+        var isCritical = pct >= 95;
+
+        var icon = "";
+        var title = "";
+        var emotion = "";
+
+        if (type === "CPU") {
+            icon = "";
+            title = "High CPU Load";
+            emotion = isCritical ? "shocked" : "focused";
+        } else {
+            icon = "";
+            title = "High Memory Usage";
+            emotion = isCritical ? "sad" : "confused";
+        }
+
+        var stateType = isCritical ? "critical" : "warning";
+        var priority = isCritical ? C.CRITICAL : C.WARNING;
+        var colors = getColorsForState(stateType);
+
+        console.warn(`Coordinator: ${type} Alert! Usage: ${pct}%`);
+
+        root.updateEyes(emotion, root._resourceAlertTimeout);
+
+        CapsuleManager.request({
+            priority: priority,
+            source: C.SRC_SYSTEM,
+            icon: icon,
+            text: `${title}: ${pct}%`,
+            progress: value,
+            withProgress: true,
+            changeH: false,
+            timeout: root._resourceAlertTimeout,
             bgColor1: colors.bg1,
             bgColor2: colors.bg2,
             fgColor: colors.fg
