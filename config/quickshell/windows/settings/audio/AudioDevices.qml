@@ -6,11 +6,10 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import org.kde.kirigami as Kirigami
 import Quickshell.Services.Pipewire
-// لا حاجة لـ import QtQuick.Controls مرة أخرى
 
-// استيراد مكونات المشروع
-import "root:/components"
 import "root:/windows/settings/audio"
+import "root:/components"
+import "root:/themes"
 
 M3GroupBox {
     id: devicesList
@@ -19,12 +18,10 @@ M3GroupBox {
     titlePixelSize: selectedTheme.typography.heading1Size
     titleFontWeight: Font.ExtraBold
 
-    property var workingTheme
-    property var selectedTheme
+    property var selectedTheme: ThemeManager.selectedTheme
 
     signal close
 
-    // هذا الجزء ممتاز ولا يحتاج لتغيير
     readonly property var nodes: Pipewire.nodes.values.reduce((acc, node) => {
         if (!node.isStream) {
             if (node.isSink) {
@@ -39,21 +36,17 @@ M3GroupBox {
         "sinks": []
     })
 
-    // --- قسم أجهزة الإخراج ---
     Label {
         text: qsTr("Output Devices")
         font.pixelSize: selectedTheme.typography.heading3Size
         font.bold: true
     }
 
-    // --- التحسين الرئيسي: استخدام ListView بدلاً من Repeater ---
     ListView {
         id: outputDevicesView
         model: nodes.sinks
-        spacing: 10 // إضافة مسافة بين العناصر
+        spacing: 10
 
-        // إدارة التخطيط: اجعل ListView يملأ العرض المتاح
-        // ويكون ارتفاعه على قدر المحتوى
         Layout.fillWidth: true
         implicitHeight: contentHeight
 
@@ -97,10 +90,8 @@ M3GroupBox {
     ListView {
         id: inputDevicesView
         model: nodes.sources
-        spacing: 10 // إضافة مسافة بين العناصر
+        spacing: 10
 
-        // إدارة التخطيط
-        Layout.fillWidth: true
         implicitHeight: contentHeight
 
         delegate: AudioItem {
@@ -109,7 +100,6 @@ M3GroupBox {
             selectedTheme: devicesList.selectedTheme
         }
 
-        // --- قسم الأنميشن (نفس الحركات ليكون التصميم متناسقًا) ---
         add: Transition {
             NumberAnimation {
                 properties: "opacity, scale"

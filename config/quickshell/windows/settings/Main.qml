@@ -11,135 +11,35 @@ import "root:/config"
 import "root:/components"
 import "./audio"
 
-import Quickshell.Services.Pipewire
-
 Controls.ApplicationWindow {
     id: root
-    // width: 900
-    // height: 1200
     visible: false
-
     color: Kirigami.Theme.backgroundColor
 
     flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
     title: "NibrasShellSettings"
 
-    property var workingTheme: root.copyTheme(ThemeManager.selectedTheme)
-    readonly property var themePropertyKeys: ThemeManager._allSerializableKeys
-
-    function copyTheme(themeObject) {
-        if (!themeObject)
-            return {};
-        const newTheme = {};
-        for (const key of root.themePropertyKeys) {
-            if (themeObject.hasOwnProperty(key)) {
-                newTheme[key] = themeObject[key];
-            }
-        }
-        return newTheme;
+    // --- Global Actions ---
+    function saveFinalChanges() {
+        // ThemeManager.updateAndApplyTheme({}, true);
+        root.visible = false;
     }
 
-    // function updateWorkingTheme(sourceTheme) {
-    //     if (!sourceTheme || !workingTheme)
-    //         return;
-    //
-    //     // مسح الخصائص القديمة (اختياري ولكنه جيد لتجنب بقاء قيم قديمة)
-    //     for (const key in workingTheme) {
-    //         delete workingTheme[key];
-    //     }
-    //
-    //     // نسخ الخصائص الجديدة إلى الكائن الموجود
-    //     for (const key of root.themePropertyKeys) {
-    //         if (sourceTheme.hasOwnProperty(key)) {
-    //             workingTheme[key] = sourceTheme[key];
-    //         }
-    //     }
-    // }
+    function cancelAllChanges() {
+        ThemeManager.reloadTheme();
+        root.visible = false;
+    }
 
-    // Connections {
-    //     target: ThemeManager
-    //     function onSelectedThemeUpdated() {
-    //         root.updateWorkingTheme(ThemeManager.selectedTheme);
-    //     // root.workingThemeChanged();
-    //     }
-    // }
-
+    // --- Shortcuts ---
     NibrasShellShortcut {
-        id: openSettingsShortcut
         name: "openSettings"
         onPressed: root.visible = !root.visible
     }
 
     Component.onCompleted: {
-        EventBus.on(Events.OPEN_SETTINGS, function () {
+        EventBus.on(Events.OPEN_SETTINGS, () => {
             root.visible = !root.visible;
         });
-    }
-
-    FolderDialog {
-        id: dynamicWallpaperFolderDialog
-        title: "Please choose a wallpapers folder"
-        onAccepted: {
-            const folderPath = this.folder.toString().replace("file://", "");
-            workingTheme._dynamicWallpapersPath = folderPath;
-            root._saveTheme(true);
-        }
-    }
-
-    FileDialog {
-        id: staticWallpaperFileDialog
-        title: "Please choose a static wallpaper"
-        nameFilters: ["Image files (*.jpg *.jpeg *.png *.bmp)", "All files (*.*)"]
-        property var targetedFieldName
-        onAccepted: {
-            const filePath = file.toString().replace("file://", "");
-            // workingTheme._wallpaper = filePath;
-            root.workingTheme[targetedFieldName] = filePath;
-            root._saveTheme(true);
-        }
-    }
-
-    FontDialog {
-        id: fontDialog
-        title: "Select a Font"
-        modality: Qt.ApplicationModal
-        // currentFont.pointSize: 20
-
-        property var targetedFieldName
-        property bool updateOnChange: true
-
-        onCurrentFontChanged:
-        // if (updateOnChange) {
-        //     root.workingTheme[targetedFieldName] = currentFont.family;
-        //     root._applyTheme();
-        // }
-        {}
-
-        onAccepted: {
-            // if (!updateOnChange) {
-            root.workingTheme[targetedFieldName] = currentFont.family;
-            root._applyTheme();
-            // }
-        }
-    }
-
-    ColorDialog {
-        id: colorDialog
-        property var targetedFieldName
-
-        modality: Qt.ApplicationModal
-        title: qsTr("Chose a color")
-
-        onVisibleChanged: {
-            if (visible && targetedFieldName) {
-                color = root.workingTheme[targetedFieldName];
-            }
-        }
-
-        onAccepted: {
-            root.workingTheme[targetedFieldName] = color;
-            root._applyTheme();
-        }
     }
 
     RowLayout {
@@ -147,278 +47,109 @@ Controls.ApplicationWindow {
         spacing: 0
 
         SidePanel {
-            onNavigateTo: index => {
-                contentStack.navigateTo(index);
-            }
+            onNavigateTo: index => contentStack.navigateTo(index)
         }
 
-        // -------------------------------------
-        // 2. حاوية المحتوى (Content Area)
-        // -------------------------------------
         Controls.StackView {
             id: contentStack
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin: 20
-            Layout.bottomMargin: 20
-            Layout.rightMargin: 20
-
+            Layout.margins: 20
             clip: true
             smooth: true
 
-            property int previousIndex: 0
-            property int currentIndex: 0
+            property var pages: []
 
-            property var generalSettingsPage
-            property var generalAppearancePage
-            property var wallpaperSettingsPage
-            property var hyprlandSettingsPage
-            property var desktopClockPage
-            property var integrationSettingsPage
-            property var colorsSettingsPage
-            property var layoutFontSettingsPage
-            property var audioDevicesSettingsPage
-            property var monitorsSettingsPage
-
+            // --- Pages Definitions ---
             Component {
                 id: generalSettingsComp
                 GeneralSettings {
-                    selectedTheme: ThemeManager.selectedTheme
-
-                    onSaveChanges: {
-                        root.visible = false;
-                    }
-
-                    onCancelChanges: {
-                        root.visible = false;
-                    }
+                    onSaveChanges: root.saveFinalChanges()
+                    onCancelChanges: root.cancelAllChanges()
                 }
             }
-
-            Component {
-                id: generalAppearanceComp
-                GeneralAppearance {
-                    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
-
-                    onSaveThemeAs: function (themeName) {
-                        ThemeManager.saveThemeAs(themeName);
-                    }
-                    onImportTheme: function (selectedFile) {
-                        ThemeManager.importThemeFromFile(selectedFile);
-                    }
-                    onExportTheme: function (selectedFile) {
-                        ThemeManager.exportCurrentTheme(selectedFile);
-                    }
-                    onResetAllSettings: function () {
-                        ThemeManager.resetWholeTheme();
-                    }
-                }
-            }
-
             Component {
                 id: wallpaperSettingsComp
                 WallpaperSettings {
-                    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
-
-                    onOpenFolderDialog: dynamicWallpaperFolderDialog.open()
-                    onOpenFileDialog: {
-                        staticWallpaperFileDialog.targetedFieldName = "_wallpaper";
-                        staticWallpaperFileDialog.open();
-                    }
-                    onDynamicColoringChanged: {}
-
-                    onResetToDefault: ThemeManager.resetWallpaperSystemSettings()
-                    onNextWallpaperClicked: ThemeManager.switchToNextWallpaper()
-
-                    onApplyChanges: root._applyTheme()
-                    onSaveChanges: root._saveTheme(true)
-                    onCancelChanges: root._cancelChanges()
+                    onSaveChanges: root.saveFinalChanges()
+                    onCancelChanges: root.cancelAllChanges()
                 }
             }
-
-            Component {
-                id: hyprlandSettingsComp
-                HyprlandSettings {
-                    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
-
-                    onApplyChanges: {
-                        // ThemeManager._setHyprlandConfigurations();
-                        root._applyTheme();
-                    }
-
-                    onSaveChanges: root._saveTheme(true)
-                    onCancelChanges: root._cancelChanges()
-                    onResetToDefault: ThemeManager.resetHyprlandSettings()
-                }
-            }
-
-            Component {
-                id: desktopClockPageComp
-                DesktopClockSettings {
-                    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
-                    isCreatingOverlayImage: ThemeManager.isCreatingOverlayImage
-
-                    onApplyChanges: root._applyTheme()
-                    onSaveChanges: root._saveTheme(true)
-                    onCancelChanges: root._cancelChanges()
-                    onResetToDefault: ThemeManager.resetClockSettings()
-
-                    onOpenFontDialog: {
-                        fontDialog.currentFont.family = root.workingTheme._desktopClockFont;
-                        fontDialog.targetedFieldName = "_desktopClockFont";
-                        fontDialog.open();
-                    }
-
-                    onOpenClockColorDialog: {
-                        colorDialog.targetedFieldName = "_desktopClockColor";
-                        colorDialog.open();
-                    }
-
-                    onOpenShadowColorDialog: {
-                        colorDialog.targetedFieldName = "_desktopClockSahdowColor";
-                        colorDialog.open();
-                    }
-
-                    onOpenOverlayFileDialog: {
-                        staticWallpaperFileDialog.targetedFieldName = "_desktopClockDepthOverlayPath";
-                        staticWallpaperFileDialog.open();
-                    }
-
-                    onCreateOverlayImageButtonClicked: ThemeManager.createImageOverlay(data)
-                    onClearUnusedCache: ThemeManager.cleardUnusedOverlayImages()
-                }
-            }
-
-            Component {
-                id: integrationSettingsComp
-                IntegrationSettings {
-                    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
-
-                    onApplyChanges: root._applyTheme()
-                    onSaveChanges: root._saveTheme(true)
-                    onCancelChanges: root._cancelChanges()
-                    onResetToDefault: {
-                        ThemeManager.resetPlasmaSettings();
-                        ThemeManager.resetGtkSettings();
-                    }
-                }
-            }
-
             Component {
                 id: colorsSettingsComp
                 ColorsSettings {
-                    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
-
-                    onApplyChanges: root._applyTheme()
-                    onSaveChanges: root._saveTheme(true)
-                    onCancelChanges: root._cancelChanges()
-                    onResetToDefault: ThemeManager.resetColorSettings()
-                    onOpenColorDialog: function (colorProperty) {
-                        colorDialog.targetedFieldName = colorProperty;
-                        colorDialog.open();
-                    }
+                    onSaveChanges: root.saveFinalChanges()
+                    onCancelChanges: root.cancelAllChanges()
                 }
             }
-
             Component {
                 id: layoutFontSettingsComp
                 LayoutFontSettings {
-                    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
-
-                    onOpenFontDialog: function (propertyName) {
-                        fontDialog.targetedFieldName = propertyName;
-                        fontDialog.updateOnChange = false;
-                        fontDialog.open();
-                    }
-
-                    onApplyChanges: root._applyTheme()
-                    onSaveChanges: root._saveTheme(true)
-                    onCancelChanges: root._cancelChanges()
-                    onResetToDefault: {
-                        ThemeManager.resetTypographySettings();
-                        ThemeManager.resetDimensionSettings();
-                    }
+                    onSaveChanges: root.saveFinalChanges()
+                    onCancelChanges: root.cancelAllChanges()
                 }
             }
-
             Component {
-                id: audioDevicesSettingsComp
+                id: desktopClockComp
+                // onSaveChanges: root.saveFinalChanges()
+                // onCancelChanges: root.cancelAllChanges()
+                DesktopClockSettings {}
+            }
+            Component {
+                id: hyprlandSettingsComp
+                HyprlandSettings {
+                    onSaveChanges: root.saveFinalChanges()
+                    onCancelChanges: root.cancelAllChanges()
+                }
+            }
+            Component {
+                id: integrationSettingsComp
+                IntegrationSettings {
+                    onSaveChanges: root.saveFinalChanges()
+                    onCancelChanges: root.cancelAllChanges()
+                }
+            }
+            Component {
+                id: audioDevicesComp
                 AudioDevices {
-                    //    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
                     onClose: root.visible = false
                 }
             }
-
             Component {
                 id: monitorsSettingsComp
-                MonitorsSettings {
-                    workingTheme: root.workingTheme
-                    selectedTheme: ThemeManager.selectedTheme
-                }
-            }
-
-            function getPage(index) {
-                return [generalSettingsPage, wallpaperSettingsPage, colorsSettingsPage, layoutFontSettingsPage, desktopClockPage, hyprlandSettingsPage, integrationSettingsPage, audioDevicesSettingsPage, monitorsSettingsPage][index];
+                MonitorsSettings {}
             }
 
             Component.onCompleted: {
-                // generalAppearancePage = generalAppearanceComp.createObject(contentStack, {
-                //     "visible": false
-                //     // "anchors.fill": stackView
-                // });
-                generalSettingsPage = generalSettingsComp.createObject(contentStack, {
-                    "visible": false
-                });
-                wallpaperSettingsPage = wallpaperSettingsComp.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
-                hyprlandSettingsPage = hyprlandSettingsComp.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
-                desktopClockPage = desktopClockPageComp.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
-                integrationSettingsPage = integrationSettingsComp.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
-                colorsSettingsPage = colorsSettingsComp.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
-                layoutFontSettingsPage = layoutFontSettingsComp.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
-                audioDevicesSettingsPage = audioDevicesSettingsComp.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
-                monitorsSettingsPage = monitorsSettingsComp.createObject(contentStack, {
-                    "visible": false
-                    // "anchors.fill": stackView
-                });
-                push(generalSettingsPage);
+                pages = [generalSettingsComp.createObject(contentStack, {
+                        visible: false
+                    }), wallpaperSettingsComp.createObject(contentStack, {
+                        visible: false
+                    }), colorsSettingsComp.createObject(contentStack, {
+                        visible: false
+                    }), layoutFontSettingsComp.createObject(contentStack, {
+                        visible: false
+                    }), desktopClockComp.createObject(contentStack, {
+                        visible: false
+                    }), hyprlandSettingsComp.createObject(contentStack, {
+                        visible: false
+                    }), integrationSettingsComp.createObject(contentStack, {
+                        visible: false
+                    }), audioDevicesComp.createObject(contentStack, {
+                        visible: false
+                        // }), monitorsSettingsComp.createObject(contentStack, {
+                        //     visible: false
+                    })];
+
+                if (pages[0])
+                    contentStack.push(pages[0]);
             }
 
+            // --- Navigation logic (Corrected currentIndex scope) ---
             function navigateTo(newIndex) {
-                if (newIndex === currentIndex)
+                if (!pages[newIndex] || newIndex === contentStack.currentIndex)
                     return;
-
-                previousIndex = currentIndex;
-
-                if (newIndex > currentIndex) {
+                if (newIndex > contentStack.currentIndex) {
                     contentStack.replaceEnter = enterFromBottom;
                     contentStack.replaceExit = exitToTop;
                 } else {
@@ -426,11 +157,10 @@ Controls.ApplicationWindow {
                     contentStack.replaceExit = exitToBottom;
                 }
 
-                currentIndex = newIndex;
-                contentStack.replace(getPage(newIndex));
+                contentStack.replace(pages[newIndex]);
             }
 
-            // --- تعريف تأثيرات الحركة (Transitions) بالتنسيق الصحيح ---
+            // --- Animations ---
             Transition {
                 id: enterFromBottom
                 SequentialAnimation {
@@ -467,7 +197,6 @@ Controls.ApplicationWindow {
                     }
                 }
             }
-
             Transition {
                 id: exitToTop
                 ParallelAnimation {
@@ -494,7 +223,6 @@ Controls.ApplicationWindow {
                     }
                 }
             }
-
             Transition {
                 id: enterFromTop
                 SequentialAnimation {
@@ -535,7 +263,6 @@ Controls.ApplicationWindow {
                     }
                 }
             }
-
             Transition {
                 id: exitToBottom
                 ParallelAnimation {
@@ -563,23 +290,5 @@ Controls.ApplicationWindow {
                 }
             }
         }
-    }
-
-    function _applyTheme() {
-        if (!ThemeManager._isThemeLoading) {
-            ThemeManager.updateAndApplyTheme(workingTheme, false);
-        }
-    }
-
-    function _saveTheme(notifySaving = false) {
-        if (!ThemeManager._isThemeLoading) {
-            ThemeManager.updateAndApplyTheme(workingTheme, true, notifySaving);
-            root.visible = false;
-        }
-    }
-
-    function _cancelChanges() {
-        ThemeManager.reloadTheme();
-        root.visible = false;
     }
 }

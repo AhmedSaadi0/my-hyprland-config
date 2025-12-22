@@ -137,6 +137,7 @@ Singleton {
     }
 
     readonly property QtObject assets: QtObject {
+        readonly property string logo: root.assetsPath + "/icons/logo.jpeg"
         readonly property QtObject icons: QtObject {
             readonly property string notification: root.assetsPath + "/icons/notification.png"
             readonly property string weather: root.assetsPath + "/icons/weather-icon.png"

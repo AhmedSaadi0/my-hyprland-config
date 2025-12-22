@@ -83,9 +83,9 @@ Singleton {
     }
 
     function checkRandomResumeComment() {
-        if (Math.random() > 0.85) {
+        if (Math.random() > 0.95) {
             console.info("[DEBUG] Random Resume Triggered!");
-            root.processCurrentSong(true); // true تعني هذا تعليق استئناف
+            root.processCurrentSong(true);
         } else {
             console.info("[DEBUG] Random Resume Skipped (Saving tokens).");
         }
@@ -151,7 +151,7 @@ Singleton {
             - Repetition Info: ${historyContextMsg}`;
         }
 
-        console.info(`[MusicService] Sending to AI Gateway...`);
+        console.info(`[MusicService] Sending to AI Gateway... ${message}`);
 
         // =========================================================
         // الاتصال عبر AiService
@@ -168,7 +168,6 @@ Singleton {
             root.aiComment = comment;
             root.aiTags = tags;
 
-            console.info("[MusicService] AI Success -> Emotion:", emotion);
             root.analysisCompleted(emotion, comment, tags);
 
             if (currentSongInfo !== "") {

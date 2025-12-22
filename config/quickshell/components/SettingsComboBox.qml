@@ -53,6 +53,11 @@ ComboBox {
         elide: Text.ElideRight
         rightPadding: indicatorIcon.width + Kirigami.Units.smallSpacing * 2
         leftPadding: 8
+
+        // لإسكات تحذير KDE Desktop Style
+        function positionToRectangle(pos) {
+            return Qt.rect(0, 0, 0, 0);
+        }
     }
 
     indicator: Text {

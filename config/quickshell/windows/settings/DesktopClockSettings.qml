@@ -1,106 +1,205 @@
+// windows/settings/DesktopClockSettings.qml
+
 pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
+import Qt.labs.platform
 
 import "root:/components"
+import "root:/config"
+import "root:/themes"
+import "root:/windows/settings/components"
 
-M3GroupBox {
+BaseThemeSettings {
     id: root
+
+    // --- Header ---
     title: qsTr("Desktop Clock Settings")
-    titleTopMargin: 10
-    titlePixelSize: selectedTheme.typography.heading1Size
-    titleFontWeight: Font.ExtraBold
 
-    property var workingTheme
-    property var selectedTheme
+    // --- Local State ---
+    property bool localEnabled: true
+    property string localFont: ""
+    property string localFormat: ""
+    property string localLocale: ""
 
-    property bool isCreatingOverlayImage: false
+    property bool localUseThemeColor: true
+    property color localColor: "#000000"
+    property bool localShadowEnabled: false
+    property color localShadowColor: "#000000"
+
+    property bool localDepthEnabled: false
+    property string localDepthModel: "u2net"
+    property string localOverlayPath: ""
 
     property bool alphaMatting: false
     property int foregroundThreshold: 240
     property int backgroundThreshold: 10
     property int erodeSize: 10
+    property bool isCreatingOverlayImage: false
 
-    signal applyChanges
-    signal saveChanges
-    signal cancelChanges
-    signal openOverlayFileDialog
-    signal openFontDialog
-    signal openShadowColorDialog
-    signal openClockColorDialog
-    signal resetToDefault
     signal createOverlayImageButtonClicked(var data)
-    signal clearUnusedCache
 
+    function syncFromTheme() {
+        // General
+        localEnabled = theme._desktopClockEnabled;
+        localFont = theme._desktopClockFont;
+        localFormat = theme._desktopClockFormat;
+        localLocale = theme._desktopClockLocal;
+
+        // Appearance
+        localUseThemeColor = theme._desktopClockUseThemeColor;
+        localColor = theme._desktopClockColor !== undefined ? theme._desktopClockColor : "#000000";
+        localShadowEnabled = theme._desktopClockSahdowEnabled;
+        localShadowColor = theme._desktopClockSahdowColor !== undefined ? theme._desktopClockSahdowColor : "#000000";
+        // localUseAnimation = theme._desktopClockUseAnimation;
+
+        // Depth
+        localDepthEnabled = theme._desktopClockDepthEffectEnabled;
+        localDepthModel = theme._desktopClockDepthModel;
+        localOverlayPath = theme._desktopClockDepthOverlayPath;
+    }
+
+    function serializeData() {
+        return {
+            "_desktopClockEnabled": localEnabled,
+            "_desktopClockFont": localFont,
+            "_desktopClockFormat": localFormat,
+            "_desktopClockLocal": localLocale,
+            "_desktopClockUseThemeColor": localUseThemeColor,
+            "_desktopClockColor": localColor.toString(),
+            "_desktopClockSahdowEnabled": localShadowEnabled,
+            "_desktopClockSahdowColor": localShadowColor.toString(),
+            // "_desktopClockUseAnimation": localUseAnimation,
+            "_desktopClockDepthEffectEnabled": localDepthEnabled,
+            "_desktopClockDepthModel": localDepthModel,
+            "_desktopClockDepthOverlayPath": localOverlayPath
+        };
+    }
+
+    // --- Dialogs ---
+    FontDialog {
+        id: fontDialog
+        onAccepted: {
+            root.localFont = font.family;
+            // root.applySingleProperty("_desktopClockFont", font.family);
+        }
+        onCurrentFontChanged: {
+            root.applySingleProperty("_desktopClockFont", currentFont.family);
+        }
+    }
+
+    ColorDialog {
+        id: colorDialog
+        property string target: "main"
+        onAccepted: {
+            if (target === "main") {
+                root.localColor = color;
+                root.applySingleProperty("_desktopClockColor", color.toString());
+            } else if (target === "shadow") {
+                root.localShadowColor = color;
+                root.applySingleProperty("_desktopClockSahdowColor", color.toString());
+            }
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        nameFilters: ["Images (*.png *.jpg *.jpeg)"]
+        onAccepted: {
+            var path = file.toString();
+            if (path.startsWith("file://"))
+                path = path.substring(7);
+            root.localOverlayPath = path;
+            root.applySingleProperty("_desktopClockDepthOverlayPath", path);
+        }
+    }
+
+    // --- Content ---
     ColumnLayout {
-        id: mainLayout
-        spacing: selectedTheme.dimensions.spacingSmall
+        Layout.preferredWidth: 590
+        spacing: root.dim("spacingSmall", 5)
 
-        // --- بداية: قسم تفعيل ساعة سطح المكتب ---
+        // --- Enable Switch ---
         SettingSwitch {
             id: _clockEnabledSwitch
             label: qsTr("Enable Desktop Clock")
-            isChecked: workingTheme._desktopClockEnabled
+            isChecked: root.localEnabled
             font.bold: true
-            font.pixelSize: selectedTheme.typography.heading3Size
+            font.pixelSize: root.typ("heading3Size", 18)
             onIsCheckedChanged: {
-                workingTheme._desktopClockEnabled = isChecked;
-                root.applyChanges();
+                if (root.isLoading)
+                    return;
+                root.localEnabled = isChecked;
+                root.applySingleProperty("_desktopClockEnabled", isChecked);
             }
         }
+
         Controls.Label {
             text: qsTr("Display a customizable clock on the desktop.")
-            font.pixelSize: selectedTheme.typography.small
-            color: selectedTheme.colors.subtleText
+            font.pixelSize: root.typ("small", 12)
+            color: root.theme ? root.theme.colors.subtleText : "#888"
             wrapMode: Text.WordWrap
             Layout.preferredWidth: 500
         }
 
-        // --- بداية: القسم العام (الخط، الصيغة، اللغة) ---
+        Kirigami.Separator {
+            Layout.fillWidth: true
+            Layout.topMargin: 10
+        }
+
+        // --- General Section ---
         ColumnLayout {
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            enabled: _clockEnabledSwitch.isChecked
-            spacing: 0
+            Layout.fillWidth: true
+            enabled: root.localEnabled
+            spacing: 5
 
             Controls.Label {
                 text: qsTr("General")
-                font.pixelSize: selectedTheme.typography.heading2Size
+                font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
-                Layout.bottomMargin: Kirigami.Units.smallSpacing
+                Layout.topMargin: 5
             }
 
+            // Font
             Controls.Label {
                 text: qsTr("Font")
                 font.bold: true
-                Layout.topMargin: Kirigami.Units.mediumSpacing
             }
             RowLayout {
                 Layout.fillWidth: true
                 EditableField {
-                    text: workingTheme._desktopClockFont
-                    selectedTheme: root.selectedTheme
                     Layout.fillWidth: true
                     Layout.preferredHeight: 30
+                    Layout.minimumWidth: 50
+                    text: root.localFont
+                    selectedTheme: root.theme
                     onEditingFinished: {
-                        workingTheme._desktopClockFont = text;
-                        root.applyChanges();
+                        if (root.isLoading)
+                            return;
+                        root.localFont = text;
+                        root.applySingleProperty("_desktopClockFont", text);
                     }
                 }
                 MButton {
                     text: ""
-                    font: selectedTheme.typography.iconFont
-                    onClicked: root.openFontDialog()
                     Layout.preferredHeight: 30
                     Layout.preferredWidth: 40
+                    font.family: root.theme ? root.theme.typography.iconFont : ""
+                    onClicked: {
+                        fontDialog.currentFont.family = root.localFont;
+                        fontDialog.open();
+                    }
                 }
             }
 
+            // Format & Locale
             RowLayout {
-                Layout.topMargin: Kirigami.Units.mediumSpacing
-                spacing: Kirigami.Units.mediumSpacing
+                Layout.fillWidth: true
+                Layout.topMargin: 10
+                spacing: 15
 
                 ColumnLayout {
                     Layout.fillWidth: true
@@ -109,13 +208,16 @@ M3GroupBox {
                         font.bold: true
                     }
                     EditableField {
-                        text: workingTheme._desktopClockFormat
-                        selectedTheme: root.selectedTheme
                         Layout.fillWidth: true
                         Layout.preferredHeight: 30
+                        Layout.minimumWidth: 50
+                        text: root.localFormat
+                        selectedTheme: root.theme
                         onEditingFinished: {
-                            workingTheme._desktopClockFormat = text;
-                            root.applyChanges();
+                            if (root.isLoading)
+                                return;
+                            root.localFormat = text;
+                            root.applySingleProperty("_desktopClockFormat", text);
                         }
                     }
                 }
@@ -126,253 +228,240 @@ M3GroupBox {
                         font.bold: true
                     }
                     EditableField {
-                        text: workingTheme._desktopClockLocal
-                        selectedTheme: root.selectedTheme
                         Layout.fillWidth: true
                         Layout.preferredHeight: 30
+                        Layout.minimumWidth: 50
+                        text: root.localLocale
+                        selectedTheme: root.theme
                         onEditingFinished: {
-                            workingTheme._desktopClockLocal = text;
-                            root.applyChanges();
+                            if (root.isLoading)
+                                return;
+                            root.localLocale = text;
+                            root.applySingleProperty("_desktopClockLocal", text);
                         }
                     }
                 }
             }
         }
 
-        // --- بداية: قسم المظهر (الألوان، الظل، الحركة) ---
+        Kirigami.Separator {
+            Layout.fillWidth: true
+            Layout.topMargin: 10
+        }
+
+        // --- Appearance Section ---
         ColumnLayout {
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            enabled: _clockEnabledSwitch.isChecked
-            spacing: 0
+            Layout.fillWidth: true
+            enabled: root.localEnabled
+            spacing: 5
 
             Controls.Label {
                 text: qsTr("Appearance")
-                font.pixelSize: selectedTheme.typography.heading2Size
+                font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
-                Layout.bottomMargin: Kirigami.Units.smallSpacing
+                Layout.topMargin: 5
             }
 
             RowLayout {
-                Layout.topMargin: Kirigami.Units.mediumSpacing
                 Layout.fillWidth: true
-                spacing: Kirigami.Units.mediumSpacing
+                Layout.topMargin: 5
+                spacing: 20
 
+                // Color Settings
                 ColumnLayout {
                     Layout.fillWidth: true
-                    spacing: Kirigami.Units.smallSpacing
 
                     SettingSwitch {
-                        id: _useThemeColorSwitch
                         label: qsTr("Use theme color")
-                        isChecked: workingTheme._desktopClockUseThemeColor
+                        isChecked: root.localUseThemeColor
                         font.bold: true
                         onIsCheckedChanged: {
-                            workingTheme._desktopClockUseThemeColor = isChecked;
-                            root.applyChanges();
+                            if (root.isLoading)
+                                return;
+                            root.localUseThemeColor = isChecked;
+                            root.applySingleProperty("_desktopClockUseThemeColor", isChecked);
                         }
                     }
+
                     ColumnLayout {
-                        enabled: !_useThemeColorSwitch.isChecked
+                        enabled: !root.localUseThemeColor
                         Layout.fillWidth: true
+
                         Controls.Label {
                             text: qsTr("Clock Color")
                             font.bold: true
                         }
                         RowLayout {
-
+                            Layout.fillWidth: true
                             EditableField {
-                                text: workingTheme._desktopClockColor.toString()
-                                selectedTheme: root.selectedTheme
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 30
+                                Layout.minimumWidth: 50
+                                text: root.localColor.toString()
+                                selectedTheme: root.theme
                                 onEditingFinished: {
-                                    workingTheme._desktopClockColor = text;
-                                    root.applyChanges();
+                                    if (root.isLoading)
+                                        return;
+                                    root.localColor = text;
+                                    root.applySingleProperty("_desktopClockColor", text);
                                 }
                             }
                             Rectangle {
                                 Layout.preferredWidth: 35
                                 Layout.preferredHeight: 30
-                                color: workingTheme._desktopClockColor.toString()
+                                color: root.localColor
                                 border.color: "gray"
                                 border.width: 1
-                                radius: selectedTheme.dimensions.elementRadius
+                                radius: 4
                             }
                             MButton {
                                 text: "󰃉"
                                 Layout.preferredWidth: 35
                                 Layout.preferredHeight: 30
-                                onClicked: root.openClockColorDialog()
+                                onClicked: {
+                                    colorDialog.target = "main";
+                                    colorDialog.currentColor = root.localColor;
+                                    colorDialog.open();
+                                }
                             }
                         }
                     }
                 }
+
+                // Shadow Settings
                 ColumnLayout {
                     Layout.fillWidth: true
-                    spacing: selectedTheme.dimensions.spacingLarge
+
                     SettingSwitch {
-                        id: _shadowEnabledSwitch
                         label: qsTr("Enable shadow")
-                        isChecked: workingTheme._desktopClockSahdowEnabled
+                        isChecked: root.localShadowEnabled
                         font.bold: true
                         onIsCheckedChanged: {
-                            workingTheme._desktopClockSahdowEnabled = isChecked;
-                            root.applyChanges();
+                            if (root.isLoading)
+                                return;
+                            root.localShadowEnabled = isChecked;
+                            root.applySingleProperty("_desktopClockSahdowEnabled", isChecked);
                         }
                     }
+
                     ColumnLayout {
-                        enabled: _shadowEnabledSwitch.isChecked
+                        enabled: root.localShadowEnabled
                         Layout.fillWidth: true
+
                         Controls.Label {
                             text: qsTr("Shadow Color")
                             font.bold: true
                         }
                         RowLayout {
+                            Layout.fillWidth: true
                             EditableField {
-                                text: workingTheme._desktopClockSahdowColor.toString()
-                                selectedTheme: root.selectedTheme
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 30
+                                Layout.minimumWidth: 50
+                                text: root.localShadowColor.toString()
+                                selectedTheme: root.theme
                                 onEditingFinished: {
-                                    workingTheme._desktopClockSahdowColor = text;
-                                    root.applyChanges();
+                                    if (root.isLoading)
+                                        return;
+                                    root.localShadowColor = text;
+                                    root.applySingleProperty("_desktopClockSahdowColor", text);
                                 }
                             }
                             Rectangle {
                                 Layout.preferredWidth: 35
                                 Layout.preferredHeight: 30
-                                color: workingTheme._desktopClockSahdowColor.toString()
+                                color: root.localShadowColor
                                 border.color: "gray"
                                 border.width: 1
-                                radius: selectedTheme.dimensions.elementRadius
+                                radius: 4
                             }
                             MButton {
                                 text: "󰃉"
                                 Layout.preferredWidth: 35
                                 Layout.preferredHeight: 30
-                                onClicked: root.openShadowColorDialog()
+                                onClicked: {
+                                    colorDialog.target = "shadow";
+                                    colorDialog.currentColor = root.localShadowColor;
+                                    colorDialog.open();
+                                }
                             }
                         }
-                    }
-                }
-            }
-
-            SettingSwitch {
-                label: qsTr("Use animation")
-                isChecked: workingTheme._desktopClockUseAnimation
-                font.bold: true
-                Layout.topMargin: Kirigami.Units.largeSpacing
-                onIsCheckedChanged: {
-                    workingTheme._desktopClockUseAnimation = isChecked;
-                    root.applyChanges();
-                }
-            }
-            Controls.Label {
-                text: qsTr("Memory usage may increase with animation due to Qt text caching")
-                font.pixelSize: selectedTheme.typography.small
-                color: selectedTheme.colors.subtleText
-                wrapMode: Text.WordWrap
-                Layout.preferredWidth: 500
-            }
-
-            ColumnLayout {
-                visible: false
-                Controls.Label {
-                    text: qsTr("Position (X, Y)")
-                    font.bold: true
-                    Layout.topMargin: Kirigami.Units.mediumSpacing
-                }
-                RowLayout {
-                    EditableField {
-                        text: workingTheme._desktopClockPosition.x
-                    }
-                    EditableField {
-                        text: workingTheme._desktopClockPosition.y
-                    }
-                }
-            }
-
-            ColumnLayout {
-                visible: false
-                Controls.Label {
-                    text: qsTr("Size (Width, Height)")
-                    font.bold: true
-                    Layout.topMargin: Kirigami.Units.mediumSpacing
-                }
-                RowLayout {
-                    EditableField {
-                        text: workingTheme._desktopClockSize.width
-                    }
-                    EditableField {
-                        text: workingTheme._desktopClockSize.height
                     }
                 }
             }
         }
 
-        // --- بداية: قسم تأثير العمق ---
+        Kirigami.Separator {
+            Layout.fillWidth: true
+            Layout.topMargin: 10
+        }
+
+        // --- Depth Effect Section ---
         ColumnLayout {
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            enabled: _clockEnabledSwitch.isChecked
-            spacing: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            enabled: root.localEnabled
+            spacing: 5
 
             Controls.Label {
                 text: qsTr("Depth Effect")
-                font.pixelSize: selectedTheme.typography.heading2Size
+                font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
-                Layout.bottomMargin: Kirigami.Units.smallSpacing
+                Layout.topMargin: 5
             }
 
             SettingSwitch {
-                id: _depthEffectSwitch
                 label: qsTr("Enable depth effect")
-                isChecked: workingTheme._desktopClockDepthEffectEnabled
+                isChecked: root.localDepthEnabled
                 font.bold: true
-                Layout.topMargin: Kirigami.Units.mediumSpacing
                 onIsCheckedChanged: {
-                    workingTheme._desktopClockDepthEffectEnabled = isChecked;
-                    root.applyChanges();
+                    if (root.isLoading)
+                        return;
+                    root.localDepthEnabled = isChecked;
+                    root.applySingleProperty("_desktopClockDepthEffectEnabled", isChecked);
                 }
             }
 
             ColumnLayout {
-                enabled: _depthEffectSwitch.isChecked && workingTheme._desktopClockDepthEffectEnabled
+                enabled: root.localDepthEnabled
+                Layout.fillWidth: true
 
                 RowLayout {
-                    spacing: selectedTheme.dimensions.spacingLarge
+                    Layout.fillWidth: true
+                    spacing: 15
 
-                    Controls.Label {
-                        text: qsTr("Model")
-                        font.bold: true
-                        Layout.topMargin: Kirigami.Units.mediumSpacing
-                    }
-                    SettingsComboBox {
+                    ColumnLayout {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 30
-                        model: ["u2net", "isnet-general-use"]
-                        Component.onCompleted: {
-                            currentIndex = find(workingTheme._desktopClockDepthModel);
+                        Controls.Label {
+                            text: qsTr("Model")
+                            font.bold: true
                         }
-                        onCurrentTextChanged: {
-                            if (workingTheme._desktopClockDepthModel !== currentText) {
-                                workingTheme._desktopClockDepthModel = currentText;
-                                root.applyChanges();
+                        SettingsComboBox {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 30
+                            model: ["u2net", "isnet-general-use"]
+                            Component.onCompleted: currentIndex = find(root.localDepthModel)
+                            onCurrentTextChanged: {
+                                if (root.isLoading)
+                                    return;
+                                root.localDepthModel = currentText;
+                                root.applySingleProperty("_desktopClockDepthModel", currentText);
                             }
                         }
                     }
 
                     MButton {
+                        Layout.preferredHeight: 30
+                        Layout.preferredWidth: 180
+                        Layout.alignment: Qt.AlignBottom
                         text: "Create Overlay Image"
                         iconText: "󰙴"
-                        enabled: _depthEffectSwitch.isChecked && !isCreatingOverlayImage
+                        enabled: !root.isCreatingOverlayImage
                         highlighted: true
                         textPreferredWidth: 4
                         iconPreferredWidth: 1
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: 180
                         onClicked: {
                             const data = {
-                                model: workingTheme._desktopClockDepthModel,
+                                model: root.localDepthModel,
                                 alphaMatting: root.alphaMatting,
                                 foregroundThreshold: root.foregroundThreshold,
                                 backgroundThreshold: root.backgroundThreshold,
@@ -387,117 +476,92 @@ M3GroupBox {
                     id: _alphaMattingSwitch
                     label: "Alpha Matting"
                     isChecked: root.alphaMatting
-                    enabled: _depthEffectSwitch.isChecked
-                    Layout.topMargin: Kirigami.Units.largeSpacing
-                    onIsCheckedChanged: alphaMatting = isChecked
+                    Layout.topMargin: 10
+                    onIsCheckedChanged: root.alphaMatting = isChecked
                 }
 
                 RowLayout {
-                    enabled: _depthEffectSwitch.isChecked && _alphaMattingSwitch.isChecked
+                    enabled: _alphaMattingSwitch.isChecked
                     Layout.fillWidth: true
-                    spacing: selectedTheme.dimensions.spacingMedium
+                    spacing: 10
 
                     ColumnLayout {
                         Controls.Label {
                             text: qsTr("BG Threshold")
                             font.bold: true
-                            Layout.topMargin: Kirigami.Units.mediumSpacing
                         }
-
                         EditableField {
-                            text: root.backgroundThreshold
-                            selectedTheme: root.selectedTheme
+                            text: root.backgroundThreshold.toString()
+                            selectedTheme: root.theme
                             Layout.preferredHeight: 30
-                            Layout.preferredWidth: 170
-                            onEditingFinished: root.backgroundThreshold = text
+                            Layout.preferredWidth: 100
+                            onEditingFinished: root.backgroundThreshold = parseInt(text)
                         }
                     }
-
                     ColumnLayout {
                         Controls.Label {
                             text: qsTr("FG Threshold")
                             font.bold: true
-                            Layout.topMargin: Kirigami.Units.mediumSpacing
                         }
                         EditableField {
-                            text: root.foregroundThreshold
-                            selectedTheme: root.selectedTheme
+                            text: root.foregroundThreshold.toString()
+                            selectedTheme: root.theme
                             Layout.preferredHeight: 30
-                            Layout.preferredWidth: 170
-                            onEditingFinished: root.foregroundThreshold = text
+                            Layout.preferredWidth: 100
+                            onEditingFinished: root.foregroundThreshold = parseInt(text)
                         }
                     }
-
                     ColumnLayout {
                         Controls.Label {
                             text: qsTr("Erode Size")
                             font.bold: true
-                            Layout.topMargin: Kirigami.Units.mediumSpacing
                         }
                         EditableField {
-                            text: root.erodeSize
-                            selectedTheme: root.selectedTheme
+                            text: root.erodeSize.toString()
+                            selectedTheme: root.theme
                             Layout.preferredHeight: 30
-                            Layout.preferredWidth: 170
-                            onEditingFinished: root.erodeSize = text
+                            Layout.preferredWidth: 100
+                            onEditingFinished: root.erodeSize = parseInt(text)
                         }
                     }
                 }
 
+                // Overlay Path
                 Controls.Label {
                     text: qsTr("Overlay image path")
                     font.bold: true
-                    Layout.topMargin: Kirigami.Units.mediumSpacing
+                    Layout.topMargin: 10
                 }
                 RowLayout {
                     Layout.fillWidth: true
                     EditableField {
-                        text: workingTheme._desktopClockDepthOverlayPath
                         Layout.fillWidth: true
                         Layout.preferredHeight: 30
-                        selectedTheme: root.selectedTheme
+                        Layout.minimumWidth: 50
+                        text: root.localOverlayPath
+                        selectedTheme: root.theme
+                        onEditingFinished: {
+                            if (root.isLoading)
+                                return;
+                            root.localOverlayPath = text;
+                            root.applySingleProperty("_desktopClockDepthOverlayPath", text);
+                        }
                     }
                     MButton {
                         text: ""
-                        font: selectedTheme.typography.iconFont
-                        onClicked: root.openOverlayFileDialog()
                         Layout.preferredHeight: 30
                         Layout.preferredWidth: 40
+                        font.family: root.theme ? root.theme.typography.iconFont : ""
+                        onClicked: fileDialog.open()
                     }
                 }
             }
         }
-    }
 
-    // --- بداية: قسم الأزرار السفلية (حفظ، إلغاء، استعادة) ---
-    footer: RowLayout {
-        spacing: selectedTheme.dimensions.spacingMedium
-
-        MButton {
-            text: "Reset to default"
-            Layout.preferredWidth: 150
-            onClicked: resetToDefault()
-        }
-        MButton {
-            text: "Clear unused cache"
-            Layout.preferredWidth: 150
-            onClicked: clearUnusedCache()
-        }
-        MButton {
-            text: "Cancel"
-            Layout.preferredWidth: 80
-            onClicked: cancelChanges()
-        }
-
+        // Spacer to push footer down if needed
         Item {
-            Layout.fillWidth: true
-        }
-
-        MButton {
-            text: "Save"
-            Layout.preferredWidth: 80
-            highlighted: true
-            onClicked: saveChanges()
+            Layout.fillHeight: true
+            width: 1
         }
     }
 }

@@ -49,6 +49,7 @@ Singleton {
 
         stdout: StdioCollector {
             onStreamFinished: {
+                console.info(`[AiService] Ai Process Result :-> ${this.text}`);
                 var data = root.cleanAndParseJson(this.text);
 
                 if (data) {

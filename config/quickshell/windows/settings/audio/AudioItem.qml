@@ -16,9 +16,18 @@ Rectangle {
     property string deviceTitle: device.description || ""
     property string deviceDescription: device.name
     property bool isSink: device.isSink
-    property bool isDefaultDevice: isSink ? (device.id === Pipewire.defaultAudioSink.id) : (device.id === Pipewire.defaultAudioSource.id)
+    property bool isDefaultDevice: {
+        if (!device)
+            return false;
 
-    width: 625
+        if (isSink) {
+            return Pipewire.defaultAudioSink && (device.id === Pipewire.defaultAudioSink.id);
+        } else {
+            return Pipewire.defaultAudioSource && (device.id === Pipewire.defaultAudioSource.id);
+        }
+    }
+
+    width: 610
     implicitHeight: 75
     radius: selectedTheme.dimensions.elementRadius
     color: selectedTheme.colors.leftMenuBgColorV1

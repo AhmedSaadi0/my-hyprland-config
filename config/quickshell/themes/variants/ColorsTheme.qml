@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
     id: colorsTheme
@@ -14,6 +15,21 @@ BaseTheme {
 
     _primary: "#22C1EB"
     _secondary: "#FD02FF"
+
+    _tertiary: "#FAD000"
+    _onTertiary: "#19002e"
+
+    // Error: أحمر ساطع
+    _error: "#ff3333"
+    _onError: "#ffffff" // الأبيض هنا أفضل لأن الأحمر عادة أغمق قليلاً من الأصفر
+
+    // Success: أخضر نيون (Electric Green)
+    _success: "#00E676"
+    _onSuccess: "#19002e"
+
+    // Warning: برتقالي ساطع
+    _warning: "#FF9100"
+    _onWarning: "#19002e"
 
     _plasmaColorScheme: "AColors"
     _themeIcons: "Vivid-Dark-Icons"

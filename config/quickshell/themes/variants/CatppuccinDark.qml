@@ -3,9 +3,10 @@ pragma Singleton
 import QtQuick
 
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
-    id: darkTheme
+    id: catppuccindarkTheme
 
     themeName: "CatppuccinDark"
     _themeMode: "dark"
@@ -17,6 +18,22 @@ BaseTheme {
 
     _onPrimary: "#1e1e2e"
     _onSecondary: "#1e1e2e"
+
+    _tertiary: "#cba6f7"
+    _onTertiary: "#1e1e2e"
+
+    // Red: لون الخطأ القياسي في الثيم
+    _error: "#f38ba8"
+    _onError: "#1e1e2e"
+
+    // Green: لون النجاح
+    _success: "#a6e3a1"
+    _onSuccess: "#1e1e2e"
+
+    // Yellow: لون التحذير
+    _warning: "#f9e2af"
+    _onWarning: "#1e1e2e"
+
     _topbarColor: "#1E1E2E" // Mantle
     _topbarFgColor: "#cdd6f4" // Text
 

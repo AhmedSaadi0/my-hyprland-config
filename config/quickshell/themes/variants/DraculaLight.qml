@@ -3,9 +3,10 @@ pragma Singleton
 import QtQuick
 
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
-    id: darkTheme
+    id: draculaLight
 
     themeName: "DraculaLight"
     _themeMode: "light"
@@ -14,8 +15,24 @@ BaseTheme {
 
     _primary: "#c197ff"       // بنفسجي ناعم
     _secondary: "#ff79c6"     // وردي نيوني
+
     _onPrimary: "#f8f8f2"     // خلفية فاتحة جدًا
     _onSecondary: "#f8f8f2"
+
+    _tertiary: "#8be9fd"
+    _onTertiary: "#282a36"    // نص داكن لأن السماوي فاتح جداً
+
+    // Error: أحمر (Dracula Red)
+    _error: "#ff5555"
+    _onError: "#f8f8f2"       // الأحمر داكن بما يكفي للنص الأبيض
+
+    // Success: أخضر (Dracula Green)
+    _success: "#50fa7b"
+    _onSuccess: "#282a36"     // الأخضر ساطع جداً، النص الداكن أفضل
+
+    // Warning: برتقالي (Dracula Orange)
+    _warning: "#ffb86c"
+    _onWarning: "#282a36"     // نص داكن للوضوح
 
     // _topbarColor: "#f8f8f2"
     // _topbarFgColor: "#44475a"

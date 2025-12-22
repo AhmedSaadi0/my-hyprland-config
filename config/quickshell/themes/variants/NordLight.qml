@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick
+
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
     id: lightTheme
@@ -18,8 +20,24 @@ BaseTheme {
     // الألوان الأساسية (طبقًا لوحة Frost)
     _primary: "#5E81AC"      // nord10 (أزرق عميق - للتأكيدات الأساسية)
     _secondary: "#88C0D0"    // nord8  (فيروزي - للتأكيدات الثانوية)
+
     _onPrimary: "#ECEFF4"    // nord6  (نص على العناصر الأساسية)
     _onSecondary: "#2E3440"  // nord0  (نص على العناصر الثانوية)
+
+    _tertiary: "#A3BE8C"
+    _onTertiary: "#2E3440"   // نص داكن للتباين
+
+    // Error: أحمر (nord11)
+    _error: "#BF616A"
+    _onError: "#ECEFF4"      // نص فاتح
+
+    // Success: أخضر (nord14)
+    _success: "#A3BE8C"
+    _onSuccess: "#2E3440"    // نص داكن
+
+    // Warning: أصفر (nord13)
+    _warning: "#EBCB8B"
+    _onWarning: "#2E3440"    // نص داكن لأن الأصفر فاتح
 
     // شريط الأدوات العلوي (طبقًا لوحة Snow Storm)
     _topbarColor: "#FFFFFF"  // أبيض نقي (مقتبس من nord6 لتحسين التباين)

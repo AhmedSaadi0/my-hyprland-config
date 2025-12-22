@@ -10,15 +10,17 @@ import Quickshell.Io
 
 import "root:/components"
 import "root:/config"
+import "root:/themes"
 
 M3GroupBox {
     id: root
     title: qsTr("General Configuration")
     titleTopMargin: 10
+
+    property var selectedTheme: ThemeManager.selectedTheme
+
     titlePixelSize: selectedTheme.typography.heading1Size
     titleFontWeight: Font.ExtraBold
-
-    property var selectedTheme
 
     readonly property string defaultWeatherPersona: "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user safety and comfort."
     readonly property string defaultMusicPersona: "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
@@ -487,7 +489,7 @@ M3GroupBox {
             Controls.Label {
                 visible: App.modelsManager.lastError !== ""
                 text: "Error: " + App.modelsManager.lastError
-                color: selectedTheme.colors.error
+                color: selectedTheme.colors.secondary
                 font.pixelSize: selectedTheme.typography.small
             }
 

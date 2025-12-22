@@ -1,7 +1,8 @@
 import QtQuick
-import org.kde.kirigami as Kirigami
+
 import "root:/components"
 import "root:/services"
+import "root:/themes"
 
 TopbarCircularProgress {
     id: ramUsage
@@ -13,7 +14,12 @@ TopbarCircularProgress {
     icon: ""
     iconFontSize: 10
 
-    iconColor: SystemService.isRamHigh ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.positiveTextColor
-    foregroundColor: SystemService.isRamHigh ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.positiveTextColor
-    backgroundColor: SystemService.isRamHigh ? Kirigami.Theme.negativeTextColor.alpha(0.5) : Kirigami.Theme.positiveTextColor.alpha(0.2)
+    readonly property color fgNormal: ThemeManager.selectedTheme.colors.secondary
+    readonly property color bgNormal: ThemeManager.selectedTheme.colors.secondary.alpha(0.4)
+    readonly property color fgWarning: ThemeManager.selectedTheme.colors.warning
+    readonly property color bgWarning: ThemeManager.selectedTheme.colors.warning.alpha(0.4)
+
+    iconColor: SystemService.isRamHigh ? fgWarning : fgNormal
+    foregroundColor: SystemService.isRamHigh ? fgWarning : fgNormal
+    backgroundColor: SystemService.isRamHigh ? bgWarning : bgNormal
 }

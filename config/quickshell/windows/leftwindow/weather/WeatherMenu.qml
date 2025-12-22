@@ -34,7 +34,7 @@ Flickable {
         // --- Dynamic Properties ---
         property string displayIcon: Weather.weatherIcon
         property string displayTitle: isAiDataAvailable ? Weather.aiAnalysistData.ui?.title || Weather.weatherDescription : Weather.weatherDescription
-        property string displayTemp: isAiDataAvailable ? Weather.aiAnalysistData.data?.temp || Weather.currentTemp : Weather.currentTemp
+        property string displayTemp: Weather.currentTemp
         property string displayFeelsLike: isAiDataAvailable ? Weather.aiAnalysistData.data?.feels_like || Weather.feelsLike : Weather.feelsLike
         property string displayHumidity: isAiDataAvailable ? Weather.aiAnalysistData.data?.humidity || Weather.humidity : Weather.humidity
         property color displayCardColor: mainCardColor

@@ -20,6 +20,7 @@ _Focus on the unique features of the capsule._
 _Visual improvements and customization options._
 
 - **Core UI**
+  - [x] **Improve Themes**: restructure `ThemeManager.qml` to separate the concerne
   - [ ] **Game Mode**: Toggle to enable high performance.
   - [ ] **GIF Wallpapers**: Support `.gif` files as wallpapers.
   - [ ] **Bar Customization**: Controls for Bar Shadows & Left Bar Width.
@@ -31,7 +32,7 @@ _Visual improvements and customization options._
 - **Themes**
   - [ ] **Dynamic Coloring Control**: Configure Material 3 `scheme_variant` via settings.
   - [ ] **New Themes**: Solarized, Rosé Pine, Oxocarbon.
-  - [ ] **Extended Colors**: Expand color schema to 6 colors.
+  - [x] **Extended Colors**: Expand color schema to 6 colors.
   - [ ] **Halt Dynamic Wallpapers**: Option to pause automatic wallpaper cycling.
 
 ---

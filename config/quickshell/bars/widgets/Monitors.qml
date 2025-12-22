@@ -1,7 +1,7 @@
 import QtQuick.Layouts
 import QtQuick
 
-import "../../components/monitors/"
+import "root:/components/monitors"
 import "root:/themes"
 import "root:/services"
 import "root:/components"
@@ -18,6 +18,10 @@ RowLayout {
         iconFontSize: 10
         activeProcess: false
         iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+
+        backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
+        foregroundColor: ThemeManager.selectedTheme.colors.primary
+        iconColor: ThemeManager.selectedTheme.colors.primary
 
         onValueChanged: function () {
             const percentage = value * 100;

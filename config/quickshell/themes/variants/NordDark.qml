@@ -1,9 +1,11 @@
 pragma Singleton
 import QtQuick
+
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
-    id: darkTheme
+    id: nordDark
     themeName: "NordDark"
     _themeMode: "dark"
 
@@ -12,8 +14,24 @@ BaseTheme {
     // الألوان الأساسية (باستخدام Frost + Aurora)
     _primary: "#799ddc"      // nord8  (فيروزي - كأساس لتحسين الوضوح)
     _secondary: "#A3BE8C"    // nord14 (أخضر - للتأكيدات المهمة)
+
     _onPrimary: "#2E3440"    // nord0  (نص داكن على عناصر فاتحة)
     _onSecondary: "#ECEFF4"  // nord6  (نص فاتح على عناصر داكنة)
+
+    _tertiary: "#B48EAD"
+    _onTertiary: "#2E3440"   // نص داكن
+
+    // Error: أحمر (nord11)
+    _error: "#BF616A"
+    _onError: "#ECEFF4"      // نص فاتح
+
+    // Success: أخضر (nord14)
+    _success: "#A3BE8C"
+    _onSuccess: "#2E3440"    // نص داكن
+
+    // Warning: أصفر (nord13)
+    _warning: "#EBCB8B"
+    _onWarning: "#2E3440"    // نص داكن
 
     // شريط الأدوات العلوي (طبقًا لوحة Polar Night)
     _topbarColor: "#2E3440"  // nord0 (خلفية داكنة)

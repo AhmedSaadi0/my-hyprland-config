@@ -44,7 +44,7 @@ You must select ONE single character (Glyph) from the library below that best ma
         "bg_color2": "string",
         "fg_color": "string",
         "title": "string",      // Persona Name OR "Nibras"
-        "emotion": "string"
+        "emotion": "string" // only from these [love, happy, wink, sad, angry, shocked, suspicious, bored, sleeping, confused, thinking, dead, focused]
     },
     "data": {
         "temp": "string",
@@ -76,7 +76,7 @@ MUSIC_MASTER_PROMPT = """
 
 ### RESPONSE GUIDELINES
 1.  **Comment**: Write a short, engaging remark (Max 20 words) that reflects your PERSONA.
-2.  **Recommendation**: Suggest 1 media(song, bodcast, video) that fits the current mood, and make sure that it is not the current played media.
+2.  **Recommendation**: Suggest 1 media(song, bodcast, video) (Max 8 words) that fits the current mood, and make sure that it is not the current played media.
 3.  **Emotion**: Select one of the available emotions, and it must fit with the vibe.
 
 ### REQUIRED OUTPUT FORMAT (JSON)

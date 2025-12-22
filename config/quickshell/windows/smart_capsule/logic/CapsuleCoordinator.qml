@@ -151,7 +151,8 @@ Singleton {
             bgColor1: colors.bg1,
             bgColor2: colors.bg2,
             fgColor: colors.fg,
-            tags: tags
+            tags: tags,
+            playTone: false
         });
     }
 

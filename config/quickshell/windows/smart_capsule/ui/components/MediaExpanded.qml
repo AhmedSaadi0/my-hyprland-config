@@ -50,7 +50,7 @@ Item {
     property bool isScrubbing: seekSlider.pressed
 
     implicitHeight: 170
-    implicitWidth: 380
+    implicitWidth: 300
 
     Timer {
         interval: 1000

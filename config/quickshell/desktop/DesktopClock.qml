@@ -95,14 +95,14 @@ Item {
                 target: contentContainer
                 property: "opacity"
                 to: 0
-                duration: 250
+                duration: 450
                 easing.type: Easing.InQuad
             }
             NumberAnimation {
                 target: contentContainer
                 property: "scale"
                 to: 0.8
-                duration: 250
+                duration: 450
                 easing.type: Easing.InQuad
             }
         }
@@ -122,14 +122,14 @@ Item {
                 target: contentContainer
                 property: "opacity"
                 to: 1
-                duration: 350
+                duration: 550
                 easing.type: Easing.OutBack
             }
             NumberAnimation {
                 target: contentContainer
                 property: "scale"
                 to: 1
-                duration: 350
+                duration: 550
                 easing.type: Easing.OutBack
             }
         }
@@ -181,6 +181,7 @@ Item {
 
                 shadowOpacity: 0.8
 
+                // 3. جعل الظل في المنتصف تماماً
                 shadowVerticalOffset: 0
                 shadowHorizontalOffset: 0
 

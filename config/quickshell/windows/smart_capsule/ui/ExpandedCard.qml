@@ -17,16 +17,15 @@ Item {
 
     signal closeRequested
 
-    readonly property int minWidth: 400
+    readonly property int minWidth: 410
     readonly property int minHeight: 220
 
-    implicitWidth: showAiOverlay ? 400 : minWidth
-
+    implicitWidth: minWidth
     implicitHeight: showAiOverlay ? Math.max(minHeight, aiContentLayout.implicitHeight + 80) : minHeight
 
     Behavior on implicitHeight {
         NumberAnimation {
-            duration: 400
+            duration: 100
             easing.type: Easing.OutBack
         }
     }
@@ -140,9 +139,11 @@ Item {
             // ---------------------------------------------------------
             // 3. طبقة الذكاء الاصطناعي (AI Overlay)
             // ---------------------------------------------------------
+            // TODO: -> Move to new component file
             Rectangle {
                 id: aiOverlay
                 anchors.fill: parent
+
                 anchors.leftMargin: 10
                 anchors.rightMargin: 10
                 anchors.topMargin: 10
@@ -161,7 +162,7 @@ Item {
                     orientation: Gradient.Horizontal
                     GradientStop {
                         position: 0.0
-                        color: CapsuleManager.bgColor1.alpha(0.85)
+                        color: CapsuleManager.bgColor1.alpha(0.80)
                         Behavior on color {
                             ColorAnimation {
                                 duration: 500
@@ -170,7 +171,7 @@ Item {
                     }
                     GradientStop {
                         position: 1.0
-                        color: CapsuleManager.bgColor2.alpha(0.85)
+                        color: CapsuleManager.bgColor2.alpha(0.80)
                         Behavior on color {
                             ColorAnimation {
                                 duration: 500
@@ -243,13 +244,13 @@ Item {
                     Text {
                         Layout.fillWidth: true
                         wrapMode: Text.Wrap
+                        elide: Text.ElideRight
+                        maximumLineCount: 4
 
                         text: {
-                            if (root.currentTab === "weather") {
-                                return Weather.aiSummaryText || "No weather analysis available.";
-                            } else {
-                                return MusicService.aiComment || "Listening to the vibes...";
-                            }
+                            if (root.currentTab === "weather")
+                                return Weather.aiSummaryText || "Analyzing weather patterns ... ";
+                            return MusicService.aiComment || "Vibing to the rhythm ... ";
                         }
                         color: CapsuleManager.fgColor
                         font.pixelSize: 14

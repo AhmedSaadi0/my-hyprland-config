@@ -257,7 +257,7 @@ Singleton {
                     // منطق Smart Polling (تغيير وقت التحديث القادم بناء على الطقس)
                     if (aiData.system_control && aiData.system_control.next_check_minutes) {
                         var nextMinutes = aiData.system_control.next_check_minutes;
-                        root.aiSmartPollingDetails = `🕒 Smart Polling: Next check in ${nextMinutes} minutes. Reason: ${aiData.system_control.reason}`;
+                        root.aiSmartPollingDetails = `[Weather] Smart Polling: Next check in ${nextMinutes} minutes. Reason: ${aiData.system_control.reason}`;
                         console.info(root.aiSmartPollingDetails);
 
                         refreshTimer.interval = nextMinutes * 60 * 1000;

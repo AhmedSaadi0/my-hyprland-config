@@ -17,8 +17,6 @@ PanelWindow {
     }
     color: "transparent"
 
-    // التعديل 1: جعل ارتفاع النافذة الكلي مرناً ليتسع للمحتوى الطويل جداً
-    // نضمن أن تكون على الأقل 400، أو بحجم الكرت + الهوامش
     implicitHeight: Math.max(400, islandRect.height + islandRect.anchors.topMargin + 20)
 
     exclusionMode: ExclusionMode.Ignore

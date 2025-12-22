@@ -3,24 +3,38 @@ pragma Singleton
 import QtQuick
 
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
-    id: darkTheme
+    id: catppuccinLightTheme
 
     themeName: "CatppuccinLight"
     _themeMode: "light"
 
     _wallpaper: App.assets.getWallpaperPath("Cat.jpg")
 
+    // --- الألوان الأساسية ---
     _primary: "#209fb5" // Blue
-    _secondary: "#ea76cb" // Pink
-
     _onPrimary: "#eff1f5"
+
+    _secondary: "#ea76cb" // Pink
     _onSecondary: "#eff1f5"
+
+    _tertiary: "#739d6f" // Mauve
+    _onTertiary: "#eff1f5"
+
+    _error: "#f38ba8"
+    _onError: "#eff1f5"
+
+    _success: "#739d6f"
+    _onSuccess: "#eff1f5"
+
+    _warning: "#c5b28a"
+    _onWarning: "#eff1f5"
+
     _topbarColor: "#e6e9ef" // Mantle
     _topbarFgColor: "#4c4f69" // Text
 
-    // خلفيات متدرجة وفاتحة ولكنها مختلفة
     _topbarBgColorV1: "#ccd0da" // Surface0
     _topbarBgColorV2: "#bcc0cc" // Surface1
     _topbarBgColorV3: "#acb0be" // Surface2

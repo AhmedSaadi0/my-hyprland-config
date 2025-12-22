@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick
+
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
     id: lightTheme
@@ -11,8 +13,24 @@ BaseTheme {
 
     _primary: "#2e7de9"
     _secondary: "#7847bd"
+
     _onPrimary: "#e9e9ec"
     _onSecondary: "#e9e9ec"
+
+    _tertiary: "#007197"
+    _onTertiary: "#e9e9ec"
+
+    // Error: أحمر (Red)
+    _error: "#f52a65"
+    _onError: "#e9e9ec"
+
+    // Success: أخضر (Green)
+    _success: "#589b13"
+    _onSuccess: "#e9e9ec"
+
+    // Warning: برتقالي/بني (Orange)
+    _warning: "#b36600"
+    _onWarning: "#e9e9ec"
 
     _topbarColor: "#e9e9ec"        // base
     _topbarFgColor: "#3760bf"      // text

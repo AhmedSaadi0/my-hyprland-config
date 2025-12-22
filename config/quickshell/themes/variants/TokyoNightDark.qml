@@ -1,9 +1,11 @@
 pragma Singleton
 import QtQuick
+
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
-    id: lightTheme
+    id: tokyoNightDark
     themeName: "TokyoNightDark"
     _themeMode: "dark"
 
@@ -11,8 +13,24 @@ BaseTheme {
 
     _primary: "#7aa2f7"
     _secondary: "#bb9af7"
+
     _onPrimary: "#1a1b26"
     _onSecondary: "#1a1b26"
+
+    _tertiary: "#7dcfff"
+    _onTertiary: "#1a1b26"
+
+    // Error: أحمر (Red)
+    _error: "#f7768e"
+    _onError: "#1a1b26"
+
+    // Success: أخضر (Green)
+    _success: "#9ece6a"
+    _onSuccess: "#1a1b26"
+
+    // Warning: برتقالي (Orange)
+    _warning: "#e0af68"
+    _onWarning: "#1a1b26"
 
     _topbarColor: "#1a1b26"        // base
     _topbarFgColor: "#c0caf5"      // text

@@ -346,7 +346,7 @@ Item {
         repeat: true
         onTriggered: {
             blinkAnim.start();
-            interval = 2000 + Math.random() * 3000;
+            interval = 1000 + Math.random() * 3000;
         }
     }
 

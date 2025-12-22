@@ -1,9 +1,11 @@
 pragma Singleton
 import QtQuick
+
 import "root:/config"
+import "root:/themes"
 
 BaseTheme {
-    id: lightTheme
+    id: gruvboxLight
     themeName: "GruvboxLight"
     _themeMode: "light"
 
@@ -11,8 +13,24 @@ BaseTheme {
 
     _primary: "#6B9E6B"
     _secondary: "#d79921"
+
     _onPrimary: "#fbf1c7"
     _onSecondary: "#fbf1c7"
+
+    _tertiary: "#458588"
+    _onTertiary: "#fbf1c7"
+
+    // Error: الأحمر (Gruvbox Red)
+    _error: "#cc241d"
+    _onError: "#fbf1c7"
+
+    // Success: الأخضر (Gruvbox Green)
+    _success: "#98971a"
+    _onSuccess: "#fbf1c7"
+
+    // Warning: البرتقالي (Gruvbox Orange)
+    _warning: "#d65d0e"
+    _onWarning: "#fbf1c7"
 
     _topbarColor: "#ebdbb2"  // light1
     _topbarFgColor: "#3c3836" // fg

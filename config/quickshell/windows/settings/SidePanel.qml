@@ -132,25 +132,26 @@ Rectangle {
                 icon: "audio-card",
                 type: "item",
                 pageIndex: 7
-            },
-            {
-                name: qsTr("Display Devices"),
-                icon: "video-display",
-                type: "item",
-                pageIndex: 8
-            },
-            {
-                name: qsTr("Capture Devices"),
-                icon: "camera-web",
-                type: "item",
-                pageIndex: 9
-            },
-            {
-                name: qsTr("Usb Peripherals"),
-                icon: "drive-removable-media-usb",
-                type: "item",
-                pageIndex: 10
             }
+            // {
+            //     name: qsTr("Display Devices"),
+            //     icon: "video-display",
+            //     type: "item",
+            //     pageIndex: 8
+            // },
+            // {
+            //     name: qsTr("Capture Devices"),
+            //     icon: "camera-web",
+            //     type: "item",
+            //     pageIndex: 9
+            // },
+            // {
+            //     name: qsTr("Usb Peripherals"),
+            //     icon: "drive-removable-media-usb",
+            //     type: "item",
+            //     pageIndex: 10
+            // }
+            ,
         ]
 
         delegate: Controls.ItemDelegate {

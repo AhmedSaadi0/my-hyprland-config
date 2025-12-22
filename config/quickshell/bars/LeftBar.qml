@@ -204,8 +204,10 @@ PanelWindow {
             const globalIndex = offset + localIndex;
             root.activeMenuIndex = globalIndex;
 
-            if (!root.panelOpen)
+            if (!root.panelOpen) {
                 root.panelOpen = true;
+                closePanelTimer.stop();
+            }
             LeftMenuStatus.changeIndex(globalIndex);
         } else {
             // إذا ألغينا التحديد، نتأكد أن المجموعات الأخرى أيضاً غير محددة قبل الإغلاق
