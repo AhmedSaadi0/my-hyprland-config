@@ -66,6 +66,7 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 بعد استنساخ المستودع، قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات `.nibrasshell.json`:
 
 ```bash
+git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
 python install.py
 ```
 
@@ -190,7 +191,7 @@ Choose your language / اختر لغتك / Vyberte jazyk:
 
 ### اعداد الملفات:
 
-    git clone https://github.com/AhmedSaadi0/NibrasShell.git
+    git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
 
     # عمل نسخة احتياطية لملفاتك الاصلية
     mv ~/.config/hypr/ ~/.config/hypr-old
@@ -341,6 +342,7 @@ Notification system that alerts you to severe conditions:
 After cloning the repository, run the installation script. It will handle everything, including the creation of the `.nibrasshell.json` config file:
 
 ```bash
+git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
 python install.py
 ```
 
@@ -463,7 +465,7 @@ Choose an option: 2
 
 ### Setting up files:
 
-    git clone https://github.com/AhmedSaadi0/NibrasShell.git
+    git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
 
     # backup your files
     mv ~/.config/hypr/ ~/.config/hypr-old
