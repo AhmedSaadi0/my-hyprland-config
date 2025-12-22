@@ -37,10 +37,12 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 
 ### 3. 💊 الكبسولة الذكية (The Smart Capsule)
 
-مركز تحكم تفاعلي:
+مركز تحكم تفاعلي مدعوم بالذكاء الاصطناعي:
 
-- **مشغل موسيقى متطور:** دعم لتعدد المشغلات مع Visualizer متحرك.
-- **إشعارات مدمجة:** التحكم بالصوت والسطوع يتم داخل الشريط (Inline) دون حجب الشاشة.
+- **الارتباط بالذكاء الاصطناعي:** الكبسولة مرتبطة ب Gemini يقوم بتحليل حالة الطقس والموسيقى التي تعمل حالياً.
+- **العين الذكية (Smart Eye):** عين تفاعلية تتغير تعابيرها وتتحرك بناءً على التحليلات القادمة من الذكاء الاصطناعي (مثل الاستمتاع مع الموسيقى أو التأثر بالطقس).
+- **مشغل موسيقى:** دعم لتعدد المشغلات مع Visualizer بسيط.
+- **إشعارات مدمجة:** عرض الصوت والسطوع يتم داخل الشريط (Inline) دون حجب الشاشة.
 - **طقس وتفاعل:** الوصول السريع لمعلومات الطقس والتحكم بالنظام.
 <p align="center">
   <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule Demo" width="100%">
@@ -63,7 +65,7 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 
 ### الطريقة التلقائية (موصى به)
 
-بعد استنساخ المستودع، قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات `.nibrasshell.json`:
+قم باستنساخ المستودع، ثم قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات `.nibrasshell.json`:
 
 ```bash
 git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
@@ -313,9 +315,11 @@ Allows deep personalization:
 
 ### 3. 💊 The Smart Capsule
 
-An interactive control hub:
+An interactive control hub powered by AI:
 
-- **Advanced Media Player:** Multi-player support with a live visualizer.
+- **AI Integration:** The capsule is connected to AI (Gemini) to analyze weather conditions and the music currently playing.
+- **Smart Eye:** Features a dynamic "Smart Eye" that changes its expressions based on the AI analysis (e.g., reacting to the music vibe or weather alerts).
+- **Advanced Media Player:** Multi-player support with a small visualizer.
 - **Non-Intrusive OSD:** Volume and brightness changes happen _inline_ (inside the bar) to keep your view clear.
 - **Smart Interactions:** Quick access to weather and system controls.
 <p align="center">
@@ -339,7 +343,7 @@ Notification system that alerts you to severe conditions:
 
 ### Automatic Method (Recommended)
 
-After cloning the repository, run the installation script. It will handle everything, including the creation of the `.nibrasshell.json` config file:
+Clone the repository, and run the installation script. It will handle everything, including the creation of the `.nibrasshell.json` config file:
 
 ```bash
 git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
@@ -596,13 +600,8 @@ nvim .nibrasshell.json
 
 ### Settings - الإعدادات
 
-[Watch a video](https://youtu.be/w7taDzj4_Y8)
-
 <p align='center'>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings1.png' width="48%"/>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings2.png' width="48%"/>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings3.png' width="48%"/>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings4.png' width="48%"/>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings1.png' width="80%"/>
 </p>
 
 ---
