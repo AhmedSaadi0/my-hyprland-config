@@ -203,7 +203,7 @@ BaseThemeSettings {
                         Layout.preferredHeight: 30
                         onClicked: {
                             ThemeManager.switchToNextWallpaper();
-                            root.localWallpaperIndex += 1;
+                            root.localWallpaperIndex = theme._selectedWallpaperIndex;
                             root.applySingleProperty("_selectedWallpaperIndex", root.localWallpaperIndex);
                         }
                     }
