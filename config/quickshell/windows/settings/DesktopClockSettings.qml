@@ -79,6 +79,22 @@ BaseThemeSettings {
         };
     }
 
+    Connections {
+        target: ThemeManager
+        function onSelectedThemeUpdated() {
+            if (!root.isLoading)
+                refresh(false);
+        }
+
+        function onCreatingOverlayImageStarted() {
+            depthEffectUi.enabled = false;
+        }
+        function onCreatingOverlayImageFinished(newPath) {
+            depthEffectUi.enabled = true;
+            refresh();
+        }
+    }
+
     // --- Dialogs ---
     FontDialog {
         id: fontDialog
@@ -398,6 +414,7 @@ BaseThemeSettings {
 
         // --- Depth Effect Section ---
         ColumnLayout {
+            id: depthEffectUi
             Layout.fillWidth: true
             enabled: root.localEnabled
             spacing: 5
@@ -460,7 +477,10 @@ BaseThemeSettings {
                         textPreferredWidth: 4
                         iconPreferredWidth: 1
                         onClicked: {
+                            const wallpaper = ThemeManager.currentWallpaper;
+
                             const data = {
+                                wallpaper: wallpaper,
                                 model: root.localDepthModel,
                                 alphaMatting: root.alphaMatting,
                                 foregroundThreshold: root.foregroundThreshold,
@@ -468,6 +488,7 @@ BaseThemeSettings {
                                 erodeSize: root.erodeSize
                             };
                             root.createOverlayImageButtonClicked(data);
+                            ThemeManager.requestCreateOverlayImage(data);
                         }
                     }
                 }

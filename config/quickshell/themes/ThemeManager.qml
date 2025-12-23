@@ -1,3 +1,5 @@
+// themes/ThemeManager.qml
+
 pragma Singleton
 
 import QtQuick
@@ -20,6 +22,8 @@ Singleton {
 
     signal selectedThemeUpdated
     signal initialThemeReady
+    signal creatingOverlayImageStarted
+    signal creatingOverlayImageFinished(string newImagePath)
 
     // =========================================================
     // Internal State for Sequence Control
@@ -87,6 +91,18 @@ Singleton {
     ThemeSerializer {
         id: serializer
     }
+    DepthEffectController {
+        id: depthEffectController
+        onCreatingOverlayImageStarted: {
+            root.creatingOverlayImageStarted();
+        }
+        onCreatingOverlayImageFinished: newImagePath => {
+            updateAndApplyTheme({
+                "_desktopClockDepthOverlayPath": newImagePath
+            }, true);
+            root.creatingOverlayImageFinished(newImagePath);
+        }
+    }
 
     // =========================================================
     // Core Logic: The Sequence Manager
@@ -139,6 +155,11 @@ Singleton {
         // المرحلة 3: البدء الفعلي لتحميل الثيم
         console.info(`[ThemeManager] Phase 3: Instructing Loader to load ${root._pendingThemeName}`);
         loader.loadTheme(root._pendingThemeName);
+    }
+
+    function requestCreateOverlayImage(options) {
+        // نمرر البيانات إلى الكونترولر الداخلي
+        depthEffectController.createOverlayImage(options);
     }
 
     // =========================================================

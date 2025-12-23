@@ -135,14 +135,14 @@ Singleton {
         if (isResumeContext) {
             message = `
             Action: User RESUMED playback.
-            Song: ${title} by ${artist}
+            Playin: ${title} by ${artist}
             Resume Time: ${resumeTimeStr}
             Volume: ${volume}
             Player: ${player}
             `;
         } else {
             message = `
-            Current Song: ${title} by ${artist}
+            Currently Playin: ${title} by ${artist}
             Context:
             - Time: ${currentTime}
             - Volume: ${volume}
