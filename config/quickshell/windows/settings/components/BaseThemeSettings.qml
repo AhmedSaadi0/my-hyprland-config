@@ -84,7 +84,7 @@ M3GroupBox {
         console.info("[" + root.title + "] Applying single property:", key, value);
 
         // TODO: -> create a function to apply single property
-        // ThemeManager.updateAndApplyTheme(data, saveToDisk);
+        ThemeManager.updateAndApplyTheme(data, saveToDisk);
 
         if (saveToDisk) {
             root.saveChanges();

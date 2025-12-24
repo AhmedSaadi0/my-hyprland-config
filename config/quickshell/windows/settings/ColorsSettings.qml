@@ -129,12 +129,20 @@ BaseThemeSettings {
     ColorDialog {
         id: mainColorDialog
         property var activeCallback: null
+        property var targetedProp: ""
         onAccepted: {
             if (activeCallback)
                 activeCallback(color.toString());
             activeCallback = null;
         }
         onRejected: activeCallback = null
+
+        // onCurrentColorChanged: {
+        //     if (activeCallback)
+        //         activeCallback(currentColor.toString());
+        //     activeCallback = null;
+        //     // root.applySingleProperty(targetedProp, color.toString());
+        // }
     }
 
     component ColorRow: ColumnLayout {
@@ -142,6 +150,7 @@ BaseThemeSettings {
         spacing: 4
         property string label
         property color value: "#000000"
+        property var targetedProp: ""
         signal userChanged(string newValue)
 
         Controls.Label {
