@@ -17,7 +17,7 @@ Item {
         anchors.fill: parent
         anchors.topMargin: 5
         anchors.bottomMargin: 5
-        radius: ThemeManager.selectedTheme.dimensions.baseRadius
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius
         color: "transparent"
 
         Behavior on color {

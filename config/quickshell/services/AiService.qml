@@ -38,6 +38,8 @@ Singleton {
         if (request.args)
             fullCmd = fullCmd.concat(request.args);
 
+        console.info(`[AiService] command to send ${fullCmd}`);
+
         aiProcess.command = fullCmd;
         aiProcess.running = true;
     }
