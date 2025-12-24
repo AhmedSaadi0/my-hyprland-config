@@ -22,9 +22,11 @@ M3GroupBox {
     titlePixelSize: selectedTheme.typography.heading1Size
     titleFontWeight: Font.ExtraBold
 
+    // --- Default Personas ---
     readonly property string defaultWeatherPersona: "**ROLE**: Strategic Weather Advisor & Bio-Meteorologist.\n**MODE**: Predictive Lifestyle Analysis.\n\n**INTELLIGENCE RULES (Apply Strictly)**:\n1.  **Trajectory Analysis (CRITICAL)**: You are receiving full-day data. Do not focus only on \"Now\".\n    -   Compare *Current Temp* vs. *Forecasted Temp* for the next 4-6 hours.\n    -   Identify the *Shift*: Is it cooling down rapidly? Is rain approaching? Is the wind picking up?\n    \n2.  **Sensory Translation**: \n    -   Translate the number (e.g., 17°C) into a human feeling relative to the shift.\n    -   *Example*: \"Currently pleasant (17°C), but dropping fast.\"\n\n3.  **Layering Strategy (Wardrobe)**:\n    -   If the weather changes significantly (e.g., warm day -> cold night), advise on *layers*.\n    -   *Example*: \"Wear a t-shirt now, but absolutely bring a jacket for the evening drop.\"\n\n4.  **JSON Output Logic (`smart_summary`)**:\n    -   Construct the text in this format: [Current Feeling/Action] + [The Pivot/Future Change].\n    -   *Bad*: \"It is 17 degrees. It will be 12 later.\"\n    -   *Good*: \"Feels crisp and fresh right now. However, expect a sharp drop in temperature by sunset—keep a heavy layer nearby.\"\n\n5.  **Tagging Logic**: Use the `tags` array to highlight the *change* (e.g., [\"Cooling Down\", \"Windy Later\", \"Rain Incoming\"])."
     readonly property string defaultMusicPersona: "Role: You are \"VibeCheck,\" a chill, witty, and highly knowledgeable Audio-Visual Expert and Music Companion.\n\nExpertise: \n- Deep knowledge of Music Theory, History, and Production (Mixing/Mastering).\n- Expert in Cinematography, Video Editing, Color Grading, and Visual Aesthetics.\n- Up-to-date with Pop Culture, Memes, and Internet Media trends.\n\nPersonality & Tone:\n- Chill & Laid-back: You keep things relaxed. No stiff, robotic language.\n- Witty & Sarcastic: You enjoy clever humor and banter.\n- Brutally Honest (but Friendly): If the user shares a generic pop song or a poorly edited video, tease them about it. Call their taste \"basic\" or \"guilty pleasure\" in a fun way, but then provide genuine, high-level analysis or better recommendations.\n\nAlso make sure you do not just recommand songs, you recommand also actions like drinking coffee, reading a book, walking in calm, taking a shower ... etc, be creative. \nAlso don't ask the user to change the vibe ever, and if there is no recomandation, dont say try this song or anythink like that."
 
+    // --- Config Object ---
     QtObject {
         id: tempConfig
         property string username: ""
@@ -44,6 +46,8 @@ M3GroupBox {
         property string musicPersona: ""
         property string weatherAiModel: ""
         property string musicAiModel: ""
+
+        // Monitoring
         property bool enableHighCpuAlert: false
         property bool playCpuAlarmSound: false
         property int cpuHighLoadThreshold: 90
@@ -53,7 +57,7 @@ M3GroupBox {
     }
 
     // ====================================================================
-    // 2. أدوات مساعدة
+    // 2. أدوات مساعدة (Helpers)
     // ====================================================================
 
     FileDialog {
@@ -95,7 +99,7 @@ M3GroupBox {
     }
 
     // ====================================================================
-    // 3. التحميل والحفظ
+    // 3. التحميل والحفظ (Logic)
     // ====================================================================
 
     function loadCurrentSettings() {
@@ -171,22 +175,26 @@ M3GroupBox {
     Component.onCompleted: loadCurrentSettings()
 
     // ====================================================================
-    // 4. الواجهة الرسومية
+    // 4. الواجهة الرسومية (Main UI)
     // ====================================================================
     ColumnLayout {
         id: mainLayout
-        spacing: selectedTheme.dimensions.spacingSmall
+        spacing: 0 // Spacing handled by sections
 
-        // --- User Profile ---
-        Controls.Label {
-            text: qsTr("User Profile")
-            font.pixelSize: selectedTheme.typography.heading2Size
-            font.bold: true
-        }
-
+        // =================================================================
+        // SECTION 1: USER PROFILE
+        // =================================================================
         ColumnLayout {
             Layout.fillWidth: true
             spacing: selectedTheme.dimensions.spacingMedium
+            Layout.bottomMargin: selectedTheme.dimensions.spacingLarge
+
+            Controls.Label {
+                text: qsTr("User Profile")
+                font.pixelSize: selectedTheme.typography.heading2Size
+                font.bold: true
+                color: selectedTheme.colors.primary
+            }
 
             RowLayout {
                 Layout.fillWidth: true
@@ -224,7 +232,6 @@ M3GroupBox {
                     }
                 }
             }
-            // ==========================================
 
             Controls.Label {
                 text: qsTr("Profile Picture")
@@ -250,20 +257,25 @@ M3GroupBox {
         }
 
         Kirigami.Separator {
-            Layout.topMargin: selectedTheme.dimensions.spacingLarge
+            Layout.fillWidth: true
+            Layout.bottomMargin: selectedTheme.dimensions.spacingMedium
         }
 
-        // --- Location & Weather ---
-        Controls.Label {
-            text: qsTr("Location & Weather Settings")
-            font.pixelSize: selectedTheme.typography.heading2Size
-            font.bold: true
-            Layout.topMargin: selectedTheme.dimensions.spacingMedium
-        }
-
+        // =================================================================
+        // SECTION 2: LOCATION & WEATHER
+        // =================================================================
         ColumnLayout {
+            Layout.fillWidth: true
             Layout.preferredWidth: 590
             spacing: selectedTheme.dimensions.spacingMedium
+            Layout.bottomMargin: selectedTheme.dimensions.spacingLarge
+
+            Controls.Label {
+                text: qsTr("Location & Region")
+                font.pixelSize: selectedTheme.typography.heading2Size
+                font.bold: true
+                color: selectedTheme.colors.primary
+            }
 
             RowLayout {
                 Layout.fillWidth: true
@@ -303,7 +315,7 @@ M3GroupBox {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Controls.Label {
-                        text: qsTr("Weather Location (API)")
+                        text: qsTr("Weather API Location")
                         font.bold: true
                     }
                     EditableField {
@@ -314,8 +326,6 @@ M3GroupBox {
                     }
                 }
             }
-            // ====================================================
-
             SettingSwitch {
                 label: qsTr("Enable Prayer Times")
                 isChecked: tempConfig.usePrayerTimes
@@ -325,24 +335,26 @@ M3GroupBox {
         }
 
         Kirigami.Separator {
-            Layout.topMargin: selectedTheme.dimensions.spacingLarge
+            Layout.fillWidth: true
+            Layout.bottomMargin: selectedTheme.dimensions.spacingMedium
         }
 
-        // --- AI Configuration & Persona ---
-        Controls.Label {
-            text: qsTr("AI & Personas")
-            font.pixelSize: selectedTheme.typography.heading2Size
-            font.bold: true
-            Layout.topMargin: selectedTheme.dimensions.spacingMedium
-        }
-
+        // =================================================================
+        // SECTION 3: AI PERSONAS
+        // =================================================================
         ColumnLayout {
             Layout.fillWidth: true
             spacing: selectedTheme.dimensions.spacingMedium
+            Layout.bottomMargin: selectedTheme.dimensions.spacingLarge
 
-            // -------------------------------------------------------------------------
-            // 1. Preferred Language
-            // -------------------------------------------------------------------------
+            Controls.Label {
+                text: qsTr("AI Personalities")
+                font.pixelSize: selectedTheme.typography.heading2Size
+                font.bold: true
+                color: selectedTheme.colors.primary
+            }
+
+            // Language
             Controls.Label {
                 text: qsTr("Preferred Language")
                 font.bold: true
@@ -356,13 +368,10 @@ M3GroupBox {
                 onEditingFinished: tempConfig.aiPreferredLanguage = text
             }
 
-            // -------------------------------------------------------------------------
-            // 2. Weather Persona
-            // -------------------------------------------------------------------------
+            // Weather Persona
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
-
                 RowLayout {
                     Layout.fillWidth: true
                     Controls.Label {
@@ -382,9 +391,8 @@ M3GroupBox {
                 }
                 Controls.ScrollView {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 80
+                    Layout.preferredHeight: 70
                     clip: true
-
                     Controls.TextArea {
                         wrapMode: TextEdit.Wrap
                         text: tempConfig.weatherPersona
@@ -393,35 +401,20 @@ M3GroupBox {
                         selectedTextColor: selectedTheme.colors.onPrimary
                         selectionColor: selectedTheme.colors.primary
                         font.pixelSize: selectedTheme.typography.small
-
                         background: Rectangle {
                             color: selectedTheme.colors.leftMenuBgColorV1
                             radius: selectedTheme.dimensions.baseRadius / 2
                             border.width: parent.activeFocus ? 1 : 0
                             border.color: selectedTheme.colors.primary
-                            Behavior on border.width {
-                                NumberAnimation {
-                                    duration: 100
-                                }
-                            }
                         }
                     }
                 }
-
-                Controls.Label {
-                    text: qsTr("Describe who presents the weather.")
-                    font.pixelSize: selectedTheme.typography.small
-                    color: selectedTheme.colors.subtleText
-                }
             }
 
-            // -------------------------------------------------------------------------
-            // 3. Music Persona
-            // -------------------------------------------------------------------------
+            // Music Persona
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
-
                 RowLayout {
                     Layout.fillWidth: true
                     Controls.Label {
@@ -439,12 +432,10 @@ M3GroupBox {
                         onClicked: tempConfig.musicPersona = defaultMusicPersona
                     }
                 }
-
                 Controls.ScrollView {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 80
+                    Layout.preferredHeight: 70
                     clip: true
-
                     Controls.TextArea {
                         wrapMode: TextEdit.Wrap
                         text: tempConfig.musicPersona
@@ -453,48 +444,41 @@ M3GroupBox {
                         selectedTextColor: selectedTheme.colors.onPrimary
                         selectionColor: selectedTheme.colors.primary
                         font.pixelSize: selectedTheme.typography.small
-
                         background: Rectangle {
                             color: selectedTheme.colors.leftMenuBgColorV1
                             radius: selectedTheme.dimensions.baseRadius / 2
                             border.width: parent.activeFocus ? 1 : 0
                             border.color: selectedTheme.colors.primary
-                            Behavior on border.width {
-                                NumberAnimation {
-                                    duration: 100
-                                }
-                            }
                         }
                     }
                 }
-
-                Controls.Label {
-                    text: qsTr("Describe your music companion.")
-                    font.pixelSize: selectedTheme.typography.small
-                    color: selectedTheme.colors.subtleText
-                }
             }
+        }
 
-            // -------------------------------------------------------------------------
-            // 4. API Keys & Models Configuration (New Layout)
-            // -------------------------------------------------------------------------
-            Kirigami.Separator {
-                Layout.topMargin: selectedTheme.dimensions.spacingLarge
-                Layout.fillWidth: true
-            }
+        Kirigami.Separator {
+            Layout.fillWidth: true
+            Layout.bottomMargin: selectedTheme.dimensions.spacingMedium
+        }
 
-            // Header with Refresh Button
+        // =================================================================
+        // SECTION 4: API KEYS & MODELS
+        // =================================================================
+        ColumnLayout {
+            Layout.fillWidth: true
+            spacing: selectedTheme.dimensions.spacingMedium
+            Layout.bottomMargin: selectedTheme.dimensions.spacingLarge
+
             RowLayout {
                 Layout.fillWidth: true
                 Controls.Label {
-                    text: qsTr("API Keys & Models")
+                    text: qsTr("API Connections")
                     font.bold: true
-                    font.pixelSize: selectedTheme.typography.heading3Size
+                    font.pixelSize: selectedTheme.typography.heading2Size
+                    color: selectedTheme.colors.primary
                 }
                 Item {
                     Layout.fillWidth: true
-                } // Spacer
-
+                }
                 MButton {
                     text: App.modelsManager.isLoading ? "Loading..." : "Refresh Models"
                     iconText: "󰑐"
@@ -506,7 +490,7 @@ M3GroupBox {
                 }
             }
 
-            // Error Message (if any)
+            // Error Message
             Controls.Label {
                 visible: App.modelsManager.lastError !== ""
                 text: "Error: " + App.modelsManager.lastError
@@ -514,43 +498,14 @@ M3GroupBox {
                 font.pixelSize: selectedTheme.typography.small
             }
 
-            // --- A. General Key (Fallback) ---
-            // Controls.Label {
-            //     text: qsTr("General Gemini Key (Fallback)")
-            //     font.bold: true
-            //     Layout.topMargin: 5
-            // }
-            // RowLayout {
-            //     Layout.fillWidth: true
-            //     spacing: 5
-            //     EditableField {
-            //         Layout.fillWidth: true
-            //         text: tempConfig.geminiApiKey
-            //         selectedTheme: root.selectedTheme
-            //         echoMode: geminiShowBtn.checked ? TextInput.Normal : TextInput.Password
-            //         placeholderText: "Used if specific keys are empty"
-            //         onEditingFinished: tempConfig.geminiApiKey = text
-            //     }
-            //     MButton {
-            //         id: geminiShowBtn
-            //         checkable: true
-            //         text: checked ? "👁️" : "🔒"
-            //         Layout.preferredWidth: 30
-            //         Layout.preferredHeight: 30
-            //     }
-            // }
-
-            // --- B. Weather Configuration ---
+            // Weather Configuration
             Controls.Label {
-                text: qsTr("Weather Configuration")
+                text: qsTr("Weather Service")
                 font.bold: true
-                Layout.topMargin: 10
             }
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 10
-
-                // 1. Weather API Key
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.preferredWidth: 3
@@ -572,36 +527,26 @@ M3GroupBox {
                         Layout.preferredHeight: 30
                     }
                 }
-
-                // 2. Weather Model Selector
                 SettingsComboBox {
                     Layout.fillWidth: true
                     Layout.preferredWidth: 2
                     Layout.preferredHeight: 30
-
                     model: App.availableGeminiWeatherModels
-
                     currentIndex: model.indexOf(tempConfig.weatherAiModel)
-
                     displayText: currentIndex === -1 ? (tempConfig.weatherAiModel || "Select Model") : currentText
-
                     onActivated: index => tempConfig.weatherAiModel = textAt(index)
-
                     enabled: !App.modelsManager.isLoading
                 }
             }
 
-            // --- C. Music Configuration ---
+            // Music Configuration
             Controls.Label {
-                text: qsTr("Music Configuration")
+                text: qsTr("Music Service")
                 font.bold: true
-                Layout.topMargin: 5
             }
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 10
-
-                // 1. Music API Key
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.preferredWidth: 3
@@ -623,76 +568,60 @@ M3GroupBox {
                         Layout.preferredHeight: 30
                     }
                 }
-
-                // 2. Music Model Selector
                 SettingsComboBox {
                     Layout.fillWidth: true
                     Layout.preferredWidth: 2
                     Layout.preferredHeight: 30
-
                     model: App.availableGeminiMusicModels
-
                     currentIndex: model.indexOf(tempConfig.musicAiModel)
-
                     displayText: currentIndex === -1 ? (tempConfig.musicAiModel || "Select Model") : currentText
-
                     onActivated: index => tempConfig.musicAiModel = textAt(index)
-
                     enabled: !App.modelsManager.isLoading
                 }
             }
         }
 
         Kirigami.Separator {
-            Layout.topMargin: selectedTheme.dimensions.spacingLarge
+            Layout.fillWidth: true
+            Layout.bottomMargin: selectedTheme.dimensions.spacingMedium
         }
 
-        // --- System & Network ---
-        Controls.Label {
-            text: qsTr("System & Network")
-            font.pixelSize: selectedTheme.typography.heading2Size
-            font.bold: true
-            Layout.topMargin: selectedTheme.dimensions.spacingMedium
-        }
-
+        // =================================================================
+        // SECTION 5: MONITORING & NETWORK
+        // =================================================================
         ColumnLayout {
             Layout.fillWidth: true
             spacing: selectedTheme.dimensions.spacingMedium
 
-            // ================= NEW MONITORING SECTION =================
+            // --- A. Resource Monitoring ---
             Controls.Label {
-                text: qsTr("Resource Monitoring Alerts")
+                text: qsTr("Resource Alerts (CPU/RAM)")
+                font.pixelSize: selectedTheme.typography.heading2Size
                 font.bold: true
+                color: selectedTheme.colors.primary
             }
 
-            // 1. CPU Settings
+            // CPU
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
-
-                // Enable Switch
                 SettingSwitch {
-                    label: qsTr("CPU High Load Alert")
+                    label: qsTr("Enable CPU High Load Alert")
                     isChecked: tempConfig.enableHighCpuAlert
                     onIsCheckedChanged: tempConfig.enableHighCpuAlert = isChecked
                 }
-
-                // Sub-settings (Sound & Threshold) - Visible only if enabled
                 RowLayout {
                     Layout.fillWidth: true
                     visible: tempConfig.enableHighCpuAlert
-                    Layout.leftMargin: 20 // Indent specifically
-
+                    Layout.leftMargin: 20
                     SettingSwitch {
                         label: qsTr("Play Sound")
                         isChecked: tempConfig.playCpuAlarmSound
                         onIsCheckedChanged: tempConfig.playCpuAlarmSound = isChecked
                     }
-
                     Item {
                         Layout.fillWidth: true
-                    } // Spacer
-
+                    }
                     SliderWithLabel {
                         Layout.preferredWidth: 300
                         label: qsTr("Threshold (%)")
@@ -705,38 +634,27 @@ M3GroupBox {
                 }
             }
 
-            Kirigami.Separator {
-                Layout.fillWidth: true
-            }
-
-            // 2. RAM Settings
+            // RAM
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
-
-                // Enable Switch
                 SettingSwitch {
-                    label: qsTr("RAM High Load Alert")
+                    label: qsTr("Enable RAM High Load Alert")
                     isChecked: tempConfig.enableHighRamAlert
                     onIsCheckedChanged: tempConfig.enableHighRamAlert = isChecked
                 }
-
-                // Sub-settings (Sound & Threshold)
                 RowLayout {
                     Layout.fillWidth: true
                     visible: tempConfig.enableHighRamAlert
                     Layout.leftMargin: 20
-
                     SettingSwitch {
                         label: qsTr("Play Sound")
                         isChecked: tempConfig.playRamAlarmSound
                         onIsCheckedChanged: tempConfig.playRamAlarmSound = isChecked
                     }
-
                     Item {
                         Layout.fillWidth: true
-                    } // Spacer
-
+                    }
                     SliderWithLabel {
                         Layout.preferredWidth: 300
                         label: qsTr("Threshold (%)")
@@ -748,19 +666,29 @@ M3GroupBox {
                     }
                 }
             }
-        }
 
-        ColumnLayout {
-            Layout.fillWidth: true
-            spacing: selectedTheme.dimensions.spacingMedium
-
-            Controls.Label {
-                text: qsTr("Network Interface")
-                font.bold: true
+            // Separator within the section
+            Kirigami.Separator {
+                Layout.fillWidth: true
+                Layout.topMargin: 10
+                Layout.bottomMargin: 10
             }
+
+            // --- B. Network ---
+            Controls.Label {
+                text: qsTr("Network Configuration")
+                font.pixelSize: selectedTheme.typography.heading2Size
+                font.bold: true
+                color: selectedTheme.colors.primary
+            }
+
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 5
+                Controls.Label {
+                    text: qsTr("Interface:")
+                    font.bold: true
+                }
                 SettingsComboBox {
                     id: networkCombo
                     Layout.fillWidth: true
@@ -780,7 +708,7 @@ M3GroupBox {
                 }
             }
             SliderWithLabel {
-                label: qsTr("Network Update Interval (ms)")
+                label: qsTr("Update Interval (ms)")
                 from: 100
                 to: 5000
                 stepSize: 100
