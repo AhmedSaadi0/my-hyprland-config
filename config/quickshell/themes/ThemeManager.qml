@@ -77,7 +77,8 @@ Singleton {
         id: wallpaperCtrl
         onWallpaperReady: path => {
             if (selectedTheme && selectedTheme.systemSettings.enableDynamicColoring) {
-                sysBridge.applyM3(path, selectedTheme.systemSettings.themeMode, true);
+                const settings = selectedTheme.systemSettings;
+                sysBridge.applyM3(path, settings.themeMode, true, settings.dynamicColoringSchemeVariant, settings.dynamicColoringChromaMult, settings.dynamicColoringToneMult);
             }
         }
     }

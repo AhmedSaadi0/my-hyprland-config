@@ -108,6 +108,11 @@ PersistentProperties {
     // -------------------------
     property string _wallpaper: "linux.png"
     property bool _enableDynamicColoring: false
+
+    property int _dynamicColoringSchemeVariant: 2
+    property real _dynamicColoringChromaMult: 2.5
+    property real _dynamicColoringToneMult: 1
+
     property bool _enableDynamicWallpapers: false
     property int _dynamicWallpapersInterval: 15 * 1000 * 60
     property string _dynamicWallpapersPath: ""
@@ -277,6 +282,10 @@ PersistentProperties {
         property alias dynamicWallpapersInterval: root._dynamicWallpapersInterval
         property alias dynamicWallpapersPath: root._dynamicWallpapersPath
         property alias selectedWallpaperIndex: root._selectedWallpaperIndex
+
+        property alias dynamicColoringSchemeVariant: root._dynamicColoringSchemeVariant
+        property alias dynamicColoringChromaMult: root._dynamicColoringChromaMult
+        property alias dynamicColoringToneMult: root._dynamicColoringToneMult
     }
 
     // --- Hyprland Configuration ---

@@ -58,7 +58,7 @@ Item {
     }
 
     // دالة منفصلة لتطبيق M3 (تستدعى عند تغير الخلفية)
-    function applyM3(wallpaperPath, themeMode, enabled) {
+    function applyM3(wallpaperPath, themeMode, enabled, scheme, chroma, tone) {
         if (!enabled)
             return;
 
@@ -68,8 +68,16 @@ Item {
             return;
         }
 
+        const data = {
+            selectedWallpaperPath: wallpaperPath,
+            themeMode: themeMode,
+            scheme: scheme,
+            chroma: chroma,
+            tone: tone
+        };
+
         console.info("SystemBridge: Applying M3 on:", wallpaperPath);
-        _dispatch("Apply M3", Utils.Helper.applyM3PlasmaColor(wallpaperPath, themeMode));
+        _dispatch("Apply M3", Utils.Helper.applyM3PlasmaColor(data));
     }
 
     function _dispatch(desc, cmd) {

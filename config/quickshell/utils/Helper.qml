@@ -52,9 +52,15 @@ Singleton {
         return [scriptFile, `${path}`];
     }
 
-    function applyM3PlasmaColor(selectedWallpaperPath, themeMode) {
+    function applyM3PlasmaColor({
+        selectedWallpaperPath,
+        themeMode,
+        scheme,
+        chroma,
+        tone
+    }) {
         const scriptCommand = Config.App.scripts.python.dynamicM3Command;
-        const command = [...scriptCommand, `'${selectedWallpaperPath}'`, "-m", themeMode];
+        const command = [...scriptCommand, `'${selectedWallpaperPath}'`, "-m", themeMode, "--scheme", scheme, "--chroma", chroma, "--tone", tone];
         console.info(command);
         return command;
     }
