@@ -43,6 +43,7 @@ Controls.ApplicationWindow {
     }
 
     RowLayout {
+        id: mainLayout
         anchors.fill: parent
         spacing: 0
 
@@ -59,6 +60,7 @@ Controls.ApplicationWindow {
             smooth: true
 
             property var pages: []
+            property int currentIndex: 0
 
             // --- Pages Definitions ---
             Component {
@@ -91,9 +93,10 @@ Controls.ApplicationWindow {
             }
             Component {
                 id: desktopClockComp
-                // onSaveChanges: root.saveFinalChanges()
-                // onCancelChanges: root.cancelAllChanges()
-                DesktopClockSettings {}
+                DesktopClockSettings {
+                    onSaveChanges: root.saveFinalChanges()
+                    onCancelChanges: root.cancelAllChanges()
+                }
             }
             Component {
                 id: hyprlandSettingsComp
@@ -157,6 +160,7 @@ Controls.ApplicationWindow {
                     contentStack.replaceExit = exitToBottom;
                 }
 
+                contentStack.currentIndex = newIndex;
                 contentStack.replace(pages[newIndex]);
             }
 

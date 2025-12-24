@@ -62,9 +62,8 @@ Singleton {
 
     property real cpuUsage: 0.0
     property real ramUsage: 0.0
-    readonly property real highLoadThreshold: 0.85
-    readonly property bool isCpuHigh: cpuUsage >= highLoadThreshold
-    readonly property bool isRamHigh: ramUsage >= highLoadThreshold
+    readonly property bool isCpuHigh: cpuUsage >= (App.cpuHighLoadThreshold / 100)
+    readonly property bool isRamHigh: ramUsage >= (App.ramHighLoadThreshold / 100)
 
     signal cpuAlert(real value)
     signal ramAlert(real value)

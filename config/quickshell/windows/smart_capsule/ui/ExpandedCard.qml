@@ -25,10 +25,11 @@ Item {
 
     Behavior on implicitHeight {
         NumberAnimation {
-            duration: 100
+            duration: 300
             easing.type: Easing.OutBack
         }
     }
+
     Behavior on implicitWidth {
         NumberAnimation {
             duration: 400

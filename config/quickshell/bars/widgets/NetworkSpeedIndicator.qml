@@ -60,19 +60,16 @@ Rectangle {
 
             Text {
                 id: networkName
-
                 text: "-"
                 font.bold: true
                 color: ThemeManager.selectedTheme.colors.topbarFgColorV1
             }
-
         }
 
         layer.effect: Shadow {
             color: palette.shadow.alpha(0.2)
             radius: 8
         }
-
     }
 
     RowLayout {
@@ -107,7 +104,6 @@ Rectangle {
                 color: ThemeManager.selectedTheme.colors.topbarFgColorV3
                 font.family: ThemeManager.selectedTheme.typography.iconFont
             }
-
         }
 
         RowLayout {
@@ -129,9 +125,7 @@ Rectangle {
                 font.family: ThemeManager.selectedTheme.typography.iconFont
                 color: ThemeManager.selectedTheme.colors.topbarFgColorV3
             }
-
         }
-
     }
 
     Timer {
@@ -155,7 +149,7 @@ Rectangle {
         stdinEnabled: true
 
         stderr: SplitParser {
-            onRead: (data) => {
+            onRead: data => {
                 console.error(data);
             }
         }
@@ -163,7 +157,7 @@ Rectangle {
         stdout: SplitParser {
             id: outputParser
 
-            onRead: (data) => {
+            onRead: data => {
                 var parts = data.trim().split("::");
                 if (parts.length === 4) {
                     const newTxBytes = parseInt(parts[0].trim());
@@ -172,20 +166,18 @@ Rectangle {
                     const strengthRaw = parts[3].trim();
                     const stringth = parseInt(strengthRaw, 10);
                     if (!Helper.isValidPositiveInt(newTxBytes) || !Helper.isValidPositiveInt(newRxBytes))
-                        return ;
+                        return;
 
                     const downloadSpeed = Helper.calculateSpeed(newRxBytes, rxBytes, updateTimer.interval);
                     const uploadSpeed = Helper.calculateSpeed(newTxBytes, txBytes, updateTimer.interval);
                     downloadSpeedText.text = Helper.convertToH(downloadSpeed);
                     uploadSpeedText.text = Helper.convertToH(uploadSpeed);
-                    networkName.text = Helper.formatNetworkName(connectedToRaw);
+                    networkName.text = Helper.formatNetworkName(connectedToRaw) ? Helper.formatNetworkName(connectedToRaw) : qsTr("No Network");
                     networkIcon.text = Helper.signalStrengthToIcon(stringth);
                     rxBytes = newRxBytes;
                     txBytes = newTxBytes;
                 }
             }
         }
-
     }
-
 }

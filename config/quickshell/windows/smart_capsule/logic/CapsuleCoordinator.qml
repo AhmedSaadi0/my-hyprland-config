@@ -87,10 +87,10 @@ Singleton {
             root.monitorBatteryDischarge();
         }
         function onCpuAlert(value) {
-            root.handleResourceAlert("CPU", value);
+            root.handleResourceAlert("CPU", value, App.playCpuAlarmSound);
         }
         function onRamAlert(value) {
-            root.handleResourceAlert("RAM", value);
+            root.handleResourceAlert("RAM", value, App.playRamAlarmSound);
         }
     }
 
@@ -308,7 +308,7 @@ Singleton {
         });
     }
 
-    function handleResourceAlert(type, value) {
+    function handleResourceAlert(type, value, playTone) {
         var pct = Math.round(value * 100);
 
         var isCritical = pct >= 95;
@@ -346,7 +346,8 @@ Singleton {
             timeout: root._resourceAlertTimeout,
             bgColor1: colors.bg1,
             bgColor2: colors.bg2,
-            fgColor: colors.fg
+            fgColor: colors.fg,
+            playTone: playTone
         });
     }
 

@@ -61,6 +61,14 @@ Singleton {
     property string darkM3WallpaperPath: root.config.darkM3WallpaperPath || homePath + "wallpapers/dark/"
     property string lightM3WallpaperPath: root.config.lightM3WallpaperPath || homePath + "wallpapers/light/"
 
+    property alias enableHighCpuAlert: root.config.enableHighCpuAlert
+    property alias enableHighRamAlert: root.config.enableHighRamAlert
+    property alias playCpuAlarmSound: root.config.playCpuAlarmSound
+    property alias playRamAlarmSound: root.config.playRamAlarmSound
+
+    property alias cpuHighLoadThreshold: root.config.cpuHighLoadThreshold
+    property alias ramHighLoadThreshold: root.config.ramHighLoadThreshold
+
     function updateConfig(key, value) {
         root.config.set(key, value);
     }

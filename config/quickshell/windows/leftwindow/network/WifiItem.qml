@@ -273,7 +273,7 @@ Item {
             EditableField {
                 id: passwordField
                 Layout.fillWidth: true
-                placeholderText: "كلمة المرور..."
+                placeholderText: qsTr("Password ... ")
                 echoMode: TextInput.Password
                 visible: root.security !== "None" && !root.in_use && !root.is_saved
                 font.pixelSize: 14

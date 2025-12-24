@@ -22,8 +22,8 @@ M3GroupBox {
     titlePixelSize: selectedTheme.typography.heading1Size
     titleFontWeight: Font.ExtraBold
 
-    readonly property string defaultWeatherPersona: "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user safety and comfort."
-    readonly property string defaultMusicPersona: "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
+    readonly property string defaultWeatherPersona: "**ROLE**: Strategic Weather Advisor & Bio-Meteorologist.\n**MODE**: Predictive Lifestyle Analysis.\n\n**INTELLIGENCE RULES (Apply Strictly)**:\n1.  **Trajectory Analysis (CRITICAL)**: You are receiving full-day data. Do not focus only on \"Now\".\n    -   Compare *Current Temp* vs. *Forecasted Temp* for the next 4-6 hours.\n    -   Identify the *Shift*: Is it cooling down rapidly? Is rain approaching? Is the wind picking up?\n    \n2.  **Sensory Translation**: \n    -   Translate the number (e.g., 17°C) into a human feeling relative to the shift.\n    -   *Example*: \"Currently pleasant (17°C), but dropping fast.\"\n\n3.  **Layering Strategy (Wardrobe)**:\n    -   If the weather changes significantly (e.g., warm day -> cold night), advise on *layers*.\n    -   *Example*: \"Wear a t-shirt now, but absolutely bring a jacket for the evening drop.\"\n\n4.  **JSON Output Logic (`smart_summary`)**:\n    -   Construct the text in this format: [Current Feeling/Action] + [The Pivot/Future Change].\n    -   *Bad*: \"It is 17 degrees. It will be 12 later.\"\n    -   *Good*: \"Feels crisp and fresh right now. However, expect a sharp drop in temperature by sunset—keep a heavy layer nearby.\"\n\n5.  **Tagging Logic**: Use the `tags` array to highlight the *change* (e.g., [\"Cooling Down\", \"Windy Later\", \"Rain Incoming\"])."
+    readonly property string defaultMusicPersona: "Role: You are \"VibeCheck,\" a chill, witty, and highly knowledgeable Audio-Visual Expert and Music Companion.\n\nExpertise: \n- Deep knowledge of Music Theory, History, and Production (Mixing/Mastering).\n- Expert in Cinematography, Video Editing, Color Grading, and Visual Aesthetics.\n- Up-to-date with Pop Culture, Memes, and Internet Media trends.\n\nPersonality & Tone:\n- Chill & Laid-back: You keep things relaxed. No stiff, robotic language.\n- Witty & Sarcastic: You enjoy clever humor and banter.\n- Brutally Honest (but Friendly): If the user shares a generic pop song or a poorly edited video, tease them about it. Call their taste \"basic\" or \"guilty pleasure\" in a fun way, but then provide genuine, high-level analysis or better recommendations.\n\nAlso make sure you do not just recommand songs, you recommand also actions like drinking coffee, reading a book, walking in calm, taking a shower ... etc, be creative. \nAlso don't ask the user to change the vibe ever, and if there is no recomandation, dont say try this song or anythink like that."
 
     QtObject {
         id: tempConfig
@@ -44,6 +44,12 @@ M3GroupBox {
         property string musicPersona: ""
         property string weatherAiModel: ""
         property string musicAiModel: ""
+        property bool enableHighCpuAlert: false
+        property bool playCpuAlarmSound: false
+        property int cpuHighLoadThreshold: 90
+        property bool enableHighRamAlert: false
+        property bool playRamAlarmSound: false
+        property int ramHighLoadThreshold: 90
     }
 
     // ====================================================================
@@ -113,6 +119,14 @@ M3GroupBox {
         tempConfig.weatherAiModel = App.weatherAiModel;
         tempConfig.musicAiModel = App.musicAiModel;
 
+        tempConfig.enableHighCpuAlert = App.enableHighCpuAlert;
+        tempConfig.playCpuAlarmSound = App.playCpuAlarmSound;
+        tempConfig.cpuHighLoadThreshold = App.cpuHighLoadThreshold;
+
+        tempConfig.enableHighRamAlert = App.enableHighRamAlert;
+        tempConfig.playRamAlarmSound = App.playRamAlarmSound;
+        tempConfig.ramHighLoadThreshold = App.ramHighLoadThreshold;
+
         if (App.availableGeminiWeatherModels.length === 0)
             App.modelsManager.refreshAll();
 
@@ -137,7 +151,13 @@ M3GroupBox {
             "weatherPersona": tempConfig.weatherPersona,
             "musicPersona": tempConfig.musicPersona,
             "weatherAiModel": tempConfig.weatherAiModel,
-            "musicAiModel": tempConfig.musicAiModel
+            "musicAiModel": tempConfig.musicAiModel,
+            "enableHighCpuAlert": tempConfig.enableHighCpuAlert,
+            "playCpuAlarmSound": tempConfig.playCpuAlarmSound,
+            "cpuHighLoadThreshold": tempConfig.cpuHighLoadThreshold,
+            "enableHighRamAlert": tempConfig.enableHighRamAlert,
+            "playRamAlarmSound": tempConfig.playRamAlarmSound,
+            "ramHighLoadThreshold": tempConfig.ramHighLoadThreshold
         };
 
         App.updateConfigMultiple(dataToSave);
@@ -300,6 +320,7 @@ M3GroupBox {
                 label: qsTr("Enable Prayer Times")
                 isChecked: tempConfig.usePrayerTimes
                 onIsCheckedChanged: tempConfig.usePrayerTimes = isChecked
+                visible: false
             }
         }
 
@@ -632,6 +653,101 @@ M3GroupBox {
             font.pixelSize: selectedTheme.typography.heading2Size
             font.bold: true
             Layout.topMargin: selectedTheme.dimensions.spacingMedium
+        }
+
+        ColumnLayout {
+            Layout.fillWidth: true
+            spacing: selectedTheme.dimensions.spacingMedium
+
+            // ================= NEW MONITORING SECTION =================
+            Controls.Label {
+                text: qsTr("Resource Monitoring Alerts")
+                font.bold: true
+            }
+
+            // 1. CPU Settings
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+
+                // Enable Switch
+                SettingSwitch {
+                    label: qsTr("CPU High Load Alert")
+                    isChecked: tempConfig.enableHighCpuAlert
+                    onIsCheckedChanged: tempConfig.enableHighCpuAlert = isChecked
+                }
+
+                // Sub-settings (Sound & Threshold) - Visible only if enabled
+                RowLayout {
+                    Layout.fillWidth: true
+                    visible: tempConfig.enableHighCpuAlert
+                    Layout.leftMargin: 20 // Indent specifically
+
+                    SettingSwitch {
+                        label: qsTr("Play Sound")
+                        isChecked: tempConfig.playCpuAlarmSound
+                        onIsCheckedChanged: tempConfig.playCpuAlarmSound = isChecked
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    } // Spacer
+
+                    SliderWithLabel {
+                        Layout.preferredWidth: 300
+                        label: qsTr("Threshold (%)")
+                        from: 0
+                        to: 100
+                        stepSize: 1
+                        value: tempConfig.cpuHighLoadThreshold
+                        onEditingFinished: finalValue => tempConfig.cpuHighLoadThreshold = finalValue
+                    }
+                }
+            }
+
+            Kirigami.Separator {
+                Layout.fillWidth: true
+            }
+
+            // 2. RAM Settings
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+
+                // Enable Switch
+                SettingSwitch {
+                    label: qsTr("RAM High Load Alert")
+                    isChecked: tempConfig.enableHighRamAlert
+                    onIsCheckedChanged: tempConfig.enableHighRamAlert = isChecked
+                }
+
+                // Sub-settings (Sound & Threshold)
+                RowLayout {
+                    Layout.fillWidth: true
+                    visible: tempConfig.enableHighRamAlert
+                    Layout.leftMargin: 20
+
+                    SettingSwitch {
+                        label: qsTr("Play Sound")
+                        isChecked: tempConfig.playRamAlarmSound
+                        onIsCheckedChanged: tempConfig.playRamAlarmSound = isChecked
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    } // Spacer
+
+                    SliderWithLabel {
+                        Layout.preferredWidth: 300
+                        label: qsTr("Threshold (%)")
+                        from: 0
+                        to: 100
+                        stepSize: 1
+                        value: tempConfig.ramHighLoadThreshold
+                        onEditingFinished: finalValue => tempConfig.ramHighLoadThreshold = finalValue
+                    }
+                }
+            }
         }
 
         ColumnLayout {
