@@ -11,6 +11,9 @@ import shutil
 import subprocess
 import sys
 from datetime import datetime
+from pathlib import Path
+
+base_dir = Path(__file__).resolve().parent
 
 # --- Define colors for terminal output ---
 GREEN = "\033[0;32m"
@@ -320,17 +323,19 @@ def install_dependencies(distro, install_optional=False):
 
     print(YELLOW + "Creating NibrasShell env..." + NC)
     # --clear تحذف البيئة القديمة إذا كانت موجودة لضمان التوافق
-    run_command(f"{python_cmd} -m venv .cache/nibrasshell/venv --clear")
+    run_command_verbose(
+        f"{python_cmd} -m venv .cache/nibrasshell/venv --clear"
+    )
 
     print(YELLOW + "Installing python needed packages using env pip..." + NC)
     # تحديث أدوات pip داخل البيئة الوهمية (مهم جداً لحل مشكلة البناء)
-    run_command(
+    run_command_verbose(
         ".cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools"
     )
 
     # تثبيت المتطلبات
-    run_command(
-        ".cache/nibrasshell/venv/bin/pip install -r .config/quickshell/scripts/python/requirements-3.13.txt"
+    run_command_verbose(
+        f".cache/nibrasshell/venv/bin/pip install -r {base_dir}/config/quickshell/scripts/python/requirements-3.13.txt"
     )
 
     print(f"{GREEN}Dependencies installed successfully.{NC}")
