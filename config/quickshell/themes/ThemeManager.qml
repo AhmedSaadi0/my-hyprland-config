@@ -22,6 +22,7 @@ Singleton {
 
     signal selectedThemeUpdated
     signal initialThemeReady
+    signal wallpaperReady
     signal creatingOverlayImageStarted
     signal creatingOverlayImageFinished(string newImagePath)
 
@@ -80,6 +81,7 @@ Singleton {
                 const settings = selectedTheme.systemSettings;
                 sysBridge.applyM3(path, settings.themeMode, true, settings.dynamicColoringSchemeVariant, settings.dynamicColoringChromaMult, settings.dynamicColoringToneMult);
             }
+            root.wallpaperReady(path);
         }
     }
 

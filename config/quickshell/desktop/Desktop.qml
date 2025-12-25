@@ -27,7 +27,6 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Background
 
     property bool isMenuOpened: false
-    property string currentWall: Theme.ThemeManager.currentWallpaper
     property string currentOverlay: ""
     property bool depthEffectActive: false
 
@@ -35,7 +34,6 @@ PanelWindow {
         id: wallpaper
         anchors.fill: parent
 
-        wallpaperSource: desktopRoot.currentWall
         overlaySource: desktopRoot.currentOverlay
         depthEnabled: desktopRoot.depthEffectActive
         isMenuOpen: desktopRoot.isMenuOpened
@@ -63,8 +61,13 @@ PanelWindow {
     // استقبال إشارات تغيير الثيم
     Connections {
         target: Theme.ThemeManager
+
         function onSelectedThemeUpdated() {
             desktopRoot.updateThemeData();
+        }
+
+        function onWallpaperReady() {
+            wallpaper.wallpaperSource = Theme.ThemeManager.currentWallpaper;
         }
     }
 
@@ -79,5 +82,6 @@ PanelWindow {
 
         // التحميل الأولي
         desktopRoot.updateThemeData();
+        wallpaper.wallpaperSource = Theme.ThemeManager.currentWallpaper;
     }
 }

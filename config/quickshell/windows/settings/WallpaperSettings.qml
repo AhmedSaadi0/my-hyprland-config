@@ -20,7 +20,7 @@ BaseThemeSettings {
     property int preferredWidth: 600
 
     // ========================================================================
-    // Local State (Holds unsaved changes)
+    // Local State
     // ========================================================================
     property bool localEnableDynamic: false
     property bool localEnableColoring: false
@@ -35,7 +35,7 @@ BaseThemeSettings {
     property real localToneMult: 1.0
 
     // ========================================================================
-    // Logic: Sync & Serialize
+    // Logic
     // ========================================================================
     function syncFromTheme() {
         let s = (theme && theme.systemSettings) ? theme.systemSettings : {};
@@ -47,7 +47,6 @@ BaseThemeSettings {
         localWallpaperIndex = s.selectedWallpaperIndex || 0;
         localStaticWallpaper = s.wallpaper || "";
 
-        // Sync New Variables
         localSchemeVariant = s.dynamicColoringSchemeVariant !== undefined ? s.dynamicColoringSchemeVariant : 2;
         localChromaMult = s.dynamicColoringChromaMult !== undefined ? s.dynamicColoringChromaMult : 2.5;
         localToneMult = s.dynamicColoringToneMult !== undefined ? s.dynamicColoringToneMult : 1.0;
@@ -58,11 +57,9 @@ BaseThemeSettings {
             "_enableDynamicWallpapers": localEnableDynamic,
             "_enableDynamicColoring": localEnableColoring,
             "_dynamicWallpapersPath": localDynamicPath,
-            "_dynamicWallpapersInterval": localInterval * 1000 // To ms
-            ,
+            "_dynamicWallpapersInterval": localInterval * 1000,
             "_selectedWallpaperIndex": localWallpaperIndex,
             "_wallpaper": localStaticWallpaper,
-            // Serialize New Variables
             "_dynamicColoringSchemeVariant": localSchemeVariant,
             "_dynamicColoringChromaMult": localChromaMult,
             "_dynamicColoringToneMult": localToneMult
@@ -94,18 +91,31 @@ BaseThemeSettings {
     }
 
     // ========================================================================
+    // Helper Component for Descriptions
+    // ========================================================================
+    component DescriptionLabel: Controls.Label {
+        font.pixelSize: root.typ("small", 12)
+        color: root.theme ? root.theme.colors.subtleText : "#888"
+        wrapMode: Text.WordWrap
+        Layout.fillWidth: true
+        Layout.leftMargin: 20 // Indentation for better hierarchy
+        Layout.rightMargin: 10
+    }
+
+    // ========================================================================
     // Main UI
     // ========================================================================
     ColumnLayout {
         id: mainLayout
-        spacing: 0 // Spacing handled by sections
+        spacing: 0
+        Layout.preferredWidth: 590
 
         // --------------------------------------------------------------------
         // SECTION 1: ACTIVATION MODES
         // --------------------------------------------------------------------
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 10
+            spacing: 5 // Tighter spacing between control and description
             Layout.bottomMargin: 15
 
             Controls.Label {
@@ -113,6 +123,7 @@ BaseThemeSettings {
                 font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
                 color: root.theme ? root.theme.colors.primary : "#fff"
+                Layout.bottomMargin: 5
             }
 
             // Dynamic Switch
@@ -126,11 +137,8 @@ BaseThemeSettings {
                     }
                 }
             }
-            Controls.Label {
-                text: qsTr("Automatically cycle through wallpapers from a folder.")
-                font.pixelSize: root.typ("small", 12)
-                color: root.theme ? root.theme.colors.subtleText : "#888"
-                Layout.leftMargin: 20
+            DescriptionLabel {
+                text: qsTr("When enabled, the system will automatically cycle through a collection of images from a folder instead of using a single static image.")
             }
 
             // Coloring Switch
@@ -144,11 +152,8 @@ BaseThemeSettings {
                     }
                 }
             }
-            Controls.Label {
-                text: qsTr("Extract colors from wallpaper to theme the application.")
-                font.pixelSize: root.typ("small", 12)
-                color: root.theme ? root.theme.colors.subtleText : "#888"
-                Layout.leftMargin: 20
+            DescriptionLabel {
+                text: qsTr("Extracts dominant colors from the current wallpaper to generate a matching system theme. Requires 'kde-material-you-colors'.")
             }
         }
 
@@ -162,15 +167,16 @@ BaseThemeSettings {
         // --------------------------------------------------------------------
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 10
+            spacing: 8
             Layout.bottomMargin: 15
-            visible: root.localEnableColoring // Hide if disabled
+            visible: root.localEnableColoring
 
             Controls.Label {
                 text: qsTr("Dynamic Color Engine")
                 font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
                 color: root.theme ? root.theme.colors.primary : "#fff"
+                Layout.bottomMargin: 5
             }
 
             // 1. Scheme Variant
@@ -193,10 +199,13 @@ BaseThemeSettings {
                     }
                 }
             }
+            DescriptionLabel {
+                text: qsTr("Defines the algorithm used to generate the palette. 'Vibrant' creates punchy colors, 'Neutral' is desaturated, and 'Fidelity' tries to match the image exactly.")
+            }
 
             // 2. Chroma Multiplier
             SliderWithLabel {
-                label: qsTr("Chroma Multiplier")
+                label: qsTr("Chroma Multiplier (Saturation)")
                 from: 0.0
                 to: 5.0
                 stepSize: 0.1
@@ -207,10 +216,13 @@ BaseThemeSettings {
                     root.applySingleProperty("_dynamicColoringChromaMult", val);
                 }
             }
+            DescriptionLabel {
+                text: qsTr("Boosts the color intensity. Higher values (e.g., 2.5) make the theme clearer and more colorful, while lower values make it grayish.")
+            }
 
             // 3. Tone Multiplier
             SliderWithLabel {
-                label: qsTr("Tone Multiplier")
+                label: qsTr("Tone Multiplier (Contrast)")
                 from: 0.0
                 to: 5.0
                 stepSize: 0.1
@@ -220,6 +232,9 @@ BaseThemeSettings {
                     root.localToneMult = val;
                     root.applySingleProperty("_dynamicColoringToneMult", val);
                 }
+            }
+            DescriptionLabel {
+                text: qsTr("Adjusts the contrast spread. Modify this if the generated colors feel too dark or too washed out compared to the background.")
             }
         }
 
@@ -236,7 +251,7 @@ BaseThemeSettings {
         // A. DYNAMIC MODE UI
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 10
+            spacing: 8
             visible: root.localEnableDynamic
 
             Controls.Label {
@@ -244,6 +259,7 @@ BaseThemeSettings {
                 font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
                 color: root.theme ? root.theme.colors.primary : "#fff"
+                Layout.bottomMargin: 5
             }
 
             // Folder Path
@@ -273,6 +289,10 @@ BaseThemeSettings {
                     Layout.preferredHeight: 30
                 }
             }
+            DescriptionLabel {
+                text: qsTr("The folder containing your wallpaper collection. The system will pick random images from here.")
+                Layout.leftMargin: 0 // Align with label
+            }
 
             // Interval
             SliderWithLabel {
@@ -286,17 +306,21 @@ BaseThemeSettings {
                     root.applySingleProperty("_dynamicWallpapersInterval", val * 1000);
                 }
             }
+            DescriptionLabel {
+                text: qsTr("How often the wallpaper updates. Short intervals are good for testing, longer ones (e.g., 300s) for daily use.")
+                Layout.leftMargin: 0
+            }
 
             // Navigation
             Controls.Label {
-                text: qsTr("Current State")
+                text: qsTr("Manual Control")
                 font.bold: true
             }
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 10
                 Controls.Label {
-                    text: "Index: " + root.localWallpaperIndex
+                    text: "Current Index: " + root.localWallpaperIndex
                     Layout.fillWidth: true
                     color: root.theme ? root.theme.colors.subtleText : "#888"
                 }
@@ -311,12 +335,16 @@ BaseThemeSettings {
                     }
                 }
             }
+            DescriptionLabel {
+                text: qsTr("Manually force a wallpaper update if you don't like the current one.")
+                Layout.leftMargin: 0
+            }
         }
 
         // B. STATIC MODE UI
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 10
+            spacing: 8
             visible: !root.localEnableDynamic
 
             Controls.Label {
@@ -324,6 +352,7 @@ BaseThemeSettings {
                 font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
                 color: root.theme ? root.theme.colors.primary : "#fff"
+                Layout.bottomMargin: 5
             }
 
             Controls.Label {
@@ -351,6 +380,10 @@ BaseThemeSettings {
                     Layout.preferredWidth: 40
                     Layout.preferredHeight: 30
                 }
+            }
+            DescriptionLabel {
+                text: qsTr("The absolute path to the single image file you want to set as your permanent background.")
+                Layout.leftMargin: 0
             }
         }
     }

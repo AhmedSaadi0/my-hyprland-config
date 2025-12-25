@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 
 Item {
     id: root
@@ -23,10 +24,24 @@ Item {
         anchors.fill: parent
         transformOrigin: Item.Center
         scale: root.isMenuOpen ? 1.05 : 1.0
+
         Behavior on scale {
             NumberAnimation {
                 duration: 800
                 easing.type: Easing.OutQuart
+            }
+        }
+
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            blurEnabled: true
+            blurMax: 32
+            blur: root.isMenuOpen ? 0.8 : 0
+            Behavior on blur {
+                NumberAnimation {
+                    duration: 800
+                    easing.type: Easing.OutCubic
+                }
             }
         }
 
@@ -163,11 +178,24 @@ Item {
         }
 
         transformOrigin: Item.Center
-        scale: root.isMenuOpen ? 1.10 : 1.0
+        scale: root.isMenuOpen ? 1.15 : 1.0
         Behavior on scale {
             NumberAnimation {
                 duration: 800
                 easing.type: Easing.OutQuart
+            }
+        }
+
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            blurEnabled: true
+            blurMax: 32
+            blur: root.isMenuOpen ? 0.2 : 0
+            Behavior on blur {
+                NumberAnimation {
+                    duration: 800
+                    easing.type: Easing.OutCubic
+                }
             }
         }
 
@@ -259,25 +287,21 @@ Item {
         }
     }
 
-    // عند تغيير المصدر، نقوم بتصفير المصدر الحالي أولاً لإجبار الحالة على التغير
-    function updateSources() {
+    function updateBgSources() {
         let targetBg = root.showChannel1 ? bg2 : bg1;
-        let targetFg = root.showChannel1 ? fg2 : fg1;
-
-        // الخطوة 1: التصفير (يجبر status على أن يصبح Null أو Loading فوراً)
         targetBg.source = "";
-        targetFg.source = "";
-
-        // الخطوة 2: وضع الروابط الجديدة
         targetBg.source = root.wallpaperSource;
-        targetFg.source = root.overlaySource;
+    }
 
-    // لن يتم التبديل إلا بعد أن تصبح الصور Ready من جديد
+    function updateFgSources() {
+        let targetFg = root.showChannel1 ? fg2 : fg1;
+        targetFg.source = "";
+        targetFg.source = root.overlaySource;
     }
 
     // نراقب تغيير أي من المصدرين ونستدعي دالة التحديث الموحدة
-    onWallpaperSourceChanged: updateSources()
-    onOverlaySourceChanged: updateSources()
+    onWallpaperSourceChanged: updateBgSources()
+    onOverlaySourceChanged: updateFgSources()
 
     // مراقبة حالات التحميل (كما كانت)
     Connections {

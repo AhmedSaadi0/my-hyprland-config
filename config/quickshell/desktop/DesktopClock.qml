@@ -38,33 +38,31 @@ Item {
 
     Behavior on x {
         enabled: !root.editMode
-        SpringAnimation {
-            spring: 4.5
-            damping: 0.2
-            epsilon: 0.25
+        NumberAnimation {
+            duration: 600
+            easing.type: Easing.InExpo
         }
     }
     Behavior on y {
         enabled: !root.editMode
-        SpringAnimation {
-            spring: 4.5
-            damping: 0.2
-            epsilon: 0.25
+        NumberAnimation {
+            duration: 600
+            easing.type: Easing.InExpo
         }
     }
 
     Behavior on width {
         enabled: !root.editMode
-        SpringAnimation {
-            spring: 4.0
-            damping: 0.3
+        NumberAnimation {
+            duration: 600
+            easing.type: Easing.InExpo
         }
     }
     Behavior on height {
         enabled: !root.editMode
-        SpringAnimation {
-            spring: 4.0
-            damping: 0.3
+        NumberAnimation {
+            duration: 600
+            easing.type: Easing.InExpo
         }
     }
 

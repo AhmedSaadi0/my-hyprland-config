@@ -73,7 +73,7 @@ Item {
 
         Theme.ThemeManager.updateAndApplyTheme({
             "_selectedWallpaperIndex": root.currentIndex
-        }, false);
+        }, true);
     }
 
     function _resolvePath(path) {

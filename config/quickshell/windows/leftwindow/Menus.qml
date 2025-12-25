@@ -109,6 +109,12 @@ StackView {
             stackView.push(initialPage);
         }
 
+        // Init notiListComponent to get Notifications
+        const notificationCompoObj = notiListComponent.createObject(stackView, {
+            "visible": false
+        });
+        _instantiatedPages[1] = notificationCompoObj;
+
         EventBus.on(Events.LEFT_MENU_IS_OPENED, function (newIndex) {
             // تجاهل إذا كان نفس الاندكس أو اندكس غير صالح
             if (newIndex < 0 || newIndex === currentIndex)

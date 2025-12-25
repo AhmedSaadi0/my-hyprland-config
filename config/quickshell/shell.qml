@@ -31,18 +31,27 @@ ShellRoot {
 
     signal openLeftPanelRequested(int selectedIndex)
 
-    // --- Initialization Logic ---
-    Component.onCompleted: {
-        if (ThemeManager.isInitialThemeReady) {
-            activateMainUI();
-        } else {
-            console.log("Waiting for ThemeManager...");
-        }
-    }
+    // // --- Initialization Logic ---
+    // Component.onCompleted: {
+    //     if (ThemeManager.isInitialThemeReady) {
+    //         activateMainUI();
+    //     } else {
+    //         console.log("Waiting for ThemeManager...");
+    //     }
+    // }
 
     Connections {
         target: ThemeManager
         function onInitialThemeReady() {
+            startComp.start();
+        }
+    }
+
+    Timer {
+        id: startComp
+        interval: 1000
+        repeat: false
+        onTriggered: {
             activateMainUI();
         }
     }
