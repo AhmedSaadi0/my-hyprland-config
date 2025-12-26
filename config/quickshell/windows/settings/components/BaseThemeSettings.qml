@@ -31,7 +31,7 @@ M3GroupBox {
 
     signal saveChanges
     signal cancelChanges
-    signal clearUnusedCache
+    signal resetToDefaultClicked
 
     function syncFromTheme() {
         console.warn("BaseThemeSettings: syncFromTheme() needs to be overridden");
@@ -91,6 +91,12 @@ M3GroupBox {
         }
     }
 
+    function resetToDefault() {
+        let data = serializeData();
+        ThemeManager.loadDefaultValues(data);
+        root.resetToDefaultClicked();
+    }
+
     Component.onCompleted: {
         Qt.callLater(() => {
             refresh(true);
@@ -101,7 +107,7 @@ M3GroupBox {
         target: ThemeManager
         function onSelectedThemeUpdated() {
             if (!root.isLoading)
-                refresh(false);
+                refresh(true);
         }
     }
 
@@ -111,16 +117,16 @@ M3GroupBox {
         MButton {
             text: "Reset"
             Layout.preferredWidth: 100
-            onClicked: root.refresh(true)
+            onClicked: root.resetToDefault()
         }
 
         // زر تنظيف الكاش يظهر فقط إذا تم تعريف الإشارة في الاستخدام
-        MButton {
-            text: "Clear Cache"
-            visible: root.hasOwnProperty("clearUnusedCache")
-            Layout.preferredWidth: 120
-            onClicked: root.clearUnusedCache()
-        }
+        // MButton {
+        //     text: "Clear Cache"
+        //     visible: root.hasOwnProperty("clearUnusedCache")
+        //     Layout.preferredWidth: 120
+        //     onClicked: root.clearUnusedCache()
+        // }
 
         Item {
             Layout.fillWidth: true
@@ -129,7 +135,10 @@ M3GroupBox {
         MButton {
             text: "Cancel"
             Layout.preferredWidth: 100
-            onClicked: root.cancelChanges()
+            onClicked: {
+                root.refresh(true);
+                root.cancelChanges();
+            }
         }
 
         // زر تطبيق (بدون حفظ) - يظهر حسب الخاصية

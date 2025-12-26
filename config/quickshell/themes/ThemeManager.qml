@@ -22,7 +22,7 @@ Singleton {
 
     signal selectedThemeUpdated
     signal initialThemeReady
-    signal wallpaperReady
+    signal wallpaperChanged(string path)
     signal creatingOverlayImageStarted
     signal creatingOverlayImageFinished(string newImagePath)
 
@@ -33,6 +33,7 @@ Singleton {
     property var _pendingCacheData: null
     // لتخزين اسم الثيم المطلوب بينما ننتظر الكاش
     property string _pendingThemeName: ""
+    property string _selectedThemeName: ""
 
     // =========================================================
     // Modules
@@ -81,19 +82,25 @@ Singleton {
                 const settings = selectedTheme.systemSettings;
                 sysBridge.applyM3(path, settings.themeMode, true, settings.dynamicColoringSchemeVariant, settings.dynamicColoringChromaMult, settings.dynamicColoringToneMult);
             }
-            root.wallpaperReady(path);
+            root.wallpaperChanged(path);
         }
     }
 
     HyprlandBridge {
         id: hyprBridge
     }
+
     SystemBridge {
         id: sysBridge
     }
+
     ThemeSerializer {
         id: serializer
+        onKeysRemoved: {
+            reloadTheme(true);
+        }
     }
+
     DepthEffectController {
         id: depthEffectController
         onCreatingOverlayImageStarted: {
@@ -111,14 +118,15 @@ Singleton {
     // Core Logic: The Sequence Manager
     // =========================================================
 
-    function requestLoadTheme(themeName) {
-        if (themeName === loader.currentThemeName && _initialReady)
+    function requestLoadTheme(themeName, forceReload = false) {
+        if (themeName === loader.currentThemeName && _initialReady && !forceReload)
             return;
 
         console.info(`[ThemeManager] Phase 1: Request received for ${themeName}`);
 
         // إعداد المتغيرات
         root._pendingThemeName = themeName;
+        root._selectedThemeName = themeName;
         root._pendingCacheData = null;
 
         // ضبط مسار الكاش لبدء القراءة
@@ -165,6 +173,23 @@ Singleton {
         depthEffectController.createOverlayImage(options);
     }
 
+    function loadDefaultValues(serializedData) {
+        if (!selectedTheme || !serializedData)
+            return;
+
+        console.info("[ThemeManager] Requesting partial reset to defaults...");
+
+        // استخراج المصفوفة
+        const keysToReset = Object.keys(serializedData);
+
+        // تحقق بسيط قبل الإرسال
+        console.info("[ThemeManager] Sending keys to serializer:", keysToReset.length);
+
+        if (keysToReset.length > 0) {
+            serializer.removeKeysFromCache(loader.currentThemeName, keysToReset);
+        }
+    }
+
     // =========================================================
     // Helper Functions
     // =========================================================
@@ -193,11 +218,13 @@ Singleton {
     function getCurrentWallpaper() {
         return wallpaperCtrl.currentWallpaperPath;
     }
+
     function switchToNextWallpaper() {
         wallpaperCtrl.nextWallpaper();
     }
-    function reloadTheme() {
-        requestLoadTheme(loader.currentThemeName);
+
+    function reloadTheme(forceReload = false) {
+        requestLoadTheme(loader.currentThemeName, forceReload);
     }
 
     // =========================================================

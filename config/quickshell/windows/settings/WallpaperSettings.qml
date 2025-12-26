@@ -24,6 +24,7 @@ BaseThemeSettings {
     // ========================================================================
     property bool localEnableDynamic: false
     property bool localEnableColoring: false
+    property bool localEnableWallpaperBlure: false
     property string localDynamicPath: ""
     property int localInterval: 60
     property int localWallpaperIndex: 0
@@ -42,6 +43,7 @@ BaseThemeSettings {
 
         localEnableDynamic = s.enableDynamicWallpapers ?? false;
         localEnableColoring = s.enableDynamicColoring ?? false;
+        localEnableWallpaperBlure = s.enableWallpaperBlur ?? false;
         localDynamicPath = s.dynamicWallpapersPath || "";
         localInterval = (s.dynamicWallpapersInterval || 60000) / 1000;
         localWallpaperIndex = s.selectedWallpaperIndex || 0;
@@ -56,6 +58,7 @@ BaseThemeSettings {
         return {
             "_enableDynamicWallpapers": localEnableDynamic,
             "_enableDynamicColoring": localEnableColoring,
+            "_enableWallpaperBlur": localEnableWallpaperBlure,
             "_dynamicWallpapersPath": localDynamicPath,
             "_dynamicWallpapersInterval": localInterval * 1000,
             "_selectedWallpaperIndex": localWallpaperIndex,
@@ -154,6 +157,20 @@ BaseThemeSettings {
             }
             DescriptionLabel {
                 text: qsTr("Extracts dominant colors from the current wallpaper to generate a matching system theme. Requires 'kde-material-you-colors'.")
+            }
+
+            SettingSwitch {
+                label: qsTr("Enable Wallpaper Blur")
+                isChecked: root.localEnableWallpaperBlure
+                onIsCheckedChanged: {
+                    if (!root.isLoading) {
+                        root.localEnableWallpaperBlure = isChecked;
+                        root.applySingleProperty("_enableWallpaperBlur", isChecked);
+                    }
+                }
+            }
+            DescriptionLabel {
+                text: qsTr("Enable blue for wallpaper when menu is opened")
             }
         }
 

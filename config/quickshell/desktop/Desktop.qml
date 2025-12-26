@@ -29,6 +29,7 @@ PanelWindow {
     property bool isMenuOpened: false
     property string currentOverlay: ""
     property bool depthEffectActive: false
+    property bool blurEnabled: false
 
     Wallpaper {
         id: wallpaper
@@ -37,6 +38,7 @@ PanelWindow {
         overlaySource: desktopRoot.currentOverlay
         depthEnabled: desktopRoot.depthEffectActive
         isMenuOpen: desktopRoot.isMenuOpened
+        blurEnabled: desktopRoot.blurEnabled
 
         content: Widgets {
             id: myWidgets
@@ -48,14 +50,13 @@ PanelWindow {
     // المنطق: تحديث البيانات والأحداث
     // ---------------------------------------------------------
     function updateThemeData() {
-        // 1. الخلفية
-
         // 2. إعدادات العمق (Overlay)
         let clockSettings = Theme.ThemeManager.selectedTheme.desktopClock;
         let isDepth = (clockSettings?.enabled && clockSettings?.depthEffectEnabled) || false;
 
         desktopRoot.depthEffectActive = isDepth;
         desktopRoot.currentOverlay = isDepth ? (clockSettings?.depthOverlayPath || "") : "";
+        desktopRoot.blurEnabled = Theme.ThemeManager.selectedTheme.systemSettings.enableWallpaperBlur;
     }
 
     // استقبال إشارات تغيير الثيم
@@ -66,8 +67,8 @@ PanelWindow {
             desktopRoot.updateThemeData();
         }
 
-        function onWallpaperReady() {
-            wallpaper.wallpaperSource = Theme.ThemeManager.currentWallpaper;
+        function onWallpaperChanged(path) {
+            wallpaper.wallpaperSource = path;
         }
     }
 

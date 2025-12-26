@@ -19,12 +19,6 @@ Controls.ApplicationWindow {
     flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
     title: "NibrasShellSettings"
 
-    // --- Global Actions ---
-    function saveFinalChanges() {
-        // ThemeManager.updateAndApplyTheme({}, true);
-        root.visible = false;
-    }
-
     function cancelAllChanges() {
         ThemeManager.reloadTheme();
         root.visible = false;
@@ -66,49 +60,42 @@ Controls.ApplicationWindow {
             Component {
                 id: generalSettingsComp
                 GeneralSettings {
-                    onSaveChanges: root.saveFinalChanges()
                     onCancelChanges: root.cancelAllChanges()
                 }
             }
             Component {
                 id: wallpaperSettingsComp
                 WallpaperSettings {
-                    onSaveChanges: root.saveFinalChanges()
                     onCancelChanges: root.cancelAllChanges()
                 }
             }
             Component {
                 id: colorsSettingsComp
                 ColorsSettings {
-                    onSaveChanges: root.saveFinalChanges()
                     onCancelChanges: root.cancelAllChanges()
                 }
             }
             Component {
                 id: layoutFontSettingsComp
                 LayoutFontSettings {
-                    onSaveChanges: root.saveFinalChanges()
                     onCancelChanges: root.cancelAllChanges()
                 }
             }
             Component {
                 id: desktopClockComp
                 DesktopClockSettings {
-                    onSaveChanges: root.saveFinalChanges()
                     onCancelChanges: root.cancelAllChanges()
                 }
             }
             Component {
                 id: hyprlandSettingsComp
                 HyprlandSettings {
-                    onSaveChanges: root.saveFinalChanges()
                     onCancelChanges: root.cancelAllChanges()
                 }
             }
             Component {
                 id: integrationSettingsComp
                 IntegrationSettings {
-                    onSaveChanges: root.saveFinalChanges()
                     onCancelChanges: root.cancelAllChanges()
                 }
             }

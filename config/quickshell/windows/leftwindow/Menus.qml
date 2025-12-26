@@ -109,7 +109,7 @@ StackView {
             stackView.push(initialPage);
         }
 
-        // Init notiListComponent to get Notifications
+        // Init notiListComponent to start register
         const notificationCompoObj = notiListComponent.createObject(stackView, {
             "visible": false
         });

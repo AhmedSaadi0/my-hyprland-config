@@ -8,6 +8,7 @@ Item {
     property string wallpaperSource: ""
     property string overlaySource: ""
     property bool depthEnabled: false
+    property bool blurEnabled: false
     property bool isMenuOpen: false
 
     default property alias content: widgetsContainer.data
@@ -32,9 +33,9 @@ Item {
             }
         }
 
-        layer.enabled: true
+        layer.enabled: root.blurEnabled
         layer.effect: MultiEffect {
-            blurEnabled: true
+            blurEnabled: root.blurEnabled
             blurMax: 32
             blur: root.isMenuOpen ? 0.8 : 0
             Behavior on blur {
@@ -186,9 +187,9 @@ Item {
             }
         }
 
-        layer.enabled: true
+        layer.enabled: root.blurEnabled
         layer.effect: MultiEffect {
-            blurEnabled: true
+            blurEnabled: root.blurEnabled
             blurMax: 32
             blur: root.isMenuOpen ? 0.2 : 0
             Behavior on blur {

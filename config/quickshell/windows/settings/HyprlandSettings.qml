@@ -35,7 +35,7 @@ BaseThemeSettings {
     property int localBlurSize: 1
     property int localBlurPasses: 1
 
-    property bool localDropShadow: false 
+    property bool localDropShadow: false
     property int localShadowRange: 0
     property int localShadowOffsetX: 0
     property int localShadowOffsetY: 0
@@ -49,8 +49,6 @@ BaseThemeSettings {
     // property string localBezier: ""
     // property string localAnimWindows: ""
     // property string localAnimWorkspaces: ""
-
-    signal resetToDefault
 
     function syncFromTheme() {
         // Layout
