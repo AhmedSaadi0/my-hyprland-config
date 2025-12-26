@@ -19,6 +19,8 @@ Item {
 
         const generalFont = `'${settings.fontName}',11,-1,5,50,0,0,0,0,0`;
         const titleFont = `'${settings.fontName}',11,-1,5,75,0,0,0,0,0`;
+        const smallFont = `'${settings.fontName}',9,-1,5,75,0,0,0,0,0`;
+        const toolBarFont = `'${settings.fontName}',10,-1,5,75,0,0,0,0,0`;
         const monoFont = "'FantasqueSansM Nerd Font Mono',10,-1,5,50,0,0,0,0,0";
 
         _dispatch("Plasma General Font", Utils.Helper.changePlasmaFont({
@@ -41,7 +43,16 @@ Item {
             key: "fixed",
             group: "General"
         }));
-
+        _dispatch("Plasma General Font", Utils.Helper.changePlasmaFont({
+            font: smallFont,
+            key: "smallestReadableFont",
+            group: "General"
+        }));
+        _dispatch("Plasma General Font", Utils.Helper.changePlasmaFont({
+            font: toolBarFont,
+            key: "toolBarFont",
+            group: "General"
+        }));
         // GTK
         _dispatch("GTK Theme", Utils.Helper.changeGtkTheme(settings.gtkTheme));
         _dispatch("GTK Icons", Utils.Helper.changeGtkIcons(settings.themeIcons));

@@ -59,24 +59,20 @@ Item {
         let keys = Object.keys(jsonData);
         console.info(`[ThemeSerializer] Processing ${keys.length} keys from JSON.`);
 
+        const isDynamicColoring = themeInstance.systemSettings.enableDynamicColoring;
+
         for (const key of keys) {
-            // تجاهل الاسم
-            if (key === "themeName")
+            if (key === "themeName" || (isDynamicColoring && _colorKeys.includes(key)))
                 continue;
 
             if (themeInstance.hasOwnProperty(key)) {
-                // تخطي الألوان الديناميكية
-                // (أضف منطق التحقق من المصفوفات هنا إذا أردت)
-
                 try {
                     let oldVal = themeInstance[key];
                     let newVal = jsonData[key];
 
-                    // سنطبع فقط أول 3 تغييرات لتجنب إغراق اللوق، أو نطبع الأخطاء
                     if (oldVal !== newVal) {
                         themeInstance[key] = newVal;
                         appliedCount++;
-                        // console.info(`[ThemeSerializer] Updated ${key}: ${oldVal} -> ${newVal}`);
                     }
                 } catch (err) {
                     console.warn(`[ThemeSerializer] Failed to set property ${key}: ${err.message}`);

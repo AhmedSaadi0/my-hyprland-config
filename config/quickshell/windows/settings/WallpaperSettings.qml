@@ -348,7 +348,7 @@ BaseThemeSettings {
                     onClicked: {
                         ThemeManager.switchToNextWallpaper();
                         root.localWallpaperIndex = theme._selectedWallpaperIndex;
-                        root.applySingleProperty("_selectedWallpaperIndex", root.localWallpaperIndex);
+                        // root.applySingleProperty("_selectedWallpaperIndex", root.localWallpaperIndex);
                     }
                 }
             }
