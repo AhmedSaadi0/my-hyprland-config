@@ -12,9 +12,17 @@ Button {
 
     property string iconText: ""
     property bool showIcon: iconText !== ""
+    property bool iconFirst: false
 
-    // خصائص المحاذاة (كما هي)
-    property var textHorizontalAlignment: showIcon ? Text.AlignRight : Text.AlignHCenter
+    property var textHorizontalAlignment: {
+        if (showIcon) {
+            if (iconFirst) {
+                return Text.AlignLeft;
+            }
+            return Text.AlignRight;
+        }
+        return Text.AlignHCenter;
+    }
     property var textVerticalAlignment: Text.AlignVCenter
     property int textPreferredWidth: 3
     property int textLeftMargin: 0
@@ -59,7 +67,7 @@ Button {
     Behavior on scale {
         NumberAnimation {
             duration: 150
-            easing.type: Easing.OutQuad // حركة ناعمة وسريعة
+            easing.type: Easing.OutQuad 
         }
     }
     // ---------------------------------------------------------
@@ -73,6 +81,29 @@ Button {
         Layout.alignment: Qt.AlignVCenter
         spacing: 0
 
+        layoutDirection: root.iconFirst ? Qt.LeftToRight : Qt.RightToLeft
+
+        Text {
+            id: iconTextItem
+            visible: root.showIcon
+            text: root.iconText
+            font.family: ThemeManager.selectedTheme.typography.iconFont
+            font.pixelSize: buttonMainText.font.pixelSize
+            horizontalAlignment: root.iconHorizontalAlignment
+            verticalAlignment: root.iconVerticalAlignment
+            color: buttonMainText.color
+            Layout.fillWidth: root.showIcon
+            Layout.preferredWidth: root.iconPreferredWidth
+            Layout.leftMargin: root.iconLeftMargin
+            Layout.rightMargin: root.iconRightMargin
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 200
+                }
+            }
+        }
+
         Text {
             id: buttonMainText
             text: root.text
@@ -80,6 +111,7 @@ Button {
             elide: root.textElide
             horizontalAlignment: root.textHorizontalAlignment
             verticalAlignment: root.textVerticalAlignment
+
             Layout.fillWidth: true
             Layout.preferredWidth: root.textPreferredWidth
             Layout.leftMargin: root.textLeftMargin
@@ -117,27 +149,6 @@ Button {
                 }
             }
         }
-
-        Text {
-            id: iconTextItem
-            visible: root.showIcon
-            text: root.iconText
-            font.family: ThemeManager.selectedTheme.typography.iconFont
-            font.pixelSize: buttonMainText.font.pixelSize
-            horizontalAlignment: root.iconHorizontalAlignment
-            verticalAlignment: root.iconVerticalAlignment
-            color: buttonMainText.color
-            Layout.fillWidth: root.showIcon
-            Layout.preferredWidth: root.iconPreferredWidth
-            Layout.leftMargin: root.iconLeftMargin
-            Layout.rightMargin: root.iconRightMargin
-
-            Behavior on color {
-                ColorAnimation {
-                    duration: 200
-                }
-            }
-        }
     }
 
     background: Rectangle {
@@ -166,7 +177,7 @@ Button {
 
         Behavior on color {
             ColorAnimation {
-                duration: 200 // جعل الاستجابة أسرع قليلاً (كانت 400)
+                duration: 200
                 easing.type: Easing.OutQuad
             }
         }

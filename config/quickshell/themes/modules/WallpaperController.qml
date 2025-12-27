@@ -61,8 +61,24 @@ Item {
             return;
 
         root.currentIndex++;
+        root._indexChanged();
+    }
+
+    function previousWallpaper() {
+        if (!root.dynamicEnabled || root.wallpapersList.length === 0)
+            return;
+
+        root.currentIndex--;
+        root._indexChanged();
+    }
+
+    function _indexChanged() {
         if (root.currentIndex >= root.wallpapersList.length) {
             root.currentIndex = 0;
+        }
+
+        if (root.currentIndex < 0) {
+            root.currentIndex = root.wallpapersList.length;
         }
 
         // المسار من القائمة يكون كاملاً عادةً (لأن السكربت يرجعه كذلك)

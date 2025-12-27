@@ -335,16 +335,37 @@ BaseThemeSettings {
             }
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 10
+                spacing: 0
                 Controls.Label {
                     text: "Current Index: " + root.localWallpaperIndex
                     Layout.fillWidth: true
                     color: root.theme ? root.theme.colors.subtleText : "#888"
                 }
                 MButton {
-                    text: "Skip Wallpaper "
-                    Layout.preferredWidth: 140
+                    text: "Back"
+                    iconText: "󰒮"
+                    Layout.preferredWidth: 80
                     Layout.preferredHeight: 30
+                    iconFirst: true
+                    textPreferredWidth: 4
+                    iconPreferredWidth: 3
+                    topRightRadius: 0
+                    bottomRightRadius: 0
+                    onClicked: {
+                        ThemeManager.switchToPreviousWallpaper();
+                        root.localWallpaperIndex = theme._selectedWallpaperIndex;
+                        // root.applySingleProperty("_selectedWallpaperIndex", root.localWallpaperIndex);
+                    }
+                }
+                MButton {
+                    text: "Next"
+                    iconText: "󰒭"
+                    Layout.preferredWidth: 80
+                    Layout.preferredHeight: 30
+                    textPreferredWidth: 4
+                    iconPreferredWidth: 3
+                    topLeftRadius: 0
+                    bottomLeftRadius: 0
                     onClicked: {
                         ThemeManager.switchToNextWallpaper();
                         root.localWallpaperIndex = theme._selectedWallpaperIndex;

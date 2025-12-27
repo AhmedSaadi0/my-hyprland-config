@@ -36,11 +36,11 @@ Item {
 
     property real requiredWidth: {
         if (!showInfo)
-            return Math.max(clockRow.implicitWidth + 100, 330);
+            return Math.max(clockRow.implicitWidth + 100, 312);
         if (!CapsuleManager.changeWidth)
-            return 330;
+            return 312;
 
-        return Math.max(mainColumn.width + 100, 330);
+        return Math.max(mainColumn.width + 100, 312);
     }
 
     property real requiredHeight: {

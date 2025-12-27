@@ -221,7 +221,10 @@ Singleton {
 
     function switchToNextWallpaper() {
         wallpaperCtrl.nextWallpaper();
-        console.info("Calling next");
+    }
+
+    function switchToPreviousWallpaper() {
+        wallpaperCtrl.previousWallpaper();
     }
 
     function reloadTheme(forceReload = false) {
