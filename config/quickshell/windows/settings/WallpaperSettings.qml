@@ -241,9 +241,9 @@ BaseThemeSettings {
             SliderWithLabel {
                 label: qsTr("Tone Multiplier (Contrast)")
                 from: 0.0
-                to: 5.0
-                stepSize: 0.1
-                decimals: 1
+                to: 3.0
+                stepSize: 0.01
+                decimals: 2
                 value: root.localToneMult
                 onEditingFinished: val => {
                     root.localToneMult = val;

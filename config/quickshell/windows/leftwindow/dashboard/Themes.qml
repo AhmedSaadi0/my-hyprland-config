@@ -15,7 +15,7 @@ import "root:/config"
 MenuCard {
     id: root
 
-    title: "Themes & Customization"
+    title: qsTr("Themes & Customization")
     icon: ""
 
     property bool settingsExpanded: false
@@ -41,7 +41,7 @@ MenuCard {
 
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
-                themeTitle: "Dracula"
+                themeTitle: qsTr("Dracula")
                 lightThemeName: "DraculaLight"
                 darkThemeName: "DraculaDark"
                 isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
@@ -49,7 +49,7 @@ MenuCard {
 
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
-                themeTitle: "Catppuccin"
+                themeTitle: qsTr("Catppuccin")
                 lightThemeName: "CatppuccinLight"
                 darkThemeName: "CatppuccinDark"
 
@@ -58,7 +58,7 @@ MenuCard {
 
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
-                themeTitle: "Material"
+                themeTitle: qsTr("Material")
                 lightThemeName: "M3Light"
                 darkThemeName: "M3Dark"
 
@@ -73,7 +73,7 @@ MenuCard {
 
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
-                themeTitle: "Nord"
+                themeTitle: qsTr("Nord")
                 lightThemeName: "NordLight"
                 darkThemeName: "NordDark"
 
@@ -82,7 +82,7 @@ MenuCard {
 
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
-                themeTitle: "Gruvbox"
+                themeTitle: qsTr("Gruvbox")
                 lightThemeName: "GruvboxLight"
                 darkThemeName: "GruvboxDark"
 
@@ -90,7 +90,7 @@ MenuCard {
             }
             ThemeSelectorCard {
                 Layout.fillWidth: true // مهم جدًا: اجعل البطاقة تملأ العرض
-                themeTitle: "Tokyo Night"
+                themeTitle: qsTr("Tokyo Night")
                 lightThemeName: "TokyoNightLight"
                 darkThemeName: "TokyoNightDark"
 
@@ -100,7 +100,7 @@ MenuCard {
 
         Label {
             id: singleThemeLabel
-            text: "Single Themes"
+            text: qsTr("Single Themes")
             font.pointSize: 10
             font.bold: true
             color: Kirigami.Theme.textColor
@@ -118,7 +118,7 @@ MenuCard {
             rowSpacing: 10
 
             MButton {
-                text: "Colors"
+                text: qsTr("Colors")
                 onClicked: {
                     ThemeManager.requestLoadTheme("ColorsTheme");
                     closeMenu.start();
@@ -128,7 +128,7 @@ MenuCard {
                 isActive: ThemeManager.selectedTheme.themeName === "ColorsTheme"
             }
             MButton {
-                text: "Deer"
+                text: qsTr("Deer")
                 onClicked: {
                     ThemeManager.requestLoadTheme("DeerTheme");
                     closeMenu.start();
