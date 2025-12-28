@@ -280,11 +280,11 @@ Item {
                                     duration: 250
                                     easing.type: Easing.InQuad
                                 }
-                                NumberAnimation {
-                                    property: "scale"
-                                    to: 0.9
-                                    duration: 200
-                                }
+                                // NumberAnimation {
+                                //     property: "scale"
+                                //     to: 0.9
+                                //     duration: 200
+                                // }
                             }
                             NumberAnimation {
                                 property: "height"

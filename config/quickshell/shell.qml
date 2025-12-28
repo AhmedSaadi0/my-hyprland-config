@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 
 import Quickshell
 import QtQuick
+import QtQml
 import QtQuick.Window
 import Quickshell.Io
 
@@ -30,6 +31,10 @@ ShellRoot {
     readonly property var _selectedTheme: ThemeManager.selectedTheme
 
     signal openLeftPanelRequested(int selectedIndex)
+
+    Component.onCompleted: {
+        Qt.uiLanguage = "ar";
+    }
 
     // // --- Initialization Logic ---
     // Component.onCompleted: {
@@ -264,6 +269,9 @@ ShellRoot {
                 }
                 function toggleNetworkingMenu() {
                     toggleMenu(Consts.NETWORK_MENU_INDEX);
+                }
+                function toggleClipboardMenu() {
+                    toggleMenu(Consts.CLIPBOARD_MENU_INDEX);
                 }
                 function toggleAiMenu() {
                     toggleMenu(Consts.AI_BOT_MENU_INDEX);

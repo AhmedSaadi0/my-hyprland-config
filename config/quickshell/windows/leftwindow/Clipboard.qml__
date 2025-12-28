@@ -1,0 +1,430 @@
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import Quickshell.Io
+
+import "root:/themes"
+import "root:/config"
+import "root:/config/EventNames.js" as Events
+
+ColumnLayout {
+    id: root
+    Layout.fillWidth: true
+    Layout.fillHeight: true
+    spacing: 0
+
+    // Header
+    Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 50
+        color: "transparent"
+        RowLayout {
+            anchors.fill: parent
+            anchors.margins: 15
+            spacing: 10
+            Label {
+                text: qsTr("Clipboard History")
+                font.pixelSize: ThemeManager.selectedTheme.typography.heading4Size
+                font.bold: true
+                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                Layout.fillWidth: true
+            }
+            Rectangle {
+                Layout.preferredWidth: 32
+                Layout.preferredHeight: 32
+                radius: ThemeManager.selectedTheme.dimensions.elementRadius
+                color: clearMA.containsMouse ? ThemeManager.selectedTheme.colors.error.alpha(0.15) : "transparent"
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
+                Text {
+                    anchors.centerIn: parent
+                    text: "󰆴"
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
+                    color: clearMA.containsMouse ? ThemeManager.selectedTheme.colors.error : ThemeManager.selectedTheme.colors.subtleText
+                }
+                MouseArea {
+                    id: clearMA
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: listView.animateAndClearAll()
+                }
+            }
+        }
+        Rectangle {
+            anchors.bottom: parent.bottom
+            width: parent.width
+            height: 1
+            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.1)
+        }
+    }
+
+    // List
+    ScrollView {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        clip: true
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy: ScrollBar.AsNeeded
+
+        ListView {
+            id: listView
+            anchors.fill: parent
+            spacing: 12
+            topMargin: 5
+            bottomMargin: 10
+            model: clipboardModel
+            cacheBuffer: 2000
+
+            // Animations Props
+            property real pullOffset: 0
+            property real shockOffset: 0
+            property bool userIsDragging: false
+
+            function triggerSway() {
+                swayAnim.restart();
+            }
+            function animateAndClearAll() {
+                if (clipboardModel.count > 0)
+                    clearAllSequence.start();
+            }
+
+            SequentialAnimation {
+                id: swayAnim
+                NumberAnimation {
+                    target: listView
+                    property: "shockOffset"
+                    to: 15
+                    duration: 150
+                    easing.type: Easing.OutQuad
+                }
+                NumberAnimation {
+                    target: listView
+                    property: "shockOffset"
+                    to: 0
+                    duration: 600
+                    easing.type: Easing.OutElastic
+                    easing.period: 0.8
+                    easing.amplitude: 0.5
+                }
+            }
+
+            SequentialAnimation {
+                id: clearAllSequence
+                ParallelAnimation {
+                    NumberAnimation {
+                        target: listView
+                        property: "pullOffset"
+                        to: 200
+                        duration: 300
+                        easing.type: Easing.InBack
+                        easing.overshoot: 1.2
+                    }
+                    NumberAnimation {
+                        target: listView
+                        property: "opacity"
+                        to: 0
+                        duration: 250
+                    }
+                }
+                ScriptAction {
+                    script: actionProcess.runCmd("wipe")
+                }
+                PropertyAction {
+                    target: listView
+                    property: "pullOffset"
+                    value: 0
+                }
+                PropertyAction {
+                    target: listView
+                    property: "opacity"
+                    value: 1
+                }
+            }
+
+            add: Transition {
+                NumberAnimation {
+                    property: "height"
+                    from: 0
+                    to: 50
+                    duration: 300
+                    easing.type: Easing.OutQuart
+                }
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 300
+                }
+            }
+            displaced: Transition {
+                NumberAnimation {
+                    properties: "y"
+                    duration: 400
+                    easing.type: Easing.OutQuart
+                }
+            }
+            remove: Transition {
+                SequentialAnimation {
+                    ParallelAnimation {
+                        NumberAnimation {
+                            property: "opacity"
+                            to: 0
+                            duration: 200
+                        }
+                        NumberAnimation {
+                            property: "x"
+                            to: 100
+                            duration: 250
+                            easing.type: Easing.InQuad
+                        }
+                    }
+                    NumberAnimation {
+                        property: "height"
+                        to: 0
+                        duration: 300
+                        easing.type: Easing.InOutQuart
+                    }
+                }
+            }
+
+            delegate: Item {
+                id: wrapper
+                width: listView.width
+                height: 50
+                transform: [
+                    Translate {
+                        x: listView.pullOffset + listView.shockOffset
+                    }
+                ]
+
+                Item {
+                    id: swipeContainer
+                    width: parent.width
+                    height: parent.height
+                    Behavior on x {
+                        enabled: !dragArea.drag.active
+                        NumberAnimation {
+                            duration: 300
+                            easing.type: Easing.OutBack
+                            easing.overshoot: 1.0
+                        }
+                    }
+
+                    MouseArea {
+                        id: dragArea
+                        anchors.fill: parent
+                        drag.target: swipeContainer
+                        drag.axis: Drag.XAxis
+                        drag.minimumX: 0
+                        drag.maximumX: 600
+                        drag.filterChildren: true
+
+                        onPressed: listView.userIsDragging = true
+                        onPositionChanged: {
+                            if (drag.active) {
+                                var tension = Math.max(0, swipeContainer.x / 12);
+                                listView.pullOffset = Math.min(tension, 30);
+                            }
+                        }
+                        onReleased: {
+                            listView.userIsDragging = false;
+                            if (swipeContainer.x > 120) {
+                                listView.pullOffset = 0;
+                                swipeContainer.x = 600;
+                                listView.triggerSway();
+
+                                // 1. حذف بصري فوراً
+                                if (index >= 0 && index < clipboardModel.count) {
+                                    const idToDelete = model.id; // حفظ ال ID قبل الحذف
+                                    clipboardModel.remove(index);
+
+                                    // 2. حذف فعلي من البايثون
+                                    actionProcess.runCmd("delete", idToDelete);
+
+                                    // 3. تحديث إجباري بعد لحظة لضمان تزامن ال IDs لبقية العناصر
+                                    refreshTimer.restart();
+                                }
+                            } else {
+                                swipeContainer.x = 0;
+                                listView.pullOffset = 0;
+                            }
+                        }
+
+                        onClicked: {
+                            if (!drag.active) {
+                                // console.log("Activating ID: " + model.id);
+                                actionProcess.runCmd("activate", model.id);
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        id: rectangle
+                        anchors.fill: parent
+                        color: dragArea.containsMouse && !dragArea.drag.active ? ThemeManager.selectedTheme.colors.secondary.alpha(0.1) : "transparent"
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 150
+                            }
+                        }
+                        opacity: 1 - (swipeContainer.x / 300)
+
+                        Rectangle {
+                            width: parent.width - 40
+                            height: 1
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.05)
+                        }
+
+                        property color accColor: {
+                            switch (model.type) {
+                            case 1:
+                                return ThemeManager.selectedTheme.colors.secondary;
+                            case 2:
+                                return ThemeManager.selectedTheme.colors.tertiary;
+                            case 4:
+                                return ThemeManager.selectedTheme.colors.warning;
+                            default:
+                                return ThemeManager.selectedTheme.colors.primary;
+                            }
+                        }
+
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.leftMargin: 10
+                            anchors.rightMargin: 10
+                            spacing: 15
+                            Label {
+                                text: "󰆴"
+                                font.family: ThemeManager.selectedTheme.typography.iconFont
+                                font.pixelSize: 18
+                                color: ThemeManager.selectedTheme.colors.error
+                                // opacity: Math.min(1, swipeContainer.x / 60)
+                                // Layout.rightMargin: 20
+                            }
+                            Rectangle {
+                                Layout.preferredWidth: 4
+                                Layout.preferredHeight: 25
+                                radius: 2
+                                color: rectangle.accColor
+                            }
+                            Label {
+                                Layout.fillWidth: true
+                                text: model.text
+                                elide: Text.ElideRight
+                                font.family: ThemeManager.selectedTheme.typography.bodyFont
+                                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // هذا التايمر ضروري لإعادة جلب البيانات بعد الحذف
+    // للتأكد من أن الأرقام IDs صحيحة للعناصر المتبقية
+    Timer {
+        id: refreshTimer
+        interval: 300 // انتظار قصير ليكتمل الحذف في الخلفية
+        repeat: false
+        onTriggered: listProcess.fetch()
+    }
+
+    ListModel {
+        id: clipboardModel
+    }
+
+    Process {
+        id: listProcess
+        function fetch() {
+            const script = App.scripts.python.getClipboard;
+            command = ["python3", script, "list"];
+            running = true;
+        }
+        stdout: SplitParser {
+            onRead: data => {
+                try {
+                    const newItems = JSON.parse(data);
+                    syncModel(newItems);
+                } catch (e) {}
+            }
+        }
+    }
+
+    Process {
+        id: actionProcess
+        function runCmd(action, id = "") {
+            const script = App.scripts.python.getClipboard;
+            if (action === "activate")
+                command = ["python3", script, "activate", id];
+            else if (action === "delete")
+                command = ["python3", script, "delete", id];
+            else if (action === "wipe") {
+                clipboardModel.clear();
+                command = ["python3", script, "wipe"];
+            }
+            running = true;
+        }
+    }
+
+    function syncModel(newItems) {
+        if (clipboardModel.count === 0) {
+            newItems.forEach(item => clipboardModel.append(item));
+            return;
+        }
+
+        let currentIdx = 0;
+        for (let i = 0; i < newItems.length; i++) {
+            let newItem = newItems[i];
+            let found = false;
+
+            // نحاول إيجاد نفس النص في القائمة
+            for (let j = currentIdx; j < clipboardModel.count; j++) {
+                // نستخدم النص للمقارنة لأن ال ID قد يتغير
+                if (clipboardModel.get(j).text === newItem.text) {
+
+                    // الأهم: تحديث الـ ID دائماً!
+                    if (clipboardModel.get(j).id !== newItem.id) {
+                        clipboardModel.setProperty(j, "id", newItem.id);
+                    }
+
+                    if (j !== currentIdx)
+                        clipboardModel.move(j, currentIdx, 1);
+                    found = true;
+                    currentIdx++;
+                    break;
+                }
+            }
+            if (!found) {
+                clipboardModel.insert(currentIdx, newItem);
+                currentIdx++;
+            }
+        }
+        while (clipboardModel.count > currentIdx)
+            clipboardModel.remove(currentIdx);
+    }
+
+    Process {
+        id: monitor
+        command: ["wl-paste", "--watch", "echo", "1"]
+        running: true
+        stdout: SplitParser {
+            onRead: if (!listProcess.running)
+                listProcess.fetch()
+        }
+    }
+
+    Component.onCompleted: {
+        listProcess.fetch();
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, function (idx) {
+            if (idx === 5)
+                listProcess.fetch();
+        });
+    }
+}

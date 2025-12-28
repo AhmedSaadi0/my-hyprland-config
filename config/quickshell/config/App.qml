@@ -213,6 +213,8 @@ Singleton {
             readonly property string mainAI: root.pythonScriptsPath + "/ai/main.py"
             readonly property string listGemini: root.pythonScriptsPath + "/ai/list-gemini.py"
 
+            readonly property string getClipboard: root.pythonScriptsPath + "/get_clipboard.py"
+
             // Commands
             readonly property var batteryInfoCommand: [pythonPath, batteryInfo]
             readonly property var devicesTempCommand: [pythonPath, devicesTemp]

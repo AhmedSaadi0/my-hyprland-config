@@ -42,7 +42,7 @@ _Visual improvements and customization options._
 _Tools and applets._
 
 - **Menus & Popups**
-  - [ ] **Clipboard Manager**: UI for clipboard history.
+  - [x] **Clipboard Manager**: UI for clipboard history.
   - [ ] **Todo List**: Built-in simple task manager.
   - [ ] **Notes**: Quick note-taking widget.
   - [ ] **Favorite Apps**: Quick launch section.

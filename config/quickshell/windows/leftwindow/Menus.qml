@@ -10,9 +10,11 @@ import "./weather"
 import "./applauncher"
 import "./animations"
 import "./network"
+import "./clipboard"
 
 import "root:/utils"
 import "root:/config"
+import "root:/themes"
 import "root:/config/EventNames.js" as Events
 
 StackView {
@@ -54,6 +56,33 @@ StackView {
         Clipboard {}
     }
     Component {
+        id: aiChatComponent
+        Text {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            text: "soon ..."
+            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        }
+    }
+    Component {
+        id: todoChatComponent
+        Text {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            text: "soon ..."
+            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        }
+    }
+    Component {
+        id: translationChatComponent
+        Text {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            text: "soon ..."
+            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        }
+    }
+    Component {
         id: appLauncherComponent
         AppLauncher {}
     }
@@ -75,6 +104,9 @@ StackView {
             3: monitorComponent,
             4: networkComponent,
             5: clipboardComponent,
+            6: todoChatComponent,
+            7: translationChatComponent,
+            8: aiChatComponent,
             9: appLauncherComponent
         };
 

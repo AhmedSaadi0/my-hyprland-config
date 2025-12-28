@@ -47,6 +47,10 @@
     "opt_allow_erasing": "1. Allow erasing conflicting packages (--allowerasing)",
     "opt_skip_broken": "2. Skip broken/conflicting packages (--skip-broken)",
     "opt_cancel": "3. Cancel installation",
+    "gemini_api_key": "Enter Gemini API Key: ",
+    "music_ai_api_key": "Enter Gemini API Key For Music Analytics:",
+    "weather_ai_api_key": "Enter Gemini API Key For Weather Analytics:",
+    "ai_preferred_language": "Enter Preferred AI Response Language:",
     "deps_success_msg": "Dependencies installed successfully. You are now ready to proceed with installing NibrasShell."
   },
   "ar": {
@@ -97,6 +101,10 @@
     "opt_allow_erasing": "1. السماح باستبدال الحزم المتعارضة (--allowerasing)",
     "opt_skip_broken": "2. تخطي الحزم المعطوبة/المتعارضة (--skip-broken)",
     "opt_cancel": "3. إلغاء التثبيت",
+    "gemini_api_key": "أدخل مفتاح Gemini API: ",
+    "music_ai_api_key": "أدخل مفتاح Gemini API لتحليل الموسيقى: ",
+    "weather_ai_api_key": "أدخل مفتاح Gemini API لتحليل الطقس: ",
+    "ai_preferred_language": "أدخل اللغة المفضلة لاستجابة الذكاء الاصطناعي:",
     "deps_success_msg": "تم تثبيت المتطلبات بنجاح. يمكنك الآن المتابعة لتثبيت واجهة NibrasShell."
   },
   "cs": {
@@ -147,6 +155,10 @@
     "opt_allow_erasing": "1. Povolit vymazání konfliktních balíčků (--allowerasing)",
     "opt_skip_broken": "2. Přeskočit poškozené balíčky (--skip-broken)",
     "opt_cancel": "3. Zrušit instalaci",
+    "gemini_api_key": "Zadejte Gemini API klíč: ",
+    "music_ai_api_key": "Zadejte Gemini API klíč pro analýzu hudby: ",
+    "weather_ai_api_key": "Zadejte Gemini API klíč pro analýzu počasí: ",
+    "ai_preferred_language": "Zadejte preferovaný jazyk odpovědi AI:",
     "deps_success_msg": "Závislosti byly úspěšně nainstalovány. Nyní můžete pokračovat v instalaci NibrasShell."
   }
 }
