@@ -43,6 +43,9 @@ QtObject {
     property int cpuHighLoadThreshold: 85
     property int ramHighLoadThreshold: 85
 
+    property bool useBottomLauncher: false  // false = side launcher, true = bottom launcher
+    property int bottomLauncherWidth: 800
+
     property var _fileView: FileView {
         id: fileWatcher
         path: Qt.resolvedUrl(store.configPath)
@@ -144,6 +147,11 @@ QtObject {
             store.cpuHighLoadThreshold = data.cpuHighLoadThreshold;
         if (data.ramHighLoadThreshold !== undefined)
             store.ramHighLoadThreshold = data.ramHighLoadThreshold;
+
+        if (data.useBottomLauncher !== undefined)
+            store.useBottomLauncher = data.useBottomLauncher;
+        if (data.bottomLauncherWidth !== undefined)
+            store.bottomLauncherWidth = data.bottomLauncherWidth;
 
         store.settingsLoaded();
         console.info("Config reloaded successfully.");

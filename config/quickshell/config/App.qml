@@ -69,6 +69,9 @@ Singleton {
     property alias cpuHighLoadThreshold: root.config.cpuHighLoadThreshold
     property alias ramHighLoadThreshold: root.config.ramHighLoadThreshold
 
+    property alias useBottomLauncher: root.config.useBottomLauncher
+    property alias bottomLauncherWidth: root.config.bottomLauncherWidth
+
     function updateConfig(key, value) {
         root.config.set(key, value);
     }
