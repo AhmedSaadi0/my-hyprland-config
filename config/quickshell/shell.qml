@@ -240,6 +240,16 @@ ShellRoot {
                 id: bottomLauncherPanel
             }
 
+            // Event listener for bottom launcher toggle from LeftBar
+            Connections {
+                target: null
+                Component.onCompleted: {
+                    EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
+                        bottomLauncherPanel.toggle();
+                    });
+                }
+            }
+
             // 5. IPC Handler (Refactored Logic)
             IpcHandler {
                 id: handler

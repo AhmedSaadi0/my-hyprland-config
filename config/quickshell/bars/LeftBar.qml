@@ -11,6 +11,7 @@ import "root:/utils"
 import "root:/services"
 import "root:/config/EventNames.js" as Events
 import "root:/config"
+import "root:/config/ConstValues.js" as Consts
 
 PanelWindow {
     id: root
@@ -202,6 +203,15 @@ PanelWindow {
                 bottomButtonGroup.currentIndex = -1;
 
             const globalIndex = offset + localIndex;
+
+            // Check if this is the apps button and bottom launcher is enabled
+            if (globalIndex === Consts.APPLICATIONS_MENU_INDEX && App.useBottomLauncher) {
+                // Reset selection and toggle bottom launcher instead
+                bottomButtonGroup.currentIndex = -1;
+                EventBus.emit(Events.TOGGLE_BOTTOM_LAUNCHER);
+                return;
+            }
+
             root.activeMenuIndex = globalIndex;
 
             if (!root.panelOpen) {
