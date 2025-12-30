@@ -32,8 +32,6 @@ PanelWindow {
         bottom: 20
     }
     
-    // Fixed width container centered in the window
-
     // Keyboard shortcut to toggle the launcher
     NibrasShellShortcut {
         id: toggleLauncherShortcut
