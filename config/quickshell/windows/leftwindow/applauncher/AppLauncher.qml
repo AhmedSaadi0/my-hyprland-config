@@ -17,13 +17,67 @@ ColumnLayout {
     spacing: 0
     focus: true
 
+    // Command mode using shared registry
+    property bool isCommandMode: CommandsRegistry.isCommandMode(searchField.text)
+    property string commandText: CommandsRegistry.getCommandText(searchField.text)
+    property var filteredCommands: isCommandMode ? CommandsRegistry.filterCommands(commandText) : []
+
+    function executeCommand(cmd) {
+        if (cmd.isAction) {
+            // Handle action commands
+            if (cmd.action === "openSettings") {
+                EventBus.emit(Events.OPEN_SETTINGS);
+                EventBus.emit(Events.CLOSE_LEFTBAR);
+            }
+        } else if (cmd.view !== "") {
+            // Show the command view
+            root.activeCommandView = cmd.view;
+        }
+    }
+
+    // Current command view (empty = none, "wallpaper" = wallpaper selector, etc.)
+    property string activeCommandView: ""
+
+    // Auto-close command view when exiting command mode
+    onIsCommandModeChanged: {
+        if (!isCommandMode && activeCommandView !== "") {
+            activeCommandView = "";
+        }
+    }
+
     function gainFocus() {
         forceActiveFocus();
         focusTimer.start();
     // searchField.forceActiveFocus();
     }
 
+    function exitCommandView() {
+        activeCommandView = "";
+        searchField.text = "";
+        searchField.forceActiveFocus();
+    }
+
+    function resetState() {
+        searchField.text = "";
+        activeCommandView = "";
+    }
+
+    // Reset when parent becomes invisible
+    onVisibleChanged: {
+        if (!visible) {
+            resetState();
+        }
+    }
+
     Keys.onPressed: event => {
+        if (event.key === Qt.Key_Escape) {
+            if (activeCommandView !== "") {
+                exitCommandView();
+                event.accepted = true;
+                return;
+            }
+        }
+
         if (event.text && !searchField.activeFocus) {
             searchField.append(event.text);
             // searchField.forceActiveFocus();
@@ -38,7 +92,7 @@ ColumnLayout {
         // Layout.margins: 12
         Layout.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        placeholderText: "Search for an application..."
+        placeholderText: "Search apps... or use > for commands"
         font.pixelSize: 16
 
         normalBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
@@ -57,6 +111,13 @@ ColumnLayout {
         // verticalAlignment: Text.VAlignment
 
         onAccepted: {
+            // Handle command mode
+            if (root.isCommandMode && root.filteredCommands.length > 0) {
+                const cmd = root.filteredCommands[0];
+                root.executeCommand(cmd);
+                return;
+            }
+
             if (processedModel.values.length > 1) {
                 const firstAppItem = processedModel.values[1];
                 root.launchSelectedApp(firstAppItem.appData.command, firstAppItem.appData.workingDirectory);
@@ -74,6 +135,7 @@ ColumnLayout {
         repeat: false
         onTriggered: {
             searchField.text = "";
+            root.activeCommandView = "";
         }
     }
 
@@ -127,12 +189,57 @@ ColumnLayout {
         }
     }
 
+    // Command suggestions list (shows when typing commands with >)
+    ListView {
+        id: commandListView
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        visible: root.isCommandMode && root.activeCommandView === ""
+
+        model: root.filteredCommands
+        clip: true
+        spacing: 4
+
+        delegate: CommandItem {
+            width: commandListView.width
+            commandData: modelData
+            isHighlighted: index === 0
+            onClicked: root.executeCommand(modelData)
+        }
+
+        Text {
+            anchors.centerIn: parent
+            visible: root.filteredCommands.length === 0
+            text: "No commands found"
+            font.pixelSize: 14
+            color: ThemeManager.selectedTheme.colors.subtleText
+        }
+    }
+
+    // Wallpaper Selector View
+    WallpaperSelector {
+        id: wallpaperSelector
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        visible: root.activeCommandView === "wallpaper"
+
+        onWallpaperSelected: path => {
+            root.exitCommandView();
+            EventBus.emit(Events.CLOSE_LEFTBAR);
+        }
+
+        onCloseRequested: {
+            root.exitCommandView();
+        }
+    }
+
     ScrollView {
         Layout.fillWidth: true
         Layout.fillHeight: true
         clip: true
         contentWidth: availableWidth
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        visible: !root.isCommandMode && root.activeCommandView === ""
 
         ListView {
             id: listView
