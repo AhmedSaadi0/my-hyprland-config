@@ -6,7 +6,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import Qt.labs.platform
 
 import "root:/themes"
 import "root:/components"
@@ -31,9 +30,9 @@ Item {
     property int sourceMode: 0 // 0 = Local, 1 = Custom, 2 = Wallhaven
 
     property var localWallpapers: []
-    property var customWallpapers: []
+    property var downloadedWallpapers: []
     property var wallhavenWallpapers: []
-    property string customFolderPath: ThemeManager.selectedTheme?.systemSettings?.dynamicWallpapersPath || ""
+    property string downloadedFolderPath: App.cacheFolderPath + "/wallpapers"
 
     // Wallhaven settings
     property string wallhavenQuery: ""
@@ -106,11 +105,11 @@ Item {
         { name: "UW QHD", value: "3440x1440" }
     ]
 
-    property var sourceNames: ["Local", "Custom", "Wallhaven"]
+    property var sourceNames: ["Local", "Downloaded", "Wallhaven"]
 
     property var currentWallpapers: {
         if (sourceMode === 0) return localWallpapers;
-        if (sourceMode === 1) return customWallpapers;
+        if (sourceMode === 1) return downloadedWallpapers;
         return wallhavenWallpapers;
     }
 
@@ -128,9 +127,7 @@ Item {
 
     Component.onCompleted: {
         loadLocalWallpapers();
-        if (customFolderPath !== "") {
-            loadCustomWallpapers();
-        }
+        loadDownloadedWallpapers();
     }
 
     function loadLocalWallpapers() {
@@ -138,10 +135,9 @@ Item {
         localWallpapersProcess.running = true;
     }
 
-    function loadCustomWallpapers() {
-        if (customFolderPath === "") return;
-        customWallpapersProcess.command = Helper.getWallpapersList(customFolderPath);
-        customWallpapersProcess.running = true;
+    function loadDownloadedWallpapers() {
+        downloadedWallpapersProcess.command = Helper.getWallpapersList(downloadedFolderPath);
+        downloadedWallpapersProcess.running = true;
     }
 
     function searchWallhaven(resetPage) {
@@ -245,15 +241,15 @@ Item {
     }
 
     Process {
-        id: customWallpapersProcess
+        id: downloadedWallpapersProcess
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
                     const list = JSON.parse(this.text);
-                    root.customWallpapers = list || [];
+                    root.downloadedWallpapers = list || [];
                 } catch (e) {
-                    console.error("WallpaperSelector: Failed to parse custom wallpapers", e);
-                    root.customWallpapers = [];
+                    console.error("WallpaperSelector: Failed to parse downloaded wallpapers", e);
+                    root.downloadedWallpapers = [];
                 }
             }
         }
@@ -302,19 +298,11 @@ Item {
         onExited: (exitCode, exitStatus) => {
             if (exitCode === 0 && wallpaperPath !== "") {
                 root.applyWallpaper(wallpaperPath);
+                // Refresh downloaded list after successful download
+                root.loadDownloadedWallpapers();
             } else {
                 console.error("WallpaperSelector: Download failed with exit code", exitCode);
             }
-        }
-    }
-
-    FolderDialog {
-        id: folderDialog
-        title: "Select Wallpapers Folder"
-        onAccepted: {
-            var path = folder.toString().replace("file://", "");
-            root.customFolderPath = path;
-            root.loadCustomWallpapers();
         }
     }
 
@@ -349,33 +337,6 @@ Item {
                     text: sourceMode === 2 ? qsTr("Browse wallpapers from Wallhaven.cc") : qsTr("Select a wallpaper to apply")
                     font.pixelSize: 11
                     color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
-                }
-            }
-
-            // Settings button (for custom folder)
-            Rectangle {
-                width: 28
-                height: 28
-                radius: 6
-                visible: root.sourceMode === 1
-                color: settingsMouseArea.containsMouse 
-                    ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333"
-                    : "transparent"
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "󰉋"
-                    font.pixelSize: 16
-                    font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-                    color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
-                }
-
-                MouseArea {
-                    id: settingsMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: folderDialog.open()
                 }
             }
 
