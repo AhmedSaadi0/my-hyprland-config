@@ -6,10 +6,8 @@ import "root:/config"
 QtObject {
     id: root
 
-    // 1. تعريف الموديل كخاصية مباشرة (بدلاً من alias)
     property ListModel model: ListModel {}
 
-    // 2. العمليات كخصائص (Properties)
     // ---------------------------------------------------------
     property Process monitor: Process {
         command: ["wl-paste", "--watch", "echo", "1"]
@@ -89,7 +87,7 @@ QtObject {
             newItems.forEach(item => model.append({
                     "text": item.text,
                     "type": item.type,
-                    "clipId": item.id // <--- هنا التحويل المهم
+                    "clipId": item.id
                 }));
             return;
         }
@@ -118,7 +116,7 @@ QtObject {
                 model.insert(currentIdx, {
                     "text": newItem.text,
                     "type": newItem.type,
-                    "clipId": newItem.id // <--- وهنا أيضاً
+                    "clipId": newItem.id
                 });
                 currentIdx++;
             }

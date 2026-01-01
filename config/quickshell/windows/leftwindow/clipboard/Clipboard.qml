@@ -14,6 +14,7 @@ ColumnLayout {
 
     // Header
     ClipboardHeader {
+        id: header // ID للربط مع البحث
         onClearAllClicked: listView.animateAndClearAll()
     }
 
@@ -30,12 +31,18 @@ ColumnLayout {
         ListView {
             id: listView
             anchors.fill: parent
-            spacing: 12
+
+            // تم تغيير spacing إلى 0 لضمان اختفاء العناصر بالكامل عند البحث
+            spacing: 0
+
             topMargin: 5
             bottomMargin: 10
 
             model: ClipboardService.model
             cacheBuffer: 2000
+
+            // *** ربط نص البحث بالهيدر ***
+            property string currentSearchText: header.searchText
 
             property real pullOffset: 0
             property real shockOffset: 0
@@ -47,7 +54,7 @@ ColumnLayout {
             function animateAndClearAll() {
                 if (listView.count > 0) {
                     ClipboardService.wipe();
-                    // clearAllSequence.start();
+                    // clearAllSequence.start(); // يمكن تفعيل هذا السطر إذا كنت تريد تشغيل الانميشن أدناه
                 }
             }
 
@@ -78,6 +85,8 @@ ColumnLayout {
                     easing.amplitude: 0.5
                 }
             }
+
+            // هذا الجزء كان موجوداً في كودك الأصلي وتمت اعادته
             SequentialAnimation {
                 id: clearAllSequence
                 ParallelAnimation {
@@ -96,9 +105,6 @@ ColumnLayout {
                         duration: 250
                     }
                 }
-                // ScriptAction {
-                //     // script: ClipboardService.wipe()
-                // }
                 PropertyAction {
                     target: listView
                     property: "pullOffset"
@@ -126,6 +132,8 @@ ColumnLayout {
                     duration: 300
                 }
             }
+
+            // هذا الترانزيشن كان مفقوداً في النسخة المختصرة
             displaced: Transition {
                 NumberAnimation {
                     properties: "y"
@@ -133,6 +141,8 @@ ColumnLayout {
                     easing.type: Easing.OutQuart
                 }
             }
+
+            // هذا الترانزيشن كان مفقوداً في النسخة المختصرة
             remove: Transition {
                 SequentialAnimation {
                     ParallelAnimation {
@@ -166,9 +176,14 @@ ColumnLayout {
 
     Component.onCompleted: {
         ClipboardService.refresh();
+        // تم تحديث الحدث ليشمل السكرول والبحث التلقائي
         EventBus.on(Events.LEFT_MENU_IS_OPENED, function (idx) {
-            if (idx === 5)
+            // تأكد من اسم الحدث (OPEN_LEFTBAR أو LEFT_MENU_IS_OPENED) حسب ملفك
+            if (idx === 5) {
                 ClipboardService.refresh();
+                listView.positionViewAtBeginning(); // سكرول للأعلى
+                header.focusSearch(); // تفعيل البحث
+            }
         });
     }
 }

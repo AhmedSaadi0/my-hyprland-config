@@ -108,7 +108,7 @@ PersistentProperties {
     // -------------------------
     property string _wallpaper: "linux.png"
     property bool _enableDynamicColoring: false
-    property bool _enableWallpaperBlur: true
+    property bool _enableWallpaperBlur: false
 
     property int _dynamicColoringSchemeVariant: 2
     property real _dynamicColoringChromaMult: 2.5

@@ -77,9 +77,9 @@ def get_fallback_response(language="en"):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--api_key", required=True)
-    parser.add_argument("--model", required=True)
     parser.add_argument("--message", required=True)
+    parser.add_argument("--api_key")
+    parser.add_argument("--model")
     parser.add_argument("--preset", choices=PRESETS.keys(), default=None)
     parser.add_argument("--base_url", default=None)
     parser.add_argument("--history", default="[]")
@@ -87,7 +87,9 @@ def main():
     parser.add_argument("--temperature", type=float, default=None)
     parser.add_argument("--json_mode", action="store_true")
     parser.add_argument(
-        "--provider", choices=["gemini", "openai", "deepseek"], default=None
+        "--provider",
+        choices=["local", "gemini", "openai", "deepseek"],
+        default=None,
     )
     parser.add_argument("--preferred_language", default="Arabic")
     parser.add_argument("--user_persona", default="You are Nibras")

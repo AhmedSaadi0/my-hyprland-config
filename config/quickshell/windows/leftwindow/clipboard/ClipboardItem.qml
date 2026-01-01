@@ -1,27 +1,60 @@
+// windows/leftwindow/clipboard/ClipboardItem.qml
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import "root:/services"
 import "root:/themes"
+import "root:/config/EventNames.js" as Events
+import "root:/config"
 
 Item {
     id: wrapper
 
+    // -- Properties & Logic --
     property var lv: ListView.view
+    property bool isExpanded: false
 
+    // Check if item matches search text
+    property bool matchesSearch: {
+        if (!lv.currentSearchText || lv.currentSearchText === "")
+            return true;
+        return model.text.toLowerCase().indexOf(lv.currentSearchText.toLowerCase()) !== -1;
+    }
+
+    // -- Layout & Visibility --
     width: lv.width
-    height: 50
+    height: matchesSearch ? (isExpanded ? contentLayout.implicitHeight + 24 : 62) : 0
+    visible: height > 0
+    clip: true
 
-    transform: [
-        Translate {
-            x: wrapper.lv.pullOffset + wrapper.lv.shockOffset
+    transform: Translate {
+        x: wrapper.lv.pullOffset + wrapper.lv.shockOffset
+    }
+
+    Behavior on height {
+        NumberAnimation {
+            duration: 250
+            easing.type: Easing.OutQuart
         }
-    ]
+    }
 
+    // -- Resources --
+    Timer {
+        id: collapseTimer
+        interval: 150
+        onTriggered: wrapper.isExpanded = false
+    }
+
+    // -- Main Content --
     Item {
         id: swipeContainer
+
         width: parent.width
-        height: parent.height
+        height: wrapper.height
+        anchors.top: parent.top
+        visible: wrapper.matchesSearch
+
         Behavior on x {
             enabled: !dragArea.drag.active
             NumberAnimation {
@@ -31,9 +64,34 @@ Item {
             }
         }
 
+        // 1. Hover Controller (High Z-index)
+        MouseArea {
+            id: hoverTrigger
+            anchors.fill: parent
+            z: 10
+            hoverEnabled: true
+            propagateComposedEvents: true
+
+            // Pass through clicks to underlying layers
+            onPressed: mouse => mouse.accepted = false
+            onReleased: mouse => mouse.accepted = false
+            onClicked: mouse => mouse.accepted = false
+            onDoubleClicked: mouse => mouse.accepted = false
+            onPressAndHold: mouse => mouse.accepted = false
+
+            onEntered: {
+                collapseTimer.stop();
+                wrapper.isExpanded = true;
+            }
+            onExited: collapseTimer.start()
+        }
+
+        // 2. Drag/Swipe Controller
         MouseArea {
             id: dragArea
             anchors.fill: parent
+            hoverEnabled: false
+
             drag.target: swipeContainer
             drag.axis: Drag.XAxis
             drag.minimumX: 0
@@ -41,14 +99,17 @@ Item {
             drag.filterChildren: true
 
             onPressed: wrapper.lv.userIsDragging = true
+
             onPositionChanged: {
                 if (drag.active) {
                     var tension = Math.max(0, swipeContainer.x / 12);
                     wrapper.lv.pullOffset = Math.min(tension, 30);
                 }
             }
+
             onReleased: {
                 wrapper.lv.userIsDragging = false;
+                // Swipe to delete logic
                 if (swipeContainer.x > 120) {
                     wrapper.lv.pullOffset = 0;
                     swipeContainer.x = 600;
@@ -61,28 +122,26 @@ Item {
             }
 
             onClicked: {
-                if (!drag.active)
+                if (!drag.active) {
                     ClipboardService.activate(clipId);
+                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                }
             }
         }
 
+        // 3. Visual Content
         Rectangle {
             id: req
             anchors.fill: parent
-            color: dragArea.containsMouse && !dragArea.drag.active ? ThemeManager.selectedTheme.colors.secondary.alpha(0.1) : "transparent"
+
+            // Visual feedback
+            opacity: 1 - (swipeContainer.x / 300)
+            color: (wrapper.isExpanded || dragArea.pressed) ? ThemeManager.selectedTheme.colors.secondary.alpha(0.1) : "transparent"
+
             Behavior on color {
                 ColorAnimation {
                     duration: 150
                 }
-            }
-            opacity: 1 - (swipeContainer.x / 300)
-
-            Rectangle {
-                width: parent.width - 40
-                height: 1
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.05)
             }
 
             property color accColor: {
@@ -98,40 +157,58 @@ Item {
                 }
             }
 
+            // Bottom Separator
+            Rectangle {
+                width: parent.width - 40
+                height: 1
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.05)
+            }
+
             RowLayout {
+                id: contentLayout
                 anchors.fill: parent
-                anchors.leftMargin: 10
-                anchors.rightMargin: 10
+                anchors.margins: 10
+                anchors.topMargin: 12
+                anchors.bottomMargin: 12
                 spacing: 15
 
-                // 1. شريط اللون الجانبي
+                // Accent Bar
                 Rectangle {
                     Layout.preferredWidth: 4
-                    Layout.preferredHeight: 25
+                    Layout.fillHeight: true
+                    Layout.alignment: Qt.AlignTop
                     radius: 2
                     color: req.accColor
                 }
 
-                // 2. النص
+                // Text Content
                 Label {
                     Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignTop
+
                     text: model.text
-                    elide: Text.ElideRight
                     font.family: ThemeManager.selectedTheme.typography.bodyFont
                     color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+
+                    elide: Text.ElideRight
+                    wrapMode: Text.Wrap
+                    maximumLineCount: wrapper.isExpanded ? 7 : 1
                 }
 
-                // 3. زر الحذف
+                // Delete Button
                 Rectangle {
                     Layout.preferredWidth: 30
                     Layout.preferredHeight: 30
                     Layout.rightMargin: 10
+                    Layout.alignment: Qt.AlignTop
                     radius: 4
                     color: deleteMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.error.alpha(0.1) : "transparent"
 
                     Label {
                         anchors.centerIn: parent
-                        text: "󰆴" // أيقونة الحذف
+                        text: "󰆴"
                         font.family: ThemeManager.selectedTheme.typography.iconFont
                         font.pixelSize: 18
                         color: ThemeManager.selectedTheme.colors.error
@@ -142,13 +219,7 @@ Item {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-
-                        // منع انتقال حدث الضغط إلى منطقة السحب الخلفية
-                        preventStealing: true
-
-                        onClicked: {
-                            ClipboardService.remove(index, clipId);
-                        }
+                        onClicked: ClipboardService.remove(index, clipId)
                     }
                 }
             }

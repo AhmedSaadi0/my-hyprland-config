@@ -9,7 +9,7 @@ def get_cliphist_items():
     try:
         # 1. جلب القائمة الخام
         result = subprocess.run(
-            "cliphist list | head -n 50",
+            "cliphist list | head -n 25",
             shell=True,
             capture_output=True,
             text=True,
@@ -22,14 +22,39 @@ def get_cliphist_items():
         processed_items = []
 
         for line in lines:
-            # نفصل الـ ID عن النص
+            # نفصل الـ ID عن النص المختصر
             parts = line.split("\t", 1)
             if len(parts) < 2:
                 continue
 
             clip_id = parts[0]
-            raw_text = parts[1]
-            display_text = raw_text.strip()
+            preview_text = parts[1].strip()
+
+            display_text = preview_text
+
+            # نتحقق: إذا لم يكن ملفاً ثنائياً (صورة)، نحاول جلب النص الكامل
+            # لأن cliphist list يعطي سطراً واحداً فقط
+            if "binary" not in preview_text.lower() and len(preview_text) > 0:
+                try:
+                    # نقوم بفك التشفير لجلب النص الأصلي مع الأسطر والفواصل
+                    decode_proc = subprocess.run(
+                        f"cliphist decode {clip_id}",
+                        shell=True,
+                        capture_output=True,
+                        text=True,
+                        timeout=0.1,  # مهلة زمنية قصيرة جداً لمنع التعليق
+                    )
+
+                    full_text = decode_proc.stdout
+                    # إذا نجحنا في جلب نص، نعتمده
+                    if full_text:
+                        # نأخذ أول 600 حرف فقط لتجنب إرسال نصوص كتب كاملة إلى الواجهة
+                        display_text = full_text[:600].strip()
+
+                except Exception:
+                    # في حال فشل فك التشفير، نعود للنص المختصر
+                    display_text = preview_text
+            # ---------------------------
 
             # تصنيف النص للألوان والأيقونات
             item_type = 0
@@ -62,22 +87,17 @@ def get_cliphist_items():
 
 
 def activate_item(clip_id):
-    # النسخ بسيط: فك التشفير ثم النسخ
-    # نستخدم decode لأنه يقبل ID مباشرة
     cmd = f"cliphist decode {clip_id} | wl-copy"
     subprocess.run(cmd, shell=True)
 
 
 def delete_item(clip_id):
     try:
-        # الحل لمشكلة الحذف:
-        # 1. نجلب القائمة
         list_proc = subprocess.run(
             "cliphist list", shell=True, capture_output=True, text=True
         )
         lines = list_proc.stdout.splitlines()
 
-        # 2. نبحث عن السطر الذي يبدأ بهذا الـ ID
         target_line = None
         prefix = f"{clip_id}\t"
 
@@ -86,10 +106,7 @@ def delete_item(clip_id):
                 target_line = line
                 break
 
-        # 3. إذا وجدناه، نرسله كاملاً لأمر الحذف
         if target_line:
-            # ملاحظة: نستخدم echo مع pipe لإرسال السطر لأمر الحذف
-            # نستخدم shlex.quote أو نضعها بين علامات اقتباس لتجنب مشاكل الرموز
             safe_line = target_line.replace('"', '\\"').replace("`", "\\`")
             cmd = f'echo "{safe_line}" | cliphist delete'
             subprocess.run(cmd, shell=True)
@@ -99,7 +116,6 @@ def delete_item(clip_id):
 
 
 def wipe_all():
-    # أمر المسح عادة بسيط، لكن أحياناً يحتاج تأكيد
     subprocess.run("cliphist wipe", shell=True)
 
 

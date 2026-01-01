@@ -16,7 +16,7 @@ PanelWindow {
     visible: false
 
     exclusionMode: ExclusionMode.Ignore
-    focusable: menus.currentIndex == Consts.APPLICATIONS_MENU_INDEX || menus.currentIndex == Consts.NETWORK_MENU_INDEX
+    focusable: menus.currentIndex == Consts.APPLICATIONS_MENU_INDEX || menus.currentIndex == Consts.NETWORK_MENU_INDEX || menus.currentIndex == Consts.CLIPBOARD_MENU_INDEX
 
     anchors {
         top: true

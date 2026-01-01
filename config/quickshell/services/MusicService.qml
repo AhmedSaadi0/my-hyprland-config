@@ -157,7 +157,7 @@ Singleton {
         // الاتصال عبر AiService
         // =========================================================
         const command = App.scripts.python.callMusicAi;
-        const args = ["--provider", "gemini", "--message", message];
+        const args = ["--message", message];
 
         AiService.sendRequest(command, args, function (data) {
             const emotion = data.emotion ? data.emotion.toString().trim() : "thinking";

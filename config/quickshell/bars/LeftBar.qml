@@ -77,8 +77,8 @@ PanelWindow {
             notificationCount: 0
         }
         ListElement {
-            icon: "󱓦"
-            activeIcon: "󱓥"
+            icon: "󰢨"
+            activeIcon: "󰅎"
             name: "Todo"
             notificationCount: 0
         }

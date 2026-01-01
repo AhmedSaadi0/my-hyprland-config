@@ -10,7 +10,7 @@ Item {
 
     signal tabClicked(string tab)
 
-    implicitWidth: 120
+    implicitWidth: 122
     implicitHeight: 32
 
     Rectangle {
@@ -23,8 +23,7 @@ Item {
             width: (parent.width - 4) / 2
             height: parent.height - 4
             y: 2
-
-            x: root.currentTab === "weather" ? 2 : (parent.width / 2) + 2
+            x: root.currentTab === "weather" ? 2 : ((parent.width / 2) - 2) + 2
 
             radius: ThemeManager.selectedTheme.dimensions.elementRadius
             color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.2)
