@@ -17,6 +17,7 @@ Singleton {
     readonly property string bashScriptsPath: mainPath + "/scripts"
     readonly property string wallpapersPath: assetsPath + "/wallpapers"
     readonly property string cacheFolderPath: homePath + ".cache/nibrasshell"
+    readonly property string downloadedWallpapersPath: cacheFolderPath + "/wallpapers"
     readonly property string themeCacheFilePath: cacheFolderPath + "/theme.json"
     readonly property string themeCacheFolderPath: cacheFolderPath + "/themes/"
     readonly property string pythonScriptsPath: mainPath + "/scripts/python"
@@ -254,6 +255,10 @@ Singleton {
             readonly property var cpuCommand: ["sh", "-c", cpuUsage]
             readonly property var ramCommand: ["sh", "-c", ramUsage]
             readonly property var deviceTempretureCommand: ["sh", "-c", deviceTempreture]
+
+            function downloadWallpaperCommand(destPath, url) {
+                return ["sh", "-c", "mkdir -p '" + root.downloadedWallpapersPath + "' && curl -s -L -o '" + destPath + "' '" + url + "'"];
+            }
         }
     }
 
