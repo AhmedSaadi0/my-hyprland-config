@@ -61,7 +61,7 @@ function isValidPositiveInt(value) {
 
 function formatNetworkName(name) {
   if (typeof name !== "string" || name.trim() === "") {
-    return "غير متصل";
+    return null;
   }
   return name;
 }

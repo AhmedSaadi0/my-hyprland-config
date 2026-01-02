@@ -36,7 +36,7 @@ PanelWindow {
     // -------------------
     // ------ Clock ------
     // -------------------
-    ClockWidget {}
+    // ClockWidget {}
 
     // ---------------------------
     // ------ Right Widgets ------
@@ -55,7 +55,7 @@ PanelWindow {
 
     Rectangle {
         id: monitors
-        width: 108
+        width: 162
         height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
         color: ThemeManager.selectedTheme.colors.topbarBgColorV1

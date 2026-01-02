@@ -40,7 +40,7 @@ Item {
     Rectangle {
         id: backgroundRect
         anchors.fill: parent
-        radius: ThemeManager.selectedTheme.dimensions.baseRadius
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
         color: {
             if (root.expanded)
@@ -273,7 +273,7 @@ Item {
             EditableField {
                 id: passwordField
                 Layout.fillWidth: true
-                placeholderText: "كلمة المرور..."
+                placeholderText: qsTr("Password ... ")
                 echoMode: TextInput.Password
                 visible: root.security !== "None" && !root.in_use && !root.is_saved
                 font.pixelSize: 14
@@ -281,7 +281,7 @@ Item {
                 placeholderTextColor: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.6)
                 background: Rectangle {
                     color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
-                    radius: ThemeManager.selectedTheme.dimensions.baseRadius
+                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
                     border.color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.5)
                     border.width: 1
                 }

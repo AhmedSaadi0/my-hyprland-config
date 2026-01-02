@@ -52,18 +52,25 @@ Singleton {
         return [scriptFile, `${path}`];
     }
 
-    function applyM3PlasmaColor(selectedWallpaperPath, themeMode) {
+    function applyM3PlasmaColor({
+        selectedWallpaperPath,
+        themeMode,
+        scheme,
+        chroma,
+        tone
+    }) {
         const scriptCommand = Config.App.scripts.python.dynamicM3Command;
-        const command = [...scriptCommand, `'${selectedWallpaperPath}'`, "-m", themeMode];
+        const command = [...scriptCommand, `'${selectedWallpaperPath}'`, "-m", themeMode, "--scheme", scheme, "--chroma", chroma, "--tone", tone];
+        console.info(command);
         return command;
     }
 
-    // TODO: -> Check this later
     function changePlasmaFont({
         font,
-        type = "font"
+        key,
+        group = "General"
     }) {
-        return ['kwriteconfig6', '--file', 'kdeglobals', '--group', 'General', '--key', type, '"JF Flat,11,-1,5,50,0,0,0,0,0"', font];
+        return ['kwriteconfig6', '--file', 'kdeglobals', '--group', group, '--key', key, font];
     }
 
     /**

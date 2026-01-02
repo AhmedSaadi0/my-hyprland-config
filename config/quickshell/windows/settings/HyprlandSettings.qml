@@ -1,390 +1,447 @@
-// settings/HyprlandSettings.qml
+// windows/settings/HyprlandSettings.qml
+
 pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
+import Qt.labs.platform
 
 import "root:/components"
+import "root:/config"
+import "root:/themes"
+import "root:/windows/settings/components"
 
-M3GroupBox {
+BaseThemeSettings {
     id: root
+
+    // --- Header ---
     title: qsTr("Hyprland Settings")
-    titleTopMargin: 10
-    titlePixelSize: selectedTheme.typography.heading1Size
-    titleFontWeight: Font.ExtraBold
+    showApplyButton: true
 
-    property var workingTheme
-    property var selectedTheme
+    // --- Local State ---
+    // Layout
+    property int localRounding: 0
+    property int localBorderWidth: 0
+    property int localGapsIn: 0
+    property string localGapsOut: "0"
+    property string localLayout: "dwindle"
+    property string localActiveBorder: ""
+    property string localInactiveBorder: ""
 
-    signal applyChanges
-    signal saveChanges
-    signal cancelChanges
-    signal resetToDefault
+    // Visual Effects
+    property bool localBlurEnabled: true
+    property int localBlurSize: 1
+    property int localBlurPasses: 1
 
+    property bool localDropShadow: false
+    property int localShadowRange: 0
+    property int localShadowOffsetX: 0
+    property int localShadowOffsetY: 0
+    property string localShadowColor: ""
+
+    property bool localDimInactive: false
+    property double localDimStrength: 0.0
+
+    // Animations
+    property bool localAnimationsEnabled: true
+    // property string localBezier: ""
+    // property string localAnimWindows: ""
+    // property string localAnimWorkspaces: ""
+
+    function syncFromTheme() {
+        // Layout
+        localRounding = theme._hyprRounding;
+        localBorderWidth = theme._hyprBorderWidth;
+        localGapsIn = theme._hyprGapsIn;
+        localGapsOut = theme._hyprGapsOut;
+        localLayout = theme._hyprLayout;
+        localActiveBorder = theme._hyprActiveBorder;
+        localInactiveBorder = theme._hyprInactiveBorder;
+
+        // Blur
+        localBlurEnabled = theme._hyprBlurEnabled;
+        localBlurSize = theme._hyprBlurSize;
+        localBlurPasses = theme._hyprBlurPasses;
+
+        localDropShadow = (theme._hyprDropShadow === 'yes' || theme._hyprDropShadow === true);
+        localShadowRange = theme._hyprShadowRange;
+        localShadowOffsetX = theme._hyprShadowOffset.x;
+        localShadowOffsetY = theme._hyprShadowOffset.y;
+        localShadowColor = theme._hyprShadowColor;
+
+        // Dim
+        localDimInactive = theme._hyprDimInactive;
+        localDimStrength = theme._hyprDimStrength;
+
+        // Animations
+        localAnimationsEnabled = theme._hyprAnimationsEnabled;
+    }
+
+    function serializeData() {
+        return {
+            // Layout
+            "_hyprRounding": localRounding,
+            "_hyprBorderWidth": localBorderWidth,
+            "_hyprGapsIn": localGapsIn,
+            "_hyprGapsOut": localGapsOut,
+            "_hyprLayout": localLayout,
+            "_hyprActiveBorder": localActiveBorder,
+            "_hyprInactiveBorder": localInactiveBorder,
+
+            // Visual Effects
+            "_hyprBlurEnabled": localBlurEnabled,
+            "_hyprBlurSize": localBlurSize,
+            "_hyprBlurPasses": localBlurPasses,
+            "_hyprDropShadow": localDropShadow ? 'yes' : 'no',
+            "_hyprShadowRange": localShadowRange,
+            "_hyprShadowOffset": Qt.point(localShadowOffsetX, localShadowOffsetY),
+            "_hyprShadowColor": localShadowColor,
+            "_hyprDimInactive": localDimInactive,
+            "_hyprDimStrength": localDimStrength,
+
+            // Animations
+            "_hyprAnimationsEnabled": localAnimationsEnabled
+        };
+    }
+
+    // --- Main Layout ---
     ColumnLayout {
-        id: mainLayout
-        spacing: selectedTheme.dimensions.spacingSmall
+        spacing: root.dim("spacingSmall", 5)
+        Layout.preferredWidth: 590
 
-        // ====================================================================
-        // --- القسم الأول: المظهر والتخطيط (Appearance & Layout) ---
-        // ====================================================================
+        // ==========================
+        // --- Appearance & Layout ---
+        // ==========================
         Controls.Label {
             text: qsTr("Appearance & Layout")
-            font.pixelSize: selectedTheme.typography.heading2Size
+            font.pixelSize: root.typ("heading2Size", 18)
             font.bold: true
         }
 
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: selectedTheme.dimensions.spacingMedium
+            spacing: 15
 
             SliderWithLabel {
                 label: qsTr("Rounding")
                 from: 0
                 to: 50
-                value: workingTheme._hyprRounding
-                onEditingFinished: finalValue => {
-                    workingTheme._hyprRounding = finalValue;
-                    root.applyChanges();
+                value: root.localRounding
+                onEditingFinished: v => {
+                    root.localRounding = v;
+                    root.applySingleProperty("_hyprRounding", v);
                 }
             }
             SliderWithLabel {
                 label: qsTr("Border Width")
                 from: 0
                 to: 10
-                value: workingTheme._hyprBorderWidth
-                onEditingFinished: finalValue => {
-                    workingTheme._hyprBorderWidth = finalValue;
-                    root.applyChanges();
+                value: root.localBorderWidth
+                onEditingFinished: v => {
+                    root.localBorderWidth = v;
+                    root.applySingleProperty("_hyprBorderWidth", v);
                 }
             }
             SliderWithLabel {
                 label: qsTr("Gaps In")
                 from: 0
                 to: 50
-                value: workingTheme._hyprGapsIn
-                onEditingFinished: finalValue => {
-                    workingTheme._hyprGapsIn = finalValue;
-                    root.applyChanges();
+                value: root.localGapsIn
+                onEditingFinished: v => {
+                    root.localGapsIn = v;
+                    root.applySingleProperty("_hyprGapsIn", v);
                 }
             }
 
-            Controls.Label {
-                text: qsTr("Gaps Out")
-                font.bold: true
-            }
-            SettingsHelperText {
-                text: qsTr("The gap between windows and the screen edge. Can be one value, or four for top, right, bottom, left (e.g., '10, 20, 10, 20').")
-            }
-            EditableField {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                text: workingTheme._hyprGapsOut
-                selectedTheme: root.selectedTheme
-                onEditingFinished: {
-                    workingTheme._hyprGapsOut = text;
-                    root.applyChanges();
+            // Gaps Out
+            ColumnLayout {
+                spacing: 2
+                Controls.Label {
+                    text: qsTr("Gaps Out")
+                    font.bold: true
                 }
-            }
-
-            Controls.Label {
-                text: qsTr("Layout Name")
-                font.bold: true
-            }
-            SettingsHelperText {
-                text: qsTr("The algorithm used to arrange windows. 'dwindle' creates a spiral layout, 'master' creates a main window with a stack.")
-            }
-            SettingsComboBox {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                model: ["dwindle", "master"]
-                editText: workingTheme._hyprLayout
-                editable: true
-                onAccepted: {
-                    if (editText !== workingTheme._hyprLayout) {
-                        workingTheme._hyprLayout = editText;
-                        root.applyChanges();
+                SettingsHelperText {
+                    text: qsTr("The gap between windows and the screen edge. Can be one value, or four (top, right, bottom, left).")
+                }
+                EditableField {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    text: root.localGapsOut
+                    selectedTheme: root.theme
+                    onEditingFinished: {
+                        root.localGapsOut = text;
+                        root.applySingleProperty("_hyprGapsOut", text);
                     }
                 }
             }
 
-            Controls.Label {
-                text: qsTr("Active Border Color")
-                font.bold: true
-            }
-            SettingsHelperText {
-                text: qsTr("Supports color gradients. Format: 'rgba(color1) rgba(color2) angle'. Example: 'rgba(ff0000ff) rgba(00ff00ff) 45deg'.")
-            }
-            EditableField {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                text: workingTheme._hyprActiveBorder
-                selectedTheme: root.selectedTheme
-                onEditingFinished: {
-                    workingTheme._hyprActiveBorder = text;
-                    root.applyChanges();
+            // Layout Name
+            ColumnLayout {
+                spacing: 2
+                Controls.Label {
+                    text: qsTr("Layout Name")
+                    font.bold: true
+                }
+                SettingsHelperText {
+                    text: qsTr("'dwindle' (spiral) or 'master' (stack).")
+                }
+                SettingsComboBox {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    model: ["dwindle", "master"]
+                    editText: root.localLayout
+                    editable: true
+                    onAccepted: {
+                        if (editText !== root.localLayout) {
+                            root.localLayout = editText;
+                            root.applySingleProperty("_hyprLayout", editText);
+                        }
+                    }
                 }
             }
 
-            Controls.Label {
-                text: qsTr("Inactive Border Color")
-                font.bold: true
+            // Borders
+            ColumnLayout {
+                spacing: 2
+                Controls.Label {
+                    text: qsTr("Active Border Color")
+                    font.bold: true
+                }
+                SettingsHelperText {
+                    text: qsTr("Supports gradients. Ex: 'rgba(ff0000ff) rgba(00ff00ff) 45deg'.")
+                }
+                EditableField {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    text: root.localActiveBorder
+                    selectedTheme: root.theme
+                    onEditingFinished: {
+                        root.localActiveBorder = text;
+                        root.applySingleProperty("_hyprActiveBorder", text);
+                    }
+                }
             }
-            EditableField {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                text: workingTheme._hyprInactiveBorder
-                selectedTheme: root.selectedTheme
-                onEditingFinished: {
-                    workingTheme._hyprInactiveBorder = text;
-                    root.applyChanges();
+
+            ColumnLayout {
+                spacing: 2
+                Controls.Label {
+                    text: qsTr("Inactive Border Color")
+                    font.bold: true
+                }
+                EditableField {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    text: root.localInactiveBorder
+                    selectedTheme: root.theme
+                    onEditingFinished: {
+                        root.localInactiveBorder = text;
+                        root.applySingleProperty("_hyprInactiveBorder", text);
+                    }
                 }
             }
         }
 
         Kirigami.Separator {
-            Layout.topMargin: selectedTheme.dimensions.spacingLarge
+            Layout.fillWidth: true
+            Layout.topMargin: 15
         }
 
-        // ====================================================================
-        // --- القسم الثاني: المؤثرات البصرية (Visual Effects) ---
-        // ====================================================================
+        // ==========================
+        // --- Visual Effects ---
+        // ==========================
         Controls.Label {
             text: qsTr("Visual Effects")
-            font.pixelSize: selectedTheme.typography.heading2Size
+            font.pixelSize: root.typ("heading2Size", 18)
             font.bold: true
-            Layout.topMargin: selectedTheme.dimensions.spacingMedium
+            Layout.topMargin: 10
         }
 
+        // Blur
         SettingSwitch {
             id: _blurSwitch
             label: qsTr("Enable Background Blur")
-            isChecked: workingTheme._hyprBlurEnabled
+            isChecked: root.localBlurEnabled
             onIsCheckedChanged: {
-                workingTheme._hyprBlurEnabled = isChecked;
-                root.applyChanges();
+                if (root.isLoading)
+                    return;
+                root.localBlurEnabled = isChecked;
+                root.applySingleProperty("_hyprBlurEnabled", isChecked);
             }
         }
+
         ColumnLayout {
-            enabled: _blurSwitch.isChecked
+            enabled: root.localBlurEnabled
             Layout.fillWidth: true
-            spacing: selectedTheme.dimensions.spacingMedium
+            Layout.leftMargin: 20
+            spacing: 15
+
             SliderWithLabel {
                 label: qsTr("Blur Size")
                 from: 1
                 to: 30
-                value: workingTheme._hyprBlurSize
-                onEditingFinished: finalValue => {
-                    workingTheme._hyprBlurSize = finalValue;
-                    root.applyChanges();
+                value: root.localBlurSize
+                onEditingFinished: v => {
+                    root.localBlurSize = v;
+                    root.applySingleProperty("_hyprBlurSize", v);
                 }
             }
             SliderWithLabel {
                 label: qsTr("Blur Passes")
                 from: 1
                 to: 5
-                value: workingTheme._hyprBlurPasses
-                onEditingFinished: finalValue => {
-                    workingTheme._hyprBlurPasses = finalValue;
-                    root.applyChanges();
+                value: root.localBlurPasses
+                onEditingFinished: v => {
+                    root.localBlurPasses = v;
+                    root.applySingleProperty("_hyprBlurPasses", v);
                 }
             }
             SettingsHelperText {
-                text: qsTr("More passes improve blur quality but use more GPU resources. 2-3 passes is often a good balance.")
+                text: qsTr("2-3 passes is a good balance between quality and performance.")
             }
         }
 
+        // Shadow
         SettingSwitch {
             id: _dropShadowSwitch
             label: qsTr("Enable Drop Shadow")
-            isChecked: workingTheme._hyprDropShadow === 'yes'
+            isChecked: root.localDropShadow
+            Layout.topMargin: 10
             onIsCheckedChanged: {
-                workingTheme._hyprDropShadow = isChecked ? 'yes' : 'no';
-                root.applyChanges();
+                if (root.isLoading)
+                    return;
+                root.localDropShadow = isChecked;
+                // تحويل القيمة البوليانية إلى النص المتوقع في Hyprland
+                root.applySingleProperty("_hyprDropShadow", isChecked ? 'yes' : 'no');
             }
-            Layout.topMargin: selectedTheme.dimensions.spacingMedium
         }
+
         ColumnLayout {
-            enabled: _dropShadowSwitch.isChecked
+            enabled: root.localDropShadow
             Layout.fillWidth: true
-            spacing: selectedTheme.dimensions.spacingMedium
+            Layout.leftMargin: 20
+            spacing: 15
+
             SliderWithLabel {
                 label: qsTr("Shadow Range")
                 from: 0
                 to: 60
-                value: workingTheme._hyprShadowRange
-                onEditingFinished: finalValue => {
-                    workingTheme._hyprShadowRange = finalValue;
-                    root.applyChanges();
+                value: root.localShadowRange
+                onEditingFinished: v => {
+                    root.localShadowRange = v;
+                    root.applySingleProperty("_hyprShadowRange", v);
                 }
             }
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: selectedTheme.dimensions.spacingMedium
+
+            ColumnLayout {
+                spacing: 5
                 Controls.Label {
                     text: qsTr("Shadow Offset (X, Y)")
                     font.bold: true
                 }
-                EditableField {
-                    text: workingTheme._hyprShadowOffset.x.toString()
-                    validator: IntValidator {}
-                    selectedTheme: root.selectedTheme
-                    onEditingFinished: {
-                        workingTheme._hyprShadowOffset.x = Number(text);
-                        root.applyChanges();
+                RowLayout {
+                    Layout.fillWidth: true
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: root.localShadowOffsetX.toString()
+                        validator: IntValidator {}
+                        selectedTheme: root.theme
+                        onEditingFinished: {
+                            root.localShadowOffsetX = Number(text);
+                            // إرسال كائن Point كامل لأن ThemeManager يتوقع ذلك
+                            root.applySingleProperty("_hyprShadowOffset", Qt.point(root.localShadowOffsetX, root.localShadowOffsetY));
+                        }
                     }
-                }
-                EditableField {
-                    text: workingTheme._hyprShadowOffset.y.toString()
-                    validator: IntValidator {}
-                    selectedTheme: root.selectedTheme
-                    onEditingFinished: {
-                        workingTheme._hyprShadowOffset.y = Number(text);
-                        root.applyChanges();
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: root.localShadowOffsetY.toString()
+                        validator: IntValidator {}
+                        selectedTheme: root.theme
+                        onEditingFinished: {
+                            root.localShadowOffsetY = Number(text);
+                            // إرسال كائن Point كامل
+                            root.applySingleProperty("_hyprShadowOffset", Qt.point(root.localShadowOffsetX, root.localShadowOffsetY));
+                        }
                     }
                 }
             }
-            Controls.Label {
-                text: qsTr("Shadow Color")
-                font.bold: true
-            }
-            EditableField {
-                Layout.fillWidth: true
-                text: workingTheme._hyprShadowColor
-                selectedTheme: root.selectedTheme
-                onEditingFinished: {
-                    workingTheme._hyprShadowColor = text;
-                    root.applyChanges();
+
+            ColumnLayout {
+                spacing: 5
+                Controls.Label {
+                    text: qsTr("Shadow Color")
+                    font.bold: true
+                }
+                EditableField {
+                    Layout.fillWidth: true
+                    text: root.localShadowColor
+                    selectedTheme: root.theme
+                    onEditingFinished: {
+                        root.localShadowColor = text;
+                        root.applySingleProperty("_hyprShadowColor", text);
+                    }
                 }
             }
         }
 
+        // Dim
         SettingSwitch {
             id: _dimSwitch
             label: qsTr("Dim Inactive Windows")
-            isChecked: workingTheme._hyprDimInactive
+            isChecked: root.localDimInactive
+            Layout.topMargin: 10
             onIsCheckedChanged: {
-                workingTheme._hyprDimInactive = isChecked;
-                root.applyChanges();
+                if (root.isLoading)
+                    return;
+                root.localDimInactive = isChecked;
+                root.applySingleProperty("_hyprDimInactive", isChecked);
             }
-            Layout.topMargin: selectedTheme.dimensions.spacingMedium
         }
+
         ColumnLayout {
-            enabled: _dimSwitch.isChecked
+            enabled: root.localDimInactive
             Layout.fillWidth: true
+            Layout.leftMargin: 20
+
             SliderWithLabel {
                 label: qsTr("Dim Strength")
                 from: 0.0
                 to: 1.0
                 stepSize: 0.01
                 decimals: 2
-                value: workingTheme._hyprDimStrength
-                onEditingFinished: finalValue => {
-                    workingTheme._hyprDimStrength = finalValue;
-                    root.applyChanges();
+                value: root.localDimStrength
+                onEditingFinished: v => {
+                    root.localDimStrength = v;
+                    root.applySingleProperty("_hyprDimStrength", v);
                 }
             }
         }
 
         Kirigami.Separator {
-            Layout.topMargin: selectedTheme.dimensions.spacingLarge
+            Layout.fillWidth: true
+            Layout.topMargin: 15
         }
 
-        // ====================================================================
-        // --- القسم الثالث: الحركات (Animations) ---
-        // ====================================================================
+        // ==========================
+        // --- Animations ---
+        // ==========================
         SettingSwitch {
             id: _animationsSwitch
             label: qsTr("Enable Animations")
-            isChecked: workingTheme._hyprAnimationsEnabled
+            isChecked: root.localAnimationsEnabled
             onIsCheckedChanged: {
-                workingTheme._hyprAnimationsEnabled = isChecked;
-                root.applyChanges();
+                if (root.isLoading)
+                    return;
+                root.localAnimationsEnabled = isChecked;
+                root.applySingleProperty("_hyprAnimationsEnabled", isChecked);
             }
         }
-        // ColumnLayout {
-        //     enabled: _animationsSwitch.isChecked
-        //     Layout.fillWidth: true
-        //     spacing: selectedTheme.dimensions.spacingMedium
-        //
-        //     Controls.Label {
-        //         text: qsTr("Bézier Curve")
-        //         font.bold: true
-        //     }
-        //     SettingsHelperText {
-        //         text: qsTr("Defines the 'feel' of the animation (e.g., speed up, slow down, bounce). You can define multiple curves.")
-        //     }
-        //     EditableField {
-        //         Layout.fillWidth: true
-        //         text: workingTheme._hyprBezier
-        //         selectedTheme: root.selectedTheme
-        //         onEditingFinished: {
-        //             workingTheme._hyprBezier = text;
-        //             root.applyChanges();
-        //         }
-        //     }
-        //
-        //     Controls.Label {
-        //         text: qsTr("Windows Animation Style")
-        //         font.bold: true
-        //     }
-        //     SettingsHelperText {
-        //         text: qsTr("Controls how windows appear/disappear. Format: 'speed, curve, style'. Speed is 1-10. Curve is a Bézier name. Style e.g. 'slide', 'fade'.")
-        //     }
-        //     EditableField {
-        //         Layout.fillWidth: true
-        //         text: workingTheme._hyprAnimWindows
-        //         selectedTheme: root.selectedTheme
-        //         onEditingFinished: {
-        //             workingTheme._hyprAnimWindows = text;
-        //             root.applyChanges();
-        //         }
-        //     }
-        //
-        //     Controls.Label {
-        //         text: qsTr("Workspaces Animation Style")
-        //         font.bold: true
-        //     }
-        //     SettingsHelperText {
-        //         text: qsTr("Controls the transition between workspaces. Uses the same format as windows animations. Example: '6, default, slide'.")
-        //     }
-        //     EditableField {
-        //         Layout.fillWidth: true
-        //         text: workingTheme._hyprAnimWorkspaces
-        //         selectedTheme: root.selectedTheme
-        //         onEditingFinished: {
-        //             workingTheme._hyprAnimWorkspaces = text;
-        //             root.applyChanges();
-        //         }
-        //     }
-        // }
-    }
 
-    footer: RowLayout {
-        spacing: selectedTheme.dimensions.spacingMedium
-
-        MButton {
-            text: "Reset to default"
-            Layout.preferredWidth: 150
-            onClicked: resetToDefault()
-        }
-        MButton {
-            text: "Cancel"
-            Layout.preferredWidth: 80
-            onClicked: cancelChanges()
-        }
-
+        // Spacer
         Item {
-            Layout.fillWidth: true
-        }
-
-        MButton {
-            text: "Save"
-            Layout.preferredWidth: 80
-            highlighted: true
-            onClicked: saveChanges()
+            Layout.fillHeight: true
+            width: 1
         }
     }
 }

@@ -48,10 +48,10 @@ ColumnLayout {
         borderColor: ThemeManager.selectedTheme.colors.primary
         borderSize: 1
 
-        topLeftRadius: ThemeManager.selectedTheme.dimensions.baseRadius
-        topRightRadius: ThemeManager.selectedTheme.dimensions.baseRadius
-        bottomLeftRadius: ThemeManager.selectedTheme.dimensions.baseRadius
-        bottomRightRadius: ThemeManager.selectedTheme.dimensions.baseRadius
+        topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+        topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+        bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+        bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
         // horizontalAlignment: Text.HAlignment
         // verticalAlignment: Text.VAlignment
@@ -197,7 +197,7 @@ ColumnLayout {
                     anchors.fill: parent
                     color: ThemeManager.selectedTheme.colors.primary.alpha(0.15)
                     visible: modelData.isHeader
-                    radius: ThemeManager.selectedTheme.dimensions.baseRadius
+                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
                     Text {
                         text: modelData.letter !== undefined ? modelData.letter : ""

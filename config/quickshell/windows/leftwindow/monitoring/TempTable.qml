@@ -10,7 +10,7 @@ ProcessTable {
     interval: 1000 * 60
     running: true
     command: App.scripts.python.devicesTempCommand
-    title: "Temp"
+    title: qsTr("Temp")
     value: ""
 
     model: dataModel // Assign the ListModel as the table's model
@@ -30,7 +30,7 @@ ProcessTable {
     ListModel {
         id: dataModel
         ListElement {
-            textRole: "جاري تحميل البيانات..."
+            textRole: qsTr("Loading ... ")
             valueRole: "0.00"
         }
     }
@@ -69,19 +69,19 @@ ProcessTable {
             dataModel.clear();
 
             dataModel.append({
-                textRole: "CPU",
+                textRole: qsTr("CPU"),
                 iconRole: "",
                 valueRole: readData.cpu_max_temp ? readData.cpu_max_temp.toFixed(0) + ' C°' : ""
             });
 
             dataModel.append({
-                textRole: "GPU",
+                textRole: qsTr("GPU"),
                 iconRole: "",
                 valueRole: readData.gpu_max_temp ? readData.gpu_max_temp.toFixed(0) + ' C°' : ""
             });
 
             dataModel.append({
-                textRole: "Storage",
+                textRole: qsTr("Storage"),
                 iconRole: "󰋊",
                 valueRole: readData.storage_max_temp ? readData.storage_max_temp.toFixed(0) + ' C°' : ""
             });
@@ -92,7 +92,7 @@ ProcessTable {
             if (dataModel.count === 0 || dataModel.get(0).textRole !== "خطأ في التحليل") {
                 dataModel.clear();
                 dataModel.append({
-                    textRole: "خطأ في التحليل",
+                    textRole: ("Error in reading data"),
                     valueRole: "N/A"
                 });
             }

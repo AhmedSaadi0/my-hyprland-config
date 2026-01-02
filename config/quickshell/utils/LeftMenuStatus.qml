@@ -2,6 +2,7 @@
 pragma Singleton
 import QtQuick
 
+// TODO: -> remove and use event handler
 QtObject {
     property int selectedIndex: -1
 

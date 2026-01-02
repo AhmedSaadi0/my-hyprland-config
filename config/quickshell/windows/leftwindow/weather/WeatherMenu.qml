@@ -1,7 +1,5 @@
 // ModernWeather.qml
 import QtQuick
-// import QtQuick.Controls
-// import Qt5Compat.GraphicalEffects
 import QtQuick.Layouts
 import Quickshell.Io
 
@@ -10,537 +8,437 @@ import "root:/services"
 import "root:/components"
 import "root:/utils"
 import "root:/config"
+import "root:/utils/helpers.js" as Helper
 
-ColumnLayout {
+// --- Root element is now a Flickable to allow scrolling ---
+Flickable {
     id: weatherRoot
 
-    spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-    height: 300
+    // Flickable Properties
+    flickableDirection: Flickable.VerticalFlick
+    contentHeight: contentColumn.height // Set content height to the layout's height
+    clip: true // Ensure content doesn't spill out
 
-    // width: 380
-    // height: parent ? parent.height : 700
+    // The main content is placed inside this ColumnLayout
+    ColumnLayout {
+        id: contentColumn
+        width: weatherRoot.width // Bind the layout width to the Flickable's width
+        spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-    // Static weather data (placeholder)
-    property string cityName: Weather.areaName
-    property string currentTemp: Weather.currentTemp
-    property string weatherCondition: Weather.weatherDescription
-    property string weatherIcon: Weather.weatherIcon
-    property string highTemp: Weather.dailyForecast[0] !== undefined ? Weather.dailyForecast[0].maxTemp : 0
-    property string lowTemp: Weather.dailyForecast[0] !== undefined ? Weather.dailyForecast[0].minTemp : 0
-    property string humidity: Weather.humidity
-    property string windSpeed: Weather.windSpeed
-    property string windDirection: Weather.windDirection
-    property string pressure: Weather.pressure
-    property string feelsLike: Weather.feelsLike
-    property string visibility: Weather.visibility
-    property string sunrise: Weather.sunrise
-    property string sunset: Weather.sunset
-    property string uvIndex: Weather.uvIndex
-    property string lastUpdate: Weather.lastUpdated
+        // ========================================================================
+        // 1. Smart Properties & Logic
+        // ========================================================================
 
-    property string accentColor: ThemeManager.selectedTheme.colors.primary
-    property string textColor: ThemeManager.selectedTheme.colors.subtleTextColor !== undefined ? ThemeManager.selectedTheme.colors.subtleTextColor : null
+        property bool isAiDataAvailable: Weather.aiSmartIcon !== "" && Weather.aiBgColor !== ""
 
-    property string mainCardColor: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
-    property string mainCardTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
+        // --- Dynamic Properties ---
+        property string displayIcon: Weather.weatherIcon
+        property string displayTitle: Weather.weatherDescription
+        property string displayTemp: Weather.currentTemp
+        property string displayFeelsLike: Weather.feelsLike
+        property string displayHumidity: Weather.humidity
+        property color displayCardColor: mainCardColor
 
-    property string cardColor: ThemeManager.selectedTheme.colors.topbarBgColorV1
-    property string cardTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
+        // --- Static Properties ---
+        property string accentColor: ThemeManager.selectedTheme.colors.primary
+        property string textColor: ThemeManager.selectedTheme.colors.subtleText
+        property color mainCardColor: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
+        property string mainCardTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
+        property color cardColor: ThemeManager.selectedTheme.colors.topbarBgColorV1
+        property string cardTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
+        property var radius: ThemeManager.selectedTheme.dimensions.elementRadius
+        property var iconFont: ThemeManager.selectedTheme.typography.iconFont
+        property var lastNotificationTimes: ({})
 
-    property var radius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property var iconFont: ThemeManager.selectedTheme.typography.iconFont
+        // ========================================================================
+        // 2. Connections & Notifications
+        // ========================================================================
 
-    property var lastNotificationTimes: ({})
+        // Helper function to prevent spamming notifications
+        function canSendNotification(notificationType) {
+            const now = new Date();
+            // Cooldown period: 4 hours in milliseconds
+            const cooldown = 4 * 60 * 60 * 1000;
+            const lastTime = lastNotificationTimes[notificationType];
 
-    function canSendNotification(notificationType) {
-        const now = new Date();
-        const twoHoursInMillis = 4 * 60 * 60 * 1000;
-
-        const lastTime = lastNotificationTimes[notificationType];
-
-        if (!lastTime || (now.getTime() - lastTime.getTime() > twoHoursInMillis)) {
-            lastNotificationTimes[notificationType] = now;
-            console.log("Sending notification for:", notificationType);
-            return true;
+            if (!lastTime || (now.getTime() - lastTime.getTime() > cooldown)) {
+                lastNotificationTimes[notificationType] = now;
+                console.log("Notification allowed for:", notificationType);
+                return true;
+            }
+            console.log("Skipping notification for:", notificationType, "(cooldown)");
+            return false;
         }
 
-        console.log("Skipping notification for:", notificationType, ". Not enough time has passed.");
-        return false;
-    }
+        Connections {
+            target: Weather
 
-    Connections {
-        target: Weather
-
-        function onChanceOfRainNotified(message) {
-            if (!canSendNotification("rain"))
-                return;
-
-            NotifManager.notify({
-                summary: "Chance of rain",
-                body: message,
-                icon: App.assets.icons.rain,
-                tone: App.assets.audio.rain
-            });
-        }
-
-        function onChanceOfSnowNotified(message) {
-            if (!canSendNotification("snow"))
-                return;
-
-            NotifManager.notify({
-                summary: "Chance of snow",
-                body: message,
-                icon: App.assets.icons.coldWeather,
-                tone: App.assets.audio.coldWeather
-            });
-        }
-
-        function onChanceOfFrostNotified(message) {
-            if (!canSendNotification("frost"))
-                return;
-
-            NotifManager.notify({
-                summary: "Chance of frost",
-                body: message,
-                icon: App.assets.icons.coldWeather,
-                tone: App.assets.audio.coldWeather
-            });
-        }
-
-        function onChanceOfFogNotified(message) {
-            if (!canSendNotification("fog"))
-                return;
-
-            NotifManager.notify({
-                summary: "Chance of fog",
-                body: message,
-                icon: App.assets.icons.fog,
-                tone: App.assets.audio.coldWeather
-            });
-        }
-
-        function onChanceOfThunderNotified(message) {
-            if (!canSendNotification("thunder"))
-                return;
-
-            NotifManager.notify({
-                summary: "Chance of thunder",
-                body: message,
-                icon: App.assets.icons.thunder,
-                tone: App.assets.audio.coldWeather
-            });
-        }
-
-        function onChanceOfWindyNotified(message) {
-            if (!canSendNotification("wind"))
-                return;
-
-            NotifManager.notify({
-                summary: "Chance of wind",
-                body: message,
-                icon: App.assets.icons.wind,
-                tone: App.assets.audio.coldWeather
-            });
-        }
-
-        function onWeatherUpdated() {
-        }
-
-        function onFetchFailed(error) {
-        }
-    }
-
-    MenuCard {
-        id: weatherHeaderCard
-
-        Layout.fillWidth: true
-        Layout.preferredHeight: 210
-
-        // cardColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV3
-        // textColor: ThemeManager.selectedTheme.colors.leftMenufgColorV3
-        cardColor: mainCardColor
-
-        cardLeftPadding: 8
-        cardRightPadding: 8
-
-        title: cityName
-        subtitle: "Last Update: " + lastUpdate
-        icon: "󰑓"
-        iconCursorShape: Qt.PointingHandCursor
-
-        onIconClicked: {
-            Weather.getWeatherData();
-            rotationAnim.start();
-        }
-
-        RotationAnimation {
-            id: rotationAnim
-            target: weatherHeaderCard.iconItem
-            property: "rotation"
-            from: 0
-            to: 360
-            duration: 1000
-            easing.type: Easing.InOutCubic
-        }
-
-        // --- Main Content Container ---
-        Item {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
-            Text {
-                id: backgroundWeatherIcon
-                text: weatherIcon
-                font.pixelSize: 140
-                color: mainCardTextColor
-                opacity: 0.08
-                font.family: iconFont
-
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+            function onChanceOfRainNotified(message) {
+                if (!contentColumn.canSendNotification("rain"))
+                    return;
+                NotifManager.notify({
+                    summary: "Chance of Rain",
+                    body: message,
+                    icon: App.assets.icons.rain,
+                    tone: App.assets.audio.rain
+                });
             }
 
-            RowLayout {
-                anchors.fill: parent
+            function onChanceOfSnowNotified(message) {
+                if (!contentColumn.canSendNotification("snow"))
+                    return;
+                NotifManager.notify({
+                    summary: "Chance of Snow",
+                    body: message,
+                    icon: App.assets.icons.coldWeather,
+                    tone: App.assets.audio.coldWeather
+                });
+            }
+
+            function onChanceOfFrostNotified(message) {
+                if (!contentColumn.canSendNotification("frost"))
+                    return;
+                NotifManager.notify({
+                    summary: "Chance of Frost",
+                    body: message,
+                    icon: App.assets.icons.coldWeather,
+                    tone: App.assets.audio.coldWeather
+                });
+            }
+
+            function onChanceOfFogNotified(message) {
+                if (!contentColumn.canSendNotification("fog"))
+                    return;
+                NotifManager.notify({
+                    summary: "Chance of Fog",
+                    body: message,
+                    icon: App.assets.icons.fog,
+                    tone: App.assets.audio.coldWeather
+                });
+            }
+
+            function onChanceOfThunderNotified(message) {
+                if (!contentColumn.canSendNotification("thunder"))
+                    return;
+                NotifManager.notify({
+                    summary: "Chance of Thunder",
+                    body: message,
+                    icon: App.assets.icons.thunder,
+                    tone: App.assets.audio.coldWeather
+                });
+            }
+
+            function onChanceOfWindyNotified(message) {
+                if (!contentColumn.canSendNotification("wind"))
+                    return;
+                NotifManager.notify({
+                    summary: "Chance of Strong Wind",
+                    body: message,
+                    icon: App.assets.icons.wind,
+                    tone: App.assets.audio.coldWeather
+                });
+            }
+        }
+
+        // ========================================================================
+        // 3. UI Components
+        // ========================================================================
+
+        // --- Main Weather Card ---
+        MenuCard {
+            id: weatherHeaderCard
+            Layout.fillWidth: true
+            Layout.preferredHeight: 210
+            cardColor: contentColumn.displayCardColor
+            cardLeftPadding: 8
+            cardRightPadding: 8
+            title: Weather.areaName
+            subtitle: "Last Update: " + Weather.lastUpdated
+            icon: "󰑓"
+            iconCursorShape: Qt.PointingHandCursor
+
+            onIconClicked: {
+                Weather.getWeatherData();
+                rotationAnim.start();
+            }
+
+            RotationAnimation {
+                id: rotationAnim
+                target: weatherHeaderCard.iconItem
+                property: "rotation"
+                from: 0
+                to: 360
+                duration: 1000
+            }
+
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
 
                 Text {
-                    text: currentTemp
-                    color: accentColor
-                    font.pixelSize: 65
-                    font.bold: true
-                    Layout.alignment: Qt.AlignVCenter
-                    Layout.leftMargin: 10
+                    id: backgroundWeatherIcon
+                    text: contentColumn.displayIcon
+                    font.pixelSize: 140
+                    color: contentColumn.mainCardTextColor
+                    opacity: 0.08
+                    font.family: contentColumn.iconFont
+                    anchors.centerIn: parent
                 }
 
-                Item {
-                    Layout.fillWidth: true
-                } // Separator
-
-                ColumnLayout {
-                    spacing: 4
-                    Layout.alignment: Qt.AlignVCenter
-                    Layout.rightMargin: 10
+                RowLayout {
+                    anchors.fill: parent
 
                     Text {
-                        Layout.fillWidth: true
-                        text: "High: " + highTemp
-                        font.pixelSize: 16
-                        color: mainCardTextColor
-                        horizontalAlignment: Text.AlignRight
+                        text: contentColumn.displayTemp + "°"
+                        color: contentColumn.accentColor
+                        font.pixelSize: 65
+                        font.bold: true
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.leftMargin: 10
                     }
-                    Text {
+
+                    Item {
                         Layout.fillWidth: true
-                        text: "Low: " + lowTemp
-                        font.pixelSize: 16
-                        color: mainCardTextColor
-                        horizontalAlignment: Text.AlignRight
                     }
-                    Text {
-                        Layout.fillWidth: true
-                        text: weatherCondition
-                        font.pixelSize: 16
-                        color: mainCardTextColor
-                        opacity: 0.8
-                        horizontalAlignment: Text.AlignRight
+
+                    ColumnLayout {
+                        spacing: 4
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.rightMargin: 10
+                        Text {
+                            text: `High: ${Weather.dailyForecast[0]?.maxTemp || 0}°`
+                            font.pixelSize: 16
+                            color: contentColumn.mainCardTextColor
+                            horizontalAlignment: Text.AlignRight
+                        }
+                        Text {
+                            text: `Low: ${Weather.dailyForecast[0]?.minTemp || 0}°`
+                            font.pixelSize: 16
+                            color: contentColumn.mainCardTextColor
+                            horizontalAlignment: Text.AlignRight
+                        }
+                        Text {
+                            text: contentColumn.displayTitle
+                            font.pixelSize: 16
+                            color: contentColumn.mainCardTextColor
+                            opacity: 0.8
+                            horizontalAlignment: Text.AlignRight
+                        }
                     }
                 }
             }
         }
-    }
 
-    // Sunrise and Sunset Card
-    Rectangle {
-        Layout.fillWidth: true
-        Layout.preferredHeight: 110
-        color: ThemeManager.selectedTheme.colors.secondary.alpha(0.4)
+        // --- AI Smart Summary Card ---
+        MenuCard {
+            id: smartWeatherDetailsCard
+            Layout.fillWidth: true
+            visible: contentColumn.isAiDataAvailable && Weather.aiSummaryText
+            cardColor: Weather.aiBgColor1
+            textColor: Helper.getAccurteTextColor(Weather.aiBgColor1)
+            icon: "󱙺"
+            title: Weather.aiTrendBadge
 
-        radius: weatherRoot.radius
+            // gradient: Gradient {
+            //     orientation: Gradient.Horizontal
+            //     GradientStop {
+            //         position: 0.0
+            //         color: Weather.aiBgColor1
+            //     }
+            //     GradientStop {
+            //         position: 1.0
+            //         color: Weather.aiBgColor2
+            //     }
+            // }
 
-        // layer.enabled: true
-        // layer.effect: DropShadow {
-        //     transparentBorder: true
-        //     radius: 8
-        //     samples: 16
-        //     color: "#40000000"
-        // }
+            Text {
+                Layout.fillWidth: true
+                text: Weather.aiSummaryText
+                wrapMode: Text.WordWrap
+                font.pixelSize: 14
+                color: Helper.getAccurteTextColor(Weather.aiBgColor1)
+            }
+
+            Flow {
+                Layout.fillWidth: true
+                spacing: 6
+                topPadding: 8
+                visible: Weather.aiTags.length > 0
+                Repeater {
+                    model: Weather.aiTags
+                    delegate: Rectangle {
+                        height: 24
+                        width: tagText.contentWidth + 16
+                        color: Weather.aiBgColor1.lighter(1.25)
+                        radius: 6
+                        Text {
+                            id: tagText
+                            anchors.centerIn: parent
+                            text: modelData
+                            font.pixelSize: 12
+                            color: Helper.getAccurteTextColor(Weather.aiBgColor1)
+                        }
+                    }
+                }
+            }
+        }
+
+        // --- Details Cards ---
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 110
+            color: ThemeManager.selectedTheme.colors.secondary.alpha(0.4)
+            radius: contentColumn.radius
+            RowLayout {
+                anchors.fill: parent
+                anchors.margins: 15
+                spacing: 12
+                SunriseSunsetCard {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    type: "Sunrise"
+                    time: Weather.sunrise
+                    icon: "🌅"
+                }
+                Rectangle {
+                    Layout.preferredWidth: 1
+                    Layout.fillHeight: true
+                    color: ThemeManager.selectedTheme.colors.subtleText.alpha(0.5)
+                }
+                SunriseSunsetCard {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    type: "Sunset"
+                    time: Weather.sunset
+                    icon: "🌇"
+                }
+            }
+        }
 
         RowLayout {
-            anchors.fill: parent
-            anchors.margins: 15
+            Layout.fillWidth: true
             spacing: 12
-
-            SunriseSunsetCard {
+            WeatherCard {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
-                type: "Sunrise"
-                time: sunrise
-                icon: "🌅"
+                Layout.preferredHeight: 110
+                title: "Feels Like"
+                value: contentColumn.displayFeelsLike + "°"
+                icon: "🌡️"
             }
-
-            Rectangle {
-                Layout.preferredWidth: 1
-                Layout.fillHeight: true
-                color: ThemeManager.selectedTheme.colors.subtleText.alpha(0.5)
-            }
-
-            SunriseSunsetCard {
+            WeatherCard {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
-                type: "Sunset"
-                time: sunset
-                icon: "🌇"
+                Layout.preferredHeight: 110
+                title: "Visibility"
+                value: Weather.visibility + " km"
+                icon: "👁️"
             }
         }
-    }
 
-    RowLayout {
-        Layout.fillWidth: true
-        spacing: 12
-
-        WeatherCard {
-            id: feelsLikeCard
+        RowLayout {
             Layout.fillWidth: true
-            Layout.preferredHeight: 110
-            title: "Feels Like"
-            value: feelsLike
-            icon: "🌡️"
-
-            // --- التأثير اللوني المعتمد على الحرارة ---
-            // property color tempColor: weatherRoot.getColorForTemperature(feelsLike)
-            //
-            // // طبقة علوية للتأثير اللوني
-            // Rectangle {
-            //     id: colorOverlay
-            //     anchors.fill: parent
-            //     radius: parent.radius
-            //     gradient: Gradient {
-            //         GradientStop {
-            //             position: 0.0
-            //             // تعديل الشفافية هنا مباشرة
-            //             color: {
-            //                 let c = feelsLikeCard.tempColor;
-            //                 c.a = 0.2;
-            //                 return c;
-            //             }
-            //         }
-            //         GradientStop {
-            //             position: 1.0
-            //             color: "transparent"
-            //         }
-            //     }
-            //     opacity: 0
-            // }
-            //
-            // // مؤقت لتشغيل التأثير كل فترة
-            // Timer {
-            //     id: tempColorTimer
-            //     interval: 6300
-            //     repeat: true
-            //     running: true
-            //     onTriggered: {
-            //         // تشغيل حركة الظهور والاختفاء
-            //         colorEffectAnimation.start();
-            //     }
-            // }
-            //
-            // // حركة ظهور واختفاء التأثير
-            // SequentialAnimation {
-            //     id: colorEffectAnimation
-            //     running: false // لا تعمل إلا عند استدعائها
-            //
-            //     // 1. ظهور التأثير
-            //     NumberAnimation {
-            //         target: colorOverlay
-            //         property: "opacity"
-            //         to: 1.0
-            //         duration: 700
-            //         easing.type: Easing.InQuad
-            //     }
-            //     // 2. انتظار لثانية واحدة
-            //     PauseAnimation {
-            //         duration: 1000
-            //     }
-            //     // 3. اختفاء التأثير
-            //     NumberAnimation {
-            //         target: colorOverlay
-            //         property: "opacity"
-            //         to: 0.0
-            //         duration: 700
-            //         easing.type: Easing.OutQuad
-            //     }
-            // }
+            spacing: 12
+            WeatherCard {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 110
+                title: "Humidity"
+                value: contentColumn.displayHumidity
+                icon: "💧"
+            }
+            WeatherCard {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 110
+                title: "Wind"
+                value: Weather.windSpeed + " km/h"
+                subtitle: Weather.windDirection
+                icon: "💨"
+            }
         }
 
-        WeatherCard {
+        RowLayout {
             Layout.fillWidth: true
-            Layout.preferredHeight: 110
-            title: "Visibility"
-            value: visibility
-            icon: "👁️"
+            spacing: 12
+            WeatherCard {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 110
+                title: "Pressure"
+                value: Weather.pressure + " hPa"
+                icon: "📊"
+            }
+            WeatherCard {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 110
+                title: "UV Index"
+                value: Weather.uvIndex
+                icon: "☀️"
+            }
         }
-    }
+    } // End of contentColumn
 
-    // Humidity and Wind Card
-    RowLayout {
-        Layout.fillWidth: true
-        spacing: 12
-
-        WeatherCard {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 110
-            title: "Humidity"
-            value: humidity
-            icon: "💧"
-        }
-
-        WeatherCard {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 110
-            title: "Wind"
-            value: windSpeed
-            subtitle: windDirection
-            icon: "💨"
-        }
-    }
-
-    // Pressure and UV Index Card
-    RowLayout {
-        Layout.fillWidth: true
-        spacing: 12
-
-        WeatherCard {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 110
-            title: "Pressure"
-            value: pressure
-            icon: "📊"
-        }
-
-        WeatherCard {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 110
-            title: "UV Index"
-            value: uvIndex
-            icon: "☀️"
-        }
-    }
-
-    // Weather Card Component
+    // ========================================================================
+    // 4. Component Definitions
+    // ========================================================================
     component WeatherCard: Rectangle {
-        property string title: ""
-        property string value: ""
-        property string subtitle: ""
-        property string icon: ""
-
-        color: cardColor
-        radius: weatherRoot.radius
-
-        border.width: 1
-        border.color: "transparent"
-
-        // layer.enabled: true
-        // layer.effect: DropShadow {
-        //     transparentBorder: true
-        //     radius: 8
-        //     samples: 16
-        //     color: "#40000000"
-        // }
-
+        property string title
+        property string value
+        property string subtitle
+        property string icon
+        color: contentColumn.cardColor
+        radius: contentColumn.radius
         Column {
             anchors.centerIn: parent
             spacing: subtitle !== "" ? 0 : 4
-
             Text {
                 text: icon
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 20
-                font.family: ThemeManager.selectedTheme.typography.iconFont
+                font.family: contentColumn.iconFont
             }
-
             Text {
                 text: title
                 font.pixelSize: 14
-                color: cardTextColor
+                color: contentColumn.cardTextColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-
             Text {
                 text: value
                 font.pixelSize: 20
                 font.bold: true
-                color: cardTextColor
+                color: contentColumn.cardTextColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-
             Text {
                 visible: subtitle !== ""
                 text: subtitle
                 font.pixelSize: 12
-                color: weatherRoot.textColor
-                anchors.horizontalCenter: {
-                    parent.horizontalCenter;
-                }
+                color: contentColumn.textColor
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
     }
 
-    // Sunrise/Sunset Card Component
     component SunriseSunsetCard: Column {
-        property string type: ""
-        property string time: ""
-        property string icon: ""
-
+        property string type
+        property string time
+        property string icon
         spacing: 6
-
         Text {
             text: icon
             font.pixelSize: 20
             anchors.horizontalCenter: parent.horizontalCenter
-            font.family: ThemeManager.selectedTheme.typography.iconFont
+            font.family: contentColumn.iconFont
         }
-
         Text {
             text: type
             font.pixelSize: 14
-            color: weatherRoot.textColor
+            color: contentColumn.textColor
             anchors.horizontalCenter: parent.horizontalCenter
         }
-
         Text {
             text: time
             font.pixelSize: 18
             font.bold: true
-            color: cardTextColor
+            color: contentColumn.cardTextColor
             anchors.horizontalCenter: parent.horizontalCenter
-        }
-    }
-
-    function getColorForTemperature(tempStr) {
-        const temp = parseFloat(tempStr);
-
-        // نصيحة للبرمجة: استخدم console.log للتحقق من القيم أثناء التطوير
-        // console.log("FeelsLike Input:", tempStr, "Parsed Temp:", temp);
-
-        // اللون الافتراضي في حالة عدم وجود قيمة صالحة
-        if (isNaN(temp)) {
-            return Qt.rgba(0.5, 0.5, 0.5, 1); // لون رمادي محايد كقيمة افتراضية
-        }
-
-        const coldColor = Qt.rgba(0.3, 0.6, 1.0, 1);    // أزرق
-        const neutralColor = Qt.rgba(0.9, 0.9, 0.9, 1); // أبيض مائل للرمادي
-        const warmColor = Qt.rgba(1.0, 0.5, 0.2, 1);    // برتقالي
-        const hotColor = Qt.rgba(1.0, 0.2, 0.2, 1);     // أحمر
-
-        if (temp <= 10) {
-            return coldColor;
-        } else if (temp > 10 && temp <= 20) {
-            return Qt.color(coldColor.r + (neutralColor.r - coldColor.r) * ((temp - 10) / 10), coldColor.g + (neutralColor.g - coldColor.g) * ((temp - 10) / 10), coldColor.b + (neutralColor.b - coldColor.b) * ((temp - 10) / 10));
-        } else if (temp > 20 && temp < 30) {
-            return Qt.color(neutralColor.r + (warmColor.r - neutralColor.r) * ((temp - 20) / 10), neutralColor.g + (warmColor.g - neutralColor.g) * ((temp - 20) / 10), neutralColor.b + (warmColor.b - neutralColor.b) * ((temp - 20) / 10));
-        } else {
-            // temp >= 30
-            const factor = Math.min((temp - 30) / 10, 1.0);
-            return Qt.color(warmColor.r + (hotColor.r - warmColor.r) * factor, warmColor.g + (hotColor.g - warmColor.g) * factor, warmColor.b + (hotColor.b - warmColor.b) * factor);
         }
     }
 }

@@ -22,7 +22,15 @@ class ColorExporter:
     base_text_states = {}
     toolbar_opacity_dark = 0
 
-    def __init__(self, wallpaper_data, ncolor, theme_mode):
+    def __init__(
+        self,
+        wallpaper_data,
+        ncolor,
+        theme_mode,
+        scheme_variant,
+        chroma_mult,
+        tone_mult,
+    ):
         material_you_colors = get_material_you_colors(
             wallpaper_data=wallpaper_data,
             ncolor=ncolor,
@@ -36,9 +44,9 @@ class ColorExporter:
             # 6 = Vibrant
             # 7 = Rainbow
             # 8 = FruitSalad
-            scheme_variant=2,
-            chroma_mult=2.5,
-            tone_mult=1.0,
+            scheme_variant=scheme_variant,
+            chroma_mult=chroma_mult,
+            tone_mult=tone_mult,
         )
 
         path = Path(wallpaper_data)

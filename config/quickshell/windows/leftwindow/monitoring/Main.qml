@@ -81,11 +81,11 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        EventBus.on(Events.OPEN_LEFTBAR, function () {
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, function () {
             monotoringMenu.menuIsOpened();
         });
 
-        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+        EventBus.on(Events.LEFT_MENU_IS_CLOSED, function () {
             monotoringMenu.menuIsClosed();
         });
     }

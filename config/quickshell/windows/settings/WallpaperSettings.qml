@@ -1,268 +1,428 @@
-// settings/WallpaperSettings.qml
+// windows/settings/WallpaperSettings.qml
 pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
+import Qt.labs.platform
 
 import "root:/components"
+import "root:/config"
+import "root:/themes"
+import "root:/windows/settings/components"
 
-M3GroupBox {
+BaseThemeSettings {
     id: root
-    title: qsTr("Wallpaper Settings")
-    titleTopMargin: 10
-    titlePixelSize: selectedTheme.typography.heading1Size
-    titleFontWeight: Font.ExtraBold
 
-    property var workingTheme
-    property var selectedTheme
+    title: qsTr("Wallpaper & Colors")
+    showApplyButton: true
+    property int preferredWidth: 600
 
-    signal openFolderDialog
-    signal openFileDialog
-    signal dynamicColoringChanged
-    signal nextWallpaperClicked
-    signal applyChanges
-    signal saveChanges
-    signal cancelChanges
-    signal resetToDefault
+    // ========================================================================
+    // Local State
+    // ========================================================================
+    property bool localEnableDynamic: false
+    property bool localEnableColoring: false
+    property bool localEnableWallpaperBlure: false
+    property string localDynamicPath: ""
+    property int localInterval: 60
+    property int localWallpaperIndex: 0
+    property string localStaticWallpaper: ""
 
+    // New Color Engine Variables
+    property int localSchemeVariant: 2
+    property real localChromaMult: 2.5
+    property real localToneMult: 1.0
+
+    // ========================================================================
+    // Logic
+    // ========================================================================
+    function syncFromTheme() {
+        let s = (theme && theme.systemSettings) ? theme.systemSettings : {};
+
+        localEnableDynamic = s.enableDynamicWallpapers ?? false;
+        localEnableColoring = s.enableDynamicColoring ?? false;
+        localEnableWallpaperBlure = s.enableWallpaperBlur ?? false;
+        localDynamicPath = s.dynamicWallpapersPath || "";
+        localInterval = (s.dynamicWallpapersInterval || 60000) / 1000;
+        localWallpaperIndex = s.selectedWallpaperIndex || 0;
+        localStaticWallpaper = s.wallpaper || "";
+
+        localSchemeVariant = s.dynamicColoringSchemeVariant !== undefined ? s.dynamicColoringSchemeVariant : 2;
+        localChromaMult = s.dynamicColoringChromaMult !== undefined ? s.dynamicColoringChromaMult : 2.5;
+        localToneMult = s.dynamicColoringToneMult !== undefined ? s.dynamicColoringToneMult : 1.0;
+    }
+
+    function serializeData() {
+        return {
+            "_enableDynamicWallpapers": localEnableDynamic,
+            "_enableDynamicColoring": localEnableColoring,
+            "_enableWallpaperBlur": localEnableWallpaperBlure,
+            "_dynamicWallpapersPath": localDynamicPath,
+            "_dynamicWallpapersInterval": localInterval * 1000,
+            "_selectedWallpaperIndex": localWallpaperIndex,
+            "_wallpaper": localStaticWallpaper,
+            "_dynamicColoringSchemeVariant": localSchemeVariant,
+            "_dynamicColoringChromaMult": localChromaMult,
+            "_dynamicColoringToneMult": localToneMult
+        };
+    }
+
+    // ========================================================================
+    // Dialogs
+    // ========================================================================
+    FolderDialog {
+        id: dirDialog
+        title: "Select Wallpapers Folder"
+        onAccepted: {
+            var path = folder.toString().replace("file://", "");
+            root.localDynamicPath = path;
+            root.applySingleProperty("_dynamicWallpapersPath", path);
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Select Wallpaper Image"
+        nameFilters: ["Image files (*.jpg *.png *.webp *.bmp)"]
+        onAccepted: {
+            var path = file.toString().replace("file://", "");
+            root.localStaticWallpaper = path;
+            root.applySingleProperty("_wallpaper", path);
+        }
+    }
+
+    // ========================================================================
+    // Helper Component for Descriptions
+    // ========================================================================
+    component DescriptionLabel: Controls.Label {
+        font.pixelSize: root.typ("small", 12)
+        color: root.theme ? root.theme.colors.subtleText : "#888"
+        wrapMode: Text.WordWrap
+        Layout.fillWidth: true
+        Layout.leftMargin: 20 // Indentation for better hierarchy
+        Layout.rightMargin: 10
+    }
+
+    // ========================================================================
+    // Main UI
+    // ========================================================================
     ColumnLayout {
         id: mainLayout
+        spacing: 0
+        Layout.preferredWidth: 590
 
-        spacing: selectedTheme.dimensions.spacingSmall
-
-        // ====================================================================
-        // --- القسم الرئيسي الأول: General ---
-        // ====================================================================
-        Controls.Label {
-            text: qsTr("General")
-            font.pixelSize: selectedTheme.typography.heading1Size
-            font.bold: true
-            Layout.topMargin: Kirigami.Units.mediumSpacing
-            Layout.bottomMargin: Kirigami.Units.smallSpacing
-        }
-
-        // --- الإعداد الفرعي 1.1: Enable dynamic wallpapers ---
-        SettingSwitch {
-            id: _enableDynamicWallpapersSwitch
-            label: qsTr("Enable dynamic wallpapers")
-            isChecked: workingTheme._enableDynamicWallpapers
-            font.bold: true
-            font.pixelSize: selectedTheme.typography.heading3Size
-            onIsCheckedChanged: {
-                workingTheme._enableDynamicWallpapers = isChecked;
-                root.applyChanges();
-            }
-        }
-        Controls.Label {
-            text: qsTr("Automatically cycle through a collection of wallpapers from a selected folder.")
-            font.pixelSize: selectedTheme.typography.small
-            color: selectedTheme.colors.subtleText
-            wrapMode: Text.WordWrap
-            Layout.preferredWidth: 500
-        }
-
-        // --- الإعداد الفرعي 1.2: Dynamic colors ---
-        SettingSwitch {
-            label: qsTr("Dynamic colors from wallpaper")
-            isChecked: workingTheme._enableDynamicColoring
-            font.pixelSize: selectedTheme.typography.heading3Size
-            font.bold: true
-            Layout.topMargin: Kirigami.Units.mediumSpacing
-            onIsCheckedChanged: {
-                workingTheme._enableDynamicColoring = isChecked;
-                if (isChecked) {
-                    root.dynamicColoringChanged();
-                    return;
-                }
-                root.applyChanges();
-            }
-        }
-        Controls.Label {
-            text: qsTr("Extract the main color from the current wallpaper and apply it to the application theme using the 'kde-material-you-colors' library (must be installed).")
-            font.pixelSize: selectedTheme.typography.small
-            color: selectedTheme.colors.subtleText
-            wrapMode: Text.WordWrap
-            Layout.preferredWidth: 620
-        }
-
+        // --------------------------------------------------------------------
+        // SECTION 1: ACTIVATION MODES
+        // --------------------------------------------------------------------
         ColumnLayout {
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            enabled: _enableDynamicWallpapersSwitch.isChecked
-
-            // spacing: selectedTheme.dimensions.spacingSmall
-            spacing: 0
+            Layout.fillWidth: true
+            spacing: 5 // Tighter spacing between control and description
+            Layout.bottomMargin: 15
 
             Controls.Label {
-                text: qsTr("Dynamic Wallpaper Settings")
-                // font.pixelSize: selectedTheme.typography.heading2Size
-                font.pixelSize: selectedTheme.typography.heading3Size
+                text: qsTr("Modes & Activation")
+                font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
-                Layout.bottomMargin: Kirigami.Units.smallSpacing
+                color: root.theme ? root.theme.colors.primary : "#fff"
+                Layout.bottomMargin: 5
             }
 
-            // --- الإعداد الفرعي 2.1: Interval ---
-            Controls.Label {
-                text: qsTr("Wallpapers interval (seconds)")
-                font.bold: true
-                Layout.topMargin: Kirigami.Units.mediumSpacing
-            }
-            Controls.Label {
-                text: qsTr("The time to wait before switching to the next wallpaper.")
-                font.pixelSize: selectedTheme.typography.small
-                color: selectedTheme.colors.subtleText
-            }
-            EditableField {
-                text: (workingTheme._dynamicWallpapersInterval / 1000).toString()
-                selectedTheme: root.selectedTheme
-                Layout.preferredHeight: 30
-                validator: IntValidator {
-                    bottom: 1
-                }
-                onEditingFinished: {
-                    workingTheme._dynamicWallpapersInterval = Number(text) * 1000;
-                    root.applyChanges();
-                }
-            }
-
-            // --- الإعداد الفرعي 2.2: Current Wallpaper ---
-            Controls.Label {
-                text: qsTr("Current wallpaper")
-                font.bold: true
-                Layout.topMargin: Kirigami.Units.mediumSpacing
-            }
-            Controls.Label {
-                text: qsTr("Shows the index of the currently displayed wallpaper. Use the button to switch to the next one.")
-                font.pixelSize: selectedTheme.typography.small
-                color: selectedTheme.colors.subtleText
-            }
-            RowLayout {
-                EditableField {
-                    text: workingTheme._selectedWallpaperIndex
-                    // readOnly: true
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 30
-                    selectedTheme: root.selectedTheme
-                    validator: IntValidator {
-                        bottom: 1
-                    }
-                    onEditingFinished: {
-                        workingTheme._selectedWallpaperIndex = Number(text);
-                        root.applyChanges();
+            // Dynamic Switch
+            SettingSwitch {
+                label: qsTr("Enable Dynamic Wallpapers")
+                isChecked: root.localEnableDynamic
+                onIsCheckedChanged: {
+                    if (!root.isLoading) {
+                        root.localEnableDynamic = isChecked;
+                        root.applySingleProperty("_enableDynamicWallpapers", isChecked);
                     }
                 }
-                MButton {
-                    text: qsTr("Next Wallpaper")
-                    iconText: ""
-                    iconPreferredWidth: 1
-                    textPreferredWidth: 4
-                    onClicked: root.nextWallpaperClicked()
-                    Layout.preferredWidth: 140
-                    Layout.preferredHeight: 30
-                }
+            }
+            DescriptionLabel {
+                text: qsTr("When enabled, the system will automatically cycle through a collection of images from a folder instead of using a single static image.")
             }
 
-            // --- الإعداد الفرعي 2.3: Wallpapers Folder ---
-            Controls.Label {
-                text: qsTr("Wallpapers folder")
-                font.bold: true
-                Layout.topMargin: Kirigami.Units.mediumSpacing
-            }
-            Controls.Label {
-                text: qsTr("The folder containing the images for the wallpapers.")
-                font.pixelSize: selectedTheme.typography.small
-                color: selectedTheme.colors.subtleText
-            }
-            RowLayout {
-                EditableField {
-                    text: workingTheme._dynamicWallpapersPath
-                    // readOnly: true
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 30
-                    selectedTheme: root.selectedTheme
+            // Coloring Switch
+            SettingSwitch {
+                label: qsTr("Enable Material You Coloring")
+                isChecked: root.localEnableColoring
+                onIsCheckedChanged: {
+                    if (!root.isLoading) {
+                        root.localEnableColoring = isChecked;
+                        root.applySingleProperty("_enableDynamicColoring", isChecked);
+                    }
                 }
-                MButton {
-                    text: ""
-                    font: selectedTheme.typography.iconFont
-                    onClicked: root.openFolderDialog()
-                    Layout.preferredWidth: 40
-                    Layout.preferredHeight: 30
+            }
+            DescriptionLabel {
+                text: qsTr("Extracts dominant colors from the current wallpaper to generate a matching system theme. Requires 'kde-material-you-colors'.")
+            }
+
+            SettingSwitch {
+                label: qsTr("Enable Wallpaper Blur")
+                isChecked: root.localEnableWallpaperBlure
+                onIsCheckedChanged: {
+                    if (!root.isLoading) {
+                        root.localEnableWallpaperBlure = isChecked;
+                        root.applySingleProperty("_enableWallpaperBlur", isChecked);
+                    }
                 }
+            }
+            DescriptionLabel {
+                text: qsTr("Enable blue for wallpaper when menu is opened")
             }
         }
 
-        // ====================================================================
-        // --- القسم الرئيسي الثالث: Static Wallpaper Settings ---
-        // ====================================================================
+        Kirigami.Separator {
+            Layout.fillWidth: true
+            Layout.bottomMargin: 15
+        }
+
+        // --------------------------------------------------------------------
+        // SECTION 2: COLOR ENGINE CONFIGURATION
+        // --------------------------------------------------------------------
         ColumnLayout {
-            Layout.topMargin: Kirigami.Units.largeSpacing
-            enabled: !_enableDynamicWallpapersSwitch.isChecked
-            spacing: Kirigami.Units.smallSpacing
+            Layout.fillWidth: true
+            spacing: 8
+            Layout.bottomMargin: 15
+            visible: root.localEnableColoring
 
             Controls.Label {
-                text: qsTr("Static Wallpaper")
-                font.pixelSize: selectedTheme.typography.heading2Size
+                text: qsTr("Dynamic Color Engine")
+                font.pixelSize: root.typ("heading2Size", 18)
                 font.bold: true
-                Layout.bottomMargin: Kirigami.Units.smallSpacing
+                color: root.theme ? root.theme.colors.primary : "#fff"
+                Layout.bottomMargin: 5
             }
 
-            // --- الإعداد الفرعي 3.1: Image Path ---
-            Controls.Label {
-                text: qsTr("Image path")
-                font.bold: true
-                Layout.topMargin: Kirigami.Units.mediumSpacing
+            // 1. Scheme Variant
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 10
+                Controls.Label {
+                    text: qsTr("Color Scheme:")
+                    font.bold: true
+                    Layout.preferredWidth: 100
+                }
+                SettingsComboBox {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    model: ["Content", "Expressive", "Fidelity", "Monochrome", "Neutral", "TonalSpot", "Vibrant", "Rainbow", "FruitSalad"]
+                    currentIndex: root.localSchemeVariant
+                    onActivated: index => {
+                        root.localSchemeVariant = index;
+                        root.applySingleProperty("_dynamicColoringSchemeVariant", index);
+                    }
+                }
             }
-            Controls.Label {
-                text: qsTr("The path to the single image to be used as wallpaper.")
+            DescriptionLabel {
+                text: qsTr("Defines the algorithm used to generate the palette. 'Vibrant' creates punchy colors, 'Neutral' is desaturated, and 'Fidelity' tries to match the image exactly.")
+            }
 
-                font.pixelSize: selectedTheme.typography.small
-                color: selectedTheme.colors.subtleText
+            // 2. Chroma Multiplier
+            SliderWithLabel {
+                label: qsTr("Chroma Multiplier (Saturation)")
+                from: 0.0
+                to: 5.0
+                stepSize: 0.1
+                decimals: 1
+                value: root.localChromaMult
+                onEditingFinished: val => {
+                    root.localChromaMult = val;
+                    root.applySingleProperty("_dynamicColoringChromaMult", val);
+                }
+            }
+            DescriptionLabel {
+                text: qsTr("Boosts the color intensity. Higher values (e.g., 2.5) make the theme clearer and more colorful, while lower values make it grayish.")
+            }
+
+            // 3. Tone Multiplier
+            SliderWithLabel {
+                label: qsTr("Tone Multiplier (Contrast)")
+                from: 0.0
+                to: 3.0
+                stepSize: 0.01
+                decimals: 2
+                value: root.localToneMult
+                onEditingFinished: val => {
+                    root.localToneMult = val;
+                    root.applySingleProperty("_dynamicColoringToneMult", val);
+                }
+            }
+            DescriptionLabel {
+                text: qsTr("Adjusts the contrast spread. Modify this if the generated colors feel too dark or too washed out compared to the background.")
+            }
+        }
+
+        Kirigami.Separator {
+            Layout.fillWidth: true
+            Layout.bottomMargin: 15
+            visible: root.localEnableColoring
+        }
+
+        // --------------------------------------------------------------------
+        // SECTION 3: WALLPAPER SOURCE (Dynamic OR Static)
+        // --------------------------------------------------------------------
+
+        // A. DYNAMIC MODE UI
+        ColumnLayout {
+            Layout.fillWidth: true
+            spacing: 8
+            visible: root.localEnableDynamic
+
+            Controls.Label {
+                text: qsTr("Dynamic Collection Config")
+                font.pixelSize: root.typ("heading2Size", 18)
+                font.bold: true
+                color: root.theme ? root.theme.colors.primary : "#fff"
+                Layout.bottomMargin: 5
+            }
+
+            // Folder Path
+            Controls.Label {
+                text: qsTr("Source Folder")
+                font.bold: true
             }
             RowLayout {
                 Layout.fillWidth: true
                 EditableField {
-                    text: workingTheme._wallpaper
-                    // readOnly: true
+                    text: root.localDynamicPath
                     Layout.fillWidth: true
                     Layout.preferredHeight: 30
-                    selectedTheme: root.selectedTheme
+                    selectedTheme: root.theme
+                    onEditingFinished: {
+                        if (root.isLoading)
+                            return;
+                        root.localDynamicPath = text;
+                        root.applySingleProperty("_dynamicWallpapersPath", text);
+                    }
+                }
+                MButton {
+                    text: ""
+                    font.family: root.typ("iconFont", "Arial")
+                    onClicked: dirDialog.open()
+                    Layout.preferredWidth: 40
+                    Layout.preferredHeight: 30
+                }
+            }
+            DescriptionLabel {
+                text: qsTr("The folder containing your wallpaper collection. The system will pick random images from here.")
+                Layout.leftMargin: 0 // Align with label
+            }
+
+            // Interval
+            SliderWithLabel {
+                label: qsTr("Change Interval (seconds)")
+                from: 10
+                to: 3600
+                stepSize: 10
+                value: root.localInterval
+                onEditingFinished: val => {
+                    root.localInterval = val;
+                    root.applySingleProperty("_dynamicWallpapersInterval", val * 1000);
+                }
+            }
+            DescriptionLabel {
+                text: qsTr("How often the wallpaper updates. Short intervals are good for testing, longer ones (e.g., 300s) for daily use.")
+                Layout.leftMargin: 0
+            }
+
+            // Navigation
+            Controls.Label {
+                text: qsTr("Manual Control")
+                font.bold: true
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 0
+                Controls.Label {
+                    text: "Current Index: " + root.localWallpaperIndex
+                    Layout.fillWidth: true
+                    color: root.theme ? root.theme.colors.subtleText : "#888"
+                }
+                MButton {
+                    text: "Back"
+                    iconText: "󰒮"
+                    Layout.preferredWidth: 80
+                    Layout.preferredHeight: 30
+                    iconFirst: true
+                    textPreferredWidth: 4
+                    iconPreferredWidth: 3
+                    topRightRadius: 0
+                    bottomRightRadius: 0
+                    onClicked: {
+                        ThemeManager.switchToPreviousWallpaper();
+                        root.localWallpaperIndex = theme._selectedWallpaperIndex;
+                        // root.applySingleProperty("_selectedWallpaperIndex", root.localWallpaperIndex);
+                    }
+                }
+                MButton {
+                    text: "Next"
+                    iconText: "󰒭"
+                    Layout.preferredWidth: 80
+                    Layout.preferredHeight: 30
+                    textPreferredWidth: 4
+                    iconPreferredWidth: 3
+                    topLeftRadius: 0
+                    bottomLeftRadius: 0
+                    onClicked: {
+                        ThemeManager.switchToNextWallpaper();
+                        root.localWallpaperIndex = theme._selectedWallpaperIndex;
+                        // root.applySingleProperty("_selectedWallpaperIndex", root.localWallpaperIndex);
+                    }
+                }
+            }
+            DescriptionLabel {
+                text: qsTr("Manually force a wallpaper update if you don't like the current one.")
+                Layout.leftMargin: 0
+            }
+        }
+
+        // B. STATIC MODE UI
+        ColumnLayout {
+            Layout.fillWidth: true
+            spacing: 8
+            visible: !root.localEnableDynamic
+
+            Controls.Label {
+                text: qsTr("Static Image Config")
+                font.pixelSize: root.typ("heading2Size", 18)
+                font.bold: true
+                color: root.theme ? root.theme.colors.primary : "#fff"
+                Layout.bottomMargin: 5
+            }
+
+            Controls.Label {
+                text: qsTr("Image Path")
+                font.bold: true
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                EditableField {
+                    text: root.localStaticWallpaper
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    selectedTheme: root.theme
+                    onEditingFinished: {
+                        if (root.isLoading)
+                            return;
+                        root.localStaticWallpaper = text;
+                        root.applySingleProperty("_wallpaper", text);
+                    }
                 }
                 MButton {
                     text: ""
-                    font: selectedTheme.typography.iconFont
-                    onClicked: root.openFileDialog()
-                    Layout.preferredHeight: 30
+                    font.family: root.typ("iconFont", "Arial")
+                    onClicked: fileDialog.open()
                     Layout.preferredWidth: 40
+                    Layout.preferredHeight: 30
                 }
             }
-        }
-    }
-
-    footer: RowLayout {
-        spacing: selectedTheme.dimensions.spacingMedium
-
-        MButton {
-            text: "Reset to default"
-            Layout.preferredWidth: 150
-            onClicked: resetToDefault()
-        }
-        MButton {
-            text: "Cancel"
-            Layout.preferredWidth: 80
-            onClicked: cancelChanges()
-        }
-
-        // عنصر فارغ لدفع زر الحفظ إلى اليمين
-        Item {
-            Layout.fillWidth: true
-        }
-
-        MButton {
-            text: "Save"
-            Layout.preferredWidth: 80
-            highlighted: true
-            onClicked: saveChanges()
+            DescriptionLabel {
+                text: qsTr("The absolute path to the single image file you want to set as your permanent background.")
+                Layout.leftMargin: 0
+            }
         }
     }
 }

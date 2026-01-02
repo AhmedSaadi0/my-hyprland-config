@@ -104,13 +104,17 @@ PanelWindow {
             implicitWidth: 200
             implicitHeight: 50
             color: root.bgColor
-            radius: 15
+            radius: ThemeManager.selectedTheme.dimensions.elementRadius
+
             y: 50
             opacity: 0
             anchors.horizontalCenter: parent.horizontalCenter
             // anchors.verticalCenter: parent.verticalCenter
 
-            layer.enabled: true
+            // layer.enabled: true
+
+            layer.enabled: root.visible
+            layer.smooth: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowBlur: 1.1

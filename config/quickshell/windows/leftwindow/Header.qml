@@ -23,13 +23,21 @@ Rectangle {
         clip: true
         fillMode: Image.PreserveAspectCrop
 
+        sourceSize.width: width
+        sourceSize.height: height
+
+        // 2. التحميل غير المتزامن
+        // يمنع تجميد الواجهة أثناء قراءة ملف الصورة من القرص
+        asynchronous: true
+
         anchors {
             topMargin: (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2) - 1
             top: parent.top
             horizontalCenter: parent.horizontalCenter
         }
 
-        layer.enabled: true
+        layer.enabled: parent.parent.visible
+        layer.smooth: true
         layer.effect: OpacityMask {
             maskSource: Item {
                 width: backgroundImage.width

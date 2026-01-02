@@ -20,7 +20,7 @@ ProcessTable {
     ListModel {
         id: dataModel
         ListElement {
-            textRole: "جاري تحميل البيانات..."
+            textRole: qsTr("Loading ... ")
             valueRole: "0.00"
         }
     }
@@ -61,7 +61,7 @@ ProcessTable {
             if (!readData.has_battery) {
                 batteryTable.value = "󱟨";
                 dataModel.append({
-                    textRole: "No Battery found",
+                    textRole: qsTr("No Battery found"),
                     iconRole: "",
                     valueRole: ""
                 });
@@ -71,19 +71,19 @@ ProcessTable {
             }
 
             dataModel.append({
-                textRole: "Percentage",
+                textRole: qsTr("Percentage"),
                 iconRole: "",
                 valueRole: readData.percentage.toFixed(0)
             });
 
             dataModel.append({
-                textRole: "Health",
+                textRole: qsTr("Health"),
                 iconRole: "",
                 valueRole: readData.wear_level_percent.toFixed(2)
             });
 
             dataModel.append({
-                textRole: "Cycles",
+                textRole: ("Cycles"),
                 iconRole: "󱍸",
                 valueRole: readData.cycle_count.toFixed(0)
             });
@@ -94,7 +94,7 @@ ProcessTable {
             if (dataModel.count === 0 || dataModel.get(0).textRole !== "خطأ في التحليل") {
                 dataModel.clear();
                 dataModel.append({
-                    textRole: "خطأ في التحليل",
+                    textRole: ("Error in reading data"),
                     valueRole: "N/A"
                 });
             }

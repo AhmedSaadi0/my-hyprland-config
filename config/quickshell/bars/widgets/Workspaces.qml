@@ -7,39 +7,35 @@ import "../../themes"
 Rectangle {
     id: workspaceRectangle
 
+    // --- الخصائص الأصلية (لم يتم تغيير القيم) ---
     property int underlineHeight: 2
     property int itemWidth: 33
     property int fontSize: 18
-    property var activeIcons: ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰆈", "󱍙", "󰺵", "󱋡", "󰙨"]
-    property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰆉", "󱍚", "󰺶", "󱋢", "󰤑"]
+    property var activeIcons: ["", "󰿣", "󰂔", "󰉋", "󱙋", "󰭹", "󱍙", "󰺵", "󱋡", "󰙨"]
+    property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰻞", "󱍚", "󰺶", "󱋢", "󰤑"]
+
+    // تحديد الآيدي (ID) الحالي
     property int focusedId: Hyprland.focusedWorkspace !== null ? Hyprland.focusedWorkspace.id : 0
 
+    // المصفوفات
     readonly property var workspaceIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    readonly property var reversedWorkspaceIds: workspaceIds.slice().reverse()
+    readonly property var reversedWorkspaceIds: workspaceIds.slice()//.reverse()
 
-    property var focusedItem: null
+    // --- تحسين الكود: حساب المؤشر رياضياً بدلاً من اللوب ---
+    // بما أن المصفوفة معكوسة (10 -> 1)، فإن المعادلة هي: 10 - الآيدي
+    property int activeIndex: {
+        if (focusedId >= 1 && focusedId <= 10)
+            return focusedId - 1;
+        return -1; // في حالة عدم وجود مساحة عمل نشطة ضمن النطاق
+    }
 
     height: parent.height
-    width: rowLayout.implicitWidth + 20
+    width: rowLayout.implicitWidth
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
     color: ThemeManager.selectedTheme.colors.topbarBgColorV1
 
-    onFocusedIdChanged: {
-        for (let i = 0; i < rowLayout.children.length; ++i) {
-            if (rowLayout.children[i].workspaceId === focusedId) {
-                focusedItem = rowLayout.children[i];
-                return;
-            }
-        }
-    }
-
-    Component.onCompleted: {
-        for (let i = 0; i < rowLayout.children.length; ++i) {
-            if (rowLayout.children[i].workspaceId === focusedId) {
-                focusedItem = rowLayout.children[i];
-                return;
-            }
-        }
+    anchors {
+        rightMargin: 5
     }
 
     RowLayout {
@@ -48,8 +44,6 @@ Rectangle {
         spacing: 5
 
         Repeater {
-            // --- (تحسين) ---
-            // استخدام الخاصية المحسوبة مسبقًا
             model: workspaceRectangle.reversedWorkspaceIds
 
             delegate: MouseArea {
@@ -60,15 +54,15 @@ Rectangle {
                 readonly property int workspaceId: modelData
                 readonly property bool isFocused: workspaceId === workspaceRectangle.focusedId
                 readonly property bool exists: Hyprland.workspaces.values.some(ws => ws.id === workspaceId)
+
                 readonly property color defaultItemColor: {
-                    // --- (تم التعديل) ---
-                    // استخدام الربط المباشر بالثيم
                     if (isFocused || exists) {
-                        ThemeManager.selectedTheme ? ThemeManager.selectedTheme.colors.primary : null;
+                        return ThemeManager.selectedTheme.colors.primary;
                     } else {
-                        palette.text.alpha(0.4);
+                        return palette.text.alpha(0.4);
                     }
                 }
+
                 readonly property string icon: isFocused ? workspaceRectangle.activeIcons[workspaceId - 1] ?? "" : workspaceRectangle.inActiveIcons[workspaceId - 1] ?? ""
 
                 cursorShape: Qt.PointingHandCursor
@@ -79,13 +73,12 @@ Rectangle {
                     anchors.centerIn: parent
 
                     text: workspaceMouseArea.icon
-
                     font.pixelSize: workspaceRectangle.fontSize
                     font.family: ThemeManager.selectedTheme.typography.iconFont
-                    // --- (تم التعديل) ---
-                    // استخدام الربط المباشر بالثيم
+
                     color: workspaceMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary : workspaceMouseArea.defaultItemColor
 
+                    // أنيميشن اللون
                     Behavior on color {
                         ColorAnimation {
                             duration: 250
@@ -125,22 +118,31 @@ Rectangle {
     Rectangle {
         id: slidingIndicator
 
-        x: workspaceRectangle.focusedItem ? rowLayout.x + workspaceRectangle.focusedItem.x : -width
-        width: workspaceRectangle.focusedItem ? workspaceRectangle.focusedItem.width : 0
+        //تحديد الموقع والحجم بناءً على الحساب الرياضي ---
+        // الموقع = (رقم الترتيب * عرض العنصر) + (رقم الترتيب * المسافة الفاصلة)
+        // نضيف 2 ونطرح 4 كما في الكود الأصلي للحفاظ على الهوامش الدقيقة
+        property int targetX: (workspaceRectangle.activeIndex * workspaceRectangle.itemWidth) + (workspaceRectangle.activeIndex * 5)
+
+        visible: workspaceRectangle.activeIndex !== -1
+
+        x: visible ? targetX + 2 : -width // +2 من الكود الأصلي
+        width: visible ? workspaceRectangle.itemWidth - 4 : 0 // -4 من الكود الأصلي
 
         height: workspaceRectangle.underlineHeight
         anchors.bottom: parent.bottom
-        // --- (تم التعديل) ---
-        // التأكد من استخدام الربط المباشر هنا أيضًا
         color: ThemeManager.selectedTheme.colors.primary
         radius: height / 2
 
+        //  SpringAnimation ---
+        // يجعل الحركة مرنة وناعمة بدلاً من الحركة الميكانيكية
         Behavior on x {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutCubic
+            SpringAnimation {
+                spring: 3.0    // قوة النابض
+                damping: 0.25  // تخفيف الاهتزاز
+                mass: 1.0      // كتلة العنصر
             }
         }
+
         Behavior on width {
             NumberAnimation {
                 duration: 250

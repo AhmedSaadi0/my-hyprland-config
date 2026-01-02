@@ -17,13 +17,59 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 
 يُفضل استخدام هذا الإعداد مع تطبيقات KDE للحصول على أفضل تجربة. إذا اخترت استخدام تطبيقات أخرى، فلا بأس بذلك، ولكن ستحتاج إلى ضبط الإعدادات يدوياً إذا لم يكن لديها ثيم مشابه لبقية التطبيقات.
 
+## ✨ المميزات الرئيسية
+
+تقدم NibrasShell تجربة متكاملة تتجاوز مجرد الشكل الجمالي:
+
+### 1. 🎨 ثيمات متعددة جاهزة
+
+تتضمن الواجهة مجموعة من أشهر الثيمات المجهزة مسبقاً:
+
+- Dracula, Gruvbox, Nord, Material3, Catppuccin, TokyoNight.
+
+### 2. ⚙️ تخصيص
+
+تعديل كل شيء تقريباً:
+
+- تغيير الألوان والخلفيات بسهولة.
+- التحكم بإعدادات Hyprland الأساسية من واجهة المستخدم.
+- توليد ألوان النظام بناءً على الخلفية (Material You).
+
+### 3. 💊 الكبسولة الذكية (The Smart Capsule)
+
+مركز تحكم تفاعلي مدعوم بالذكاء الاصطناعي:
+
+- **الارتباط بالذكاء الاصطناعي:** الكبسولة مرتبطة ب Gemini يقوم بتحليل حالة الطقس والموسيقى التي تعمل حالياً.
+- **العين الذكية (Smart Eye):** عين تفاعلية تتغير تعابيرها وتتحرك بناءً على التحليلات القادمة من الذكاء الاصطناعي (مثل الاستمتاع مع الموسيقى أو التأثر بالطقس).
+- **مشغل موسيقى:** دعم لتعدد المشغلات مع Visualizer بسيط.
+- **إشعارات مدمجة:** عرض الصوت والسطوع يتم داخل الشريط (Inline) دون حجب الشاشة.
+- **طقس وتفاعل:** الوصول السريع لمعلومات الطقس والتحكم بالنظام.
+<p align="center">
+  <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule Demo" width="100%">
+</p>
+
+### 4. ⛈️ تنبيهات الطقس
+
+نظام إشعارات ينبهك بحالات الطقس القاسية فور حدوثها:
+
+- تنبيهات للصقيع، المطر الغزير، الثلوج، الرعد، والرياح القوية.
+
+### 5. 📡 مدير الشبكة
+
+- عرض سرعة الإنترنت الحالية.
+- حساب استهلاك البيانات (يومي / شهري).
+
+---
+
 ## التثبيت
 
 ### الطريقة التلقائية (موصى به)
 
-بعد استنساخ المستودع، قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات `.nibrasshell.json`:
+قم باستنساخ المستودع، ثم قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات `.nibrasshell.json`:
 
 ```bash
+git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
+cd nibrasshell 
 python install.py
 ```
 
@@ -88,7 +134,7 @@ sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 
 # تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
 sudo dnf install ffmpeg --allowerasing
-sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13 python3.13-devel
 
 # تفعيل مستودع هيبر لاند
 sudo dnf copr enable solopasha/hyprland
@@ -98,10 +144,6 @@ sudo dnf install hyprland hyprshot hyprpicker wl-clipboard swww
 # تفعيل مستودع كويك شل
 sudo dnf copr enable errornointernet/quickshell
 sudo dnf install quickshell
-
-# تفعيل مستودع material-you-colors
-sudo dnf copr enable luisbocanegra/kde-material-you-colors
-sudo dnf install kde-material-you-colors
 
 # تثبيت plasma-desktop - غير الزامي
 sudo dnf install plasma-desktop ark kate dolphin
@@ -119,14 +161,40 @@ sudo dnf install plasma-desktop ark kate dolphin
 - نحتاج مكتبه `rembg` و `pillow` لانشاء الصور ذات تاثير العمق
 
 ```bash
-pip install rembg[gpu] pillow psutil
+python3.13 -m venv ~/.cache/nibrasshell/venv
+~/.cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools
+~/.cache/nibrasshell/venv/bin/pip install -r .config/quickshell/scripts/python/requirements-3.13.txt
 ```
+
+### الان يمكنك استخدام سكربت التثبيت واختيار رقم 2
+
+```bash
+python install.py
+Choose your language / اختر لغتك / Vyberte jazyk:
+1. English
+2. العربية
+3. Česky
+> 2
+
+=============================================
+سكربت تثبيت NibrasShell
+=============================================
+1. تثبيت المتطلبات
+2. تثبيت الواجهة
+3. تحديث QuickShell
+4. حذف الواجهة
+5. إنشاء/تعديل ملف الإعدادات
+6. خروج
+اختر أحد الخيارات: 2
+```
+
+### في حال لم يعمل السكربت الان اكمل مع التثبيت اليدوي
 
 #### استخرج جميع الثيمات في المجلد `config/gtk-themes/` الى `~/.themes`
 
 ### اعداد الملفات:
 
-    git clone https://github.com/AhmedSaadi0/NibrasShell.git
+    git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
 
     # عمل نسخة احتياطية لملفاتك الاصلية
     mv ~/.config/hypr/ ~/.config/hypr-old
@@ -195,30 +263,16 @@ nvim .nibrasshell.json
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
-  "darkM3WallpaperPath": "/home/ahmed/wallpapers/dark",
-  "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
   "weatherLocation": "sanaa",
   "city": "sanaa",
   "country": "yemen",
   "usePrayerTimes": true,
-  "changePlasmaColor": true,
-  "scripts": {
-    "dynamicM3Py": null,
-    "get_wallpapers": null,
-    "createThumbnail": null,
-    "gtk_theme": null,
-    "systemInfo": null,
-    "deviceLocal": null,
-    "cpu": null,
-    "ram": null,
-    "deviceTemp": null,
-    "hardwareInfo": null,
-    "cpuUsage": null,
-    "ramUsage": null,
-    "cpuCores": null,
-    "devicesTemp2": null,
-    "playerctl": null
-  }
+  "geminiApiKey": "",
+  "musicAiApiKey": "", // الذكاء الاصطناعي: خبير الصوتيات وناقد الوسائط
+  "weatherAiApiKey": "", // الذكاء الاصطناعي: محلل الطقس والتنبيهات
+  "aiPreferredLanguage": "Arabic", // اللغة المستخدمة في الرد
+  "weatherPersona": "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user'\''s safety and comfort.",
+  "musicPersona": "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
 }
 ```
 
@@ -242,13 +296,59 @@ nvim .nibrasshell.json
 
 It is recommended to use this setup with KDE applications for the best experience. If you choose to use other applications, that is fine, but you will need to theme them manually if they do not have a theme similar to the rest of the applications.
 
+## ✨ Key Features
+
+NibrasShell offers a complete desktop experience, not just a look:
+
+### 1. 🎨 Instant Theme Switching
+
+Pre-configured, high-quality themes:
+
+- Dracula, Gruvbox, Nord, Material3, Catppuccin, TokyoNight.
+
+### 2. ⚙️ Ultimate Customizability
+
+Allows deep personalization:
+
+- Easily change colors and wallpapers.
+- Tweak Hyprland settings directly from the UI.
+- Dynamic system colors based on your wallpaper (Material You).
+
+### 3. 💊 The Smart Capsule
+
+An interactive control hub powered by AI:
+
+- **AI Integration:** The capsule is connected to AI (Gemini) to analyze weather conditions and the music currently playing.
+- **Smart Eye:** Features a dynamic "Smart Eye" that changes its expressions based on the AI analysis (e.g., reacting to the music vibe or weather alerts).
+- **Advanced Media Player:** Multi-player support with a small visualizer.
+- **Non-Intrusive OSD:** Volume and brightness changes happen _inline_ (inside the bar) to keep your view clear.
+- **Smart Interactions:** Quick access to weather and system controls.
+<p align="center">
+  <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule Demo" width="100%">
+</p>
+
+### 4. ⛈️ Weather Alerts
+
+Notification system that alerts you to severe conditions:
+
+- Instant alerts for Frost, Rain, Snow, Thunderstorms, and High Winds.
+
+### 5. 📡 Network Dashboard
+
+- Real-time speed monitoring.
+- **Data Usage Tracking:** Monitor your daily and monthly consumption.
+
+---
+
 ## Installing
 
 ### Automatic Method (Recommended)
 
-After cloning the repository, run the installation script. It will handle everything, including the creation of the `.nibrasshell.json` config file:
+Clone the repository, and run the installation script. It will handle everything, including the creation of the `.nibrasshell.json` config file:
 
 ```bash
+git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
+cd nibrasshell
 python install.py
 ```
 
@@ -312,7 +412,7 @@ sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 
 # Install needed apps with other supporting apps like media support
 sudo dnf install ffmpeg --allowerasing
-sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13 python3.13-devel
 
 # Enable Hyprland repository
 sudo dnf copr enable solopasha/hyprland
@@ -321,10 +421,6 @@ sudo dnf install hyprland hyprshot hyprpicker wl-clipboard swww
 # Enable Quickshell repository
 sudo dnf copr enable errornointernet/quickshell
 sudo dnf install quickshell
-
-# material-you-colors
-sudo dnf copr enable luisbocanegra/kde-material-you-colors
-sudo dnf install kde-material-you-colors
 
 # Install plasma-desktop for its apps - Optional
 sudo dnf install plasma-desktop ark kate dolphin
@@ -342,14 +438,40 @@ sudo dnf install plasma-desktop ark kate dolphin
 - we need `rembg` and `pillow` to create the needed images to apply depth effect
 
 ```bash
-pip install rembg[gpu] pillow psutil
+python3.13 -m venv ~/.cache/nibrasshell/venv
+~/.cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools
+~/.cache/nibrasshell/venv/bin/pip install -r .config/quickshell/scripts/python/requirements-3.13.txt
 ```
+
+### Now you can use the install script option 2
+
+```bash
+$ python install.py
+Choose your language / اختر لغتك / Vyberte jazyk:
+1. English
+2. العربية
+3. Česky
+> 1
+
+=============================================
+NibrasShell Installation Script
+=============================================
+1. Install Dependencies
+2. Install NibrasShell
+3. Update QuickShell
+4. Uninstall NibrasShell
+5. Create/Edit User Config
+6. Exit
+Choose an option: 2
+```
+
+### in case the install script still did not work you can continue
 
 #### Extract all themes in `config/gtk-themes/` to `~/.themes`
 
 ### Setting up files:
 
-    git clone https://github.com/AhmedSaadi0/NibrasShell.git
+    git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
 
     # backup your files
     mv ~/.config/hypr/ ~/.config/hypr-old
@@ -418,30 +540,16 @@ nvim .nibrasshell.json
   "networkMonitor": "wlp0s20f3",
   "networkTimeout": 300,
   "networkInterval": 1000,
-  "darkM3WallpaperPath": "/home/ahmed/wallpapers/dark",
-  "lightM3WallpaperPath": "/home/ahmed/wallpapers/light",
   "weatherLocation": "sanaa",
   "city": "sanaa",
   "country": "yemen",
   "usePrayerTimes": true,
-  "changePlasmaColor": true,
-  "scripts": {
-    "dynamicM3Py": null,
-    "get_wallpapers": null,
-    "createThumbnail": null,
-    "gtk_theme": null,
-    "systemInfo": null,
-    "deviceLocal": null,
-    "cpu": null,
-    "ram": null,
-    "deviceTemp": null,
-    "hardwareInfo": null,
-    "cpuUsage": null,
-    "ramUsage": null,
-    "cpuCores": null,
-    "devicesTemp2": null,
-    "playerctl": null
-  }
+  "geminiApiKey": "",
+  "musicAiApiKey": "", // AI Audiophile and Media Critic
+  "weatherAiApiKey": "", // AI Weather Alerts And Analysts
+  "aiPreferredLanguage": "English", // To response with
+  "weatherPersona": "You are a professional Senior Meteorologist. You provide precise, actionable advice based on data. You care about the user'\''s safety and comfort.",
+  "musicPersona": "You are a chill, witty Music Companion. You enjoy good vibes and occasionally tease the user about their taste in a friendly way."
 }
 ```
 
@@ -457,31 +565,45 @@ nvim .nibrasshell.json
 
 # Screenshots - لقطات شاشة
 
-|                                                          M3 Light                                                          |                                                         M3 Dark                                                          |
-| :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
-| <img alt='M3 Light screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-light.png'/> | <img alt='M3 Dark screenshot' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-dark.png'/> |
+|                                                                M3 Light                                                                |                                                               M3 Dark                                                                |
+| :------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="M3 Light screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-light.png" width="400"/> | <img alt="M3 Dark screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/m3-dark.png" width="400"/> |
 
-|                                                  Nord Light                                                   |                                                  Nord Dark                                                   |
-| :-----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
-| <img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-light.png'/> | <img alt='Nord' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-dark.png'/> |
+|                                                                 Nord Light                                                                 |                                                                Nord Dark                                                                 |
+| :----------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="Nord Light screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-light.png" width="400"/> | <img alt="Nord Dark screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/nord-dark.png" width="400"/> |
 
-|                                                    Gruvbox Light                                                    |                                                    Gruvbox Dark                                                    |
-| :-----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
-| <img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-light.png'/> | <img alt='Gruvbox' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-dark.png'/> |
+|                                                                  Gruvbox Light                                                                   |                                                                  Gruvbox Dark                                                                  |
+| :----------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="Gruvbox Light screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-light.png" width="400"/> | <img alt="Gruvbox Dark screenshot" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/gruvbox-dark.png" width="400"/> |
 
-|                                                        Catppuccin Dark                                                        |                                                   TokyoNight Dark                                                   |
-| :---------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
-| <img alt='Catppuccin-dark' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png'/> | <img alt='TokyoNight' src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png'/> |
+|                                                              Catppuccin Light                                                               |                                                              Catppuccin Dark                                                              |
+| :-----------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="Catppuccin Light" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-light.jpg" width="400"/> | <img alt="Catppuccin Dark" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/Catppuccin-dark.png" width="400"/> |
+
+|                                                              TokyoNight Light                                                               |                                                           TokyoNight Dark                                                            |
+| :-----------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="TokyoNight Light" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight-light.jpg" width="400"/> | <img alt="TokyoNight Dark" src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/tokyonight.png" width="400"/> |
+
+<p align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/deer.jpg" alt="Depth effect" width="400"><br>
+        <strong>Depth effect</strong>
+      </td>
+      <td align="center">
+        <img src="https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/smart-c.gif" alt="Smart Capsule" width="400"><br>
+        <strong>Smart Capsule</strong>
+      </td>
+    </tr>
+  </table>
+</p>
 
 ### Settings - الإعدادات
 
-[Watch a video](https://youtu.be/w7taDzj4_Y8)
-
 <p align='center'>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings1.png' width="48%"/>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings2.png' width="48%"/>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings3.png' width="48%"/>
-	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings4.png' width="48%"/>
+	<img src='https://github.com/AhmedSaadi0/nibrasshell/blob/quickshell/screenshots/settings1.png' width="80%"/>
 </p>
 
 ---

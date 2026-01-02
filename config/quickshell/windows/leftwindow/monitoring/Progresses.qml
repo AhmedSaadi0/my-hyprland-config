@@ -94,7 +94,7 @@ Rectangle {
         MonitorWidget {
             id: tempWidget
             Layout.fillWidth: true // Make each MonitorWidget take equal share of width
-            title: "Temp" // Shorter title if space is tight
+            title: qsTr("Temp") // Shorter title if space is tight
             // valueText: "100%" // Default is "100%", can be overridden or updated dynamically
             monitorComponent: tempComponent
             monitorItemWidth: root.monitorWidth
@@ -105,7 +105,7 @@ Rectangle {
 
         MonitorWidget {
             Layout.fillWidth: true
-            title: "Battery"
+            title: qsTr("Battery")
             monitorComponent: batComponent
             monitorItemWidth: root.monitorWidth
             monitorItemHeight: root.monitorHeight
@@ -115,7 +115,7 @@ Rectangle {
 
         MonitorWidget {
             Layout.fillWidth: true
-            title: "RAM"
+            title: qsTr("RAM")
             monitorComponent: ramComponent
             monitorItemWidth: root.monitorWidth
             monitorItemHeight: root.monitorHeight
@@ -125,7 +125,7 @@ Rectangle {
 
         MonitorWidget {
             Layout.fillWidth: true
-            title: "CPU"
+            title: qsTr("CPU")
             monitorComponent: cpuComponent
             monitorItemWidth: root.monitorWidth
             monitorItemHeight: root.monitorHeight
@@ -135,11 +135,11 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        EventBus.on(Events.OPEN_LEFTBAR, function () {
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, function () {
             root.menuIsOpened();
         });
 
-        EventBus.on(Events.CLOSE_LEFTBAR, function () {
+        EventBus.on(Events.LEFT_MENU_IS_CLOSED, function () {
             root.menuIsClosed();
         });
     }

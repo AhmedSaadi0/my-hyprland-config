@@ -1,3 +1,5 @@
+// services/Brightness.qml
+
 pragma Singleton
 pragma ComponentBehavior: Bound
 
