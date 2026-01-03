@@ -13,6 +13,52 @@ Item {
     property string currentWallpaperPath: ""
     signal wallpaperReady(string path)
 
+    // Wallpaper Lists
+    property var localWallpapersList: []
+    property var downloadedWallpapersList: []
+    property var wallhavenWallpapersList: []
+
+    // Wallhaven signals
+    signal fetchingWallhavenWallpapersStarted
+    signal wallhavenWallpapersFetched(var response)
+    signal wallhavenWallpapersError(string errorDetails)
+
+    // Download signals
+    signal wallpaperDownloadStarted(string filePath)
+    signal wallpaperDownloadFinished(string filePath)
+    signal wallpaperDownloadError(string errorDetails)
+
+    function refreshLocalWallpapers() {
+        localWallpapersProcess.command = Utils.Helper.getWallpapersList(App.wallpapersPath);
+        localWallpapersProcess.running = true;
+    }
+
+    function refreshDownloadedWallpapers() {
+        downloadedWallpapersProcess.command = Utils.Helper.getWallpapersList(App.downloadedWallpapersPath);
+        downloadedWallpapersProcess.running = true;
+    }
+
+    function refreshAllWallpaperLists() {
+        refreshLocalWallpapers();
+        refreshDownloadedWallpapers();
+    }
+
+    function searchWallhaven(url) {
+        fetchingWallhavenWallpapersStarted();
+        wallhavenProcess.command = ["curl", "-s", url];
+        wallhavenProcess.running = true;
+    }
+
+    function downloadWallhaven(id, fileType, url) {
+        const filename = id + "." + fileType.split('/')[1];
+        const filePath = App.downloadedWallpapersPath + "/" + filename;
+        
+        wallpaperDownloadStarted(filePath);
+        wallhavenDownloadProcess.wallpaperPath = filePath;
+        wallhavenDownloadProcess.command = App.scripts.bash.downloadWallpaperCommand(filePath, url);
+        wallhavenDownloadProcess.running = true;
+    }
+
     // =========================================================
     // Configuration
     // =========================================================
@@ -140,9 +186,72 @@ Item {
         }
     }
 
+    Process {
+        id: localWallpapersProcess
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    root.localWallpapersList = JSON.parse(this.text) || [];
+                } catch (e) {
+                    console.error("WallpaperController: Failed to parse local wallpapers", e);
+                    root.localWallpapersList = [];
+                }
+            }
+        }
+    }
+
+    Process {
+        id: downloadedWallpapersProcess
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    root.downloadedWallpapersList = JSON.parse(this.text) || [];
+                } catch (e) {
+                    console.error("WallpaperController: Failed to parse downloaded wallpapers", e);
+                    root.downloadedWallpapersList = [];
+                }
+            }
+        }
+    }
+
+    Process {
+        id: wallhavenProcess
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const response = JSON.parse(this.text);
+                    root.wallhavenWallpapersFetched(response);
+                } catch (e) {
+                    console.error("WallpaperController: Failed to parse Wallhaven response", e);
+                    root.wallhavenWallpapersError("Failed to parse response: " + e);
+                }
+            }
+        }
+    }
+
+    Process {
+        id: wallhavenDownloadProcess
+        property string wallpaperPath: ""
+        
+        onExited: (exitCode, exitStatus) => {
+            if (exitCode === 0 && wallpaperPath !== "") {
+                // Push to downloaded list
+                root.downloadedWallpapersList = [...root.downloadedWallpapersList, wallpaperPath];
+                root.wallpaperDownloadFinished(wallpaperPath);
+            } else {
+                console.error("WallpaperController: Download failed with exit code", exitCode);
+                root.wallpaperDownloadError("Download failed with exit code " + exitCode);
+            }
+        }
+    }
+
     Timer {
         id: wallpaperTimer
         repeat: true
         onTriggered: root.nextWallpaper()
+    }
+
+    Component.onCompleted: {
+        refreshAllWallpaperLists();
     }
 }

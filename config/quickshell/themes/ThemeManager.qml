@@ -18,6 +18,9 @@ Singleton {
     property bool _initialReady: false
     readonly property alias selectedTheme: loader.activeThemeInstance
     readonly property alias currentWallpaper: wallpaperCtrl.currentWallpaperPath
+    readonly property alias localWallpapers: wallpaperCtrl.localWallpapersList
+    readonly property alias downloadedWallpapers: wallpaperCtrl.downloadedWallpapersList
+    readonly property alias wallhavenWallpapers: wallpaperCtrl.wallhavenWallpapersList
     readonly property bool isInitialThemeReady: _initialReady
 
     signal selectedThemeUpdated
@@ -25,6 +28,22 @@ Singleton {
     signal wallpaperChanged(string path)
     signal creatingOverlayImageStarted
     signal creatingOverlayImageFinished(string newImagePath)
+
+    // Wallhaven signals (forwarded from WallpaperController)
+    signal fetchingWallhavenWallpapersStarted
+    signal wallhavenWallpapersFetched(var response)
+    signal wallhavenWallpapersError(string errorDetails)
+
+    // Download signals (forwarded from WallpaperController)
+    signal wallpaperDownloadStarted(string filePath)
+    signal wallpaperDownloadFinished(string filePath)
+    signal wallpaperDownloadError(string errorDetails)
+
+    function refreshLocalWallpapers() { wallpaperCtrl.refreshLocalWallpapers(); }
+    function refreshDownloadedWallpapers() { wallpaperCtrl.refreshDownloadedWallpapers(); }
+    function refreshAllWallpaperLists() { wallpaperCtrl.refreshAllWallpaperLists(); }
+    function searchWallhaven(url) { wallpaperCtrl.searchWallhaven(url); }
+    function downloadWallhaven(id, fileType, url) { wallpaperCtrl.downloadWallhaven(id, fileType, url); }
 
     // =========================================================
     // Internal State for Sequence Control
@@ -84,6 +103,12 @@ Singleton {
             }
             root.wallpaperChanged(path);
         }
+        onFetchingWallhavenWallpapersStarted: root.fetchingWallhavenWallpapersStarted()
+        onWallhavenWallpapersFetched: response => root.wallhavenWallpapersFetched(response)
+        onWallhavenWallpapersError: errorDetails => root.wallhavenWallpapersError(errorDetails)
+        onWallpaperDownloadStarted: filePath => root.wallpaperDownloadStarted(filePath)
+        onWallpaperDownloadFinished: filePath => root.wallpaperDownloadFinished(filePath)
+        onWallpaperDownloadError: errorDetails => root.wallpaperDownloadError(errorDetails)
     }
 
     HyprlandBridge {
