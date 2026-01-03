@@ -4,6 +4,8 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
+    
+import "./todo" as Todo 
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
 import "./weather"
@@ -66,11 +68,9 @@ StackView {
     }
     Component {
         id: todoChatComponent
-        Text {
+        Todo.TodoView {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            text: "soon ..."
-            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
         }
     }
     Component {
