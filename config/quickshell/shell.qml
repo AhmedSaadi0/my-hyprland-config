@@ -11,6 +11,7 @@ import "root:/windows/leftwindow"
 import "root:/windows/smart_capsule"
 import "root:/windows/settings"
 import "root:/windows/cheatsheet"
+import "root:/windows/bottomlauncher"
 import "root:/bars"
 import "root:/osd"
 import "root:/utils"
@@ -235,6 +236,19 @@ ShellRoot {
             Cheatsheet {
                 id: cheatsheetPanel
             }
+            BottomAppLauncher {
+                id: bottomLauncherPanel
+            }
+
+            // Event listener for bottom launcher toggle from LeftBar
+            Connections {
+                target: null
+                Component.onCompleted: {
+                    EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
+                        bottomLauncherPanel.toggle();
+                    });
+                }
+            }
 
             // 5. IPC Handler (Refactored Logic)
             IpcHandler {
@@ -277,7 +291,11 @@ ShellRoot {
                     toggleMenu(Consts.AI_BOT_MENU_INDEX);
                 }
                 function toggleApplauncherMenu() {
-                    toggleMenu(Consts.APPLICATIONS_MENU_INDEX);
+                    if (App.useBottomLauncher) {
+                        bottomLauncherPanel.toggle();
+                    } else {
+                        toggleMenu(Consts.APPLICATIONS_MENU_INDEX);
+                    }
                 }
             }
         }

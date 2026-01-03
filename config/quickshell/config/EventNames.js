@@ -16,3 +16,5 @@ var OPEN_CHEATSHEET = "openCheatsheet";
 
 var CPU_THRESHOLD_EXCEEDED = "cpuThresholdExceeded";
 var MEMORY_THRESHOLD_EXCEEDED = "memoryThresholdExceeded";
+
+var TOGGLE_BOTTOM_LAUNCHER = "toggleBottomLauncher";

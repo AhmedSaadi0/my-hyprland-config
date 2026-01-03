@@ -54,6 +54,10 @@ M3GroupBox {
         property bool enableHighRamAlert: false
         property bool playRamAlarmSound: false
         property int ramHighLoadThreshold: 90
+
+        // Launcher Layout
+        property bool useBottomLauncher: false
+        property int bottomLauncherWidth: 800
     }
 
     // ====================================================================
@@ -131,6 +135,9 @@ M3GroupBox {
         tempConfig.playRamAlarmSound = App.playRamAlarmSound;
         tempConfig.ramHighLoadThreshold = App.ramHighLoadThreshold;
 
+        tempConfig.useBottomLauncher = App.useBottomLauncher;
+        tempConfig.bottomLauncherWidth = App.bottomLauncherWidth;
+
         if (App.availableGeminiWeatherModels.length === 0)
             App.modelsManager.refreshAll();
 
@@ -161,7 +168,9 @@ M3GroupBox {
             "cpuHighLoadThreshold": tempConfig.cpuHighLoadThreshold,
             "enableHighRamAlert": tempConfig.enableHighRamAlert,
             "playRamAlarmSound": tempConfig.playRamAlarmSound,
-            "ramHighLoadThreshold": tempConfig.ramHighLoadThreshold
+            "ramHighLoadThreshold": tempConfig.ramHighLoadThreshold,
+            "useBottomLauncher": tempConfig.useBottomLauncher,
+            "bottomLauncherWidth": tempConfig.bottomLauncherWidth
         };
 
         App.updateConfigMultiple(dataToSave);
@@ -255,6 +264,79 @@ M3GroupBox {
                 }
             }
         }
+
+        Kirigami.Separator {
+            Layout.fillWidth: true
+            Layout.bottomMargin: selectedTheme.dimensions.spacingMedium
+        }
+
+        // =================================================================
+        // SECTION: LAUNCHER LAYOUT
+        // =================================================================
+        ColumnLayout {
+            Layout.fillWidth: true
+            spacing: selectedTheme.dimensions.spacingMedium
+            Layout.bottomMargin: selectedTheme.dimensions.spacingLarge
+
+            Controls.Label {
+                text: qsTr("Launcher Layout")
+                font.pixelSize: selectedTheme.typography.heading2Size
+                font.bold: true
+                color: selectedTheme.colors.primary
+            }
+
+            SettingSwitch {
+                label: qsTr("Use Bottom Launcher")
+                tooltip: qsTr("Toggle between side launcher (left panel) and bottom launcher.")
+                isChecked: tempConfig.useBottomLauncher
+                onIsCheckedChanged: tempConfig.useBottomLauncher = isChecked
+            }
+
+            Controls.Label {
+                text: tempConfig.useBottomLauncher
+                    ? qsTr("App launcher will open from the bottom of the screen.")
+                    : qsTr("App launcher will open from the left side panel.")
+                font.pixelSize: selectedTheme.typography.small
+                color: selectedTheme.colors.primary
+                opacity: 0.7
+            }
+            // Bottom Launcher Width
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+                visible: tempConfig.useBottomLauncher
+
+                Controls.Label {
+                    text: qsTr("Launcher Width: %1px").arg(tempConfig.bottomLauncherWidth)
+                    font.bold: true
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 10
+
+                    Controls.Slider {
+                        id: launcherWidthSlider
+                        Layout.fillWidth: true
+                        from: 550
+                        to: 1200
+                        stepSize: 50
+                        value: tempConfig.bottomLauncherWidth
+                        onMoved: tempConfig.bottomLauncherWidth = value
+                    }
+
+                    Controls.Label {
+                        text: "550"
+                        font.pixelSize: selectedTheme.typography.small
+                        opacity: 0.6
+                    }
+                    Controls.Label {
+                        text: "1200"
+                        font.pixelSize: selectedTheme.typography.small
+                        opacity: 0.6
+                    }
+                }
+            }        }
 
         Kirigami.Separator {
             Layout.fillWidth: true
