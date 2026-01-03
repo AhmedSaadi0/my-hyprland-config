@@ -1,4 +1,3 @@
-// windows/bottomlauncher/LauncherContent.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -14,28 +13,32 @@ Item {
 
     signal appLaunched
 
-    // Command mode using shared registry
+    // --- Logic & Properties ---
+
     property bool isCommandMode: CommandsRegistry.isCommandMode(searchField.text)
     property string commandText: CommandsRegistry.getCommandText(searchField.text)
     property var filteredCommands: isCommandMode ? CommandsRegistry.filterCommands(commandText) : []
+    property string activeCommandView: ""
+
+    property int currentViewIndex: {
+        if (activeCommandView === "wallpaper")
+            return 2;
+        if (isCommandMode)
+            return 1;
+        return 0;
+    }
 
     function executeCommand(cmd) {
         if (cmd.isAction) {
-            // Handle action commands
             if (cmd.action === "openSettings") {
                 EventBus.emit(Events.OPEN_SETTINGS);
                 root.appLaunched();
             }
         } else if (cmd.view !== "") {
-            // Show the command view
             root.activeCommandView = cmd.view;
         }
     }
 
-    // Current command view (empty = none, "wallpaper" = wallpaper selector, etc.)
-    property string activeCommandView: ""
-
-    // Auto-close command view when exiting command mode
     onIsCommandModeChanged: {
         if (!isCommandMode && activeCommandView !== "") {
             activeCommandView = "";
@@ -59,11 +62,9 @@ Item {
         categoryFilter.selectedCategory = "";
     }
 
-    // Reset when parent becomes invisible
     onVisibleChanged: {
-        if (!visible) {
+        if (!visible)
             resetState();
-        }
     }
 
     Keys.onPressed: event => {
@@ -104,38 +105,36 @@ Item {
 
     ScriptModel {
         id: filteredModel
-
         values: {
+            if (root.isCommandMode || root.activeCommandView !== "")
+                return [];
+
             const searchText = searchField.text.toLowerCase();
             const category = categoryFilter.selectedCategory;
 
-            return [...DesktopEntries.applications.values]
-                .filter(app => app && app.name && app.noDisplay !== true)
-                .filter(app => {
-                    if (category !== "") {
-                        const categories = app.categories || [];
-                        const categoryMatch = categories.some(cat => 
-                            cat.toLowerCase().includes(category.toLowerCase())
-                        );
-                        if (!categoryMatch) return false;
-                    }
+            return [...DesktopEntries.applications.values].filter(app => app && app.name && app.noDisplay !== true).filter(app => {
+                if (category !== "") {
+                    const categories = app.categories || [];
+                    if (!categories.some(cat => cat.toLowerCase().includes(category.toLowerCase())))
+                        return false;
+                }
 
-                    if (searchText === "") return true;
+                if (searchText === "")
+                    return true;
 
-                    const nameMatch = app.name.toLowerCase().includes(searchText);
-                    const commentMatch = (app.comment || "").toLowerCase().includes(searchText);
-                    const genericNameMatch = (app.genericName || "").toLowerCase().includes(searchText);
-                    const categoriesMatch = (app.categories || []).some(cat => 
-                        cat.toLowerCase().includes(searchText)
-                    );
+                const nameMatch = app.name.toLowerCase().includes(searchText);
+                const commentMatch = (app.comment || "").toLowerCase().includes(searchText);
+                const genericNameMatch = (app.genericName || "").toLowerCase().includes(searchText);
+                const categoriesMatch = (app.categories || []).some(cat => cat.toLowerCase().includes(searchText));
 
-                    return nameMatch || commentMatch || genericNameMatch || categoriesMatch;
-                })
-                .sort((a, b) => a.name.localeCompare(b.name));
+                return nameMatch || commentMatch || genericNameMatch || categoriesMatch;
+            }).sort((a, b) => a.name.localeCompare(b.name));
         }
     }
 
-    // Search Bar
+    // --- UI Structure ---
+
+    // 1. Search Bar
     RowLayout {
         id: searchRow
         anchors.top: parent.top
@@ -143,6 +142,7 @@ Item {
         anchors.right: parent.right
         height: 40
         spacing: 8
+        z: 10
 
         EditableField {
             id: searchField
@@ -165,164 +165,197 @@ Item {
             bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
             onAccepted: {
-                // Handle command mode
                 if (root.isCommandMode && root.filteredCommands.length > 0) {
-                    const cmd = root.filteredCommands[0];
-                    root.executeCommand(cmd);
+                    root.executeCommand(root.filteredCommands[0]);
                     return;
                 }
-
                 if (filteredModel.values.length > 0) {
                     const firstApp = filteredModel.values[0];
                     root.launchApp(firstApp.command, firstApp.workingDirectory);
                 }
             }
         }
-
-       
     }
 
-    // Category Filter
-    CategoryFilter {
-        id: categoryFilter
-        anchors.top: searchRow.bottom
-        anchors.topMargin: 8
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 32
-        visible: !root.isCommandMode && root.activeCommandView === ""
-    }
-
-    // Command suggestions list (shows when typing commands with >)
-    ListView {
-        id: commandListView
+    // 2. Animated Content Area
+    SwipeView {
+        id: contentStack
         anchors.top: searchRow.bottom
         anchors.topMargin: 8
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        visible: root.isCommandMode && root.activeCommandView === ""
 
-        model: root.filteredCommands
+        currentIndex: root.currentViewIndex
+        interactive: false
         clip: true
-        spacing: 4
+        orientation: Qt.Horizontal
 
-        delegate: CommandItem {
-            width: commandListView.width
-            commandData: modelData
-            isHighlighted: index === 0
-            onClicked: root.executeCommand(modelData)
-        }
-
-        Text {
-            anchors.centerIn: parent
-            visible: root.filteredCommands.length === 0
-            text: "No commands found"
-            font.pixelSize: 14
-            color: ThemeManager.selectedTheme.colors.subtleText
-        }
-    }
-
-    // Wallpaper Selector View
-    WallpaperSelector {
-        id: wallpaperSelector
-        anchors.top: searchRow.bottom
-        anchors.topMargin: 8
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        visible: root.activeCommandView === "wallpaper"
-
-        onWallpaperSelected: path => {
-            root.exitCommandView();
-            root.appLaunched();
-        }
-
-        onCloseRequested: {
-            root.exitCommandView();
-        }
-    }
-
-    // App List
-    ListView {
-        id: appListView
-        anchors.top: categoryFilter.bottom
-        anchors.topMargin: 8
-        anchors.left: parent.left
-        anchors.right: scrollBarBg.left
-        anchors.rightMargin: 8
-        anchors.bottom: parent.bottom
-        visible: !root.isCommandMode && root.activeCommandView === ""
-
-        model: filteredModel
-        clip: true
-        spacing: 2
-        currentIndex: -1
-        boundsBehavior: Flickable.StopAtBounds
-
-        delegate: LauncherAppItem {
-            width: appListView.width
-            appData: modelData
-            isSelected: appListView.currentIndex === index
-            isHighlighted: index === 0 && searchField.text !== ""
-
-            onClicked: {
-                root.launchApp(modelData.command, modelData.workingDirectory);
+        // Page 0: Apps List & Categories
+        Item {
+            CategoryFilter {
+                id: categoryFilter
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 32
             }
 
-            onHovered: {
-                appListView.currentIndex = index;
-            }
-        }
+            ScrollView {
+                id: appScrollView
+                anchors.top: categoryFilter.bottom
+                anchors.topMargin: 8
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
 
-        Text {
-            anchors.centerIn: parent
-            visible: filteredModel.values.length === 0
-            text: "No applications found"
-            font.pixelSize: 14
-            color: ThemeManager.selectedTheme.colors.subtleText
-        }
-    }
+                clip: true
 
-    // Scrollbar
-    Rectangle {
-        id: scrollBarBg
-        anchors.right: parent.right
-        anchors.top: categoryFilter.bottom
-        anchors.topMargin: 8
-        anchors.bottom: parent.bottom
-        width: 6
-        visible: appListView.visible && appListView.contentHeight > appListView.height
-        radius: 3
-        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+                ListView {
+                    id: appListView
+                    width: parent.width
 
-        Rectangle {
-            id: scrollHandle
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 6
-            radius: 3
-            color: handleMouseArea.containsMouse || handleMouseArea.pressed
-                ? ThemeManager.selectedTheme.colors.primary
-                : ThemeManager.selectedTheme.colors.primary.alpha(0.6)
+                    model: filteredModel
+                    spacing: 2
+                    currentIndex: -1
+                    boundsBehavior: Flickable.StopAtBounds
 
-            y: Math.max(0, Math.min(parent.height - height, appListView.visibleArea.yPosition * parent.height))
-            height: Math.max(30, appListView.visibleArea.heightRatio * parent.height)
+                    displaced: Transition {
+                        NumberAnimation {
+                            properties: "x,y"
+                            duration: 200
+                            easing.type: Easing.OutQuad
+                        }
+                    }
 
-            MouseArea {
-                id: handleMouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-                drag.target: parent
-                drag.axis: Drag.YAxis
-                drag.minimumY: 0
-                drag.maximumY: scrollBarBg.height - scrollHandle.height
+                    displayMarginBeginning: 40
+                    displayMarginEnd: 40
 
-                onPositionChanged: {
-                    if (drag.active) {
-                        let ratio = scrollHandle.y / (scrollBarBg.height - scrollHandle.height);
-                        appListView.contentY = ratio * (appListView.contentHeight - appListView.height);
+                    delegate: LauncherAppItem {
+                        id: delegateRoot
+                        width: appListView.width
+                        appData: modelData
+                        isSelected: appListView.currentIndex === index
+                        isHighlighted: index === 0 && searchField.text !== ""
+
+                        onClicked: root.launchApp(modelData.command, modelData.workingDirectory)
+                        onHovered: appListView.currentIndex = index
+
+                        opacity: 0
+                        transform: Translate {
+                            id: itemTrans
+                            y: 15
+                        }
+
+                        Component.onCompleted: {
+                            entranceAnim.start();
+                        }
+
+                        ParallelAnimation {
+                            id: entranceAnim
+
+                            SequentialAnimation {
+                                PauseAnimation {
+                                    duration: Math.min(appListView.index, 10) * 20
+                                }
+
+                                ParallelAnimation {
+
+                                    NumberAnimation {
+                                        target: delegateRoot
+                                        property: "opacity"
+                                        to: 1
+                                        duration: 200
+                                        easing.type: Easing.OutCubic
+                                    }
+
+                                    NumberAnimation {
+                                        target: itemTrans
+                                        property: "y"
+                                        to: 0
+                                        duration: 250
+                                        easing.type: Easing.OutBack
+                                        easing.overshoot: 0.8
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+            }
+
+            Text {
+                anchors.centerIn: parent
+                visible: filteredModel.values.length === 0
+                text: "No applications found"
+                font.pixelSize: 14
+                color: ThemeManager.selectedTheme.colors.subtleText
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+
+        // Page 1: Command List
+        Item {
+            ListView {
+                id: commandListView
+                anchors.fill: parent
+                model: root.filteredCommands
+                clip: true
+                spacing: 4
+
+                delegate: CommandItem {
+                    id: cmdDelegate
+                    width: commandListView.width
+                    commandData: modelData
+                    isHighlighted: index === 0
+                    onClicked: root.executeCommand(modelData)
+
+                    opacity: 0
+                    transform: Translate {
+                        id: cmdTrans
+                        x: -10
+                    }
+
+                    Component.onCompleted: cmdAnim.start()
+
+                    ParallelAnimation {
+                        id: cmdAnim
+                        NumberAnimation {
+                            target: cmdDelegate
+                            property: "opacity"
+                            to: 1
+                            duration: 150
+                        }
+                        NumberAnimation {
+                            target: cmdTrans
+                            property: "x"
+                            to: 0
+                            duration: 200
+                            easing.type: Easing.OutQuad
+                        }
+                    }
+                }
+
+                Text {
+                    anchors.centerIn: parent
+                    visible: root.filteredCommands.length === 0
+                    text: "No commands found"
+                    font.pixelSize: 14
+                    color: ThemeManager.selectedTheme.colors.subtleText
+                }
+            }
+        }
+
+        // Page 2: Wallpaper Selector
+        Item {
+            WallpaperSelector {
+                id: wallpaperSelector
+                anchors.fill: parent
+                onWallpaperSelected: path => {
+                    root.exitCommandView();
+                    root.appLaunched();
+                }
+                onCloseRequested: root.exitCommandView()
             }
         }
     }

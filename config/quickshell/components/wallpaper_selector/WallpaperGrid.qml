@@ -16,66 +16,84 @@ Rectangle {
     property string currentWallpaper: ""
     property string emptyText: qsTr("No wallpapers found")
 
+    property var downloadingList: []
+
     signal wallpaperClicked(var wallpaperData)
     signal loadMore
 
     radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
     color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#1a1a2e"
     clip: true
-
-    GridView {
-        id: wallpaperGrid
+    ScrollView {
+        id: scrollView
         anchors.fill: parent
         anchors.margins: 8
 
-        property int columns: root.compact ? 1 : 4
-        cellWidth: (width - 16) / columns
-        cellHeight: root.compact ? cellWidth * 0.5 + 24 : cellWidth * 0.6 + 28
-
-        model: root.wallpapers
         clip: true
-        boundsBehavior: Flickable.StopAtBounds
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
-        ScrollBar.vertical: ScrollBar {
-            active: true
-            policy: ScrollBar.AsNeeded
-        }
+        GridView {
+            id: wallpaperGrid
+            anchors.fill: parent
+            anchors.margins: 8
 
-        onAtYEndChanged: {
-            if (atYEnd && root.isWallhaven && !root.loading) {
-                root.loadMore();
+            property int columns: root.compact ? 1 : 4
+            cellWidth: (width - 16) / columns
+            cellHeight: root.compact ? cellWidth * 0.5 + 24 : cellWidth * 0.6 + 28
+            delegateModelAccess: DelegateModel.ReadOnly
+
+            model: root.wallpapers
+            clip: true
+
+            // boundsBehavior: Flickable.StopAtBounds
+            // flickDeceleration: 1000
+            // maximumFlickVelocity: 3000
+            // ScrollBar.vertical: ScrollBar {
+            //     active: true
+            //     policy: ScrollBar.AsNeeded
+            // }
+
+            onAtYEndChanged: {
+                if (atYEnd && root.isWallhaven && !root.loading) {
+                    root.loadMore();
+                }
             }
-        }
 
-        delegate: WallpaperCard {
-            width: wallpaperGrid.cellWidth
-            height: wallpaperGrid.cellHeight
-            
-            isWallhaven: root.isWallhaven
-            currentWallpaper: root.currentWallpaper
+            delegate: WallpaperCard {
+                width: wallpaperGrid.cellWidth
+                height: wallpaperGrid.cellHeight
 
-            onClicked: wallpaperData => root.wallpaperClicked(wallpaperData)
+                isWallhaven: root.isWallhaven
+                currentWallpaper: root.currentWallpaper
+
+                isDownloading: {
+                    if (!root.isWallhaven)
+                        return false;
+                    return root.downloadingList.indexOf(modelData.id) !== -1;
+                }
+
+                onClicked: wallpaperData => root.wallpaperClicked(wallpaperData)
+            }
         }
     }
 
-    // Empty state
     Text {
         anchors.centerIn: parent
-        visible: root.wallpapers.length === 0 && !root.loading
+        visible: wallpaperGrid.count === 0 && !root.loading
         text: root.emptyText
         font.pixelSize: 14
         color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
         horizontalAlignment: Text.AlignHCenter
     }
 
-    // Loading state
     Rectangle {
         anchors.centerIn: parent
         width: 48
         height: 48
         radius: 24
         color: ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333"
-        visible: root.loading && root.wallpapers.length === 0
+        visible: root.loading && wallpaperGrid.count === 0
 
         Text {
             anchors.centerIn: parent
@@ -85,7 +103,7 @@ Rectangle {
             color: ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
 
             RotationAnimation on rotation {
-                running: root.loading
+                running: root.loading && wallpaperGrid.count === 0
                 from: 0
                 to: 360
                 duration: 1000
@@ -94,23 +112,44 @@ Rectangle {
         }
     }
 
-    // Load more indicator
     Rectangle {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 8
-        width: loadMoreText.width + 24
-        height: 28
-        radius: 14
+        anchors.bottomMargin: 10
+        width: 120
+        height: 32
+        radius: 16
         color: ThemeManager.selectedTheme?.colors?.primary.alpha(0.9) || "#6366f1"
-        visible: root.isWallhaven && root.loading && root.wallpapers.length > 0
 
-        Text {
-            id: loadMoreText
+        visible: root.isWallhaven && root.loading && wallpaperGrid.count > 0
+
+        Row {
             anchors.centerIn: parent
-            text: "Loading more..."
-            font.pixelSize: 11
-            color: "#fff"
+            spacing: 8
+
+            BusyIndicator {
+                width: 20
+                height: 20
+                running: true
+                contentItem: Item {
+                    Rectangle {
+                        width: 20
+                        height: 20
+                        radius: 10
+                        color: "transparent"
+                        border.width: 2
+                        border.color: "white"
+                        visible: true
+                    }
+                }
+            }
+
+            Text {
+                text: "Loading..."
+                font.pixelSize: 12
+                font.bold: true
+                color: "#fff"
+            }
         }
     }
 }

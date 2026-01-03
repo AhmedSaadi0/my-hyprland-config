@@ -5,84 +5,103 @@ import QtQuick.Layouts
 
 import "root:/themes"
 import "root:/components"
+import "root:/components/tab"
 
 Item {
     id: root
-    
+
     property string selectedCategory: ""
 
-    // Simplified category definitions
     readonly property var categories: [
-        { label: "All", category: "" },
-        { label: "Dev", category: "Development" },
-        { label: "Games", category: "Game" },
-        { label: "Graphics", category: "Graphics" },
-        { label: "Internet", category: "Network" },
-        { label: "Media", category: "AudioVideo" },
-        { label: "Office", category: "Office" },
-        { label: "System", category: "System" },
-        { label: "Utils", category: "Utility" }
+        {
+            label: "All",
+            category: "",
+            icon: "",
+            width: 75
+        },
+        {
+            label: "Dev",
+            category: "Development",
+            icon: "",
+            width: 85
+        },
+        {
+            label: "Games",
+            category: "Game",
+            icon: "󰸿",
+            width: 100
+        },
+        {
+            label: "Graphics",
+            category: "Graphics",
+            icon: "󰽉",
+            width: 110
+        },
+        {
+            label: "Internet",
+            category: "Network",
+            icon: "󰖟",
+            width: 105
+        },
+        {
+            label: "Media",
+            category: "AudioVideo",
+            icon: "",
+            width: 90
+        },
+        {
+            label: "Office",
+            category: "Office",
+            icon: "",
+            width: 90
+        },
+        {
+            label: "System",
+            category: "System",
+            icon: "",
+            width: 95
+        },
+        {
+            label: "Utils",
+            category: "Utility",
+            icon: "",
+            width: 85
+        }
     ]
 
-    RowLayout {
+    TabBar {
+        id: filterBar
         anchors.fill: parent
-        spacing: 6
 
-        Repeater {
-            model: root.categories
+        vertical: false
+        barLength: parent.width
+        barThickness: 32
 
-            Rectangle {
-                id: categoryBtn
-                Layout.preferredHeight: 28
-                Layout.preferredWidth: categoryText.implicitWidth + 20
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius
+        color: "transparent"
+        ensureVisibility: true
 
-                property bool isSelected: root.selectedCategory === modelData.category
+        highlightColor: ThemeManager.selectedTheme.colors.primary
+        textHighlightColor: ThemeManager.selectedTheme.colors.onPrimary
+        textColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        hoverColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
 
-                color: isSelected 
-                    ? ThemeManager.selectedTheme.colors.primary
-                    : mouseArea.containsMouse 
-                        ? ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-                        : "transparent"
-
-                border.color: isSelected 
-                    ? ThemeManager.selectedTheme.colors.primary
-                    : ThemeManager.selectedTheme.colors.primary.alpha(0.3)
-                border.width: 1
-
-                Behavior on color {
-                    ColorAnimation { duration: 150; easing.type: Easing.OutQuad }
-                }
-
-                Text {
-                    id: categoryText
-                    anchors.centerIn: parent
-                    text: modelData.label
-                    font.pixelSize: 12
-                    font.weight: categoryBtn.isSelected ? Font.DemiBold : Font.Normal
-                    color: categoryBtn.isSelected 
-                        ? ThemeManager.selectedTheme.colors.onPrimary
-                        : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-                    
-                    Behavior on color {
-                        ColorAnimation { duration: 150 }
+        model: root.categories.map(item => ({
+                    text: item.label,
+                    icon: item.icon,
+                    expandedWidth: item.width || 100,
+                    closedWidth: 40,
+                    onClick: function () {
+                        root.selectedCategory = item.category;
                     }
-                }
+                }))
 
-                MouseArea {
-                    id: mouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-
-                    onClicked: {
-                        root.selectedCategory = modelData.category;
-                    }
+        Connections {
+            target: root
+            function onSelectedCategoryChanged() {
+                if (root.selectedCategory === "") {
+                    filterBar.currentIndex = 0;
                 }
             }
         }
-
-        // Spacer
-        Item { Layout.fillWidth: true }
     }
 }

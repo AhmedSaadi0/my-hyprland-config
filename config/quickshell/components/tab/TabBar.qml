@@ -2,7 +2,7 @@
 
 import QtQuick
 import org.kde.kirigami as Kirigami
-import "../../themes"
+import "root:/themes"
 
 Rectangle {
     id: root
@@ -16,13 +16,15 @@ Rectangle {
     //-----------------------
     // Size Configuration
     //-----------------------
-    // CHANGED: Renamed properties for clarity in both orientations
     property int barLength: 300
     property int barThickness: 50
     property bool vertical: false
     property bool ensureVisibility: false
 
-    // CHANGED: implicit size now depends on orientation
+    // Default sizes (Fallback values)
+    property int defaultExpandedSize: 100
+    property int defaultClosedSize: 40
+
     implicitWidth: vertical ? barThickness : barLength
     implicitHeight: vertical ? barLength : barThickness
 
@@ -40,6 +42,7 @@ Rectangle {
     //-----------------------
     property alias model: listView.model
     property alias currentIndex: listView.currentIndex
+    property int listViewSpacing: 8
 
     ListView {
         id: listView
@@ -47,56 +50,75 @@ Rectangle {
             fill: parent
             margins: 6
         }
-        spacing: 14
-        // CHANGED: Orientation is now dynamic
+        spacing: root.listViewSpacing
         orientation: root.vertical ? ListView.Vertical : ListView.Horizontal
         highlightFollowsCurrentItem: false
 
-        delegate: TabButtonDelegate {
-            // CHANGED: Width and height are now conditional based on orientation
-            width: root.vertical ? listView.width : (listView.currentIndex === index ? 120 : 40)
-            height: root.vertical ? (listView.currentIndex === index ? 120 : 40) : listView.height
+        // delegateModelAccess: DelegateModel.ReadOnly
 
-            // ADDED: Pass the vertical property down to the delegate
+        NumberAnimation {
+            id: scrollAnimation
+            target: listView
+            property: root.vertical ? "contentY" : "contentX"
+            duration: 300
+            easing.type: Easing.OutCubic
+        }
+
+        delegate: TabButtonDelegate {
+            id: tabDelegate
+
+            readonly property int itemExpandedWidth: (modelData && modelData.expandedWidth !== undefined) ? modelData.expandedWidth : root.defaultExpandedSize
+            readonly property int itemClosedWidth: (modelData && modelData.closedWidth !== undefined) ? modelData.closedWidth : root.defaultClosedSize
+
+            readonly property int itemExpandedHeight: root.defaultExpandedSize
+            readonly property int itemClosedHeight: root.defaultClosedSize
+
+            width: root.vertical ? listView.width : (listView.currentIndex === index ? itemExpandedWidth : itemClosedWidth)
+            height: root.vertical ? (listView.currentIndex === index ? itemExpandedHeight : itemClosedHeight) : listView.height
+
+            // --------------------------------------
             vertical: root.vertical
 
-            text: model.text
-            icon: model.icon
-            onClick: model.onClick
+            text: modelData.text
+            icon: modelData.icon
+            onClick: modelData.onClick
             isCurrent: listView.currentIndex === index
 
-            // CHANGED: This function now handles both orientations
             function ensureVisible() {
                 if (!root.ensureVisibility) {
                     return;
                 }
+                var targetPos = 0;
+                var viewSize = 0;
+                var contentSize = 0;
+
                 if (root.vertical) {
-                    const itemCenter = mapToItem(listView.contentItem, 0, height / 2).y;
-                    const viewCenter = listView.height / 2;
-                    if (itemCenter < viewCenter) {
-                        listView.contentY = Math.max(0, itemCenter - viewCenter);
-                    } else {
-                        const maxY = listView.contentHeight - listView.height;
-                        listView.contentY = Math.min(maxY, itemCenter - viewCenter);
-                    }
+                    viewSize = listView.height;
+                    contentSize = listView.contentHeight;
+                    targetPos = (y + height / 2) - (viewSize / 2);
                 } else {
-                    const itemCenter = mapToItem(listView.contentItem, width / 2, 0).x;
-                    const viewCenter = listView.width / 2;
-                    if (itemCenter < viewCenter) {
-                        listView.contentX = Math.max(0, itemCenter - viewCenter);
-                    } else {
-                        const maxX = listView.contentWidth - listView.width;
-                        listView.contentX = Math.min(maxX, itemCenter - viewCenter);
-                    }
+                    viewSize = listView.width;
+                    contentSize = listView.contentWidth;
+                    targetPos = (x + width / 2) - (viewSize / 2);
                 }
+
+                var maxPos = Math.max(0, contentSize - viewSize);
+                targetPos = Math.max(0, Math.min(targetPos, maxPos));
+
+                scrollAnimation.stop();
+                scrollAnimation.to = targetPos;
+                scrollAnimation.restart();
             }
         }
 
-        Component.onCompleted: if (model?.count > 0)
-            currentIndex = 0
+        Component.onCompleted: {
+            if (listView.count > 0) {
+                currentIndex = 0;
+            }
+        }
 
         onModelChanged: {
-            if (model?.count > 0 && currentIndex >= model.count) {
+            if (listView.count > 0 && currentIndex >= listView.count) {
                 currentIndex = 0;
             }
         }

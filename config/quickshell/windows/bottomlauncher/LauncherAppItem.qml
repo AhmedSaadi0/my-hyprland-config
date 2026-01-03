@@ -7,10 +7,10 @@ import "root:/themes"
 
 Item {
     id: root
-    
+
     signal clicked
     signal hovered
-    
+
     property var appData
     property bool isSelected: false
     property bool isHighlighted: false
@@ -21,7 +21,7 @@ Item {
         id: hoverBg
         anchors.fill: parent
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        
+
         color: {
             if (root.isHighlighted) {
                 return ThemeManager.selectedTheme.colors.primary.alpha(0.25);
@@ -35,9 +35,7 @@ Item {
             return "transparent";
         }
 
-        border.color: root.isHighlighted 
-            ? ThemeManager.selectedTheme.colors.primary 
-            : "transparent"
+        border.color: root.isHighlighted ? ThemeManager.selectedTheme.colors.primary : "transparent"
         border.width: root.isHighlighted ? 1 : 0
 
         Behavior on color {
@@ -48,7 +46,9 @@ Item {
         }
 
         Behavior on border.color {
-            ColorAnimation { duration: 150 }
+            ColorAnimation {
+                duration: 150
+            }
         }
     }
 
@@ -72,10 +72,7 @@ Item {
                 width: 32
                 height: 32
                 fillMode: Image.PreserveAspectFit
-                source: Quickshell.iconPath(
-                    appData ? appData.icon : "application-x-executable",
-                    "application-x-executable"
-                )
+                source: Quickshell.iconPath(appData ? appData.icon : "application-x-executable", "application-x-executable")
                 transformOrigin: Item.Center
 
                 Behavior on scale {
@@ -98,13 +95,13 @@ Item {
                 text: appData ? appData.name : "Unknown"
                 font.pixelSize: 14
                 font.weight: Font.Medium
-                color: root.isHighlighted 
-                    ? ThemeManager.selectedTheme.colors.primary
-                    : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                color: root.isHighlighted ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
                 elide: Text.ElideRight
-                
+
                 Behavior on color {
-                    ColorAnimation { duration: 150 }
+                    ColorAnimation {
+                        duration: 150
+                    }
                 }
             }
 
@@ -124,14 +121,14 @@ Item {
             Layout.preferredHeight: 28
             Layout.alignment: Qt.AlignVCenter
             radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-            color: pinMouseArea.containsMouse 
-                ? ThemeManager.selectedTheme.colors.primary.alpha(0.2)
-                : "transparent"
+            color: pinMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
             visible: mouseArea.containsMouse || root.isSelected
             opacity: visible ? 1 : 0
 
             Behavior on opacity {
-                NumberAnimation { duration: 150 }
+                NumberAnimation {
+                    duration: 150
+                }
             }
 
             Text {
@@ -172,7 +169,7 @@ Item {
     SequentialAnimation {
         id: bounceAnim
         running: false
-        
+
         PropertyAnimation {
             target: appIcon
             property: "scale"

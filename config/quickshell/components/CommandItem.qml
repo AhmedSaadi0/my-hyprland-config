@@ -28,17 +28,20 @@ Item {
             return "transparent";
         }
 
-        border.color: root.isHighlighted 
-            ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
-            : "transparent"
+        border.color: root.isHighlighted ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
         border.width: root.isHighlighted ? 1 : 0
 
         Behavior on color {
-            ColorAnimation { duration: 150; easing.type: Easing.OutQuad }
+            ColorAnimation {
+                duration: 150
+                easing.type: Easing.OutQuad
+            }
         }
 
         Behavior on border.color {
-            ColorAnimation { duration: 150 }
+            ColorAnimation {
+                duration: 150
+            }
         }
     }
 
