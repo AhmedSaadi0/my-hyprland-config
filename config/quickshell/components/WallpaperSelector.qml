@@ -3,31 +3,38 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 
 import "root:/themes"
 import "root:/config"
 import "root:/components/wallpaper_selector"
 
+import "root:/windows/smart_capsule/logic"
+import "root:/config/ConstValues.js" as C
+
+// TODO: -> find a way to make this singltone
 Item {
     id: root
 
     signal wallpaperSelected(string path)
     signal closeRequested
 
-    // Catch clicks on blank areas to prevent closing the launcher
     MouseArea {
         anchors.fill: parent
         onClicked: event => event.accepted = true
     }
 
     property bool compact: width < 400
-    property int sourceMode: 0 // 0 = Local, 1 = Downloaded, 2 = Wallhaven
+    property int sourceMode: 0 // 0: Local, 1: Downloaded, 2: Wallhaven
     property string filterText: ""
 
-    // Read wallpaper lists from ThemeManager
     property var localWallpapers: ThemeManager.localWallpapers
     property var downloadedWallpapers: ThemeManager.downloadedWallpapers
-    property var wallhavenWallpapers: []
+    property var activeDownloads: []
+
+    ListModel {
+        id: wallhavenModel
+    }
 
     // Wallhaven settings
     property string wallhavenQuery: ""
@@ -42,19 +49,14 @@ Item {
     property bool wallhavenLoading: false
     property bool wallhavenHasMore: true
 
-    property var currentWallpapers: {
-        if (sourceMode === 0) return localWallpapers;
-        if (sourceMode === 1) return downloadedWallpapers;
-        return wallhavenWallpapers;
-    }
-
-    property var filteredWallpapers: {
-        if (sourceMode === 2) return currentWallpapers;
-        if (!currentWallpapers || currentWallpapers.length === 0) return [];
-        if (filterText === "") return currentWallpapers;
+    function getFilteredList(sourceList) {
+        if (!sourceList || sourceList.length === 0)
+            return [];
+        if (filterText === "")
+            return sourceList;
 
         const searchLower = filterText.toLowerCase();
-        return currentWallpapers.filter(path => {
+        return sourceList.filter(path => {
             const filename = (typeof path === 'string' ? path : path.path || "").split('/').pop().toLowerCase();
             return filename.includes(searchLower);
         });
@@ -65,11 +67,12 @@ Item {
     }
 
     function searchWallhaven(resetPage) {
-        if (wallhavenLoading) return;
-        
+        if (wallhavenLoading)
+            return;
+
         if (resetPage) {
             wallhavenPage = 1;
-            wallhavenWallpapers = [];
+            wallhavenModel.clear();
             wallhavenHasMore = true;
         }
 
@@ -78,7 +81,7 @@ Item {
         url += "&purity=" + wallhavenPurity;
         url += "&sorting=" + wallhavenSorting;
         url += "&order=" + wallhavenOrder;
-        
+
         if (wallhavenSorting === "toplist") {
             url += "&topRange=" + wallhavenTopRange;
         }
@@ -97,7 +100,8 @@ Item {
     }
 
     function loadMoreWallhaven() {
-        if (wallhavenLoading || !wallhavenHasMore) return;
+        if (wallhavenLoading || !wallhavenHasMore)
+            return;
         wallhavenPage++;
         searchWallhaven(false);
     }
@@ -105,6 +109,28 @@ Item {
     function selectWallpaper(wallpaperData) {
         if (sourceMode === 2) {
             if (typeof wallpaperData === 'object') {
+                if (activeDownloads.length > 0) {
+                    CapsuleManager.request({
+                        priority: C.WARNING,
+                        source: "WallpaperSelector",
+                        icon: "󰅙",
+                        text: "Please wait for the current download to finish",
+                        playTone: false,
+                        bgColor1: ThemeManager.selectedTheme.colors.error || "#cc3333"
+                    });
+                    return;
+                }
+
+                activeDownloads = [wallpaperData.id];
+
+                CapsuleManager.request({
+                    priority: C.TRANSIENT,
+                    source: "WallpaperSelector",
+                    icon: "󰇚",
+                    text: "Starting download...",
+                    withProgress: true
+                });
+
                 ThemeManager.downloadWallhaven(wallpaperData.id, wallpaperData.file_type, wallpaperData.path);
                 return;
             }
@@ -131,7 +157,6 @@ Item {
         }
     }
 
-    // Listen to ThemeManager signals
     Connections {
         target: ThemeManager
 
@@ -142,21 +167,16 @@ Item {
         function onWallhavenWallpapersFetched(response) {
             root.wallhavenLoading = false;
             if (response.data && Array.isArray(response.data)) {
-                const newWallpapers = response.data.map(w => ({
-                    id: w.id,
-                    path: w.path,
-                    thumb: w.thumbs.large,
-                    resolution: w.resolution,
-                    file_type: w.file_type,
-                    views: w.views,
-                    favorites: w.favorites
-                }));
-                
-                if (root.wallhavenPage === 1) {
-                    root.wallhavenWallpapers = newWallpapers;
-                } else {
-                    root.wallhavenWallpapers = root.wallhavenWallpapers.concat(newWallpapers);
-                }
+                response.data.forEach(w => {
+                    wallhavenModel.append({
+                        "id": w.id,
+                        "path": w.path,
+                        "thumb": w.thumbs.large,
+                        "resolution": w.resolution,
+                        "file_type": w.file_type,
+                        "favorites": w.favorites
+                    });
+                });
 
                 if (response.meta) {
                     root.wallhavenHasMore = response.meta.current_page < response.meta.last_page;
@@ -166,15 +186,15 @@ Item {
 
         function onWallhavenWallpapersError(errorDetails) {
             root.wallhavenLoading = false;
-            console.error("WallpaperSelector: Wallhaven error -", errorDetails);
         }
 
         function onWallpaperDownloadFinished(filePath) {
+            root.activeDownloads = [];
             root.applyWallpaper(filePath);
         }
 
         function onWallpaperDownloadError(errorDetails) {
-            console.error("WallpaperSelector: Download error -", errorDetails);
+            root.activeDownloads = [];
         }
     }
 
@@ -182,6 +202,7 @@ Item {
         anchors.fill: parent
         spacing: 10
 
+        // Header Section
         WallpaperHeader {
             Layout.fillWidth: true
             isLoading: root.wallhavenLoading
@@ -190,17 +211,19 @@ Item {
             onCloseClicked: root.closeRequested()
         }
 
+        // Tabs Section
         SourceTabs {
             Layout.fillWidth: true
             currentSource: root.sourceMode
             onSourceSelected: index => {
                 root.sourceMode = index;
-                if (index === 2 && root.wallhavenWallpapers.length === 0) {
+                if (index === 2 && wallhavenModel.count === 0) {
                     root.searchWallhaven(true);
                 }
             }
         }
 
+        // Search Bar Section
         SearchBar {
             Layout.fillWidth: true
             sourceMode: root.sourceMode
@@ -214,43 +237,109 @@ Item {
             onSearchRequested: root.searchWallhaven(true)
         }
 
-        WallhavenFilters {
-            Layout.fillWidth: true
-            visible: root.sourceMode === 2
-
-            sorting: root.wallhavenSorting
-            order: root.wallhavenOrder
-            topRange: root.wallhavenTopRange
-            category: root.wallhavenCategory
-            color: root.wallhavenColor
-            resolution: root.wallhavenResolution
-
-            onSortingSelected: value => { root.wallhavenSorting = value; root.searchWallhaven(true); }
-            onOrderSelected: value => { root.wallhavenOrder = value; root.searchWallhaven(true); }
-            onTopRangeSelected: value => { root.wallhavenTopRange = value; root.searchWallhaven(true); }
-            onCategorySelected: value => { root.wallhavenCategory = value; root.searchWallhaven(true); }
-            onColorSelected: value => { root.wallhavenColor = value; root.searchWallhaven(true); }
-            onResolutionSelected: value => { root.wallhavenResolution = value; root.searchWallhaven(true); }
-        }
-
-        WallpaperGrid {
+        // Content Section with Animation
+        SwipeView {
+            id: viewPager
             Layout.fillWidth: true
             Layout.fillHeight: true
+            currentIndex: root.sourceMode
+            clip: true
+            interactive: false
 
-            wallpapers: root.filteredWallpapers
-            isWallhaven: root.sourceMode === 2
-            loading: root.wallhavenLoading
-            compact: root.compact
-            currentWallpaper: ThemeManager.currentWallpaper
-            emptyText: {
-                if (root.sourceMode === 2) {
-                    return qsTr("Search for wallpapers or click refresh to load top wallpapers");
+            onCurrentIndexChanged: {
+                if (root.sourceMode !== currentIndex) {
+                    root.sourceMode = currentIndex;
                 }
-                return qsTr("No wallpapers found");
             }
 
-            onWallpaperClicked: wallpaperData => root.selectWallpaper(wallpaperData)
-            onLoadMore: root.loadMoreWallhaven()
+            // Page 0: Local Wallpapers
+            Item {
+                WallpaperGrid {
+                    anchors.fill: parent
+                    wallpapers: root.getFilteredList(root.localWallpapers)
+                    isWallhaven: false
+                    loading: false
+                    compact: root.compact
+                    currentWallpaper: ThemeManager.currentWallpaper
+                    downloadingList: []
+                    emptyText: qsTr("No local wallpapers found")
+                    onWallpaperClicked: wallpaperData => root.selectWallpaper(wallpaperData)
+                }
+            }
+
+            // Page 1: Downloaded Wallpapers
+            Item {
+                WallpaperGrid {
+                    anchors.fill: parent
+                    wallpapers: root.getFilteredList(root.downloadedWallpapers)
+                    isWallhaven: false
+                    loading: false
+                    compact: root.compact
+                    currentWallpaper: ThemeManager.currentWallpaper
+                    downloadingList: []
+                    emptyText: qsTr("No downloaded wallpapers yet")
+                    onWallpaperClicked: wallpaperData => root.selectWallpaper(wallpaperData)
+                }
+            }
+
+            // Page 2: Wallhaven
+            Item {
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+
+                    WallhavenFilters {
+                        Layout.fillWidth: true
+                        sorting: root.wallhavenSorting
+                        order: root.wallhavenOrder
+                        topRange: root.wallhavenTopRange
+                        category: root.wallhavenCategory
+                        color: root.wallhavenColor
+                        resolution: root.wallhavenResolution
+
+                        onSortingSelected: value => {
+                            root.wallhavenSorting = value;
+                            root.searchWallhaven(true);
+                        }
+                        onOrderSelected: value => {
+                            root.wallhavenOrder = value;
+                            root.searchWallhaven(true);
+                        }
+                        onTopRangeSelected: value => {
+                            root.wallhavenTopRange = value;
+                            root.searchWallhaven(true);
+                        }
+                        onCategorySelected: value => {
+                            root.wallhavenCategory = value;
+                            root.searchWallhaven(true);
+                        }
+                        onColorSelected: value => {
+                            root.wallhavenColor = value;
+                            root.searchWallhaven(true);
+                        }
+                        onResolutionSelected: value => {
+                            root.wallhavenResolution = value;
+                            root.searchWallhaven(true);
+                        }
+                    }
+
+                    WallpaperGrid {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        wallpapers: wallhavenModel
+                        isWallhaven: true
+                        loading: root.wallhavenLoading
+                        compact: root.compact
+                        currentWallpaper: ThemeManager.currentWallpaper
+                        downloadingList: root.activeDownloads
+                        emptyText: qsTr("Search for wallpapers or click refresh")
+
+                        onWallpaperClicked: wallpaperData => root.selectWallpaper(wallpaperData)
+                        onLoadMore: root.loadMoreWallhaven()
+                    }
+                }
+            }
         }
     }
 }

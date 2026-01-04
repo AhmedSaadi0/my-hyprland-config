@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 
 import "root:/themes"
 
@@ -14,18 +15,25 @@ Item {
     property bool isWallhaven: false
     property string currentWallpaper: ""
 
+    property bool isDownloading: false
+
     signal clicked(var wallpaperData)
 
     property string thumbUrl: {
-        if (!modelData) return "";
+        if (!modelData)
+            return "";
         return isWallhaven ? (modelData.thumb || "") : ("file://" + modelData);
     }
+
     property string wallpaperPath: {
-        if (!modelData) return "";
+        if (!modelData)
+            return "";
         return isWallhaven ? (modelData.path || "") : modelData;
     }
+
     property string displayName: {
-        if (!modelData) return "";
+        if (!modelData)
+            return "";
         if (isWallhaven) {
             return modelData.resolution || modelData.id || "";
         }
@@ -37,18 +45,14 @@ Item {
         anchors.fill: parent
         anchors.margins: 4
         radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
-        color: itemMouseArea.containsMouse 
-            ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.15) || "#333"
-            : "transparent"
-        border.color: root.currentWallpaper === root.wallpaperPath
-            ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
-            : itemMouseArea.containsMouse 
-                ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.5) || "#555"
-                : "transparent"
+        color: itemMouseArea.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.15) || "#333" : "transparent"
+        border.color: root.currentWallpaper === root.wallpaperPath ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : itemMouseArea.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.5) || "#555" : "transparent"
         border.width: root.currentWallpaper === root.wallpaperPath ? 2 : 1
 
         Behavior on color {
-            ColorAnimation { duration: 150 }
+            ColorAnimation {
+                duration: 150
+            }
         }
 
         ColumnLayout {
@@ -72,7 +76,6 @@ Item {
                     sourceSize: Qt.size(300, 200)
                 }
 
-                // Loading indicator
                 Rectangle {
                     anchors.centerIn: parent
                     width: 24
@@ -126,6 +129,35 @@ Item {
                 color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
                 elide: Text.ElideMiddle
                 horizontalAlignment: Text.AlignHCenter
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
+            visible: root.isDownloading
+            radius: parent.radius
+            z: 10
+            anchors {
+                verticalCenter: parent.verticalCenter
+                horizontalCenter: parent.horizontalCenter
+            }
+
+            ColumnLayout {
+                anchors.centerIn: parent
+                spacing: 6
+                BusyIndicator {
+                    width: 32
+                    height: 32
+                    running: root.isDownloading
+                    Layout.alignment: Qt.AlignHCenter
+                }
+                Text {
+                    text: "Downloading..."
+                    color: "white"
+                    font.pixelSize: 10
+                    font.bold: true
+                }
             }
         }
 

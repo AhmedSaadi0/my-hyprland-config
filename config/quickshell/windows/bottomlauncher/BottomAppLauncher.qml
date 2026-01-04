@@ -26,12 +26,16 @@ PanelWindow {
         right: true
     }
 
-    implicitHeight: 550
-    
+    implicitHeight: 600
+
+    mask: Region {
+        item: contentContainer
+    }
+
     margins {
         bottom: 20
     }
-    
+
     // Keyboard shortcut to toggle the launcher
     NibrasShellShortcut {
         id: toggleLauncherShortcut
@@ -141,7 +145,7 @@ PanelWindow {
                 name: "hidden"
                 PropertyChanges {
                     target: contentContainer
-                    y: 50
+                    y: 150
                     opacity: 0.0
                 }
             }

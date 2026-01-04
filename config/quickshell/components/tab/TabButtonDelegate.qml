@@ -1,7 +1,7 @@
 // components/tab/TabButtonDelegate.qml
 
 import QtQuick
-import "../../themes"
+import "root:/themes"
 
 Item {
     id: delegateRoot
@@ -31,20 +31,15 @@ Item {
         }
 
         IconLabel {
-            // This is the key change:
-            // 1. Rotate the component if vertical
-            // 2. Swap width/height to fit the new orientation
-            // 3. Anchor it to the center
             rotation: delegateRoot.vertical ? 90 : 0 // Rotate -90 degrees (upwards)
             width: delegateRoot.vertical ? parent.height : parent.width
             height: delegateRoot.vertical ? parent.width : parent.height
             anchors.centerIn: parent
+            isCurrent: delegateRoot.isCurrent
 
             iconText: icon
             labelText: isCurrent ? text : ""
             isActive: isCurrent || mouseArea.containsMouse
-            // The `currentWidth` property is no longer needed as IconLabel's width is set directly
-
         }
     }
 
@@ -71,7 +66,7 @@ Item {
         onClicked: {
             listView.currentIndex = index;
             ensureVisible();
-            onClick?.();
+            onClick();
         }
     }
 }

@@ -9,20 +9,20 @@ Singleton {
 
     // All available launcher commands
     readonly property var commands: [
-        { 
-            name: "Change Wallpaper", 
+        {
+            name: "Change Wallpaper",
             keywords: "wallpaper background",
-            description: "Browse and set wallpapers", 
-            icon: "󰸉", 
-            view: "wallpaper", 
-            isAction: false 
+            description: "Browse and set wallpapers",
+            icon: "󰸉",
+            view: "wallpaper",
+            isAction: false
         },
-        { 
-            name: "Open Settings", 
+        {
+            name: "Open Settings",
             keywords: "settings preferences config",
-            description: "Configure nibras-shell options", 
-            icon: "󰒓", 
-            view: "", 
+            description: "Configure nibras-shell options",
+            icon: "",
+            view: "",
             isAction: true,
             action: "openSettings"
         }
@@ -30,12 +30,10 @@ Singleton {
 
     // Filter commands by search text
     function filterCommands(searchText) {
-        if (!searchText || searchText === "") return commands;
+        if (!searchText || searchText === "")
+            return commands;
         const lower = searchText.toLowerCase();
-        return commands.filter(cmd => 
-            cmd.name.toLowerCase().includes(lower) || 
-            cmd.keywords.toLowerCase().includes(lower)
-        );
+        return commands.filter(cmd => cmd.name.toLowerCase().includes(lower) || cmd.keywords.toLowerCase().includes(lower));
     }
 
     // Check if text starts with command prefix
@@ -45,7 +43,8 @@ Singleton {
 
     // Extract command text (without the > prefix)
     function getCommandText(text) {
-        if (!isCommandMode(text) || text.length <= 1) return "";
+        if (!isCommandMode(text) || text.length <= 1)
+            return "";
         return text.substring(1).trim().toLowerCase();
     }
 }

@@ -21,6 +21,9 @@ RowLayout {
         font.pixelSize: 24
         font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
         color: ThemeManager.selectedTheme?.colors?.primary || "#fff"
+
+        renderType: Text.QtRendering
+        font.hintingPreference: Font.PreferNoHinting
     }
 
     ColumnLayout {
@@ -46,9 +49,7 @@ RowLayout {
         width: 28
         height: 28
         radius: 6
-        color: refreshMouseArea.containsMouse 
-            ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333"
-            : "transparent"
+        color: refreshMouseArea.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333" : "transparent"
 
         Text {
             anchors.centerIn: parent
@@ -56,6 +57,9 @@ RowLayout {
             font.pixelSize: 16
             font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
             color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+
+            renderType: Text.QtRendering
+            font.hintingPreference: Font.PreferNoHinting
 
             RotationAnimation on rotation {
                 running: root.isLoading
@@ -80,9 +84,7 @@ RowLayout {
         width: 28
         height: 28
         radius: 6
-        color: closeMouseArea.containsMouse 
-            ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333"
-            : "transparent"
+        color: closeMouseArea.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333" : "transparent"
 
         Text {
             anchors.centerIn: parent
@@ -90,6 +92,9 @@ RowLayout {
             font.pixelSize: 16
             font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
             color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+
+            renderType: Text.QtRendering
+            font.hintingPreference: Font.PreferNoHinting
         }
 
         MouseArea {
