@@ -19,6 +19,7 @@ Singleton {
     readonly property string cacheFolderPath: homePath + ".cache/nibrasshell"
     readonly property string downloadedWallpapersPath: cacheFolderPath + "/wallpapers"
     readonly property string themeCacheFilePath: cacheFolderPath + "/theme.json"
+    readonly property string todoFilePath: cacheFolderPath + "/todo.json"
     readonly property string themeCacheFolderPath: cacheFolderPath + "/themes/"
     readonly property string pythonScriptsPath: mainPath + "/scripts/python"
     readonly property string pythonPath: cacheFolderPath + "/venv/bin/python"
