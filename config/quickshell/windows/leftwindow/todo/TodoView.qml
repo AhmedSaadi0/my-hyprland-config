@@ -8,7 +8,7 @@ import "root:/components"
 
 ColumnLayout {
     id: root
-    anchors.fill: parent // ضروري جداً لملء المساحة في القائمة الجانبية
+    anchors.fill: parent
     spacing: 0 
     
     readonly property var theme: ThemeManager.selectedTheme.colors
@@ -31,7 +31,6 @@ ColumnLayout {
                 }
             } catch (e) { console.error("Error loading JSON: " + e) }
         }
-        // أضفنا هذه السطور للتأكد من حالة الحفظ في الـ terminal
         onSaved: console.info("Tasks saved to: " + path)
         onSaveFailed: error => console.error("Save failed: " + error)
     }
@@ -58,7 +57,6 @@ ColumnLayout {
         theme: root.theme
         typography: root.typography
         selectedDate: root.selectedDate
-        // الترويسة تأخذ عرض كامل لكن طول محدد تلقائياً
         Layout.fillWidth: true 
         
         onOpenCalendar: calendarPopup.open()
@@ -77,8 +75,7 @@ ColumnLayout {
         id: bodyItems
         theme: root.theme
         typography: root.typography
-        model: todoModel
-        // هنا السر: القائمة يجب أن تأخذ كل المساحة المتبقية
+        listModel: todoModel 
         Layout.fillWidth: true
         Layout.fillHeight: true 
         

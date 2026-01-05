@@ -5,18 +5,25 @@ import "root:/themes"
 
 ListView {
     id: todoList
+    
     property var theme
     property var typography
-    property var todoModel // الموديل القادم من TodoView
+    
+    property var listModel 
 
     signal requestSave()
 
+    Layout.fillWidth: true
+    Layout.fillHeight: true
     clip: true
     spacing: 8
-    // نربط الموديل الخاص بالـ ListView بالخاصية التي مررناها
-    model: todoList.model 
+    
+    topMargin: 5
+    bottomMargin: 10
+    
+    model: listModel
 
-delegate: Rectangle {
+    delegate: Rectangle {
             width: todoList.width
             height: 60
             radius: 8
@@ -58,8 +65,10 @@ delegate: Rectangle {
                     checked: model.completed
                     Layout.alignment: Qt.AlignVCenter
                     onCheckedChanged: {
+                        if (model.completed !== checked) {
                         model.completed = checked
-                        root.saveTasks()
+                        todoList.requestSave()
+                    }
                     }
                     indicator: Rectangle {
                         implicitWidth: 22
@@ -85,8 +94,8 @@ delegate: Rectangle {
                     Layout.alignment: Qt.AlignVCenter
                     flat: true
                     onClicked: {
-                        todoModel.remove(index)
-                        root.saveTasks()
+                        todoList.listModel.remove(index)
+                    todoList.requestSave()
                     }
                     contentItem: Text { 
                         text: "✕"

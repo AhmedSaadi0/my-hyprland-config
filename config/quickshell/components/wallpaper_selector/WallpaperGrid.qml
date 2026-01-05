@@ -41,7 +41,8 @@ Rectangle {
             property int columns: root.compact ? 1 : 4
             cellWidth: (width - 16) / columns
             cellHeight: root.compact ? cellWidth * 0.5 + 24 : cellWidth * 0.6 + 28
-            delegateModelAccess: DelegateModel.ReadOnly
+            // NOTE: -> needs qt 6.10 or higher
+            // delegateModelAccess: DelegateModel.ReadOnly
 
             model: root.wallpapers
             clip: true
