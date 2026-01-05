@@ -63,14 +63,13 @@ QtObject {
                     body: `Overlay image created successfully in: ${createOverlayImageProcess.newImagePath}`
                 }));
                 App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
-                // selectedTheme._desktopClockDepthOverlayPath = createOverlayImageProcess.newImagePath;
                 // _cacheAppliedData();
 
                 root.creatingOverlayImageFinished(createOverlayImageProcess.newImagePath);
             }
         }
         stderr: SplitParser {
-            onRead: data => console.error("Error creating wallpaper overlay:", data)
+            onRead: data => console.error("[DepthEffectController] Error creating wallpaper overlay:", data)
         }
 
         function start(imagePath) {
@@ -86,18 +85,18 @@ QtObject {
             onStreamFinished: {
                 try {
                     // console.info(this.text);
-                    App.dispatchCommand("send notification", Utils.Helper.sendNotification({
+                    App.dispatchCommand("[DepthEffectController] send notification", Utils.Helper.sendNotification({
                         summary: "Cached Images Deleted",
                         body: this.text.trim()
                     }));
                     App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
                 } catch (e) {
-                    console.error("Failed to parse wallpapers list:", e);
+                    console.error("[DepthEffectController] Failed to parse wallpapers list:", e);
                 }
             }
         }
         stderr: SplitParser {
-            onRead: data => console.error("Error getting wallpaper list:", data)
+            onRead: data => console.error("[DepthEffectController] Error getting wallpaper list:", data)
         }
 
         function start(imagePath) {

@@ -8,7 +8,7 @@ QtObject {
         if (!hyprConfig)
             return;
 
-        console.info("HyprlandBridge: Dispatching configuration...");
+        console.info("[HyprlandBridge] HyprlandBridge: Dispatching configuration...");
 
         // دالة مساعدة داخلية للتنفيذ
         const dispatch = (cmd, val) => {

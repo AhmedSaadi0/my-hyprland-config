@@ -75,7 +75,7 @@ Item {
 
         // حماية: لا نطبق M3 على مسارات غير صحيحة
         if (!wallpaperPath || wallpaperPath === "" || wallpaperPath.indexOf("/") === -1) {
-            console.warn("SystemBridge: Skipping M3, invalid wallpaper path:", wallpaperPath);
+            console.warn("[SystemBridge] Skipping M3, invalid wallpaper path:", wallpaperPath);
             return;
         }
 
@@ -87,7 +87,7 @@ Item {
             tone: tone
         };
 
-        console.info("SystemBridge: Applying M3 on:", wallpaperPath);
+        console.info("[SystemBridge] Applying M3 on:", wallpaperPath);
         _dispatch("Apply M3", Utils.Helper.applyM3PlasmaColor(data));
     }
 

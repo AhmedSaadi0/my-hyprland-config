@@ -18,7 +18,9 @@ Rectangle {
 
     property var downloadingList: []
 
-    signal wallpaperClicked(var wallpaperData)
+    signal wallpaperDownloadAndApply(var wallpaperData)
+    signal wallpaperPreview(var wallpaperData)
+    signal wallpaperDownloadOnly(var wallpaperData)
     signal loadMore
 
     radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
@@ -73,7 +75,9 @@ Rectangle {
                     return root.downloadingList.indexOf(modelData.id) !== -1;
                 }
 
-                onClicked: wallpaperData => root.wallpaperClicked(wallpaperData)
+                onDownloadAndApply: wallpaperData => root.wallpaperDownloadAndApply(wallpaperData)
+                onDownloadOnly: wallpaperData => root.wallpaperDownloadOnly(wallpaperData)
+                onPreview: wallpaperData => root.wallpaperPreview(wallpaperData)
             }
         }
     }

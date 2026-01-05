@@ -38,7 +38,7 @@ Item {
         cacheFile.setText(JSON.stringify(data, null, 2));
 
         if (notify) {
-            console.info("Theme saved to cache:", fileName);
+            console.info("[ThemeSerializer] Theme saved to cache:", fileName);
         }
     }
 

@@ -39,6 +39,7 @@ M3GroupBox {
         property string networkMonitor: ""
         property int networkInterval: 1000
         property string aiPreferredLanguage: "English"
+        property string aiProvider: "gemini" //choices=["local", "gemini", "openai", "deepseek"]
         property string geminiApiKey: ""
         property string weatherAiApiKey: ""
         property string musicAiApiKey: ""
@@ -117,6 +118,7 @@ M3GroupBox {
         tempConfig.networkMonitor = App.networkMonitor;
         tempConfig.networkInterval = App.networkInterval;
         tempConfig.aiPreferredLanguage = App.aiPreferredLanguage;
+        tempConfig.aiProvider = App.aiProvider;
         tempConfig.geminiApiKey = App.geminiApiKey;
         tempConfig.weatherAiApiKey = App.weatherAiApiKey;
         tempConfig.musicAiApiKey = App.musicAiApiKey;
@@ -156,6 +158,7 @@ M3GroupBox {
             "networkMonitor": tempConfig.networkMonitor,
             "networkInterval": tempConfig.networkInterval,
             "aiPreferredLanguage": tempConfig.aiPreferredLanguage,
+            "aiProvider": tempConfig.aiProvider,
             "geminiApiKey": tempConfig.geminiApiKey,
             "weatherAiApiKey": tempConfig.weatherAiApiKey,
             "musicAiApiKey": tempConfig.musicAiApiKey,
@@ -293,9 +296,7 @@ M3GroupBox {
             }
 
             Controls.Label {
-                text: tempConfig.useBottomLauncher
-                    ? qsTr("App launcher will open from the bottom of the screen.")
-                    : qsTr("App launcher will open from the left side panel.")
+                text: tempConfig.useBottomLauncher ? qsTr("App launcher will open from the bottom of the screen.") : qsTr("App launcher will open from the left side panel.")
                 font.pixelSize: selectedTheme.typography.small
                 color: selectedTheme.colors.primary
                 opacity: 0.7
@@ -336,7 +337,8 @@ M3GroupBox {
                         opacity: 0.6
                     }
                 }
-            }        }
+            }
+        }
 
         Kirigami.Separator {
             Layout.fillWidth: true
@@ -437,17 +439,45 @@ M3GroupBox {
             }
 
             // Language
-            Controls.Label {
-                text: qsTr("Preferred Language")
-                font.bold: true
-            }
-            EditableField {
+            RowLayout {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                text: tempConfig.aiPreferredLanguage
-                selectedTheme: root.selectedTheme
-                placeholderText: "e.g. English, Arabic, Japanese..."
-                onEditingFinished: tempConfig.aiPreferredLanguage = text
+                spacing: 15
+
+                // 1. Preferred Language
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 5
+                    Controls.Label {
+                        text: qsTr("Preferred Language")
+                        font.bold: true
+                    }
+                    EditableField {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 30
+                        text: tempConfig.aiPreferredLanguage
+                        selectedTheme: root.selectedTheme
+                        placeholderText: "e.g. English, Arabic..."
+                        onEditingFinished: tempConfig.aiPreferredLanguage = text
+                    }
+                }
+
+                // 2. AI Provider
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 5
+                    Controls.Label {
+                        text: qsTr("AI Provider")
+                        font.bold: true
+                    }
+                    SettingsComboBox {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 30
+                        model: ["local", "gemini", "openai", "deepseek"]
+                        currentIndex: model.indexOf(tempConfig.aiProvider)
+                        displayText: currentIndex === -1 ? tempConfig.aiProvider : currentText
+                        onActivated: index => tempConfig.aiProvider = textAt(index)
+                    }
+                }
             }
 
             // Weather Persona

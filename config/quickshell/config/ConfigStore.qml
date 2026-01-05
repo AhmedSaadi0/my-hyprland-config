@@ -29,6 +29,7 @@ QtObject {
     property string musicAiApiKey: ""
     property string aiPreferredLanguage: "English"
 
+    property string aiProvider: "gemini" // choices=["local", "gemini", "openai", "deepseek"]
     property string weatherAiModel: "gemini-flash-lite-latest"
     property string musicAiModel: "gemini-flash-lite-latest"
 
@@ -113,18 +114,24 @@ QtObject {
         // -------------------------------------------------------
         // مفاتيح الذكاء الاصطناعي واللغة
         // -------------------------------------------------------
+        if (data.aiProvider !== undefined)
+            store.aiProvider = data.aiProvider;
+
         if (data.geminiApiKey !== undefined)
             store.geminiApiKey = data.geminiApiKey;
         if (data.weatherAiApiKey !== undefined)
             store.weatherAiApiKey = data.weatherAiApiKey;
         if (data.musicAiApiKey !== undefined)
             store.musicAiApiKey = data.musicAiApiKey;
+
         if (data.aiPreferredLanguage !== undefined)
             store.aiPreferredLanguage = data.aiPreferredLanguage;
+
         if (data.weatherPersona !== undefined)
             store.weatherPersona = data.weatherPersona;
         if (data.musicPersona !== undefined)
             store.musicPersona = data.musicPersona;
+
         if (data.weatherAiModel !== undefined)
             store.weatherAiModel = data.weatherAiModel;
         if (data.musicAiModel !== undefined)

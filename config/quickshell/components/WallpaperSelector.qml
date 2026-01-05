@@ -12,7 +12,6 @@ import "root:/components/wallpaper_selector"
 import "root:/windows/smart_capsule/logic"
 import "root:/config/ConstValues.js" as C
 
-// TODO: -> find a way to make this singltone
 Item {
     id: root
 
@@ -30,7 +29,17 @@ Item {
 
     property var localWallpapers: ThemeManager.localWallpapers
     property var downloadedWallpapers: ThemeManager.downloadedWallpapers
+
+    // --- إدارة التنزيلات المتعددة ---
+    // قائمة معرفات الصور التي يتم تنزيلها حالياً (لتشغيل الـ Spinner في الكروت)
     property var activeDownloads: []
+
+    // كائن لتخزين نية المستخدم لكل عملية تنزيل
+    // المفتاح هو الـ ID والقيمة هي "apply" أو "save"
+    property var downloadIntents: ({})
+
+    // --- إدارة المعاينة ---
+    property string previewImageUrl: ""
 
     ListModel {
         id: wallhavenModel
@@ -49,6 +58,8 @@ Item {
     property bool wallhavenLoading: false
     property bool wallhavenHasMore: true
 
+    // --- دوال مساعدة ---
+
     function getFilteredList(sourceList) {
         if (!sourceList || sourceList.length === 0)
             return [];
@@ -66,6 +77,8 @@ Item {
         ThemeManager.refreshAllWallpaperLists();
     }
 
+    // --- دوال البحث في Wallhaven ---
+
     function searchWallhaven(resetPage) {
         if (wallhavenLoading)
             return;
@@ -82,18 +95,14 @@ Item {
         url += "&sorting=" + wallhavenSorting;
         url += "&order=" + wallhavenOrder;
 
-        if (wallhavenSorting === "toplist") {
+        if (wallhavenSorting === "toplist")
             url += "&topRange=" + wallhavenTopRange;
-        }
-        if (wallhavenQuery !== "") {
+        if (wallhavenQuery !== "")
             url += "&q=" + encodeURIComponent(wallhavenQuery);
-        }
-        if (wallhavenColor !== "") {
+        if (wallhavenColor !== "")
             url += "&colors=" + wallhavenColor;
-        }
-        if (wallhavenResolution !== "") {
+        if (wallhavenResolution !== "")
             url += "&atleast=" + wallhavenResolution;
-        }
         url += "&page=" + wallhavenPage;
 
         ThemeManager.searchWallhaven(url);
@@ -106,37 +115,86 @@ Item {
         searchWallhaven(false);
     }
 
-    function selectWallpaper(wallpaperData) {
-        if (sourceMode === 2) {
-            if (typeof wallpaperData === 'object') {
-                if (activeDownloads.length > 0) {
-                    CapsuleManager.request({
-                        priority: C.WARNING,
-                        source: "WallpaperSelector",
-                        icon: "󰅙",
-                        text: "Please wait for the current download to finish",
-                        playTone: false,
-                        bgColor1: ThemeManager.selectedTheme.colors.error || "#cc3333"
-                    });
-                    return;
-                }
+    // --- المنطق الأساسي (Core Logic) ---
 
-                activeDownloads = [wallpaperData.id];
-
-                CapsuleManager.request({
-                    priority: C.TRANSIENT,
-                    source: "WallpaperSelector",
-                    icon: "󰇚",
-                    text: "Starting download...",
-                    withProgress: true
-                });
-
-                ThemeManager.downloadWallhaven(wallpaperData.id, wallpaperData.file_type, wallpaperData.path);
-                return;
-            }
+    // دالة بدء التنزيل (تدعم التعدد)
+    function _initiateDownload(wallpaperData, intent) {
+        // التحقق من أن الملف غير موجود في قائمة التنزيل الحالية لتجنب التكرار
+        if (activeDownloads.indexOf(wallpaperData.id) !== -1) {
+            CapsuleManager.request({
+                priority: C.WARNING,
+                source: "WallpaperSelector",
+                icon: "󰅙",
+                text: "Already downloading this wallpaper",
+                playTone: false
+            });
+            return;
         }
-        const path = typeof wallpaperData === 'string' ? wallpaperData : wallpaperData.path;
-        applyWallpaper(path);
+
+        // تسجيل النية (تطبيق أم حفظ فقط)
+        downloadIntents[wallpaperData.id] = intent;
+
+        // إضافة الـ ID لقائمة التنزيلات النشطة (لإظهار الـ Spinner)
+        let newDownloads = activeDownloads.slice(); // نسخ المصفوفة
+        newDownloads.push(wallpaperData.id);
+        activeDownloads = newDownloads;
+
+        CapsuleManager.request({
+            priority: C.TRANSIENT,
+            source: "WallpaperSelector",
+            icon: "󰇚",
+            text: intent === "apply" ? "Downloading & Applying..." : "Download started...",
+            withProgress: true
+        });
+
+        ThemeManager.downloadWallhaven(wallpaperData.id, wallpaperData.file_type, wallpaperData.path);
+    }
+
+    // 1. منطق التحميل والتطبيق
+    function handleDownloadAndApply(wallpaperData) {
+        if (sourceMode === 2) {
+            // Wallhaven: تنزيل بنية التطبيق
+            if (typeof wallpaperData === 'object') {
+                _initiateDownload(wallpaperData, "apply");
+            }
+        } else {
+            // Local/Downloaded: تطبيق مباشر
+            const path = typeof wallpaperData === 'string' ? wallpaperData : wallpaperData.path;
+            applyWallpaper(path);
+        }
+    }
+
+    // 2. منطق التحميل فقط
+    function handleDownloadOnly(wallpaperData) {
+        if (sourceMode === 2) {
+            // Wallhaven: تنزيل بنية الحفظ
+            if (typeof wallpaperData === 'object') {
+                _initiateDownload(wallpaperData, "save");
+            }
+        } else {
+            // Local: إشعار فقط
+            CapsuleManager.request({
+                priority: C.INFO,
+                source: "WallpaperSelector",
+                icon: "󰄬",
+                text: "Image is already available locally",
+                playTone: false
+            });
+        }
+    }
+
+    // 3. منطق المعاينة (Popup)
+    function handlePreview(wallpaperData) {
+        let url = "";
+        if (sourceMode === 2) {
+            url = wallpaperData.path; // رابط الصورة الكامل من النت
+        } else {
+            const path = typeof wallpaperData === 'string' ? wallpaperData : wallpaperData.path;
+            url = "file://" + path; // رابط محلي
+        }
+
+        root.previewImageUrl = url;
+        previewPopup.open();
     }
 
     function applyWallpaper(path) {
@@ -148,14 +206,15 @@ Item {
     }
 
     function handleRefresh() {
-        if (sourceMode === 0) {
+        if (sourceMode === 0)
             ThemeManager.refreshLocalWallpapers();
-        } else if (sourceMode === 1) {
+        else if (sourceMode === 1)
             ThemeManager.refreshDownloadedWallpapers();
-        } else {
+        else
             searchWallhaven(true);
-        }
     }
+
+    // --- Connections ---
 
     Connections {
         target: ThemeManager
@@ -186,23 +245,78 @@ Item {
 
         function onWallhavenWallpapersError(errorDetails) {
             root.wallhavenLoading = false;
+        // ملاحظة: لا نمسح التنزيلات النشطة هنا لأن الخطأ في البحث لا يعني توقف التنزيلات
         }
 
         function onWallpaperDownloadFinished(filePath) {
-            root.activeDownloads = [];
-            root.applyWallpaper(filePath);
+            // نحتاج لمعرفة أي ID انتهى بناءً على اسم الملف
+            // ملاحظة: هذا يعتمد على أن اسم الملف يحتوي على الـ ID (وهو الغالب في Wallhaven)
+
+            let finishedId = null;
+            let remainingDownloads = [];
+
+            // البحث في التنزيلات النشطة
+            for (let i = 0; i < root.activeDownloads.length; i++) {
+                let id = root.activeDownloads[i];
+                // التحقق البسيط: هل اسم الملف يحتوي على الـ ID؟
+                if (filePath.indexOf(id) !== -1) {
+                    finishedId = id;
+                } else {
+                    remainingDownloads.push(id);
+                }
+            }
+
+            // تحديث القائمة لإيقاف الـ Spinner
+            if (finishedId) {
+                root.activeDownloads = remainingDownloads;
+
+                // التحقق من النية
+                let intent = root.downloadIntents[finishedId];
+                if (intent === "apply") {
+                    root.applyWallpaper(filePath);
+                } else {
+                    CapsuleManager.request({
+                        priority: C.INFO,
+                        source: "WallpaperSelector",
+                        icon: "󰄬",
+                        text: "Saved to Downloaded Wallpapers",
+                        playTone: true
+                    });
+                }
+
+                // تنظيف النية
+                delete root.downloadIntents[finishedId];
+
+                // تحديث القائمة المحلية
+                ThemeManager.refreshDownloadedWallpapers();
+            } else {
+                // في حال لم نستطع التعرف على الـ ID من اسم الملف
+                // نقوم بمسح التنزيلات القديمة جداً أو نتركها (هنا سنتركها لتفادي خطأ في الـ UI)
+                // لكن لتحديث القائمة:
+                ThemeManager.refreshDownloadedWallpapers();
+            }
         }
 
         function onWallpaperDownloadError(errorDetails) {
-            root.activeDownloads = [];
+            CapsuleManager.request({
+                priority: C.ERROR,
+                source: "WallpaperSelector",
+                icon: "󰅙",
+                text: "Download failed",
+                bgColor1: ThemeManager.selectedTheme.colors.error || "#cc3333"
+            });
+        // كإجراء احترازي في حال الخطأ، يمكننا مسح القائمة إذا كنا متأكدين
+        // لكن لسلامة التنزيلات المتعددة، سنتركها للمستخدم ليحاول مرة أخرى
         }
     }
+
+    // --- الواجهة الرسومية ---
 
     ColumnLayout {
         anchors.fill: parent
         spacing: 10
 
-        // Header Section
+        // Header
         WallpaperHeader {
             Layout.fillWidth: true
             isLoading: root.wallhavenLoading
@@ -211,7 +325,7 @@ Item {
             onCloseClicked: root.closeRequested()
         }
 
-        // Tabs Section
+        // Tabs
         SourceTabs {
             Layout.fillWidth: true
             currentSource: root.sourceMode
@@ -223,21 +337,20 @@ Item {
             }
         }
 
-        // Search Bar Section
+        // Search Bar
         SearchBar {
             Layout.fillWidth: true
             sourceMode: root.sourceMode
             onFilterTextChanged: text => {
-                if (root.sourceMode === 2) {
+                if (root.sourceMode === 2)
                     root.wallhavenQuery = text;
-                } else {
+                else
                     root.filterText = text;
-                }
             }
             onSearchRequested: root.searchWallhaven(true)
         }
 
-        // Content Section with Animation
+        // Content
         SwipeView {
             id: viewPager
             Layout.fillWidth: true
@@ -245,40 +358,40 @@ Item {
             currentIndex: root.sourceMode
             clip: true
             interactive: false
+            onCurrentIndexChanged: if (root.sourceMode !== currentIndex)
+                root.sourceMode = currentIndex
 
-            onCurrentIndexChanged: {
-                if (root.sourceMode !== currentIndex) {
-                    root.sourceMode = currentIndex;
-                }
-            }
-
-            // Page 0: Local Wallpapers
+            // Page 0: Local
             Item {
                 WallpaperGrid {
                     anchors.fill: parent
                     wallpapers: root.getFilteredList(root.localWallpapers)
                     isWallhaven: false
-                    loading: false
                     compact: root.compact
                     currentWallpaper: ThemeManager.currentWallpaper
                     downloadingList: []
                     emptyText: qsTr("No local wallpapers found")
-                    onWallpaperClicked: wallpaperData => root.selectWallpaper(wallpaperData)
+
+                    onWallpaperDownloadAndApply: wallpaperData => root.handleDownloadAndApply(wallpaperData)
+                    onWallpaperPreview: wallpaperData => root.handlePreview(wallpaperData)
+                    onWallpaperDownloadOnly: wallpaperData => console.log("Already Local")
                 }
             }
 
-            // Page 1: Downloaded Wallpapers
+            // Page 1: Downloaded
             Item {
                 WallpaperGrid {
                     anchors.fill: parent
                     wallpapers: root.getFilteredList(root.downloadedWallpapers)
                     isWallhaven: false
-                    loading: false
                     compact: root.compact
                     currentWallpaper: ThemeManager.currentWallpaper
                     downloadingList: []
                     emptyText: qsTr("No downloaded wallpapers yet")
-                    onWallpaperClicked: wallpaperData => root.selectWallpaper(wallpaperData)
+
+                    onWallpaperDownloadAndApply: wallpaperData => root.handleDownloadAndApply(wallpaperData)
+                    onWallpaperPreview: wallpaperData => root.handlePreview(wallpaperData)
+                    onWallpaperDownloadOnly: wallpaperData => console.log("Already Downloaded")
                 }
             }
 
@@ -296,7 +409,7 @@ Item {
                         category: root.wallhavenCategory
                         color: root.wallhavenColor
                         resolution: root.wallhavenResolution
-
+                        // ... (Event handlers remain same) ...
                         onSortingSelected: value => {
                             root.wallhavenSorting = value;
                             root.searchWallhaven(true);
@@ -335,8 +448,125 @@ Item {
                         downloadingList: root.activeDownloads
                         emptyText: qsTr("Search for wallpapers or click refresh")
 
-                        onWallpaperClicked: wallpaperData => root.selectWallpaper(wallpaperData)
+                        // تم تحديث الروابط هنا:
+                        onWallpaperDownloadAndApply: wallpaperData => root.handleDownloadAndApply(wallpaperData)
+                        onWallpaperDownloadOnly: wallpaperData => root.handleDownloadOnly(wallpaperData)
+                        onWallpaperPreview: wallpaperData => root.handlePreview(wallpaperData)
+
                         onLoadMore: root.loadMoreWallhaven()
+                    }
+                }
+            }
+        }
+    }
+
+    // --- نافذة المعاينة (Popup) ---
+    Popup {
+        id: previewPopup
+        anchors.centerIn: parent
+        width: parent.width * 0.9
+        height: parent.height * 0.9
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        // خلفية الـ Popup (شفافة لتبدو كـ Overlay)
+        background: Rectangle {
+            color: "#cc000000" // أسود شفاف داكن
+            radius: 8
+        }
+
+        // محتوى المعاينة
+        Item {
+            anchors.fill: parent
+
+            // الصورة الكبيرة
+            Image {
+                id: previewImg
+                anchors.fill: parent
+                anchors.margins: 20
+                source: root.previewImageUrl
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
+                smooth: true
+                mipmap: true
+            }
+
+            // مؤشر التحميل (للصور من النت)
+            BusyIndicator {
+                anchors.centerIn: parent
+                running: previewImg.status === Image.Loading
+                width: 64
+                height: 64
+            }
+
+            // زر الإغلاق
+            Rectangle {
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.margins: 10
+                width: 40
+                height: 40
+                radius: 20
+                color: closeMouse.containsMouse ? "#ff4444" : "#44ffffff"
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "✕"
+                    color: "white"
+                    font.pixelSize: 18
+                }
+
+                MouseArea {
+                    id: closeMouse
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: previewPopup.close()
+                }
+            }
+
+            // زر "تطبيق" من المعاينة (اختياري - ميزة إضافية)
+            Rectangle {
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: 20
+                width: 140
+                height: 40
+                radius: 20
+                color: ThemeManager.selectedTheme.colors.primary || "#6366f1"
+                visible: previewImg.status === Image.Ready
+
+                RowLayout {
+                    anchors.centerIn: parent
+                    spacing: 8
+                    Text {
+                        text: "󰄬"
+                        font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
+                        color: ThemeManager.selectedTheme.colors.onPrimary
+                    }
+                    Text {
+                        text: "Apply Wallpaper"
+                        color: ThemeManager.selectedTheme.colors.onPrimary
+                        font.bold: true
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        // إذا كانت الصورة من wallhaven، نحتاج للـ Data الخاصة بها.
+                        // حالياً لدينا الرابط فقط في المعاينة.
+                        // إذا كانت محلية، نطبقها مباشرة.
+                        if (root.sourceMode !== 2) {
+                            root.applyWallpaper(root.previewImageUrl.replace("file://", ""));
+                            previewPopup.close();
+                        } else {
+                            // للصور من النت، الأفضل إغلاق المعاينة والضغط على زر التحميل في البطاقة
+                            // أو تخزين الكائن wallpaperData بالكامل في المعاينة (يمكن تحسينه لاحقاً)
+                            previewPopup.close();
+                        }
                     }
                 }
             }

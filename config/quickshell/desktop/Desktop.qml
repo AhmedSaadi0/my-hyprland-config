@@ -63,12 +63,18 @@ PanelWindow {
     Connections {
         target: Theme.ThemeManager
 
+        // BUG: it is called twice, find why and fix it
         function onSelectedThemeUpdated() {
+            console.info("Theme selected");
             desktopRoot.updateThemeData();
         }
 
         function onWallpaperChanged(path) {
             wallpaper.wallpaperSource = path;
+        }
+
+        function onCreatingOverlayImageFinished(newImagePath) {
+            wallpaper.overlaySource = newImagePath;
         }
     }
 
