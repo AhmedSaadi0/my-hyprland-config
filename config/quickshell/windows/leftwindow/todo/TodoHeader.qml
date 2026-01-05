@@ -5,120 +5,235 @@ import "root:/themes"
 
 ColumnLayout {
     id: headerRoot
-    spacing: 15
-    Layout.fillWidth: true
 
-    // الخصائص المطلوبة من الخارج
-    property var theme
-    property var typography
-    property date selectedDate
-    
-    // الإشارات (Signals) للتواصل مع TodoView
+    // --- Signals ---
     signal addTask(string title, bool urgent)
-    signal openCalendar()
+    signal openCalendar
 
-    // 1. العنوان
-    Text {
-        text: "My Tasks"
-        font.family: typography.bodyFont
-        font.pixelSize: 22
-        font.bold: true
-        color: theme.leftMenuFgColorV1
-        Layout.leftMargin: 10
-        Layout.topMargin: 5
+    // --- Properties ---
+    property date selectedDate
+
+    // Theme Helpers
+    readonly property var colors: ThemeManager.selectedTheme.colors
+    readonly property var dims: ThemeManager.selectedTheme.dimensions
+    readonly property var typo: ThemeManager.selectedTheme.typography
+
+    // --- Layout Settings ---
+    Layout.fillWidth: true
+    spacing: dims.spacingLarge
+
+    // --- Functions ---
+    // دالة لجمع منطق الإضافة من الزر ومن مفتاح Enter
+    function submitNewTask() {
+        if (taskInput.text.trim() !== "") {
+            headerRoot.addTask(taskInput.text, urgentBtn.checked);
+            taskInput.text = "";
+            urgentBtn.checked = false;
+        }
     }
 
-    // 2. منطقة الإدخال
+    // --- Visual Elements ---
+
+    // 1. Header Title
+    Text {
+        text: "Tasks"
+        font.family: typo.bodyFont
+        font.pixelSize: typo.heading2Size
+        font.bold: true
+        color: colors.leftMenuFgColorV1
+        opacity: 0.9
+        Layout.leftMargin: 4
+    }
+
+    // 2. Input Card
     Rectangle {
         Layout.fillWidth: true
-        Layout.preferredHeight: 185
-        Layout.margins: 10
-        color: Qt.rgba(theme.leftMenuFgColorV1.r, theme.leftMenuFgColorV1.g, theme.leftMenuFgColorV1.b, 0.05)
-        border.color: Qt.rgba(theme.leftMenuFgColorV1.r, theme.leftMenuFgColorV1.g, theme.leftMenuFgColorV1.b, 0.1)
-        radius: 10
+        Layout.preferredHeight: 140
+
+        color: colors.tertiary.alpha(0.2)
+        radius: dims.elementRadius
+
+        // Border styling with focus state
+        border.width: taskInput.activeFocus ? 1.5 : 1
+        border.color: taskInput.activeFocus ? Qt.rgba(colors.primary.r, colors.primary.g, colors.primary.b, 0.4) : Qt.rgba(colors.leftMenuFgColorV1.r, colors.leftMenuFgColorV1.g, colors.leftMenuFgColorV1.b, 0.05)
+
+        Behavior on border.color {
+            ColorAnimation {
+                duration: 200
+            }
+        }
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 10
+            anchors.margins: 16
+            spacing: 0
 
-            TextField {
+            // Input Area
+            TextArea {
                 id: taskInput
+
                 Layout.fillWidth: true
-                Layout.preferredHeight: 35
-                placeholderText: "What needs to be done?"
-                font.family: typography.bodyFont
-                color: theme.leftMenuFgColorV1
-                
-                background: Rectangle {
-                    color: Qt.rgba(theme.leftMenuFgColorV1.r, theme.leftMenuFgColorV1.g, theme.leftMenuFgColorV1.b, 0.08)
-                    radius: 4
-                    border.width: 1
-                    border.color: taskInput.activeFocus ? theme.primary : "transparent"
+                Layout.fillHeight: true
+                Layout.bottomMargin: 10
+
+                placeholderText: "Add a new task..."
+                placeholderTextColor: colors.subtleText
+                color: colors.leftMenuFgColorV1
+                font.family: typo.bodyFont
+                font.pixelSize: 15
+                wrapMode: Text.Wrap
+                background: null
+
+                // Shift+Enter لسطر جديد، و Enter للإرسال
+                Keys.onReturnPressed: event => {
+                    if ((event.modifiers & Qt.ShiftModifier) == 0) {
+                        headerRoot.submitNewTask();
+                        event.accepted = true;
+                    }
                 }
-                onAccepted: addTaskBtn.clicked()
             }
 
+            // Bottom Toolbar
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 10
-                
+                spacing: 12
+
+                // Date Selector
                 Button {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 35
-                    text: "📅  " + headerRoot.selectedDate.toLocaleDateString(Qt.locale(), "ddd, MMM d")
+                    id: dateBtn
+                    text: "📅 " + headerRoot.selectedDate.toLocaleDateString(Qt.locale(), "MMM d")
+
+                    Layout.preferredHeight: 34
+                    leftPadding: 14
+                    rightPadding: 14
+                    flat: true
+
                     onClicked: headerRoot.openCalendar()
-                    
+
                     background: Rectangle {
-                        color: Qt.rgba(theme.leftMenuFgColorV1.r, theme.leftMenuFgColorV1.g, theme.leftMenuFgColorV1.b, 0.08)
-                        radius: 4
+                        radius: dims.elementRadius
+                        color: dateBtn.hovered ? Qt.rgba(colors.leftMenuFgColorV1.r, colors.leftMenuFgColorV1.g, colors.leftMenuFgColorV1.b, 0.08) : Qt.rgba(colors.leftMenuFgColorV1.r, colors.leftMenuFgColorV1.g, colors.leftMenuFgColorV1.b, 0.04)
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 150
+                            }
+                        }
                     }
+
                     contentItem: Text {
                         text: parent.text
-                        font.family: typography.bodyFont
-                        color: theme.leftMenuFgColorV1
+                        font.family: typo.bodyFont
+                        font.pixelSize: 12
+                        font.weight: Font.Medium
+                        color: colors.leftMenuFgColorV1
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        opacity: 0.8
                     }
                 }
 
-                CheckBox {
-                    id: urgentCheck
-                    text: "Urgent"
-                    Layout.preferredHeight: 35
+                // Urgent Toggle
+                Button {
+                    id: urgentBtn
+                    checkable: true
+
+                    Layout.preferredHeight: 36
+                    Layout.preferredWidth: checked ? 100 : 90
+
+                    // Button Animations
+                    scale: pressed ? 0.95 : 1.0
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
+                    Behavior on Layout.preferredWidth {
+                        NumberAnimation {
+                            duration: 200
+                        }
+                    }
+
+                    background: Rectangle {
+                        radius: 18
+                        color: urgentBtn.checked ? colors.error : "transparent"
+                        border.width: urgentBtn.checked ? 0 : 1.5
+                        border.color: urgentBtn.checked ? colors.error : colors.subtleText
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
+                        Behavior on border.color {
+                            ColorAnimation {
+                                duration: 200
+                            }
+                        }
+                    }
+
+                    contentItem: RowLayout {
+                        anchors.centerIn: parent
+                        spacing: 8
+
+                        Text {
+                            text: urgentBtn.checked ? "🔥" : "🏳️"
+                            font.pixelSize: 14
+                            color: urgentBtn.checked ? "white" : colors.subtleText
+                            Layout.leftMargin: 10
+
+                            rotation: urgentBtn.checked ? 0 : -15
+                            Behavior on rotation {
+                                NumberAnimation {
+                                    duration: 300
+                                    easing.type: Easing.OutBack
+                                }
+                            }
+                        }
+
+                        Text {
+                            text: urgentBtn.checked ? "URGENT" : "Normal"
+                            font.family: typo.bodyFont
+                            font.pixelSize: 12
+                            font.bold: true
+                            font.capitalization: Font.AllUppercase
+                            color: urgentBtn.checked ? "white" : colors.subtleText
+                            Layout.rightMargin: 5
+                        }
+                    }
+                }
+
+                // Spacer
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                // Submit Button
+                Button {
+                    id: addTaskBtn
+
+                    Layout.preferredHeight: 34
+                    Layout.preferredWidth: 34
+
+                    onClicked: headerRoot.submitNewTask()
+
+                    background: Rectangle {
+                        radius: 17
+                        color: addTaskBtn.pressed ? Qt.darker(colors.primary, 1.1) : colors.primary
+                        layer.enabled: true
+                    }
+
                     contentItem: Text {
-                        text: parent.text
-                        font.family: typography.bodyFont
-                        color: theme.leftMenuFgColorV1
-                        leftPadding: parent.indicator.width + 10
+                        text: "➤"
+                        font.pixelSize: 16
+                        color: colors.onPrimary
+                        horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        bottomPadding: 2
                     }
-                }
-            }
 
-            Button {
-                id: addTaskBtn
-                text: "Add New Task"
-                Layout.fillWidth: true
-                Layout.preferredHeight: 40
-                onClicked: {
-                    if (taskInput.text.trim() !== "") {
-                        headerRoot.addTask(taskInput.text, urgentCheck.checked)
-                        taskInput.text = ""
-                        urgentCheck.checked = false
-                    }
-                }
-                background: Rectangle {
-                    color: parent.pressed ? theme.primary : theme.leftMenuFgColorV1
-                    radius: 8
-                }
-                contentItem: Text {
-                    text: parent.text
-                    font.family: typography.bodyFont
-                    font.bold: true
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    ToolTip.visible: hovered
+                    ToolTip.text: "Add Task"
+                    ToolTip.delay: 500
                 }
             }
         }

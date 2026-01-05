@@ -74,6 +74,7 @@ Singleton {
 
     property alias useBottomLauncher: root.config.useBottomLauncher
     property alias bottomLauncherWidth: root.config.bottomLauncherWidth
+    property alias firstDayOfWeek: root.config.firstDayOfWeek
 
     function updateConfig(key, value) {
         root.config.set(key, value);

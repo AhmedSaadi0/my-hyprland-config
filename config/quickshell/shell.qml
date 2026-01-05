@@ -287,6 +287,9 @@ ShellRoot {
                 function toggleClipboardMenu() {
                     toggleMenu(Consts.CLIPBOARD_MENU_INDEX);
                 }
+                function toggleTodoMenu() {
+                    toggleMenu(Consts.TODO_MENU_INDEX);
+                }
                 function toggleAiMenu() {
                     toggleMenu(Consts.AI_BOT_MENU_INDEX);
                 }

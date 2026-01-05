@@ -24,7 +24,11 @@ BaseThemeSettings {
     // ========================================================================
     property bool localEnableDynamic: false
     property bool localEnableColoring: false
-    property bool localEnableWallpaperBlure: false
+
+    // إعدادات الضبابية (Blur)
+    property bool localEnableWallpaperBlur: false
+    property real localWallpaperBlurStrength: 0.8 // القيمة الافتراضية
+
     property string localDynamicPath: ""
     property int localInterval: 60
     property int localWallpaperIndex: 0
@@ -43,7 +47,11 @@ BaseThemeSettings {
 
         localEnableDynamic = s.enableDynamicWallpapers ?? false;
         localEnableColoring = s.enableDynamicColoring ?? false;
-        localEnableWallpaperBlure = s.enableWallpaperBlur ?? false;
+
+        // قراءة إعدادات الضبابية
+        localEnableWallpaperBlur = s.enableWallpaperBlur ?? false;
+        localWallpaperBlurStrength = s.wallpaperBlurStrength !== undefined ? s.wallpaperBlurStrength : 0.8;
+
         localDynamicPath = s.dynamicWallpapersPath || "";
         localInterval = (s.dynamicWallpapersInterval || 60000) / 1000;
         localWallpaperIndex = s.selectedWallpaperIndex || 0;
@@ -58,7 +66,10 @@ BaseThemeSettings {
         return {
             "_enableDynamicWallpapers": localEnableDynamic,
             "_enableDynamicColoring": localEnableColoring,
-            "_enableWallpaperBlur": localEnableWallpaperBlure,
+
+            // حفظ إعدادات الضبابية
+            "_enableWallpaperBlur": localEnableWallpaperBlur,
+            "_wallpaperBlurStrength": localWallpaperBlurStrength,
             "_dynamicWallpapersPath": localDynamicPath,
             "_dynamicWallpapersInterval": localInterval * 1000,
             "_selectedWallpaperIndex": localWallpaperIndex,
@@ -159,18 +170,40 @@ BaseThemeSettings {
                 text: qsTr("Extracts dominant colors from the current wallpaper to generate a matching system theme. Requires 'kde-material-you-colors'.")
             }
 
+            // Blur Switch & Slider
             SettingSwitch {
                 label: qsTr("Enable Wallpaper Blur")
-                isChecked: root.localEnableWallpaperBlure
+                isChecked: root.localEnableWallpaperBlur
                 onIsCheckedChanged: {
                     if (!root.isLoading) {
-                        root.localEnableWallpaperBlure = isChecked;
+                        root.localEnableWallpaperBlur = isChecked;
                         root.applySingleProperty("_enableWallpaperBlur", isChecked);
                     }
                 }
             }
+
+            // شريط التحكم بالضبابية يظهر فقط عند التفعيل
+            ColumnLayout {
+                Layout.fillWidth: true
+                visible: root.localEnableWallpaperBlur
+                Layout.leftMargin: 20 // إزاحة للداخل لتدل على التبعية
+
+                SliderWithLabel {
+                    label: qsTr("Blur Strength")
+                    from: 0.1
+                    to: 1.0
+                    stepSize: 0.05
+                    decimals: 2
+                    value: root.localWallpaperBlurStrength
+                    onEditingFinished: val => {
+                        root.localWallpaperBlurStrength = val;
+                        root.applySingleProperty("_wallpaperBlurStrength", val);
+                    }
+                }
+            }
+
             DescriptionLabel {
-                text: qsTr("Enable blue for wallpaper when menu is opened")
+                text: qsTr("Adds a blur effect to the wallpaper when menus or overlays are active. Adjust the slider to control intensity.")
             }
         }
 

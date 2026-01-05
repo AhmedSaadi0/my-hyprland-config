@@ -34,6 +34,10 @@ M3GroupBox {
         property string profilePicture: ""
         property string city: ""
         property string country: ""
+
+        // 0=Sun, 1=Mon, ..., 6=Sat
+        property int firstDayOfWeek: 6
+
         property string weatherLocation: ""
         property bool usePrayerTimes: true
         property string networkMonitor: ""
@@ -113,6 +117,10 @@ M3GroupBox {
         tempConfig.profilePicture = App.profilePicture;
         tempConfig.city = App.city;
         tempConfig.country = App.country;
+
+        // تحميل بداية الأسبوع
+        tempConfig.firstDayOfWeek = App.firstDayOfWeek !== undefined ? App.firstDayOfWeek : 6;
+
         tempConfig.weatherLocation = App.weatherLocation;
         tempConfig.usePrayerTimes = App.usePrayerTimes;
         tempConfig.networkMonitor = App.networkMonitor;
@@ -153,6 +161,9 @@ M3GroupBox {
             "profilePicture": tempConfig.profilePicture,
             "city": tempConfig.city,
             "country": tempConfig.country,
+
+            // حفظ بداية الأسبوع
+            "firstDayOfWeek": tempConfig.firstDayOfWeek,
             "weatherLocation": tempConfig.weatherLocation,
             "usePrayerTimes": tempConfig.usePrayerTimes,
             "networkMonitor": tempConfig.networkMonitor,
@@ -410,6 +421,48 @@ M3GroupBox {
                     }
                 }
             }
+
+            // --- First Day of Week Selection ---
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 15
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 5
+
+                    Controls.Label {
+                        text: qsTr("First Day of Week")
+                        font.bold: true
+                    }
+
+                    SettingsComboBox {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 30
+                        // الموديل يعكس الترتيب القياسي (0=الأحد)
+                        model: [qsTr("Sunday")    // Index 0
+                            , qsTr("Monday")    // Index 1
+                            , qsTr("Tuesday")   // Index 2
+                            , qsTr("Wednesday") // Index 3
+                            , qsTr("Thursday")  // Index 4
+                            , qsTr("Friday")    // Index 5
+                            , qsTr("Saturday")   // Index 6
+                        ]
+
+                        // نحدد العنصر المختار بناءً على القيمة المحفوظة
+                        currentIndex: tempConfig.firstDayOfWeek
+
+                        // عند الاختيار، نحدث قيمة tempConfig
+                        onActivated: index => tempConfig.firstDayOfWeek = index
+                    }
+                }
+
+                // Placeholder to balance layout if needed or add more regional settings here
+                Item {
+                    Layout.fillWidth: true
+                }
+            }
+
             SettingSwitch {
                 label: qsTr("Enable Prayer Times")
                 isChecked: tempConfig.usePrayerTimes

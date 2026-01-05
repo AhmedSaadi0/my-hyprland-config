@@ -10,6 +10,7 @@ Item {
     property bool depthEnabled: false
     property bool blurEnabled: false
     property bool isMenuOpen: false
+    property real blurValue: 0.9
 
     default property alias content: widgetsContainer.data
 
@@ -36,9 +37,20 @@ Item {
 
         layer.enabled: root.blurEnabled
         layer.effect: MultiEffect {
+            // تفعيل الضبابية
             blurEnabled: root.blurEnabled
+
+            // 1. هذا الرقم يحجز الذاكرة. يجب أن يكون مساوياً لأقصى رقم تريد الوصول إليه (32 بكسل كافية جداً وناعمة)
             blurMax: 32
-            blur: root.isMenuOpen ? 0.8 : 0
+
+            // 2. المعادلة:
+            // إذا كانت القائمة مفتوحة: نأخذ القيمة من الإعدادات (مثلاً 0.8) ونضربها في 32 لنحصل على قوة الضبابية (25.6 بكسل)
+            // إذا كانت مغلقة: 0
+            blur: root.isMenuOpen ? (root.blurValue) : 0
+
+            // تحسين النعومة (اختياري)
+            saturation: 0.2 // يمكن تقليل التشبع ليعطي مظهراً زجاجياً أكثر
+
             Behavior on blur {
                 NumberAnimation {
                     duration: 800
@@ -188,18 +200,18 @@ Item {
             }
         }
 
-        layer.enabled: root.blurEnabled
-        layer.effect: MultiEffect {
-            blurEnabled: root.blurEnabled
-            blurMax: 32
-            blur: root.isMenuOpen ? 0.2 : 0
-            Behavior on blur {
-                NumberAnimation {
-                    duration: 800
-                    easing.type: Easing.OutCubic
-                }
-            }
-        }
+        // layer.enabled: root.blurEnabled
+        // layer.effect: MultiEffect {
+        //     blurEnabled: root.blurEnabled
+        //     blurMax: 32
+        //     blur: root.isMenuOpen ? 0.2 : 0
+        //     Behavior on blur {
+        //         NumberAnimation {
+        //             duration: 800
+        //             easing.type: Easing.OutCubic
+        //         }
+        //     }
+        // }
 
         Image {
             id: fg1

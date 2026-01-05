@@ -39,6 +39,7 @@ PanelWindow {
         depthEnabled: desktopRoot.depthEffectActive
         isMenuOpen: desktopRoot.isMenuOpened
         blurEnabled: desktopRoot.blurEnabled
+        blurValue: Theme.ThemeManager.selectedTheme.systemSettings.wallpaperBlurStrength
 
         content: Widgets {
             id: myWidgets

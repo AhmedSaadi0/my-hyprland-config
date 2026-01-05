@@ -44,6 +44,8 @@ QtObject {
     property int cpuHighLoadThreshold: 85
     property int ramHighLoadThreshold: 85
 
+    property int firstDayOfWeek: 6 // Saturday
+
     property bool useBottomLauncher: false  // false = side launcher, true = bottom launcher
     property int bottomLauncherWidth: 800
 
@@ -77,6 +79,8 @@ QtObject {
             store.subtitle = data.subtitle;
         if (data.profilePicture !== undefined)
             store.profilePicture = data.profilePicture;
+        if (data.firstDayOfWeek !== undefined)
+            store.firstDayOfWeek = data.firstDayOfWeek;
 
         // -------------------------------------------------------
         // الشبكة
