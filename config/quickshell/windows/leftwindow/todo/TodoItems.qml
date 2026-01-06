@@ -81,6 +81,9 @@ ListView {
         propagateComposedEvents: true
         onClicked: mouse => mouse.accepted = false
 
+        // Local state for editing
+        property bool isEditing: false
+
         ListView.onRemove: removeAnim.start()
 
         SequentialAnimation {
@@ -112,12 +115,14 @@ ListView {
             radius: dims.elementRadius
 
             border.width: 1
-            border.color: Qt.rgba(colors.primary.r, colors.primary.g, colors.primary.b, 0.05)
+            border.color: isEditing 
+                ? Qt.rgba(colors.primary.r, colors.primary.g, colors.primary.b, 0.5) 
+                : Qt.rgba(colors.primary.r, colors.primary.g, colors.primary.b, 0.05)
 
             color: {
                 if (model.completed)
                     return Qt.rgba(colors.leftMenuBgColorV3.r, colors.leftMenuBgColorV3.g, colors.leftMenuBgColorV3.b, 0.5);
-                if (itemRoot.containsMouse)
+                if (itemRoot.containsMouse || isEditing)
                     return Qt.lighter(colors.leftMenuBgColorV2, 1.2);
                 return colors.leftMenuBgColorV1;
             }
@@ -128,7 +133,7 @@ ListView {
                 }
             }
 
-            // شريط ملون جانبي لتوضيح الحالة
+            // Side color bar
             Rectangle {
                 width: 4
                 anchors.left: parent.left
@@ -166,9 +171,14 @@ ListView {
                     checked: model.completed
                     Layout.alignment: Qt.AlignTop
                     Layout.topMargin: 2
+                    
+                    // Prevent checking the box while editing to avoid state confusion
+                    enabled: !isEditing 
 
                     onClicked: {
                         model.completed = checked;
+                        // If checked, ensure editing is closed (redundant safety)
+                        if(checked) isEditing = false;
                         todoList.requestSave();
                     }
 
@@ -209,7 +219,9 @@ ListView {
                     Layout.alignment: Qt.AlignTop
                     spacing: 6
 
+                    // 1. View Mode: Text Display
                     Text {
+                        visible: !isEditing
                         text: model.title
                         font.family: typo.bodyFont
                         font.pixelSize: typo.medium
@@ -223,14 +235,35 @@ ListView {
                         opacity: model.completed ? 0.6 : 1
                         color: model.completed ? colors.subtleText : colors.leftMenuFgColorV1
 
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 200
-                            }
+                        Behavior on color { ColorAnimation { duration: 200 } }
+                        Behavior on opacity { NumberAnimation { duration: 200 } }
+                    }
+
+                    // 2. Edit Mode: Input Area
+                    TextArea {
+                        id: editInput
+                        visible: isEditing
+                        Layout.fillWidth: true
+                        
+                        text: model.title
+                        font.family: typo.bodyFont
+                        font.pixelSize: typo.medium
+                        font.bold: true
+                        wrapMode: Text.Wrap
+                        color: colors.leftMenuFgColorV1
+                        
+                        background: Rectangle {
+                            color: Qt.rgba(colors.primary.r, colors.primary.g, colors.primary.b, 0.05)
+                            radius: 4
                         }
-                        Behavior on opacity {
-                            NumberAnimation {
-                                duration: 200
+                        
+                        // Save on Enter (Shift+Enter for new line)
+                        Keys.onReturnPressed: (event) => {
+                            if ((event.modifiers & Qt.ShiftModifier) == 0) {
+                                model.title = editInput.text;
+                                isEditing = false;
+                                todoList.requestSave();
+                                event.accepted = true;
                             }
                         }
                     }
@@ -267,11 +300,64 @@ ListView {
                     }
                 }
 
+                // --- Action Buttons ---
+
+                // 1. Edit Button
+                Button {
+                    id: editBtn
+                    Layout.preferredWidth: 34
+                    Layout.preferredHeight: 34
+                    Layout.alignment: isEditing ? Qt.AlignTop : Qt.AlignVCenter
+
+                    visible: !model.completed 
+
+                    flat: true
+                    opacity: isEditing || itemRoot.containsMouse || editBtn.hovered ? 1 : 0
+                    
+                    Behavior on opacity {
+                        NumberAnimation { duration: 200 }
+                    }
+
+                    onClicked: {
+                        if (isEditing) {
+                            if(editInput.text.trim() !== "") {
+                                model.title = editInput.text;
+                                isEditing = false;
+                                todoList.requestSave();
+                            }
+                        } else {
+                            editInput.text = model.title;
+                            isEditing = true;
+                            editInput.forceActiveFocus();
+                        }
+                    }
+
+                    background: Rectangle {
+                        radius: dims.elementRadius
+                        color: editBtn.hovered ? Qt.rgba(colors.primary.r, colors.primary.g, colors.primary.b, 0.1) : "transparent"
+                    }
+
+                    contentItem: Text {
+                        text: isEditing ? "✓" : "✎"
+                        color: editBtn.hovered ? colors.primary : colors.subtleText
+                        font.pixelSize: 16
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    
+                    ToolTip.visible: hovered
+                    ToolTip.text: isEditing ? "Save" : "Edit"
+                    ToolTip.delay: 500
+                }
+
+                // 2. Delete Button
                 Button {
                     id: deleteBtn
                     Layout.preferredWidth: 34
                     Layout.preferredHeight: 34
                     Layout.alignment: Qt.AlignVCenter
+                    
+                    visible: !isEditing
 
                     flat: true
                     opacity: itemRoot.containsMouse || deleteBtn.hovered ? 1 : 0
