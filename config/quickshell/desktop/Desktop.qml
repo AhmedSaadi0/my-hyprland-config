@@ -75,7 +75,7 @@ PanelWindow {
         }
 
         function onCreatingOverlayImageFinished(newImagePath) {
-            wallpaper.overlaySource = newImagePath;
+            desktopRoot.currentOverlay = newImagePath;
         }
     }
 
