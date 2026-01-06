@@ -39,6 +39,7 @@ PanelWindow {
         depthEnabled: desktopRoot.depthEffectActive
         isMenuOpen: desktopRoot.isMenuOpened
         blurEnabled: desktopRoot.blurEnabled
+        blurValue: Theme.ThemeManager.selectedTheme.systemSettings.wallpaperBlurStrength
 
         content: Widgets {
             id: myWidgets
@@ -63,12 +64,18 @@ PanelWindow {
     Connections {
         target: Theme.ThemeManager
 
+        // BUG: it is called twice, find why and fix it
         function onSelectedThemeUpdated() {
+            console.info("Theme selected");
             desktopRoot.updateThemeData();
         }
 
         function onWallpaperChanged(path) {
             wallpaper.wallpaperSource = path;
+        }
+
+        function onCreatingOverlayImageFinished(newImagePath) {
+            wallpaper.overlaySource = newImagePath;
         }
     }
 

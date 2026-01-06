@@ -56,6 +56,7 @@ Singleton {
     property alias aiPreferredLanguage: root.config.aiPreferredLanguage
     property alias weatherPersona: root.config.weatherPersona
     property alias musicPersona: root.config.musicPersona
+    property alias aiProvider: root.config.aiProvider
 
     property alias weatherAiModel: root.config.weatherAiModel
     property alias musicAiModel: root.config.musicAiModel
@@ -73,6 +74,7 @@ Singleton {
 
     property alias useBottomLauncher: root.config.useBottomLauncher
     property alias bottomLauncherWidth: root.config.bottomLauncherWidth
+    property alias firstDayOfWeek: root.config.firstDayOfWeek
 
     function updateConfig(key, value) {
         root.config.set(key, value);
@@ -235,7 +237,7 @@ Singleton {
             readonly property var dataUsageCommand: [pythonPath, dataUsage]
             readonly property var connectWifiCommand: [pythonPath, connectWifi]
 
-            readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", "gemini"]
+            readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", aiProvider]
 
             readonly property var callGemini: [...initialAiCommand, "--api_key", geminiApiKey]
             readonly property var callWeatherAi: [...initialAiCommand, "--api_key", weatherAiApiKey, "--preset", "weather", "--user_persona", root.weatherPersona, "--model", root.weatherAiModel]
@@ -279,7 +281,7 @@ Singleton {
             console.warn(`Skipping empty command: ${description}`);
             return;
         }
-        console.info(description + " -> " + commandArray.join(' '));
+        console.info("[App] [dispatchCommand] " + description + " -> " + commandArray.join(' '));
         Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 

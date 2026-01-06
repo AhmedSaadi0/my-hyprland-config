@@ -1,5 +1,4 @@
 // themes/ThemeManager.qml
-
 pragma Singleton
 
 import QtQuick
@@ -13,96 +12,131 @@ Singleton {
     id: root
 
     // =========================================================
-    // Public API
+    // 1. Public API & Properties
     // =========================================================
+
+    // Read-only Aliases (Exposing internal state safely)
+    readonly property alias selectedTheme: themeLoader.activeThemeInstance
+    readonly property alias isInitialThemeReady: root._initialReady
+
+    // Wallpaper Data Aliases
+    readonly property alias currentWallpaper: wallpaperController.currentWallpaperPath
+    readonly property alias localWallpapers: wallpaperController.localWallpapersList
+    readonly property alias downloadedWallpapers: wallpaperController.downloadedWallpapersList
+    readonly property alias wallhavenWallpapers: wallpaperController.wallhavenWallpapersList
+
+    // Internal State Flags
     property bool _initialReady: false
-    readonly property alias selectedTheme: loader.activeThemeInstance
-    readonly property alias currentWallpaper: wallpaperCtrl.currentWallpaperPath
-    readonly property alias localWallpapers: wallpaperCtrl.localWallpapersList
-    readonly property alias downloadedWallpapers: wallpaperCtrl.downloadedWallpapersList
-    readonly property alias wallhavenWallpapers: wallpaperCtrl.wallhavenWallpapersList
-    readonly property bool isInitialThemeReady: _initialReady
-
-    signal selectedThemeUpdated
-    signal initialThemeReady
-    signal wallpaperChanged(string path)
-    signal creatingOverlayImageStarted
-    signal creatingOverlayImageFinished(string newImagePath)
-
-    // Wallhaven signals (forwarded from WallpaperController)
-    signal fetchingWallhavenWallpapersStarted
-    signal wallhavenWallpapersFetched(var response)
-    signal wallhavenWallpapersError(string errorDetails)
-
-    // Download signals (forwarded from WallpaperController)
-    signal wallpaperDownloadStarted(string filePath)
-    signal wallpaperDownloadFinished(string filePath)
-    signal wallpaperDownloadError(string errorDetails)
-
-    function refreshLocalWallpapers() { wallpaperCtrl.refreshLocalWallpapers(); }
-    function refreshDownloadedWallpapers() { wallpaperCtrl.refreshDownloadedWallpapers(); }
-    function refreshAllWallpaperLists() { wallpaperCtrl.refreshAllWallpaperLists(); }
-    function searchWallhaven(url) { wallpaperCtrl.searchWallhaven(url); }
-    function downloadWallhaven(id, fileType, url) { wallpaperCtrl.downloadWallhaven(id, fileType, url); }
-
-    // =========================================================
-    // Internal State for Sequence Control
-    // =========================================================
-    // لتخزين بيانات الكاش مؤقتاً قبل إنشاء الثيم
     property var _pendingCacheData: null
-    // لتخزين اسم الثيم المطلوب بينما ننتظر الكاش
     property string _pendingThemeName: ""
     property string _selectedThemeName: ""
 
     // =========================================================
-    // Modules
+    // 2. Signals
     // =========================================================
+
+    // Theme Lifecycle Signals
+    signal selectedThemeUpdated
+    signal initialThemeReady
+
+    // Feature Signals
+    signal wallpaperChanged(string path)
+    signal creatingOverlayImageStarted
+    signal creatingOverlayImageFinished(string newImagePath)
+
+    // Forwarded Signals (Wallhaven & Downloads)
+    signal fetchingWallhavenWallpapersStarted
+    signal wallhavenWallpapersFetched(var response)
+    signal wallhavenWallpapersError(string errorDetails)
+    signal wallpaperDownloadStarted(string filePath)
+    signal wallpaperDownloadFinished(string filePath)
+    signal wallpaperDownloadError(string errorDetails)
+
+    // =========================================================
+    // 3. Public Methods (Wrappers)
+    // =========================================================
+
+    function refreshLocalWallpapers() {
+        wallpaperController.refreshLocalWallpapers();
+    }
+    function refreshDownloadedWallpapers() {
+        wallpaperController.refreshDownloadedWallpapers();
+    }
+    function refreshAllWallpaperLists() {
+        wallpaperController.refreshAllWallpaperLists();
+    }
+    function searchWallhaven(url) {
+        wallpaperController.searchWallhaven(url);
+    }
+    function downloadWallhaven(id, fileType, url) {
+        wallpaperController.downloadWallhaven(id, fileType, url);
+    }
+
+    function getCurrentWallpaper() {
+        return wallpaperController.currentWallpaperPath;
+    }
+    function switchToNextWallpaper() {
+        wallpaperController.nextWallpaper();
+    }
+    function switchToPreviousWallpaper() {
+        wallpaperController.previousWallpaper();
+    }
+
+    function requestCreateOverlayImage(options) {
+        depthEffectController.createOverlayImage(options);
+    }
+
+    // =========================================================
+    // 4. Sub-Components (Modules)
+    // =========================================================
+
     ThemeLoader {
-        id: loader
+        id: themeLoader
         onThemeLoaded: themeInstance => {
-            // المرحلة 4: تم إنشاء الكائن الخام
+            // [Phase 4]: Raw QML Object Created
             console.info("[ThemeManager] Phase 4: Theme Object Created");
 
-            // المرحلة 5: الحقن في الذاكرة (Hydration)
+            // [Phase 5]: Hydration (Injecting Cached Data)
             if (root._pendingCacheData) {
                 console.info("[ThemeManager] Phase 5: Injecting cached data into memory...");
-                serializer.applyData(themeInstance, root._pendingCacheData);
+                themeSerializer.applyData(themeInstance, root._pendingCacheData);
             } else {
                 console.info("[ThemeManager] Phase 5: No cache data found, using defaults.");
             }
 
-            // المرحلة 6: التطبيق مرة واحدة فقط (Single Source of Truth)
+            // [Phase 6]: System Application (Single Source of Truth)
             _applyToSystem(themeInstance);
 
-            // حفظ الجلسة
-            sessionSaver.setText(JSON.stringify({
-                activeThemeName: loader.currentThemeName
+            // Persist Session
+            fileSessionWriter.setText(JSON.stringify({
+                activeThemeName: themeLoader.currentThemeName
             }));
 
-            // تنظيف
+            // Cleanup
             root._pendingCacheData = null;
             root._pendingThemeName = "";
 
-            // إعلام الواجهة
+            // Notify UI
             root.selectedThemeUpdated();
 
-            if (!_initialReady) {
+            if (!root._initialReady) {
                 console.info("[ThemeManager] System Ready.");
-                _initialReady = true;
+                root._initialReady = true;
                 root.initialThemeReady();
             }
         }
     }
 
     WallpaperController {
-        id: wallpaperCtrl
+        id: wallpaperController
         onWallpaperReady: path => {
             if (selectedTheme && selectedTheme.systemSettings.enableDynamicColoring) {
                 const settings = selectedTheme.systemSettings;
-                sysBridge.applyM3(path, settings.themeMode, true, settings.dynamicColoringSchemeVariant, settings.dynamicColoringChromaMult, settings.dynamicColoringToneMult);
+                bridgeSystem.applyM3(path, settings.themeMode, true, settings.dynamicColoringSchemeVariant, settings.dynamicColoringChromaMult, settings.dynamicColoringToneMult);
             }
             root.wallpaperChanged(path);
         }
+        // Signal Forwarding
         onFetchingWallhavenWallpapersStarted: root.fetchingWallhavenWallpapersStarted()
         onWallhavenWallpapersFetched: response => root.wallhavenWallpapersFetched(response)
         onWallhavenWallpapersError: errorDetails => root.wallhavenWallpapersError(errorDetails)
@@ -112,15 +146,15 @@ Singleton {
     }
 
     HyprlandBridge {
-        id: hyprBridge
+        id: bridgeHyprland
     }
 
     SystemBridge {
-        id: sysBridge
+        id: bridgeSystem
     }
 
     ThemeSerializer {
-        id: serializer
+        id: themeSerializer
         onKeysRemoved: {
             reloadTheme(true);
         }
@@ -128,9 +162,7 @@ Singleton {
 
     DepthEffectController {
         id: depthEffectController
-        onCreatingOverlayImageStarted: {
-            root.creatingOverlayImageStarted();
-        }
+        onCreatingOverlayImageStarted: root.creatingOverlayImageStarted()
         onCreatingOverlayImageFinished: newImagePath => {
             updateAndApplyTheme({
                 "_desktopClockDepthOverlayPath": newImagePath
@@ -140,45 +172,39 @@ Singleton {
     }
 
     // =========================================================
-    // Core Logic: The Sequence Manager
+    // 5. Core Logic & Sequence Manager
     // =========================================================
 
     function requestLoadTheme(themeName, forceReload = false) {
-        if (themeName === loader.currentThemeName && _initialReady && !forceReload)
+        if (themeName === themeLoader.currentThemeName && root._initialReady && !forceReload)
             return;
 
         console.info(`[ThemeManager] Phase 1: Request received for ${themeName}`);
 
-        // إعداد المتغيرات
         root._pendingThemeName = themeName;
         root._selectedThemeName = themeName;
         root._pendingCacheData = null;
 
-        // ضبط مسار الكاش لبدء القراءة
         const cachePath = App.themeCacheFolderPath + `/${themeName}.json`;
 
-        // خدعة لضمان إعادة قراءة الملف حتى لو كان المسار نفسه (في حال تغير المحتوى خارجياً)
-        if (cacheFile.path === cachePath) {
-            cacheFile.path = "";
+        // Force file reload logic if path is identical
+        if (fileThemeCache.path === cachePath) {
+            fileThemeCache.path = "";
         }
-        cacheFile.path = cachePath;
+        fileThemeCache.path = cachePath;
 
-        // بدء مؤقت الأمان (Safety Timeout)
-        // في حال لم يستجب FileView (الملف غير موجود)، نكمل بعد فترة قصيرة
-        cacheTimeoutTimer.restart();
+        // Restart safety timer in case file doesn't exist
+        timerCacheTimeout.restart();
     }
 
-    // يتم استدعاؤه عندما ينتهي FileView من القراءة
     function _onCacheFileReady(content) {
-        // إيقاف مؤقت الأمان لأننا حصلنا على رد
-        cacheTimeoutTimer.stop();
-
+        timerCacheTimeout.stop(); // Stop safety timer
         console.info("[ThemeManager] Phase 2: Cache File Check Complete.");
 
         if (content && content.trim() !== "") {
             try {
                 let json = JSON.parse(content);
-                // التأكد من أن الكاش يخص الثيم المطلوب
+                // Verify cache belongs to requested theme
                 if (json.themeName === root._pendingThemeName) {
                     root._pendingCacheData = json;
                     console.info("[ThemeManager] Valid cache found.");
@@ -188,14 +214,13 @@ Singleton {
             }
         }
 
-        // المرحلة 3: البدء الفعلي لتحميل الثيم
+        // [Phase 3]: Instruct Loader
         console.info(`[ThemeManager] Phase 3: Instructing Loader to load ${root._pendingThemeName}`);
-        loader.loadTheme(root._pendingThemeName);
+        themeLoader.loadTheme(root._pendingThemeName);
     }
 
-    function requestCreateOverlayImage(options) {
-        // نمرر البيانات إلى الكونترولر الداخلي
-        depthEffectController.createOverlayImage(options);
+    function reloadTheme(forceReload = false) {
+        requestLoadTheme(themeLoader.currentThemeName, forceReload);
     }
 
     function loadDefaultValues(serializedData) {
@@ -203,76 +228,53 @@ Singleton {
             return;
 
         console.info("[ThemeManager] Requesting partial reset to defaults...");
-
-        // استخراج المصفوفة
         const keysToReset = Object.keys(serializedData);
 
-        // تحقق بسيط قبل الإرسال
-        console.info("[ThemeManager] Sending keys to serializer:", keysToReset.length);
-
         if (keysToReset.length > 0) {
-            serializer.removeKeysFromCache(loader.currentThemeName, keysToReset);
+            themeSerializer.removeKeysFromCache(themeLoader.currentThemeName, keysToReset);
         }
     }
-
-    // =========================================================
-    // Helper Functions
-    // =========================================================
 
     function updateAndApplyTheme(data, saveToDisk) {
         if (!selectedTheme)
             return;
 
-        // تعديل مباشر
-        serializer.applyData(selectedTheme, data);
+        // Apply to memory
+        themeSerializer.applyData(selectedTheme, data);
         _applyToSystem(selectedTheme);
 
+        // Apply to disk
         if (saveToDisk) {
-            serializer.saveToCache(selectedTheme, loader.currentThemeName, true);
+            themeSerializer.saveToCache(selectedTheme, themeLoader.currentThemeName, true);
+        } else {
+            root.selectedThemeUpdated();
         }
-        root.selectedThemeUpdated();
     }
 
     function _applyToSystem(theme) {
         console.info("[ThemeManager] Applying Final Configuration...");
-        hyprBridge.applyConfig(theme.hyprlandConfiguration);
-        sysBridge.applySystemTheme(theme.systemSettings, theme.colors, theme.typography);
-        wallpaperCtrl.configure(theme.systemSettings);
-    }
-
-    function getCurrentWallpaper() {
-        return wallpaperCtrl.currentWallpaperPath;
-    }
-
-    function switchToNextWallpaper() {
-        wallpaperCtrl.nextWallpaper();
-    }
-
-    function switchToPreviousWallpaper() {
-        wallpaperCtrl.previousWallpaper();
-    }
-
-    function reloadTheme(forceReload = false) {
-        requestLoadTheme(loader.currentThemeName, forceReload);
+        bridgeHyprland.applyConfig(theme.hyprlandConfiguration);
+        bridgeSystem.applySystemTheme(theme.systemSettings, theme.colors, theme.typography);
+        wallpaperController.configure(theme.systemSettings);
     }
 
     // =========================================================
-    // Initialization & I/O
+    // 6. IO & Initialization
     // =========================================================
 
     Component.onCompleted: {
-        // لا نحمل شيئاً فوراً، ننتظر تحميل الجلسة
-        startTimer.start();
+        timerStartup.start();
     }
 
+    // Delays startup slightly to ensure FileView is ready
     Timer {
-        id: startTimer
-        interval: 50 // تأخير بسيط جداً للسماح لـ FileView بالتهيئة
+        id: timerStartup
+        interval: 50
         repeat: false
         onTriggered: {
             console.info("[ThemeManager] Startup: Reading Session...");
             try {
-                let txt = sessionLoader.text();
+                let txt = fileSessionReader.text();
                 let session = JSON.parse(txt);
                 let target = session.activeThemeName || "ColorsTheme";
                 requestLoadTheme(target);
@@ -283,35 +285,32 @@ Singleton {
         }
     }
 
-    // مؤقت الأمان: إذا لم نجد ملف الكاش خلال 200ms، نعتبره غير موجود ونكمل
+    // Safety fallback if cache file lookup fails/hangs
     Timer {
-        id: cacheTimeoutTimer
+        id: timerCacheTimeout
         interval: 200
         repeat: false
         onTriggered: {
             console.warn("[ThemeManager] Cache lookup timed out (File likely missing). Proceeding with defaults.");
-            _onCacheFileReady(""); // نرسل نصاً فارغاً لنكمل العملية
+            _onCacheFileReady("");
         }
     }
 
     FileView {
-        id: sessionLoader
+        id: fileSessionReader
         path: App.themeCacheFilePath
     }
 
     FileView {
-        id: sessionSaver
+        id: fileSessionWriter
         path: App.themeCacheFilePath
         watchChanges: false
     }
 
     FileView {
-        id: cacheFile
+        id: fileThemeCache
         watchChanges: false
-
-        // عندما يتغير المسار وينتهي التحميل
         onLoaded: {
-            // نتأكد أننا في منتصف عملية تحميل (لنتجنب الاستدعاءات العشوائية)
             if (root._pendingThemeName !== "") {
                 _onCacheFileReady(text());
             }

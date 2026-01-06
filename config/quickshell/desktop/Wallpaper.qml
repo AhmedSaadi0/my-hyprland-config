@@ -10,11 +10,13 @@ Item {
     property bool depthEnabled: false
     property bool blurEnabled: false
     property bool isMenuOpen: false
+    property real blurValue: 0.9
 
     default property alias content: widgetsContainer.data
 
     // متغيرات التحكم
-    property bool showChannel1: true
+    property bool bgShowChannel1: true
+    property bool fgShowChannel1: true
 
     // ---------------------------------------------------------
     // 1. الخلفية
@@ -35,9 +37,20 @@ Item {
 
         layer.enabled: root.blurEnabled
         layer.effect: MultiEffect {
+            // تفعيل الضبابية
             blurEnabled: root.blurEnabled
+
+            // 1. هذا الرقم يحجز الذاكرة. يجب أن يكون مساوياً لأقصى رقم تريد الوصول إليه (32 بكسل كافية جداً وناعمة)
             blurMax: 32
-            blur: root.isMenuOpen ? 0.8 : 0
+
+            // 2. المعادلة:
+            // إذا كانت القائمة مفتوحة: نأخذ القيمة من الإعدادات (مثلاً 0.8) ونضربها في 32 لنحصل على قوة الضبابية (25.6 بكسل)
+            // إذا كانت مغلقة: 0
+            blur: root.isMenuOpen ? (root.blurValue) : 0
+
+            // تحسين النعومة (اختياري)
+            saturation: 0.2 // يمكن تقليل التشبع ليعطي مظهراً زجاجياً أكثر
+
             Behavior on blur {
                 NumberAnimation {
                     duration: 800
@@ -56,7 +69,7 @@ Item {
             states: [
                 State {
                     name: "active"
-                    when: root.showChannel1
+                    when: root.bgShowChannel1
                     PropertyChanges {
                         target: bg1
                         opacity: 1.0
@@ -65,7 +78,7 @@ Item {
                 },
                 State {
                     name: "inactive"
-                    when: !root.showChannel1
+                    when: !root.bgShowChannel1
                     PropertyChanges {
                         target: bg1
                         opacity: 0.0
@@ -108,7 +121,7 @@ Item {
             states: [
                 State {
                     name: "active"
-                    when: !root.showChannel1
+                    when: !root.bgShowChannel1
                     PropertyChanges {
                         target: bg2
                         opacity: 1.0
@@ -117,7 +130,7 @@ Item {
                 },
                 State {
                     name: "inactive"
-                    when: root.showChannel1
+                    when: root.bgShowChannel1
                     PropertyChanges {
                         target: bg2
                         opacity: 0.0
@@ -187,18 +200,18 @@ Item {
             }
         }
 
-        layer.enabled: root.blurEnabled
-        layer.effect: MultiEffect {
-            blurEnabled: root.blurEnabled
-            blurMax: 32
-            blur: root.isMenuOpen ? 0.2 : 0
-            Behavior on blur {
-                NumberAnimation {
-                    duration: 800
-                    easing.type: Easing.OutCubic
-                }
-            }
-        }
+        // layer.enabled: root.blurEnabled
+        // layer.effect: MultiEffect {
+        //     blurEnabled: root.blurEnabled
+        //     blurMax: 32
+        //     blur: root.isMenuOpen ? 0.2 : 0
+        //     Behavior on blur {
+        //         NumberAnimation {
+        //             duration: 800
+        //             easing.type: Easing.OutCubic
+        //         }
+        //     }
+        // }
 
         Image {
             id: fg1
@@ -206,7 +219,7 @@ Item {
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
             sourceSize: Qt.size(parent.width, parent.height)
-            opacity: root.showChannel1 ? 1 : 0
+            opacity: root.fgShowChannel1 ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
                     duration: 800
@@ -220,7 +233,7 @@ Item {
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
             sourceSize: Qt.size(parent.width, parent.height)
-            opacity: !root.showChannel1 ? 1 : 0
+            opacity: !root.fgShowChannel1 ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
                     duration: 800
@@ -234,23 +247,23 @@ Item {
         interval: 900
         repeat: false
         onTriggered: {
-            if (root.showChannel1) {
+            if (root.bgShowChannel1) {
                 bg2.source = "";
-                fg2.source = "";
             } else {
                 bg1.source = "";
+            }
+
+            if (root.fgShowChannel1) {
+                fg2.source = "";
+            } else {
                 fg1.source = "";
             }
         }
     }
 
-    function checkReadinessAndSwap() {
+    function checkReadinessAndSwapBg() {
         // تحديد الصور التي يتم تحميلها حالياً (التي سننتقل إليها)
-        let pendingBg = root.showChannel1 ? bg2 : bg1;
-        let pendingFg = root.showChannel1 ? fg2 : fg1;
-
-        // هل نحتاج الطبقة الأمامية؟
-        let needOverlay = root.depthEnabled && (root.overlaySource !== "");
+        let pendingBg = root.bgShowChannel1 ? bg2 : bg1;
 
         // ---------------------------------------------------------
         // التحقق من الخلفية
@@ -258,6 +271,29 @@ Item {
         // نعتبرها جاهزة إذا: نجح التحميل (Ready) أو فشل تماماً (Error)
         // المهم ألا تكون في حالة تحميل (Loading)
         let bgFinished = (pendingBg.status === Image.Ready || pendingBg.status === Image.Error);
+
+        // ---------------------------------------------------------
+        // قرار التبديل
+        // ---------------------------------------------------------
+        if (bgFinished) {
+            // (اختياري) تسجيل أخطاء في الكونسول للمطور
+            if (pendingBg.status === Image.Error) {
+                console.warn("Wallpaper failed to load: " + pendingBg.source);
+            }
+
+            // تنفيذ التبديل
+            root.bgShowChannel1 = !root.bgShowChannel1;
+
+            // تشغيل مؤقت التنظيف لحذف الصور القديمة
+            cleanupTimer.restart();
+        }
+    }
+
+    function checkReadinessAndSwapFg() {
+        let pendingFg = root.fgShowChannel1 ? fg2 : fg1;
+
+        // هل نحتاج الطبقة الأمامية؟
+        let needOverlay = root.depthEnabled && (root.overlaySource !== "");
 
         // ---------------------------------------------------------
         // التحقق من الطبقة الأمامية
@@ -271,31 +307,23 @@ Item {
         // ---------------------------------------------------------
         // قرار التبديل
         // ---------------------------------------------------------
-        if (bgFinished && fgFinished) {
-            // (اختياري) تسجيل أخطاء في الكونسول للمطور
-            if (pendingBg.status === Image.Error) {
-                console.warn("Wallpaper failed to load: " + pendingBg.source);
-            }
+        if (fgFinished) {
             if (needOverlay && pendingFg.status === Image.Error) {
                 console.warn("Overlay failed to load: " + pendingFg.source);
             }
-
-            // تنفيذ التبديل
-            root.showChannel1 = !root.showChannel1;
-
-            // تشغيل مؤقت التنظيف لحذف الصور القديمة
+            root.fgShowChannel1 = !root.fgShowChannel1;
             cleanupTimer.restart();
         }
     }
 
     function updateBgSources() {
-        let targetBg = root.showChannel1 ? bg2 : bg1;
+        let targetBg = root.bgShowChannel1 ? bg2 : bg1;
         targetBg.source = "";
         targetBg.source = root.wallpaperSource;
     }
 
     function updateFgSources() {
-        let targetFg = root.showChannel1 ? fg2 : fg1;
+        let targetFg = root.fgShowChannel1 ? fg2 : fg1;
         targetFg.source = "";
         targetFg.source = root.overlaySource;
     }
@@ -308,37 +336,38 @@ Item {
     Connections {
         target: bg1
         function onStatusChanged() {
-            if (!root.showChannel1)
-                root.checkReadinessAndSwap();
+            if (!root.bgShowChannel1)
+                root.checkReadinessAndSwapBg();
         }
     }
     Connections {
         target: bg2
         function onStatusChanged() {
-            if (root.showChannel1)
-                root.checkReadinessAndSwap();
+            if (root.bgShowChannel1)
+                root.checkReadinessAndSwapBg();
         }
     }
     Connections {
         target: fg1
         function onStatusChanged() {
-            if (!root.showChannel1)
-                root.checkReadinessAndSwap();
+            if (!root.fgShowChannel1)
+                root.checkReadinessAndSwapFg();
         }
     }
     Connections {
         target: fg2
         function onStatusChanged() {
-            if (root.showChannel1)
-                root.checkReadinessAndSwap();
+            if (root.fgShowChannel1)
+                root.checkReadinessAndSwapFg();
         }
     }
 
     Component.onCompleted: {
         // تحميل أولي مباشر
-        if (root.showChannel1) {
+        if (root.bgShowChannel1)
             bg1.source = root.wallpaperSource;
+
+        if (root.fgShowChannel1)
             fg1.source = root.overlaySource;
-        }
     }
 }

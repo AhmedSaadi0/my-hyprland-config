@@ -109,6 +109,7 @@ PersistentProperties {
     property string _wallpaper: "linux.png"
     property bool _enableDynamicColoring: false
     property bool _enableWallpaperBlur: false
+    property real _wallpaperBlurStrength: 0.9
 
     property int _dynamicColoringSchemeVariant: 2
     property real _dynamicColoringChromaMult: 2.5
@@ -280,6 +281,7 @@ PersistentProperties {
         property alias enableAccentColoring: root._enableAccentColoring
         property alias enableDynamicColoring: root._enableDynamicColoring
         property alias enableWallpaperBlur: root._enableWallpaperBlur
+        property alias wallpaperBlurStrength: root._wallpaperBlurStrength
         property alias enableDynamicWallpapers: root._enableDynamicWallpapers
         property alias dynamicWallpapersInterval: root._dynamicWallpapersInterval
         property alias dynamicWallpapersPath: root._dynamicWallpapersPath
