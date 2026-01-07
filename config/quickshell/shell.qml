@@ -167,21 +167,21 @@ ShellRoot {
             }
 
             // 2. Shadows Layers
-            Variants {
-                model: Quickshell.screens
-                LeftbarShadowsLayer {
-                    required property ShellScreen modelData
-                    screen: modelData
-                }
-            }
+            // Variants {
+            //     model: Quickshell.screens
+            //     LeftbarShadowsLayer {
+            //         required property ShellScreen modelData
+            //         screen: modelData
+            //     }
+            // }
 
-            Variants {
-                model: Quickshell.screens
-                TopbarShadowsLayer {
-                    required property ShellScreen modelData
-                    screen: modelData
-                }
-            }
+            // Variants {
+            //     model: Quickshell.screens
+            //     TopbarShadowsLayer {
+            //         required property ShellScreen modelData
+            //         screen: modelData
+            //     }
+            // }
 
             // 3. Bars & Corners
             Variants {
@@ -193,32 +193,32 @@ ShellRoot {
                 }
             }
 
-            Variants {
-                model: Quickshell.screens
-                TopRightCorner {
-                    id: topRightCorners
-                    required property ShellScreen modelData
-                    screen: modelData
-                }
-            }
-
-            Variants {
-                model: Quickshell.screens
-                TopLeftCorner {
-                    id: topLeftCorners
-                    required property ShellScreen modelData
-                    screen: modelData
-                }
-            }
-
-            Variants {
-                model: Quickshell.screens
-                BottomLeftCorner {
-                    id: bottomLeftCorner
-                    required property ShellScreen modelData
-                    screen: modelData
-                }
-            }
+            // Variants {
+            //     model: Quickshell.screens
+            //     TopRightCorner {
+            //         id: topRightCorners
+            //         required property ShellScreen modelData
+            //         screen: modelData
+            //     }
+            // }
+            //
+            // Variants {
+            //     model: Quickshell.screens
+            //     TopLeftCorner {
+            //         id: topLeftCorners
+            //         required property ShellScreen modelData
+            //         screen: modelData
+            //     }
+            // }
+            //
+            // Variants {
+            //     model: Quickshell.screens
+            //     BottomLeftCorner {
+            //         id: bottomLeftCorner
+            //         required property ShellScreen modelData
+            //         screen: modelData
+            //     }
+            // }
 
             Variants {
                 model: Quickshell.screens
@@ -265,8 +265,8 @@ ShellRoot {
                         menuToOpen = -1;
                     }
 
-                    EventBus.emit(Events.OPEN_LEFTBAR, menuToOpen);
                     LeftMenuStatus.changeIndex(menuToOpen);
+                    EventBus.emit(Events.OPEN_LEFTBAR, menuToOpen);
                 }
 
                 function toggleDashboardMenu() {

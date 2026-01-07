@@ -42,6 +42,10 @@ BaseThemeSettings {
 
     signal createOverlayImageButtonClicked(var data)
 
+    function clearUnusedCache() {
+        ThemeManager.cleardUnusedOverlayImages();
+    }
+
     function syncFromTheme() {
         // General
         localEnabled = theme._desktopClockEnabled;

@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
 import "root:/themes"
 import "root:/components"
 import "root:/utils"
@@ -11,12 +12,14 @@ PanelWindow {
     id: root
 
     property bool isShown: false
+    property int animationDuration: 600
 
     color: "transparent"
     visible: false
 
     exclusionMode: ExclusionMode.Ignore
-    focusable: menus.currentIndex == Consts.APPLICATIONS_MENU_INDEX || menus.currentIndex == Consts.NETWORK_MENU_INDEX || menus.currentIndex == Consts.CLIPBOARD_MENU_INDEX  || menus.currentIndex == Consts.TODO_MENU_INDEX
+    focusable: menus.currentIndex == Consts.APPLICATIONS_MENU_INDEX || menus.currentIndex == Consts.NETWORK_MENU_INDEX || menus.currentIndex == Consts.CLIPBOARD_MENU_INDEX || menus.currentIndex == Consts.TODO_MENU_INDEX
+    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
 
     anchors {
         top: true
@@ -24,11 +27,10 @@ PanelWindow {
         bottom: true
     }
 
-    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 10
     margins {
-        left: 40
+        left: ThemeManager.selectedTheme.dimensions.leftBarWidth
         top: ThemeManager.selectedTheme.dimensions.barHeight + 10
-        bottom: 10
+        // bottom: 10
     }
 
     onIsShownChanged: {
@@ -63,19 +65,20 @@ PanelWindow {
     CorneredBox {
         id: contentContainer
 
-        width: parent.width - 10
+        width: parent.width // - 10
         height: parent.height
         anchors.top: parent.top
         anchors.bottom: parent.bottom
+        // anchors.right: parent.right
 
         layer.enabled: root.visible && opacity === 0
         // layer.enabled: opacity < 1.0 && opacity > 0.0
         // layer.enabled: true
         layer.smooth: true
 
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 1.3
-        border.color: ThemeManager.selectedTheme.colors.primary
-        border.width: 2
+        // radius: ThemeManager.selectedTheme.dimensions.elementRadius * 1.3
+        // border.color: ThemeManager.selectedTheme.colors.primary
+        // border.width: 2
 
         Column {
             id: col
@@ -109,7 +112,7 @@ PanelWindow {
                 name: "visible"
                 PropertyChanges {
                     target: contentContainer
-                    x: 10
+                    x: 0
                     opacity: 1.0
                 }
             },
@@ -130,7 +133,7 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 400
+                        duration: root.animationDuration
                         easing.type: Easing.OutExpo
                     }
                     NumberAnimation {
@@ -147,12 +150,12 @@ PanelWindow {
                     ParallelAnimation {
                         NumberAnimation {
                             properties: "x"
-                            duration: 350
-                            easing.type: Easing.InQuart
+                            duration: root.animationDuration
+                            easing.type: Easing.OutCubic
                         }
                         NumberAnimation {
                             properties: "opacity"
-                            duration: 800
+                            duration: root.animationDuration * 2
                             easing.type: Easing.InQuad
                         }
                     }

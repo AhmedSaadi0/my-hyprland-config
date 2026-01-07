@@ -16,8 +16,9 @@ import "root:/config/ConstValues.js" as Consts
 PanelWindow {
     id: root
 
-    implicitWidth: 40
-    color: ThemeManager.selectedTheme.colors.topbarColor
+    implicitWidth: ThemeManager.selectedTheme.dimensions.leftBarWidth
+    // color: ThemeManager.selectedTheme.colors.topbarColor
+    color: "transparent"
     exclusionMode: ExclusionMode.Ignore
 
     anchors {
