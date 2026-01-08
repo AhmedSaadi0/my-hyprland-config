@@ -81,7 +81,7 @@ QtObject {
             let left = gapsArray[3];
 
             // المعادلة: الهامش الجديد = الهامش الأصلي + عرض القائمة
-            let newLeftGap = left + menuWidth;
+            let newLeftGap = left + menuWidth - 5;
 
             // 4. إرسال الأمر
             Hyprland.dispatch(`exec hyprctl keyword general:gaps_out ${top}, ${right}, ${bottom}, ${newLeftGap}`);

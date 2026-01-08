@@ -38,8 +38,8 @@ PanelWindow {
 
     Behavior on margins.left {
         NumberAnimation {
-            duration: panelOpen ? 300 : 600
-            easing.type: panelOpen ? Easing.OutCubic : Easing.OutExpo
+            duration: panelOpen ? 600 : 500
+            easing.type: panelOpen ? Easing.OutExpo : Easing.OutCubic
         }
     }
 
@@ -352,7 +352,7 @@ PanelWindow {
 
     Timer {
         id: changeIsMenuOpen
-        interval: 10
+        interval: 2
         repeat: false
         onTriggered: {
             root.margins.left = panelOpen && App.menuStyle === Consts.DOCKED_MOVING_BAR ? ThemeManager.selectedTheme.dimensions.menuWidth : 0;

@@ -58,7 +58,7 @@ PanelWindow {
         // -----------------------------------------------------
         transform: Translate {
             // التحرك 400 بكسل لليمين عند فتح القائمة، وصفر عند إغلاقها
-            x: App.menuStyle !== C.FLOATING && desktopRoot.isMenuOpened ? Theme.ThemeManager.selectedTheme.dimensions.menuWidth + 10 : 0
+            x: App.menuStyle !== C.FLOATING && desktopRoot.isMenuOpened ? Theme.ThemeManager.selectedTheme.dimensions.menuWidth + 5 : 0
 
             // جعل الحركة ناعمة
             Behavior on x {
@@ -79,7 +79,7 @@ PanelWindow {
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                shadowColor: Qt.rgba(0, 0, 0, desktopRoot.isMenuOpened ? 0.2 : 0.5)
+                shadowColor: Qt.rgba(0, 0, 0, 0.5)
                 shadowBlur: 1.0
                 shadowVerticalOffset: -1
                 shadowHorizontalOffset: -1
