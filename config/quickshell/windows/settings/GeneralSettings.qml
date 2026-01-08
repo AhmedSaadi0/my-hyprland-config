@@ -11,6 +11,7 @@ import Quickshell.Io
 import "root:/components"
 import "root:/config"
 import "root:/themes"
+import "root:/config/ConstValues.js" as C
 
 M3GroupBox {
     id: root
@@ -25,6 +26,10 @@ M3GroupBox {
     // --- Default Personas ---
     readonly property string defaultWeatherPersona: "**ROLE**: Strategic Weather Advisor & Bio-Meteorologist.\n**MODE**: Predictive Lifestyle Analysis.\n\n**INTELLIGENCE RULES (Apply Strictly)**:\n1.  **Trajectory Analysis (CRITICAL)**: You are receiving full-day data. Do not focus only on \"Now\".\n    -   Compare *Current Temp* vs. *Forecasted Temp* for the next 4-6 hours.\n    -   Identify the *Shift*: Is it cooling down rapidly? Is rain approaching? Is the wind picking up?\n    \n2.  **Sensory Translation**: \n    -   Translate the number (e.g., 17°C) into a human feeling relative to the shift.\n    -   *Example*: \"Currently pleasant (17°C), but dropping fast.\"\n\n3.  **Layering Strategy (Wardrobe)**:\n    -   If the weather changes significantly (e.g., warm day -> cold night), advise on *layers*.\n    -   *Example*: \"Wear a t-shirt now, but absolutely bring a jacket for the evening drop.\"\n\n4.  **JSON Output Logic (`smart_summary`)**:\n    -   Construct the text in this format: [Current Feeling/Action] + [The Pivot/Future Change].\n    -   *Bad*: \"It is 17 degrees. It will be 12 later.\"\n    -   *Good*: \"Feels crisp and fresh right now. However, expect a sharp drop in temperature by sunset—keep a heavy layer nearby.\"\n\n5.  **Tagging Logic**: Use the `tags` array to highlight the *change* (e.g., [\"Cooling Down\", \"Windy Later\", \"Rain Incoming\"])."
     readonly property string defaultMusicPersona: "Role: You are \"VibeCheck,\" a chill, witty, and highly knowledgeable Audio-Visual Expert and Music Companion.\n\nExpertise: \n- Deep knowledge of Music Theory, History, and Production (Mixing/Mastering).\n- Expert in Cinematography, Video Editing, Color Grading, and Visual Aesthetics.\n- Up-to-date with Pop Culture, Memes, and Internet Media trends.\n\nPersonality & Tone:\n- Chill & Laid-back: You keep things relaxed. No stiff, robotic language.\n- Witty & Sarcastic: You enjoy clever humor and banter.\n- Brutally Honest (but Friendly): If the user shares a generic pop song or a poorly edited video, tease them about it. Call their taste \"basic\" or \"guilty pleasure\" in a fun way, but then provide genuine, high-level analysis or better recommendations.\n\nAlso make sure you do not just recommand songs, you recommand also actions like drinking coffee, reading a book, walking in calm, taking a shower ... etc, be creative. \nAlso don't ask the user to change the vibe ever, and if there is no recomandation, dont say try this song or anythink like that."
+
+    readonly property string modeFloating: C.FLOATING
+    readonly property string modeDockedFixed: C.DOCKED_FIXED_BAR
+    readonly property string modeDockedMoving: C.DOCKED_MOVING_BAR
 
     // --- Config Object ---
     QtObject {
@@ -63,6 +68,7 @@ M3GroupBox {
         // Launcher Layout
         property bool useBottomLauncher: false
         property int bottomLauncherWidth: 800
+        property string menuStyle: "floating"
     }
 
     // ====================================================================
@@ -147,6 +153,7 @@ M3GroupBox {
 
         tempConfig.useBottomLauncher = App.useBottomLauncher;
         tempConfig.bottomLauncherWidth = App.bottomLauncherWidth;
+        tempConfig.menuStyle = App.menuStyle || modeFloating;
 
         if (App.availableGeminiWeatherModels.length === 0)
             App.modelsManager.refreshAll();
@@ -184,7 +191,8 @@ M3GroupBox {
             "playRamAlarmSound": tempConfig.playRamAlarmSound,
             "ramHighLoadThreshold": tempConfig.ramHighLoadThreshold,
             "useBottomLauncher": tempConfig.useBottomLauncher,
-            "bottomLauncherWidth": tempConfig.bottomLauncherWidth
+            "bottomLauncherWidth": tempConfig.bottomLauncherWidth,
+            "menuStyle": tempConfig.menuStyle
         };
 
         App.updateConfigMultiple(dataToSave);
@@ -285,7 +293,7 @@ M3GroupBox {
         }
 
         // =================================================================
-        // SECTION: LAUNCHER LAYOUT
+        // SECTION: LAUNCHER & SIDEBAR LAYOUT
         // =================================================================
         ColumnLayout {
             Layout.fillWidth: true
@@ -293,12 +301,75 @@ M3GroupBox {
             Layout.bottomMargin: selectedTheme.dimensions.spacingLarge
 
             Controls.Label {
-                text: qsTr("Launcher Layout")
+                text: qsTr("Layout Configuration")
                 font.pixelSize: selectedTheme.typography.heading2Size
                 font.bold: true
                 color: selectedTheme.colors.primary
             }
 
+            // --- جزء القائمة الجانبية (الجديد) ---
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+
+                Controls.Label {
+                    text: qsTr("Sidebar Menu Style")
+                    font.bold: true
+                }
+
+                SettingsComboBox {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+
+                    // النصوص التي تظهر للمستخدم
+                    model: [qsTr("Floating (Overlay)")             // Index 0
+                        , qsTr("Docked - Icons Fixed Left")      // Index 1
+                        , qsTr("Docked - Icons Push Right")       // Index 2
+                    ]
+
+                    // تحديد العنصر المختار بناءً على قيمة المتغير
+                    currentIndex: {
+                        if (tempConfig.menuStyle === modeDockedFixed)
+                            return 1;
+                        if (tempConfig.menuStyle === modeDockedMoving)
+                            return 2;
+                        return 0; // Default: Floating
+                    }
+
+                    // عند الاختيار، نحدث قيمة tempConfig بالثوابت المطلوبة
+                    onActivated: index => {
+                        if (index === 0)
+                            tempConfig.menuStyle = modeFloating;
+                        else if (index === 1)
+                            tempConfig.menuStyle = modeDockedFixed;
+                        else if (index === 2)
+                            tempConfig.menuStyle = modeDockedMoving;
+                    }
+                }
+
+                // نص توضيحي بسيط يظهر أسفل القائمة
+                Controls.Label {
+                    text: {
+                        if (tempConfig.menuStyle === modeDockedFixed)
+                            return qsTr("Menu reserves space. Icons stay fixed on the left.");
+                        if (tempConfig.menuStyle === modeDockedMoving)
+                            return qsTr("Menu reserves space. Icons move to the right of the menu.");
+                        return qsTr("Menu floats above windows without resizing workspace.");
+                    }
+                    font.pixelSize: selectedTheme.typography.small
+                    color: selectedTheme.colors.primary
+                    opacity: 0.7
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+            }
+
+            Kirigami.Separator {
+                Layout.fillWidth: true
+                Layout.margins: 5
+            }
+
+            // --- جزء اللانشر السفلي (الموجود سابقاً) ---
             SettingSwitch {
                 label: qsTr("Use Bottom Launcher")
                 tooltip: qsTr("Toggle between side launcher (left panel) and bottom launcher.")
@@ -306,13 +377,7 @@ M3GroupBox {
                 onIsCheckedChanged: tempConfig.useBottomLauncher = isChecked
             }
 
-            Controls.Label {
-                text: tempConfig.useBottomLauncher ? qsTr("App launcher will open from the bottom of the screen.") : qsTr("App launcher will open from the left side panel.")
-                font.pixelSize: selectedTheme.typography.small
-                color: selectedTheme.colors.primary
-                opacity: 0.7
-            }
-            // Bottom Launcher Width
+            // ... بقية كود اللانشر السفلي (Slider وتفاصيله) ...
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
@@ -336,7 +401,6 @@ M3GroupBox {
                         value: tempConfig.bottomLauncherWidth
                         onMoved: tempConfig.bottomLauncherWidth = value
                     }
-
                     Controls.Label {
                         text: "550"
                         font.pixelSize: selectedTheme.typography.small

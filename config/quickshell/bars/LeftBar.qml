@@ -9,8 +9,8 @@ import "../themes"
 import "../components"
 import "root:/utils"
 import "root:/services"
-import "root:/config/EventNames.js" as Events
 import "root:/config"
+import "root:/config/EventNames.js" as Events
 import "root:/config/ConstValues.js" as Consts
 
 PanelWindow {
@@ -27,12 +27,21 @@ PanelWindow {
         bottom: true
     }
 
-    margins.top: ThemeManager.selectedTheme.dimensions.barHeight
+    margins {
+        top: ThemeManager.selectedTheme.dimensions.barHeight
+    }
 
     // --- Properties ---
     property bool panelOpen: false
     property int activeMenuIndex: LeftMenuStatus.selectedIndex
     property int notificationMenuIndex: -1
+
+    Behavior on margins.left {
+        NumberAnimation {
+            duration: panelOpen ? 300 : 600
+            easing.type: panelOpen ? Easing.OutCubic : Easing.OutExpo
+        }
+    }
 
     // ---------------------------------------------------------
     // 1. MODELS (البيانات)
@@ -152,6 +161,7 @@ PanelWindow {
             } catch (error) {
                 LeftMenuStatus.changeIndex(-1);
             }
+            changeIsMenuOpen.start();
         });
     }
 
@@ -228,6 +238,8 @@ PanelWindow {
                 LeftMenuStatus.changeIndex(-1);
             }
         }
+
+        changeIsMenuOpen.start();
     }
 
     // ---------------------------------------------------------
@@ -333,8 +345,17 @@ PanelWindow {
 
     Timer {
         id: closePanelTimer
-        interval: 600
+        interval: 20
         repeat: false
         onTriggered: LeftMenuStatus.changeIndex(-1)
+    }
+
+    Timer {
+        id: changeIsMenuOpen
+        interval: 10
+        repeat: false
+        onTriggered: {
+            root.margins.left = panelOpen && App.menuStyle === Consts.DOCKED_MOVING_BAR ? ThemeManager.selectedTheme.dimensions.menuWidth : 0;
+        }
     }
 }

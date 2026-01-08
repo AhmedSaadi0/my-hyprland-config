@@ -5,7 +5,7 @@ import "root:/themes"
 import "root:/components"
 import "root:/utils"
 import "root:/config/EventNames.js" as Events
-import "root:/config/ConstValues.js" as Consts
+import "root:/config/ConstValues.js" as C
 import "root:/config"
 
 PanelWindow {
@@ -13,12 +13,13 @@ PanelWindow {
 
     property bool isShown: false
     property int animationDuration: 600
+    property string menuStyle: App.menuStyle
 
     color: "transparent"
     visible: false
 
     exclusionMode: ExclusionMode.Ignore
-    focusable: menus.currentIndex == Consts.APPLICATIONS_MENU_INDEX || menus.currentIndex == Consts.NETWORK_MENU_INDEX || menus.currentIndex == Consts.CLIPBOARD_MENU_INDEX || menus.currentIndex == Consts.TODO_MENU_INDEX
+    focusable: menus.currentIndex == C.APPLICATIONS_MENU_INDEX || menus.currentIndex == C.NETWORK_MENU_INDEX || menus.currentIndex == C.CLIPBOARD_MENU_INDEX || menus.currentIndex == C.TODO_MENU_INDEX
     implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
 
     anchors {
@@ -28,9 +29,18 @@ PanelWindow {
     }
 
     margins {
-        left: ThemeManager.selectedTheme.dimensions.leftBarWidth
+        left: {
+            switch (root.menuStyle) {
+            case C.DOCKED_FIXED_BAR:
+                return ThemeManager.selectedTheme.dimensions.leftBarWidth;
+            case C.DOCKED_MOVING_BAR:
+                return 0;
+            case C.FLOATING:
+                return 40;
+            }
+        }
         top: ThemeManager.selectedTheme.dimensions.barHeight + 10
-        // bottom: 10
+        bottom: root.menuStyle === C.FLOATING ? 15 : 0
     }
 
     onIsShownChanged: {
@@ -65,7 +75,7 @@ PanelWindow {
     CorneredBox {
         id: contentContainer
 
-        width: parent.width // - 10
+        width: root.menuStyle === C.FLOATING ? parent.width - 10 : parent.width
         height: parent.height
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -76,9 +86,9 @@ PanelWindow {
         // layer.enabled: true
         layer.smooth: true
 
-        // radius: ThemeManager.selectedTheme.dimensions.elementRadius * 1.3
-        // border.color: ThemeManager.selectedTheme.colors.primary
-        // border.width: 2
+        radius: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.dimensions.elementRadius * 1.3 : 0
+        border.color: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.colors.primary : "#00000000"
+        border.width: root.menuStyle === C.FLOATING ? 2 : 0
 
         Column {
             id: col
@@ -112,7 +122,7 @@ PanelWindow {
                 name: "visible"
                 PropertyChanges {
                     target: contentContainer
-                    x: 0
+                    x: root.menuStyle === C.FLOATING ? 10 : 0
                     opacity: 1.0
                 }
             },
@@ -133,7 +143,7 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: root.animationDuration
+                        duration: root.animationDuration + 150
                         easing.type: Easing.OutExpo
                     }
                     NumberAnimation {

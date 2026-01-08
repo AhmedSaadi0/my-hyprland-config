@@ -7,10 +7,11 @@ import QtQuick.Effects
 import Qt5Compat.GraphicalEffects
 import Quickshell.Hyprland
 
-import "root:/themes" as Theme
 import "root:/components"
-import "root:/config/EventNames.js" as Events
 import "root:/config"
+import "root:/themes" as Theme
+import "root:/config/EventNames.js" as Events
+import "root:/config/ConstValues.js" as C
 
 PanelWindow {
     id: desktopRoot
@@ -57,7 +58,7 @@ PanelWindow {
         // -----------------------------------------------------
         transform: Translate {
             // التحرك 400 بكسل لليمين عند فتح القائمة، وصفر عند إغلاقها
-            x: desktopRoot.isMenuOpened ? Theme.ThemeManager.selectedTheme.dimensions.menuWidth + 10 : 0
+            x: App.menuStyle !== C.FLOATING && desktopRoot.isMenuOpened ? Theme.ThemeManager.selectedTheme.dimensions.menuWidth + 10 : 0
 
             // جعل الحركة ناعمة
             Behavior on x {
@@ -79,7 +80,7 @@ PanelWindow {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: Qt.rgba(0, 0, 0, desktopRoot.isMenuOpened ? 0.2 : 0.5)
-                shadowBlur: 1.4
+                shadowBlur: 1.0
                 shadowVerticalOffset: -1
                 shadowHorizontalOffset: -1
                 shadowScale: 1.0
@@ -149,12 +150,10 @@ PanelWindow {
 
     Component.onCompleted: {
         EventBus.on(Events.LEFT_MENU_IS_OPENED, () => {
-            // desktopRoot.isMenuOpened = true;
             changeIsMenuOpen.newValue = true;
             changeIsMenuOpen.start();
         });
         EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => {
-            // desktopRoot.isMenuOpened = false;
             changeIsMenuOpen.newValue = false;
             changeIsMenuOpen.start();
         });
@@ -170,7 +169,8 @@ PanelWindow {
         property bool newValue: false
         onTriggered: {
             desktopRoot.isMenuOpened = newValue;
-            addLeftSpace();
+            if (App.menuStyle !== C.FLOATING)
+                addLeftSpace();
         }
     }
 

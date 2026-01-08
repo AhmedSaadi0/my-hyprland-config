@@ -1,5 +1,7 @@
 import QtQuick
 import Quickshell.Hyprland
+import "root:/config"
+import "root:/config/ConstValues.js" as C
 
 QtObject {
     id: root
@@ -22,7 +24,9 @@ QtObject {
 
         // --- General ---
         dispatch('general:gaps_in', hyprConfig.gapsIn);
-        // dispatch('general:gaps_out', hyprConfig.gapsOut);
+        if (App.menuStyle == C.FLOATING) {
+            dispatch('general:gaps_out', hyprConfig.gapsOut);
+        }
         dispatch('general:border_size', hyprConfig.borderWidth);
         dispatch('general:col.active_border', hyprConfig.activeBorder);
         dispatch('general:col.inactive_border', hyprConfig.inactiveBorder);

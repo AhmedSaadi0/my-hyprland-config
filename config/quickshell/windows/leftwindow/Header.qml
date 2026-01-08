@@ -6,6 +6,7 @@ import QtQuick.Effects
 import "root:/themes"
 import "root:/config"
 import "root:/components"
+import "root:/config/ConstValues.js" as C
 
 Rectangle {
     id: root
@@ -18,7 +19,7 @@ Rectangle {
     Image {
         id: backgroundImage
         source: wallpaper
-        width: ThemeManager.selectedTheme.dimensions.menuWidth - 14
+        width: App.menuStyle == C.FLOATING ? ThemeManager.selectedTheme.dimensions.menuWidth - 24 : ThemeManager.selectedTheme.dimensions.menuWidth - 14
         height: 200
         clip: true
         fillMode: Image.PreserveAspectCrop
