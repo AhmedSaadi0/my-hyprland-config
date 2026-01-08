@@ -21,41 +21,32 @@ Item {
 
     // --- State Properties ---
     property date selectedDate: new Date()
+    
+    // -1 = Editing the Header (New Task), 0+ = Editing an existing item index
+    property int activeCalendarIndex: -1 
 
     Layout.fillWidth: true
     Layout.fillHeight: true
 
     // --- Functions ---
-
-    // تحديد رتبة المهمة
     function getTaskRank(item) {
-        if (item.completed)
-            return root.rankDone;
-        if (item.isUrgent)
-            return root.rankUrgent;
+        if (item.completed) return root.rankDone;
+        if (item.isUrgent) return root.rankUrgent;
         return root.rankNormal;
     }
 
-    // منطق المقارنة والتبديل
     function shouldSwap(itemA, itemB) {
         let rankA = getTaskRank(itemA);
         let rankB = getTaskRank(itemB);
 
-        // 1. الترتيب حسب الأولوية (الأصغر للأعلى)
-        if (rankA > rankB)
-            return true;  // A أقل أهمية، ينزل للأسفل
-        if (rankA < rankB)
-            return false; // A أكثر أهمية، يبقى في الأعلى
+        if (rankA > rankB) return true;
+        if (rankA < rankB) return false;
 
-        // 2. الترتيب حسب التاريخ (الأحدث للأعلى) عند تساوي الأولوية
-        // نستخدم الطابع الزمني إذا وجد، أو نعتبره 0
         let timeA = itemA.timestamp || 0;
         let timeB = itemB.timestamp || 0;
-
-        return timeA < timeB; // إذا كان A أقدم من B، قم بالتبديل لرفع B
+        return timeA < timeB;
     }
 
-    // خوارزمية الترتيب
     function sortTasks() {
         let n = todoModel.count;
         let swapped;
@@ -64,7 +55,6 @@ Item {
             for (let i = 0; i < n - 1; i++) {
                 let item1 = todoModel.get(i);
                 let item2 = todoModel.get(i + 1);
-
                 if (shouldSwap(item1, item2)) {
                     todoModel.move(i, i + 1, 1);
                     swapped = true;
@@ -73,7 +63,6 @@ Item {
         } while (swapped)
     }
 
-    // حفظ البيانات
     function saveTasks() {
         let arr = [];
         for (let i = 0; i < todoModel.count; i++) {
@@ -81,8 +70,7 @@ Item {
             arr.push({
                 "title": item.title,
                 "date": item.date,
-                "timestamp": item.timestamp || 0 // حفظ الطابع الزمني للترتيب المستقبلي
-                ,
+                "timestamp": item.timestamp || 0,
                 "isUrgent": item.isUrgent,
                 "completed": item.completed
             });
@@ -91,18 +79,13 @@ Item {
     }
 
     // --- Data Components ---
-
-    ListModel {
-        id: todoModel
-    }
+    ListModel { id: todoModel }
 
     FileView {
         id: tasksFile
         path: App.todoFilePath
-
         onLoaded: {
-            if (!text() || text().trim() === "")
-                return;
+            if (!text() || text().trim() === "") return;
             try {
                 let data = JSON.parse(text());
                 todoModel.clear();
@@ -114,15 +97,12 @@ Item {
                 console.error("Error loading JSON: " + e);
             }
         }
-
         onSaved: console.info("Tasks saved")
         onSaveFailed: error => console.error("Save failed: " + error)
     }
-
     Component.onCompleted: tasksFile.reload()
 
     // --- UI Structure ---
-
     ColumnLayout {
         anchors.fill: parent
         spacing: dims.spacingMedium
@@ -132,18 +112,20 @@ Item {
             Layout.fillWidth: true
             selectedDate: root.selectedDate
 
-            onOpenCalendar: calendarPopup.open()
+            onOpenCalendar: {
+                // Set index to -1 so we know we are editing the new task date
+                root.activeCalendarIndex = -1
+                calendarPopup.open()
+            }
 
             onAddTask: (title, urgent) => {
                 todoModel.append({
                     "title": title,
                     "date": root.selectedDate.toLocaleDateString(Qt.locale(), "MMM d"),
-                    "timestamp": new Date().getTime() // إضافة الوقت الحالي للترتيب
-                    ,
+                    "timestamp": new Date().getTime(),
                     "isUrgent": urgent,
                     "completed": false
                 });
-
                 root.sortTasks();
                 root.saveTasks();
             }
@@ -153,7 +135,6 @@ Item {
             id: bodyItems
             Layout.fillWidth: true
             Layout.fillHeight: true
-
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
             ScrollBar.vertical.policy: ScrollBar.AlwaysOff
@@ -165,6 +146,12 @@ Item {
                     root.sortTasks();
                     root.saveTasks();
                 }
+
+                // Handle request from a list item to edit its date
+                onRequestCalendar: (index) => {
+                    root.activeCalendarIndex = index
+                    calendarPopup.open()
+                }
             }
         }
     }
@@ -175,6 +162,23 @@ Item {
         y: 80
         z: 100
 
-        onDateSelected: date => root.selectedDate = date
+        onDateSelected: date => {
+            if (root.activeCalendarIndex === -1) {
+                // Editing Header Date
+                root.selectedDate = date;
+            } else {
+                // Editing Existing Task Date
+                let formattedDate = date.toLocaleDateString(Qt.locale(), "MMM d");
+                
+                // Directly update the model
+                todoModel.setProperty(root.activeCalendarIndex, "date", formattedDate);
+                
+                // Note: We don't save immediately, the user will save when clicking 'Done' (Checkmark) 
+                // in the list item, or we can force a save here if preferred. 
+                // For now, let's leave it to the user to confirm via the edit button, 
+                // but since the date update is instant in UI, saving immediately is safer for consistency:
+                // root.saveTasks(); 
+            }
+        }
     }
 }
