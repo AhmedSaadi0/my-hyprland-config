@@ -200,8 +200,11 @@ Singleton {
             readonly property string topCpuUsage: root.pythonScriptsPath + "/top_cpu_usage.py"
             readonly property string topRamUsage: root.pythonScriptsPath + "/top_ram_usage.py"
 
-            // Wallpaper coloring
+            // Wallpaper & coloring
+            // To get the wallpapers in a single folder
             readonly property string dynamicM3: root.pythonScriptsPath + "/m3/dynamic-m3.py"
+            // To scan themes json files for wallpapers list and get them all as a single list
+            readonly property string scanWallpapers: root.pythonScriptsPath + "/scan_wallpapers.py"
 
             // Depth effect
             readonly property string rembgOverylayWallpaper: root.pythonScriptsPath + "/create_depth_image_rembg.py"
@@ -226,6 +229,7 @@ Singleton {
             readonly property var topCpuUsageCommand: [pythonPath, topCpuUsage]
             readonly property var topRamUsageCommand: [pythonPath, topRamUsage]
             readonly property var dynamicM3Command: [pythonPath, dynamicM3]
+            readonly property var scanWallpapersCommand: [pythonPath, scanWallpapers, "--themes_cache_dir", root.themeCacheFolderPath, "--shell_dir", root.mainPath]
             readonly property var rembgOverylayWallpaperCommand: [pythonPath, rembgOverylayWallpaper]
             readonly property var opencvOverylayWallpaperCommand: [pythonPath, opencvOverylayWallpaper]
             readonly property var removeUnusedCachedOverlayImagesCommand: [pythonPath, removeUnusedCachedOverlayImages]

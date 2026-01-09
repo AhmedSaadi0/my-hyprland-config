@@ -102,6 +102,43 @@ Singleton {
         }
     }
 
+    // --- Themes & Wallpapers ---
+    Connections {
+        target: ThemeManager
+
+        // عند تغيير الثيم بالكامل
+        // function onSelectedThemeUpdated() {
+        //     if (ThemeManager.selectedTheme) {
+        //         root.handleThemeUpdate(ThemeManager.selectedTheme.themeName);
+        //     }
+        // }
+
+        // عند تغيير الخلفية
+        function onWallpaperChanged(path) {
+            root.handleWallpaperChange(path);
+        }
+
+        // عند بدء معالجة صورة العمق (Depth Effect)
+        function onCreatingOverlayImageStarted() {
+            root.handleDepthEffectStatus("processing");
+        }
+
+        // عند الانتهاء من معالجة صورة العمق
+        function onCreatingOverlayImageFinished(path) {
+            root.handleDepthEffectStatus("finished");
+        }
+
+        // عند تنظيف الكاش
+        function onUnusedCachedOverlayImagesDeleted() {
+            root.handleThemeCacheCleaned();
+        }
+
+        // مراقبة أخطاء التحميل
+        function onWallpaperDownloadError(errorDetails) {
+            root.handleThemeError("Download Failed", errorDetails);
+        }
+    }
+
     // ========================================================================
     // 🧠 Core Logic Handlers (Public for Testing)
     // ========================================================================
@@ -351,6 +388,102 @@ Singleton {
         });
     }
 
+    function handleThemeUpdate(themeName) {
+        root.updateEyes("happy", 3000);
+        let colors = getColorsForState("theme_applied"); // سنضيف هذه الحالة في Helpers
+
+        CapsuleManager.request({
+            priority: C.NOTIFICATION,
+            source: C.SRC_SYSTEM,
+            icon: "󰔎",
+            text: "Theme Applied: " + themeName,
+            timeout: 1000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: false,
+            changeH: false
+        });
+    }
+
+    function handleWallpaperChange(path) {
+        // نستخرج اسم الملف فقط من المسار الكامل
+        let filename = path.split('/').pop();
+        root.updateEyes("wink", 1500);
+
+        let colors = getColorsForState("info");
+        CapsuleManager.request({
+            priority: C.TRANSIENT,
+            source: C.SRC_SYSTEM,
+            icon: "󰸉",
+            text: "Wallpaper: " + filename,
+            timeout: 3000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: false,
+            changeH: false
+        });
+    }
+
+    function handleDepthEffectStatus(status) {
+        if (status === "processing") {
+            root.updateEyes("focused", 100000);
+            CapsuleManager.request({
+                priority: C.NOTIFICATION,
+                source: C.SRC_SYSTEM,
+                icon: "󰉔",
+                text: "Generating Depth Effect...",
+                timeout: 100000,
+                bgColor1: "#4527A0",
+                bgColor2: "#7B1FA2",
+                fgColor: "#FFFFFF"
+            });
+        } else {
+            root.updateEyes("happy", 3000);
+            CapsuleManager.request({
+                priority: C.NOTIFICATION,
+                source: C.SRC_SYSTEM,
+                icon: "󰉓",
+                text: "Depth Effect Ready!",
+                timeout: 3000,
+                bgColor1: "#2E7D32",
+                bgColor2: "#43A047",
+                fgColor: "#FFFFFF"
+            });
+        }
+    }
+
+    function handleThemeCacheCleaned() {
+        root.updateEyes("bored", 2000);
+        CapsuleManager.request({
+            priority: C.TRANSIENT,
+            source: C.SRC_SYSTEM,
+            icon: "󰃢",
+            text: "Theme Cache Cleaned",
+            timeout: 3000,
+            playTone: false,
+            changeH: false
+        });
+    }
+
+    function handleThemeError(title, details) {
+        root.updateEyes("dead", 4000);
+        let colors = getColorsForState("critical");
+        CapsuleManager.request({
+            priority: C.WARNING,
+            source: C.SRC_SYSTEM,
+            icon: "󰚌",
+            text: title + ": " + details,
+            timeout: 5000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: false,
+            changeH: false
+        });
+    }
+
     // ========================================================================
     // 🛠️ Helpers
     // ========================================================================
@@ -397,6 +530,13 @@ Singleton {
                 bg1: "#880E4F",
                 bg2: "#1A237E",
                 fg: "#FFFFFF"
+            };
+        case "theme_applied":
+            return {
+                // نستخدم ألوان الثيم الجديد مباشرة
+                bg1: ThemeManager.selectedTheme.colors.primary,
+                bg2: ThemeManager.selectedTheme.colors.secondary,
+                fg: ThemeManager.selectedTheme.colors.onPrimary
             };
         default:
             return {

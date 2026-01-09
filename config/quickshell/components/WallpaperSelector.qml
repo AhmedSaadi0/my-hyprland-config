@@ -40,6 +40,7 @@ Item {
 
     // --- إدارة المعاينة ---
     property string previewImageUrl: ""
+    property var currentPreviewData: null
 
     ListModel {
         id: wallhavenModel
@@ -185,9 +186,14 @@ Item {
 
     // 3. منطق المعاينة (Popup)
     function handlePreview(wallpaperData) {
+        // حفظ البيانات لاستخدامها لاحقاً في زر التطبيق
+        root.currentPreviewData = wallpaperData;
+
         let url = "";
         if (sourceMode === 2) {
-            url = wallpaperData.path; // رابط الصورة الكامل من النت
+            // Wallhaven: استخدم الصورة المصغرة (thumb) للعرض السريع بدلاً من الأصلية
+            // إذا لم تتوفر thumb نعود للأصلية كاحتياط
+            url = wallpaperData.thumb || wallpaperData.path;
         } else {
             const path = typeof wallpaperData === 'string' ? wallpaperData : wallpaperData.path;
             url = "file://" + path; // رابط محلي
@@ -230,7 +236,7 @@ Item {
                     wallhavenModel.append({
                         "id": w.id,
                         "path": w.path,
-                        "thumb": w.thumbs.large,
+                        "thumb": w.thumbs.original,
                         "resolution": w.resolution,
                         "file_type": w.file_type,
                         "favorites": w.favorites
@@ -245,7 +251,7 @@ Item {
 
         function onWallhavenWallpapersError(errorDetails) {
             root.wallhavenLoading = false;
-        // ملاحظة: لا نمسح التنزيلات النشطة هنا لأن الخطأ في البحث لا يعني توقف التنزيلات
+            // ملاحظة: لا نمسح التنزيلات النشطة هنا لأن الخطأ في البحث لا يعني توقف التنزيلات
         }
 
         function onWallpaperDownloadFinished(filePath) {
@@ -409,7 +415,7 @@ Item {
                         category: root.wallhavenCategory
                         color: root.wallhavenColor
                         resolution: root.wallhavenResolution
-                        // ... (Event handlers remain same) ...
+
                         onSortingSelected: value => {
                             root.wallhavenSorting = value;
                             root.searchWallhaven(true);
@@ -448,7 +454,6 @@ Item {
                         downloadingList: root.activeDownloads
                         emptyText: qsTr("Search for wallpapers or click refresh")
 
-                        // تم تحديث الروابط هنا:
                         onWallpaperDownloadAndApply: wallpaperData => root.handleDownloadAndApply(wallpaperData)
                         onWallpaperDownloadOnly: wallpaperData => root.handleDownloadOnly(wallpaperData)
                         onWallpaperPreview: wallpaperData => root.handlePreview(wallpaperData)
@@ -472,7 +477,7 @@ Item {
 
         // خلفية الـ Popup (شفافة لتبدو كـ Overlay)
         background: Rectangle {
-            color: "#cc000000" // أسود شفاف داكن
+            color: "#cc000000"
             radius: 8
         }
 
@@ -490,6 +495,11 @@ Item {
                 asynchronous: true
                 smooth: true
                 mipmap: true
+
+                // تحديد حجم الذاكرة المستخدم
+                // هذا يمنع فك تشفير الصورة بحجم هائل إذا كانت محلية، ويحسن الأداء
+                sourceSize.width: 1280
+                sourceSize.height: 720
             }
 
             // مؤشر التحميل (للصور من النت)
@@ -556,16 +566,20 @@ Item {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        // إذا كانت الصورة من wallhaven، نحتاج للـ Data الخاصة بها.
-                        // حالياً لدينا الرابط فقط في المعاينة.
-                        // إذا كانت محلية، نطبقها مباشرة.
+                        previewPopup.close();
+
+                        // منطق ذكي: إذا كانت محلية طبقها، وإذا من النت قم بتحميل الأصلية
                         if (root.sourceMode !== 2) {
-                            root.applyWallpaper(root.previewImageUrl.replace("file://", ""));
-                            previewPopup.close();
+                            // محلي
+                            let path = root.previewImageUrl.replace("file://", "");
+                            root.applyWallpaper(path);
                         } else {
-                            // للصور من النت، الأفضل إغلاق المعاينة والضغط على زر التحميل في البطاقة
-                            // أو تخزين الكائن wallpaperData بالكامل في المعاينة (يمكن تحسينه لاحقاً)
-                            previewPopup.close();
+                            // Wallhaven:
+                            // نستخدم currentPreviewData المخزنة لأنها تحتوي على ID و Path الأصلي
+                            // بينما previewImageUrl يحتوي فقط على رابط الصورة المصغرة (thumb)
+                            if (root.currentPreviewData) {
+                                root.handleDownloadAndApply(root.currentPreviewData);
+                            }
                         }
                     }
                 }

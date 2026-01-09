@@ -13,6 +13,7 @@ QtObject {
     property string currentThemeName: ""
 
     signal creatingOverlayImageStarted
+    signal unusedCachedOverlayImagesDeleted
     signal creatingOverlayImageFinished(string newImagePath)
 
     function createOverlayImage({
@@ -58,13 +59,6 @@ QtObject {
         property string newImagePath
         stdout: StdioCollector {
             onStreamFinished: {
-                App.dispatchCommand("send notification", Utils.Helper.sendNotification({
-                    summary: "Image created",
-                    body: `Overlay image created successfully in: ${createOverlayImageProcess.newImagePath}`
-                }));
-                App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
-                // _cacheAppliedData();
-
                 root.creatingOverlayImageFinished(createOverlayImageProcess.newImagePath);
             }
         }
@@ -84,12 +78,7 @@ QtObject {
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
-                    // console.info(this.text);
-                    App.dispatchCommand("[DepthEffectController] send notification", Utils.Helper.sendNotification({
-                        summary: "Cached Images Deleted",
-                        body: this.text.trim()
-                    }));
-                    App.dispatchCommand("play sound", Utils.Helper.playSoundCommand(App.assets.audio.notificationAlert));
+                    root.unusedCachedOverlayImagesDeleted();
                 } catch (e) {
                     console.error("[DepthEffectController] Failed to parse wallpapers list:", e);
                 }

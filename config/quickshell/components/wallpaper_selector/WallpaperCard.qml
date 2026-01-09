@@ -91,9 +91,12 @@ Item {
                     id: thumbnailImage
                     anchors.fill: parent
                     source: root.thumbUrl
-                    fillMode: Image.PreserveAspectCrop
+
+                    // يحافظ على تعبئة المكان دون تشويه الصورة (يقص الزوائد)
+                    fillMode: Image.PreserveAspectFit
+
                     asynchronous: true
-                    sourceSize: Qt.size(300, 200)
+                    sourceSize: Qt.size(300, 0)
                 }
 
                 // Loading Spinner
@@ -203,7 +206,7 @@ Item {
             anchors.right: parent.right
             anchors.margins: 8
             spacing: 0
-            visible: root.isHovered && root.isWallhaven
+            visible: root.isHovered
             z: 100
 
             ActionButton {
@@ -217,6 +220,7 @@ Item {
             ActionButton {
                 id: downloadButton
                 iconSymbol: "󰇚"
+                visible: root.isWallhaven
                 onActionTriggered: {
                     root.downloadOnly(root.modelData);
                 }

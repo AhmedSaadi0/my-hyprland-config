@@ -51,6 +51,8 @@ Item {
         var contentH = 0;
         if (showInfo && CapsuleManager.changeHeight) {
             contentH = mainColumn.height + 25;
+        } else if (!CapsuleManager.changeHeight) {
+            contentH = mainColumn.height - 5;
         }
 
         return Math.max(minHeight, eyesH, contentH);
