@@ -5,6 +5,8 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 
+import "root:/config/ConstValues.js" as C
+
 QtObject {
     id: store
 
@@ -18,8 +20,6 @@ QtObject {
     property string profilePicture: ""
     property string networkMonitor: "wlp0s20f3"
     property int networkInterval: 400
-    property string darkM3WallpaperPath: ""
-    property string lightM3WallpaperPath: ""
     property string city: "sanaa"
     property string country: "yemen"
     property string weatherLocation: "sanaa"
@@ -48,6 +48,8 @@ QtObject {
 
     property bool useBottomLauncher: false  // false = side launcher, true = bottom launcher
     property int bottomLauncherWidth: 800
+
+    property string menuStyle: C.DOCKED_FIXED_BAR
 
     property var _fileView: FileView {
         id: fileWatcher
@@ -91,12 +93,14 @@ QtObject {
             store.networkInterval = data.networkInterval;
 
         // -------------------------------------------------------
-        // المسارات (الخلفيات)
+        // التخطيط
         // -------------------------------------------------------
-        if (data.darkM3WallpaperPath !== undefined)
-            store.darkM3WallpaperPath = data.darkM3WallpaperPath;
-        if (data.lightM3WallpaperPath !== undefined)
-            store.lightM3WallpaperPath = data.lightM3WallpaperPath;
+        if (data.menuStyle !== undefined)
+            store.menuStyle = data.menuStyle;
+        if (data.useBottomLauncher !== undefined)
+            store.useBottomLauncher = data.useBottomLauncher;
+        if (data.bottomLauncherWidth !== undefined)
+            store.bottomLauncherWidth = data.bottomLauncherWidth;
 
         // -------------------------------------------------------
         // الموقع والطقس
@@ -158,11 +162,6 @@ QtObject {
             store.cpuHighLoadThreshold = data.cpuHighLoadThreshold;
         if (data.ramHighLoadThreshold !== undefined)
             store.ramHighLoadThreshold = data.ramHighLoadThreshold;
-
-        if (data.useBottomLauncher !== undefined)
-            store.useBottomLauncher = data.useBottomLauncher;
-        if (data.bottomLauncherWidth !== undefined)
-            store.bottomLauncherWidth = data.bottomLauncherWidth;
 
         store.settingsLoaded();
         console.info("Config reloaded successfully.");

@@ -9,15 +9,16 @@ import "../themes"
 import "../components"
 import "root:/utils"
 import "root:/services"
-import "root:/config/EventNames.js" as Events
 import "root:/config"
+import "root:/config/EventNames.js" as Events
 import "root:/config/ConstValues.js" as Consts
 
 PanelWindow {
     id: root
 
-    implicitWidth: 40
-    color: ThemeManager.selectedTheme.colors.topbarColor
+    implicitWidth: ThemeManager.selectedTheme.dimensions.leftBarWidth
+    // color: ThemeManager.selectedTheme.colors.topbarColor
+    color: "transparent"
     exclusionMode: ExclusionMode.Ignore
 
     anchors {
@@ -26,12 +27,21 @@ PanelWindow {
         bottom: true
     }
 
-    margins.top: ThemeManager.selectedTheme.dimensions.barHeight
+    margins {
+        top: ThemeManager.selectedTheme.dimensions.barHeight
+    }
 
     // --- Properties ---
     property bool panelOpen: false
     property int activeMenuIndex: LeftMenuStatus.selectedIndex
     property int notificationMenuIndex: -1
+
+    Behavior on margins.left {
+        NumberAnimation {
+            duration: panelOpen ? 600 : 500
+            easing.type: panelOpen ? Easing.OutExpo : Easing.OutCubic
+        }
+    }
 
     // ---------------------------------------------------------
     // 1. MODELS (البيانات)
@@ -151,6 +161,7 @@ PanelWindow {
             } catch (error) {
                 LeftMenuStatus.changeIndex(-1);
             }
+            changeIsMenuOpen.start();
         });
     }
 
@@ -227,6 +238,8 @@ PanelWindow {
                 LeftMenuStatus.changeIndex(-1);
             }
         }
+
+        changeIsMenuOpen.start();
     }
 
     // ---------------------------------------------------------
@@ -332,8 +345,17 @@ PanelWindow {
 
     Timer {
         id: closePanelTimer
-        interval: 600
+        interval: 20
         repeat: false
         onTriggered: LeftMenuStatus.changeIndex(-1)
+    }
+
+    Timer {
+        id: changeIsMenuOpen
+        interval: 2
+        repeat: false
+        onTriggered: {
+            root.margins.left = panelOpen && App.menuStyle === Consts.DOCKED_MOVING_BAR ? ThemeManager.selectedTheme.dimensions.menuWidth : 0;
+        }
     }
 }

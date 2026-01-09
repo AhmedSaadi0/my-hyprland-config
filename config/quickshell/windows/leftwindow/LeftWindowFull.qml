@@ -1,22 +1,26 @@
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
 import "root:/themes"
 import "root:/components"
 import "root:/utils"
 import "root:/config/EventNames.js" as Events
-import "root:/config/ConstValues.js" as Consts
+import "root:/config/ConstValues.js" as C
 import "root:/config"
 
 PanelWindow {
     id: root
 
     property bool isShown: false
+    property int animationDuration: 600
+    property string menuStyle: App.menuStyle
 
     color: "transparent"
     visible: false
 
     exclusionMode: ExclusionMode.Ignore
-    focusable: menus.currentIndex == Consts.APPLICATIONS_MENU_INDEX || menus.currentIndex == Consts.NETWORK_MENU_INDEX || menus.currentIndex == Consts.CLIPBOARD_MENU_INDEX  || menus.currentIndex == Consts.TODO_MENU_INDEX
+    focusable: menus.currentIndex == C.APPLICATIONS_MENU_INDEX || menus.currentIndex == C.NETWORK_MENU_INDEX || menus.currentIndex == C.CLIPBOARD_MENU_INDEX || menus.currentIndex == C.TODO_MENU_INDEX
+    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
 
     anchors {
         top: true
@@ -24,11 +28,19 @@ PanelWindow {
         bottom: true
     }
 
-    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth + 10
     margins {
-        left: 40
+        left: {
+            switch (root.menuStyle) {
+            case C.DOCKED_FIXED_BAR:
+                return ThemeManager.selectedTheme.dimensions.leftBarWidth;
+            case C.DOCKED_MOVING_BAR:
+                return 0;
+            case C.FLOATING:
+                return 40;
+            }
+        }
         top: ThemeManager.selectedTheme.dimensions.barHeight + 10
-        bottom: 10
+        bottom: root.menuStyle === C.FLOATING ? 15 : 0
     }
 
     onIsShownChanged: {
@@ -63,19 +75,21 @@ PanelWindow {
     CorneredBox {
         id: contentContainer
 
-        width: parent.width - 10
+        width: root.menuStyle === C.FLOATING ? parent.width - 10 : parent.width
         height: parent.height
         anchors.top: parent.top
         anchors.bottom: parent.bottom
+        // anchors.right: parent.right
 
         layer.enabled: root.visible && opacity === 0
         // layer.enabled: opacity < 1.0 && opacity > 0.0
         // layer.enabled: true
         layer.smooth: true
 
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 1.3
-        border.color: ThemeManager.selectedTheme.colors.primary
-        border.width: 2
+        radius: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.dimensions.elementRadius * 1.3 : 0
+        border.color: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.colors.primary : "#00000000"
+        border.width: root.menuStyle === C.FLOATING ? 2 : 0
+        boxColor: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.colors.topbarColor : "transparent"
 
         Column {
             id: col
@@ -109,7 +123,7 @@ PanelWindow {
                 name: "visible"
                 PropertyChanges {
                     target: contentContainer
-                    x: 10
+                    x: root.menuStyle === C.FLOATING ? 10 : 0
                     opacity: 1.0
                 }
             },
@@ -130,7 +144,7 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: 400
+                        duration: root.animationDuration + 150
                         easing.type: Easing.OutExpo
                     }
                     NumberAnimation {
@@ -147,12 +161,12 @@ PanelWindow {
                     ParallelAnimation {
                         NumberAnimation {
                             properties: "x"
-                            duration: 350
-                            easing.type: Easing.InQuart
+                            duration: root.animationDuration
+                            easing.type: Easing.OutCubic
                         }
                         NumberAnimation {
                             properties: "opacity"
-                            duration: 800
+                            duration: root.animationDuration * 2
                             easing.type: Easing.InQuad
                         }
                     }

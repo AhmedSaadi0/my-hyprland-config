@@ -4,6 +4,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Hyprland
 import "root:/config"
 import "root:/themes/modules"
 import "root:/themes"
@@ -175,6 +176,10 @@ Singleton {
     // 5. Core Logic & Sequence Manager
     // =========================================================
 
+    function cleardUnusedOverlayImages() {
+        depthEffectController.cleardUnusedOverlayImages();
+    }
+
     function requestLoadTheme(themeName, forceReload = false) {
         if (themeName === themeLoader.currentThemeName && root._initialReady && !forceReload)
             return;
@@ -256,6 +261,14 @@ Singleton {
         bridgeHyprland.applyConfig(theme.hyprlandConfiguration);
         bridgeSystem.applySystemTheme(theme.systemSettings, theme.colors, theme.typography);
         wallpaperController.configure(theme.systemSettings);
+    }
+
+    function addLeftMenuSpacing() {
+        bridgeHyprland.addLeftMenuSpacing(selectedTheme.hyprlandConfiguration, selectedTheme.dimensions);
+    }
+
+    function resetLeftMenuSpacing() {
+        bridgeHyprland.resetLeftMenuSpacing(selectedTheme.hyprlandConfiguration);
     }
 
     // =========================================================

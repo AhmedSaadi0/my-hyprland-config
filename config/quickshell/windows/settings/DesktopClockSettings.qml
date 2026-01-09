@@ -42,6 +42,10 @@ BaseThemeSettings {
 
     signal createOverlayImageButtonClicked(var data)
 
+    function clearUnusedCache() {
+        ThemeManager.cleardUnusedOverlayImages();
+    }
+
     function syncFromTheme() {
         // General
         localEnabled = theme._desktopClockEnabled;
@@ -54,7 +58,6 @@ BaseThemeSettings {
         localColor = theme._desktopClockColor !== undefined ? theme._desktopClockColor : "#000000";
         localShadowEnabled = theme._desktopClockSahdowEnabled;
         localShadowColor = theme._desktopClockSahdowColor !== undefined ? theme._desktopClockSahdowColor : "#000000";
-        // localUseAnimation = theme._desktopClockUseAnimation;
 
         // Depth
         localDepthEnabled = theme._desktopClockDepthEffectEnabled;
@@ -72,7 +75,6 @@ BaseThemeSettings {
             "_desktopClockColor": localColor.toString(),
             "_desktopClockSahdowEnabled": localShadowEnabled,
             "_desktopClockSahdowColor": localShadowColor.toString(),
-            // "_desktopClockUseAnimation": localUseAnimation,
             "_desktopClockDepthEffectEnabled": localDepthEnabled,
             "_desktopClockDepthModel": localDepthModel,
             "_desktopClockDepthOverlayPath": localOverlayPath
@@ -100,7 +102,6 @@ BaseThemeSettings {
         id: fontDialog
         onAccepted: {
             root.localFont = font.family;
-            // root.applySingleProperty("_desktopClockFont", font.family);
         }
         onCurrentFontChanged: {
             root.applySingleProperty("_desktopClockFont", currentFont.family);
@@ -501,49 +502,42 @@ BaseThemeSettings {
                     onIsCheckedChanged: root.alphaMatting = isChecked
                 }
 
-                RowLayout {
+                // استخدام ColumnLayout بدلاً من RowLayout لتسهيل عرض Sliders بشكل رأسي
+                ColumnLayout {
                     enabled: _alphaMattingSwitch.isChecked
                     Layout.fillWidth: true
+                    Layout.leftMargin: 10
+                    Layout.rightMargin: 10
                     spacing: 10
 
-                    ColumnLayout {
-                        Controls.Label {
-                            text: qsTr("BG Threshold")
-                            font.bold: true
-                        }
-                        EditableField {
-                            text: root.backgroundThreshold.toString()
-                            selectedTheme: root.theme
-                            Layout.preferredHeight: 30
-                            Layout.preferredWidth: 100
-                            onEditingFinished: root.backgroundThreshold = parseInt(text)
-                        }
+                    SliderWithLabel {
+                        label: qsTr("Background Threshold")
+                        from: 0
+                        to: 255
+                        stepSize: 1
+                        decimals: 0
+                        value: root.backgroundThreshold
+                        onEditingFinished: val => root.backgroundThreshold = parseInt(val)
                     }
-                    ColumnLayout {
-                        Controls.Label {
-                            text: qsTr("FG Threshold")
-                            font.bold: true
-                        }
-                        EditableField {
-                            text: root.foregroundThreshold.toString()
-                            selectedTheme: root.theme
-                            Layout.preferredHeight: 30
-                            Layout.preferredWidth: 100
-                            onEditingFinished: root.foregroundThreshold = parseInt(text)
-                        }
+
+                    SliderWithLabel {
+                        label: qsTr("Foreground Threshold")
+                        from: 0
+                        to: 255
+                        stepSize: 1
+                        decimals: 0
+                        value: root.foregroundThreshold
+                        onEditingFinished: val => root.foregroundThreshold = parseInt(val)
                     }
-                    ColumnLayout {
-                        Controls.Label {
-                            text: qsTr("Erode Size")
-                            font.bold: true
-                        }
-                        EditableField {
-                            text: root.erodeSize.toString()
-                            selectedTheme: root.theme
-                            Layout.preferredHeight: 30
-                            Layout.preferredWidth: 100
-                            onEditingFinished: root.erodeSize = parseInt(text)
-                        }
+
+                    SliderWithLabel {
+                        label: qsTr("Erode Size")
+                        from: 0
+                        to: 50
+                        stepSize: 1
+                        decimals: 0
+                        value: root.erodeSize
+                        onEditingFinished: val => root.erodeSize = parseInt(val)
                     }
                 }
 

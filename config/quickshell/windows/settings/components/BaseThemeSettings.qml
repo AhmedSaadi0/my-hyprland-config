@@ -121,12 +121,12 @@ M3GroupBox {
         }
 
         // زر تنظيف الكاش يظهر فقط إذا تم تعريف الإشارة في الاستخدام
-        // MButton {
-        //     text: "Clear Cache"
-        //     visible: root.hasOwnProperty("clearUnusedCache")
-        //     Layout.preferredWidth: 120
-        //     onClicked: root.clearUnusedCache()
-        // }
+        MButton {
+            text: "Clear Cache"
+            visible: root.hasOwnProperty("clearUnusedCache")
+            Layout.preferredWidth: 120
+            onClicked: root.clearUnusedCache()
+        }
 
         Item {
             Layout.fillWidth: true

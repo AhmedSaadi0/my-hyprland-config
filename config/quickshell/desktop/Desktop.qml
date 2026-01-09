@@ -3,11 +3,15 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import QtQuick.Effects
+import Qt5Compat.GraphicalEffects
+import Quickshell.Hyprland
 
-import "root:/themes" as Theme
 import "root:/components"
-import "root:/config/EventNames.js" as Events
 import "root:/config"
+import "root:/themes" as Theme
+import "root:/config/EventNames.js" as Events
+import "root:/config/ConstValues.js" as C
 
 PanelWindow {
     id: desktopRoot
@@ -18,7 +22,9 @@ PanelWindow {
         left: true
         right: true
     }
-    color: "transparent"
+
+    color: Theme.ThemeManager.selectedTheme.colors.topbarColor
+
     aboveWindows: false
     focusable: true
     exclusionMode: ExclusionMode.Ignore
@@ -31,27 +37,96 @@ PanelWindow {
     property bool depthEffectActive: false
     property bool blurEnabled: false
 
-    Wallpaper {
-        id: wallpaper
+    property int elementRadius: Theme.ThemeManager.selectedTheme.dimensions.elementRadius
+    property int cornerRadius: elementRadius <= 1 ? 0 : elementRadius + 6
+
+    // ---------------------------------------------------------
+    // حاوية الورقة العائمة (تجمع الظل والمحتوى)
+    // ---------------------------------------------------------
+    Item {
+        id: sheetContainer
         anchors.fill: parent
 
-        overlaySource: desktopRoot.currentOverlay
-        depthEnabled: desktopRoot.depthEffectActive
-        isMenuOpen: desktopRoot.isMenuOpened
-        blurEnabled: desktopRoot.blurEnabled
-        blurValue: Theme.ThemeManager.selectedTheme.systemSettings.wallpaperBlurStrength
+        // الهوامش التي تصنع شكل البارات
+        anchors.topMargin: Theme.ThemeManager.selectedTheme.dimensions.barHeight + 3
+        anchors.leftMargin: Theme.ThemeManager.selectedTheme.dimensions.leftBarWidth + 2
+        anchors.rightMargin: 5
+        anchors.bottomMargin: 5
 
-        content: Widgets {
-            id: myWidgets
-            dimWidgets: desktopRoot.isMenuOpened
+        // -----------------------------------------------------
+        // الإضافة الجديدة: تحريك الحاوية بالكامل لليمين
+        // -----------------------------------------------------
+        transform: Translate {
+            // التحرك 400 بكسل لليمين عند فتح القائمة، وصفر عند إغلاقها
+            x: App.menuStyle !== C.FLOATING && desktopRoot.isMenuOpened ? Theme.ThemeManager.selectedTheme.dimensions.menuWidth + 5 : 0
+
+            // جعل الحركة ناعمة
+            Behavior on x {
+                NumberAnimation {
+                    duration: 600
+                    easing.type: desktopRoot.isMenuOpened ? Easing.OutCubic : Easing.OutExpo
+                }
+            }
+        }
+
+        // 1. طبقة الظل الخلفية
+        Rectangle {
+            id: shadowRect
+            anchors.fill: parent
+            radius: desktopRoot.cornerRadius
+            color: Theme.ThemeManager.selectedTheme.colors.topbarColor
+
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                shadowEnabled: true
+                shadowColor: Qt.rgba(0, 0, 0, 0.5)
+                shadowBlur: 1.0
+                shadowVerticalOffset: -1
+                shadowHorizontalOffset: -1
+                shadowScale: 1.0
+            }
+        }
+
+        // 2. طبقة الخلفية والصور
+        Wallpaper {
+            id: wallpaper
+            anchors.fill: parent
+
+            overlaySource: desktopRoot.currentOverlay
+            depthEnabled: desktopRoot.depthEffectActive
+            isMenuOpen: desktopRoot.isMenuOpened
+            blurEnabled: desktopRoot.blurEnabled
+            blurValue: Theme.ThemeManager.selectedTheme.systemSettings.wallpaperBlurStrength
+
+            content: Widgets {
+                id: myWidgets
+                dimWidgets: desktopRoot.isMenuOpened
+            }
+
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: maskItem
+            }
+        }
+
+        // 3. عنصر القناع
+        Item {
+            id: maskItem
+            anchors.fill: parent
+            visible: false
+
+            Rectangle {
+                anchors.fill: parent
+                radius: desktopRoot.cornerRadius
+                color: "black"
+            }
         }
     }
 
     // ---------------------------------------------------------
-    // المنطق: تحديث البيانات والأحداث
+    // المنطق
     // ---------------------------------------------------------
     function updateThemeData() {
-        // 2. إعدادات العمق (Overlay)
         let clockSettings = Theme.ThemeManager.selectedTheme.desktopClock;
         let isDepth = (clockSettings?.enabled && clockSettings?.depthEffectEnabled) || false;
 
@@ -60,36 +135,50 @@ PanelWindow {
         desktopRoot.blurEnabled = Theme.ThemeManager.selectedTheme.systemSettings.enableWallpaperBlur;
     }
 
-    // استقبال إشارات تغيير الثيم
     Connections {
         target: Theme.ThemeManager
-
-        // BUG: it is called twice, find why and fix it
         function onSelectedThemeUpdated() {
-            console.info("Theme selected");
             desktopRoot.updateThemeData();
         }
-
         function onWallpaperChanged(path) {
             wallpaper.wallpaperSource = path;
         }
-
         function onCreatingOverlayImageFinished(newImagePath) {
-            wallpaper.overlaySource = newImagePath;
+            desktopRoot.currentOverlay = newImagePath;
         }
     }
 
-    // إدارة أحداث القائمة (Menu)
     Component.onCompleted: {
         EventBus.on(Events.LEFT_MENU_IS_OPENED, () => {
-            desktopRoot.isMenuOpened = true;
+            changeIsMenuOpen.newValue = true;
+            changeIsMenuOpen.start();
         });
         EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => {
-            desktopRoot.isMenuOpened = false;
+            changeIsMenuOpen.newValue = false;
+            changeIsMenuOpen.start();
         });
 
-        // التحميل الأولي
         desktopRoot.updateThemeData();
         wallpaper.wallpaperSource = Theme.ThemeManager.currentWallpaper;
+    }
+
+    Timer {
+        id: changeIsMenuOpen
+        interval: 30
+        repeat: false
+        property bool newValue: false
+        onTriggered: {
+            desktopRoot.isMenuOpened = newValue;
+            if (App.menuStyle !== C.FLOATING)
+                addLeftSpace();
+        }
+    }
+
+    function addLeftSpace() {
+        if (desktopRoot.isMenuOpened) {
+            Theme.ThemeManager.addLeftMenuSpacing();
+        } else {
+            Theme.ThemeManager.resetLeftMenuSpacing();
+        }
     }
 }

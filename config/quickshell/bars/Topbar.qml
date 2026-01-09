@@ -10,7 +10,8 @@ import "../components"
 PanelWindow {
     id: topBar
     implicitHeight: ThemeManager.selectedTheme.dimensions.barHeight
-    color: ThemeManager.selectedTheme.colors.topbarColor
+    // color: ThemeManager.selectedTheme.colors.topbarColor
+    color: "transparent"
 
     exclusionMode: ExclusionMode.Auto
 

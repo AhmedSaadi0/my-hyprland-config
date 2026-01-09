@@ -1,5 +1,7 @@
 import QtQuick
 import Quickshell.Hyprland
+import "root:/config"
+import "root:/config/ConstValues.js" as C
 
 QtObject {
     id: root
@@ -22,7 +24,9 @@ QtObject {
 
         // --- General ---
         dispatch('general:gaps_in', hyprConfig.gapsIn);
-        dispatch('general:gaps_out', hyprConfig.gapsOut);
+        if (App.menuStyle == C.FLOATING) {
+            dispatch('general:gaps_out', hyprConfig.gapsOut);
+        }
         dispatch('general:border_size', hyprConfig.borderWidth);
         dispatch('general:col.active_border', hyprConfig.activeBorder);
         dispatch('general:col.inactive_border', hyprConfig.inactiveBorder);
@@ -56,5 +60,40 @@ QtObject {
             dispatch('animations:animation', `workspaces, ${hyprConfig.animWorkspaces}`);
 
     // dispatch('decoration:drop_shadow', hyprConfig.dropShadow ? "yes" : "no");
+    }
+
+    function addLeftMenuSpacing(hyprConfig, dimensions) {
+        if (!hyprConfig || !dimensions)
+            return;
+
+        let gapsStr = hyprConfig.gapsOut; // EX -> : "10, 10, 10, 52"
+        let menuWidth = dimensions.menuWidth + (hyprConfig.gapsIn * 2);
+
+        // 2. تقسيم النص إلى مصفوفة أرقام [Top, Right, Bottom, Left]
+        // نستخدم split(',') للفصل و parseInt لتحويل النص لرقم
+        let gapsArray = gapsStr.split(',').map(val => parseInt(val.trim()));
+
+        // 3. التحقق والحساب
+        if (gapsArray.length === 4) {
+            let top = gapsArray[0];
+            let right = gapsArray[1];
+            let bottom = gapsArray[2];
+            let left = gapsArray[3];
+
+            // المعادلة: الهامش الجديد = الهامش الأصلي + عرض القائمة
+            let newLeftGap = left + menuWidth - 5;
+
+            // 4. إرسال الأمر
+            Hyprland.dispatch(`exec hyprctl keyword general:gaps_out ${top}, ${right}, ${bottom}, ${newLeftGap}`);
+        } else {
+            console.warn("Error: gapsOut format in theme should be 'T, R, B, L'");
+        }
+    }
+
+    function resetLeftMenuSpacing(hyprConfig) {
+        if (!hyprConfig)
+            return;
+        const gapsOut = hyprConfig.gapsOut;
+        Hyprland.dispatch(`exec hyprctl keyword general:gaps_out ${gapsOut}`);
     }
 }

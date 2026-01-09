@@ -65,6 +65,7 @@ PersistentProperties {
     // --------------------
     property int _baseRadius: 12
     property int _barHeight: 30
+    property int _leftBarWidth: 40
     property int _barBottomMargin: 10
     property int _barWidgetsHeight: 22
     property int _menuHeight: 900
@@ -132,7 +133,7 @@ PersistentProperties {
 
     // Gaps & Layout
     property int _hyprGapsIn: 5
-    property string _hyprGapsOut: "10, 10, 10, 52"
+    property string _hyprGapsOut: "12, 15, 15, 52"
     property string _hyprLayout: "dwindle"
 
     // Animations
@@ -237,6 +238,7 @@ PersistentProperties {
     readonly property var dimensions: QtObject {
         property alias baseRadius: root._baseRadius
         property alias barHeight: root._barHeight
+        property alias leftBarWidth: root._leftBarWidth
         property alias barBottomMargin: root._barBottomMargin
         property alias barWidgetsHeight: root._barWidgetsHeight
         property alias menuHeight: root._menuHeight

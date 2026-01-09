@@ -61,9 +61,6 @@ Singleton {
     property alias weatherAiModel: root.config.weatherAiModel
     property alias musicAiModel: root.config.musicAiModel
 
-    property string darkM3WallpaperPath: root.config.darkM3WallpaperPath || homePath + "wallpapers/dark/"
-    property string lightM3WallpaperPath: root.config.lightM3WallpaperPath || homePath + "wallpapers/light/"
-
     property alias enableHighCpuAlert: root.config.enableHighCpuAlert
     property alias enableHighRamAlert: root.config.enableHighRamAlert
     property alias playCpuAlarmSound: root.config.playCpuAlarmSound
@@ -75,6 +72,7 @@ Singleton {
     property alias useBottomLauncher: root.config.useBottomLauncher
     property alias bottomLauncherWidth: root.config.bottomLauncherWidth
     property alias firstDayOfWeek: root.config.firstDayOfWeek
+    property alias menuStyle: root.config.menuStyle
 
     function updateConfig(key, value) {
         root.config.set(key, value);
