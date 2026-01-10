@@ -92,7 +92,7 @@ Item {
 
     // -- List Management --
     function refreshLocalWallpapers() {
-        procLocalWallpapers.command = Utils.Helper.getWallpapersList(App.wallpapersPath);
+        procLocalWallpapers.command = App.scripts.python.scanWallpapersCommand;
         procLocalWallpapers.running = true;
     }
 

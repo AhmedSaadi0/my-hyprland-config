@@ -42,6 +42,7 @@ Singleton {
 
     // Feature Signals
     signal wallpaperChanged(string path)
+    signal unusedCachedOverlayImagesDeleted
     signal creatingOverlayImageStarted
     signal creatingOverlayImageFinished(string newImagePath)
 
@@ -164,6 +165,7 @@ Singleton {
     DepthEffectController {
         id: depthEffectController
         onCreatingOverlayImageStarted: root.creatingOverlayImageStarted()
+        onUnusedCachedOverlayImagesDeleted: root.unusedCachedOverlayImagesDeleted()
         onCreatingOverlayImageFinished: newImagePath => {
             updateAndApplyTheme({
                 "_desktopClockDepthOverlayPath": newImagePath
