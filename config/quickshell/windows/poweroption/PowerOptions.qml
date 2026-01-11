@@ -37,7 +37,7 @@ MenuCard {
     StackView {
         id: viewStack
         Layout.fillWidth: true
-        implicitHeight: root.buttonHeight
+        implicitHeight: root.buttonHeight + 10 
 
         initialItem: RowLayout {
             spacing: root.buttonsRowSpacing

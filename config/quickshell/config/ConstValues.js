@@ -10,6 +10,7 @@ var TRANSLATE_MENU_INDEX = 7;
 var AI_BOT_MENU_INDEX = 8;
 var FAVIORTE_APPS_MENU_INDEX = 9;
 var APPLICATIONS_MENU_INDEX = 9;
+var TOGGLE_POWER_MENU = 10;
 
 // --- Smart Capsule Priorities (مستويات الأهمية) ---
 const IDLE = 0; // الساعة (الوضع الافتراضي)

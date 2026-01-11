@@ -12,6 +12,7 @@ import "root:/windows/smart_capsule"
 import "root:/windows/settings"
 import "root:/windows/cheatsheet"
 import "root:/windows/bottomlauncher"
+import "root:/windows/poweroption"
 import "root:/bars"
 import "root:/osd"
 import "root:/utils"
@@ -239,6 +240,10 @@ ShellRoot {
             BottomAppLauncher {
                 id: bottomLauncherPanel
             }
+            PowerMenuWindow {
+                id: powerMenuWindow
+                // visible is handled via the connection below
+            }
 
             // Event listener for bottom launcher toggle from LeftBar
             Connections {
@@ -246,6 +251,11 @@ ShellRoot {
                 Component.onCompleted: {
                     EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
                         bottomLauncherPanel.toggle();
+                    });
+
+                EventBus.on(Events.TOGGLE_POWER_MENU, () => {
+                        // Toggle visibility
+                        powerMenuWindow.visible = !powerMenuWindow.visible;
                     });
                 }
             }
@@ -299,6 +309,10 @@ ShellRoot {
                     } else {
                         toggleMenu(Consts.APPLICATIONS_MENU_INDEX);
                     }
+                }
+                // Optional: Allow triggering power menu from terminal/scripts
+                function togglePowerMenu() {
+                   EventBus.emit(Events.TOGGLE_POWER_MENU);
                 }
             }
         }
