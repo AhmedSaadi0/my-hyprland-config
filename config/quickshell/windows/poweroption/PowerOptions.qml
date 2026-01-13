@@ -17,7 +17,7 @@ MenuCard {
     title: qsTr("Power Options")
     icon: ""
 
-    property int buttonHeight: 25
+    property int buttonHeight: 35
     property int buttonsRowSpacing: 10
     property string iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
     property color baseTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV2
