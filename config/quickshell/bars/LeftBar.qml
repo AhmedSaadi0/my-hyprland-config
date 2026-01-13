@@ -72,8 +72,8 @@ PanelWindow {
             name: "Monitors"
         }
         ListElement {
-            icon: "󰲝"
-            activeIcon: "󰛳"
+            icon: "󰤯"
+            activeIcon: "󰤨"
             name: "Network"
         }
     }
