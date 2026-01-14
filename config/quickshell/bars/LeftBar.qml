@@ -72,8 +72,8 @@ PanelWindow {
             name: "Monitors"
         }
         ListElement {
-            icon: "󰲝"
-            activeIcon: "󰛳"
+            icon: "󰤯"
+            activeIcon: "󰤨"
             name: "Network"
         }
     }
@@ -120,6 +120,13 @@ PanelWindow {
             icon: "󰀻"
             activeIcon: "󰵆"
             name: "All Apps"
+            notificationCount: 0
+        }
+        // --- ADDED POWER OPTION HERE ---
+        ListElement {
+            icon: ""           // Standard Power Icon
+            activeIcon: ""     // Active state (can be red or filled if font supports it)
+            name: "Power"
             notificationCount: 0
         }
     }
@@ -205,24 +212,33 @@ PanelWindow {
     // دالة مساعدة لتحديث الحالة
     function updateGlobalState(localIndex, offset, groupName) {
         if (localIndex !== -1) {
-            // تصفير المجموعات الأخرى
-            if (groupName !== "top")
-                topButtonGroup.currentIndex = -1;
-            if (groupName !== "middle")
-                middleButtonGroup.currentIndex = -1;
-            if (groupName !== "bottom")
-                bottomButtonGroup.currentIndex = -1;
+            // Reset other groups
+            if (groupName !== "top") topButtonGroup.currentIndex = -1;
+            if (groupName !== "middle") middleButtonGroup.currentIndex = -1;
+            if (groupName !== "bottom") bottomButtonGroup.currentIndex = -1;
 
             const globalIndex = offset + localIndex;
 
-            // Check if this is the apps button and bottom launcher is enabled
-            if (globalIndex === Consts.APPLICATIONS_MENU_INDEX && App.useBottomLauncher) {
-                // Reset selection and toggle bottom launcher instead
+            // 1. All Apps Logic (Index 0)
+            if (groupName === "bottom" && localIndex === 0 && App.useBottomLauncher) {
                 bottomButtonGroup.currentIndex = -1;
                 EventBus.emit(Events.TOGGLE_BOTTOM_LAUNCHER);
                 return;
             }
 
+            // 2. [NEW] Power Button Logic (Index 1)
+            if (groupName === "bottom" && localIndex === 1) {
+                // Deselect visually
+                bottomButtonGroup.currentIndex = -1;
+                
+                // Trigger the external PanelWindow
+                EventBus.emit(Events.TOGGLE_POWER_MENU);
+                
+                // Stop the side panel from expanding
+                return;
+            }
+
+            // 3. Normal Sidebar Navigation
             root.activeMenuIndex = globalIndex;
 
             if (!root.panelOpen) {
@@ -241,6 +257,7 @@ PanelWindow {
 
         changeIsMenuOpen.start();
     }
+    
 
     // ---------------------------------------------------------
     // 3. UI GROUPS (الواجهات)
