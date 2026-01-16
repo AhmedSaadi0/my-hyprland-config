@@ -34,6 +34,9 @@ Item {
             if (exitCode === 0)
                 root.parent.parent.visible = false;
         }
+        function start() {
+            powerActionProcess.running = true;
+        }
     }
 
     // الحاوية الكبرى المتوسطة في الشاشة
