@@ -5,9 +5,11 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
 
-import "root:/themes"
+import "root:/windows/smart_capsule/logic"
 import "root:/utils/helpers.js" as Helpers
+import "root:/config/ConstValues.js" as C
 import "root:/components"
+import "root:/themes"
 
 Item {
     id: root
@@ -30,10 +32,10 @@ Item {
     Process {
         id: powerActionProcess
         command: root.pendingActionCommand
-        onExited: exitCode => {
-            if (exitCode === 0)
-                root.parent.parent.visible = false;
-        }
+        // onExited: exitCode => {
+        //     if (exitCode === 0)
+        //         root.parent.parent.visible = false;
+        // }
         function start() {
             powerActionProcess.running = true;
         }
@@ -204,7 +206,12 @@ Item {
                     normalForeground: "#ffffff"
                     focus: true
                     Keys.onReturnPressed: clicked()
-                    onClicked: powerActionProcess.start()
+                    onClicked: {
+                        // نمنع الضغط المتكرر
+                        enabled = false;
+                        // استدعاء دالة الوداع
+                        root.prepareGoodbye(root.confirmActionText);
+                    }
                 }
             }
         }
@@ -268,5 +275,56 @@ Item {
                 easing.type: Easing.OutBack
             }
         }
+    }
+
+    Timer {
+        id: executionDelayTimer
+        interval: 2500
+        repeat: false
+        onTriggered: powerActionProcess.start()
+    }
+
+    // دالة لتجهيز الوداع
+    function prepareGoodbye(actionType) {
+        root.close();
+        let eyeEmotion = "wink";
+        let capsuleMsg = "";
+        let capsuleIcon = "";
+        let capsuleColor = theme.colors.primary;
+
+        if (actionType === qsTr("Shut Down")) {
+            eyeEmotion = "sleeping";
+            capsuleMsg = "System shutting down... Goodbye!";
+            capsuleIcon = "\uf011";
+            capsuleColor = theme.colors.error;
+        } else if (actionType === qsTr("Restart")) {
+            eyeEmotion = "happy";
+            capsuleMsg = "System is restarting...";
+            capsuleIcon = "\uf01e";
+            capsuleColor = theme.colors.warning;
+        } else if (actionType === qsTr("Suspend")) {
+            eyeEmotion = "sleeping";
+            capsuleMsg = "System is going to sleep...";
+            capsuleIcon = "\uf186";
+            capsuleColor = theme.colors.tertiary;
+        } else {
+            eyeEmotion = "wink";
+            capsuleMsg = "Logging out... See you soon!";
+            capsuleIcon = "\uf08b";
+        }
+
+        EyeController.showEmotion(eyeEmotion, 5000);
+
+        CapsuleManager.request({
+            priority: C.TRANSIENT,
+            source: "System",
+            icon: capsuleIcon,
+            text: capsuleMsg,
+            bgColor1: capsuleColor,
+            timeout: 5000
+        });
+
+        // 3. بدء العد التنازلي للتنفيذ
+        executionDelayTimer.start();
     }
 }
