@@ -252,11 +252,6 @@ ShellRoot {
                     EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
                         bottomLauncherPanel.toggle();
                     });
-
-                EventBus.on(Events.TOGGLE_POWER_MENU, () => {
-                        // Toggle visibility
-                        powerMenuWindow.visible = !powerMenuWindow.visible;
-                    });
                 }
             }
 
@@ -310,9 +305,8 @@ ShellRoot {
                         toggleMenu(Consts.APPLICATIONS_MENU_INDEX);
                     }
                 }
-                // Optional: Allow triggering power menu from terminal/scripts
                 function togglePowerMenu() {
-                   EventBus.emit(Events.TOGGLE_POWER_MENU);
+                    EventBus.emit(Events.TOGGLE_POWER_MENU);
                 }
             }
         }

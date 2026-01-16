@@ -31,7 +31,7 @@ Singleton {
         configPath: root.configFilePath
 
         onSettingsLoaded: {
-            if (root.geminiApiKey !== "" || root.weatherAiApiKey !== "" || root.musicAiApiKey !== "") {
+            if (root.aiApiKey !== "" || root.weatherAiApiKey !== "" || root.musicAiApiKey !== "") {
                 console.info("Settings loaded, triggering initial models fetch...");
                 root.modelsManager.refreshAll();
             } else {
@@ -50,7 +50,7 @@ Singleton {
     property alias country: root.config.country
     property alias weatherLocation: root.config.weatherLocation
     property alias usePrayerTimes: root.config.usePrayerTimes
-    property alias geminiApiKey: root.config.geminiApiKey
+    property alias aiApiKey: root.config.aiApiKey
     property alias weatherAiApiKey: root.config.weatherAiApiKey
     property alias musicAiApiKey: root.config.musicAiApiKey
     property alias aiPreferredLanguage: root.config.aiPreferredLanguage
@@ -241,9 +241,11 @@ Singleton {
 
             readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", aiProvider]
 
-            readonly property var callGemini: [...initialAiCommand, "--api_key", geminiApiKey]
-            readonly property var callWeatherAi: [...initialAiCommand, "--api_key", weatherAiApiKey, "--preset", "weather", "--user_persona", root.weatherPersona, "--model", root.weatherAiModel]
-            readonly property var callMusicAi: [...initialAiCommand, "--api_key", musicAiApiKey, "--preset", "music", "--user_persona", root.musicPersona, "--model", root.musicAiModel]
+            readonly property var callGemini: [...initialAiCommand, "--api_key", root.aiApiKey]
+
+            readonly property var callWeatherAi: [...initialAiCommand, "--api_key", (root.weatherAiApiKey !== "" ? root.weatherAiApiKey : root.aiApiKey), "--preset", "weather", "--user_persona", root.weatherPersona, "--model", root.weatherAiModel]
+
+            readonly property var callMusicAi: [...initialAiCommand, "--api_key", (root.musicAiApiKey !== "" ? root.musicAiApiKey : root.aiApiKey), "--preset", "music", "--user_persona", root.musicPersona, "--model", root.musicAiModel]
         }
 
         readonly property QtObject bash: QtObject {

@@ -1,233 +1,269 @@
-// windows/leftwindow/dashboard/PowerOptions.qml
+// windows/poweroption/PowerOptions.qml
 
 import QtQuick
-
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
-import org.kde.kirigami as Kirigami
 
 import "root:/themes"
 import "root:/utils/helpers.js" as Helpers
 import "root:/components"
 
-MenuCard {
+Item {
     id: root
+    anchors.fill: parent
 
-    title: qsTr("Power Options")
-    icon: ""
-
-    property int buttonHeight: 35
-    property int buttonsRowSpacing: 10
-    property string iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
-    property color baseTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV2
-    property color highlightedStateTextColor: ThemeManager.selectedTheme.colors.onSecondary
-    property color activeStateBackgroundColor: ThemeManager.selectedTheme.colors.secondary
-    property color defaultStateBackgroundColor: Kirigami.Theme.activeBackgroundColor
-
-    property string powerOffButtonLabel: qsTr("⏻")
-    property string rebootButtonLabel: qsTr("")
-    property string logoutButtonLabel: qsTr("")
-    property string confirmNoText: qsTr("")
+    readonly property var theme: ThemeManager.selectedTheme
 
     property var pendingActionCommand: []
     property string pendingActionMessage: ""
     property string confirmActionText: ""
+    property color currentAccentColor: theme.colors.primary
 
-    StackView {
-        id: viewStack
-        Layout.fillWidth: true
-        implicitHeight: root.buttonHeight + 10 
+    signal close
 
-        initialItem: RowLayout {
-            spacing: root.buttonsRowSpacing
+    focus: true
+    Keys.onEscapePressed: {
+        root.close();
+    }
 
-            MButton {
-                Layout.fillWidth: true
-                Layout.preferredHeight: root.buttonHeight
-                text: root.powerOffButtonLabel
-                font.family: root.iconFontFamily
-                onClicked: {
-                    root.pendingActionCommand = ["systemctl", "poweroff"];
-                    root.pendingActionMessage = qsTr("Confirm Power Off");
-                    root.confirmActionText = qsTr("Power off ⏻");
-                    viewStack.push(confirmationView);
-                }
+    Process {
+        id: powerActionProcess
+        command: root.pendingActionCommand
+        onExited: exitCode => {
+            if (exitCode === 0)
+                root.parent.parent.visible = false;
+        }
+    }
+
+    // الحاوية الكبرى المتوسطة في الشاشة
+    ColumnLayout {
+        anchors.centerIn: parent
+        spacing: theme.dimensions.spacingLarge * 2
+        width: parent.width
+
+        // 1. العنوان والوصف
+        ColumnLayout {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: theme.dimensions.spacingSmall
+
+            Text {
+                text: viewStack.depth > 1 ? root.pendingActionMessage : qsTr("System Control")
+                color: theme.colors.topbarFgColor
+                font.family: theme.typography.bodyFont
+                font.pixelSize: theme.typography.heading1Size
+                font.bold: true
+                Layout.alignment: Qt.AlignHCenter
             }
-            MButton {
-                Layout.fillWidth: true
-                Layout.preferredHeight: root.buttonHeight
-                text: root.rebootButtonLabel
-                font.family: root.iconFontFamily
-                onClicked: {
-                    root.pendingActionCommand = ["systemctl", "reboot"];
-                    root.pendingActionMessage = qsTr("Confirm Reboot");
-                    root.confirmActionText = qsTr("Reboot ");
-                    viewStack.push(confirmationView);
-                }
-            }
-            MButton {
-                Layout.fillWidth: true
-                Layout.preferredHeight: root.buttonHeight
-                text: root.logoutButtonLabel
-                font.family: root.iconFontFamily
-                onClicked: {
-                    root.pendingActionCommand = ["hyprctl", "dispatch", "exit"];
-                    root.pendingActionMessage = qsTr("Confirm Logout");
-                    root.confirmActionText = qsTr("Log out ");
-                    viewStack.push(confirmationView);
-                }
+
+            Text {
+                text: viewStack.depth > 1 ? qsTr("This action cannot be undone") : qsTr("Choose an action to perform")
+                color: theme.colors.subtleText
+                font.family: theme.typography.bodyFont
+                font.pixelSize: theme.typography.medium
+                Layout.alignment: Qt.AlignHCenter
+                opacity: 0.7
             }
         }
 
-        Component {
-            id: confirmationView
-            RowLayout {
-                spacing: 0
+        // 2. منطقة الأزرار (StackView)
+        StackView {
+            id: viewStack
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: 800 // عرض كافٍ للأزرار
+            Layout.preferredHeight: 180
+            clip: false
 
-                MButton {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: root.buttonHeight
-                    text: root.confirmNoText
-                    font.family: root.iconFontFamily
-                    topRightRadius: 0
-                    bottomRightRadius: 0
-                    onClicked: viewStack.pop()
+            initialItem: mainActions
+
+            pushEnter: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 200
                 }
-
-                MButton {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: root.buttonHeight
-                    text: root.confirmActionText
-                    normalBackground: root.activeStateBackgroundColor
-                    normalForeground: Helpers.getAccurteTextColor(root.activeStateBackgroundColor)
-                    font.family: root.iconFontFamily
-                    topLeftRadius: 0
-                    bottomLeftRadius: 0
-                    onClicked: {
-                        powerActionProcess.start();
-                        viewStack.pop();
-                    }
+                NumberAnimation {
+                    property: "scale"
+                    from: 0.95
+                    to: 1
+                    duration: 200
+                    easing.type: Easing.OutCubic
                 }
             }
-        }
-
-        pushEnter: Transition {
-            NumberAnimation {
-                properties: "y"
-                from: 20
-                to: 0
-                duration: 200
-                easing.type: Easing.OutCubic
-            }
-            NumberAnimation {
-                properties: "opacity"
-                from: 0
-                to: 1
-                duration: 150
-            }
-        }
-        pushExit: Transition {
-            NumberAnimation {
-                properties: "y"
-                from: 0
-                to: -20
-                duration: 200
-                easing.type: Easing.InCubic
-            }
-            NumberAnimation {
-                properties: "opacity"
-                from: 1
-                to: 0
-                duration: 150
-            }
-        }
-        popEnter: Transition {
-            NumberAnimation {
-                properties: "y"
-                from: -20
-                to: 0
-                duration: 200
-                easing.type: Easing.OutCubic
-            }
-            NumberAnimation {
-                properties: "opacity"
-                from: 0
-                to: 1
-                duration: 150
-            }
-        }
-        popExit: Transition {
-            NumberAnimation {
-                properties: "y"
-                from: 0
-                to: 20
-                duration: 200
-                easing.type: Easing.InCubic
-            }
-            NumberAnimation {
-                properties: "opacity"
-                from: 1
-                to: 0
-                duration: 150
+            popExit: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 150
+                }
             }
         }
     }
 
-    states: [
-        State {
-            name: "confirmation"
-            when: viewStack.depth > 1
-            PropertyChanges {
-                target: root
-                title: root.pendingActionMessage
+    // --- واجهة الأزرار الرئيسية ---
+    Component {
+        id: mainActions
+        Item {
+            // حاوية تملأ الـ StackView
+            width: viewStack.width
+            height: viewStack.height
+
+            RowLayout {
+                anchors.centerIn: parent // توسيط حقيقي داخل الحاوية
+                spacing: theme.dimensions.spacingLarge
+
+                PowerTile {
+                    icon: "\uf011"
+                    label: qsTr("Shut Down")
+                    accentColor: theme.colors.error
+                    onClicked: {
+                        root.currentAccentColor = accentColor;
+                        root.pendingActionCommand = ["systemctl", "poweroff"];
+                        root.pendingActionMessage = qsTr("Shut Down System?");
+                        root.confirmActionText = qsTr("Shut Down");
+                        viewStack.push(confirmActions);
+                    }
+                }
+
+                PowerTile {
+                    icon: "\uf01e"
+                    label: qsTr("Restart")
+                    accentColor: theme.colors.warning
+                    onClicked: {
+                        root.currentAccentColor = accentColor;
+                        root.pendingActionCommand = ["systemctl", "reboot"];
+                        root.pendingActionMessage = qsTr("Restart System?");
+                        root.confirmActionText = qsTr("Restart");
+                        viewStack.push(confirmActions);
+                    }
+                }
+
+                PowerTile {
+                    icon: "\uf186"
+                    label: qsTr("Suspend")
+                    accentColor: theme.colors.tertiary
+                    onClicked: {
+                        root.currentAccentColor = accentColor;
+                        root.pendingActionCommand = ["systemctl", "suspend"];
+                        root.pendingActionMessage = qsTr("Suspend System?");
+                        root.confirmActionText = qsTr("Suspend");
+                        viewStack.push(confirmActions);
+                    }
+                }
+
+                PowerTile {
+                    icon: "\uf08b"
+                    label: qsTr("Log Out")
+                    accentColor: theme.colors.primary
+                    onClicked: {
+                        root.currentAccentColor = accentColor;
+                        root.pendingActionCommand = ["hyprctl", "dispatch", "exit"];
+                        root.pendingActionMessage = qsTr("Exit Session?");
+                        root.confirmActionText = qsTr("Log Out");
+                        viewStack.push(confirmActions);
+                    }
+                }
             }
-        },
-        State {
-            name: "default"
-            when: viewStack.depth <= 1
-            PropertyChanges {
-                target: root
-                title: qsTr("Power Options")
+        }
+    }
+
+    Component {
+        id: confirmActions
+        Item {
+            // حاوية تملأ الـ StackView لضمان مرجع التوسيط
+            width: viewStack.width
+            height: viewStack.height
+
+            RowLayout {
+                anchors.centerIn: parent
+                spacing: theme.dimensions.spacingLarge * 1.5
+
+                MButton {
+                    text: qsTr("Back")
+                    iconText: "\uf060"
+                    iconFirst: true
+                    Layout.preferredWidth: 160
+                    Layout.preferredHeight: 55
+                    // شفافية متناسقة
+                    normalBackground: Qt.rgba(theme.colors.topbarBgColorV1.r, theme.colors.topbarBgColorV1.g, theme.colors.topbarBgColorV1.b, 0.4)
+                    onClicked: viewStack.pop()
+                }
+
+                MButton {
+                    text: root.confirmActionText
+                    iconText: "\uf00c"
+                    Layout.preferredWidth: 200
+                    Layout.preferredHeight: 55
+                    // شفافية بلون الأكشن المختار
+                    normalBackground: Qt.rgba(root.currentAccentColor.r, root.currentAccentColor.g, root.currentAccentColor.b, 0.6)
+                    normalForeground: "#ffffff"
+                    focus: true
+                    Keys.onReturnPressed: clicked()
+                    onClicked: powerActionProcess.start()
+                }
             }
         }
-    ]
+    }
 
-    Process {
-        id: powerActionProcess
-        running: false
-        property string lastStderrOutput: ""
-        property string lastStdoutOutput: ""
+    // --- مكون البلاطة (PowerTile) ---
+    component PowerTile: Rectangle {
+        id: tileRoot
+        property string icon: ""
+        property string label: ""
+        property color accentColor: theme.colors.primary
+        signal clicked
+        width: 150
+        height: 150
 
-        function start() {
-            command = root.pendingActionCommand;
-            running = true;
-        }
+        radius: theme.dimensions.elementRadius
+        color: mouseArea.hovered ? Qt.rgba(accentColor.r, accentColor.g, accentColor.b, 0.15) : Qt.rgba(theme.colors.topbarBgColorV1.r, theme.colors.topbarBgColorV1.g, theme.colors.topbarBgColorV1.b, 0.3)
 
-        stderr: SplitParser {
-            onRead: data => {
-                powerActionProcess.lastStderrOutput += data;
-                console.warn("Power action stderr:", data);
+        border.color: mouseArea.hovered ? accentColor : Qt.rgba(1, 1, 1, 0.1)
+        border.width: 1
+
+        ColumnLayout {
+            anchors.centerIn: parent
+            spacing: 10
+
+            Text {
+                text: icon
+                font.family: theme.typography.iconFont
+                font.pixelSize: 40
+                color: mouseArea.hovered ? accentColor : theme.colors.topbarFgColor
+                Layout.alignment: Qt.AlignHCenter
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
+            }
+
+            Text {
+                text: label
+                font.family: theme.typography.bodyFont
+                font.pixelSize: theme.typography.medium
+                color: theme.colors.topbarFgColor
+                Layout.alignment: Qt.AlignHCenter
+                opacity: mouseArea.hovered ? 1.0 : 0.6
             }
         }
 
-        stdout: SplitParser {
-            onRead: data => {
-                powerActionProcess.lastStdoutOutput += data;
-                console.log("Power action stdout:", data);
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: tileRoot.clicked()
+        }
+
+        scale: mouseArea.pressed ? 0.96 : (mouseArea.hovered ? 1.04 : 1.0)
+        Behavior on scale {
+            NumberAnimation {
+                duration: 150
+                easing.type: Easing.OutBack
             }
-        }
-
-        onRunningChanged: if (running) {
-            lastStderrOutput = "";
-            lastStdoutOutput = "";
-        }
-
-        onExited: {
-            if (exitCode !== 0)
-                console.error("Power action failed! Exit Code:", exitCode, "Stderr:", lastStderrOutput);
-            else
-                console.log("Power action completed successfully.");
         }
     }
 }

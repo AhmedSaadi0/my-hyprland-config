@@ -2,12 +2,12 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-// import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
+import QtQuick.Effects
 
-// import Qt5Compat.GraphicalEffects
+import "root:/themes"
 
 MouseArea {
     id: root
@@ -32,18 +32,29 @@ MouseArea {
         anchor.window: this.QsWindow.window
     }
 
+    // 1. الأيقونة الأصلية (المصدر) - نجعلها مخفية
     IconImage {
-        id: trayIcon
+        id: trayIconSource
         width: parent.implicitWidth
         height: parent.implicitHeight
-        // visible:
         source: root.modelData.icon
         anchors.centerIn: parent
-        // onPaletteChanged: {
-        //     // var oldSource = source;
-        //     // source = "";
-        //     // source = oldSource;
-        //     console.info("CHHH -> " + oldSource);
-        // }
+        visible: false // نخفيها لأننا سنعرض النسخة الملونة
+    }
+
+    // 2. المؤثر الذي سيقوم بتلوين الأيقونة
+    MultiEffect {
+        id: coloredIcon
+        anchors.fill: trayIconSource
+        source: trayIconSource
+
+        // تفعيل التلوين الكامل
+        colorization: 1.0
+
+        colorizationColor: ThemeManager.selectedTheme.colors.topbarFgColorV2
+
+        // لتصحيح التباين والسطوع في حال كانت الأيقونة الأصلية باهتة
+        brightness: 0.0
+        contrast: 0.0
     }
 }

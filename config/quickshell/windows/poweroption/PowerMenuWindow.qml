@@ -1,14 +1,18 @@
+// windows/poweroption/PowerMenuWindow.qml
+
 import Quickshell
 import QtQuick
+import QtQuick.Layouts
 import Quickshell.Wayland
 import "root:/windows/leftwindow/dashboard" as DashboardComponents
 import "root:/config/EventNames.js" as Events
-import "root:/services" // For EventBus
+import "root:/services"
+import "root:/themes"
+import "root:/config"
 
 PanelWindow {
     id: root
 
-    // Make the window cover the entire screen
     anchors {
         top: true
         bottom: true
@@ -16,39 +20,61 @@ PanelWindow {
         right: true
     }
 
-    // Crucial: Tell the window manager NOT to reserve space for this window.
-    // It will float over your desktop/apps.
     exclusionMode: ExclusionMode.Ignore
+    WlrLayershell.namespace: "NibrasShell:logout"
+    WlrLayershell.layer: WlrLayer.Overlay
 
-    // Transparent background
-    color: "transparent"
+    WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+
+    color: ThemeManager.selectedTheme.colors.tertiary.alpha(0.3)
     visible: false
 
-    // 1. Click outside to close
+    Item {
+        id: keyboardHandler
+        anchors.fill: parent
+        focus: true
+
+        Keys.onEscapePressed: event => {
+            root.visible = false;
+        }
+
+        Keys.onPressed: event => {
+            if (event.key === Qt.Key_Escape) {
+                root.visible = false;
+            }
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
         onClicked: root.visible = false
     }
 
-    // 2. The Power Options Card
     PowerOptions {
         id: powerCard
         anchors.centerIn: parent
         width: 320
-        height: implicitHeight > 0 ? implicitHeight : 200
 
-        // Prevent clicking the card from closing the window
         MouseArea {
-            anchors.fill: parent
-            z: -1  // <--- ADD THIS LINE
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            z: -1
             propagateComposedEvents: false
             onClicked: mouse.accepted = true
         }
+
+        onClose: root.visible = false
     }
 
-    // 3. Logic to toggle visibility
+    // onVisibleChanged: {
+    //     if (visible) {
+    //         keyboardHandler.forceActiveFocus();
+    //         console.log("Window visible, forcing focus...");
+    //     }
+    // }
+
     Component.onCompleted: {
-        EventBus.on(Events.TOGGLE_POWER_MENU, function() {
+        EventBus.on(Events.TOGGLE_POWER_MENU, function () {
             root.visible = !root.visible;
         });
     }

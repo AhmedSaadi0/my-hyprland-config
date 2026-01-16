@@ -76,10 +76,12 @@ PanelWindow {
 
     SystemTray {
         id: systemTray
+        layer.enabled: true
+        layer.effect: Shadow {}
         anchors {
             left: parent.left
             verticalCenter: parent.verticalCenter
-            leftMargin: 10
+            leftMargin: 5
         }
     }
 
