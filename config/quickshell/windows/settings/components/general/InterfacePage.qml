@@ -12,6 +12,7 @@ import "root:/config/ConstValues.js" as C
 BaseGeneralSettings {
     id: page
     title: qsTr("Workspace & Layout")
+    icon: ""
 
     property var theme: page.selectedTheme
 
@@ -55,49 +56,6 @@ BaseGeneralSettings {
         spacing: theme.dimensions.spacingLarge
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignHCenter
-
-        // --- HERO ICON ---
-        ColumnLayout {
-            Layout.alignment: Qt.AlignHCenter
-            spacing: 10
-
-            Rectangle {
-                Layout.alignment: Qt.AlignHCenter
-                width: 70
-                height: 70
-                radius: 35
-                color: theme.colors.primary
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "" // Window/Interface Icon
-                    font.family: theme.typography.iconFont
-                    font.pixelSize: 32
-                    color: theme.colors.onPrimary
-                }
-            }
-
-            Text {
-                text: qsTr("Interface Customization")
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.heading3Size
-                font.bold: true
-                color: theme.colors.leftMenuFgColorV1
-                Layout.alignment: Qt.AlignHCenter
-            }
-        }
-
-        // Separator
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredWidth: 600
-            Layout.alignment: Qt.AlignHCenter
-            height: 1
-            color: theme.colors.subtleText
-            opacity: 0.2
-            Layout.topMargin: 10
-            Layout.bottomMargin: 10
-        }
 
         // --- FORM CONTENT ---
         GridLayout {

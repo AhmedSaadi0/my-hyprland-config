@@ -11,6 +11,8 @@ import "root:/config"
 BaseGeneralSettings {
     id: page
     title: qsTr("Personal & Regional Info")
+    icon: ""
+    alwaysCollapsed: true
 
     property var theme: page.selectedTheme
 

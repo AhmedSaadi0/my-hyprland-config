@@ -11,12 +11,14 @@ import "root:/components"
 import "root:/config"
 import "root:/themes"
 import "root:/windows/settings/components"
+import "root:/windows/settings/components/base"
 
 BaseThemeSettings {
     id: root
-
     title: qsTr("Wallpaper & Colors")
+    icon: ""
     showApplyButton: true
+
     property int preferredWidth: 600
 
     // ========================================================================
@@ -96,7 +98,7 @@ BaseThemeSettings {
     FileDialog {
         id: fileDialog
         title: "Select Wallpaper Image"
-        nameFilters: ["Image files (*.jpg *.png *.webp *.bmp)"]
+        nameFilters: ["Image files or a video (*.jpg *.png *.webp *.bmp *.jfi *.mp4)"]
         onAccepted: {
             var path = file.toString().replace("file://", "");
             root.localStaticWallpaper = path;
@@ -346,14 +348,16 @@ BaseThemeSettings {
 
             // Interval
             SliderWithLabel {
-                label: qsTr("Change Interval (seconds)")
-                from: 10
-                to: 3600
-                stepSize: 10
-                value: root.localInterval
+                label: qsTr("Change Interval (Minutes)")
+                from: 1
+                to: 59
+                // stepSize: 1
+                stepSize: 0.01
+                decimals: 2
+                value: root.localInterval / 60
                 onEditingFinished: val => {
-                    root.localInterval = val;
-                    root.applySingleProperty("_dynamicWallpapersInterval", val * 1000);
+                    root.localInterval = (val * 60);
+                    // root.applySingleProperty("_dynamicWallpapersInterval", (val * 60) * 1000);
                 }
             }
             DescriptionLabel {

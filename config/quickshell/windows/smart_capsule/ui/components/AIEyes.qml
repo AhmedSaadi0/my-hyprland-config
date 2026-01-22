@@ -1,3 +1,5 @@
+// windows/smart_capsule/ui/components /AIEyes.qml
+
 import QtQuick
 import "root:/config"
 import "../../logic"
@@ -64,7 +66,7 @@ Item {
     NibrasShellShortcut {
         name: "setSleeping"
         onPressed: {
-            EyeController.showEmotion("sleeping");
+            EyeController.showEmotion("sleeping", 5000);
         }
     }
 
@@ -256,12 +258,14 @@ Item {
             id: leftEye
             color: root.eyeColor
             animDur: 200
+            isLeftEye: true
         }
 
         AIEyePart {
             id: rightEye
             color: root.eyeColor
             animDur: 200
+            isLeftEye: false
         }
     }
 
@@ -490,27 +494,47 @@ Item {
             name: "sleeping"
             PropertyChanges {
                 target: leftEye
-                eyeW: 8
+                eyeW: 10
                 eyeH: 2
-                eyeR: 1
+
+                // نخفي الحاجب أو نتركه مسترخياً
                 browY: 0
                 browAngle: 0
-                browW: 8
+                browW: 10
+                showBrow: false
+
+                // تصفير الأشكال الأخرى
                 isHappyShape: false
+                isHeartShape: false
+                isSadShape: false
+                isThinkingShape: false
+                isDeadShape: false
+                isListeningShape: false
+                isFocusedShape: false
+
+                // تفعيل شكل النوم
+                isSleepingShape: true
             }
             PropertyChanges {
                 target: rightEye
-                eyeW: 8
+                eyeW: 10
                 eyeH: 2
-                eyeR: 1
                 browY: 0
                 browAngle: 0
-                browW: 8
+                browW: 10
+                showBrow: false
                 isHappyShape: false
+                isHeartShape: false
+                isSadShape: false
+                isThinkingShape: false
+                isDeadShape: false
+                isListeningShape: false
+                isFocusedShape: false
+                isSleepingShape: true
             }
             PropertyChanges {
                 target: eyesRow
-                spacing: 6
+                spacing: 3
             }
         },
         State {
@@ -639,23 +663,31 @@ Item {
             name: "bored"
             PropertyChanges {
                 target: leftEye
-                eyeW: 12 // عين عريضة قليلاً
-                eyeH: 5  // نصف مغلقة (Normal Height ~10)
-                eyeR: 2  // زوايا أقل استدارة
+                eyeW: 12        // عرض متوسط
+                eyeH: 3         // ارتفاع صغير جداً (خط سميك قليلاً)
+                eyeR: 0         // زوايا قائمة (مستطيل)
 
-                // الحواجب منخفضة ومسطحة تماماً
-                browY: -1 // قريبة جداً من العين
+                // الحاجب ملاصق تماماً للعين
+                browY: -1
                 browAngle: 0
                 browW: 12
-                showBrow: true
+                showBrow: true  // الحاجب يظهر كأنه الجفن العلوي الثقيل
 
+                // استخدام العين العادية (NormalEye) بشكل مستطيل
                 isHappyShape: false
+                isHeartShape: false
+                isSadShape: false
+                isThinkingShape: false
+                isDeadShape: false
+                isListeningShape: false
+                isFocusedShape: false
+                isSleepingShape: false
             }
             PropertyChanges {
                 target: rightEye
                 eyeW: 12
-                eyeH: 5
-                eyeR: 2
+                eyeH: 3
+                eyeR: 0
 
                 browY: -1
                 browAngle: 0
@@ -663,11 +695,18 @@ Item {
                 showBrow: true
 
                 isHappyShape: false
+                isHeartShape: false
+                isSadShape: false
+                isThinkingShape: false
+                isDeadShape: false
+                isListeningShape: false
+                isFocusedShape: false
+                isSleepingShape: false
             }
             PropertyChanges {
                 target: eyesRow
-                spacing: 7
-            } // تباعد العيون قليلاً يوحي بالشرود
+                spacing: 6
+            }
         },
         State {
             name: "love"

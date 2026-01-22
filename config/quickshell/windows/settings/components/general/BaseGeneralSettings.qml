@@ -6,16 +6,13 @@ import QtQuick.Controls as Controls
 import "root:/components"
 import "root:/config"
 import "root:/themes"
+import "root:/windows/settings/components/base"
 
 M3GroupBox {
     id: root
 
     // --- إعدادات العنوان الافتراضية ---
-    titleTopMargin: 10
     property var selectedTheme: ThemeManager.selectedTheme
-
-    titlePixelSize: typ("heading1Size", 22)
-    titleFontWeight: Font.Bold
 
     // --- حالة البيانات ---
     property bool isLoading: true

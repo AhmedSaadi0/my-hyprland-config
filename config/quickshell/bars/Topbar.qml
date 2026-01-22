@@ -56,7 +56,7 @@ PanelWindow {
 
     Rectangle {
         id: monitors
-        width: 162
+        width: 275
         height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
         color: ThemeManager.selectedTheme.colors.topbarBgColorV1
@@ -70,7 +70,9 @@ PanelWindow {
         }
 
         Monitors {
-            anchors.centerIn: parent
+            height: parent.height
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 
@@ -95,4 +97,25 @@ PanelWindow {
             leftMargin: 10
         }
     }
+
+    // ActiveWindow {
+    //     id: activeWindow
+    //     height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
+    //     layer.enabled: true
+    //     layer.effect: Shadow {}
+    //
+    //     //  ajuste pegado lado izquierdo
+    //     anchors {
+    //         // Lado Izquierdo: Se pega al SystemTray
+    //         left: systemTray.right
+    //         leftMargin: 0
+    //
+    //         // Lado Derecho: Se pega a Monitors
+    //         // Esto obliga al widget a estirarse para llenar todo el espacio
+    //         right: monitors.left
+    //         rightMargin: 10
+    //
+    //         verticalCenter: parent.verticalCenter
+    //     }
+    // }
 }

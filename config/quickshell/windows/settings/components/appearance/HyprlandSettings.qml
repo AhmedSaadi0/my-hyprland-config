@@ -18,6 +18,7 @@ BaseThemeSettings {
 
     // --- Header ---
     title: qsTr("Hyprland Settings")
+    icon: ""
     showApplyButton: true
 
     // --- Local State ---

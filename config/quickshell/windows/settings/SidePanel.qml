@@ -117,8 +117,8 @@ Rectangle {
                 pageIndex: 6
             },
             {
-                name: qsTr("Desktop Clock"),
-                icon: "",
+                name: qsTr("Desktop & CLock"),
+                icon: "",
                 type: "item",
                 pageIndex: 7
             },
@@ -130,7 +130,7 @@ Rectangle {
             },
             {
                 name: qsTr("Integration"),
-                icon: "",
+                icon: "󰒋",
                 type: "item",
                 pageIndex: 9
             },
