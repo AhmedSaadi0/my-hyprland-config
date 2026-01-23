@@ -36,6 +36,7 @@ PersistentProperties {
     property color _onWarning: "#ffffff"
 
     // topbar
+    // TODO: -> these colors must be changed to a better way, maybe follow m3 naming
     property color _topbarColor: Kirigami.Theme.backgroundColor
     property color _topbarFgColor: Kirigami.Theme.textColor
 

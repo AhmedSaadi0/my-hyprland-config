@@ -11,9 +11,6 @@ import "root:/components"
 M3GroupBox {
     id: root
     title: qsTr("Monitor Settings")
-    titleTopMargin: 10
-    titlePixelSize: selectedTheme.typography.heading1Size
-    titleFontWeight: Font.ExtraBold
 
     property var workingTheme
     property var selectedTheme

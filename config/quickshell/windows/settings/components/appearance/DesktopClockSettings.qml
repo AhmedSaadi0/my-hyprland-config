@@ -17,7 +17,8 @@ BaseThemeSettings {
     id: root
 
     // --- Header ---
-    title: qsTr("Desktop Clock Settings")
+    title: qsTr("Desktop & Clock Settings")
+    icon: ""
 
     // --- Local State ---
     property bool localEnabled: true

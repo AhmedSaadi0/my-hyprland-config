@@ -4,8 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-    
-import "./todo" as Todo 
+import "./todo" as Todo
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
 import "./weather"
@@ -91,12 +90,32 @@ StackView {
     // Lazy Loading Logic
     // ---------------------------------------------------------
     function getPage(index) {
-        // إذا كانت الصفحة مخلوقة مسبقاً في الذاكرة، أعد استخدامها فوراً
-        if (_instantiatedPages[index]) {
-            return _instantiatedPages[index];
+        let page = _instantiatedPages[index];
+
+        // 1. التحقق مما إذا كانت الصفحة موجودة في الكاش
+        if (page) {
+            try {
+                if (page.objectName === undefined && page !== null) {}
+
+                // --- الإصلاحات ---
+                page.visible = false; // إعادة تعيين الرؤية لبدء الحركة
+                page.opacity = 1.0;
+                page.scale = 1.0;
+                page.y = 0;
+
+                // هام جداً: إعادة تفعيل التفاعل للصفحة القادمة
+                page.enabled = true;
+                // هام جداً: رفع الصفحة لتكون فوق البقايا الشفافة
+                page.z = 1;
+
+                return page;
+            } catch (e) {
+                console.warn("Found dead object in cache for index:", index, "- Recreating it.");
+                _instantiatedPages[index] = null;
+            }
         }
 
-        // خريطة تربط الإندكس بالمكون المناسب
+        // --- كود الإنشاء ---
         let componentMap = {
             0: dashboardComponent,
             1: notiListComponent,
@@ -113,15 +132,19 @@ StackView {
         let selectedComponent = componentMap[index];
 
         if (selectedComponent) {
-            // إنشاء الصفحة لأول مرة
             let newPage = selectedComponent.createObject(stackView, {
-                "visible": false
+                "visible": false,
+                "StackView.visible": false
             });
 
             if (newPage) {
-                // حفظها في الكاش للمرات القادمة
                 _instantiatedPages[index] = newPage;
-                console.log("Lazy Loaded Page Index:", index); // للمراقبة (اختياري)
+                newPage.opacity = 1.0;
+                newPage.scale = 1.0;
+                newPage.y = 0;
+                // ضمان التفعيل
+                newPage.enabled = true;
+                newPage.z = 1;
                 return newPage;
             }
         }
@@ -148,11 +171,10 @@ StackView {
         _instantiatedPages[1] = notificationCompoObj;
 
         EventBus.on(Events.LEFT_MENU_IS_OPENED, function (newIndex) {
-            // تجاهل إذا كان نفس الاندكس أو اندكس غير صالح
             if (newIndex < 0 || newIndex === currentIndex)
                 return;
 
-            // تحديد اتجاه الحركة (للأعلى أم للأسفل)
+            // تحديد اتجاه الحركة
             if (newIndex > currentIndex) {
                 stackView.replaceEnter = enterFromBottom;
                 stackView.replaceExit = exitToTop;
@@ -161,11 +183,18 @@ StackView {
                 stackView.replaceExit = exitToBottom;
             }
 
-            // جلب الصفحة (سواء من الكاش أو إنشاء جديد)
             let targetPage = getPage(newIndex);
 
             if (targetPage) {
+                // قبل الاستبدال، نعطل تفاعل الصفحة القديمة فوراً
+                if (stackView.currentItem) {
+                    stackView.currentItem.enabled = false;
+                    stackView.currentItem.z = 0; // إنزالها في الترتيب
+                }
+
                 currentIndex = newIndex;
+                targetPage.visible = true;
+
                 stackView.replace(targetPage);
 
                 if (newIndex === stackView.appLauncherIndex && typeof targetPage.gainFocus === "function") {
@@ -173,6 +202,8 @@ StackView {
                 }
             }
         });
+        ;
+        ;
     }
 
     // ---------------------------------------------------------

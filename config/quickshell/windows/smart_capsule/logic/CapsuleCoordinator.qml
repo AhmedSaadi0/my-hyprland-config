@@ -15,13 +15,13 @@ Singleton {
     // ⚙️ Configuration (Timeouts & Thresholds)
     // ========================================================================
     property int _musicEyeReactDuration: 2000
-    property int _musicAnalysisTimeout: 10000
+    property int _musicAnalysisTimeout: 5000
     property int _musicBasicInfoTimeout: 3000
 
     property int _sysOsdTimeout: 2000
     property int _sysEyeReactDuration: 1000
 
-    property int _weatherTimeout: 8000
+    property int _weatherTimeout: 5000
     property int _weatherWinkDuration: 700
 
     property int _batChargingTimeout: 3000

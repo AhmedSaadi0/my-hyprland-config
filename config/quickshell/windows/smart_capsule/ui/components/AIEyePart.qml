@@ -1,3 +1,5 @@
+// windows/smart_capsule/ui/components/AIEyePart.qml
+
 import QtQuick
 import QtQuick.Shapes // ضروري للرسم
 
@@ -30,6 +32,8 @@ Item {
     property bool isDeadShape: false
     property bool isListeningShape: false
     property bool isFocusedShape: false
+    property bool isSleepingShape: false
+    property bool isLeftEye: false
 
     // أبعاد المكون الرئيسي
     height: 24
@@ -69,8 +73,18 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         // أنيميشن للأبعاد عند تغيير الحالة
-        Behavior on width { NumberAnimation { duration: root.animDur; easing.type: Easing.OutBack } }
-        Behavior on height { NumberAnimation { duration: root.animDur; easing.type: Easing.OutBack } }
+        Behavior on width {
+            NumberAnimation {
+                duration: root.animDur
+                easing.type: Easing.OutBack
+            }
+        }
+        Behavior on height {
+            NumberAnimation {
+                duration: root.animDur
+                easing.type: Easing.OutBack
+            }
+        }
 
         // --- المكونات الفرعية ---
 
@@ -79,9 +93,7 @@ Item {
             eyeR: root.eyeR
             animDur: root.animDur
             // تكون نشطة فقط إذا لم تكن أي حالة خاصة أخرى مفعلة
-            active: !(root.isHappyShape || root.isHeartShape || root.isSadShape || 
-                      root.isThinkingShape || root.isDeadShape || root.isListeningShape || 
-                      root.isFocusedShape)
+            active: !(root.isHappyShape || root.isHeartShape || root.isSadShape || root.isThinkingShape || root.isDeadShape || root.isListeningShape || root.isFocusedShape || root.isSleepingShape)
         }
 
         HappyEye {
@@ -121,6 +133,7 @@ Item {
             color: root.color
             eyeW: root.eyeW
             active: root.isListeningShape
+            // mirrored: root.isLeftEye
         }
 
         FocusedEye {
@@ -128,6 +141,13 @@ Item {
             eyeW: root.eyeW
             eyeH: root.eyeH
             active: root.isFocusedShape
+        }
+
+        SleepingEye {
+            color: root.color
+            eyeW: root.eyeW
+            eyeH: root.eyeH
+            active: root.isSleepingShape
         }
     }
 }

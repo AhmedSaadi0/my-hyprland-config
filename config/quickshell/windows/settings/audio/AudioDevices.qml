@@ -7,16 +7,15 @@ import QtQuick.Controls
 import org.kde.kirigami as Kirigami
 import Quickshell.Services.Pipewire
 
+import "root:/windows/settings/components/base"
 import "root:/windows/settings/audio"
 import "root:/components"
 import "root:/themes"
 
 M3GroupBox {
     id: devicesList
-    title: qsTr("Audio Devices")
-    titleTopMargin: 10
-    titlePixelSize: selectedTheme.typography.heading1Size
-    titleFontWeight: Font.ExtraBold
+    title: qsTr("Audio Devices Settings")
+    icon: ""
 
     property var selectedTheme: ThemeManager.selectedTheme
 

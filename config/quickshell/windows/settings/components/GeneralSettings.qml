@@ -1,4 +1,4 @@
-// settings/GeneralSettings.qml
+// windows/settings/components/GeneralSettings.qml
 pragma ComponentBehavior: Bound
 
 import QtQuick
@@ -48,8 +48,9 @@ M3GroupBox {
         property string networkMonitor: ""
         property int networkInterval: 1000
         property string aiPreferredLanguage: "English"
-        property string aiProvider: "gemini" //choices=["local", "gemini", "openai", "deepseek"]
+        property string aiProvider: "gemini" //choices=["local", "gemini", "openai", "deepseek", "openrouter"]
         property string geminiApiKey: ""
+        property string openrouterApiKey: ""
         property string weatherAiApiKey: ""
         property string musicAiApiKey: ""
         property string weatherPersona: ""
@@ -142,6 +143,7 @@ M3GroupBox {
 
         tempConfig.weatherAiModel = App.weatherAiModel;
         tempConfig.musicAiModel = App.musicAiModel;
+        tempConfig.openrouterApiKey = App.openrouterApiKey || "";
 
         tempConfig.enableHighCpuAlert = App.enableHighCpuAlert;
         tempConfig.playCpuAlarmSound = App.playCpuAlarmSound;
@@ -178,6 +180,7 @@ M3GroupBox {
             "aiPreferredLanguage": tempConfig.aiPreferredLanguage,
             "aiProvider": tempConfig.aiProvider,
             "geminiApiKey": tempConfig.geminiApiKey,
+            "openrouterApiKey": tempConfig.openrouterApiKey,
             "weatherAiApiKey": tempConfig.weatherAiApiKey,
             "musicAiApiKey": tempConfig.musicAiApiKey,
             "weatherPersona": tempConfig.weatherPersona,
@@ -589,7 +592,7 @@ M3GroupBox {
                     SettingsComboBox {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 30
-                        model: ["local", "gemini", "openai", "deepseek"]
+                        model: ["local", "gemini", "openai", "deepseek", "openrouter"]
                         currentIndex: model.indexOf(tempConfig.aiProvider)
                         displayText: currentIndex === -1 ? tempConfig.aiProvider : currentText
                         onActivated: index => tempConfig.aiProvider = textAt(index)
@@ -694,6 +697,42 @@ M3GroupBox {
         // =================================================================
         ColumnLayout {
             Layout.fillWidth: true
+            visible: tempConfig.aiProvider === "openrouter"
+            spacing: 5
+
+            Controls.Label {
+                text: qsTr("OpenRouter Master API Key")
+                font.bold: true
+                color: selectedTheme.colors.primary
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 5
+                EditableField {
+                    Layout.fillWidth: true
+                    placeholderText: "sk-or-v1-..."
+                    text: tempConfig.openrouterApiKey
+                    selectedTheme: root.selectedTheme
+                    echoMode: orShowBtn.checked ? TextInput.Normal : TextInput.Password
+                    onEditingFinished: tempConfig.openrouterApiKey = text
+                }
+                MButton {
+                    id: orShowBtn
+                    checkable: true
+                    text: checked ? "" : ""
+                    font.family: selectedTheme.typography.iconFont
+                    Layout.preferredWidth: 30
+                    Layout.preferredHeight: 30
+                }
+            }
+            Kirigami.Separator {
+                Layout.fillWidth: true
+                Layout.topMargin: 5
+                Layout.bottomMargin: 5
+            }
+        }
+        ColumnLayout {
+            Layout.fillWidth: true
             spacing: selectedTheme.dimensions.spacingMedium
             Layout.bottomMargin: selectedTheme.dimensions.spacingLarge
 
@@ -757,6 +796,7 @@ M3GroupBox {
                     }
                 }
                 SettingsComboBox {
+                    visible: tempConfig.aiProvider !== "openrouter"
                     Layout.fillWidth: true
                     Layout.preferredWidth: 2
                     Layout.preferredHeight: 30
@@ -765,6 +805,16 @@ M3GroupBox {
                     displayText: currentIndex === -1 ? (tempConfig.weatherAiModel || "Select Model") : currentText
                     onActivated: index => tempConfig.weatherAiModel = textAt(index)
                     enabled: !App.modelsManager.isLoading
+                }
+                EditableField {
+                    visible: tempConfig.aiProvider === "openrouter"
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 2
+                    Layout.preferredHeight: 30
+                    placeholderText: "e.g. qwen/qwen-2-7b:free"
+                    text: tempConfig.weatherAiModel
+                    selectedTheme: root.selectedTheme
+                    onEditingFinished: tempConfig.weatherAiModel = text
                 }
             }
 
@@ -798,6 +848,7 @@ M3GroupBox {
                     }
                 }
                 SettingsComboBox {
+                    visible: tempConfig.aiProvider !== "openrouter"
                     Layout.fillWidth: true
                     Layout.preferredWidth: 2
                     Layout.preferredHeight: 30
@@ -806,6 +857,16 @@ M3GroupBox {
                     displayText: currentIndex === -1 ? (tempConfig.musicAiModel || "Select Model") : currentText
                     onActivated: index => tempConfig.musicAiModel = textAt(index)
                     enabled: !App.modelsManager.isLoading
+                }
+                EditableField {
+                    visible: tempConfig.aiProvider === "openrouter"
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 2
+                    Layout.preferredHeight: 30
+                    placeholderText: "e.g. anthropic/claude-3-haiku"
+                    text: tempConfig.musicAiModel
+                    selectedTheme: root.selectedTheme
+                    onEditingFinished: tempConfig.musicAiModel = text
                 }
             }
         }

@@ -16,20 +16,16 @@ Rectangle {
 
     property string wallpaper: ThemeManager.getCurrentWallpaper() !== undefined ? ThemeManager.getCurrentWallpaper() : ""
 
-    Image {
+    MediaItem {
         id: backgroundImage
         source: wallpaper
+
+        quality: "low"
+
+        active: visible && (parent.parent ? parent.parent.visible : true)
+
         width: App.menuStyle == C.FLOATING ? ThemeManager.selectedTheme.dimensions.menuWidth - 24 : ThemeManager.selectedTheme.dimensions.menuWidth - 14
         height: 200
-        clip: true
-        fillMode: Image.PreserveAspectCrop
-
-        sourceSize.width: width
-        sourceSize.height: height
-
-        // 2. التحميل غير المتزامن
-        // يمنع تجميد الواجهة أثناء قراءة ملف الصورة من القرص
-        asynchronous: true
 
         anchors {
             topMargin: (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2) - 1
@@ -37,23 +33,16 @@ Rectangle {
             horizontalCenter: parent.horizontalCenter
         }
 
-        layer.enabled: parent.parent.visible
-        layer.smooth: true
-        layer.effect: OpacityMask {
-            maskSource: Item {
-                width: backgroundImage.width
-                height: backgroundImage.height
-                Rectangle {
-                    id: topMask
-                    anchors.top: parent.top
-                    width: parent.width
-                    height: parent.height
-                    radius: ThemeManager.selectedTheme.dimensions.elementRadius - 3
-                    // topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius - 3
-                    // topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius - 3
-                }
-            }
-        }
+        // layer.enabled: true
+        // layer.smooth: true
+        // layer.effect: OpacityMask {
+        //     maskSource: Rectangle {
+        //         width: backgroundImage.width
+        //         height: backgroundImage.height
+        //         radius: ThemeManager.selectedTheme.dimensions.elementRadius - 3
+        //         visible: false // مهم: إخفاء مصدر القناع حتى لا يظهر مربع أبيض
+        //     }
+        // }
     }
 
     Rectangle {

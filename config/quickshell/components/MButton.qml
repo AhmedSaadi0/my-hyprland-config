@@ -1,3 +1,5 @@
+// components/MButton.qml
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -67,7 +69,7 @@ Button {
     Behavior on scale {
         NumberAnimation {
             duration: 150
-            easing.type: Easing.OutQuad 
+            easing.type: Easing.OutQuad
         }
     }
     // ---------------------------------------------------------

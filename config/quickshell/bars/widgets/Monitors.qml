@@ -7,107 +7,96 @@ import "root:/services"
 import "root:/components"
 
 RowLayout {
-    // anchors.fill: parent
-    // width: 120
-    spacing: 6
+    spacing: 8
 
-    TopbarCircularProgress {
-        id: brightnessUsage
-        icon: "󰃠"
-        value: Brightness.brightness
-        iconFontSize: 10
-        activeProcess: false
-        iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
-
-        backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
-        foregroundColor: ThemeManager.selectedTheme.colors.primary
-        iconColor: ThemeManager.selectedTheme.colors.primary
-
-        onValueChanged: function () {
-            const percentage = value * 100;
-            if (percentage >= 90) {
-                brightnessUsage.icon = "󰃠"; // nf-mdi-brightness_7
-            } else if (percentage >= 70) {
-                brightnessUsage.icon = "󰃟"; // nf-mdi-brightness_6
-            } else if (percentage >= 50) {
-                brightnessUsage.icon = "󰃞"; // nf-mdi-brightness_5
-            } else if (percentage >= 30) {
-                brightnessUsage.icon = "󰃝"; // nf-mdi-brightness_4
-            } else if (percentage > 10) {
-                brightnessUsage.icon = "󰃛"; // nf-mdi-brightness_2
-            } else {
-                brightnessUsage.icon = "󰃚"; // nf-mdi-brightness_1
-            }
-        }
-    }
-
-    TopbarCircularProgress {
-        id: audioUsage
-        icon: ""
-        value: Audio.volume
-        iconFontSize: 10
-        activeProcess: false
-
-        iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
-        backgroundColor: ThemeManager.selectedTheme.colors.secondary.alpha(0.2)
-        foregroundColor: ThemeManager.selectedTheme.colors.secondary
-        iconColor: ThemeManager.selectedTheme.colors.secondary
-
-        readonly property bool muted: Audio.muted
-
-        onMutedChanged: function () {
-            const percentage = value * 100;
-            if (Audio.muted) {
-                audioUsage.icon = "󰖁";
-            } else if (percentage >= 75) {
-                audioUsage.icon = "";
-            } else if (percentage >= 50) {
-                audioUsage.icon = "󰕾";
-            } else if (percentage > 0) {
-                audioUsage.icon = "󰖀";
-            } else {
-                audioUsage.icon = "󰖁";
-            }
-        }
-
-        onValueChanged: function () {
-            const percentage = value * 100;
-            if (Audio.muted) {
-                audioUsage.icon = "󰖁";
-            } else if (percentage >= 75) {
-                audioUsage.icon = "";
-            } else if (percentage >= 50) {
-                audioUsage.icon = "󰕾";
-            } else if (percentage > 0) {
-                audioUsage.icon = "󰖀";
-            } else {
-                audioUsage.icon = "󰖁";
-            }
-        }
-    }
-
-    // Separator
-    Rectangle {
-        width: 1
-        height: 16
-        color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
+    // 1. تنسيق النص الرقمي
+    component ValueLabel: Text {
+        color: ThemeManager.selectedTheme.colors.primary
+        font.family: ThemeManager.selectedTheme.typography.fontFamily
+        font.pixelSize: 12
+        font.bold: true
         Layout.alignment: Qt.AlignVCenter
     }
 
-    Tempreture {
-        iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+    // 2. شكل الفاصل العمودي
+    component VerticalDivider: Rectangle {
+        width: 1
+        height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight / 1.9
+        color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
+        Layout.alignment: Qt.AlignVCenter
+        Layout.leftMargin: 2
+        Layout.rightMargin: 2
     }
-    Battery {
-        glowIcon: false
-        iconColor: ThemeManager.selectedTheme.colors.primary
-        iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
-        backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
-        foregroundColor: ThemeManager.selectedTheme.colors.primary
+
+    // --- 1. Temperature ---
+    Row {
+        spacing: 5
+        Layout.alignment: Qt.AlignVCenter
+        Tempreture {
+            id: tempMonitor
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+        }
+        ValueLabel {
+            // إضافة Math.round هنا لإزالة الفواصل
+            text: Math.round(tempMonitor.value * 100) + "°C"
+            color: tempMonitor.fgNormal
+        }
     }
-    Ram {
-        iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+
+    VerticalDivider {
+        Layout.alignment: Qt.AlignVCenter
     }
-    Cpu {
-        iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+
+    // --- 2. Battery ---
+    Row {
+        spacing: 5
+        Layout.alignment: Qt.AlignVCenter
+        Battery {
+            id: batteryMonitor
+            glowIcon: false
+            iconColor: ThemeManager.selectedTheme.colors.primary
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+            backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
+            foregroundColor: ThemeManager.selectedTheme.colors.primary
+        }
+        ValueLabel {
+            text: Math.round(batteryMonitor.value * 100) + "%"
+        }
+    }
+
+    VerticalDivider {
+        Layout.alignment: Qt.AlignVCenter
+    }
+
+    // --- 3. RAM ---
+    Row {
+        spacing: 5
+        Layout.alignment: Qt.AlignVCenter
+        Ram {
+            id: ramMonitor
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+        }
+        ValueLabel {
+            text: Math.round(ramMonitor.value * 100) + "%"
+            color: ramMonitor.fgNormal
+        }
+    }
+
+    VerticalDivider {
+        Layout.alignment: Qt.AlignVCenter
+    }
+
+    // --- 4. CPU ---
+    Row {
+        spacing: 5
+        Layout.alignment: Qt.AlignVCenter
+        Cpu {
+            id: cpuMonitor
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+        }
+        ValueLabel {
+            text: Math.round(cpuMonitor.value * 100) + "%"
+            color: cpuMonitor.fgNormal
+        }
     }
 }

@@ -1,3 +1,5 @@
+// windows/settings/SettingsWindow.qml
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
@@ -9,6 +11,9 @@ import "root:/themes"
 import "root:/config/EventNames.js" as Events
 import "root:/config"
 import "root:/components"
+import "root:/windows/settings/components"
+import "root:/windows/settings/components/general"
+import "root:/windows/settings/components/appearance"
 import "./audio"
 
 Controls.ApplicationWindow {
@@ -42,6 +47,7 @@ Controls.ApplicationWindow {
         spacing: 0
 
         SidePanel {
+            // التنقل يعتمد على الاندكس القادم من القائمة الجانبية
             onNavigateTo: index => contentStack.navigateTo(index)
         }
 
@@ -56,13 +62,37 @@ Controls.ApplicationWindow {
             property var pages: []
             property int currentIndex: 0
 
-            // --- Pages Definitions ---
+            // =========================================================
+            // 1. تعريف المكونات (Components Definition)
+            // =========================================================
+
+            // --- New General Pages ---
             Component {
-                id: generalSettingsComp
-                GeneralSettings {
+                id: userProfileComp
+                UserProfilePage {
                     onCancelChanges: root.cancelAllChanges()
                 }
             }
+            Component {
+                id: interfaceComp
+                InterfacePage {
+                    onCancelChanges: root.cancelAllChanges()
+                }
+            }
+            Component {
+                id: aiComp
+                AIPage {
+                    onCancelChanges: root.cancelAllChanges()
+                }
+            }
+            Component {
+                id: systemComp
+                SystemPage {
+                    onCancelChanges: root.cancelAllChanges()
+                }
+            }
+
+            // --- Existing Appearance Pages ---
             Component {
                 id: wallpaperSettingsComp
                 WallpaperSettings {
@@ -99,6 +129,8 @@ Controls.ApplicationWindow {
                     onCancelChanges: root.cancelAllChanges()
                 }
             }
+
+            // --- Devices ---
             Component {
                 id: audioDevicesComp
                 AudioDevices {
@@ -110,35 +142,69 @@ Controls.ApplicationWindow {
                 MonitorsSettings {}
             }
 
+            // =========================================================
+            // 2. إنشاء وترتيب الصفحات (Initialization)
+            // =========================================================
             Component.onCompleted: {
-                pages = [generalSettingsComp.createObject(contentStack, {
+                // ملاحظة: الترتيب هنا يجب أن يطابق تماماً الترتيب في SidePanel.qml
+                pages = [
+                    // General Section
+                    userProfileComp.createObject(contentStack, {
                         visible: false
-                    }), wallpaperSettingsComp.createObject(contentStack, {
+                    }) // Index 0
+                    , interfaceComp.createObject(contentStack, {
                         visible: false
-                    }), colorsSettingsComp.createObject(contentStack, {
+                    })   // Index 1
+                    , aiComp.createObject(contentStack, {
                         visible: false
-                    }), layoutFontSettingsComp.createObject(contentStack, {
+                    })          // Index 2
+                    , systemComp.createObject(contentStack, {
                         visible: false
-                    }), desktopClockComp.createObject(contentStack, {
-                        visible: false
-                    }), hyprlandSettingsComp.createObject(contentStack, {
-                        visible: false
-                    }), integrationSettingsComp.createObject(contentStack, {
-                        visible: false
-                    }), audioDevicesComp.createObject(contentStack, {
-                        visible: false
-                        // }), monitorsSettingsComp.createObject(contentStack, {
-                        //     visible: false
-                    })];
+                    })      // Index 3
 
+                    ,
+
+                    // Appearance Section
+                    wallpaperSettingsComp.createObject(contentStack, {
+                        visible: false
+                    }) // Index 4
+                    , colorsSettingsComp.createObject(contentStack, {
+                        visible: false
+                    })    // Index 5
+                    , layoutFontSettingsComp.createObject(contentStack, {
+                        visible: false
+                    })// Index 6
+                    , desktopClockComp.createObject(contentStack, {
+                        visible: false
+                    })      // Index 7
+                    , hyprlandSettingsComp.createObject(contentStack, {
+                        visible: false
+                    })  // Index 8
+                    , integrationSettingsComp.createObject(contentStack, {
+                        visible: false
+                    })// Index 9
+
+                    ,
+
+                    // Devices Section
+                    audioDevicesComp.createObject(contentStack, {
+                        visible: false
+                    })       // Index 10
+                ];
+
+                // عرض الصفحة الأولى افتراضياً
                 if (pages[0])
                     contentStack.push(pages[0]);
             }
 
-            // --- Navigation logic (Corrected currentIndex scope) ---
+            // =========================================================
+            // 3. منطق التنقل (Navigation Logic)
+            // =========================================================
             function navigateTo(newIndex) {
                 if (!pages[newIndex] || newIndex === contentStack.currentIndex)
                     return;
+
+                // تحديد اتجاه الحركة بناءً على ترتيب الصفحة
                 if (newIndex > contentStack.currentIndex) {
                     contentStack.replaceEnter = enterFromBottom;
                     contentStack.replaceExit = exitToTop;
@@ -151,7 +217,7 @@ Controls.ApplicationWindow {
                 contentStack.replace(pages[newIndex]);
             }
 
-            // --- Animations ---
+            // --- Animations (كما هي في الكود الأصلي) ---
             Transition {
                 id: enterFromBottom
                 SequentialAnimation {

@@ -18,6 +18,7 @@ BaseThemeSettings {
 
     // --- Header ---
     title: qsTr("Layout & Fonts")
+    icon: ""
     showApplyButton: true
 
     // --- Local State ---
@@ -119,7 +120,6 @@ BaseThemeSettings {
         }
         onRejected: activeCallback = null
     }
-
 
     // 1. Size Field Component (للأرقام)
     component SizeRow: ColumnLayout {
@@ -467,5 +467,4 @@ BaseThemeSettings {
             width: 1
         }
     }
-
 }

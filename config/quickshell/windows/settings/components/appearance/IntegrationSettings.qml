@@ -16,8 +16,7 @@ BaseThemeSettings {
 
     // --- Header ---
     title: qsTr("System Integration Settings")
-    titlePixelSize: typ("heading1Size", 22)
-    titleFontWeight: Font.ExtraBold
+    icon: "󰒋"
 
     showApplyButton: true
 

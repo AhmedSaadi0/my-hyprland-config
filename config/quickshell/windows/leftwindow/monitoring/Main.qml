@@ -11,7 +11,8 @@ Rectangle {
     id: monotoringMenu
     objectName: "monitoring"
     color: "transparent"
-    implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    // implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
+    implicitWidth: 200
 
     // width: ThemeManager.selectedTheme.dimensions.menuWidth
     // spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsSpacing

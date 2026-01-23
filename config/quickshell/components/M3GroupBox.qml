@@ -1,128 +1,230 @@
-// components/M3GroupBox.qml
+// components/M3GroupBox.qml (OneUIHeader)
 
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import org.kde.kirigami as Kirigami
 
 import "root:/themes"
 
-GroupBox {
+Item {
     id: root
 
     Layout.fillWidth: true
     Layout.fillHeight: true
 
+    // --- خصائص المحتوى ---
     default property alias content: userContentColumn.data
-    property int cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property color backgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    // property int cornerRadius: 8
     property Component footer: undefined
 
-    property alias titlePixelSize: titleLabel.font.pixelSize
-    property alias titleFontWeight: titleLabel.font.weight
-    property alias titleColor: titleLabel.color
-    property alias titleTopMargin: titleLabel.topPadding
-    property alias titleBottomMargin: titleLabel.bottomPadding
-    property int contentAlignment: Qt.AlignCenter
+    property bool alwaysCollapsed: false
 
-    padding: 0
-    topPadding: titleLabel.implicitHeight + titleLabel.topPadding + titleLabel.bottomPadding
-    leftPadding: 16
-    rightPadding: 16
-    bottomPadding: 16
+    property string title: "العنوان"
+    property string icon: "\uf013"
+    property string iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
 
-    font.pixelSize: 14
-    font.weight: Font.Medium
+    property int expandedHeight: 200
+    property int collapsedHeight: 60
 
-    label: Text {
-        id: titleLabel
-        text: root.title
-        font.pixelSize: 14
-        font.weight: Font.Medium
-        color: Kirigami.Theme.textColor
+    property int cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property color backgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    property color textColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV2
+    property color dividerColor: Qt.rgba(textColor.r, textColor.g, textColor.b, 0.1)
 
-        topPadding: 0
-        leftPadding: root.leftPadding
-        rightPadding: root.rightPadding
+    // --- منطق الطي ---
+    property real collapseProgress: {
+        // إذا كان الطي الدائم مفعلاً، نعيد 1.0 فوراً (حالة مطوية بالكامل)
+        if (root.alwaysCollapsed)
+            return 1.0;
+
+        if (!flick.visible)
+            return 0;
+        let range = expandedHeight - collapsedHeight;
+        let p = flick.contentY / range;
+        return Math.min(1.0, Math.max(0.0, p));
     }
 
-    background: Rectangle {
+    // الخلفية العامة
+    Rectangle {
+        anchors.fill: parent
         radius: root.cornerRadius
         color: root.backgroundColor
-        border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.12)
+        border.color: Qt.rgba(root.textColor.r, root.textColor.g, root.textColor.b, 0.12)
         border.width: 1
+        clip: true
     }
 
-    contentItem: ColumnLayout {
-        width: root.availableWidth
-        spacing: 0 // نتحكم في المسافات يدويًا
+    // =========================================================
+    // 1. الرأس المتحرك (Header)
+    // =========================================================
+    Rectangle {
+        id: headerItem
+        z: 10
+        width: parent.width
 
-        // Item {
-        ScrollView {
-            id: contentContainer
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+        // تعديل الارتفاع: إذا كان الطي دائماً، نثبت الارتفاع على collapsedHeight
+        height: root.alwaysCollapsed ? root.collapsedHeight : Math.max(root.collapsedHeight, root.expandedHeight - flick.contentY)
+
+        color: root.backgroundColor
+        radius: root.cornerRadius
+        clip: true
+
+        // إخفاء الزوايا السفلية لتبدو متصلة
+        Rectangle {
+            anchors.bottom: parent.bottom
+            width: parent.width
+            height: root.cornerRadius
+            color: root.backgroundColor
+            z: -1
+        }
+
+        // خط فاصل للرأس
+        Rectangle {
+            anchors.bottom: parent.bottom
+            width: parent.width
+            height: 1
+            color: root.dividerColor
+            opacity: root.collapseProgress
+        }
+
+        // المحتوى الكبير (يختفي فوراً إذا كانت alwaysCollapsed مفعلة لأن progress = 1)
+        ColumnLayout {
+            anchors.centerIn: parent
+            spacing: 10
+            opacity: 1.0 - (root.collapseProgress * 2.0)
+            visible: opacity > 0
+            scale: 1.0 - (root.collapseProgress * 0.4)
+
+            Rectangle {
+                Layout.alignment: Qt.AlignHCenter
+                width: 70
+                height: 70
+                radius: 35
+                color: ThemeManager.selectedTheme.colors.primary
+
+                Text {
+                    anchors.centerIn: parent
+                    text: root.icon
+                    font.family: root.iconFontFamily
+                    font.pixelSize: 32
+                    color: ThemeManager.selectedTheme.colors.onPrimary
+                    Layout.alignment: Qt.AlignCenter
+                }
+            }
+
+            Text {
+                text: root.title
+                color: root.textColor
+                font.pixelSize: ThemeManager.selectedTheme.typography.heading3Size
+                font.bold: true
+                Layout.alignment: Qt.AlignHCenter
+            }
+        }
+
+        // المحتوى الصغير (يظهر دائماً إذا كانت alwaysCollapsed مفعلة)
+        RowLayout {
+            anchors.fill: parent
+            anchors.leftMargin: 20
+            anchors.rightMargin: 20
+            spacing: 12
+            opacity: (root.collapseProgress - 0.6) * 2.5
+            visible: root.collapseProgress > 0.6
+
+            Text {
+                text: root.icon
+                font.family: root.iconFontFamily
+                font.pixelSize: 20
+                color: root.textColor
+                verticalAlignment: Text.AlignVCenter
+                font.bold: true
+            }
+
+            Text {
+                text: root.title
+                Layout.fillWidth: true
+                font.pixelSize: ThemeManager.selectedTheme.typography.heading3Size
+                font.bold: true
+                color: root.textColor
+                elide: Text.ElideRight
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+    }
+
+    // =========================================================
+    // 2. منطقة المحتوى (ScrollView)
+    // =========================================================
+    ScrollView {
+        id: scrollView
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: footerContainer.top
+
+        clip: true
+
+        Flickable {
+            id: flick
+            contentWidth: width
+            contentHeight: contentLayout.implicitHeight
 
             ColumnLayout {
-                id: userContentColumn
-                spacing: 12
+                id: contentLayout
+                width: parent.width
+                spacing: 0
 
-                anchors.horizontalCenter: (root.contentAlignment & Qt.AlignHCenter) ? parent.horizontalCenter : undefined
-                anchors.left: (root.contentAlignment & Qt.AlignLeft) ? parent.left : undefined
-                anchors.right: (root.contentAlignment & Qt.AlignRight) ? parent.right : undefined
+                // A. Spacer
+                // تعديل الفراغ: إذا كان الطي دائماً، نحجز مسافة صغيرة فقط (collapsedHeight)
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: root.alwaysCollapsed ? root.collapsedHeight : root.expandedHeight
+                }
 
-                anchors.verticalCenter: (root.contentAlignment & Qt.AlignVCenter) ? parent.verticalCenter : undefined
-                anchors.top: (root.contentAlignment & Qt.AlignTop) ? parent.top : undefined
-                anchors.bottom: (root.contentAlignment & Qt.AlignBottom) ? parent.bottom : undefined
+                // B. محتوى المستخدم
+                ColumnLayout {
+                    id: userContentColumn
+                    Layout.fillWidth: true
+                    Layout.margins: 16
+                    spacing: 12
+                }
+
+                // هامش بسيط في نهاية المحتوى
+                Item {
+                    Layout.preferredHeight: 10
+                }
             }
+        }
+    }
+
+    // =========================================================
+    // 3. الفوتر الثابت (Sticky Footer)
+    // =========================================================
+    Rectangle {
+        id: footerContainer
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        radius: root.cornerRadius
+
+        height: footerLoader.active ? footerLoader.implicitHeight + 32 : 0
+
+        color: root.backgroundColor
+        visible: height > 0
+        z: 20
+
+        // خط فاصل فوق الفوتر
+        Rectangle {
+            anchors.top: parent.top
+            width: parent.width
+            height: 1
+            color: root.dividerColor
         }
 
         Loader {
             id: footerLoader
-            Layout.fillWidth: true
-            visible: root.footer !== undefined
+            anchors.fill: parent
+            anchors.margins: 16
             sourceComponent: root.footer
-
-            Layout.topMargin: visible ? Kirigami.Units.largeSpacing : 0
+            active: root.footer !== undefined
         }
     }
-
-    // نتحكم في محتوى الـ GroupBox بالكامل
-    // contentItem: Item {
-    //     // نربط الأبعاد الضمنية بالـ ColumnLayout الداخلي
-    //     implicitWidth: mainLayout.implicitWidth
-    //     implicitHeight: mainLayout.implicitHeight
-    //
-    //     ColumnLayout {
-    //         id: mainLayout
-    //         // اجعل هذا التخطيط يملأ الـ contentItem
-    //         anchors.fill: parent
-    //
-    //         // 1. العنوان (موجود بالفعل، لكننا نضع تحته فاصل)
-    //         // لا نحتاج لإعادة تعريف العنوان هنا، GroupBox يقوم بذلك
-    //
-    //         // 2. الفاصل المرئي (لتمييز العنوان)
-    //         Rectangle {
-    //             // اجعله يظهر فقط إذا كان هناك عنوان
-    //             visible: root.title.length > 0
-    //
-    //             Layout.fillWidth: true
-    //             Layout.topMargin: 15
-    //             Layout.preferredHeight: 1
-    //             // Layout.bottomMargin: 10
-    //             // Layout.leftMargin: -root.leftPadding // اجعل الخط يمتد ليلمس الحواف
-    //             // Layout.rightMargin: -root.rightPadding
-    //             // height: 1
-    //             color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.08)
-    //         }
-    //
-    //         // 3. العمود الذي سيحتوي على محتوى المستخدم
-    //         ColumnLayout {
-    //             id: userContentColumn
-    //             Layout.fillWidth: true
-    //             spacing: 12
-    //         }
-    //     }
-    // }
 }

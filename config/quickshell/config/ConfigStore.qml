@@ -24,12 +24,12 @@ QtObject {
     property string country: "yemen"
     property string weatherLocation: "sanaa"
     property bool usePrayerTimes: true
-    property string geminiApiKey: ""
+    property string aiApiKey: ""
     property string weatherAiApiKey: ""
     property string musicAiApiKey: ""
     property string aiPreferredLanguage: "English"
 
-    property string aiProvider: "gemini" // choices=["local", "gemini", "openai", "deepseek"]
+    property string aiProvider: "gemini" // choices=["local", "gemini", "openai", "deepseek", "openrouter"]
     property string weatherAiModel: "gemini-flash-lite-latest"
     property string musicAiModel: "gemini-flash-lite-latest"
 
@@ -125,10 +125,12 @@ QtObject {
         if (data.aiProvider !== undefined)
             store.aiProvider = data.aiProvider;
 
-        if (data.geminiApiKey !== undefined)
-            store.geminiApiKey = data.geminiApiKey;
+        if (data.aiApiKey !== undefined)
+            store.aiApiKey = data.aiApiKey;
+
         if (data.weatherAiApiKey !== undefined)
             store.weatherAiApiKey = data.weatherAiApiKey;
+
         if (data.musicAiApiKey !== undefined)
             store.musicAiApiKey = data.musicAiApiKey;
 
@@ -142,6 +144,7 @@ QtObject {
 
         if (data.weatherAiModel !== undefined)
             store.weatherAiModel = data.weatherAiModel;
+
         if (data.musicAiModel !== undefined)
             store.musicAiModel = data.musicAiModel;
 
@@ -178,9 +181,13 @@ QtObject {
 
         var currentData = {};
         try {
-            currentData = JSON.parse(configFile.text());
+            // التصحيح: استخدام fileWatcher والتحقق من النص
+            var txt = fileWatcher.text();
+            if (txt && txt.trim() !== "") {
+                currentData = JSON.parse(txt);
+            }
         } catch (e) {
-            console.warn("ConfigStore: Creating new config object.");
+            console.warn("ConfigStore: Creating new config object (Parse error or empty).");
         }
 
         for (var i = 0; i < keys.length; i++) {
@@ -199,7 +206,10 @@ QtObject {
 
         var currentData = {};
         try {
-            currentData = JSON.parse(_fileView.text());
+            var txt = fileWatcher.text();
+            if (txt && txt.trim() !== "") {
+                currentData = JSON.parse(txt);
+            }
         } catch (e) {}
 
         currentData[key] = value;

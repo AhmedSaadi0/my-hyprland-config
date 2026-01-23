@@ -17,6 +17,7 @@ BaseThemeSettings {
     id: root
 
     title: qsTr("Color Settings")
+    icon: ""
 
     // --- Local Variables ---
     property color localPrimary: "#000000"

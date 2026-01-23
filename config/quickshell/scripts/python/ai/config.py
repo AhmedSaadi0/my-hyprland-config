@@ -5,6 +5,7 @@ import prompt
 from gemini_provider import GeminiProvider
 from local_provider import LocalProvider
 from openai_provider import OpenAIProvider
+from openrouter_provider import OpenRouterProvider
 
 # -----------------------------------------------------------------------------
 # 0. التكوينات والإعدادات المسبقة (Presets)
@@ -86,8 +87,11 @@ def get_provider(
     if args.provider == "local":
         return LocalProvider(**common_args)
 
-    if args.provider == "gemini" or "gemini" in args.model.lower():
+    if args.provider == "gemini":  # or "gemini" in args.model.lower():
         return GeminiProvider(**common_args)
+
+    if args.provider == "openrouter":
+        return OpenRouterProvider(**common_args)
 
     # TODO: -> test logic
     base_url = args.base_url
