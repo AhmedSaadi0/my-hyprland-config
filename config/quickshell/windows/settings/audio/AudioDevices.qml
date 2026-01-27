@@ -7,7 +7,7 @@ import QtQuick.Controls
 import org.kde.kirigami as Kirigami
 import Quickshell.Services.Pipewire
 
-import "root:/windows/settings/components/base"
+import "root:/windows/settings/components"
 import "root:/windows/settings/audio"
 import "root:/components"
 import "root:/themes"

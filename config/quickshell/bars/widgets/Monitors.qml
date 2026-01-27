@@ -7,12 +7,12 @@ import "root:/services"
 import "root:/components"
 
 RowLayout {
-    spacing: 8
+    spacing: 4
 
     // 1. تنسيق النص الرقمي
     component ValueLabel: Text {
         color: ThemeManager.selectedTheme.colors.primary
-        font.family: ThemeManager.selectedTheme.typography.fontFamily
+        // font.family: ThemeManager.selectedTheme.typography.iconFont
         font.pixelSize: 12
         font.bold: true
         Layout.alignment: Qt.AlignVCenter

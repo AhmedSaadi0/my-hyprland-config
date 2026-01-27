@@ -1,182 +1,206 @@
-// TODO: -> finish this
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Effects
 import Quickshell
-import Quickshell.Io
+import Quickshell.Hyprland
+
+import "root:/themes"
 
 Item {
     id: root
 
-    // ===============================================================
-    // 1. ESTILOS
-    // ===============================================================
-    QtObject {
-        id: style
-        // Fondo: Intenta usar el tema, si falla usa el gris oscuro
-        property color background: {
-            try {
-                return ThemeManager.selectedTheme.colors.topbarBgColorV1;
-            } catch (e) {
-                return "#1e1e2e";
-            }
-        }
+    // --- 1. الإعدادات والخصائص (Properties) ---
+    readonly property var theme: ThemeManager.selectedTheme
+    readonly property var activeToplevel: Hyprland.activeToplevel
 
-        // ⚪ TEXTO BLANCO
-        property color text: "#ffffff"
+    property int minWidth: 200
+    property int maxWidth: 350
+    property int innerPadX: theme.dimensions.spacingLarge
+    property int gap: theme.dimensions.spacingMedium
 
-        // ⚪ SUBTEXTO (Gris muy claro, casi blanco)
-        property color subtext: "#eeeeee"
+    property bool hasWindow: activeToplevel !== null
+    // property bool isFullscreen: (activeToplevel !== undefined && activeToplevel.fullscreen !== undefined && hasWindow !== null) ? hasWindow && activeToplevel.fullscreen : false
+    // property bool isFullscreen: (activeToplevel && hasWindow) ? activeToplevel.fullscreen : false
+    property bool isFullscreen: (activeToplevel?.fullscreen && hasWindow) || false
+    property real hover: 0.0
+    property real contentScale: 1.0
+    property point parallaxOffset: Qt.point(0, 0)
+
+    // منطق جلب اسم الكلاس والعنوان
+    property string currentClass: {
+        if (!hasWindow)
+            return "Desktop";
+        if (activeToplevel.appId)
+            return activeToplevel.appId;
+        try {
+            Hyprland.refreshToplevels();
+            var rawData = activeToplevel.lastIpcObject;
+            if (rawData && rawData.class)
+                return rawData.class;
+        } catch (e) {}
+        return "Active Window";
     }
 
-    // ===============================================================
-    // 2. HYPRLAND
-    // ===============================================================
-    property string currentClass: ""
-    property string currentTitle: ""
-    property bool hasWindow: false
+    property string currentTitle: (hasWindow && activeToplevel.title) ? activeToplevel.title : "Workspace"
+    property string iconName: currentClass === "Active Window" ? "application-x-executable" : currentClass.toLowerCase()
 
-    Process {
-        id: activeWinProc
-        command: ["sh", "-c", "hyprctl activewindow -j"]
-        running: true
-        stdout: StdioCollector {
-            onStreamFinished: {
-                try {
-                    if (text.trim() === "{}" || text.trim() === "") {
-                        root.hasWindow = false;
-                        root.currentClass = "Escritorio";
-                        root.currentTitle = "";
-                    } else {
-                        var data = JSON.parse(text);
-                        root.currentClass = data.class || data.initialClass || "Unknown";
-                        root.currentTitle = data.title || data.initialTitle || "";
-                        root.hasWindow = true;
-                    }
-                } catch (e) {
-                    root.hasWindow = false;
-                }
-                restartTimer.start();
-            }
-        }
+    // الحسابات الديناميكية للعرض
+    implicitHeight: theme.dimensions.barWidgetsHeight
+    implicitWidth: Math.max(minWidth, Math.min(maxWidth, calculatedWidth))
+    property int calculatedWidth: innerPadX * 2 + 28 + gap + Math.min(titleMetrics.width, maxWidth - 100)
+
+    TextMetrics {
+        id: titleMetrics
+        text: root.currentTitle
+        font.family: theme.typography.bodyFont
+        font.pixelSize: theme.typography.small
+        font.bold: true
     }
 
-    Timer {
-        id: restartTimer
-        interval: 300
-        repeat: false
-        onTriggered: activeWinProc.running = true
-    }
-
-    // ===============================================================
-    // 3. LA BARRITA GRIS (Visual Bubble)
-    // ===============================================================
+    // --- 2. الخلفية والتأثيرات (Background & Effects) ---
     Rectangle {
-        id: visualBubble
+        id: bgCapsule
+        anchors.fill: parent
+        radius: theme.dimensions.elementRadius
+        clip: true // يمنع خروج المحتوى (النص المتحرك) عن الحدود
 
-        height: 32
+        color: root.isFullscreen ? theme.colors.primary : (root.hasWindow ? theme.colors.topbarBgColorV2 : theme.colors.topbarBgColorV1)
 
-        // Ancho que se ajusta al texto
-        width: Math.min(contentRow.implicitWidth + 34, root.width)
+        border.width: root.isFullscreen ? 2 : 1
+        border.color: Qt.rgba(theme.colors.topbarFgColor.r, theme.colors.topbarFgColor.g, theme.colors.topbarFgColor.b, 0.1 + (root.hover * 0.1))
 
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-
-        //  bordes quedan totalmente curvos
-        radius: height / 2
-
-        color: style.background
-
-        Behavior on width {
-            NumberAnimation {
-                duration: 200
-                easing.type: Easing.OutCubic
-            }
-        }
-
+        // --- 3. المحتوى الأساسي (Main Content) ---
         RowLayout {
-            id: contentRow
-            anchors.centerIn: parent
-            width: parent.width - 24 // Margen interno
-            spacing: 10
+            id: contentLayout
+            anchors.fill: parent
+            // anchors.leftMargin: root.innerPadX
+            anchors.rightMargin: root.innerPadX
+            spacing: 0
 
-            // A. ICONO
-            Image {
-                Layout.preferredWidth: 20
-                Layout.preferredHeight: 20
+            // تأثير حركة الـ Parallax والمقياس
+            transform: [
+                Translate {
+                    x: root.parallaxOffset.x
+                    y: root.parallaxOffset.y
+                    Behavior on x {
+                        NumberAnimation {
+                            duration: 150
+                        }
+                    }
+                    Behavior on y {
+                        NumberAnimation {
+                            duration: 150
+                        }
+                    }
+                },
+                Scale {
+                    origin.x: bgCapsule.width / 2
+                    origin.y: bgCapsule.height / 2
+                    xScale: root.contentScale
+                    yScale: root.contentScale
+                    Behavior on xScale {
+                        NumberAnimation {
+                            duration: 100
+                        }
+                    }
+                }
+            ]
+
+            // حاوية الأيقونة
+            Item {
+                Layout.preferredWidth: 24
+                Layout.preferredHeight: 22
                 Layout.alignment: Qt.AlignVCenter
 
-                source: root.hasWindow ? Quickshell.iconPath(root.currentClass, "application-x-executable") : Quickshell.iconPath("user-desktop", "computer")
+                Rectangle {
+                    anchors.fill: parent
+                    topLeftRadius: theme.dimensions.elementRadius
+                    bottomLeftRadius: theme.dimensions.elementRadius
+                    color: theme.colors.primary
+                    opacity: 0.25
+                }
 
-                fillMode: Image.PreserveAspectFit
-                smooth: true
-                // Opacidad alta para que se vea bien claro
-                opacity: root.hasWindow ? 1 : 0.8
+                Image {
+                    id: appIcon
+                    anchors.fill: parent
+                    anchors.margins: 2
+                    anchors.leftMargin: 4
+                    fillMode: Image.PreserveAspectFit
+                    source: Quickshell.iconPath(root.iconName, "application-x-executable")
 
-                onStatusChanged: {
-                    if (status === Image.Error)
-                        source = Quickshell.iconPath("application-x-executable", "unknown");
+                    onSourceChanged: iconAnim.restart()
                 }
             }
 
-            // B. CLASE
-            Text {
-                text: root.currentClass
-                Layout.alignment: Qt.AlignVCenter
-                Layout.maximumWidth: 150
-                elide: Text.ElideRight
-
-                font.family: "Sans"
-                font.weight: Font.Bold
-                font.pixelSize: 12
-
-                // Color Blanco
-                color: style.text
-
-                function capitalize(s) {
-                    return s && s[0].toUpperCase() + s.slice(1);
-                }
-                onTextChanged: text = capitalize(text)
-            }
-
-            Rectangle {
-                visible: root.hasWindow && root.currentTitle !== ""
-                width: 1
-                height: 14
-                color: style.subtext
-                Layout.alignment: Qt.AlignVCenter
-                opacity: 0.6
-            }
-
-            Text {
-                text: root.currentTitle
-                Layout.alignment: Qt.AlignVCenter
+            // منطقة النص (اللوحة الإعلانية المتحركة)
+            Item {
+                id: textContainer
                 Layout.fillWidth: true
+                Layout.preferredHeight: parent.height
+                clip: true // ضروري جداً لقص النص الزائد
 
-                visible: text !== ""
+                Label {
+                    id: scrollingText
+                    text: root.currentTitle
+                    color: theme.colors.topbarFgColor
+                    font: titleMetrics.font
+                    height: parent.height
+                    verticalAlignment: Text.AlignVCenter
 
-                font.family: "Sans"
-                font.pixelSize: 12
+                    // تحديد ما إذا كان النص يحتاج للتحرك
+                    readonly property bool isOverflowing: width > parent.width
 
-                // Color Blanco
-                color: style.text
-                opacity: 1.0 // Sin transparencia para máxima visibilidad
+                    // الأنيميشن الخاص بالتحريك (Marquee)
+                    SequentialAnimation on x {
+                        running: scrollingText.isOverflowing
+                        loops: Animation.Infinite
 
-                elide: Text.ElideRight
-                maximumLineCount: 1
+                        PauseAnimation {
+                            duration: 2000
+                        } // انتظر قليلاً في البداية
+
+                        NumberAnimation {
+                            from: 0
+                            to: -(scrollingText.width - textContainer.width)
+                            duration: Math.max(2000, scrollingText.width * 20)
+                            easing.type: Easing.InOutQuad
+                        }
+
+                        PauseAnimation {
+                            duration: 2000
+                        } // انتظر في النهاية
+
+                        NumberAnimation {
+                            to: 0
+                            duration: 800
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
+
+                    // إذا لم يكن النص طويلاً، اجعله في المنتصف (اختياري)
+                    anchors.horizontalCenter: isOverflowing ? undefined : parent.horizontalCenter
+                }
             }
         }
     }
 
-    // Tooltip
-    MouseArea {
-        anchors.fill: visualBubble
-        hoverEnabled: true
-        acceptedButtons: Qt.NoButton
-
-        ToolTip.visible: containsMouse && contentRow.implicitWidth > visualBubble.width
-        ToolTip.text: root.currentTitle
-        ToolTip.delay: 500
+    // --- 5. أنيميشن الأيقونة عند التغيير ---
+    SequentialAnimation {
+        id: iconAnim
+        NumberAnimation {
+            target: appIcon
+            property: "scale"
+            from: 0.6
+            to: 1.2
+            duration: 200
+            easing.type: Easing.OutBack
+        }
+        NumberAnimation {
+            target: appIcon
+            property: "scale"
+            to: 1.0
+            duration: 100
+        }
     }
 }

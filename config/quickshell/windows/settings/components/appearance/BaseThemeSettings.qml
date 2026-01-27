@@ -6,7 +6,7 @@ import QtQuick.Controls as Controls
 import "root:/components"
 import "root:/config"
 import "root:/themes"
-import "root:/windows/settings/components/base"
+import "root:/windows/settings/components"
 
 M3GroupBox {
     id: root

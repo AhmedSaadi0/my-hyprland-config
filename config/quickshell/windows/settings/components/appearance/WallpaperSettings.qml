@@ -11,7 +11,6 @@ import "root:/components"
 import "root:/config"
 import "root:/themes"
 import "root:/windows/settings/components"
-import "root:/windows/settings/components/base"
 
 BaseThemeSettings {
     id: root
