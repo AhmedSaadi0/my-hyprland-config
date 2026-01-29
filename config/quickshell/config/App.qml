@@ -74,6 +74,13 @@ Singleton {
     property alias firstDayOfWeek: root.config.firstDayOfWeek
     property alias menuStyle: root.config.menuStyle
 
+    property alias topBarActiveWindowMinWidth: root.config.topBarActiveWindowMinWidth
+    property alias topBarActiveWindowMaxWidth: root.config.topBarActiveWindowMaxWidth
+
+    property alias activeWorkspacesIcons: root.config.activeWorkspacesIcons
+    property alias inActiveWorkspacesIcons: root.config.inActiveWorkspacesIcons
+    property alias dynamicWorkspaces: root.config.dynamicWorkspaces
+
     function updateConfig(key, value) {
         root.config.set(key, value);
     }
@@ -292,7 +299,7 @@ Singleton {
             console.warn(`Skipping empty command: ${description}`);
             return;
         }
-        console.info("[App] [dispatchCommand] " + description + " -> " + commandArray.join(' '));
+        // console.info("[App] [dispatchCommand] " + description + " -> " + commandArray.join(' '));
         Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 

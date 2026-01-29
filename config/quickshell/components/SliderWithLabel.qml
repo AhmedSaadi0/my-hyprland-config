@@ -1,3 +1,5 @@
+// components/SliderWithLabel.qml
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls

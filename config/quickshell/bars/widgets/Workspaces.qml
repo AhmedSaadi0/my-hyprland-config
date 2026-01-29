@@ -5,6 +5,7 @@ import Quickshell.Hyprland
 import Quickshell.Widgets
 
 import "root:/themes"
+import "root:/config"
 
 Item {
     id: root
@@ -12,8 +13,8 @@ Item {
     width: mainRow.childrenRect.width + 25
     height: parent.height
 
-    property var activeIcons: ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰭹", "󱍙", "󰺵", "󱋡", "󰙨"]
-    property var inActiveIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰻞", "󱍚", "󰺶", "󱋢", "󰤑"]
+    property var activeIcons: App.activeWorkspacesIcons
+    property var inActiveIcons: App.inActiveWorkspacesIcons
 
     Behavior on width {
         NumberAnimation {

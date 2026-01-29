@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Hyprland
 
 import "root:/themes"
+import "root:/config"
 
 Item {
     id: root
@@ -14,8 +15,8 @@ Item {
     readonly property var theme: ThemeManager.selectedTheme
     readonly property var activeToplevel: Hyprland.activeToplevel
 
-    property int minWidth: 200
-    property int maxWidth: 350
+    property int minWidth: App.topBarActiveWindowMinWidth
+    property int maxWidth: App.topBarActiveWindowMaxWidth
     property int innerPadX: theme.dimensions.spacingLarge
     property int gap: theme.dimensions.spacingMedium
 
