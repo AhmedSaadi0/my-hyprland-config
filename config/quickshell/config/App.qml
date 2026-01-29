@@ -166,20 +166,27 @@ Singleton {
             readonly property string highTempWarning: root.assetsPath + "/icons/electrical-danger-sign.png"
         }
         readonly property QtObject audio: QtObject {
+            readonly property string powerConnect: root.assetsPath + "/audio/power_in.mp3"
+            readonly property string batteryLow: root.assetsPath + "/audio/low-battery.mp3"
+            readonly property string notifyStandard: root.assetsPath + "/audio/notification.wav"
+            readonly property string notifySoft: root.assetsPath + "/audio/notification2.wav"
+
+            readonly property string smartCapsuleNotification: root.assetsPath + "/audio/smart_capsule.wav"
+            readonly property string smartCapsuleWarning: root.assetsPath + "/audio/warning-sound.mp3"
+            readonly property string smartCapsuleCritical: root.assetsPath + "/audio/warning-sound.mp3"
+
+            // Not used
+            // TODO: -> check these or delete them
+            readonly property string desktopLogin: root.assetsPath + "/audio/desktop-login.wav"
+            readonly property string desktopLogout: root.assetsPath + "/audio/desktop-logout.mp3"
             readonly property string hotWeather: root.assetsPath + "/audio/cold-weather.mp3"
             readonly property string coldWeather: root.assetsPath + "/audio/cold-weather.mp3"
             readonly property string rain: root.assetsPath + "/audio/rain-notification.mp3"
             readonly property string prayerTime: root.assetsPath + "/audio/prayer-notification.ogg"
-            readonly property string desktopLogin: root.assetsPath + "/audio/desktop-login.mp3"
-            readonly property string desktopLogout: root.assetsPath + "/audio/desktop-logout.mp3"
             readonly property string highEnergyRate: root.assetsPath + "/audio/warning-sound.mp3"
             readonly property string highVoltage: root.assetsPath + "/audio/warning-sound.mp3"
             readonly property string highTempWarning: root.assetsPath + "/audio/warning-sound.mp3"
-            readonly property string notificationAlert: root.assetsPath + "/audio/new-notification.mp3"
             readonly property string cpuHighUsage: root.assetsPath + "/audio/cpu_high_usage.wav"
-            readonly property string smartCapsuleNotification: root.assetsPath + "/audio/smart_capsule.mp3"
-            readonly property string smartCapsuleWarning: root.assetsPath + "/audio/warning-sound.mp3"
-            readonly property string smartCapsuleCritical: root.assetsPath + "/audio/warning-sound.mp3"
 
             function playTone(tone) {
                 const command = Helper.playSoundCommand(tone);

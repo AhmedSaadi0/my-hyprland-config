@@ -1,3 +1,5 @@
+// bars/Topbar.qml
+
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
@@ -74,21 +76,58 @@ PanelWindow {
             spacing: 10
 
             // ويدجت الشاشات (Monitors)
+
             Rectangle {
                 id: monitorsWrapper
-                width: 260
-                height: theme.dimensions.barWidgetsHeight
+                property int maxWidth: 300
+
+                Layout.preferredWidth: Math.min(monitors.implicitWidth + 10, maxWidth)
+                Layout.maximumWidth: maxWidth
+                Layout.preferredHeight: theme.dimensions.barWidgetsHeight
+
                 radius: theme.dimensions.elementRadius
                 color: theme.colors.topbarBgColorV1
+                clip: true
 
                 layer.enabled: true
                 layer.effect: Shadow {}
 
-                Monitors {
-                    id: monitors
-                    anchors.centerIn: parent
-                    implicitHeight: parent.implicitHeight
+                Behavior on Layout.preferredWidth {
+                    NumberAnimation {
+                        duration: 450
+                        easing.type: Easing.OutBack
+                        easing.overshoot: 0.6
+                    }
+                }
+
+                Behavior on Layout.preferredHeight {
+                    NumberAnimation {
+                        duration: 450
+                        easing.type: Easing.OutBack
+                        easing.overshoot: 0.6
+                    }
+                }
+
+                Flickable {
+                    id: monitorsFlick
+
+                    width: parent.width
                     height: parent.height
+
+                    contentWidth: monitors.implicitWidth
+                    contentHeight: parent.height
+
+                    flickableDirection: Flickable.HorizontalFlick
+                    boundsBehavior: Flickable.StopAtBounds
+                    interactive: contentWidth > width
+
+                    contentX: contentWidth < width ? -(width - contentWidth) / 2 : 0
+
+                    Monitors {
+                        id: monitors
+                        height: parent.height
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
                 }
             }
 

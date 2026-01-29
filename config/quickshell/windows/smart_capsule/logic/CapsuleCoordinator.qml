@@ -241,15 +241,20 @@ Singleton {
             bgColor2: colors.bg2,
             fgColor: colors.fg,
             timeout: root._sysOsdTimeout,
-            changeW: false
+            changeW: false,
+            playTone: true,
+            tone: App.assets.audio.notifySoft
         });
     }
 
     function handleChargingState() {
         if (SystemService.isCharging) {
+            // --- حالة توصيل الشاحن ---
             root._lastAlertLevel = -1;
+
             if (currentPriority <= C.TRANSIENT)
                 root.updateEyes("happy", 4000);
+
             let colors = getColorsForState("success");
             CapsuleManager.request({
                 priority: C.NOTIFICATION,
@@ -259,8 +264,31 @@ Singleton {
                 bgColor1: colors.bg1,
                 bgColor2: colors.bg2,
                 fgColor: colors.fg,
-                timeout: root._batChargingTimeout
+                timeout: root._batChargingTimeout,
+                playTone: true,
+                tone: App.assets.audio.powerConnect
             });
+        } else {
+            // --- حالة فصل الشاحن ---
+            if (currentPriority <= C.TRANSIENT)
+                root.updateEyes("suspicious", 3000);
+
+            let colors = getColorsForState("info");
+            CapsuleManager.request({
+                priority: C.NOTIFICATION,
+                source: C.SRC_BATTERY,
+                icon: SystemService.batteryIcon,
+                text: `Power Disconnected: ${Math.round(SystemService.batteryPercent * 100)}%`,
+                bgColor1: colors.bg1,
+                bgColor2: colors.bg2,
+                fgColor: colors.fg,
+                timeout: root._batChargingTimeout
+                // playTone: true,
+                // tone: App.assets.audio.powerDisconnect
+            });
+
+            // التحقق فوراً من مستوى البطارية في حال فصلنا الشاحن والبطارية منخفضة جداً
+            monitorBatteryDischarge();
         }
     }
 
@@ -303,16 +331,19 @@ Singleton {
         let msg = `Battery at ${level}%`;
         let emotion = "bored";
         let timeout = root._batTimeoutWarning;
+        let tone = App.assets.audio.smartCapsuleWarning;
 
         if (level <= root._batLevelWarning) {
             alertType = "warning";
             emotion = "suspicious";
-            priority = C.WARNING;
+            tone = App.assets.audio.batteryLow;
         }
         if (level <= root._batLevelLow) {
             alertType = "warning";
             emotion = "sad";
+            priority = C.WARNING;
             msg = `Low Battery (${level}%). Please plug in.`;
+            tone = App.assets.audio.batteryLow;
         }
         if (level <= root._batLevelCritical) {
             alertType = "critical";
@@ -320,12 +351,15 @@ Singleton {
             priority = C.CRITICAL;
             msg = `Critical Battery (${level}%)!`;
             timeout = root._batTimeoutCritical;
+            tone = App.assets.audio.smartCapsuleWarning;
         }
         if (level <= root._batLevelDying) {
             alertType = "critical";
             emotion = "dead";
+            priority = C.CRITICAL;
             msg = `Battery Dying (${level}%)... Goodbye?`;
             timeout = root._batTimeoutDying;
+            tone = App.assets.audio.smartCapsuleCritical;
         }
 
         let colors = getColorsForState(alertType);
@@ -341,7 +375,8 @@ Singleton {
             timeout: timeout,
             bgColor1: colors.bg1,
             bgColor2: colors.bg2,
-            fgColor: colors.fg
+            fgColor: colors.fg,
+            tone: tone
         });
     }
 

@@ -37,6 +37,7 @@ Singleton {
     // --- Battery (Logic Moved Here) ---
     readonly property var _bat: UPower.displayDevice ?? (UPower.devices.values.length > 0 ? UPower.devices.values[0] : null)
 
+    readonly property bool hasBattery: UPower.devices.values.some(device => device.type === UPowerDeviceType.Battery)
     readonly property real batteryPercent: _bat ? _bat.percentage : 0
     readonly property int batteryState: _bat ? _bat.state : 0
     readonly property bool isCharging: batteryState === 1 || batteryState === 4

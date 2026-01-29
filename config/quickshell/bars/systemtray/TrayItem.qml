@@ -14,9 +14,26 @@ MouseArea {
 
     required property SystemTrayItem modelData
 
+    implicitWidth: ThemeManager.selectedTheme.dimensions.barWidgetsHeight - 6
+    implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
+
+    hoverEnabled: true
+    cursorShape: Qt.PointingHandCursor
     acceptedButtons: Qt.LeftButton | Qt.RightButton
-    implicitWidth: 13
-    implicitHeight: 13
+
+    Rectangle {
+        anchors.fill: parent
+        anchors.margins: 2
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius
+        color: ThemeManager.selectedTheme.colors.primary
+        opacity: root.containsPress ? 0.3 : (root.containsMouse ? 0.15 : 0)
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 150
+            }
+        }
+    }
 
     onClicked: event => {
         if (event.button === Qt.LeftButton) {
@@ -29,32 +46,63 @@ MouseArea {
     QsMenuAnchor {
         id: menu
         menu: root.modelData.menu
-        anchor.window: this.QsWindow.window
+        anchor.window: root.QsWindow.window
     }
 
-    // 1. الأيقونة الأصلية (المصدر) - نجعلها مخفية
     IconImage {
         id: trayIconSource
-        width: parent.implicitWidth
-        height: parent.implicitHeight
+        width: parent.implicitHeight - 8
+        height: parent.implicitHeight - 8
         source: root.modelData.icon
         anchors.centerIn: parent
-        visible: false // نخفيها لأننا سنعرض النسخة الملونة
+        visible: false
+
+        smooth: true
+        mipmap: true
     }
 
-    // 2. المؤثر الذي سيقوم بتلوين الأيقونة
     MultiEffect {
         id: coloredIcon
         anchors.fill: trayIconSource
         source: trayIconSource
 
-        // تفعيل التلوين الكامل
         colorization: 1.0
-
         colorizationColor: ThemeManager.selectedTheme.colors.topbarFgColorV2
 
-        // لتصحيح التباين والسطوع في حال كانت الأيقونة الأصلية باهتة
-        brightness: 0.0
-        contrast: 0.0
+        autoPaddingEnabled: true
+    }
+
+    Rectangle {
+        id: tooltip
+        visible: root.containsMouse && (modelData.title !== "" || modelData.tooltip !== "")
+
+        anchors.bottom: parent.top
+        anchors.bottomMargin: ThemeManager.selectedTheme.dimensions.spacingMedium
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        width: tooltipText.width + (ThemeManager.selectedTheme.dimensions.spacingMedium * 2)
+        height: tooltipText.height + ThemeManager.selectedTheme.dimensions.spacingSmall
+        z: 100
+
+        color: ThemeManager.selectedTheme.colors.topbarColor
+        border.color: ThemeManager.selectedTheme.colors.primary
+        border.width: 1
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius / 4
+
+        Text {
+            id: tooltipText
+            anchors.centerIn: parent
+            text: (modelData.tooltip || modelData.title || "")
+            color: ThemeManager.selectedTheme.colors.topbarFgColor
+            font.family: ThemeManager.selectedTheme.typography.bodyFont
+            font.pixelSize: ThemeManager.selectedTheme.typography.small
+        }
+
+        opacity: visible ? 1 : 0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 100
+            }
+        }
     }
 }

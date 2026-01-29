@@ -47,6 +47,7 @@ Singleton {
         changeW = true,
         changeH = null,
         playTone = true,
+        tone = null,
         bgColor1 = ThemeManager.selectedTheme.colors.primary,
         bgColor2 = ThemeManager.selectedTheme.colors.secondary,
         fgColor = ThemeManager.selectedTheme.colors.onPrimary,
@@ -78,14 +79,16 @@ Singleton {
             }
 
             if (playTone) {
-                playSmartCapsuleTone(priority);
+                playSmartCapsuleTone(priority, tone);
             }
         }
     }
 
-    function playSmartCapsuleTone(priority) {
+    function playSmartCapsuleTone(priority, tone) {
         const nibrasAudio = App.assets.audio;
-        if (priority === C.NOTIFICATION) {
+        if (tone)
+            nibrasAudio.playTone(tone);
+        else if (priority === C.NOTIFICATION) {
             nibrasAudio.playTone(nibrasAudio.smartCapsuleNotification);
         } else if (priority === C.WARNING) {
             nibrasAudio.playTone(nibrasAudio.smartCapsuleWarning);
