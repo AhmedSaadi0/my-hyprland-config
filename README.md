@@ -629,4 +629,4 @@ nvim .nibrasshell.json
 
 ### Sounds
 
-- [https://www.freesound.org](freesound.org)
+- [freesound.org](https://www.freesound.org)
