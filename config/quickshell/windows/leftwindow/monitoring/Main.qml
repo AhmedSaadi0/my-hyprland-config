@@ -12,7 +12,7 @@ Rectangle {
     objectName: "monitoring"
     color: "transparent"
     // implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
-    implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
+    // implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
 
     // width: ThemeManager.selectedTheme.dimensions.menuWidth
     // spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsSpacing
