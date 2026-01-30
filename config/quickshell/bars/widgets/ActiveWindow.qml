@@ -51,6 +51,9 @@ Item {
     implicitWidth: Math.max(minWidth, Math.min(maxWidth, calculatedWidth))
     property int calculatedWidth: innerPadX * 2 + 28 + gap + Math.min(titleMetrics.width, maxWidth - 100)
 
+    property int topLeftRadius
+    property int bottomLeftRadius
+
     TextMetrics {
         id: titleMetrics
         text: root.currentTitle
@@ -64,12 +67,11 @@ Item {
         id: bgCapsule
         anchors.fill: parent
         radius: theme.dimensions.elementRadius
+        topLeftRadius: root.topLeftRadius
+        bottomLeftRadius: root.bottomLeftRadius
         clip: true // يمنع خروج المحتوى (النص المتحرك) عن الحدود
 
-        color: root.isFullscreen ? theme.colors.primary : (root.hasWindow ? theme.colors.topbarBgColorV2 : theme.colors.topbarBgColorV1)
-
-        border.width: root.isFullscreen ? 2 : 1
-        border.color: Qt.rgba(theme.colors.topbarFgColor.r, theme.colors.topbarFgColor.g, theme.colors.topbarFgColor.b, 0.1 + (root.hover * 0.1))
+        color: theme.colors.tertiary.alpha(0.7)
 
         // --- 3. المحتوى الأساسي (Main Content) ---
         RowLayout {
@@ -116,9 +118,9 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
-                    topLeftRadius: theme.dimensions.elementRadius
-                    bottomLeftRadius: theme.dimensions.elementRadius
-                    color: theme.colors.primary
+                    topLeftRadius: root.topLeftRadius
+                    bottomLeftRadius: root.bottomLeftRadius
+                    color: theme.colors.primary.lighter(1.8)
                     opacity: 0.25
                 }
 
@@ -144,7 +146,7 @@ Item {
                 Label {
                     id: scrollingText
                     text: root.currentTitle
-                    color: theme.colors.topbarFgColor
+                    color: theme.colors.onTertiary
                     font: titleMetrics.font
                     height: parent.height
                     verticalAlignment: Text.AlignVCenter

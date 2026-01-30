@@ -16,6 +16,7 @@ PanelWindow {
 
     // --- 1. الإعدادات الأساسية ---
     readonly property var theme: ThemeManager.selectedTheme
+    property int innerRadiusDiv: 4
     implicitHeight: theme.dimensions.barHeight
     color: "transparent"
     exclusionMode: ExclusionMode.Auto
@@ -40,13 +41,16 @@ PanelWindow {
         RowLayout {
             id: leftSection
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-            spacing: theme.dimensions.spacingMedium
+            spacing: theme.dimensions.spacingSmall
 
             SystemTray {
                 id: systemTray
                 height: theme.dimensions.barWidgetsHeight
                 layer.enabled: true
                 layer.effect: Shadow {}
+
+                topRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
+                bottomRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
             }
 
             NetworkSpeedIndicator {
@@ -54,6 +58,8 @@ PanelWindow {
                 height: theme.dimensions.barWidgetsHeight
                 layer.enabled: true
                 layer.effect: Shadow {}
+
+                radius: theme.dimensions.elementRadius / innerRadiusDiv
             }
 
             ActiveWindow {
@@ -61,6 +67,9 @@ PanelWindow {
                 height: theme.dimensions.barWidgetsHeight
                 layer.enabled: true
                 layer.effect: Shadow {}
+
+                bottomLeftRadius: theme.dimensions.elementRadius / innerRadiusDiv
+                topLeftRadius: theme.dimensions.elementRadius / innerRadiusDiv
             }
         }
 
@@ -73,9 +82,8 @@ PanelWindow {
         RowLayout {
             id: rightSection
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-            spacing: 10
-
-            // ويدجت الشاشات (Monitors)
+            // spacing: 10
+            spacing: theme.dimensions.spacingSmall
 
             Rectangle {
                 id: monitorsWrapper
@@ -88,6 +96,9 @@ PanelWindow {
                 radius: theme.dimensions.elementRadius
                 color: theme.colors.topbarBgColorV1
                 clip: true
+
+                topRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
+                bottomRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
 
                 layer.enabled: true
                 layer.effect: Shadow {}

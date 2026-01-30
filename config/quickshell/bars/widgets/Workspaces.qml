@@ -69,10 +69,14 @@ Item {
                 clip: true
 
                 readonly property real defaultRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-                topLeftRadius: index === 0 ? defaultRadius : defaultRadius / 4
-                bottomLeftRadius: index === 0 ? defaultRadius : defaultRadius / 4
+
+                // topLeftRadius: index === 0 ? defaultRadius : defaultRadius / 4
+                // bottomLeftRadius: index === 0 ? defaultRadius : defaultRadius / 4
                 topRightRadius: index === activeIcons.length - 1 ? defaultRadius : defaultRadius / 4
                 bottomRightRadius: index === activeIcons.length - 1 ? defaultRadius : defaultRadius / 4
+
+                topLeftRadius: defaultRadius / 4
+                bottomLeftRadius: defaultRadius / 4
 
                 color: isWsActive ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.topbarBgColorV1
 

@@ -32,6 +32,9 @@ Rectangle {
         color: ThemeManager.selectedTheme.colors.topbarColor
         layer.enabled: true
 
+        topLeftRadius: netspeedToolbarWidget.topLeftRadius
+        bottomLeftRadius: netspeedToolbarWidget.bottomLeftRadius
+
         anchors {
             left: parent.left
             margins: 2
