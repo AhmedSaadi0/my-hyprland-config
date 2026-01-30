@@ -48,7 +48,7 @@ PanelWindow {
         anchors.fill: parent
 
         // الهوامش التي تصنع شكل البارات
-        anchors.topMargin: Theme.ThemeManager.selectedTheme.dimensions.barHeight + 3
+        anchors.topMargin: (Theme.ThemeManager.selectedTheme.dimensions.barHeight) + 3
         anchors.leftMargin: Theme.ThemeManager.selectedTheme.dimensions.leftBarWidth + 2
         anchors.rightMargin: 5
         anchors.bottomMargin: 5

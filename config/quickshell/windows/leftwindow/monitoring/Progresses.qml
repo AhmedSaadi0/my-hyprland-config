@@ -7,12 +7,13 @@ import "root:/components/monitors" // For Tempreture, Battery, Ram, Cpu
 import "root:/themes"
 
 import "root:/config/EventNames.js" as Events
+import "root:/config/ConstValues.js" as C
 import "root:/config"
 
 Rectangle {
     id: root
     height: 150
-    width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2)
+    width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2) - (App.menuStyle === C.FLOATING ? 10 : 0)
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
     // color: Kirigami.Theme.linkBackgroundColor
 

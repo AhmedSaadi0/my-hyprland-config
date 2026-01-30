@@ -1,7 +1,8 @@
-// components/MediaItem.qml
 import QtQuick
-import QtQuick.Effects
+import QtQuick.Controls
 import QtMultimedia
+
+import "root:/services"
 
 Item {
     id: mItem
@@ -9,17 +10,17 @@ Item {
     // --- Public API ---
     property string source: ""
     property bool active: false
-    // القيم المتاحة: "High", "Low"
+    // "High": جودة كاملة، "Low": أداء عالي (دقة أقل)
     property string quality: "High"
 
     // --- State & Getters ---
-    readonly property bool isVideoType: isVideo(source)
+    readonly property bool isVideoType: _isVideo(source)
 
     property bool isReady: {
         if (!loader.item)
             return false;
         if (isVideoType) {
-            return loader.item.playbackState === MediaPlayer.PlayingState || loader.item.mediaStatus === MediaPlayer.Buffered || loader.item.mediaStatus === MediaPlayer.Loaded;
+            return loader.item.playbackState === MediaPlayer.PlayingState || loader.item.mediaStatus === MediaPlayer.Buffered;
         }
         return loader.item.status === Image.Ready;
     }
@@ -30,25 +31,27 @@ Item {
         return isVideoType ? loader.item.error !== MediaPlayer.NoError : loader.item.status === Image.Error;
     }
 
-    // --- Helper Functions (Internal) ---
-    function toFileUrl(path) {
+    // --- Internal Helpers ---
+    function _isVideo(path) {
+        if (!path)
+            return false;
+        return /\.(mp4|mkv|webm|avi|mov|flv)$/i.test(path.toString());
+    }
+
+    function _resolvePath(path) {
         if (!path)
             return "";
         const str = path.toString();
-        return (str.startsWith("file://") || str.startsWith("http")) ? str : "file://" + str;
-    }
-
-    function isVideo(path) {
-        if (!path)
-            return false;
-        const p = path.toString().toLowerCase();
-        return p.endsWith(".mp4") || p.endsWith(".mkv") || p.endsWith(".webm") || p.endsWith(".avi");
+        if (str.indexOf("://") === -1 && str.indexOf("/") === 0)
+            return "file://" + str;
+        return str;
     }
 
     // --- Main Loader ---
     Loader {
         id: loader
         anchors.fill: parent
+        asynchronous: true
         sourceComponent: {
             if (!mItem.source)
                 return undefined;
@@ -56,9 +59,7 @@ Item {
         }
     }
 
-    // --- Components ---
-
-    // 1. Video Component
+    // --- 1. Video Component (Fixed) ---
     Component {
         id: videoComp
         VideoOutput {
@@ -66,35 +67,53 @@ Item {
             anchors.fill: parent
             fillMode: VideoOutput.PreserveAspectCrop
 
-            // High: يستخدم LastFrame لأقصى سلاسة (يستهلك GPU أكثر)
-            // Low: يستخدم التزامن التلقائي (أوفر للبطارية والمعالج)
-            // flushMode: mItem.quality === "High" ? VideoOutput.LastFrame : VideoOutput.FirstFrame
+            // --- إصلاح وتطبيق منطق الجودة ---
+
+            // تم إزالة flushMode لأنه غير مدعوم في Qt 6
+
+            // بدلاً منه نستخدم Layering لتحسين الأداء في وضع Low:
+            // عند تفعيله، يتم رسم الفيديو في ذاكرة مؤقتة بحجم أصغر، ثم تكبيره.
+            // هذا يقلل الحمل على GPU بنسبة تصل لـ 75%
+            layer.enabled: mItem.quality === "Low"
+
+            // نجعل دقة الرسم نصف حجم العنصر
+            layer.textureSize: mItem.quality === "Low" ? Qt.size(width / 2, height / 2) : Qt.size(0, 0)
+
+            // نلغي التنعيم في وضع Low لكسب المزيد من الأداء
+            layer.smooth: mItem.quality === "High"
 
             MediaPlayer {
                 id: player
                 videoOutput: vOut
-                source: mItem.source ? Qt.resolvedUrl(mItem.toFileUrl(mItem.source)) : ""
+                source: mItem.source ? Qt.resolvedUrl(mItem._resolvePath(mItem.source)) : ""
                 loops: MediaPlayer.Infinite
-                autoPlay: true
 
-                audioOutput: AudioOutput {
-                    volume: 0
-                }
+                // تشغيل فقط إذا كان العنصر نشطاً ومرئياً
+                // property bool shouldPlay: MusicService.isPlaying && mItem.active && mItem.visible
+                property bool shouldPlay: mItem.active && mItem.visible
+                onShouldPlayChanged: shouldPlay ? play() : pause()
 
-                Component.onCompleted: if (mItem.active)
+                // onSourceChanged: {
+                //     pauseTimer.stop();
+                //     play();
+                //     pauseTimer.start();
+                // }
+
+                Component.onCompleted: if (shouldPlay)
                     play()
             }
-
-            Connections {
-                target: mItem
-                function onActiveChanged() {
-                    mItem.active ? player.play() : player.pause();
+            Timer {
+                id: pauseTimer
+                repeat: false
+                interval: 400
+                onTriggered: {
+                    player.pause();
                 }
             }
         }
     }
 
-    // 2. Image/GIF Component
+    // --- 2. Image/GIF Component ---
     Component {
         id: imageComp
         AnimatedImage {
@@ -105,18 +124,15 @@ Item {
             cache: true
 
             source: mItem.source
-            playing: mItem.active
-            paused: !mItem.active
+            playing: mItem.active && mItem.visible
+            paused: !playing
 
-            // High: تحميل الصورة بكامل دقتها وتنعيمها
-            // Low: تحميل نصف الدقة (يوفر 75% من الرام) وإيقاف التنعيم
-            sourceSize: mItem.quality === "Low" ? Qt.size(parent.width / 2, parent.height / 2) : Qt.size(parent.width, parent.height)
+            // في وضع Low: نحمل الصورة بنصف الحجم الأصلي
+            sourceSize: mItem.quality === "Low" ? Qt.size(parent.width / 2, parent.height / 2) : undefined
 
+            // في وضع Low: نلغي التنعيم
             smooth: mItem.quality === "High"
-            mipmap: mItem.quality === "High" // يحسن الجودة عند التصغير لكن يستهلك GPU
-
-            onStatusChanged: if (status === Image.Ready)
-                playing = true
+            mipmap: mItem.quality === "High"
         }
     }
 }

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Widgets
 
 import "root:/themes"
 
@@ -34,14 +35,15 @@ Item {
         anchors.rightMargin: 12
         spacing: 8
 
-        Image {
+        IconImage {
             id: icon
             Layout.preferredWidth: 48
             Layout.preferredHeight: 48
             Layout.alignment: Qt.AlignVCenter
-            fillMode: Image.PreserveAspectFit
+            // fillMode: Image.PreserveAspectFit
             source: Quickshell.iconPath(desktopEntity ? desktopEntity.icon : "application-x-executable", "application-x-executable")
             transformOrigin: Item.Center
+            asynchronous: true
         }
 
         ColumnLayout {

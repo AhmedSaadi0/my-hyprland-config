@@ -17,6 +17,7 @@ Rectangle {
     property string darkThemeName: ""
 
     property bool isSelected: false
+    property int innerRadiusDiv: 4
 
     width: parent.width
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
@@ -55,32 +56,34 @@ Rectangle {
 
         RowLayout {
             Layout.fillWidth: true
-            spacing: 0
+            spacing: 2
 
             MButton {
                 text: ""
                 // iconText: "" // أيقونة الوضع الفاتح
                 Layout.fillWidth: true
-                topRightRadius: 0
-                bottomRightRadius: 0
                 isActive: ThemeManager.selectedTheme.themeName === card.lightThemeName
                 onClicked: {
                     ThemeManager.requestLoadTheme(card.lightThemeName);
                     closeMenu.start();
                     // EventBus.emit(Events.CLOSE_LEFTBAR);
                 }
+
+                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
             }
 
             MButton {
                 text: "󰖔"
                 Layout.fillWidth: true
-                topLeftRadius: 0
-                bottomLeftRadius: 0
                 isActive: ThemeManager.selectedTheme.themeName === card.darkThemeName
                 onClicked: {
                     ThemeManager.requestLoadTheme(card.darkThemeName);
                     closeMenu.start();
                 }
+
+                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
             }
         }
     }

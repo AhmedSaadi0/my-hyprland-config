@@ -36,7 +36,7 @@ PanelWindow {
             case C.DOCKED_MOVING_BAR:
                 return 0;
             case C.FLOATING:
-                return 40;
+                return ThemeManager.selectedTheme.dimensions.leftBarWidth;
             }
         }
         top: ThemeManager.selectedTheme.dimensions.barHeight + 10

@@ -39,7 +39,7 @@ Singleton {
         body = "",
         icon = "",
         urgency = "normal",
-        tone = App.assets.audio.notificationAlert
+        tone = App.assets.audio.notifyStandard
     }) {
         App.dispatchCommand("Notify", Helper.sendNotification({
             summary: summary,
@@ -50,7 +50,7 @@ Singleton {
         playNotificationTone(tone);
     }
 
-    function playNotificationTone(tone = App.assets.audio.notificationAlert) {
+    function playNotificationTone(tone = App.assets.audio.notifyStandard) {
         if (!root.dndEnabled) {
             App.dispatchCommand("Notification tone", Helper.playSoundCommand(tone));
         }
@@ -74,10 +74,8 @@ Singleton {
             });
 
             root.activeNotifications.push(newSmartNotif);
-
             root.notificationReceived(newSmartNotif);
-
-        // playNotificationTone();
+            root.playNotificationTone();
         }
     }
 

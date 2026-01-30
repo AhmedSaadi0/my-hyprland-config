@@ -2,6 +2,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Widgets
 
 import "root:/themes"
 
@@ -66,12 +67,12 @@ Item {
             radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.8
             color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
 
-            Image {
+            IconImage {
                 id: appIcon
                 anchors.centerIn: parent
                 width: 32
                 height: 32
-                fillMode: Image.PreserveAspectFit
+                // fillMode: Image.PreserveAspectFit
                 source: Quickshell.iconPath(appData ? appData.icon : "application-x-executable", "application-x-executable")
                 transformOrigin: Item.Center
 

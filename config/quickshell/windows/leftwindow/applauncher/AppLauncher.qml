@@ -391,6 +391,8 @@ ColumnLayout {
                 });
             }
 
+            // console.info("sortedApps finalList -> " + JSON.stringify(finalList));
+
             return finalList;
         }
     }

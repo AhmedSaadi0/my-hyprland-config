@@ -19,7 +19,8 @@ MenuCard {
     property int defaultButtonWidth: 100
     property int defaultButtonHeight: 30
 
-    property int buttonsRowSpacing: 10
+    property int buttonsRowSpacing: 7
+    property int innerRadiusDiv: 3
 
     // --- Colors (Aliasing Theme colors for clarity and central access) ---
     property color baseTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
@@ -72,8 +73,12 @@ MenuCard {
                 root.profileToSetOnClick = root.highPerformanceProfileCmd;
                 profileProcess.running = true;
             }
-            normalBackground: (root.selectedProfile === root.profileIndexPerformance) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
-            normalForeground: (root.selectedProfile === root.profileIndexPerformance) ? root.highlightedStateTextColor : root.baseTextColor
+            isActive: root.selectedProfile === root.profileIndexPerformance
+            // normalBackground: (root.selectedProfile === root.profileIndexPerformance) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+            // normalForeground: (root.selectedProfile === root.profileIndexPerformance) ? root.highlightedStateTextColor : root.baseTextColor
+
+            topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+            bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
         }
 
         MButton {
@@ -85,8 +90,15 @@ MenuCard {
                 root.profileToSetOnClick = root.balancedProfileCmd;
                 profileProcess.running = true;
             }
-            normalBackground: (root.selectedProfile === root.profileIndexBalanced) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
-            normalForeground: (root.selectedProfile === root.profileIndexBalanced) ? root.highlightedStateTextColor : root.baseTextColor
+
+            isActive: root.selectedProfile === root.profileIndexBalanced
+            // normalBackground: (root.selectedProfile === root.profileIndexBalanced) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+            // normalForeground: (root.selectedProfile === root.profileIndexBalanced) ? root.highlightedStateTextColor : root.baseTextColor
+
+            topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+            topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+            bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+            bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
         }
 
         MButton {
@@ -98,8 +110,12 @@ MenuCard {
                 root.profileToSetOnClick = root.powerSaverProfileCmd;
                 profileProcess.running = true;
             }
-            normalBackground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
-            normalForeground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.highlightedStateTextColor : root.baseTextColor
+            isActive: root.selectedProfile === root.profileIndexPowerSaver
+            // normalBackground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+            // normalForeground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.highlightedStateTextColor : root.baseTextColor
+
+            bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+            topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
         }
     }
 

@@ -1,3 +1,5 @@
+// bars/widgets/Monitors.qml
+
 import QtQuick.Layouts
 import QtQuick
 
@@ -7,15 +9,15 @@ import "root:/services"
 import "root:/components"
 
 RowLayout {
-    spacing: 8
+    spacing: 6
 
     // 1. تنسيق النص الرقمي
     component ValueLabel: Text {
         color: ThemeManager.selectedTheme.colors.primary
-        font.family: ThemeManager.selectedTheme.typography.fontFamily
-        font.pixelSize: 12
+        font.family: ThemeManager.selectedTheme.typography.bodyFont
+        font.pixelSize: ThemeManager.selectedTheme.typography.small
         font.bold: true
-        Layout.alignment: Qt.AlignVCenter
+        Layout.alignment: Qt.AlignCenter
     }
 
     // 2. شكل الفاصل العمودي
@@ -38,7 +40,7 @@ RowLayout {
         }
         ValueLabel {
             // إضافة Math.round هنا لإزالة الفواصل
-            text: Math.round(tempMonitor.value * 100) + "°C"
+            text: Math.round(tempMonitor.value * 100) + " C"
             color: tempMonitor.fgNormal
         }
     }
@@ -48,9 +50,11 @@ RowLayout {
     }
 
     // --- 2. Battery ---
+
     Row {
         spacing: 5
         Layout.alignment: Qt.AlignVCenter
+        visible: SystemService.hasBattery
         Battery {
             id: batteryMonitor
             glowIcon: false
@@ -63,8 +67,8 @@ RowLayout {
             text: Math.round(batteryMonitor.value * 100) + "%"
         }
     }
-
     VerticalDivider {
+        visible: SystemService.hasBattery
         Layout.alignment: Qt.AlignVCenter
     }
 

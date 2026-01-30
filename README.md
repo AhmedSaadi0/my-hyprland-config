@@ -69,7 +69,7 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 
 ```bash
 git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
-cd nibrasshell 
+cd nibrasshell
 python install.py
 ```
 
@@ -626,3 +626,7 @@ nvim .nibrasshell.json
 - High voltage icons by [Muhammad Atif](https://www.flaticon.com/free-icons/high-voltage)
 - Wind and Rain icons by [Freepik](https://www.flaticon.com/free-icons/wind)
 - Notification icons by [Freepik](https://www.flaticon.com/free-icons/notification)
+
+### Sounds
+
+- [freesound.org](https://www.freesound.org)

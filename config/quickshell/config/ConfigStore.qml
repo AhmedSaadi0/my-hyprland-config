@@ -44,12 +44,19 @@ QtObject {
     property int cpuHighLoadThreshold: 85
     property int ramHighLoadThreshold: 85
 
+    property int topBarActiveWindowMinWidth: 200
+    property int topBarActiveWindowMaxWidth: 400
+
+    property bool dynamicWorkspaces: false
+    property var activeWorkspacesIcons: ["󰋜", "󰿣", "󰂔", "󰉋", "󱙋", "󰭹", "󱍙", "󰺵", "󱋡", "󰙨"]
+    property var inActiveWorkspacesIcons: ["", "󰿤", "󰂕", "󰉖", "󱙌", "󰻞", "󱍚", "󰺶", "󱋢", "󰤑"]
+
     property int firstDayOfWeek: 6 // Saturday
 
     property bool useBottomLauncher: false  // false = side launcher, true = bottom launcher
     property int bottomLauncherWidth: 800
 
-    property string menuStyle: C.DOCKED_FIXED_BAR
+    property string menuStyle: C.DOCKED_MOVING_BAR
 
     property var _fileView: FileView {
         id: fileWatcher

@@ -19,11 +19,8 @@ Rectangle {
     MediaItem {
         id: backgroundImage
         source: wallpaper
-
         quality: "low"
-
         active: visible && (parent.parent ? parent.parent.visible : true)
-
         width: App.menuStyle == C.FLOATING ? ThemeManager.selectedTheme.dimensions.menuWidth - 24 : ThemeManager.selectedTheme.dimensions.menuWidth - 14
         height: 200
 
@@ -33,16 +30,23 @@ Rectangle {
             horizontalCenter: parent.horizontalCenter
         }
 
-        // layer.enabled: true
-        // layer.smooth: true
-        // layer.effect: OpacityMask {
-        //     maskSource: Rectangle {
-        //         width: backgroundImage.width
-        //         height: backgroundImage.height
-        //         radius: ThemeManager.selectedTheme.dimensions.elementRadius - 3
-        //         visible: false // مهم: إخفاء مصدر القناع حتى لا يظهر مربع أبيض
-        //     }
-        // }
+        layer.enabled: parent.parent.visible
+        layer.smooth: true
+        layer.effect: OpacityMask {
+            maskSource: Item {
+                width: backgroundImage.width
+                height: backgroundImage.height
+                Rectangle {
+                    id: topMask
+                    anchors.top: parent.top
+                    width: parent.width
+                    height: parent.height
+                    radius: ThemeManager.selectedTheme.dimensions.elementRadius - 3
+                    // topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius - 3
+                    // topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius - 3
+                }
+            }
+        }
     }
 
     Rectangle {

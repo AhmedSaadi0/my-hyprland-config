@@ -13,9 +13,6 @@ Rectangle {
     color: theme.colors.topbarBgColorV2
     radius: theme.dimensions.elementRadius
 
-    border.color: Qt.rgba(1, 1, 1, 0.05)
-    border.width: 1
-
     clip: true
     visible: trayRepeater.count > 0
 
