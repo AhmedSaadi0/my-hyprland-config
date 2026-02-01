@@ -78,7 +78,7 @@ Item {
         bottomLeftRadius: root.bottomLeftRadius
         clip: true // يمنع خروج المحتوى (النص المتحرك) عن الحدود
 
-        color: theme.colors.tertiary.alpha(0.7)
+        color: theme.colors.primary.alpha(0.7)
 
         // --- 3. المحتوى الأساسي (Main Content) ---
         RowLayout {
@@ -162,7 +162,7 @@ Item {
                 Label {
                     id: scrollingText
                     text: root.currentTitle
-                    color: theme.colors.onTertiary
+                    color: theme.colors.onPrimary
                     font: titleMetrics.font
                     height: parent.height
                     verticalAlignment: Text.AlignVCenter
