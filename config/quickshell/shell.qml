@@ -6,6 +6,7 @@ import QtQuick
 import QtQml
 import QtQuick.Window
 import Quickshell.Io
+import Quickshell.Hyprland
 
 import "root:/windows/leftwindow"
 import "root:/windows/smart_capsule"
@@ -51,6 +52,16 @@ ShellRoot {
         target: ThemeManager
         function onInitialThemeReady() {
             startComp.start();
+        }
+    }
+
+    Connections {
+        target: Hyprland
+
+        function onRawEvent(event) {
+            if (event.name === "openwindow") {
+                Hyprland.refreshToplevels();
+            }
         }
     }
 

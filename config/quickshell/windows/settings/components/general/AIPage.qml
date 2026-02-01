@@ -161,7 +161,8 @@ BaseGeneralSettings {
             SettingsComboBox {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 30
-                model: ["gemini", "openrouter", "local"]
+                // TODO: -> make as a const from App.qml or const.js
+                model: ["gemini", "openrouter", "ollama", "local"]
 
                 currentIndex: {
                     var idx = model.indexOf(page.localProvider);
@@ -305,9 +306,9 @@ BaseGeneralSettings {
                 Layout.alignment: Qt.AlignVCenter
             }
 
-            // 1. الخيار الأول: ComboBox (إذا لم يكن OpenRouter)
+            // 1. الخيار الأول: ComboBox (إذا كان جيميناي)
             SettingsComboBox {
-                visible: page.localProvider !== "openrouter"
+                visible: page.localProvider === "gemini"
                 Layout.fillWidth: true
                 Layout.preferredHeight: 30
                 model: App.availableGeminiWeatherModels
@@ -316,9 +317,9 @@ BaseGeneralSettings {
                 onActivated: index => page.localWeatherModel = textAt(index)
             }
 
-            // 2. الخيار الثاني: EditableField (إذا كان OpenRouter)
+            // 2. الخيار الثاني: EditableField (إذا كان غير جيميناي)
             EditableField {
-                visible: page.localProvider === "openrouter"
+                visible: page.localProvider !== "gemini"
                 Layout.fillWidth: true
                 placeholderText: "e.g. qwen/qwen-2-7b:free"
                 text: page.localWeatherModel
@@ -357,7 +358,7 @@ BaseGeneralSettings {
 
             // 1. ComboBox
             SettingsComboBox {
-                visible: page.localProvider !== "openrouter"
+                visible: page.localProvider === "gemini"
                 Layout.fillWidth: true
                 Layout.preferredHeight: 30
                 model: App.availableGeminiMusicModels
@@ -368,7 +369,7 @@ BaseGeneralSettings {
 
             // 2. EditableField
             EditableField {
-                visible: page.localProvider === "openrouter"
+                visible: page.localProvider !== "gemini"
                 Layout.fillWidth: true
                 placeholderText: "e.g. anthropic/claude-3-haiku"
                 text: page.localMusicModel

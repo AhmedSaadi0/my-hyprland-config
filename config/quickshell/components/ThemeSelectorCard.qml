@@ -56,7 +56,7 @@ Rectangle {
 
         RowLayout {
             Layout.fillWidth: true
-            spacing: 2
+            spacing: 1
 
             MButton {
                 text: ""
@@ -69,8 +69,8 @@ Rectangle {
                     // EventBus.emit(Events.CLOSE_LEFTBAR);
                 }
 
-                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
-                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
             }
 
             MButton {
@@ -82,8 +82,8 @@ Rectangle {
                     closeMenu.start();
                 }
 
-                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
-                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
             }
         }
     }

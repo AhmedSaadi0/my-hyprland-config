@@ -88,7 +88,14 @@ def main():
     parser.add_argument("--json_mode", action="store_true")
     parser.add_argument(
         "--provider",
-        choices=["local", "gemini", "openrouter", "openai", "deepseek"],
+        choices=[
+            "local",
+            "gemini",
+            "openrouter",
+            "openai",
+            "deepseek",
+            "ollama",
+        ],
         default=None,
     )
     parser.add_argument("--preferred_language", default="Arabic")

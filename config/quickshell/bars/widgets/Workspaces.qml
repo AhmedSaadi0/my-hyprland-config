@@ -23,6 +23,13 @@ Item {
         }
     }
 
+    Connections {
+        target: ThemeManager
+        function onSelectedThemeUpdated() {
+        // TODO: -> refresh app icon
+        }
+    }
+
     Row {
         id: mainRow
         anchors.verticalCenter: parent.verticalCenter
@@ -34,9 +41,9 @@ Item {
             delegate: Rectangle {
                 id: workspaceBox
                 readonly property int wsId: index + 1
+                readonly property real defaultRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
-                // --- منطق تجميع التطبيقات ---
-                // وظيفة تقوم بحساب التطبيقات الفريدة وعدد تكرارها في هذه المساحة
+                // --- منطق البيانات ---
                 readonly property var groupedApps: {
                     let apps = {};
                     let toplevels = Hyprland.toplevels.values;
@@ -44,10 +51,15 @@ Item {
                         let win = toplevels[i];
                         if (win.workspace && win.workspace.id === wsId) {
                             let id = win.appId || (win.lastIpcObject ? win.lastIpcObject.class : "unknown");
+
+                            let rawAddr = String(win.address);
+                            let addr = rawAddr.startsWith("0x") ? rawAddr : "0x" + rawAddr;
+
                             if (!apps[id]) {
                                 apps[id] = {
                                     id: id,
-                                    count: 1
+                                    count: 1,
+                                    address: addr
                                 };
                             } else {
                                 apps[id].count++;
@@ -66,15 +78,11 @@ Item {
                 width: ready ? Math.round(contentRow.width + 12) : 0
                 opacity: ready ? 1 : 0
                 scale: ready ? 1 : 0.8
-                clip: true
 
-                readonly property real defaultRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+                clip: false
 
-                // topLeftRadius: index === 0 ? defaultRadius : defaultRadius / 4
-                // bottomLeftRadius: index === 0 ? defaultRadius : defaultRadius / 4
                 topRightRadius: index === activeIcons.length - 1 ? defaultRadius : defaultRadius / 4
                 bottomRightRadius: index === activeIcons.length - 1 ? defaultRadius : defaultRadius / 4
-
                 topLeftRadius: defaultRadius / 4
                 bottomLeftRadius: defaultRadius / 4
 
@@ -103,7 +111,7 @@ Item {
                 Row {
                     id: contentRow
                     anchors.centerIn: parent
-                    spacing: 6 // زيادة التباعد قليلاً ليتناسب مع العدادات
+                    spacing: 6
                     opacity: workspaceBox.width > 20 ? 1 : 0
                     Behavior on opacity {
                         NumberAnimation {
@@ -111,7 +119,6 @@ Item {
                         }
                     }
 
-                    // ---- عرض أيقونات التطبيقات المجمعة ----
                     Repeater {
                         model: workspaceBox.groupedApps
 
@@ -119,51 +126,112 @@ Item {
                             width: 22
                             height: 22
 
-                            IconImage {
-                                id: appIcon
-                                anchors.centerIn: parent
-                                width: 16
-                                height: 16
-                                mipmap: true
-                                source: {
-                                    let id = modelData.id;
-                                    let entry = DesktopEntries.byId(id);
-                                    let iconName = (entry && entry.icon) ? entry.icon : id;
-                                    return Quickshell.iconPath(iconName, "application-x-executable");
+                            MouseArea {
+                                id: dragArea
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                drag.target: tile
+                                drag.axis: Drag.XAndYAxis
+                                drag.smoothed: true
+                                drag.threshold: 5
+
+                                onPressed: {
+                                    tile.storedAddress = modelData.address;
                                 }
-                                asynchronous: true
-                            }
 
-                            // العداد (يظهر فقط إذا كان التطبيق مكرر)
-                            Rectangle {
-                                visible: modelData.count > 1
-                                anchors.top: appIcon.top
-                                anchors.right: appIcon.right
-                                anchors.topMargin: -4
-                                anchors.rightMargin: -4
-                                width: 12
-                                height: 12
-                                radius: 6
-                                color: isWsActive ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.primary
-                                border.width: 1
-                                border.color: workspaceBox.color
+                                onClicked: {
+                                    if (!isWsActive)
+                                        Hyprland.dispatch(`workspace ${wsId}`);
+                                }
 
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: modelData.count
-                                    font.pixelSize: 8
-                                    font.bold: true
-                                    color: isWsActive ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onPrimary
+                                onReleased: {
+                                    tile.Drag.drop();
+                                    tile.x = 0;
+                                    tile.y = 0;
+                                }
+
+                                Item {
+                                    id: tile
+                                    width: 22
+                                    height: 22
+
+                                    property string storedAddress: ""
+
+                                    Drag.active: dragArea.drag.active
+                                    Drag.keys: ["window"]
+                                    Drag.hotSpot.x: 11
+                                    Drag.hotSpot.y: 11
+
+                                    Behavior on x {
+                                        enabled: !dragArea.drag.active
+                                        NumberAnimation {
+                                            duration: 200
+                                            easing.type: Easing.OutQuad
+                                        }
+                                    }
+                                    Behavior on y {
+                                        enabled: !dragArea.drag.active
+                                        NumberAnimation {
+                                            duration: 200
+                                            easing.type: Easing.OutQuad
+                                        }
+                                    }
+
+                                    IconImage {
+                                        id: appIcon
+                                        anchors.centerIn: parent
+                                        width: 16
+                                        height: 16
+                                        mipmap: true
+                                        source: {
+                                            const currentTheme = ThemeManager.selectedTheme.systemSettings.themeIcons;
+
+                                            let id = modelData.id;
+                                            let entry = DesktopEntries.byId(id);
+                                            let iconName = (entry && entry.icon) ? entry.icon : id;
+
+                                            const iconPath = Quickshell.iconPath(iconName, "application-x-executable");
+
+                                            return iconPath;
+                                        }
+                                        asynchronous: true
+                                    }
+
+                                    Rectangle {
+                                        visible: modelData.count > 1
+                                        anchors.top: appIcon.top
+                                        anchors.right: appIcon.right
+                                        anchors.topMargin: -4
+                                        anchors.rightMargin: -4
+                                        width: 12
+                                        height: 12
+                                        radius: ThemeManager.selectedTheme.dimensions.elementRadius / 4
+                                        color: isWsActive ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.primary
+                                        border.width: 1
+                                        border.color: workspaceBox.color
+
+                                        Text {
+                                            anchors.centerIn: parent
+                                            text: modelData.count
+                                            font.pixelSize: 8
+                                            font.bold: true
+                                            color: isWsActive ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onPrimary
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
 
-                    // ---- أيقونة المساحة الفارغة ----
                     Item {
                         visible: !workspaceBox.hasWindows
                         width: 20
                         height: 22
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: Hyprland.dispatch(`workspace ${wsId}`)
+                        }
                         Text {
                             anchors.centerIn: parent
                             text: isWsActive ? activeIcons[wsId - 1] || "" : inActiveIcons[wsId - 1] || ""
@@ -174,8 +242,45 @@ Item {
                     }
                 }
 
+                DropArea {
+                    anchors.fill: parent
+                    keys: ["window"]
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: ThemeManager.selectedTheme.dimensions.elementRadius / 4
+                        color: "transparent"
+                        border.color: parent.containsDrag ? ThemeManager.selectedTheme.colors.primary : "transparent"
+                        border.width: 2
+                        visible: parent.containsDrag
+
+                        Rectangle {
+                            anchors.fill: parent
+                            radius: parent.radius
+                            color: parent.border.color
+                            opacity: 0.1
+                        }
+                    }
+
+                    onDropped: drop => {
+                        if (drop.source && drop.source.storedAddress) {
+                            let winAddress = drop.source.storedAddress;
+
+                            if (!winAddress.startsWith("0x")) {
+                                winAddress = "0x" + winAddress;
+                            }
+
+                            Hyprland.dispatch(`movetoworkspacesilent ${wsId},address:${winAddress}`);
+                            drop.accept();
+                        } else {
+                            console.warn("[Drop Fail] Source or address missing");
+                        }
+                    }
+                }
+
                 MouseArea {
                     anchors.fill: parent
+                    z: -1
                     cursorShape: Qt.PointingHandCursor
                     onClicked: Hyprland.dispatch(`workspace ${wsId}`)
                 }
