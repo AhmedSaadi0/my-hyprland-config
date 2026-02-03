@@ -7,6 +7,7 @@ import "root:/themes"
 import "root:/utils/helpers.js" as Helper
 import "root:/config/EventNames.js" as Events
 import "root:/config"
+import "root:/components"
 
 // TODO: -> Improve this and seprat in into several files
 PanelWindow {
@@ -139,6 +140,24 @@ PanelWindow {
         color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
+        MButton {
+            id: closeBtn
+            anchors {
+                top: parent.top
+                right: parent.right
+                margins: 20
+            }
+            width: 45
+            height: 45
+            text: "󰅖"
+            cursorShape: Qt.PointingHandCursor
+            normalBackground: "transparent"
+            hoveredBackground: Qt.rgba(1, 0, 0, 0.5)
+            onClicked: root.visible = false
+            z: 100 // ليكون فوق كل شيء
+            font: ThemeManager.selectedTheme.typography.iconFont
+        }
+
         // تأثير خلفية
         Rectangle {
             anchors.fill: parent
@@ -200,25 +219,6 @@ PanelWindow {
             contentWidth: flow.width
             contentHeight: flow.height
             clip: true
-
-            ScrollBar.vertical: ScrollBar {
-                parent: mainFlickable
-                anchors {
-                    top: mainFlickable.top
-                    right: mainFlickable.right
-                    bottom: mainFlickable.bottom
-                }
-                policy: ScrollBar.AsNeeded
-                width: 8
-                background: Rectangle {
-                    color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-                    radius: 4
-                }
-                contentItem: Rectangle {
-                    color: ThemeManager.selectedTheme.colors.primary
-                    radius: 4
-                }
-            }
 
             Flow {
                 id: flow

@@ -4,6 +4,7 @@ import platform
 import prompt
 from gemini_provider import GeminiProvider
 from local_provider import LocalProvider
+from ollama_provider import OllamaProvider
 from openai_provider import OpenAIProvider
 from openrouter_provider import OpenRouterProvider
 
@@ -64,12 +65,6 @@ def get_provider(
         **sys_details,
     }
 
-    # if final_system_instruction is None:
-    #     final_system_instruction = ""
-
-    # print(sys_details)
-    # print(user_persona)
-    # print(preferred_language)
     for key, value in replacements.items():
         if key in final_system_instruction:
             final_system_instruction = final_system_instruction.replace(
@@ -86,6 +81,10 @@ def get_provider(
 
     if args.provider == "local":
         return LocalProvider(**common_args)
+
+    if args.provider == "ollama":
+        common_args["base_url"] = args.base_url
+        return OllamaProvider(**common_args)
 
     if args.provider == "gemini":  # or "gemini" in args.model.lower():
         return GeminiProvider(**common_args)

@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Widgets
 
 import "root:/themes"
 import "root:/config"
@@ -35,7 +36,6 @@ Item {
         if (activeToplevel.appId)
             return activeToplevel.appId;
         try {
-            Hyprland.refreshToplevels();
             var rawData = activeToplevel.lastIpcObject;
             if (rawData && rawData.class)
                 return rawData.class;
@@ -54,6 +54,13 @@ Item {
     property int topLeftRadius
     property int bottomLeftRadius
 
+    Connections {
+        target: ThemeManager
+        function onSelectedThemeUpdated() {
+        // TODO: -> refresh app icon
+        }
+    }
+
     TextMetrics {
         id: titleMetrics
         text: root.currentTitle
@@ -71,7 +78,7 @@ Item {
         bottomLeftRadius: root.bottomLeftRadius
         clip: true // يمنع خروج المحتوى (النص المتحرك) عن الحدود
 
-        color: theme.colors.tertiary.alpha(0.7)
+        color: theme.colors.primary.alpha(0.7)
 
         // --- 3. المحتوى الأساسي (Main Content) ---
         RowLayout {
@@ -124,15 +131,24 @@ Item {
                     opacity: 0.25
                 }
 
-                Image {
+                IconImage {
                     id: appIcon
                     anchors.fill: parent
                     anchors.margins: 2
                     anchors.leftMargin: 4
-                    fillMode: Image.PreserveAspectFit
-                    source: Quickshell.iconPath(root.iconName, "application-x-executable")
+                    // fillMode: Image.PreserveAspectFit
+                    // source: Quickshell.iconPath(root.iconName, "application-x-executable")
+                    source: {
+                        let id = currentClass;
+                        let entry = DesktopEntries.byId(id);
+                        let iconName = (entry && entry.icon) ? entry.icon : id;
+                        const iconPath = Quickshell.iconPath(iconName, "application-x-executable");
+                        return iconPath;
+                    }
 
                     onSourceChanged: iconAnim.restart()
+                    asynchronous: true
+                    mipmap: true
                 }
             }
 
@@ -146,7 +162,7 @@ Item {
                 Label {
                     id: scrollingText
                     text: root.currentTitle
-                    color: theme.colors.onTertiary
+                    color: theme.colors.onPrimary
                     font: titleMetrics.font
                     height: parent.height
                     verticalAlignment: Text.AlignVCenter
