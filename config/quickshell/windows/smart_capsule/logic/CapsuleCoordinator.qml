@@ -46,32 +46,6 @@ Singleton {
     // 🔌 Service Connections
     // ========================================================================
 
-    // KeyboardLayout
-    NibrasShellShortcut {
-        name: "showKeyboardLayout"
-        onPressed: {
-            let layoutName = SystemService.currentLayout || "Unknown";
-
-            root.updateEyes("wink", root._sysEyeReactDuration);
-
-            // let colors = getColorsForState("info");
-
-            CapsuleManager.request({
-                priority: C.TRANSIENT,
-                source: C.SRC_SYSTEM,
-                icon: "󰌌",
-                text: "Layout: " + layoutName,
-                timeout: root._sysOsdTimeout,
-                // bgColor1: colors.bg1,
-                // bgColor2: colors.bg2,
-                // fgColor: colors.fg,
-                changeH: false
-                // playTone: true,
-                // tone: App.assets.audio.notifySoft
-            });
-        }
-    }
-
     // --- Music ---
     Connections {
         target: MusicService
@@ -117,6 +91,9 @@ Singleton {
         }
         function onRamAlert(value) {
             root.handleResourceAlert("RAM", value, App.playRamAlarmSound);
+        }
+        function onCurrentLayoutChanged() {
+            root.handleLayoutChanged();
         }
     }
 
@@ -248,6 +225,26 @@ Singleton {
             withProgress: true,
             timeout: root._sysOsdTimeout,
             changeW: false
+        });
+    }
+
+    function handleLayoutChanged() {
+        let layoutName = SystemService.currentLayout || "Unknown";
+
+        root.updateEyes("wink", root._sysEyeReactDuration);
+
+        CapsuleManager.request({
+            priority: C.TRANSIENT,
+            source: C.SRC_SYSTEM,
+            icon: "󰌌",
+            text: "Layout: " + layoutName,
+            timeout: root._sysOsdTimeout,
+            // bgColor1: colors.bg1,
+            // bgColor2: colors.bg2,
+            // fgColor: colors.fg,
+            changeH: false
+            // playTone: true,
+            // tone: App.assets.audio.notifySoft
         });
     }
 
