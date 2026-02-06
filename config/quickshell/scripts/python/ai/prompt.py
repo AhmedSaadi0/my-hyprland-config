@@ -44,7 +44,7 @@ You must select ONE single character (Glyph) from the library below that best ma
         "bg_color2": "string",
         "fg_color": "string",
         "title": "string",      // Persona Name OR "Nibras"
-        "emotion": "string" // only from these [love, happy, wink, sad, angry, shocked, suspicious, bored, sleeping, confused, dead ]
+        "emotion": "string" // only from these [love, happy, wink, sad, angry, shocked, suspicious, bored, listening, thinking, sleeping, confused, dead, focused]
     },
     "data": {
         "temp": "string",
@@ -80,5 +80,5 @@ MUSIC_MASTER_PROMPT = """
 3.  **Emotion**: Select one of the available emotions, and it must fit with the vibe.
 
 ### REQUIRED OUTPUT FORMAT (JSON)
-{"emotion": "Select one: [love, happy, wink, sad, angry, shocked, suspicious, bored, sleeping, confused, dead, focused]", "comment": "Your text here", "tags": ["suggest new song name"]}
+{"emotion": "Select one: [love, happy, wink, sad, angry, shocked, suspicious, bored, listening, thinking, sleeping, confused, dead, focused]", "comment": "Your text here", "tags": ["suggest new song name"]}
 """

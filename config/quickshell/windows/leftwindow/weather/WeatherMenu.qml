@@ -259,6 +259,15 @@ Flickable {
                 color: Helper.getAccurteTextColor(Weather.aiBgColor1)
             }
 
+            Text {
+                Layout.fillWidth: true
+                // text: Weather.aiSummaryText
+                text: "⏱ " + Weather.aiSmartPollingDetails
+                wrapMode: Text.Wrap
+                font.pixelSize: 11
+                color: Helper.getAccurteTextColor(Weather.aiBgColor1) === "black" ? "#99000000" : "#99ffffff"
+            }
+
             Flow {
                 Layout.fillWidth: true
                 spacing: 6

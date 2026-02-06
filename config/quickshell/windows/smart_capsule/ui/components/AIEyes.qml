@@ -193,8 +193,6 @@ Item {
             duration: 150
             easing.type: Easing.InQuad
         }
-
-        // 5. تكرار بعد فترة عشوائية أو ثابتة (هنا نكرر)
     }
 
     // دالة: إجبار العين على أخذ شكل الحالة الحالية (لإصلاح العين بعد الرمش)
@@ -923,6 +921,53 @@ Item {
                 target: eyesRow
                 spacing: 6
             }
-        }
+        },
+        // State {
+        //     name: "shocked"
+        //     PropertyChanges {
+        //         target: leftEye
+        //         eyeW: 11        // مربع متناسق
+        //         eyeH: 11
+        //         eyeR: 3         // انحناء ناعم (Squircle)
+        //
+        //         // رفع الحواجب للأعلى هو السر لعدم ظهور الملل
+        //         browY: -5
+        //         browAngle: 10   // زاوية خفيفة لتبدو ودودة (^)
+        //         browW: 10
+        //         showBrow: true
+        //
+        //         // إطفاء الأشكال الأخرى
+        //         isHappyShape: false
+        //         isHeartShape: false
+        //         isSadShape: false
+        //         isThinkingShape: false
+        //         isDeadShape: false
+        //         isListeningShape: false
+        //         isFocusedShape: false
+        //     }
+        //     PropertyChanges {
+        //         target: rightEye
+        //         eyeW: 11
+        //         eyeH: 11
+        //         eyeR: 3
+        //
+        //         browY: -5
+        //         browAngle: -10  // عكس الزاوية (^)
+        //         browW: 10
+        //         showBrow: true
+        //
+        //         isHappyShape: false
+        //         isHeartShape: false
+        //         isSadShape: false
+        //         isThinkingShape: false
+        //         isDeadShape: false
+        //         isListeningShape: false
+        //         isFocusedShape: false
+        //     }
+        //     PropertyChanges {
+        //         target: eyesRow
+        //         spacing: 6
+        //     }
+        // }
     ]
 }

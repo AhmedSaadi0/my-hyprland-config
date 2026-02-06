@@ -66,11 +66,22 @@ Singleton {
     readonly property bool isCpuHigh: cpuUsage >= (App.cpuHighLoadThreshold / 100)
     readonly property bool isRamHigh: ramUsage >= (App.ramHighLoadThreshold / 100)
 
+    property string currentLayout: "EN"
+
     signal cpuAlert(real value)
     signal ramAlert(real value)
 
     signal cpuNormal
     signal ramNormal
+
+    function _formatLayout(rawName) {
+        let lower = rawName.toLowerCase();
+        if (lower.includes("arabic"))
+            return "AR";
+        if (lower.includes("english"))
+            return "EN";
+        return rawName.substring(0, 2).toUpperCase();
+    }
 
     onIsCpuHighChanged: {
         if (isCpuHigh) {
@@ -111,6 +122,31 @@ Singleton {
                 var val = parseFloat(data.trim());
                 if (!isNaN(val)) {
                     root.ramUsage = val / 100.0;
+                }
+            }
+        }
+    }
+
+    Process {
+        id: layoutListener
+        command: ["sh", "-c", "nc -U $XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | grep --line-buffered 'activelayout>>'"]
+        running: true
+
+        stdout: SplitParser {
+            onRead: data => {
+                let parts = data.trim().split(">>");
+                if (parts.length > 1) {
+                    let info = parts[1].split(",");
+                    if (info.length > 1) {
+                        let newLayout = info[1];
+
+                        let formatted = root._formatLayout(newLayout);
+
+                        if (root.currentLayout !== formatted) {
+                            root.currentLayout = formatted;
+                            console.info("Keyboard Layout Changed to: " + formatted);
+                        }
+                    }
                 }
             }
         }
