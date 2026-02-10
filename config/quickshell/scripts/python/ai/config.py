@@ -1,5 +1,6 @@
 import datetime
 import platform
+import subprocess
 
 import prompt
 from gemini_provider import GeminiProvider
@@ -32,7 +33,52 @@ PRESETS = {
         "json_mode": True,
         "temperature": 0.5,
     },
+    "boot_analyze": {
+        "system_instruction": prompt.SYSTEM_ANALYST_PROMPT,
+        "json_mode": True,
+        "temperature": 0.1,
+    },
 }
+
+
+def get_raw_boot_logs():
+    """تجميع بيانات الإقلاع واللوجات في نص واحد"""
+    buffer = []
+
+    # 1. Boot Time
+    try:
+        time_out = subprocess.check_output(
+            ["systemd-analyze", "time"], text=True
+        ).strip()
+        buffer.append(f"--- BOOT DURATION ---\n{time_out}")
+    except Exception as e:
+        buffer.append(f"--- BOOT TIME ERROR: {e} ---")
+
+    # 2. Critical Logs (Journalctl)
+    try:
+        # نجلب آخر 30 خطأ (Priority 3) من الإقلاع الحالي
+        logs_out = subprocess.check_output(
+            [
+                "journalctl",
+                "-b",
+                "0",
+                "-p",
+                "3",
+                "-n",
+                "30",
+                "--output",
+                "short-iso",
+                "--no-pager",
+            ],
+            text=True,
+        ).strip()
+        if not logs_out:
+            logs_out = "No critical errors found."
+        buffer.append(f"--- CRITICAL LOGS ---\n{logs_out}")
+    except Exception as e:
+        buffer.append(f"--- LOGS ERROR: {e} ---")
+
+    return "\n\n".join(buffer)
 
 
 def get_system_details():
@@ -58,6 +104,13 @@ def get_provider(
     preferred_language = args.preferred_language or "English"
     user_persona = args.user_persona or ""
     sys_details = get_system_details()
+
+    if "{SYSTEM_LOGS}" in final_system_instruction:
+        sys_logs = get_raw_boot_logs()
+        final_system_instruction = final_system_instruction.replace(
+            "{SYSTEM_LOGS}",
+            sys_logs,
+        )
 
     replacements = {
         "$aiPreferredLanguage": preferred_language,

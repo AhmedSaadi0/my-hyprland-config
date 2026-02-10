@@ -315,7 +315,9 @@ Item {
                     if (CapsuleManager.currentPriority > C.HOVER)
                         return;
 
-                    let infoText = MusicService.activePlayer.identity;
+                    // TODO: -> send request to ai to give good response if no music is found
+                    let infoText = MusicService.activePlayer !== null ? MusicService.activePlayer.identity : "Hi";
+
                     if (root.isMusicPlaying) {
                         infoText = MusicService.fullInfo;
                     }

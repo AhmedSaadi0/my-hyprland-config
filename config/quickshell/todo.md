@@ -22,7 +22,8 @@ _Visual improvements and customization options._
 - **Core UI**
   - [x] **Improve Themes**: restructure `ThemeManager.qml` to separate the concerne
   - [ ] **Game Mode**: Toggle to enable high performance.
-  - [ ] **GIF Wallpapers**: Support `.gif` files as wallpapers.
+  - [x] **GIF Wallpapers**: Support `.gif` files as wallpapers.
+  - [x] **Video Wallpapers**: Support `.mp4, .mkv ... etc` files as wallpapers.
   - [ ] **Bar Customization**: Controls for Bar Shadows & Left Bar Width.
   - [ ] **Depth Effect**:
     - [ ] Auto-generation of depth effect.
@@ -30,7 +31,7 @@ _Visual improvements and customization options._
     - [ ] Cava (Visualizer) integration with Depth Effect.
 
 - **Themes**
-  - [ ] **Dynamic Coloring Control**: Configure Material 3 `scheme_variant` via settings.
+  - [x] **Dynamic Coloring Control**: Configure Material 3 `scheme_variant` via settings.
   - [ ] **New Themes**: Solarized, Rosé Pine, Oxocarbon.
   - [x] **Extended Colors**: Expand color schema to 6 colors.
   - [ ] **Halt Dynamic Wallpapers**: Option to pause automatic wallpaper cycling.
@@ -43,7 +44,7 @@ _Tools and applets._
 
 - **Menus & Popups**
   - [x] **Clipboard Manager**: UI for clipboard history.
-  - [ ] **Todo List**: Built-in simple task manager.
+  - [x] **Todo List**: Built-in simple task manager.
   - [ ] **Notes**: Quick note-taking widget.
   - [ ] **Favorite Apps**: Quick launch section.
   - [ ] **AI Bots**: Menu for different AI assistants.
@@ -65,7 +66,7 @@ _Hardware control and system indicators._
   - [ ] **VPN Indicator**: Status icon for VPN.
   - [ ] **Quick Toggles**: Wi-Fi, Airplane Mode, Gammastep buttons.
   - [ ] **Keyboard Layout**: Indicator for current language.
-  - [ ] **Power**: Battery & Power Profiles integration.
+  - [x] **Power**: Battery & Power Profiles integration.
 
 ---
 

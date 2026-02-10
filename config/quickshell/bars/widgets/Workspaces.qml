@@ -43,6 +43,9 @@ Item {
                 readonly property int wsId: index + 1
                 readonly property real defaultRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
+                z: dragActive ? 100 : index
+                property bool dragActive: false
+
                 // --- منطق البيانات ---
                 readonly property var groupedApps: {
                     let apps = {};
@@ -137,6 +140,7 @@ Item {
 
                                 onPressed: {
                                     tile.storedAddress = modelData.address;
+                                    workspaceBox.dragActive = true;
                                 }
 
                                 onClicked: {
@@ -148,6 +152,11 @@ Item {
                                     tile.Drag.drop();
                                     tile.x = 0;
                                     tile.y = 0;
+                                    workspaceBox.dragActive = false;
+                                }
+
+                                onCanceled: {
+                                    workspaceBox.dragActive = false;
                                 }
 
                                 Item {

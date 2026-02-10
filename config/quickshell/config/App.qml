@@ -255,10 +255,8 @@ Singleton {
 
             readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", aiProvider]
 
-            readonly property var callGemini: [...initialAiCommand, "--api_key", root.aiApiKey]
-
+            readonly property var callBootAnalysisAi: [...initialAiCommand, "--api_key", root.aiApiKey, "--preset", "boot_analyze", "--json_mode", "--model", root.weatherAiModel]
             readonly property var callWeatherAi: [...initialAiCommand, "--api_key", (root.weatherAiApiKey !== "" ? root.weatherAiApiKey : root.aiApiKey), "--preset", "weather", "--user_persona", root.weatherPersona, "--model", root.weatherAiModel]
-
             readonly property var callMusicAi: [...initialAiCommand, "--api_key", (root.musicAiApiKey !== "" ? root.musicAiApiKey : root.aiApiKey), "--preset", "music", "--user_persona", root.musicPersona, "--model", root.musicAiModel]
         }
 
@@ -299,7 +297,7 @@ Singleton {
             console.warn(`Skipping empty command: ${description}`);
             return;
         }
-        // console.info("[App] [dispatchCommand] " + description + " -> " + commandArray.join(' '));
+        console.info("[App] [dispatchCommand] " + description + " -> " + commandArray.join(' '));
         Hyprland.dispatch(`exec ${commandArray.join(' ')}`);
     }
 
