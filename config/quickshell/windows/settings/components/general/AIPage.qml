@@ -32,10 +32,12 @@ BaseGeneralSettings {
     property string localMainKey: ""
     property string localWeatherKey: ""
     property string localMusicKey: ""
+    property string localSystemKey: ""
 
     // Models
     property string localWeatherModel: ""
     property string localMusicModel: ""
+    property string localSystemModel: ""
 
     // Personas
     property string localWeatherPersona: ""
@@ -54,9 +56,11 @@ BaseGeneralSettings {
         localMainKey = App.aiApiKey || "";
         localWeatherKey = App.weatherAiApiKey || "";
         localMusicKey = App.musicAiApiKey || "";
+        localSystemKey = App.systemAiApiKey || "";
 
         localWeatherModel = App.weatherAiModel || "";
         localMusicModel = App.musicAiModel || "";
+        localSystemModel = App.systemAiModel || "";
 
         localWeatherPersona = App.weatherPersona || defaultWeatherPersona;
         localMusicPersona = App.musicPersona || defaultMusicPersona;
@@ -76,8 +80,10 @@ BaseGeneralSettings {
             "aiApiKey": localMainKey,
             "weatherAiApiKey": localWeatherKey,
             "musicAiApiKey": localMusicKey,
+            "systemAiApiKey": localSystemKey,
             "weatherAiModel": localWeatherModel,
             "musicAiModel": localMusicModel,
+            "systemAiModel": localSystemModel,
             "weatherPersona": localWeatherPersona,
             "musicPersona": localMusicPersona
         };
@@ -296,104 +302,262 @@ BaseGeneralSettings {
                 Layout.columnSpan: 2
             }
 
-            // --- Weather Model Logic ---
-            Controls.Label {
-                text: qsTr("Weather Model")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                color: theme.colors.secondary
-                Layout.alignment: Qt.AlignVCenter
-            }
-
-            // 1. الخيار الأول: ComboBox (إذا كان جيميناي)
-            SettingsComboBox {
-                visible: page.localProvider === "gemini"
+            // --- Weather Card ---
+            Rectangle {
+                Layout.columnSpan: 2
                 Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                model: App.availableGeminiWeatherModels
-                currentIndex: model.indexOf(page.localWeatherModel)
-                displayText: currentIndex === -1 ? (page.localWeatherModel || "Select Model") : currentText
-                onActivated: index => page.localWeatherModel = textAt(index)
+                color: theme.colors.leftMenuBgColorV1
+                radius: theme.dimensions.elementRadius
+                border.color: theme.colors.subtleText
+                border.width: 1
+                opacity: 0.95
+                implicitHeight: weatherCardContent.implicitHeight + 24
+
+                ColumnLayout {
+                    id: weatherCardContent
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 10
+
+                    RowLayout {
+                        spacing: 8
+                        Text {
+                            text: ""
+                            font.family: theme.typography.iconFont
+                            color: theme.colors.primary
+                            font.pixelSize: theme.typography.heading4Size
+                        }
+                        Text {
+                            text: qsTr("Weather Assistant")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.medium
+                            color: theme.colors.primary
+                        }
+                    }
+
+                    RowLayout {
+                        Controls.Label {
+                            text: qsTr("Model")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.small
+                            color: theme.colors.secondary
+                            Layout.preferredWidth: 140
+                        }
+                        StackLayout {
+                            Layout.fillWidth: true
+                            currentIndex: page.localProvider === "gemini" ? 0 : 1
+
+                            SettingsComboBox {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 30
+                                model: App.availableGeminiWeatherModels
+                                currentIndex: model.indexOf(page.localWeatherModel)
+                                displayText: currentIndex === -1 ? (page.localWeatherModel || "Select Model") : currentText
+                                onActivated: index => page.localWeatherModel = textAt(index)
+                            }
+                            EditableField {
+                                Layout.fillWidth: true
+                                placeholderText: "e.g. qwen/qwen-2-7b:free"
+                                text: page.localWeatherModel
+                                selectedTheme: page.theme
+                                onEditingFinished: page.localWeatherModel = text
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Controls.Label {
+                            text: qsTr("API Key (Opt)")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.small
+                            color: theme.colors.secondary
+                            Layout.preferredWidth: 140
+                        }
+                        EditableField {
+                            Layout.fillWidth: true
+                            text: page.localWeatherKey
+                            placeholderText: "Leave empty to use main key"
+                            echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
+                            selectedTheme: page.theme
+                            onEditingFinished: page.localWeatherKey = text
+                        }
+                    }
+                }
             }
 
-            // 2. الخيار الثاني: EditableField (إذا كان غير جيميناي)
-            EditableField {
-                visible: page.localProvider !== "gemini"
+            // --- Music Card ---
+            Rectangle {
+                Layout.columnSpan: 2
                 Layout.fillWidth: true
-                placeholderText: "e.g. qwen/qwen-2-7b:free"
-                text: page.localWeatherModel
-                selectedTheme: page.theme
-                onEditingFinished: page.localWeatherModel = text
+                color: theme.colors.leftMenuBgColorV1
+                radius: theme.dimensions.elementRadius
+                border.color: theme.colors.subtleText
+                border.width: 1
+                opacity: 0.95
+                implicitHeight: musicCardContent.implicitHeight + 24
+
+                ColumnLayout {
+                    id: musicCardContent
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 10
+
+                    RowLayout {
+                        spacing: 8
+                        Text {
+                            text: ""
+                            font.family: theme.typography.iconFont
+                            color: theme.colors.primary
+                            font.pixelSize: theme.typography.heading4Size
+                        }
+                        Text {
+                            text: qsTr("Music Assistant")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.medium
+                            color: theme.colors.primary
+                        }
+                    }
+
+                    RowLayout {
+                        Controls.Label {
+                            text: qsTr("Model")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.small
+                            color: theme.colors.secondary
+                            Layout.preferredWidth: 140
+                        }
+                        StackLayout {
+                            Layout.fillWidth: true
+                            currentIndex: page.localProvider === "gemini" ? 0 : 1
+
+                            SettingsComboBox {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 30
+                                model: App.availableGeminiMusicModels
+                                currentIndex: model.indexOf(page.localMusicModel)
+                                displayText: currentIndex === -1 ? (page.localMusicModel || "Select Model") : currentText
+                                onActivated: index => page.localMusicModel = textAt(index)
+                            }
+                            EditableField {
+                                Layout.fillWidth: true
+                                placeholderText: "e.g. anthropic/claude-3-haiku"
+                                text: page.localMusicModel
+                                selectedTheme: page.theme
+                                onEditingFinished: page.localMusicModel = text
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Controls.Label {
+                            text: qsTr("API Key (Opt)")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.small
+                            color: theme.colors.secondary
+                            Layout.preferredWidth: 140
+                        }
+                        EditableField {
+                            Layout.fillWidth: true
+                            text: page.localMusicKey
+                            placeholderText: "Leave empty to use main key"
+                            echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
+                            selectedTheme: page.theme
+                            onEditingFinished: page.localMusicKey = text
+                        }
+                    }
+                }
             }
 
-            // Specific Key for Weather (Optional)
-            Controls.Label {
-                text: qsTr("Specific Key (Opt)")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                color: theme.colors.secondary
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                Layout.topMargin: 6
-            }
-            EditableField {
+            // --- System Card ---
+            Rectangle {
+                Layout.columnSpan: 2
                 Layout.fillWidth: true
-                text: page.localWeatherKey
-                placeholderText: "Leave empty to use main key"
-                echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
-                selectedTheme: page.theme
-                onEditingFinished: page.localWeatherKey = text
-            }
+                color: theme.colors.leftMenuBgColorV1
+                radius: theme.dimensions.elementRadius
+                border.color: theme.colors.subtleText
+                border.width: 1
+                opacity: 0.95
+                implicitHeight: systemCardContent.implicitHeight + 24
 
-            // --- Music Model Logic ---
-            Controls.Label {
-                text: qsTr("Music Model")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                color: theme.colors.secondary
-                Layout.alignment: Qt.AlignVCenter
-            }
+                ColumnLayout {
+                    id: systemCardContent
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 10
 
-            // 1. ComboBox
-            SettingsComboBox {
-                visible: page.localProvider === "gemini"
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                model: App.availableGeminiMusicModels
-                currentIndex: model.indexOf(page.localMusicModel)
-                displayText: currentIndex === -1 ? (page.localMusicModel || "Select Model") : currentText
-                onActivated: index => page.localMusicModel = textAt(index)
-            }
+                    RowLayout {
+                        spacing: 8
+                        Text {
+                            text: ""
+                            font.family: theme.typography.iconFont
+                            color: theme.colors.primary
+                            font.pixelSize: theme.typography.heading4Size
+                        }
+                        Text {
+                            text: qsTr("System Assistant")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.medium
+                            color: theme.colors.primary
+                        }
+                    }
 
-            // 2. EditableField
-            EditableField {
-                visible: page.localProvider !== "gemini"
-                Layout.fillWidth: true
-                placeholderText: "e.g. anthropic/claude-3-haiku"
-                text: page.localMusicModel
-                selectedTheme: page.theme
-                onEditingFinished: page.localMusicModel = text
-            }
+                    RowLayout {
+                        Controls.Label {
+                            text: qsTr("Model")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.small
+                            color: theme.colors.secondary
+                            Layout.preferredWidth: 140
+                        }
+                        StackLayout {
+                            Layout.fillWidth: true
+                            currentIndex: page.localProvider === "gemini" ? 0 : 1
 
-            // Specific Key for Music (Optional)
-            Controls.Label {
-                text: qsTr("Specific Key (Opt)")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                color: theme.colors.secondary
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                Layout.topMargin: 6
-            }
-            EditableField {
-                Layout.fillWidth: true
-                text: page.localMusicKey
-                placeholderText: "Leave empty to use main key"
-                echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
-                selectedTheme: page.theme
-                onEditingFinished: page.localMusicKey = text
+                            SettingsComboBox {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 30
+                                model: App.availableGeminiWeatherModels
+                                currentIndex: model.indexOf(page.localSystemModel)
+                                displayText: currentIndex === -1 ? (page.localSystemModel || "Select Model") : currentText
+                                onActivated: index => page.localSystemModel = textAt(index)
+                            }
+                            EditableField {
+                                Layout.fillWidth: true
+                                placeholderText: "e.g. gemini-flash-lite-latest"
+                                text: page.localSystemModel
+                                selectedTheme: page.theme
+                                onEditingFinished: page.localSystemModel = text
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Controls.Label {
+                            text: qsTr("API Key (Opt)")
+                            font.bold: true
+                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.small
+                            color: theme.colors.secondary
+                            Layout.preferredWidth: 140
+                        }
+                        EditableField {
+                            Layout.fillWidth: true
+                            text: page.localSystemKey
+                            placeholderText: "Leave empty to use main key"
+                            echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
+                            selectedTheme: page.theme
+                            onEditingFinished: page.localSystemKey = text
+                        }
+                    }
+                }
             }
 
             // ==========================

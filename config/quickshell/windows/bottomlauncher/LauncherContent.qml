@@ -29,9 +29,17 @@ Item {
     }
 
     function executeCommand(cmd) {
+        if (cmd.enabled === false)
+            return;
         if (cmd.isAction) {
             if (cmd.action === "openSettings") {
                 EventBus.emit(Events.OPEN_SETTINGS);
+                root.appLaunched();
+            } else if (cmd.action === "nextWallpaper") {
+                ThemeManager.switchToNextWallpaper();
+                root.appLaunched();
+            } else if (cmd.action === "previousWallpaper") {
+                ThemeManager.switchToPreviousWallpaper();
                 root.appLaunched();
             }
         } else if (cmd.view !== "") {
@@ -166,7 +174,10 @@ Item {
 
             onAccepted: {
                 if (root.isCommandMode && root.filteredCommands.length > 0) {
-                    root.executeCommand(root.filteredCommands[0]);
+                    const cmd = root.filteredCommands.find(c => c.enabled !== false);
+                    if (!cmd)
+                        return;
+                    root.executeCommand(cmd);
                     return;
                 }
                 if (filteredModel.values.length > 0) {

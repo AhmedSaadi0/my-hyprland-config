@@ -50,17 +50,25 @@ Singleton {
     property alias country: root.config.country
     property alias weatherLocation: root.config.weatherLocation
     property alias usePrayerTimes: root.config.usePrayerTimes
+
+    // AI Keys
     property alias aiApiKey: root.config.aiApiKey
     property alias weatherAiApiKey: root.config.weatherAiApiKey
     property alias musicAiApiKey: root.config.musicAiApiKey
-    property alias aiPreferredLanguage: root.config.aiPreferredLanguage
+    property alias systemAiApiKey: root.config.systemAiApiKey
+
+    // AI Persona
     property alias weatherPersona: root.config.weatherPersona
     property alias musicPersona: root.config.musicPersona
-    property alias aiProvider: root.config.aiProvider
 
+    // AI Configs
+    property alias aiProvider: root.config.aiProvider
+    property alias aiPreferredLanguage: root.config.aiPreferredLanguage
     property alias weatherAiModel: root.config.weatherAiModel
     property alias musicAiModel: root.config.musicAiModel
+    property alias systemAiModel: root.config.systemAiModel
 
+    // Hardware configs
     property alias enableHighCpuAlert: root.config.enableHighCpuAlert
     property alias enableHighRamAlert: root.config.enableHighRamAlert
     property alias playCpuAlarmSound: root.config.playCpuAlarmSound
@@ -69,6 +77,7 @@ Singleton {
     property alias cpuHighLoadThreshold: root.config.cpuHighLoadThreshold
     property alias ramHighLoadThreshold: root.config.ramHighLoadThreshold
 
+    // Shell layout configs
     property alias useBottomLauncher: root.config.useBottomLauncher
     property alias bottomLauncherWidth: root.config.bottomLauncherWidth
     property alias firstDayOfWeek: root.config.firstDayOfWeek
@@ -255,7 +264,8 @@ Singleton {
 
             readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", aiProvider]
 
-            readonly property var callBootAnalysisAi: [...initialAiCommand, "--api_key", root.aiApiKey, "--preset", "boot_analyze", "--json_mode", "--model", root.weatherAiModel]
+            readonly property var callBootAnalysisAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "boot_analyze", "--json_mode", "--model", root.systemAiModel]
+            readonly property var callSpikeAnalysisAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "spike_analyze", "--json_mode", "--model", root.systemAiModel]
             readonly property var callWeatherAi: [...initialAiCommand, "--api_key", (root.weatherAiApiKey !== "" ? root.weatherAiApiKey : root.aiApiKey), "--preset", "weather", "--user_persona", root.weatherPersona, "--model", root.weatherAiModel]
             readonly property var callMusicAi: [...initialAiCommand, "--api_key", (root.musicAiApiKey !== "" ? root.musicAiApiKey : root.aiApiKey), "--preset", "music", "--user_persona", root.musicPersona, "--model", root.musicAiModel]
         }

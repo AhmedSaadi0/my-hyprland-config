@@ -25,12 +25,24 @@ Item {
     // الألوان بناءً على حالة الـ AI
     readonly property color themeStatusColor: {
         var s = SystemService.bootStatusColor; // سيتحسس QML أي تغيير هنا
+        if (!s || s === "")
+            return bootRoot.theme.colors.success;
+        if (s.startsWith("#"))
+            return s;
         if (s === "red")
             return bootRoot.theme.colors.error;
-        if (s === "orange")
+        if (s === "orange" || s === "yellow")
             return bootRoot.theme.colors.warning;
-        return bootRoot.theme.colors.success;
+        if (s === "green")
+            return bootRoot.theme.colors.success;
+        return bootRoot.theme.colors.info || bootRoot.theme.colors.primary;
     }
+
+    readonly property color statusBgColor: Qt.rgba(themeStatusColor.r, themeStatusColor.g, themeStatusColor.b, bootRoot.theme.systemSettings.themeMode == "dark" ? 0.18 : 0.12)
+    readonly property color statusBorderColor: Qt.rgba(themeStatusColor.r, themeStatusColor.g, themeStatusColor.b, bootRoot.theme.systemSettings.themeMode == "dark" ? 0.35 : 0.25)
+    readonly property color statusTitleColor: bootRoot.theme.systemSettings.themeMode == "dark" ? themeStatusColor.lighter(1.25) : themeStatusColor.darker(1.6)
+    readonly property color statusTextColor: bootRoot.theme.colors.leftMenuFgColorV1
+    readonly property color statusMutedColor: Qt.rgba(statusTitleColor.r, statusTitleColor.g, statusTitleColor.b, 0.85)
 
     Rectangle {
         anchors.fill: parent
@@ -52,8 +64,8 @@ Item {
         Rectangle {
             Layout.fillWidth: true
             implicitHeight: summaryRow.implicitHeight + 20
-            color: Qt.rgba(bootRoot.themeStatusColor.r, bootRoot.themeStatusColor.g, bootRoot.themeStatusColor.b, 0.1)
-            border.color: Qt.rgba(bootRoot.themeStatusColor.r, bootRoot.themeStatusColor.g, bootRoot.themeStatusColor.b, 0.3)
+            color: bootRoot.statusBgColor
+            border.color: bootRoot.statusBorderColor
             radius: 8
 
             RowLayout {
@@ -65,21 +77,21 @@ Item {
                     text: SystemService.bootStatusIcon || ""
                     font.family: bootRoot.theme.typography.iconFont
                     font.pixelSize: 22
-                    color: bootRoot.themeStatusColor
+                    color: bootRoot.statusTitleColor
                 }
                 ColumnLayout {
                     Layout.fillWidth: true
                     spacing: 2
                     Text {
                         text: SystemService.bootStatusTitle || "Analyzing..."
-                        color: bootRoot.themeStatusColor
+                        color: bootRoot.statusTitleColor
                         font.bold: true
                         font.pixelSize: bootRoot.theme.typography.small
                     }
                     Text {
                         Layout.fillWidth: true
                         text: SystemService.aiBootSummary || "Waiting for system logs analysis..."
-                        color: bootRoot.theme.colors.leftMenuFgColorV2
+                        color: bootRoot.statusTextColor
                         font.pixelSize: bootRoot.theme.typography.small - 1
                         wrapMode: Text.WordWrap
                     }
@@ -112,15 +124,14 @@ Item {
                             Layout.topMargin: 2
                             text: ""
                             font.family: bootRoot.theme.typography.iconFont
-                            color: bootRoot.themeStatusColor
+                            color: bootRoot.statusMutedColor
                         }
 
                         Text {
                             id: logContent
                             Layout.fillWidth: true
                             text: `<b>${modelData.process}:</b> ${modelData.message}`
-                            // color: bootRoot.theme.colors.leftMenuFgColorV2
-                            color: bootRoot.themeStatusColor
+                            color: bootRoot.theme.colors.leftMenuFgColorV2
                             font.family: "Monospace"
                             font.pixelSize: bootRoot.theme.typography.small - 2
                             wrapMode: Text.WordWrap
@@ -139,7 +150,7 @@ Item {
                                 anchors.centerIn: parent
                                 text: ""
                                 font.family: bootRoot.theme.typography.iconFont
-                                color: bootRoot.themeStatusColor
+                                color: bootRoot.statusMutedColor
                                 font.pixelSize: 14
                             }
 

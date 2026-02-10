@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "root:/themes"
+import "root:/services"
 
 // استيراد المكونات المحلية
 import "./components"
@@ -20,37 +21,58 @@ Item {
     property string expandedEventId: ""
     property bool showBootDetails: false
 
-    // --- Data Model ---
-    ListModel {
-        id: eventModel
-        ListElement {
-            eventId: "evt_1"
-            type: "CPU"
-            value: "45%"
-            severity: "NORMAL"
-            timestamp: "10:55:01"
-            aiAnalysis: "Load average stable."
-            isLoading: false
-        }
-        ListElement {
-            eventId: "evt_2"
-            type: "NET"
-            value: "1.2MB/s"
-            severity: "WARNING"
-            timestamp: "10:56:12"
-            aiAnalysis: "Unusual outbound traffic detected."
-            isLoading: false
-        }
-        ListElement {
-            eventId: "evt_3"
-            type: "DISK"
-            value: "Write"
-            severity: "CRITICAL"
-            timestamp: "11:00:05"
-            aiAnalysis: "I/O wait time exceeded 500ms."
-            isLoading: true
-        }
+    readonly property color bootStatusColor: {
+        var s = SystemService.bootStatusColor || "";
+        if (s.startsWith("#"))
+            return s;
+        if (s === "red")
+            return root.theme.colors.error;
+        if (s === "orange" || s === "yellow")
+            return root.theme.colors.warning;
+        if (s === "green")
+            return root.theme.colors.success;
+        if (SystemService.bootAnalysisStatus === "LOADING")
+            return root.theme.colors.primary;
+        return root.theme.colors.subtleText;
     }
+
+    readonly property string bootStatusText: {
+        if (SystemService.bootAnalysisStatus === "LOADING")
+            return "ANALYZING";
+        if (SystemService.bootAnalysisStatus === "ERROR")
+            return "ERROR";
+        var s = SystemService.bootStatusColor || "";
+        if (s === "red")
+            return "CRITICAL";
+        if (s === "orange" || s === "yellow")
+            return "WARNING";
+        if (s === "green")
+            return "OPTIMAL";
+        if (SystemService.bootAnalysisStatus === "SUCCESS")
+            return "STATUS";
+        return "WAITING";
+    }
+
+    readonly property string bootStatusIcon: {
+        if (SystemService.bootAnalysisStatus === "LOADING")
+            return "󰞌";
+        if (SystemService.bootAnalysisStatus === "ERROR")
+            return "";
+        var s = SystemService.bootStatusColor || "";
+        if (s === "red")
+            return "";
+        if (s === "orange" || s === "yellow")
+            return "";
+        if (s === "green")
+            return "";
+        return "󱚣";
+    }
+
+    readonly property color bootStatusTextColor: root.theme.colors.leftMenuFgColorV3
+    readonly property color bootStatusBgColor: root.theme.colors.leftMenuBgColorV3
+
+    // --- Data Model ---
+    readonly property var eventModel: SystemService.eventsModel
 
     // --- Main Container ---
     Rectangle {
@@ -74,7 +96,11 @@ Item {
                 Layout.fillWidth: true
                 theme: root.theme
                 title: "System Guard"
-                statusText: "OPTIMAL"
+                statusText: root.bootStatusText
+                statusColor: root.bootStatusColor
+                statusTextColor: root.bootStatusTextColor
+                statusBgColor: root.bootStatusBgColor
+                statusIcon: root.bootStatusIcon
                 isDetailsOpen: root.showBootDetails
 
                 onToggleDetailsClicked: root.showBootDetails = !root.showBootDetails
@@ -126,6 +152,8 @@ Item {
                         eventSeverity: model.severity
                         eventTime: model.timestamp
                         aiText: model.aiAnalysis
+                        isLoading: model.isLoading
+                        aiModelName: model.aiModel
                         isExpanded: root.expandedEventId === model.eventId
 
                         onExpandRequested: {

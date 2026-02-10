@@ -86,6 +86,9 @@ Singleton {
         function onBatteryPercentChanged() {
             root.monitorBatteryDischarge();
         }
+        function onBootAnalysisStatusChanged() {
+            root.handleBootAnalysisStatus();
+        }
         function onCpuAlert(value) {
             root.handleResourceAlert("CPU", value, App.playCpuAlarmSound);
         }
@@ -446,6 +449,88 @@ Singleton {
         });
     }
 
+    function handleBootAnalysisStatus() {
+        const status = SystemService.bootAnalysisStatus;
+
+        if (status === "IDLE")
+            return;
+
+        if (status === "LOADING") {
+            root.updateEyes("thinking", 3000);
+            let colors = getColorsForState("info");
+            CapsuleManager.request({
+                priority: C.TRANSIENT,
+                source: C.SRC_SYSTEM,
+                icon: "󰞌",
+                text: "Analyzing boot logs...",
+                timeout: 3000,
+                bgColor1: colors.bg1,
+                bgColor2: colors.bg2,
+                fgColor: colors.fg,
+                changeH: false,
+                playTone: false
+            });
+            return;
+        }
+
+        if (status === "SUCCESS") {
+            let stateType = "success";
+            const rawColor = (SystemService.bootStatusColor || "").toString().toLowerCase();
+            if (rawColor === "red")
+                stateType = "critical";
+            else if (rawColor === "orange" || rawColor === "yellow")
+                stateType = "warning";
+
+            let colors = getBootColors();
+            root.updateEyes(getBootEmotion(stateType), 4000);
+
+            let summary = SystemService.aiBootSummary || "Boot analysis ready.";
+            if (SystemService.bootTimeText && SystemService.bootTimeText !== "--")
+                summary = `${summary} (${SystemService.bootTimeText})`;
+
+            CapsuleManager.request({
+                priority: stateType === "critical" ? C.WARNING : C.NOTIFICATION,
+                source: C.SRC_SYSTEM,
+                icon: SystemService.bootStatusIcon || "",
+                text: summary,
+                timeout: 5000,
+                bgColor1: colors.bg1,
+                bgColor2: colors.bg2,
+                fgColor: colors.fg,
+                changeH: true,
+                playTone: false
+            });
+            return;
+        }
+
+        if (status === "ERROR") {
+            let colors = getBootColors();
+            root.updateEyes("sad", 4000);
+            CapsuleManager.request({
+                priority: C.WARNING,
+                source: C.SRC_SYSTEM,
+                icon: "󰞌",
+                text: "Boot analysis failed. Try again later.",
+                timeout: 5000,
+                bgColor1: colors.bg1,
+                bgColor2: colors.bg2,
+                fgColor: colors.fg,
+                changeH: true,
+                playTone: false
+            });
+        }
+    }
+
+    function getBootEmotion(stateType) {
+        if (stateType === "critical")
+            return "shocked";
+        if (stateType === "warning")
+            return "focused";
+        if (stateType === "success")
+            return "happy";
+        return "thinking";
+    }
+
     function handleThemeUpdate(themeName) {
         root.updateEyes("happy", 3000);
         let colors = getColorsForState("theme_applied"); // سنضيف هذه الحالة في Helpers
@@ -603,5 +688,23 @@ Singleton {
                 fg: ThemeManager.selectedTheme.colors.onPrimary
             };
         }
+    }
+
+    function getBootColors() {
+        const raw = (SystemService.bootStatusColor || "").toString().toLowerCase();
+        if (raw.startsWith("#")) {
+            return {
+                bg1: raw,
+                bg2: raw,
+                fg: "#FFFFFF"
+            };
+        }
+        if (raw === "red")
+            return getColorsForState("critical");
+        if (raw === "orange" || raw === "yellow")
+            return getColorsForState("warning");
+        if (raw === "green")
+            return getColorsForState("success");
+        return getColorsForState("info");
     }
 }

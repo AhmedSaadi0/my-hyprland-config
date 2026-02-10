@@ -18,13 +18,21 @@ Item {
     property string eventSeverity
     property string eventTime
     property string aiText
+    property string aiModelName: "System AI"
+    property bool isLoading: false
     property bool isExpanded: false
 
     signal expandRequested
 
     readonly property var theme: ThemeManager.selectedTheme
     property bool isCritical: eventSeverity === "CRITICAL"
-    property color stateColor: isCritical ? theme.colors.error : theme.colors.warning
+    property color stateColor: {
+        if (eventSeverity === "CRITICAL")
+            return theme.colors.error;
+        if (eventSeverity === "WARNING")
+            return theme.colors.warning;
+        return theme.colors.success;
+    }
 
     // --- Timeline Line ---
     Rectangle {
@@ -248,7 +256,7 @@ Item {
                                 Layout.fillWidth: true
                             }
                             Text {
-                                text: "Gemini 2.5 Flash"
+                                text: aiModelName
                                 font.pixelSize: 8
                                 color: theme.colors.subtleText
                             }
@@ -257,7 +265,7 @@ Item {
                         Text {
                             id: aiDescription
                             Layout.fillWidth: true
-                            text: aiText
+                            text: isLoading ? "Analyzing... Please wait." : aiText
                             wrapMode: Text.WordWrap
                             font.family: theme.typography.bodyFont
                             font.pixelSize: theme.typography.small - 1
@@ -274,7 +282,7 @@ Item {
                             border.color: Qt.rgba(theme.colors.tertiary.r, theme.colors.tertiary.g, theme.colors.tertiary.b, 0.2)
                             Text {
                                 anchors.centerIn: parent
-                                text: "View Details"
+                                text: isLoading ? "Analyzing" : "View Details"
                                 font.pixelSize: 9
                                 color: theme.colors.tertiary
                             }

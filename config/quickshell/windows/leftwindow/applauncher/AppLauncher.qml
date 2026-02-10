@@ -34,9 +34,17 @@ ColumnLayout {
     }
 
     function executeCommand(cmd) {
+        if (cmd.enabled === false)
+            return;
         if (cmd.isAction) {
             if (cmd.action === "openSettings") {
                 EventBus.emit(Events.OPEN_SETTINGS);
+                EventBus.emit(Events.CLOSE_LEFTBAR);
+            } else if (cmd.action === "nextWallpaper") {
+                ThemeManager.switchToNextWallpaper();
+                EventBus.emit(Events.CLOSE_LEFTBAR);
+            } else if (cmd.action === "previousWallpaper") {
+                ThemeManager.switchToPreviousWallpaper();
                 EventBus.emit(Events.CLOSE_LEFTBAR);
             }
         } else if (cmd.view !== "") {
@@ -113,7 +121,9 @@ ColumnLayout {
 
         onAccepted: {
             if (root.isCommandMode && root.filteredCommands.length > 0) {
-                const cmd = root.filteredCommands[0];
+                const cmd = root.filteredCommands.find(c => c.enabled !== false);
+                if (!cmd)
+                    return;
                 root.executeCommand(cmd);
                 return;
             }

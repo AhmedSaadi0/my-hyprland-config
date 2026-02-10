@@ -38,6 +38,11 @@ PRESETS = {
         "json_mode": True,
         "temperature": 0.1,
     },
+    "spike_analyze": {
+        "system_instruction": prompt.SPIKE_ANALYST_PROMPT,
+        "json_mode": True,
+        "temperature": 0.2,
+    },
 }
 
 
