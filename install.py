@@ -261,7 +261,8 @@ def install_dependencies(distro, install_optional=False):
     # ---------------------------------------------------------
     # 1. تثبيت حزم النظام (System Packages) حسب التوزيعة
     # ---------------------------------------------------------
-    if distro == "fedora":
+    # TODO: -> change detection to a better way
+    if distro == "fedora" or distro == "nobara":
         print(YELLOW + "Enabling RPM Fusion and COPR repositories..." + NC)
         run_command_verbose(
             "sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"

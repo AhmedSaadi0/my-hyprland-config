@@ -127,10 +127,10 @@ Singleton {
     property int _eventCounter: 0
     property real _prevMaxTemp: -1
     property var _lastSpikeAt: ({
-                                    cpu: 0,
-                                    ram: 0,
-                                    temp: 0
-                                })
+            cpu: 0,
+            ram: 0,
+            temp: 0
+        })
     property int _spikeCooldownMs: 60000
     property real _cpuSpikeDelta: 0.25
     property real _ramSpikeDelta: 0.25
