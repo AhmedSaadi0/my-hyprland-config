@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NibrasShell - واجهة Hyprland عصرية</title>
+    <!-- استدعاء Tailwind CSS للتصميم -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استدعاء خط تجوال العربي -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {sans: ['Tajawal', 'sans-serif']},
+                    colors: {
+                        primary: '#8b5cf6', // لون بنفسجي مميز (Dracula vibe)
+                        dark: '#0f172a',
+                        darker: '#020617'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* تأثيرات إضافية */
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #c084fc, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-darker text-white font-sans overflow-x-hidden">
+
+    <!-- القائمة العلوية -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-tighter">Nibras<span class="text-primary">Shell</span></h1>
+            <a href="https://github.com/AhmedSaadi0/NibrasShell"
+                class="bg-primary hover:bg-violet-700 text-white px-5 py-2 rounded-full transition duration-300 font-bold flex items-center gap-2">
+                <span>GitHub</span>
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+            </a>
+        </div>
+    </nav>
+
+    <!-- الواجهة الرئيسية -->
+    <header class="pt-32 pb-20 text-center px-4 relative">
+        <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary opacity-20 blur-[100px] rounded-full -z-10">
+        </div>
+
+        <h2 class="text-5xl md:text-7xl font-bold mb-6">واجهة <span class="gradient-text">Hyprland</span> المستقبلية
+        </h2>
+        <p class="text-gray-400 text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            تم بناء NibrasShell باستخدام Quickshell لتقديم تجربة سطح مكتب غنية بالميزات، تفاعلية، وجميلة بصرياً.
+        </p>
+
+        <!-- صندوق الكود للتثبيت -->
+        <div class="max-w-2xl mx-auto bg-gray-900 rounded-xl overflow-hidden border border-gray-700 shadow-2xl text-left"
+            dir="ltr">
+            <div class="flex items-center px-4 py-2 bg-gray-800 border-b border-gray-700">
+                <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                <span class="ml-auto text-xs text-gray-400">bash</span>
+            </div>
+            <div class="p-4 font-mono text-sm text-green-400">
+                $ git clone https://github.com/AhmedSaadi0/NibrasShell.git<br>
+                $ cd NibrasShell<br>
+                $ ./install.sh
+            </div>
+        </div>
+    </header>
+
+    <!-- المميزات -->
+    <section class="py-20 bg-dark">
+        <div class="max-w-7xl mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-16">لماذا NibrasShell؟</h3>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- ميزة 1 -->
+                <div class="glass p-8 rounded-2xl hover:border-primary transition duration-300">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h4 class="text-xl font-bold mb-3">ثيمات متعددة</h4>
+                    <p class="text-gray-400">يدعم ثيمات جاهزة مثل Dracula, Catppuccin, Nord مع إمكانية التبديل الفوري.
+                    </p>
+                </div>
+                <!-- ميزة 2 -->
+                <div class="glass p-8 rounded-2xl hover:border-primary transition duration-300">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h4 class="text-xl font-bold mb-3">Smart Capsule</h4>
+                    <p class="text-gray-400">كبسولة ذكية تفاعلية تعرض الإشعارات وحالة النظام بشكل جمالي وعملي.</p>
+                </div>
+                <!-- ميزة 3 -->
+                <div class="glass p-8 rounded-2xl hover:border-primary transition duration-300">
+                    <div class="text-4xl mb-4">🛠️</div>
+                    <h4 class="text-xl font-bold mb-3">تحكم كامل</h4>
+                    <p class="text-gray-400">مركز تحكم عصري (Control Center) للتحكم في الإعدادات والشبكة والصوت بسهولة.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer class="py-8 text-center text-gray-500 border-t border-gray-800">
+        <p>تم التطوير بواسطة <a href="https://github.com/AhmedSaadi0"
+                class="text-primary hover:underline">AhmedSaadi0</a> © 2026</p>
+    </footer>
+
+</body>
+
+</html>
