@@ -11,6 +11,11 @@
   --success: #57d163;
   --radius: 14px;
   --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --border: #222a38;
+  --border-strong: #2b3446;
+  --border-muted: #253047;
+  --panel-strong: #161d2a;
+  --code-text: #cde3ff;
   --font-title: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
   --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
 }
@@ -28,6 +33,24 @@
   --success: #50fa7b;
 }
 
+:root[data-theme="dracula-light"] {
+  --bg: #f5f2ff;
+  --bg-2: #ece7ff;
+  --panel: #ffffff;
+  --text: #2d2a36;
+  --muted: #5f5b6a;
+  --accent: #7b2ff7;
+  --accent-2: #ff79c6;
+  --accent-3: #00bcd4;
+  --danger: #d63b3b;
+  --success: #2a9d65;
+  --border: #d9d6ea;
+  --border-strong: #cfc9e6;
+  --border-muted: #e6e2f3;
+  --panel-strong: #f2effa;
+  --code-text: #2a3446;
+}
+
 :root[data-theme="catppuccin"] {
   --bg: #1e1e2e;
   --bg-2: #24273a;
@@ -39,6 +62,24 @@
   --accent-3: #f9e2af;
   --danger: #f38ba8;
   --success: #a6e3a1;
+}
+
+:root[data-theme="catppuccin-light"] {
+  --bg: #f7f4ff;
+  --bg-2: #efeaff;
+  --panel: #ffffff;
+  --text: #2b2a35;
+  --muted: #6a6875;
+  --accent: #6c91ff;
+  --accent-2: #b07cff;
+  --accent-3: #ffd48a;
+  --danger: #d95a7c;
+  --success: #3aa86e;
+  --border: #d8d4ea;
+  --border-strong: #cfc9e1;
+  --border-muted: #e8e3f5;
+  --panel-strong: #f2eefb;
+  --code-text: #2a3446;
 }
 
 :root[data-theme="gruvbox"] {
@@ -54,6 +95,24 @@
   --success: #b8bb26;
 }
 
+:root[data-theme="gruvbox-light"] {
+  --bg: #f7f1e3;
+  --bg-2: #f1e8d6;
+  --panel: #fffaf2;
+  --text: #3c3223;
+  --muted: #6a5d4b;
+  --accent: #d79921;
+  --accent-2: #d65d0e;
+  --accent-3: #689d6a;
+  --danger: #cc241d;
+  --success: #427b58;
+  --border: #d8cbb6;
+  --border-strong: #ccbfa8;
+  --border-muted: #eadfcb;
+  --panel-strong: #f0e5cf;
+  --code-text: #3b2f20;
+}
+
 :root[data-theme="nord"] {
   --bg: #2e3440;
   --bg-2: #3b4252;
@@ -65,6 +124,24 @@
   --accent-3: #a3be8c;
   --danger: #bf616a;
   --success: #a3be8c;
+}
+
+:root[data-theme="nord-light"] {
+  --bg: #edf2f7;
+  --bg-2: #e4ebf3;
+  --panel: #ffffff;
+  --text: #2b3440;
+  --muted: #5e6a79;
+  --accent: #5e81ac;
+  --accent-2: #81a1c1;
+  --accent-3: #a3be8c;
+  --danger: #bf616a;
+  --success: #3a8f6a;
+  --border: #cfd8e3;
+  --border-strong: #c2ccd8;
+  --border-muted: #e2e8f0;
+  --panel-strong: #e8eef5;
+  --code-text: #253140;
 }
 
 :root[data-theme="tokyonight"] {
@@ -80,6 +157,24 @@
   --success: #9ece6a;
 }
 
+:root[data-theme="tokyonight-light"] {
+  --bg: #f5f7ff;
+  --bg-2: #e9ecff;
+  --panel: #ffffff;
+  --text: #2b2f40;
+  --muted: #5e657d;
+  --accent: #5a7df7;
+  --accent-2: #a77cf5;
+  --accent-3: #ff8aa1;
+  --danger: #e05570;
+  --success: #4aa875;
+  --border: #d5daef;
+  --border-strong: #c8cfe7;
+  --border-muted: #e7eaf7;
+  --panel-strong: #eef1ff;
+  --code-text: #2a3446;
+}
+
 :root[data-theme="material"] {
   --bg: #0b1215;
   --bg-2: #0f161a;
@@ -91,6 +186,24 @@
   --accent-3: #ffca28;
   --danger: #ff5252;
   --success: #69f0ae;
+}
+
+:root[data-theme="material-light"] {
+  --bg: #f2f7fb;
+  --bg-2: #e7f0f7;
+  --panel: #ffffff;
+  --text: #1f2b33;
+  --muted: #586a75;
+  --accent: #00acc1;
+  --accent-2: #6c4cff;
+  --accent-3: #f7b731;
+  --danger: #e74c3c;
+  --success: #2fa36b;
+  --border: #cfe0ea;
+  --border-strong: #c2d4de;
+  --border-muted: #e1edf4;
+  --panel-strong: #edf4f8;
+  --code-text: #1f2b33;
 }
 
 * { box-sizing: border-box; }
@@ -117,7 +230,7 @@ nav {
   top: 0;
   backdrop-filter: blur(10px);
   background: color-mix(in srgb, var(--bg) 80%, transparent);
-  border-bottom: 1px solid #222a38;
+  border-bottom: 1px solid var(--border);
   z-index: 10;
 }
 
@@ -169,7 +282,7 @@ nav {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  border: 1px solid #2b3446;
+  border: 1px solid var(--border-strong);
   background: var(--panel);
   color: var(--text);
   font-size: 18px;
@@ -184,7 +297,7 @@ nav {
 .theme-select {
   background: var(--panel);
   color: var(--text);
-  border: 1px solid #2b3446;
+  border: 1px solid var(--border-strong);
   border-radius: 10px;
   padding: 8px 10px;
   font-family: var(--font-body);
@@ -194,7 +307,7 @@ nav {
 .lang-select {
   background: var(--panel);
   color: var(--text);
-  border: 1px solid #2b3446;
+  border: 1px solid var(--border-strong);
   border-radius: 10px;
   padding: 8px 10px;
   font-family: var(--font-body);
@@ -248,7 +361,7 @@ nav {
 
 .card {
   background: linear-gradient(180deg, var(--panel) 0%, var(--bg-2) 100%);
-  border: 1px solid #253047;
+  border: 1px solid var(--border-muted);
   border-radius: var(--radius);
   padding: 16px;
   box-shadow: var(--shadow);
@@ -313,18 +426,18 @@ nav {
 .list li {
   padding: 10px 12px;
   background: color-mix(in srgb, var(--bg-2) 80%, black);
-  border: 1px solid #222a38;
+  border: 1px solid var(--border);
   border-radius: 10px;
 }
 
 .code {
   background: color-mix(in srgb, var(--bg) 85%, black);
-  border: 1px solid #222a38;
+  border: 1px solid var(--border);
   padding: 12px;
   border-radius: 10px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 13px;
-  color: #cde3ff;
+  color: var(--code-text);
   overflow-x: auto;
 }
 
@@ -339,9 +452,17 @@ nav {
   border-radius: 18px;
   background: radial-gradient(300px 200px at 20% 20%, var(--panel) 0%, var(--bg-2) 60%),
               linear-gradient(135deg, color-mix(in srgb, var(--accent) 30%, transparent), color-mix(in srgb, var(--accent-2) 30%, transparent));
-  border: 1px solid #2a344a;
+  border: 1px solid var(--border-strong);
   position: relative;
   overflow: hidden;
+}
+
+.hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.92;
 }
 
 .hero-visual .chip {
@@ -373,13 +494,13 @@ nav {
 }
 
 .table th, .table td {
-  border: 1px solid #263047;
+  border: 1px solid var(--border-muted);
   padding: 10px;
   text-align: start;
 }
 
 .table th {
-  background: #161d2a;
+  background: var(--panel-strong);
   color: var(--text);
 }
 
@@ -401,7 +522,7 @@ nav {
 
 .gallery-card {
   background: var(--panel);
-  border: 1px solid #253047;
+  border: 1px solid var(--border-muted);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);

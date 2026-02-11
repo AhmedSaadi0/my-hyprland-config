@@ -88,6 +88,17 @@ NibrasShell هو سطح مكتب مبني على Hyprland و Quickshell، يرك
 - تعليق ذكي على الموسيقى.
 - سجل تشغيل حديث.
 
+## الذكاء الاصطناعي (حاليًا)
+- تحليل بيانات الطقس.
+- تحليل الموسيقى.
+- تحليل حالة النظام بعد الإقلاع مباشرة (Boot up).
+- تلخيص ما حدث عند ارتفاع مفاجئ في المعالج أو الرام أو درجة الحرارة داخل اللوق.
+
+## وحدات مرتبطة بالذكاء الاصطناعي (قريبًا)
+- كليببورد (سيتم ربطها بالذكاء الاصطناعي لجلب ملخص في المستقبل).
+- قائمة تودو (سيتم ربطها بالذكاء الاصطناعي لجلب ملخص في المستقبل، مع تنبيهات للمهام بحسب التاريخ).
+- مراقب شبكة (سيتم ربطها بالذكاء الاصطناعي لجلب ملخص عن الاستهلاك بحسب التطبيق في المستقبل).
+
 **خدمة الحافظة**
 - مراقبة عبر `wl-paste`.
 - قائمة/تفعيل/حذف/مسح عبر سكربت Python.
@@ -260,6 +271,150 @@ python install.py
 - Arch
 - Fedora
 - Void
+
+## التثبيت اليدوي الكامل
+
+### الاعتماديات الأساسية
+- Hyprland
+- Quickshell
+- network-manager-applet
+- playerctl
+- polkit-kde-agent أو polkit-gnome
+- FantasqueSansM Nerd Font
+- dolphin
+- konsole
+- brightnessctl
+- gammastep
+- wl-clipboard
+- hyprpicker
+- sysstat
+- bc
+- sassc
+- swww
+- systemsettings
+- acpi
+- fish
+- gnome-bluetooth-3.0
+- power-profiles-daemon
+- lm_sensors
+- copyq
+- kde-material-you-colors
+- vnstat
+- nethogs
+
+### اعتماديات اختيارية
+- strawberry
+- easyeffects
+- blueman
+- telegram-desktop
+- discord
+- kvantum
+- firefox
+
+### مثال لمستخدمي Arch
+```bash
+# تثبيت البرامج المطلوبة
+yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww quickshell
+
+# تثبيت البرامج الاختيارية
+yay -S orchis-theme-git discord firefox visual-studio-code-bin nwg-look-bin qt5ct telegram-desktop strawberry
+```
+
+### مثال لمستخدمي Fedora
+```bash
+# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
+sudo dnf install ffmpeg --allowerasing
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13 python3.13-devel
+
+# تفعيل مستودع هيبر لاند
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install hyprland hyprshot hyprpicker wl-clipboard swww
+
+# تفعيل مستودع كويك شل
+sudo dnf copr enable errornointernet/quickshell
+sudo dnf install quickshell
+```
+
+### متطلبات تأثير العمق للساعة في سطح المكتب
+```bash
+python3.13 -m venv ~/.cache/nibrasshell/venv
+~/.cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools
+~/.cache/nibrasshell/venv/bin/pip install -r ~/.config/quickshell/scripts/python/requirements-3.13.txt
+```
+
+### إعداد الملفات يدوياً
+```bash
+git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
+
+# عمل نسخة احتياطية لملفاتك الاصلية
+mv ~/.config/hypr/ ~/.config/hypr-old
+mv ~/.config/quickshell/ ~/.config/quickshell-old
+mv ~/.config/wofi/ ~/.config/wofi-old
+mv ~/.config/easyeffects ~/.config/easyeffects-old
+mv ~/.config/fish/config.fish ~/.config/fish/config.back.fish
+
+# نسخ الملفات
+cp -r NibrasShell ~/.config/hypr
+cp -r ~/.config/hypr/config/quickshell ~/.config/quickshell
+cp -r ~/.config/hypr/config/wofi ~/.config/wofi
+cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
+
+# اعداد الصلاحيات للملفات التنفيذية
+sudo chmod +x ~/.config/hypr/scripts/*
+sudo chmod +x ~/.config/quickshell/scripts/*
+
+# نسخ اعدادت easyeffects
+cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
+
+# نسخ ملفات الثيمات
+mkdir ~/.local/share/color-schemes/
+mkdir ~/.local/share/konsole/
+mkdir ~/.config/Kvantum/
+mkdir ~/.config/qt5ct/
+mkdir ~/.config/qt6ct/
+
+cp -r ~/.config/hypr/config/plasma-colors/* ~/.local/share/color-schemes/
+cp -r ~/.config/hypr/config/kvantum-themes/* ~/.config/Kvantum/
+cp -r ~/.config/hypr/config/konsole/* ~/.local/share/konsole/
+cp ~/.config/hypr/config/qt5ct.conf ~/.config/qt5ct/
+cp ~/.config/hypr/config/qt6ct.conf ~/.config/qt6ct/
+
+mkdir ~/.fonts
+cp -r ~/.config/hypr/config/.fonts/* ~/.fonts
+
+mkdir ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/BeautySolar.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
+tar xvf ~/.config/hypr/config/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
+```
+
+### إعداد ملف الإعدادات
+```bash
+nvim ~/.nibrasshell.json
+```
+
+```json
+{
+  "username": "اسمك",
+  "profilePicture": "/home/user/pictures/profile.png",
+  "networkMonitor": "wlp0s20f3",
+  "weatherLocation": "sanaa",
+  "city": "sanaa",
+  "country": "yemen",
+  "usePrayerTimes": true
+}
+```
 
 ## مسارات مهمة
 - إعدادات Hyprland: `hyprland.conf` وملفات `binding.conf` و `env.conf` و `exec-once.conf` و `rules.conf` و `monitors.conf`.
