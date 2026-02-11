@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav>
+  <nav id="navRoot">
     <div class="container nav-inner">
       <div class="brand">
         <div class="brand-badge"></div>
@@ -16,45 +16,52 @@
           <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
         </div>
       </div>
-      <div class="nav-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="features.html">المميزات</a>
-        <a href="gallery.html">الصور</a>
-        <a href="install.html">التثبيت</a>
-        <a href="docs.html">الوثائق</a>
-        <a href="dev.html">المطورون</a>
-        <a href="changelog.html">التغييرات</a>
-        <a href="roadmap.html">خارطة الطريق</a>
-        <a href="faq.html">الأسئلة</a>
-      </div>
-      <div class="nav-actions">
-        <select id="themeSelect" class="theme-select" aria-label="اختيار الثيم">
-          <option value="tokyonight">Tokyo Night</option>
-          <option value="dracula">Dracula</option>
-          <option value="catppuccin">Catppuccin</option>
-          <option value="gruvbox">Gruvbox</option>
-          <option value="nord">Nord</option>
-          <option value="material">Material</option>
-        </select>
+      <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+      <div class="nav-menu">
+        <div class="nav-links">
+          <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+          <a href="features.html" data-i18n="nav_features">المميزات</a>
+          <a href="gallery.html" data-i18n="nav_gallery">الصور</a>
+          <a href="install.html" data-i18n="nav_install">التثبيت</a>
+          <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+          <a href="dev.html" data-i18n="nav_dev">المطورون</a>
+          <a href="changelog.html" data-i18n="nav_changelog">التغييرات</a>
+          <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+          <a href="faq.html" data-i18n="nav_faq">الأسئلة</a>
+        </div>
+        <div class="nav-actions">
+          <select id="themeSelect" class="theme-select" aria-label="Theme">
+            <option value="tokyonight">Tokyo Night</option>
+            <option value="dracula">Dracula</option>
+            <option value="catppuccin">Catppuccin</option>
+            <option value="gruvbox">Gruvbox</option>
+            <option value="nord">Nord</option>
+            <option value="material">Material</option>
+          </select>
+          <select id="langSelect" class="lang-select" aria-label="Language">
+            <option value="ar">AR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
       </div>
     </div>
   </nav>
 
   <main class="container">
     <section class="page-title">
-      <h1>التثبيت</h1>
-      <p class="muted">خطوات التثبيت السريعة والملاحظات الأساسية.</p>
+      <h1 data-i18n="install_title">التثبيت</h1>
+      <p class="muted" data-i18n="install_sub">خطوات التثبيت السريعة والملاحظات الأساسية.</p>
     </section>
 
     <section class="section">
-      <h2>التثبيت التلقائي</h2>
+      <h2 data-i18n="install_auto">التثبيت التلقائي</h2>
       <div class="code">git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
 cd NibrasShell
 python install.py</div>
     </section>
 
     <section class="section">
-      <h2>التوزيعات المدعومة في السكربت</h2>
+      <h2 data-i18n="install_supported">التوزيعات المدعومة في السكربت</h2>
       <ul class="list">
         <li>Arch</li>
         <li>Fedora</li>
@@ -63,16 +70,16 @@ python install.py</div>
     </section>
 
     <section class="section">
-      <h2>ملاحظات مهمة</h2>
+      <h2 data-i18n="install_notes">ملاحظات مهمة</h2>
       <ul class="list">
-        <li>قد تختلف أسماء الحزم حسب التوزيعة.</li>
-        <li>يفضّل إعادة تشغيل النظام بعد التثبيت.</li>
-        <li>يمكنك التثبيت اليدوي على أي توزيعة أخرى.</li>
+        <li data-i18n="install_note_1">قد تختلف أسماء الحزم حسب التوزيعة.</li>
+        <li data-i18n="install_note_2">يفضّل إعادة تشغيل النظام بعد التثبيت.</li>
+        <li data-i18n="install_note_3">يمكنك التثبيت اليدوي على أي توزيعة أخرى.</li>
       </ul>
     </section>
 
     <section class="footer">
-      <div>إذا واجهتك مشكلة، راجع صفحة استكشاف الأخطاء في الوثائق.</div>
+      <div data-i18n="install_footer">إذا واجهتك مشكلة، راجع صفحة استكشاف الأخطاء في الوثائق.</div>
     </section>
   </main>
 

@@ -162,7 +162,36 @@ nav {
   gap: 10px;
 }
 
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #2b3446;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 18px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .theme-select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid #2b3446;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.lang-select {
   background: var(--panel);
   color: var(--text);
   border: 1px solid #2b3446;
@@ -346,7 +375,7 @@ nav {
 .table th, .table td {
   border: 1px solid #263047;
   padding: 10px;
-  text-align: right;
+  text-align: start;
 }
 
 .table th {
@@ -396,4 +425,23 @@ nav {
   .grid-3 { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: 1fr; }
+  .nav-inner { flex-wrap: wrap; }
+  .nav-toggle { display: inline-flex; }
+  .nav-menu {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 10px 0 6px;
+  }
+  nav.open .nav-menu { display: flex; }
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .nav-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

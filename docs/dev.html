@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav>
+  <nav id="navRoot">
     <div class="container nav-inner">
       <div class="brand">
         <div class="brand-badge"></div>
@@ -16,92 +16,99 @@
           <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
         </div>
       </div>
-      <div class="nav-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="features.html">المميزات</a>
-        <a href="gallery.html">الصور</a>
-        <a href="install.html">التثبيت</a>
-        <a href="docs.html">الوثائق</a>
-        <a href="dev.html">المطورون</a>
-        <a href="changelog.html">التغييرات</a>
-        <a href="roadmap.html">خارطة الطريق</a>
-        <a href="faq.html">الأسئلة</a>
-      </div>
-      <div class="nav-actions">
-        <select id="themeSelect" class="theme-select" aria-label="اختيار الثيم">
-          <option value="tokyonight">Tokyo Night</option>
-          <option value="dracula">Dracula</option>
-          <option value="catppuccin">Catppuccin</option>
-          <option value="gruvbox">Gruvbox</option>
-          <option value="nord">Nord</option>
-          <option value="material">Material</option>
-        </select>
+      <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+      <div class="nav-menu">
+        <div class="nav-links">
+          <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+          <a href="features.html" data-i18n="nav_features">المميزات</a>
+          <a href="gallery.html" data-i18n="nav_gallery">الصور</a>
+          <a href="install.html" data-i18n="nav_install">التثبيت</a>
+          <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+          <a href="dev.html" data-i18n="nav_dev">المطورون</a>
+          <a href="changelog.html" data-i18n="nav_changelog">التغييرات</a>
+          <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+          <a href="faq.html" data-i18n="nav_faq">الأسئلة</a>
+        </div>
+        <div class="nav-actions">
+          <select id="themeSelect" class="theme-select" aria-label="Theme">
+            <option value="tokyonight">Tokyo Night</option>
+            <option value="dracula">Dracula</option>
+            <option value="catppuccin">Catppuccin</option>
+            <option value="gruvbox">Gruvbox</option>
+            <option value="nord">Nord</option>
+            <option value="material">Material</option>
+          </select>
+          <select id="langSelect" class="lang-select" aria-label="Language">
+            <option value="ar">AR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
       </div>
     </div>
   </nav>
 
   <main class="container">
     <section class="page-title">
-      <h1>وثائق المطورين</h1>
-      <p class="muted">خريطة تقنية مختصرة لفهم بنية المشروع وكيفية توسعته.</p>
+      <h1 data-i18n="dev_title">وثائق المطورين</h1>
+      <p class="muted" data-i18n="dev_sub">خريطة تقنية مختصرة لفهم بنية المشروع وكيفية توسعته.</p>
     </section>
 
     <section class="section">
-      <h2>المعمارية العامة</h2>
+      <h2 data-i18n="dev_arch">المعمارية العامة</h2>
       <ul class="list">
-        <li>واجهة QML عبر Quickshell.</li>
-        <li>Hyprland للتعامل مع النوافذ والشاشات والأحداث.</li>
-        <li>خدمات خلفية في `config/quickshell/services`.</li>
-        <li>سكربتات Python/Bash في `config/quickshell/scripts` و `scripts`.</li>
+        <li data-i18n="dev_arch_1">واجهة QML عبر Quickshell.</li>
+        <li data-i18n="dev_arch_2">Hyprland للتعامل مع النوافذ والشاشات والأحداث.</li>
+        <li data-i18n="dev_arch_3">خدمات خلفية في `config/quickshell/services`.</li>
+        <li data-i18n="dev_arch_4">سكربتات Python/Bash في `config/quickshell/scripts` و `scripts`.</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>نقطة البداية</h2>
-      <p>المكوّن الرئيسي في:</p>
+      <h2 data-i18n="dev_entry">نقطة البداية</h2>
+      <p data-i18n="dev_entry_hint">المكوّن الرئيسي في:</p>
       <div class="code">config/quickshell/shell.qml</div>
-      <p>هذا الملف يجمع الطبقات الأساسية مثل الشريط العلوي والقائمة الجانبية والكبسولة الذكية.</p>
+      <p data-i18n="dev_entry_desc">هذا الملف يجمع الطبقات الأساسية مثل الشريط العلوي والقائمة الجانبية والكبسولة الذكية.</p>
     </section>
 
     <section class="section">
-      <h2>إدارة الإعدادات</h2>
+      <h2 data-i18n="dev_settings">إدارة الإعدادات</h2>
       <ul class="list">
-        <li>قراءة الإعدادات من `~/.nibrasshell.json` عبر `ConfigStore.qml`.</li>
-        <li>الواجهة تستخدم `App.qml` لتوحيد المسارات والأوامر.</li>
-        <li>الكاش في `~/.cache/nibrasshell`.</li>
+        <li data-i18n="dev_settings_1">قراءة الإعدادات من `~/.nibrasshell.json` عبر `ConfigStore.qml`.</li>
+        <li data-i18n="dev_settings_2">الواجهة تستخدم `App.qml` لتوحيد المسارات والأوامر.</li>
+        <li data-i18n="dev_settings_3">الكاش في `~/.cache/nibrasshell`.</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>إدارة الثيمات والخلفيات</h2>
+      <h2 data-i18n="dev_themes">إدارة الثيمات والخلفيات</h2>
       <ul class="list">
-        <li>`ThemeManager.qml` مسؤول عن تحميل الثيمات وتطبيقها.</li>
-        <li>`WallpaperController.qml` لإدارة الخلفيات الثابتة والديناميكية.</li>
-        <li>`DepthEffectController.qml` لتوليد طبقات العمق.</li>
+        <li data-i18n="dev_themes_1">`ThemeManager.qml` مسؤول عن تحميل الثيمات وتطبيقها.</li>
+        <li data-i18n="dev_themes_2">`WallpaperController.qml` لإدارة الخلفيات الثابتة والديناميكية.</li>
+        <li data-i18n="dev_themes_3">`DepthEffectController.qml` لتوليد طبقات العمق.</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>الخدمات الأساسية</h2>
+      <h2 data-i18n="dev_services">الخدمات الأساسية</h2>
       <table class="table">
         <thead>
-          <tr><th>الخدمة</th><th>الدور</th></tr>
+          <tr><th data-i18n="dev_services_th1">الخدمة</th><th data-i18n="dev_services_th2">الدور</th></tr>
         </thead>
         <tbody>
-          <tr><td>SystemService</td><td>مراقبة الموارد وتحليل الإقلاع وارتفاعات الأداء</td></tr>
-          <tr><td>Weather</td><td>جلب الطقس والتحليل الذكي والتنبيهات</td></tr>
-          <tr><td>MusicService</td><td>تكامل MPRIS والتعليق الذكي</td></tr>
-          <tr><td>NotifManager</td><td>إدارة الإشعارات ووضع عدم الإزعاج</td></tr>
-          <tr><td>ClipboardService</td><td>مراقبة الحافظة وإدارتها</td></tr>
+          <tr><td>SystemService</td><td data-i18n="dev_services_row1">مراقبة الموارد وتحليل الإقلاع وارتفاعات الأداء</td></tr>
+          <tr><td>Weather</td><td data-i18n="dev_services_row2">جلب الطقس والتحليل الذكي والتنبيهات</td></tr>
+          <tr><td>MusicService</td><td data-i18n="dev_services_row3">تكامل MPRIS والتعليق الذكي</td></tr>
+          <tr><td>NotifManager</td><td data-i18n="dev_services_row4">إدارة الإشعارات ووضع عدم الإزعاج</td></tr>
+          <tr><td>ClipboardService</td><td data-i18n="dev_services_row5">مراقبة الحافظة وإدارتها</td></tr>
         </tbody>
       </table>
     </section>
 
     <section class="section">
-      <h2>السكربتات المهمة</h2>
+      <h2 data-i18n="dev_scripts">السكربتات المهمة</h2>
       <div class="grid-2">
         <div class="card">
-          <strong>Python</strong>
+          <strong data-i18n="dev_python">Python</strong>
           <ul class="list">
             <li>monitoring: `top_cpu_usage.py`, `top_ram_usage.py`</li>
             <li>wallpapers: `scan_wallpapers.py`, `dynamic-m3.py`</li>
@@ -110,7 +117,7 @@
           </ul>
         </div>
         <div class="card">
-          <strong>Bash</strong>
+          <strong data-i18n="dev_bash">Bash</strong>
           <ul class="list">
             <li>`cpu_usage.sh` و `ram_usage.sh`</li>
             <li>`internet.sh` و `temp.sh`</li>
@@ -121,22 +128,22 @@
     </section>
 
     <section class="section">
-      <h2>تشغيل Quickshell</h2>
+      <h2 data-i18n="dev_run">تشغيل Quickshell</h2>
       <div class="code">config/quickshell/run.fish</div>
-      <p>هذا السكربت يضبط log rules لتقليل الضوضاء أثناء التشغيل.</p>
+      <p data-i18n="dev_run_desc">هذا السكربت يضبط log rules لتقليل الضوضاء أثناء التشغيل.</p>
     </section>
 
     <section class="section">
-      <h2>ملاحظات تطوير</h2>
+      <h2 data-i18n="dev_notes">ملاحظات تطوير</h2>
       <ul class="list">
-        <li>الكبسولة الذكية في `config/quickshell/windows/smart_capsule`.</li>
-        <li>القائمة الجانبية في `config/quickshell/windows/leftwindow`.</li>
-        <li>الإعدادات في `config/quickshell/windows/settings`.</li>
+        <li data-i18n="dev_note_1">الكبسولة الذكية في `config/quickshell/windows/smart_capsule`.</li>
+        <li data-i18n="dev_note_2">القائمة الجانبية في `config/quickshell/windows/leftwindow`.</li>
+        <li data-i18n="dev_note_3">الإعدادات في `config/quickshell/windows/settings`.</li>
       </ul>
     </section>
 
     <section class="footer">
-      <div>هذه الصفحة ملخصة ويمكن توسيعها لاحقاً بمخططات ورسوم.</div>
+      <div data-i18n="dev_footer">هذه الصفحة ملخصة ويمكن توسيعها لاحقاً بمخططات ورسوم.</div>
     </section>
   </main>
 

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav>
+  <nav id="navRoot">
     <div class="container nav-inner">
       <div class="brand">
         <div class="brand-badge"></div>
@@ -16,45 +16,52 @@
           <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
         </div>
       </div>
-      <div class="nav-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="features.html">المميزات</a>
-        <a href="gallery.html">الصور</a>
-        <a href="install.html">التثبيت</a>
-        <a href="docs.html">الوثائق</a>
-        <a href="dev.html">المطورون</a>
-        <a href="changelog.html">التغييرات</a>
-        <a href="roadmap.html">خارطة الطريق</a>
-        <a href="faq.html">الأسئلة</a>
-      </div>
-      <div class="nav-actions">
-        <select id="themeSelect" class="theme-select" aria-label="اختيار الثيم">
-          <option value="tokyonight">Tokyo Night</option>
-          <option value="dracula">Dracula</option>
-          <option value="catppuccin">Catppuccin</option>
-          <option value="gruvbox">Gruvbox</option>
-          <option value="nord">Nord</option>
-          <option value="material">Material</option>
-        </select>
+      <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+      <div class="nav-menu">
+        <div class="nav-links">
+          <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+          <a href="features.html" data-i18n="nav_features">المميزات</a>
+          <a href="gallery.html" data-i18n="nav_gallery">الصور</a>
+          <a href="install.html" data-i18n="nav_install">التثبيت</a>
+          <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+          <a href="dev.html" data-i18n="nav_dev">المطورون</a>
+          <a href="changelog.html" data-i18n="nav_changelog">التغييرات</a>
+          <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+          <a href="faq.html" data-i18n="nav_faq">الأسئلة</a>
+        </div>
+        <div class="nav-actions">
+          <select id="themeSelect" class="theme-select" aria-label="Theme">
+            <option value="tokyonight">Tokyo Night</option>
+            <option value="dracula">Dracula</option>
+            <option value="catppuccin">Catppuccin</option>
+            <option value="gruvbox">Gruvbox</option>
+            <option value="nord">Nord</option>
+            <option value="material">Material</option>
+          </select>
+          <select id="langSelect" class="lang-select" aria-label="Language">
+            <option value="ar">AR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
       </div>
     </div>
   </nav>
 
   <main class="container">
     <section class="page-title">
-      <h1>المميزات</h1>
-      <p class="muted">نظرة تفصيلية لأهم ما يميز الواجهة.</p>
+      <h1 data-i18n="features_title">المميزات</h1>
+      <p class="muted" data-i18n="features_sub">نظرة تفصيلية لأهم ما يميز الواجهة.</p>
     </section>
 
     <section class="section">
       <div class="grid-2">
         <div class="card">
-          <h2>الكبسولة الذكية</h2>
-          <p>عرض موجز للطقس والميديا مع توسعة تفاعلية وطبقة AI.</p>
+          <h2 data-i18n="feat_capsule_title">الكبسولة الذكية</h2>
+          <p data-i18n="feat_capsule_desc">عرض موجز للطقس والميديا مع توسعة تفاعلية وطبقة AI.</p>
         </div>
         <div class="card">
-          <h2>القائمة الجانبية</h2>
-          <p>تنقّل سريع بين الأقسام مع نمط عائم أو ثابت.</p>
+          <h2 data-i18n="feat_menu_title">القائمة الجانبية</h2>
+          <p data-i18n="feat_menu_desc">تنقّل سريع بين الأقسام مع نمط عائم أو ثابت.</p>
         </div>
       </div>
     </section>
@@ -62,12 +69,12 @@
     <section class="section">
       <div class="grid-2">
         <div class="card">
-          <h2>مراقبة النظام</h2>
-          <p>CPU و RAM و الحرارة والبطارية مع تحليل ارتفاعات مفاجئة.</p>
+          <h2 data-i18n="feat_monitor_title">مراقبة النظام</h2>
+          <p data-i18n="feat_monitor_desc">CPU و RAM و الحرارة والبطارية مع تحليل ارتفاعات مفاجئة.</p>
         </div>
         <div class="card">
-          <h2>الطقس الذكي</h2>
-          <p>تحليل ذكي وتنبيهات جوية مع تحديثات مرنة حسب الحالة.</p>
+          <h2 data-i18n="feat_weather_title">الطقس الذكي</h2>
+          <p data-i18n="feat_weather_desc">تحليل ذكي وتنبيهات جوية مع تحديثات مرنة حسب الحالة.</p>
         </div>
       </div>
     </section>
@@ -75,29 +82,29 @@
     <section class="section">
       <div class="grid-2">
         <div class="card">
-          <h2>الثيمات والخلفيات</h2>
-          <p>ثيمات جاهزة مع دعم خلفيات ديناميكية وتوليد ألوان تلقائي.</p>
+          <h2 data-i18n="feat_themes_title">الثيمات والخلفيات</h2>
+          <p data-i18n="feat_themes_desc">ثيمات جاهزة مع دعم خلفيات ديناميكية وتوليد ألوان تلقائي.</p>
         </div>
         <div class="card">
-          <h2>لوحة إعدادات احترافية</h2>
-          <p>تحكم كامل بالواجهة والموارد والذكاء الاصطناعي.</p>
+          <h2 data-i18n="feat_settings_title">لوحة إعدادات احترافية</h2>
+          <p data-i18n="feat_settings_desc">تحكم كامل بالواجهة والموارد والذكاء الاصطناعي.</p>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <h2>قائمة مختصرة بالمزايا</h2>
+      <h2 data-i18n="feat_list_title">قائمة مختصرة بالمزايا</h2>
       <ul class="list">
-        <li>شريط علوي غني بعناصر النظام ومساحات العمل.</li>
-        <li>مشغل تطبيقات جانبي وسفلي.</li>
-        <li>إشعارات فورية ومركز إشعارات.</li>
-        <li>تأثير عمق للساعة مع Overlay.</li>
-        <li>تكامل مع Pipewire و MPRIS و wl-clipboard.</li>
+        <li data-i18n="feat_list_1">شريط علوي غني بعناصر النظام ومساحات العمل.</li>
+        <li data-i18n="feat_list_2">مشغل تطبيقات جانبي وسفلي.</li>
+        <li data-i18n="feat_list_3">إشعارات فورية ومركز إشعارات.</li>
+        <li data-i18n="feat_list_4">تأثير عمق للساعة مع Overlay.</li>
+        <li data-i18n="feat_list_5">تكامل مع Pipewire و MPRIS و wl-clipboard.</li>
       </ul>
     </section>
 
     <section class="footer">
-      <div>للتفاصيل التقنية الكاملة، انتقل إلى الوثائق.</div>
+      <div data-i18n="feat_footer">للتفاصيل التقنية الكاملة، انتقل إلى الوثائق.</div>
     </section>
   </main>
 

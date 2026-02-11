@@ -1,4 +1,4 @@
-<nav>
+<nav id="navRoot">
   <div class="container nav-inner">
     <div class="brand">
       <div class="brand-badge"></div>
@@ -7,26 +7,33 @@
         <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
       </div>
     </div>
-    <div class="nav-links">
-      <a href="index.html">الرئيسية</a>
-      <a href="features.html">المميزات</a>
-      <a href="gallery.html">الصور</a>
-      <a href="install.html">التثبيت</a>
-      <a href="docs.html">الوثائق</a>
-      <a href="dev.html">المطورون</a>
-      <a href="changelog.html">التغييرات</a>
-      <a href="roadmap.html">خارطة الطريق</a>
-      <a href="faq.html">الأسئلة</a>
-    </div>
-    <div class="nav-actions">
-      <select id="themeSelect" class="theme-select" aria-label="اختيار الثيم">
-        <option value="tokyonight">Tokyo Night</option>
-        <option value="dracula">Dracula</option>
-        <option value="catppuccin">Catppuccin</option>
-        <option value="gruvbox">Gruvbox</option>
-        <option value="nord">Nord</option>
-        <option value="material">Material</option>
-      </select>
+    <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+    <div class="nav-menu">
+      <div class="nav-links">
+        <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+        <a href="features.html" data-i18n="nav_features">المميزات</a>
+        <a href="gallery.html" data-i18n="nav_gallery">الصور</a>
+        <a href="install.html" data-i18n="nav_install">التثبيت</a>
+        <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+        <a href="dev.html" data-i18n="nav_dev">المطورون</a>
+        <a href="changelog.html" data-i18n="nav_changelog">التغييرات</a>
+        <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+        <a href="faq.html" data-i18n="nav_faq">الأسئلة</a>
+      </div>
+      <div class="nav-actions">
+        <select id="themeSelect" class="theme-select" aria-label="Theme">
+          <option value="tokyonight">Tokyo Night</option>
+          <option value="dracula">Dracula</option>
+          <option value="catppuccin">Catppuccin</option>
+          <option value="gruvbox">Gruvbox</option>
+          <option value="nord">Nord</option>
+          <option value="material">Material</option>
+        </select>
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="ar">AR</option>
+          <option value="en">EN</option>
+        </select>
+      </div>
     </div>
   </div>
 </nav>

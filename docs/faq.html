@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav>
+  <nav id="navRoot">
     <div class="container nav-inner">
       <div class="brand">
         <div class="brand-badge"></div>
@@ -16,57 +16,64 @@
           <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
         </div>
       </div>
-      <div class="nav-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="features.html">المميزات</a>
-        <a href="gallery.html">الصور</a>
-        <a href="install.html">التثبيت</a>
-        <a href="docs.html">الوثائق</a>
-        <a href="dev.html">المطورون</a>
-        <a href="changelog.html">التغييرات</a>
-        <a href="roadmap.html">خارطة الطريق</a>
-        <a href="faq.html">الأسئلة</a>
-      </div>
-      <div class="nav-actions">
-        <select id="themeSelect" class="theme-select" aria-label="اختيار الثيم">
-          <option value="tokyonight">Tokyo Night</option>
-          <option value="dracula">Dracula</option>
-          <option value="catppuccin">Catppuccin</option>
-          <option value="gruvbox">Gruvbox</option>
-          <option value="nord">Nord</option>
-          <option value="material">Material</option>
-        </select>
+      <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+      <div class="nav-menu">
+        <div class="nav-links">
+          <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+          <a href="features.html" data-i18n="nav_features">المميزات</a>
+          <a href="gallery.html" data-i18n="nav_gallery">الصور</a>
+          <a href="install.html" data-i18n="nav_install">التثبيت</a>
+          <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+          <a href="dev.html" data-i18n="nav_dev">المطورون</a>
+          <a href="changelog.html" data-i18n="nav_changelog">التغييرات</a>
+          <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+          <a href="faq.html" data-i18n="nav_faq">الأسئلة</a>
+        </div>
+        <div class="nav-actions">
+          <select id="themeSelect" class="theme-select" aria-label="Theme">
+            <option value="tokyonight">Tokyo Night</option>
+            <option value="dracula">Dracula</option>
+            <option value="catppuccin">Catppuccin</option>
+            <option value="gruvbox">Gruvbox</option>
+            <option value="nord">Nord</option>
+            <option value="material">Material</option>
+          </select>
+          <select id="langSelect" class="lang-select" aria-label="Language">
+            <option value="ar">AR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
       </div>
     </div>
   </nav>
 
   <main class="container">
     <section class="page-title">
-      <h1>الأسئلة الشائعة</h1>
-      <p class="muted">إجابات سريعة عن أكثر الأسئلة تكراراً.</p>
+      <h1 data-i18n="faq_title">الأسئلة الشائعة</h1>
+      <p class="muted" data-i18n="faq_sub">إجابات سريعة عن أكثر الأسئلة تكراراً.</p>
     </section>
 
     <section class="section">
       <div class="card">
-        <strong>هل المشروع جاهز بالكامل؟</strong>
-        <p>المشروع قيد التطوير مع ميزات جاهزة وميزات قادمة.</p>
+        <strong data-i18n="faq_q1">هل المشروع جاهز بالكامل؟</strong>
+        <p data-i18n="faq_a1">المشروع قيد التطوير مع ميزات جاهزة وميزات قادمة.</p>
       </div>
       <div class="card">
-        <strong>هل يدعم خلفيات الفيديو؟</strong>
-        <p>نعم، يدعم الخلفيات بصيغ فيديو عبر `Wallpaper.qml`.</p>
+        <strong data-i18n="faq_q2">هل يدعم خلفيات الفيديو؟</strong>
+        <p data-i18n="faq_a2">نعم، يدعم الخلفيات بصيغ فيديو عبر `Wallpaper.qml`.</p>
       </div>
       <div class="card">
-        <strong>هل يمكن التثبيت على توزيعات أخرى؟</strong>
-        <p>نعم عبر التثبيت اليدوي، والسكربت يدعم Arch و Fedora و Void.</p>
+        <strong data-i18n="faq_q3">هل يمكن التثبيت على توزيعات أخرى؟</strong>
+        <p data-i18n="faq_a3">نعم عبر التثبيت اليدوي، والسكربت يدعم Arch و Fedora و Void.</p>
       </div>
       <div class="card">
-        <strong>أين أجد الاختصارات؟</strong>
-        <p>داخل نافذة الـ Cheatsheet أو من Hyprland مباشرة.</p>
+        <strong data-i18n="faq_q4">أين أجد الاختصارات؟</strong>
+        <p data-i18n="faq_a4">داخل نافذة الـ Cheatsheet أو من Hyprland مباشرة.</p>
       </div>
     </section>
 
     <section class="footer">
-      <div>للاستفسارات التقنية، راجع الوثائق والويكي.</div>
+      <div data-i18n="faq_footer">للاستفسارات التقنية، راجع الوثائق والويكي.</div>
     </section>
   </main>
 

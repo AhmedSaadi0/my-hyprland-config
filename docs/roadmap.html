@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav>
+  <nav id="navRoot">
     <div class="container nav-inner">
       <div class="brand">
         <div class="brand-badge"></div>
@@ -16,79 +16,86 @@
           <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
         </div>
       </div>
-      <div class="nav-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="features.html">المميزات</a>
-        <a href="gallery.html">الصور</a>
-        <a href="install.html">التثبيت</a>
-        <a href="docs.html">الوثائق</a>
-        <a href="dev.html">المطورون</a>
-        <a href="changelog.html">التغييرات</a>
-        <a href="roadmap.html">خارطة الطريق</a>
-        <a href="faq.html">الأسئلة</a>
-      </div>
-      <div class="nav-actions">
-        <select id="themeSelect" class="theme-select" aria-label="اختيار الثيم">
-          <option value="tokyonight">Tokyo Night</option>
-          <option value="dracula">Dracula</option>
-          <option value="catppuccin">Catppuccin</option>
-          <option value="gruvbox">Gruvbox</option>
-          <option value="nord">Nord</option>
-          <option value="material">Material</option>
-        </select>
+      <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+      <div class="nav-menu">
+        <div class="nav-links">
+          <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+          <a href="features.html" data-i18n="nav_features">المميزات</a>
+          <a href="gallery.html" data-i18n="nav_gallery">الصور</a>
+          <a href="install.html" data-i18n="nav_install">التثبيت</a>
+          <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+          <a href="dev.html" data-i18n="nav_dev">المطورون</a>
+          <a href="changelog.html" data-i18n="nav_changelog">التغييرات</a>
+          <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+          <a href="faq.html" data-i18n="nav_faq">الأسئلة</a>
+        </div>
+        <div class="nav-actions">
+          <select id="themeSelect" class="theme-select" aria-label="Theme">
+            <option value="tokyonight">Tokyo Night</option>
+            <option value="dracula">Dracula</option>
+            <option value="catppuccin">Catppuccin</option>
+            <option value="gruvbox">Gruvbox</option>
+            <option value="nord">Nord</option>
+            <option value="material">Material</option>
+          </select>
+          <select id="langSelect" class="lang-select" aria-label="Language">
+            <option value="ar">AR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
       </div>
     </div>
   </nav>
 
   <main class="container">
     <section class="page-title">
-      <h1>خارطة الطريق</h1>
-      <p class="muted">ملخص للأفكار والمهام القادمة.</p>
+      <h1 data-i18n="roadmap_title">خارطة الطريق</h1>
+      <p class="muted" data-i18n="roadmap_sub">ملخص للأفكار والمهام القادمة.</p>
     </section>
 
     <section class="section">
-      <h2>الكبسولة الذكية والذكاء الاصطناعي</h2>
+      <h2 data-i18n="roadmap_ai_title">الكبسولة الذكية والذكاء الاصطناعي</h2>
       <ul class="list">
-        <li>تخصيص ألوان الكبسولة الذكية.</li>
-        <li>ربط Fuzzy Clock بالذكاء الاصطناعي.</li>
-        <li>ردود ذكية عند ارتفاع CPU و RAM.</li>
-        <li>تلخيص النص المنسوخ بالذكاء الاصطناعي.</li>
+        <li data-i18n="roadmap_ai_1">تخصيص ألوان الكبسولة الذكية.</li>
+        <li data-i18n="roadmap_ai_2">ربط Fuzzy Clock بالذكاء الاصطناعي.</li>
+        <li data-i18n="roadmap_ai_3">ردود ذكية عند ارتفاع CPU و RAM.</li>
+        <li data-i18n="roadmap_ai_4">تلخيص النص المنسوخ بالذكاء الاصطناعي.</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>الواجهة والثيمات</h2>
+      <h2 data-i18n="roadmap_ui_title">الواجهة والثيمات</h2>
       <ul class="list">
-        <li>وضع Game Mode للأداء.</li>
-        <li>تخصيص ظل البار وعرض القائمة اليسرى.</li>
-        <li>تأثيرات عمق متقدمة لكل خلفية.</li>
-        <li>ثيمات جديدة مثل Solarized و Rosé Pine و Oxocarbon.</li>
-        <li>إيقاف تدوير الخلفيات الديناميكية.</li>
+        <li data-i18n="roadmap_ui_1">وضع Game Mode للأداء.</li>
+        <li data-i18n="roadmap_ui_2">تخصيص ظل البار وعرض القائمة اليسرى.</li>
+        <li data-i18n="roadmap_ui_3">تأثيرات عمق متقدمة لكل خلفية.</li>
+        <li data-i18n="roadmap_ui_4">ثيمات جديدة مثل Solarized و Rosé Pine و Oxocarbon.</li>
+        <li data-i18n="roadmap_ui_5">إيقاف تدوير الخلفيات الديناميكية.</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>الودجت والإنتاجية</h2>
+      <h2 data-i18n="roadmap_prod_title">الودجت والإنتاجية</h2>
       <ul class="list">
-        <li>ملاحظات سريعة.</li>
-        <li>التطبيقات المفضلة.</li>
-        <li>قائمة مساعدين الذكاء الاصطناعي.</li>
+        <li data-i18n="roadmap_prod_1">ملاحظات سريعة.</li>
+        <li data-i18n="roadmap_prod_2">التطبيقات المفضلة.</li>
+        <li data-i18n="roadmap_prod_3">قائمة مساعدين الذكاء الاصطناعي.</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>النظام والأجهزة</h2>
+      <h2 data-i18n="roadmap_sys_title">النظام والأجهزة</h2>
       <ul class="list">
-        <li>مدير بلوتوث كامل.</li>
-        <li>إعدادات العرض.</li>
-        <li>مؤشر VPN.</li>
-        <li>مفاتيح سريعة للشبكة ووضع الطيران و Gammastep.</li>
-        <li>مؤشر لغة لوحة المفاتيح.</li>
+        <li data-i18n="roadmap_sys_1">مدير بلوتوث كامل.</li>
+        <li data-i18n="roadmap_sys_2">إعدادات العرض.</li>
+        <li data-i18n="roadmap_sys_3">مؤشر VPN.</li>
+        <li data-i18n="roadmap_sys_4">مفاتيح سريعة للشبكة ووضع الطيران و Gammastep.</li>
+        <li data-i18n="roadmap_sys_5">مؤشر لغة لوحة المفاتيح.</li>
       </ul>
     </section>
 
     <section class="footer">
-      <div>هذه الخارطة تتطابق مع `todo.md` وتحدّث باستمرار.</div>
+      <div data-i18n="roadmap_footer">هذه الخارطة تتطابق مع `todo.md` وتحدّث باستمرار.</div>
     </section>
   </main>
 

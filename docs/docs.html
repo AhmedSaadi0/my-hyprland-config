@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav>
+  <nav id="navRoot">
     <div class="container nav-inner">
       <div class="brand">
         <div class="brand-badge"></div>
@@ -16,54 +16,61 @@
           <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
         </div>
       </div>
-      <div class="nav-links">
-        <a href="index.html">الرئيسية</a>
-        <a href="features.html">المميزات</a>
-        <a href="gallery.html">الصور</a>
-        <a href="install.html">التثبيت</a>
-        <a href="docs.html">الوثائق</a>
-        <a href="dev.html">المطورون</a>
-        <a href="changelog.html">التغييرات</a>
-        <a href="roadmap.html">خارطة الطريق</a>
-        <a href="faq.html">الأسئلة</a>
-      </div>
-      <div class="nav-actions">
-        <select id="themeSelect" class="theme-select" aria-label="اختيار الثيم">
-          <option value="tokyonight">Tokyo Night</option>
-          <option value="dracula">Dracula</option>
-          <option value="catppuccin">Catppuccin</option>
-          <option value="gruvbox">Gruvbox</option>
-          <option value="nord">Nord</option>
-          <option value="material">Material</option>
-        </select>
+      <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+      <div class="nav-menu">
+        <div class="nav-links">
+          <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+          <a href="features.html" data-i18n="nav_features">المميزات</a>
+          <a href="gallery.html" data-i18n="nav_gallery">الصور</a>
+          <a href="install.html" data-i18n="nav_install">التثبيت</a>
+          <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+          <a href="dev.html" data-i18n="nav_dev">المطورون</a>
+          <a href="changelog.html" data-i18n="nav_changelog">التغييرات</a>
+          <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+          <a href="faq.html" data-i18n="nav_faq">الأسئلة</a>
+        </div>
+        <div class="nav-actions">
+          <select id="themeSelect" class="theme-select" aria-label="Theme">
+            <option value="tokyonight">Tokyo Night</option>
+            <option value="dracula">Dracula</option>
+            <option value="catppuccin">Catppuccin</option>
+            <option value="gruvbox">Gruvbox</option>
+            <option value="nord">Nord</option>
+            <option value="material">Material</option>
+          </select>
+          <select id="langSelect" class="lang-select" aria-label="Language">
+            <option value="ar">AR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
       </div>
     </div>
   </nav>
 
   <main class="container">
     <section class="page-title">
-      <h1>الوثائق</h1>
-      <p class="muted">اختصر طريقك إلى التفاصيل التقنية.</p>
+      <h1 data-i18n="docs_title">الوثائق</h1>
+      <p class="muted" data-i18n="docs_sub">اختصر طريقك إلى التفاصيل التقنية.</p>
     </section>
 
     <section class="section">
       <div class="grid-2">
         <div class="card">
-          <h2>الواجهة</h2>
+          <h2 data-i18n="docs_ui_title">الواجهة</h2>
           <ul class="list">
-            <li>الشريط العلوي</li>
-            <li>القائمة الجانبية</li>
-            <li>الكبسولة الذكية</li>
-            <li>سطح المكتب والخلفيات</li>
+            <li data-i18n="docs_ui_1">الشريط العلوي</li>
+            <li data-i18n="docs_ui_2">القائمة الجانبية</li>
+            <li data-i18n="docs_ui_3">الكبسولة الذكية</li>
+            <li data-i18n="docs_ui_4">سطح المكتب والخلفيات</li>
           </ul>
         </div>
         <div class="card">
-          <h2>الخدمات</h2>
+          <h2 data-i18n="docs_services_title">الخدمات</h2>
           <ul class="list">
-            <li>SystemService</li>
-            <li>Weather</li>
-            <li>MusicService</li>
-            <li>ClipboardService</li>
+            <li data-i18n="docs_services_1">SystemService</li>
+            <li data-i18n="docs_services_2">Weather</li>
+            <li data-i18n="docs_services_3">MusicService</li>
+            <li data-i18n="docs_services_4">ClipboardService</li>
           </ul>
         </div>
       </div>
@@ -72,34 +79,34 @@
     <section class="section">
       <div class="grid-2">
         <div class="card">
-          <h2>الإعدادات</h2>
+          <h2 data-i18n="docs_settings_title">الإعدادات</h2>
           <ul class="list">
-            <li>ملف الإعدادات `~/.nibrasshell.json`</li>
-            <li>لوحة الإعدادات الداخلية</li>
-            <li>الثيمات والألوان</li>
+            <li data-i18n="docs_settings_1">ملف الإعدادات `~/.nibrasshell.json`</li>
+            <li data-i18n="docs_settings_2">لوحة الإعدادات الداخلية</li>
+            <li data-i18n="docs_settings_3">الثيمات والألوان</li>
           </ul>
         </div>
         <div class="card">
-          <h2>المطورون</h2>
+          <h2 data-i18n="docs_dev_title">المطورون</h2>
           <ul class="list">
-            <li>سكربتات Python و Bash</li>
-            <li>نظام الخلفيات</li>
-            <li>تأثيرات العمق والبلور</li>
+            <li data-i18n="docs_dev_1">سكربتات Python و Bash</li>
+            <li data-i18n="docs_dev_2">نظام الخلفيات</li>
+            <li data-i18n="docs_dev_3">تأثيرات العمق والبلور</li>
           </ul>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <h2>توثيق المطورين</h2>
-      <p>انتقل إلى صفحة المطورين لمعرفة المعمارية والخدمات والسكربتات بالتفصيل.</p>
+      <h2 data-i18n="docs_dev_cta_title">توثيق المطورين</h2>
+      <p data-i18n="docs_dev_cta_desc">انتقل إلى صفحة المطورين لمعرفة المعمارية والخدمات والسكربتات بالتفصيل.</p>
       <div class="cta-row">
-        <a class="btn" href="dev.html">وثائق المطورين</a>
+        <a class="btn" href="dev.html" data-i18n="docs_dev_cta_btn">وثائق المطورين</a>
       </div>
     </section>
 
     <section class="footer">
-      <div>هذه الصفحة مختصرة، بينما التفاصيل الكاملة في الويكي.</div>
+      <div data-i18n="docs_footer">هذه الصفحة مختصرة، بينما التفاصيل الكاملة في الويكي.</div>
     </section>
   </main>
 
