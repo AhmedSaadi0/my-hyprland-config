@@ -1,9 +1,14 @@
-const highlights = document.querySelectorAll("[data-highlight]");
-if (highlights.length) {
-  let i = 0;
-  setInterval(() => {
-    highlights.forEach(el => el.classList.remove("active"));
-    highlights[i % highlights.length].classList.add("active");
-    i++;
-  }, 2400);
+const themeSelect = document.getElementById("themeSelect");
+const savedTheme = localStorage.getItem("nibras-theme");
+if (savedTheme) {
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  if (themeSelect) themeSelect.value = savedTheme;
+}
+
+if (themeSelect) {
+  themeSelect.addEventListener("change", (e) => {
+    const theme = e.target.value;
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("nibras-theme", theme);
+  });
 }

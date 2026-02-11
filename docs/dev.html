@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>وثائق المطورين – NibrasShell</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <div>
+          <div>NibrasShell</div>
+          <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="features.html">المميزات</a>
+        <a href="gallery.html">الصور</a>
+        <a href="install.html">التثبيت</a>
+        <a href="docs.html">الوثائق</a>
+        <a href="dev.html">المطورون</a>
+        <a href="changelog.html">التغييرات</a>
+        <a href="roadmap.html">خارطة الطريق</a>
+        <a href="faq.html">الأسئلة</a>
+      </div>
+      <div class="nav-actions">
+        <select id="themeSelect" class="theme-select" aria-label="اختيار الثيم">
+          <option value="tokyonight">Tokyo Night</option>
+          <option value="dracula">Dracula</option>
+          <option value="catppuccin">Catppuccin</option>
+          <option value="gruvbox">Gruvbox</option>
+          <option value="nord">Nord</option>
+          <option value="material">Material</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="page-title">
+      <h1>وثائق المطورين</h1>
+      <p class="muted">خريطة تقنية مختصرة لفهم بنية المشروع وكيفية توسعته.</p>
+    </section>
+
+    <section class="section">
+      <h2>المعمارية العامة</h2>
+      <ul class="list">
+        <li>واجهة QML عبر Quickshell.</li>
+        <li>Hyprland للتعامل مع النوافذ والشاشات والأحداث.</li>
+        <li>خدمات خلفية في `config/quickshell/services`.</li>
+        <li>سكربتات Python/Bash في `config/quickshell/scripts` و `scripts`.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>نقطة البداية</h2>
+      <p>المكوّن الرئيسي في:</p>
+      <div class="code">config/quickshell/shell.qml</div>
+      <p>هذا الملف يجمع الطبقات الأساسية مثل الشريط العلوي والقائمة الجانبية والكبسولة الذكية.</p>
+    </section>
+
+    <section class="section">
+      <h2>إدارة الإعدادات</h2>
+      <ul class="list">
+        <li>قراءة الإعدادات من `~/.nibrasshell.json` عبر `ConfigStore.qml`.</li>
+        <li>الواجهة تستخدم `App.qml` لتوحيد المسارات والأوامر.</li>
+        <li>الكاش في `~/.cache/nibrasshell`.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>إدارة الثيمات والخلفيات</h2>
+      <ul class="list">
+        <li>`ThemeManager.qml` مسؤول عن تحميل الثيمات وتطبيقها.</li>
+        <li>`WallpaperController.qml` لإدارة الخلفيات الثابتة والديناميكية.</li>
+        <li>`DepthEffectController.qml` لتوليد طبقات العمق.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>الخدمات الأساسية</h2>
+      <table class="table">
+        <thead>
+          <tr><th>الخدمة</th><th>الدور</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SystemService</td><td>مراقبة الموارد وتحليل الإقلاع وارتفاعات الأداء</td></tr>
+          <tr><td>Weather</td><td>جلب الطقس والتحليل الذكي والتنبيهات</td></tr>
+          <tr><td>MusicService</td><td>تكامل MPRIS والتعليق الذكي</td></tr>
+          <tr><td>NotifManager</td><td>إدارة الإشعارات ووضع عدم الإزعاج</td></tr>
+          <tr><td>ClipboardService</td><td>مراقبة الحافظة وإدارتها</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>السكربتات المهمة</h2>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Python</strong>
+          <ul class="list">
+            <li>monitoring: `top_cpu_usage.py`, `top_ram_usage.py`</li>
+            <li>wallpapers: `scan_wallpapers.py`, `dynamic-m3.py`</li>
+            <li>depth: `create_depth_image_rembg.py`</li>
+            <li>network: `list_wifi.py`, `connect_wifi.py`</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Bash</strong>
+          <ul class="list">
+            <li>`cpu_usage.sh` و `ram_usage.sh`</li>
+            <li>`internet.sh` و `temp.sh`</li>
+            <li>`playerctl.sh`</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>تشغيل Quickshell</h2>
+      <div class="code">config/quickshell/run.fish</div>
+      <p>هذا السكربت يضبط log rules لتقليل الضوضاء أثناء التشغيل.</p>
+    </section>
+
+    <section class="section">
+      <h2>ملاحظات تطوير</h2>
+      <ul class="list">
+        <li>الكبسولة الذكية في `config/quickshell/windows/smart_capsule`.</li>
+        <li>القائمة الجانبية في `config/quickshell/windows/leftwindow`.</li>
+        <li>الإعدادات في `config/quickshell/windows/settings`.</li>
+      </ul>
+    </section>
+
+    <section class="footer">
+      <div>هذه الصفحة ملخصة ويمكن توسيعها لاحقاً بمخططات ورسوم.</div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

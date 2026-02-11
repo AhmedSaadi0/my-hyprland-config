@@ -15,12 +15,90 @@
   --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
 }
 
+:root[data-theme="dracula"] {
+  --bg: #1e1f29;
+  --bg-2: #282a36;
+  --panel: #2f3142;
+  --text: #f8f8f2;
+  --muted: #b5b5c6;
+  --accent: #bd93f9;
+  --accent-2: #ff79c6;
+  --accent-3: #8be9fd;
+  --danger: #ff5555;
+  --success: #50fa7b;
+}
+
+:root[data-theme="catppuccin"] {
+  --bg: #1e1e2e;
+  --bg-2: #24273a;
+  --panel: #2a2f45;
+  --text: #cdd6f4;
+  --muted: #a6adc8;
+  --accent: #89b4fa;
+  --accent-2: #cba6f7;
+  --accent-3: #f9e2af;
+  --danger: #f38ba8;
+  --success: #a6e3a1;
+}
+
+:root[data-theme="gruvbox"] {
+  --bg: #1d2021;
+  --bg-2: #282828;
+  --panel: #32302f;
+  --text: #ebdbb2;
+  --muted: #a89984;
+  --accent: #fabd2f;
+  --accent-2: #fe8019;
+  --accent-3: #8ec07c;
+  --danger: #fb4934;
+  --success: #b8bb26;
+}
+
+:root[data-theme="nord"] {
+  --bg: #2e3440;
+  --bg-2: #3b4252;
+  --panel: #434c5e;
+  --text: #eceff4;
+  --muted: #a3b1c2;
+  --accent: #88c0d0;
+  --accent-2: #81a1c1;
+  --accent-3: #a3be8c;
+  --danger: #bf616a;
+  --success: #a3be8c;
+}
+
+:root[data-theme="tokyonight"] {
+  --bg: #1a1b26;
+  --bg-2: #1f2335;
+  --panel: #24283b;
+  --text: #c0caf5;
+  --muted: #9aa5ce;
+  --accent: #7aa2f7;
+  --accent-2: #bb9af7;
+  --accent-3: #f7768e;
+  --danger: #f7768e;
+  --success: #9ece6a;
+}
+
+:root[data-theme="material"] {
+  --bg: #0b1215;
+  --bg-2: #0f161a;
+  --panel: #121b20;
+  --text: #e1f1f7;
+  --muted: #a2c0ca;
+  --accent: #00bcd4;
+  --accent-2: #7c4dff;
+  --accent-3: #ffca28;
+  --danger: #ff5252;
+  --success: #69f0ae;
+}
+
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: radial-gradient(1200px 600px at 10% 0%, #1b1f2b 0%, #0f131a 60%) fixed;
+  background: radial-gradient(1200px 600px at 10% 0%, var(--bg-2) 0%, var(--bg) 60%) fixed;
   color: var(--text);
   line-height: 1.7;
   direction: rtl;
@@ -38,7 +116,7 @@ nav {
   position: sticky;
   top: 0;
   backdrop-filter: blur(10px);
-  background: rgba(15,19,26,0.7);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
   border-bottom: 1px solid #222a38;
   z-index: 10;
 }
@@ -77,6 +155,22 @@ nav {
 
 .nav-links a { color: var(--muted); }
 .nav-links a:hover { color: var(--text); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid #2b3446;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+}
 
 .hero {
   padding: 64px 0 30px;
@@ -124,7 +218,7 @@ nav {
 }
 
 .card {
-  background: linear-gradient(180deg, #1b2230 0%, #141a24 100%);
+  background: linear-gradient(180deg, var(--panel) 0%, var(--bg-2) 100%);
   border: 1px solid #253047;
   border-radius: var(--radius);
   padding: 16px;
@@ -189,13 +283,13 @@ nav {
 
 .list li {
   padding: 10px 12px;
-  background: #151b26;
+  background: color-mix(in srgb, var(--bg-2) 80%, black);
   border: 1px solid #222a38;
   border-radius: 10px;
 }
 
 .code {
-  background: #0b0f16;
+  background: color-mix(in srgb, var(--bg) 85%, black);
   border: 1px solid #222a38;
   padding: 12px;
   border-radius: 10px;
@@ -214,8 +308,8 @@ nav {
 .hero-visual {
   height: 320px;
   border-radius: 18px;
-  background: radial-gradient(300px 200px at 20% 20%, #2b3a55 0%, #141a24 60%),
-              linear-gradient(135deg, rgba(76,201,240,0.2), rgba(123,47,247,0.2));
+  background: radial-gradient(300px 200px at 20% 20%, var(--panel) 0%, var(--bg-2) 60%),
+              linear-gradient(135deg, color-mix(in srgb, var(--accent) 30%, transparent), color-mix(in srgb, var(--accent-2) 30%, transparent));
   border: 1px solid #2a344a;
   position: relative;
   overflow: hidden;
@@ -270,8 +364,36 @@ nav {
   font-size: 12px;
 }
 
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.gallery-card {
+  background: var(--panel);
+  border: 1px solid #253047;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-card .caption {
+  padding: 10px 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
 }
