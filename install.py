@@ -279,6 +279,8 @@ def install_dependencies(distro, install_optional=False):
         if install_optional:
             command += f" {optional_pkgs}"
 
+        command = f"{command} --skip-broken"
+
         print(YELLOW + "Installing main packages (Fedora)..." + NC)
         run_command_verbose(command)
 
@@ -324,18 +326,18 @@ def install_dependencies(distro, install_optional=False):
     print(YELLOW + "Creating NibrasShell env..." + NC)
     # --clear تحذف البيئة القديمة إذا كانت موجودة لضمان التوافق
     run_command_verbose(
-        f"{python_cmd} -m venv .cache/nibrasshell/venv --clear"
+        f"{python_cmd} -m venv ~/.cache/nibrasshell/venv --clear"
     )
 
     print(YELLOW + "Installing python needed packages using env pip..." + NC)
     # تحديث أدوات pip داخل البيئة الوهمية (مهم جداً لحل مشكلة البناء)
     run_command_verbose(
-        ".cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools"
+        "~/.cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools"
     )
 
     # تثبيت المتطلبات
     run_command_verbose(
-        f".cache/nibrasshell/venv/bin/pip install -r {base_dir}/config/quickshell/scripts/python/requirements-3.13.txt"
+        f"~/.cache/nibrasshell/venv/bin/pip install -r {base_dir}/config/quickshell/scripts/python/requirements-3.13.txt"
     )
 
     print(f"{GREEN}Dependencies installed successfully.{NC}")

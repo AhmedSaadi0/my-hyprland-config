@@ -69,7 +69,7 @@ If you want to use ags_v1 change the branch to [main](https://github.com/AhmedSa
 
 ```bash
 git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
-cd nibrasshell
+cd NibrasShell
 python install.py
 ```
 
@@ -348,7 +348,7 @@ Clone the repository, and run the installation script. It will handle everything
 
 ```bash
 git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
-cd nibrasshell
+cd NibrasShell
 python install.py
 ```
 
