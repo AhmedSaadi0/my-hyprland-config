@@ -9,7 +9,7 @@ _Focus on the unique features of the capsule._
   - [ ] **Fuzzy Clock**: Add a fuzzy clock logic to organize the day (e.g., "Work Time", "Rest"), connected to AI.
 
 - **AI Logic**
-  - [x] **System Reactions**: Trigger AI reactions when RAM is full or CPU is high (using AI to explain the issue humorously).
+  - [ ] **System Reactions**: Trigger AI reactions when RAM is full or CPU is high (using AI to explain the issue humorously).
   - [ ] **Clipboard AI**: AI summarizer for copied text.
   - [ ] **Connect Fuzzy Clock**: Link the fuzzy clock states with AI responses.
 

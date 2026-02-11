@@ -267,11 +267,11 @@ Singleton {
     function _checkCpuSpike(prev, curr) {
         if (prev < 0)
             return;
-        const delta = curr - prev;
         const threshold = App.cpuHighLoadThreshold / 100;
         if (!_canTriggerSpike("cpu"))
             return;
-        if (delta >= _cpuSpikeDelta || (curr >= threshold && delta >= 0.15)) {
+        if (curr >= threshold) {
+            const delta = curr - prev;
             _lastSpikeAt.cpu = Date.now();
             _createSpikeEvent("CPU", Math.round(curr * 100), Math.round(prev * 100), Math.round(delta * 100), threshold * 100);
         }
@@ -280,11 +280,11 @@ Singleton {
     function _checkRamSpike(prev, curr) {
         if (prev < 0)
             return;
-        const delta = curr - prev;
         const threshold = App.ramHighLoadThreshold / 100;
         if (!_canTriggerSpike("ram"))
             return;
-        if (delta >= _ramSpikeDelta || (curr >= threshold && delta >= 0.15)) {
+        if (curr >= threshold) {
+            const delta = curr - prev;
             _lastSpikeAt.ram = Date.now();
             _createSpikeEvent("RAM", Math.round(curr * 100), Math.round(prev * 100), Math.round(delta * 100), threshold * 100);
         }
@@ -293,10 +293,10 @@ Singleton {
     function _checkTempSpike(prevMax, currMax) {
         if (prevMax < 0)
             return;
-        const delta = currMax - prevMax;
         if (!_canTriggerSpike("temp"))
             return;
-        if (currMax >= _tempHighThreshold || delta >= _tempSpikeDelta) {
+        if (currMax >= _tempHighThreshold) {
+            const delta = currMax - prevMax;
             _lastSpikeAt.temp = Date.now();
             _createSpikeEvent("TEMP", Math.round(currMax), Math.round(prevMax), Math.round(delta), _tempHighThreshold);
         }
