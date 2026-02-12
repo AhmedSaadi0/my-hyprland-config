@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Io
 
 import "root:/themes"
+import "root:/config"
 import "root:/services"
 import "root:/windows/smart_capsule/ui/components"
 import "root:/windows/smart_capsule/logic"
@@ -34,6 +35,12 @@ Item {
     readonly property color themeColor: CapsuleManager.fgColor
     readonly property color contentColor: isMusicPlaying ? "#000000" : themeColor
 
+    property bool isEyesHovered: false
+    function startHoverHold() {
+        hoverHoldTimer.stop();
+        hoverHoldTimer.start();
+    }
+
     property real requiredWidth: {
         if (!showInfo)
             return Math.max(clockRow.implicitWidth + 100, 312);
@@ -61,6 +68,46 @@ Item {
         NumberAnimation {
             duration: 300
             easing.type: Easing.OutBack
+        }
+    }
+
+    Component.onCompleted: {
+        Qt.callLater(() => {
+            HoverResponseManager.ensureHoverResponses();
+        });
+    }
+
+    Timer {
+        id: hoverHoldTimer
+        interval: 2000
+        repeat: false
+        onTriggered: {
+            if (root.isEyesHovered || capsuleHoverArea.containsMouse)
+                return;
+            if (CapsuleManager.currentPriority > C.HOVER)
+                return;
+            CapsuleManager.reset();
+        }
+    }
+
+    Connections {
+        target: HoverResponseManager
+        function onFreshResponseReady(item) {
+            if (!root.isEyesHovered)
+                return;
+            if (CapsuleManager.currentPriority > C.HOVER)
+                return;
+            if (root.isMusicPlaying)
+                return;
+            CapsuleManager.request({
+                priority: C.HOVER,
+                source: C.SRC_MUSIC,
+                icon: "󰒋",
+                text: item.text,
+                timeout: 0,
+                changeW: true
+            });
+            EyeController.showEmotion(item.emotion || "happy", 2000);
         }
     }
 
@@ -312,6 +359,7 @@ Item {
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onEntered: {
+                    root.isEyesHovered = true;
                     if (CapsuleManager.currentPriority > C.HOVER)
                         return;
 
@@ -321,23 +369,42 @@ Item {
                     if (root.isMusicPlaying) {
                         infoText = MusicService.fullInfo;
                     }
+
+                    if (root.isMusicPlaying) {
+                        CapsuleManager.request({
+                            priority: C.HOVER,
+                            source: C.SRC_MUSIC,
+                            icon: "󰝚",
+                            text: infoText,
+                            timeout: 0,
+                            changeW: false,
+                            progress: (MusicService.progress * 100),
+                            showProgress: true
+                        });
+                        EyeController.showEmotion("happy", 2000);
+                        return;
+                    }
+
+                    let response = HoverResponseManager.pickHoverResponse();
                     CapsuleManager.request({
                         priority: C.HOVER,
                         source: C.SRC_MUSIC,
-                        icon: "󰝚",
-                        text: infoText,
+                        icon: "󰒋",
+                        text: response.text,
                         timeout: 0,
-                        changeW: false,
-                        progress: (MusicService.progress * 100),
-                        showProgress: true
+                        changeW: true
                     });
-                    EyeController.showEmotion("happy", 2000);
+                    EyeController.showEmotion(response.emotion, 2000);
+
+                    HoverResponseManager.scheduleExtraIfAny(response);
+                    HoverResponseManager.requestFreshResponseIfAllowed();
                 }
                 onExited: {
+                    root.isEyesHovered = false;
                     if (CapsuleManager.currentPriority > C.HOVER)
                         return;
 
-                    CapsuleManager.reset();
+                    startHoverHold();
                 }
             }
         }
@@ -419,11 +486,19 @@ Item {
 
                 onEntered: {
                     CapsuleManager.stopRestTimer();
+                    hoverHoldTimer.stop();
                 }
 
                 onExited: {
                     CapsuleManager.startRestTimer(3000);
                 }
+            }
+
+            MouseArea {
+                id: capsuleHoverArea
+                anchors.fill: parent
+                hoverEnabled: true
+                onExited: startHoverHold()
             }
 
             Text {

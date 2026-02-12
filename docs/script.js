@@ -44,7 +44,7 @@ const translations = {
 
     why_title: "لماذا نبراس شِل؟",
     why_1_title: "واجهة ذكية",
-    why_1_desc: "كبسولة تفاعلية تلخّص الطقس والموسيقى وتعرض معلومات فورية.",
+    why_1_desc: "كبسولة ذكية تتفاعل مع المستخدم عبر الهوفر، وتعرض رسائل الذكاء الاصطناعي مع ملخصات الطقس والموسيقى.",
     why_2_title: "تخصيص عميق",
     why_2_desc: "تحكم شامل بالألوان والخطوط والخلفيات وأسلوب القوائم.",
     why_3_title: "خدمات متكاملة",
@@ -308,7 +308,7 @@ const translations = {
 
     why_title: "Why NibrasShell?",
     why_1_title: "Smart UI",
-    why_1_desc: "An interactive capsule that summarizes weather and music with real-time insights.",
+    why_1_desc: "A smart capsule that reacts to user hover and shows AI messages with weather and music summaries.",
     why_2_title: "Deep Customization",
     why_2_desc: "Full control over colors, fonts, wallpapers, and menu behavior.",
     why_3_title: "Integrated Services",

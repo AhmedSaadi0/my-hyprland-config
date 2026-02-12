@@ -28,6 +28,11 @@ PRESETS = {
         "json_mode": False,
         "temperature": 0.7,
     },
+    "idle_capsule": {
+        "system_instruction": prompt.IDLE_CAPSULE_PROMPT,
+        "json_mode": True,
+        "temperature": 0.8,
+    },
     "music": {
         "system_instruction": prompt.MUSIC_MASTER_PROMPT,
         "json_mode": True,

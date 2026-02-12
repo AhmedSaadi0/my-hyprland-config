@@ -199,6 +199,22 @@ Singleton {
         });
     }
 
+    function notifyHoverExtra(text, emotion) {
+        if (!text || text === "")
+            return;
+        root.updateEyes(emotion || "thinking", 1500);
+        CapsuleManager.request({
+            priority: C.NOTIFICATION,
+            source: C.SRC_MUSIC,
+            icon: "󰒋",
+            text: text,
+            timeout: 3500,
+            changeW: true,
+            changeH: false,
+            playTone: false
+        });
+    }
+
     function notifyBasicMusicInfo() {
         let colors = getColorsForState("music");
         CapsuleManager.request({

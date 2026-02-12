@@ -245,6 +245,7 @@ Singleton {
             readonly property string listGemini: root.pythonScriptsPath + "/ai/list-gemini.py"
 
             readonly property string getClipboard: root.pythonScriptsPath + "/get_clipboard.py"
+            readonly property string applyKonsoleProfileOpenSessions: root.pythonScriptsPath + "/apply_konsole_profile_open_sessions.py"
 
             // Commands
             readonly property var batteryInfoCommand: [pythonPath, batteryInfo]
@@ -261,6 +262,7 @@ Singleton {
             readonly property var liveUsageCommand: [pythonPath, liveUsage]
             readonly property var dataUsageCommand: [pythonPath, dataUsage]
             readonly property var connectWifiCommand: [pythonPath, connectWifi]
+            readonly property var applyKonsoleProfileOpenSessionsCommand: [pythonPath, applyKonsoleProfileOpenSessions]
 
             readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", aiProvider]
 
@@ -268,6 +270,7 @@ Singleton {
             readonly property var callSpikeAnalysisAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "spike_analyze", "--json_mode", "--model", root.systemAiModel]
             readonly property var callWeatherAi: [...initialAiCommand, "--api_key", (root.weatherAiApiKey !== "" ? root.weatherAiApiKey : root.aiApiKey), "--preset", "weather", "--user_persona", root.weatherPersona, "--model", root.weatherAiModel]
             readonly property var callMusicAi: [...initialAiCommand, "--api_key", (root.musicAiApiKey !== "" ? root.musicAiApiKey : root.aiApiKey), "--preset", "music", "--user_persona", root.musicPersona, "--model", root.musicAiModel]
+            readonly property var callIdleCapsuleAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "idle_capsule", "--json_mode", "--model", root.systemAiModel]
         }
 
         readonly property QtObject bash: QtObject {

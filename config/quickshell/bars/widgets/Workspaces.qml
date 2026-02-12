@@ -2,10 +2,12 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Io
 import Quickshell.Widgets
 
 import "root:/themes"
 import "root:/config"
+import "root:/utils"
 
 Item {
     id: root
@@ -15,6 +17,36 @@ Item {
 
     property var activeIcons: App.activeWorkspacesIcons
     property var inActiveIcons: App.inActiveWorkspacesIcons
+    property string currentIconTheme: (ThemeManager.selectedTheme && ThemeManager.selectedTheme.systemSettings) ? ThemeManager.selectedTheme.systemSettings.themeIcons : ""
+    property var themedIconPaths: ({})
+    property bool pendingResolve: false
+
+    function resolveWorkspaceIcon(appId, iconThemeName, resolvedPaths) {
+        void iconThemeName;
+        void resolvedPaths;
+
+        let iconName = Helper.iconNameFromAppId(appId);
+        return Helper.resolveThemedIcon(iconName, themedIconPaths);
+    }
+
+    function collectRequestedIconNames() {
+        let unique = {};
+        let toplevels = Hyprland.toplevels.values;
+        for (let i = 0; i < toplevels.length; i++) {
+            let win = toplevels[i];
+            let appId = win.appId || (win.lastIpcObject ? win.lastIpcObject.class : "unknown");
+            let iconName = Helper.iconNameFromAppId(appId);
+            if (iconName && iconName !== "")
+                unique[iconName] = true;
+        }
+        unique["application-x-executable"] = true;
+        return Object.keys(unique).sort();
+    }
+
+    onCurrentIconThemeChanged: {
+        themedIconPaths = ({});
+        iconResolveDebounce.restart();
+    }
 
     Behavior on width {
         NumberAnimation {
@@ -26,7 +58,63 @@ Item {
     Connections {
         target: ThemeManager
         function onSelectedThemeUpdated() {
-        // TODO: -> refresh app icon
+            iconResolveDebounce.restart();
+        }
+    }
+
+    Component.onCompleted: iconResolveDebounce.start()
+
+    Timer {
+        id: iconResolveDebounce
+        interval: 250
+        repeat: false
+        onTriggered: {
+            const icons = collectRequestedIconNames();
+
+            if (!currentIconTheme || currentIconTheme === "")
+                return;
+            if (!icons || icons.length === 0) {
+                themedIconPaths = ({});
+                return;
+            }
+            if (themedIconResolver.running) {
+                pendingResolve = true;
+                return;
+            }
+
+            themedIconResolver.command = [App.pythonPath, App.pythonScriptsPath + "/resolve_theme_icons.py", "--theme", currentIconTheme, "--icons-json", JSON.stringify(icons)];
+            themedIconResolver.running = true;
+        }
+    }
+
+    Process {
+        id: themedIconResolver
+        running: false
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const parsed = JSON.parse(this.text.toString());
+                    root.themedIconPaths = parsed || {};
+                    console.info("[Workspaces] Icon map refreshed for theme:", currentIconTheme, "count:", Object.keys(root.themedIconPaths).length);
+                } catch (e) {
+                    console.warn("[Workspaces] Failed to parse resolved icons JSON:", e);
+                }
+            }
+        }
+
+        onExited: (exitCode, exitStatus) => {
+            void exitStatus;
+            if (exitCode !== 0) {
+                console.warn("[Workspaces] Icon resolver exited with code:", exitCode);
+            }
+        }
+
+        onRunningChanged: {
+            if (!running && pendingResolve) {
+                pendingResolve = false;
+                iconResolveDebounce.restart();
+            }
         }
     }
 
@@ -192,17 +280,7 @@ Item {
                                         width: 16
                                         height: 16
                                         mipmap: true
-                                        source: {
-                                            const currentTheme = ThemeManager.selectedTheme.systemSettings.themeIcons;
-
-                                            let id = modelData.id;
-                                            let entry = DesktopEntries.byId(id);
-                                            let iconName = (entry && entry.icon) ? entry.icon : id;
-
-                                            const iconPath = Quickshell.iconPath(iconName, "application-x-executable");
-
-                                            return iconPath;
-                                        }
+                                        source: root.resolveWorkspaceIcon(modelData.id, root.currentIconTheme, root.themedIconPaths)
                                         asynchronous: true
                                     }
 

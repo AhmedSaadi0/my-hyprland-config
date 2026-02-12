@@ -9,7 +9,7 @@ _Focus on the unique features of the capsule._
   - [ ] **Fuzzy Clock**: Add a fuzzy clock logic to organize the day (e.g., "Work Time", "Rest"), connected to AI.
 
 - **AI Logic**
-  - [ ] **System Reactions**: Trigger AI reactions when RAM is full or CPU is high (using AI to explain the issue humorously).
+  - [x] **System Reactions**: Trigger AI reactions when RAM is full or CPU is high (using AI to explain the issue humorously).
   - [ ] **Clipboard AI**: AI summarizer for copied text.
   - [ ] **Connect Fuzzy Clock**: Link the fuzzy clock states with AI responses.
 
@@ -65,7 +65,7 @@ _Hardware control and system indicators._
   - [ ] **Display Settings**: Monitor selection and resolution control.
   - [ ] **VPN Indicator**: Status icon for VPN.
   - [ ] **Quick Toggles**: Wi-Fi, Airplane Mode, Gammastep buttons.
-  - [ ] **Keyboard Layout**: Indicator for current language.
+  - [x] **Keyboard Layout**: Indicator for current language in smart capsule.
   - [x] **Power**: Battery & Power Profiles integration.
 
 ---
