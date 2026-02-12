@@ -17,6 +17,7 @@ Item {
         id: hoverBg
         anchors.fill: parent
         radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
+        opacity: commandData?.enabled === false ? 0.5 : 1
 
         color: {
             if (root.isHighlighted) {
@@ -55,6 +56,7 @@ Item {
         height: 40
         radius: (ThemeManager.selectedTheme?.dimensions?.elementRadius || 8) * 0.8
         color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#1a1a2e"
+        opacity: commandData?.enabled === false ? 0.5 : 1
 
         Text {
             anchors.centerIn: parent
@@ -73,6 +75,7 @@ Item {
         anchors.rightMargin: 48
         anchors.verticalCenter: parent.verticalCenter
         spacing: 2
+        opacity: commandData?.enabled === false ? 0.5 : 1
 
         Text {
             text: commandData?.name || ""
@@ -97,7 +100,7 @@ Item {
         height: 24
         radius: 4
         color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#1a1a2e"
-        visible: mouseArea.containsMouse || root.isHighlighted
+        visible: (mouseArea.containsMouse || root.isHighlighted) && commandData?.enabled !== false
         opacity: 0.8
 
         Text {
@@ -112,7 +115,8 @@ Item {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
+        enabled: commandData?.enabled !== false
+        cursorShape: commandData?.enabled === false ? Qt.ArrowCursor : Qt.PointingHandCursor
         onClicked: root.clicked()
     }
 }

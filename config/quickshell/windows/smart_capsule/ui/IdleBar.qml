@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Io
 
 import "root:/themes"
+import "root:/config"
 import "root:/services"
 import "root:/windows/smart_capsule/ui/components"
 import "root:/windows/smart_capsule/logic"
@@ -34,6 +35,16 @@ Item {
     readonly property color themeColor: CapsuleManager.fgColor
     readonly property color contentColor: isMusicPlaying ? "#000000" : themeColor
 
+    property bool isEyesHovered: false
+    property bool hoverActive: false
+    property bool hoverLocked: false
+    property int hoverHoldMs: 2500
+    function startHoverHold() {
+        hoverHoldTimer.stop();
+        hoverHoldTimer.interval = hoverHoldMs;
+        hoverHoldTimer.start();
+    }
+
     property real requiredWidth: {
         if (!showInfo)
             return Math.max(clockRow.implicitWidth + 100, 312);
@@ -61,6 +72,67 @@ Item {
         NumberAnimation {
             duration: 300
             easing.type: Easing.OutBack
+        }
+    }
+
+    Component.onCompleted: {
+        Qt.callLater(() => {
+            HoverResponseManager.ensureHoverResponses();
+        });
+    }
+
+    HoverHandler {
+        id: capsuleHoverHandler
+        acceptedDevices: PointerDevice.Mouse
+        onHoveredChanged: {
+            root.hoverActive = hovered;
+            if (hovered)
+                hoverHoldTimer.stop();
+            else
+                startHoverHold();
+        }
+    }
+
+    Connections {
+        target: CapsuleManager
+        function onCurrentPriorityChanged() {
+            if (CapsuleManager.currentPriority !== C.HOVER && !root.hoverActive)
+                root.hoverLocked = false;
+        }
+    }
+
+    Timer {
+        id: hoverHoldTimer
+        interval: 2000
+        repeat: false
+        onTriggered: {
+            if (root.hoverActive)
+                return;
+            if (CapsuleManager.currentPriority > C.HOVER)
+                return;
+            root.hoverLocked = false;
+            CapsuleManager.reset();
+        }
+    }
+
+    Connections {
+        target: HoverResponseManager
+        function onFreshResponseReady(item) {
+            if (!root.isEyesHovered)
+                return;
+            if (CapsuleManager.currentPriority > C.HOVER)
+                return;
+            if (root.isMusicPlaying)
+                return;
+            CapsuleManager.request({
+                priority: C.HOVER,
+                source: C.SRC_MUSIC,
+                icon: "󰒋",
+                text: item.text,
+                timeout: 0,
+                changeW: true
+            });
+            EyeController.showEmotion(item.emotion || "happy", 2000);
         }
     }
 
@@ -218,7 +290,11 @@ Item {
 
                     onClicked: root.requestExpand("weather")
                     onEntered: {
+                        if (root.hoverLocked)
+                            return;
                         if (Weather) {
+                            hoverHoldTimer.stop();
+                            root.hoverLocked = true;
                             CapsuleManager.request({
                                 priority: C.HOVER,
                                 source: C.SRC_WEATHER,
@@ -230,7 +306,7 @@ Item {
                         }
                     }
                     onExited: {
-                        CapsuleManager.reset();
+                        startHoverHold();
                     }
                 }
             }
@@ -312,30 +388,56 @@ Item {
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
                 onEntered: {
+                    root.isEyesHovered = true;
+                    if (root.hoverLocked)
+                        return;
                     if (CapsuleManager.currentPriority > C.HOVER)
                         return;
 
-                    let infoText = MusicService.activePlayer.identity;
+                    // TODO: -> send request to ai to give good response if no music is found
+                    let infoText = MusicService.activePlayer !== null ? MusicService.activePlayer.identity : "Hi";
+
                     if (root.isMusicPlaying) {
                         infoText = MusicService.fullInfo;
                     }
+
+                    if (root.isMusicPlaying) {
+                        CapsuleManager.request({
+                            priority: C.HOVER,
+                            source: C.SRC_MUSIC,
+                            icon: "󰝚",
+                            text: infoText,
+                            timeout: 0,
+                            changeW: false,
+                            progress: (MusicService.progress * 100),
+                            showProgress: true
+                        });
+                        root.hoverLocked = true;
+                        EyeController.showEmotion("happy", 2000);
+                        return;
+                    }
+
+                    let response = HoverResponseManager.pickHoverResponse();
                     CapsuleManager.request({
                         priority: C.HOVER,
                         source: C.SRC_MUSIC,
-                        icon: "󰝚",
-                        text: infoText,
+                        icon: "󰒋",
+                        text: response.text,
                         timeout: 0,
-                        changeW: false,
-                        progress: (MusicService.progress * 100),
-                        showProgress: true
+                        changeW: true
                     });
-                    EyeController.showEmotion("happy", 2000);
+                    root.hoverLocked = true;
+                    EyeController.showEmotion(response.emotion, 2000);
+
+                    HoverResponseManager.scheduleExtraIfAny(response);
+                    HoverResponseManager.requestFreshResponseIfAllowed();
                 }
                 onExited: {
+                    root.isEyesHovered = false;
                     if (CapsuleManager.currentPriority > C.HOVER)
                         return;
 
-                    CapsuleManager.reset();
+                    startHoverHold();
                 }
             }
         }
@@ -417,10 +519,36 @@ Item {
 
                 onEntered: {
                     CapsuleManager.stopRestTimer();
+                    hoverHoldTimer.stop();
                 }
 
                 onExited: {
-                    CapsuleManager.startRestTimer(3000);
+                    if (CapsuleManager.currentPriority <= C.HOVER) {
+                        startHoverHold();
+                    } else {
+                        CapsuleManager.startRestTimer(3000);
+                    }
+                }
+                preventStealing: true
+                property real pressY: 0
+                property bool swipeTriggered: false
+
+                onPressed: mouse => {
+                    pressY = mouse.y;
+                    swipeTriggered = false;
+                }
+
+                onPositionChanged: mouse => {
+                    if (swipeTriggered)
+                        return;
+                    if (!(mouse.buttons & Qt.LeftButton))
+                        return;
+                    if (mouse.y - pressY < -28) {
+                        swipeTriggered = true;
+                        hoverHoldTimer.stop();
+                        CapsuleManager.stopRestTimer();
+                        CapsuleManager.reset();
+                    }
                 }
             }
 

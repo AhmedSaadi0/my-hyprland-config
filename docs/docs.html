@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الوثائق – NibrasShell</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav id="navRoot">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <div>
+          <div>NibrasShell</div>
+          <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
+        </div>
+      </div>
+      <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+      <div class="nav-menu">
+        <div class="nav-links">
+          <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+          <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+        </div>
+        <div class="nav-actions">
+          <div class="nav-icons">
+            <a class="icon-btn" href="https://github.com/AhmedSaadi0/NibrasShell" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.86 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.36-3.37-1.36-.46-1.2-1.12-1.52-1.12-1.52-.92-.65.07-.64.07-.64 1.02.07 1.56 1.08 1.56 1.08.9 1.58 2.36 1.12 2.94.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.74 0 0 .84-.27 2.75 1.05.8-.23 1.66-.35 2.52-.35.86 0 1.72.12 2.52.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.43.2 2.48.1 2.74.64.72 1.03 1.64 1.03 2.76 0 3.93-2.34 4.8-4.57 5.05.36.32.69.95.69 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.18.6.69.49 3.98-1.35 6.84-5.17 6.84-9.67C22 6.58 17.52 2 12 2z"/>
+              </svg>
+            </a>
+            <a class="icon-btn" href="https://discord.gg/EUcGgRGhrs" target="_blank" rel="noopener" aria-label="Discord">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.3 4.3A19.6 19.6 0 0 0 16 3a14.6 14.6 0 0 0-.7 1.5 18.2 18.2 0 0 0-4.6 0A14.6 14.6 0 0 0 10 3a19.6 19.6 0 0 0-4.3 1.3C3.4 7.7 2.8 11 3 14.3a19.9 19.9 0 0 0 5.1 2.7 15.3 15.3 0 0 0 1.1-1.7 12.6 12.6 0 0 1-1.7-.8l.4-.3c3.3 1.5 6.8 1.5 10.1 0l.4.3c-.5.3-1.1.6-1.7.8a15.3 15.3 0 0 0 1.1 1.7 19.9 19.9 0 0 0 5.1-2.7c.4-4-.7-7.3-2.8-10zM9.2 13.2c-.8 0-1.4-.7-1.4-1.6 0-.9.6-1.6 1.4-1.6.8 0 1.4.7 1.4 1.6 0 .9-.6 1.6-1.4 1.6zm5.6 0c-.8 0-1.4-.7-1.4-1.6 0-.9.6-1.6 1.4-1.6.8 0 1.4.7 1.4 1.6 0 .9-.6 1.6-1.4 1.6z"/>
+              </svg>
+            </a>
+          </div>
+          <select id="themeSelect" class="theme-select" aria-label="Theme">
+            <option value="tokyonight">Tokyo Night (Dark)</option>
+            <option value="tokyonight-light">Tokyo Night (Light)</option>
+            <option value="dracula">Dracula (Dark)</option>
+            <option value="dracula-light">Dracula (Light)</option>
+            <option value="catppuccin">Catppuccin (Dark)</option>
+            <option value="catppuccin-light">Catppuccin (Light)</option>
+            <option value="gruvbox">Gruvbox (Dark)</option>
+            <option value="gruvbox-light">Gruvbox (Light)</option>
+            <option value="nord">Nord (Dark)</option>
+            <option value="nord-light">Nord (Light)</option>
+            <option value="material">Material You (Dark)</option>
+            <option value="material-light">Material You (Light)</option>
+          </select>
+          <select id="langSelect" class="lang-select" aria-label="Language">
+            <option value="ar">AR</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container docs-layout">
+    <aside class="docs-sidebar">
+      <div class="sidebar-title" data-i18n="docs_sidebar_title">دليل الوثائق</div>
+      <a class="sidebar-link active" href="docs.html" data-i18n="docs_sidebar_overview">نظرة عامة</a>
+      <a class="sidebar-link" href="docs-install.html" data-i18n="docs_sidebar_install">التثبيت الكامل</a>
+      <a class="sidebar-link" href="docs-dev.html" data-i18n="docs_sidebar_dev">توثيق التطوير</a>
+    </aside>
+
+    <section class="docs-content">
+      <h1 data-i18n="docs_overview_title">الوثائق</h1>
+      <p class="muted" data-i18n="docs_overview_desc">
+        اختر القسم المناسب من الشريط الجانبي للوصول إلى شرح التثبيت أو توثيق التطوير.
+      </p>
+
+      <div class="grid-2" style="margin-top:20px">
+        <div class="card">
+          <h2 data-i18n="docs_overview_install_title">التثبيت الكامل</h2>
+          <p data-i18n="docs_overview_install_desc">خطوات تلقائية ويدوية مفصلة مع أمثلة للتوزيعات.</p>
+          <a class="btn" href="docs-install.html" data-i18n="docs_overview_install_btn">افتح التثبيت</a>
+        </div>
+        <div class="card">
+          <h2 data-i18n="docs_overview_dev_title">توثيق التطوير</h2>
+          <p data-i18n="docs_overview_dev_desc">المعمارية، السكربتات، والخدمات الأساسية.</p>
+          <a class="btn" href="docs-dev.html" data-i18n="docs_overview_dev_btn">افتح التوثيق</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

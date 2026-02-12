@@ -75,7 +75,7 @@ Singleton {
     // ============================================================
     Timer {
         id: analysisDebouncer
-        interval: 1000 * 10
+        interval: 1000 * 3
         repeat: false
         onTriggered: {
             root.processCurrentSong(false); // false تعني هذا ليس تعليق استئناف

@@ -3,6 +3,7 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Widgets
 
 import "root:/config" as Config
 
@@ -92,6 +93,12 @@ Singleton {
      */
     function changeKonsoleProfile(profileName) {
         return ['kwriteconfig5', '--file', 'konsolerc', '--group', "'Desktop Entry'", '--key', 'DefaultProfile', profileName];
+    }
+
+    // Applies profile immediately to currently opened Konsole sessions via DBus.
+    function applyKonsoleProfileToRunningSessions(profileName) {
+        const scriptCommand = Config.App.scripts.python.applyKonsoleProfileOpenSessionsCommand;
+        return [...scriptCommand, "--profile", `'${profileName}'`];
     }
 
     // ==========================================================
@@ -317,5 +324,72 @@ Singleton {
             fullCommand.push("--end-date", endDate);
         }
         return fullCommand;
+    }
+
+    // ==========================================================
+    // ==                 ICON UTILITIES                       ==
+    // ==========================================================
+
+    function toImageSource(pathOrUrl) {
+        if (!pathOrUrl || pathOrUrl === "")
+            return "";
+        if (pathOrUrl.startsWith("file://") || pathOrUrl.startsWith("qrc:") || pathOrUrl.startsWith("image://") || pathOrUrl.startsWith("data:") || pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://"))
+            return pathOrUrl;
+        if (pathOrUrl.startsWith("/"))
+            return "file://" + pathOrUrl;
+        return pathOrUrl;
+    }
+
+    function isDirectImageSource(iconValue) {
+        if (!iconValue || iconValue === "")
+            return false;
+        return iconValue.startsWith("/") || iconValue.startsWith("file://") || iconValue.startsWith("qrc:") || iconValue.startsWith("image://") || iconValue.startsWith("data:") || iconValue.startsWith("http://") || iconValue.startsWith("https://");
+    }
+
+    function isFilePath(pathOrUrl) {
+        if (!pathOrUrl || pathOrUrl === "")
+            return false;
+        return pathOrUrl.startsWith("/") || pathOrUrl.startsWith("file://");
+    }
+
+    function iconNameFromAppId(appId) {
+        let id = appId || "application-x-executable";
+        let entry = DesktopEntries.byId(id);
+        return (entry && entry.icon) ? entry.icon : id;
+    }
+
+    function iconNameFromPath(pathOrUrl) {
+        if (!pathOrUrl || pathOrUrl === "")
+            return "";
+        if (pathOrUrl.startsWith("image://icon/")) {
+            let name = pathOrUrl.slice("image://icon/".length);
+            return name ? name : "";
+        }
+        let path = pathOrUrl;
+        if (path.startsWith("file://"))
+            path = path.slice(7);
+        if (!path.startsWith("/"))
+            return "";
+        let base = path.split("/").pop();
+        if (!base || base === "")
+            return "";
+        let dot = base.lastIndexOf(".");
+        if (dot > 0)
+            base = base.slice(0, dot);
+        return base;
+    }
+
+    function resolveThemedIcon(iconName, themedIconPaths, fallbackKey = "application-x-executable") {
+        if (!themedIconPaths)
+            return "";
+        let themedPath = themedIconPaths[iconName];
+        if (themedPath && themedPath !== "")
+            return toImageSource(themedPath);
+        if (fallbackKey && fallbackKey !== "") {
+            let fallbackPath = themedIconPaths[fallbackKey];
+            if (fallbackPath && fallbackPath !== "")
+                return toImageSource(fallbackPath);
+        }
+        return "";
     }
 }

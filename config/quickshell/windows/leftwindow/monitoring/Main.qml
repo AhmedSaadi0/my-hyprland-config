@@ -1,93 +1,99 @@
 // windows/leftwindow/monitoring/Main.qml
 
 import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 
 import "root:/components"
 import "root:/themes"
 import "root:/config/EventNames.js" as Events
 import "root:/config"
 
-Rectangle {
-    id: monotoringMenu
+Item {
+    id: monitoringMenu
     objectName: "monitoring"
-    color: "transparent"
-    // implicitHeight: Screen.height - ThemeManager.selectedTheme.dimensions.barHeight
-    // implicitWidth: ThemeManager.selectedTheme.dimensions.menuWidth
 
-    // width: ThemeManager.selectedTheme.dimensions.menuWidth
-    // spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsSpacing
+    // نجعل القائمة تأخذ كامل مساحة الأب (التي هي عادة MenuContainer)
+    // anchors.fill: parent
 
-    // This component is from the original code, keeping it as is.
-    Progresses {
-        id: progresses
-        anchors {
-            top: parent.top
-            // left: parent.left
-            // right: parent.right
-            // horizontalCenter: parent.horizontalCenter
-            leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-            rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        }
-    }
+    ScrollView {
+        id: mainScrollView
+        anchors.fill: parent
+        contentWidth: availableWidth
+        clip: true
 
-    ProcessTable {
-        id: cpuTable
-        running: true
-        // showRows: 20
-        // command: ["python", ".config/quickshell/scripts/python/top_cpu_usage.py"]
-        command: App.scripts.python.topCpuUsageCommand
-        title: "Cpu Usage"
-        anchors {
-            top: progresses.bottom
-            left: progresses.left
-            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        }
-    }
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
 
-    ProcessTable {
-        id: ramTable
-        interval: 1000 * 5
-        // interval: 300
-        running: true
-        // showRows: 20
-        // command: ["python", ".config/quickshell/scripts/python/top_ram_usage.py"]
-        command: App.scripts.python.topRamUsageCommand
-        title: "Mem Usage"
+        ColumnLayout {
+            width: mainScrollView.availableWidth
+            spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-        anchors {
-            top: progresses.bottom
-            right: progresses.right
-            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        }
-    }
+            // إضافة هوامش جانبية وعلوية
+            Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+            Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+            Layout.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+            // Layout.bottomMargin: 30 // مساحة إضافية في الأسفل
 
-    TempTable {
-        id: tempTable
+            Progresses {
+                id: progresses
+                Layout.fillWidth: true
+            }
 
-        anchors {
-            top: ramTable.bottom
-            right: cpuTable.right
-            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        }
-    }
+            // لترتيب الجداول جنباً إلى جنب بشكل مرن
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-    BatteryTable {
-        id: batteryTable
+                ProcessTable {
+                    id: cpuTable
+                    Layout.fillWidth: true
+                    title: "Cpu Usage"
+                    command: App.scripts.python.topCpuUsageCommand
+                    // أزل الـ anchors اليدوية
+                }
 
-        anchors {
-            top: ramTable.bottom
-            right: progresses.right
-            topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+                ProcessTable {
+                    id: ramTable
+                    Layout.fillWidth: true
+                    title: "Mem Usage"
+                    command: App.scripts.python.topRamUsageCommand
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
+                TempTable {
+                    id: tempTable
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 120
+                }
+
+                BatteryTable {
+                    id: batteryTable
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 120
+                }
+            }
+
+            SystemMonitor {
+                id: systemMonitor
+                Layout.fillWidth: true
+                // لا نضع height ثابت هنا، سيأخذ طوله من implicitHeight الذي عرفناه
+                Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2
+            }
         }
     }
 
     Component.onCompleted: {
         EventBus.on(Events.LEFT_MENU_IS_OPENED, function () {
-            monotoringMenu.menuIsOpened();
+            monitoringMenu.menuIsOpened();
         });
 
         EventBus.on(Events.LEFT_MENU_IS_CLOSED, function () {
-            monotoringMenu.menuIsClosed();
+            monitoringMenu.menuIsClosed();
         });
     }
 

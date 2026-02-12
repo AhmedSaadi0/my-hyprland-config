@@ -19,6 +19,8 @@ Item {
     property string commandText: CommandsRegistry.getCommandText(searchField.text)
     property var filteredCommands: isCommandMode ? CommandsRegistry.filterCommands(commandText) : []
     property string activeCommandView: ""
+    property int selectedAppIndex: -1
+    property int selectedCommandIndex: -1
 
     property int currentViewIndex: {
         if (activeCommandView === "wallpaper")
@@ -29,9 +31,17 @@ Item {
     }
 
     function executeCommand(cmd) {
+        if (cmd.enabled === false)
+            return;
         if (cmd.isAction) {
             if (cmd.action === "openSettings") {
                 EventBus.emit(Events.OPEN_SETTINGS);
+                root.appLaunched();
+            } else if (cmd.action === "nextWallpaper") {
+                ThemeManager.switchToNextWallpaper();
+                root.appLaunched();
+            } else if (cmd.action === "previousWallpaper") {
+                ThemeManager.switchToPreviousWallpaper();
                 root.appLaunched();
             }
         } else if (cmd.view !== "") {
@@ -43,6 +53,8 @@ Item {
         if (!isCommandMode && activeCommandView !== "") {
             activeCommandView = "";
         }
+        ensureCommandSelection();
+        ensureAppSelection();
     }
 
     function gainFocus() {
@@ -60,6 +72,8 @@ Item {
         searchField.text = "";
         activeCommandView = "";
         categoryFilter.selectedCategory = "";
+        selectedAppIndex = -1;
+        selectedCommandIndex = -1;
     }
 
     onVisibleChanged: {
@@ -75,6 +89,25 @@ Item {
                 return;
             }
             appLaunched();
+            event.accepted = true;
+            return;
+        }
+
+        if (event.key === Qt.Key_Down) {
+            moveSelection(1);
+            searchField.forceActiveFocus();
+            event.accepted = true;
+            return;
+        }
+        if (event.key === Qt.Key_Up) {
+            moveSelection(-1);
+            searchField.forceActiveFocus();
+            event.accepted = true;
+            return;
+        }
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+            activateSelection();
+            searchField.forceActiveFocus();
             event.accepted = true;
             return;
         }
@@ -165,14 +198,33 @@ Item {
             bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
             onAccepted: {
-                if (root.isCommandMode && root.filteredCommands.length > 0) {
-                    root.executeCommand(root.filteredCommands[0]);
+                activateSelection();
+            }
+
+            Keys.onPressed: event => {
+                if (event.key === Qt.Key_Down) {
+                    root.moveSelection(1);
+                    searchField.forceActiveFocus();
+                    event.accepted = true;
                     return;
                 }
-                if (filteredModel.values.length > 0) {
-                    const firstApp = filteredModel.values[0];
-                    root.launchApp(firstApp.command, firstApp.workingDirectory);
+                if (event.key === Qt.Key_Up) {
+                    root.moveSelection(-1);
+                    searchField.forceActiveFocus();
+                    event.accepted = true;
+                    return;
                 }
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    root.activateSelection();
+                    searchField.forceActiveFocus();
+                    event.accepted = true;
+                    return;
+                }
+            }
+
+            onTextChanged: {
+                Qt.callLater(root.ensureCommandSelection);
+                Qt.callLater(root.ensureAppSelection);
             }
         }
     }
@@ -200,6 +252,12 @@ Item {
                 anchors.right: parent.right
                 height: 32
             }
+            Connections {
+                target: categoryFilter
+                function onSelectedCategoryChanged() {
+                    Qt.callLater(root.ensureAppSelection);
+                }
+            }
 
             ScrollView {
                 id: appScrollView
@@ -217,7 +275,6 @@ Item {
 
                     model: filteredModel
                     spacing: 2
-                    currentIndex: -1
                     boundsBehavior: Flickable.StopAtBounds
 
                     displaced: Transition {
@@ -235,11 +292,11 @@ Item {
                         id: delegateRoot
                         width: appListView.width
                         appData: modelData
-                        isSelected: appListView.currentIndex === index
-                        isHighlighted: index === 0 && searchField.text !== ""
+                        isSelected: root.selectedAppIndex === index
+                        isHighlighted: root.selectedAppIndex >= 0 ? (index === root.selectedAppIndex) : (index === 0 && searchField.text !== "")
 
                         onClicked: root.launchApp(modelData.command, modelData.workingDirectory)
-                        onHovered: appListView.currentIndex = index
+                        onHovered: root.selectedAppIndex = index
 
                         opacity: 0
                         transform: Translate {
@@ -307,7 +364,7 @@ Item {
                     id: cmdDelegate
                     width: commandListView.width
                     commandData: modelData
-                    isHighlighted: index === 0
+                    isHighlighted: index === (root.selectedCommandIndex >= 0 ? root.selectedCommandIndex : 0)
                     onClicked: root.executeCommand(modelData)
 
                     opacity: 0
@@ -367,5 +424,124 @@ Item {
             workingDirectory: workingDirectory
         });
         root.appLaunched();
+    }
+
+    function ensureAppSelection() {
+        if (root.isCommandMode || root.activeCommandView !== "") {
+            selectedAppIndex = -1;
+            return;
+        }
+        if (filteredModel.values.length === 0) {
+            selectedAppIndex = -1;
+            return;
+        }
+        if (selectedAppIndex < 0 || selectedAppIndex >= filteredModel.values.length) {
+            selectedAppIndex = 0;
+        }
+        appListView.currentIndex = selectedAppIndex;
+    }
+
+    function ensureCommandSelection() {
+        if (!root.isCommandMode) {
+            selectedCommandIndex = -1;
+            return;
+        }
+        if (root.filteredCommands.length === 0) {
+            selectedCommandIndex = -1;
+            return;
+        }
+        if (selectedCommandIndex < 0 || selectedCommandIndex >= root.filteredCommands.length) {
+            selectedCommandIndex = 0;
+        }
+        commandListView.currentIndex = selectedCommandIndex;
+    }
+
+    function moveSelection(dir) {
+        if (root.isCommandMode) {
+            moveCommandSelection(dir);
+            return;
+        }
+        if (root.activeCommandView !== "")
+            return;
+        if (filteredModel.values.length === 0)
+            return;
+        let idx = selectedAppIndex;
+        if (idx < 0)
+            idx = dir > 0 ? 0 : filteredModel.values.length - 1;
+        else
+            idx = Math.max(0, Math.min(filteredModel.values.length - 1, idx + dir));
+        selectedAppIndex = idx;
+    }
+
+    function moveCommandSelection(dir) {
+        if (root.filteredCommands.length === 0)
+            return;
+        let idx = selectedCommandIndex;
+        if (idx < 0)
+            idx = dir > 0 ? 0 : root.filteredCommands.length - 1;
+        else
+            idx = Math.max(0, Math.min(root.filteredCommands.length - 1, idx + dir));
+        selectedCommandIndex = idx;
+    }
+
+    function firstEnabledCommandIndex(startIdx) {
+        if (root.filteredCommands.length === 0)
+            return -1;
+        let idx = Math.max(0, Math.min(root.filteredCommands.length - 1, startIdx));
+        for (let i = idx; i < root.filteredCommands.length; i++) {
+            if (root.filteredCommands[i].enabled !== false)
+                return i;
+        }
+        for (let i = idx - 1; i >= 0; i--) {
+            if (root.filteredCommands[i].enabled !== false)
+                return i;
+        }
+        return -1;
+    }
+
+    function activateSelection() {
+        if (root.isCommandMode) {
+            activateCommandSelection();
+            return;
+        }
+        if (root.activeCommandView !== "")
+            return;
+        let idx = selectedAppIndex;
+        if (idx < 0)
+            idx = 0;
+        if (idx < 0 || idx >= filteredModel.values.length)
+            return;
+        const app = filteredModel.values[idx];
+        if (!app)
+            return;
+        root.launchApp(app.command, app.workingDirectory);
+    }
+
+    function activateCommandSelection() {
+        if (root.filteredCommands.length === 0)
+            return;
+        let idx = selectedCommandIndex >= 0 ? selectedCommandIndex : 0;
+        idx = firstEnabledCommandIndex(idx);
+        if (idx === -1)
+            return;
+        root.executeCommand(root.filteredCommands[idx]);
+    }
+
+    onSelectedAppIndexChanged: {
+        if (selectedAppIndex >= 0) {
+            appListView.currentIndex = selectedAppIndex;
+            appListView.positionViewAtIndex(selectedAppIndex, ListView.Contain);
+        } else {
+            appListView.currentIndex = -1;
+        }
+    }
+
+    onSelectedCommandIndexChanged: {
+        if (selectedCommandIndex >= 0) {
+            commandListView.currentIndex = selectedCommandIndex;
+            commandListView.positionViewAtIndex(selectedCommandIndex, ListView.Contain);
+        } else {
+            commandListView.currentIndex = -1;
+        }
     }
 }

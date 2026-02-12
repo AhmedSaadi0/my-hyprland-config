@@ -4,10 +4,12 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell
 import Quickshell.Hyprland
+import Quickshell.Io
 import Quickshell.Widgets
 
 import "root:/themes"
 import "root:/config"
+import "root:/utils"
 
 Item {
     id: root
@@ -45,6 +47,30 @@ Item {
 
     property string currentTitle: (hasWindow && activeToplevel.title) ? activeToplevel.title : "Workspace"
     property string iconName: currentClass === "Active Window" ? "application-x-executable" : currentClass.toLowerCase()
+    property string currentIconTheme: (ThemeManager.selectedTheme && ThemeManager.selectedTheme.systemSettings) ? ThemeManager.selectedTheme.systemSettings.themeIcons : ""
+    property var themedIconPaths: ({})
+    property bool pendingResolve: false
+
+    function resolveActiveIconSource(windowClass, iconThemeName, resolvedPaths) {
+        void iconThemeName;
+        void resolvedPaths;
+
+        let iconKey = Helper.iconNameFromAppId(windowClass);
+        return Helper.resolveThemedIcon(iconKey, themedIconPaths);
+    }
+
+    function collectRequestedIconNames() {
+        let unique = {};
+        let iconKey = Helper.iconNameFromAppId(currentClass);
+        if (iconKey && iconKey !== "")
+            unique[iconKey] = true;
+        unique["application-x-executable"] = true;
+        return Object.keys(unique).sort();
+    }
+
+    function requestIconResolve() {
+        iconResolveDebounce.restart();
+    }
 
     // الحسابات الديناميكية للعرض
     implicitHeight: theme.dimensions.barWidgetsHeight
@@ -57,7 +83,65 @@ Item {
     Connections {
         target: ThemeManager
         function onSelectedThemeUpdated() {
-        // TODO: -> refresh app icon
+            requestIconResolve();
+        }
+    }
+
+    onCurrentClassChanged: requestIconResolve()
+    onCurrentIconThemeChanged: {
+        themedIconPaths = ({});
+        requestIconResolve();
+    }
+    Component.onCompleted: requestIconResolve()
+
+    Timer {
+        id: iconResolveDebounce
+        interval: 250
+        repeat: false
+        onTriggered: {
+            const icons = collectRequestedIconNames();
+            if (!currentIconTheme || currentIconTheme === "")
+                return;
+            if (!icons || icons.length === 0) {
+                themedIconPaths = ({});
+                return;
+            }
+            if (activeIconResolver.running) {
+                pendingResolve = true;
+                return;
+            }
+
+            activeIconResolver.command = [App.pythonPath, App.pythonScriptsPath + "/resolve_theme_icons.py", "--theme", currentIconTheme, "--icons-json", JSON.stringify(icons)];
+            activeIconResolver.running = true;
+        }
+    }
+
+    Process {
+        id: activeIconResolver
+        running: false
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    const parsed = JSON.parse(this.text.toString());
+                    root.themedIconPaths = parsed || {};
+                } catch (e) {
+                    console.warn("[ActiveWindow] Failed to parse resolved icons JSON:", e);
+                }
+            }
+        }
+
+        onExited: (exitCode, exitStatus) => {
+            void exitStatus;
+            if (exitCode !== 0)
+                console.warn("[ActiveWindow] Icon resolver exited with code:", exitCode);
+        }
+
+        onRunningChanged: {
+            if (!running && pendingResolve) {
+                pendingResolve = false;
+                iconResolveDebounce.restart();
+            }
         }
     }
 
@@ -138,13 +222,7 @@ Item {
                     anchors.leftMargin: 4
                     // fillMode: Image.PreserveAspectFit
                     // source: Quickshell.iconPath(root.iconName, "application-x-executable")
-                    source: {
-                        let id = currentClass;
-                        let entry = DesktopEntries.byId(id);
-                        let iconName = (entry && entry.icon) ? entry.icon : id;
-                        const iconPath = Quickshell.iconPath(iconName, "application-x-executable");
-                        return iconPath;
-                    }
+                    source: root.resolveActiveIconSource(root.currentClass, root.currentIconTheme, root.themedIconPaths)
 
                     onSourceChanged: iconAnim.restart()
                     asynchronous: true

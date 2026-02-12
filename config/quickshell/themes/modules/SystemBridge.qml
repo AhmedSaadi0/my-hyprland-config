@@ -14,6 +14,7 @@ Item {
         _dispatch("Plasma Color", Utils.Helper.changePlasmaColor(settings.plasmaColorScheme));
         _dispatch("Plasma Icons", Utils.Helper.changePlasmaIcons(settings.themeIcons));
         _dispatch("Konsole Profile", Utils.Helper.changeKonsoleProfile(settings.konsoleProfile));
+        _dispatch("Konsole Running Sessions Profile", Utils.Helper.applyKonsoleProfileToRunningSessions(settings.konsoleProfile.replace(".profile", "")));
         _dispatch("Qt Style", Utils.Helper.changeQtStyle(settings.qtThemeStyle));
         _dispatch("Kvantum Theme", Utils.Helper.changeKvantumTheme(settings.kvantumTheme));
 

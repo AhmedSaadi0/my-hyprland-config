@@ -921,7 +921,7 @@ Item {
                 target: eyesRow
                 spacing: 6
             }
-        },
+        }
         // State {
         //     name: "shocked"
         //     PropertyChanges {
@@ -969,5 +969,6 @@ Item {
         //         spacing: 6
         //     }
         // }
+
     ]
 }
