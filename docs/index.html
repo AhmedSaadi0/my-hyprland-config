@@ -1,172 +1,199 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NibrasShell – سطح مكتب Hyprland + Quickshell</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>نِبراس شِل - واجهة مدمجة بالذكاء الاصطناعي</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <nav id="navRoot">
-    <div class="container nav-inner">
-      <div class="brand">
-        <div class="brand-badge"></div>
-        <div>
-          <div>NibrasShell</div>
-          <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
+    <nav id="navRoot">
+        <div class="container nav-inner">
+            <div class="brand">
+                <img class="brand-logo" src="assets/logo.jpeg" alt="NibrasShell logo" />
+                <div>
+                    <div data-i18n="brand_name">نِبراس شِل</div>
+                    <div style="font-size:12px;color:var(--muted)" data-i18n="brand_tagline">واجهة مدمجة بالذكاء الاصطناعي</div>
+                </div>
+            </div>
+            <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+            <div class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+                    <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+                </div>
+                <div class="nav-actions">
+                    <div class="nav-icons">
+                        <a class="icon-btn" href="https://github.com/AhmedSaadi0/NibrasShell" target="_blank"
+                            rel="noopener" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.86 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.36-3.37-1.36-.46-1.2-1.12-1.52-1.12-1.52-.92-.65.07-.64.07-.64 1.02.07 1.56 1.08 1.56 1.08.9 1.58 2.36 1.12 2.94.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.74 0 0 .84-.27 2.75 1.05.8-.23 1.66-.35 2.52-.35.86 0 1.72.12 2.52.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.43.2 2.48.1 2.74.64.72 1.03 1.64 1.03 2.76 0 3.93-2.34 4.8-4.57 5.05.36.32.69.95.69 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.18.6.69.49 3.98-1.35 6.84-5.17 6.84-9.67C22 6.58 17.52 2 12 2z" />
+                            </svg>
+                        </a>
+                        <a class="icon-btn" href="https://discord.gg/EUcGgRGhrs" target="_blank" rel="noopener"
+                            aria-label="Discord">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M20.3 4.3A19.6 19.6 0 0 0 16 3a14.6 14.6 0 0 0-.7 1.5 18.2 18.2 0 0 0-4.6 0A14.6 14.6 0 0 0 10 3a19.6 19.6 0 0 0-4.3 1.3C3.4 7.7 2.8 11 3 14.3a19.9 19.9 0 0 0 5.1 2.7 15.3 15.3 0 0 0 1.1-1.7 12.6 12.6 0 0 1-1.7-.8l.4-.3c3.3 1.5 6.8 1.5 10.1 0l.4.3c-.5.3-1.1.6-1.7.8a15.3 15.3 0 0 0 1.1 1.7 19.9 19.9 0 0 0 5.1-2.7c.4-4-.7-7.3-2.8-10zM9.2 13.2c-.8 0-1.4-.7-1.4-1.6 0-.9.6-1.6 1.4-1.6.8 0 1.4.7 1.4 1.6 0 .9-.6 1.6-1.4 1.6zm5.6 0c-.8 0-1.4-.7-1.4-1.6 0-.9.6-1.6 1.4-1.6.8 0 1.4.7 1.4 1.6 0 .9-.6 1.6-1.4 1.6z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <select id="themeSelect" class="theme-select" aria-label="Theme">
+                        <option value="tokyonight">Tokyo Night (Dark)</option>
+                        <option value="tokyonight-light">Tokyo Night (Light)</option>
+                        <option value="dracula">Dracula (Dark)</option>
+                        <option value="dracula-light">Dracula (Light)</option>
+                        <option value="catppuccin">Catppuccin (Dark)</option>
+                        <option value="catppuccin-light">Catppuccin (Light)</option>
+                        <option value="gruvbox">Gruvbox (Dark)</option>
+                        <option value="gruvbox-light">Gruvbox (Light)</option>
+                        <option value="nord">Nord (Dark)</option>
+                        <option value="nord-light">Nord (Light)</option>
+                        <option value="material">Material You (Dark)</option>
+                        <option value="material-light">Material You (Light)</option>
+                    </select>
+                    <select id="langSelect" class="lang-select" aria-label="Language">
+                        <option value="ar">AR</option>
+                        <option value="en">EN</option>
+                    </select>
+                </div>
+            </div>
         </div>
-      </div>
-      <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
-      <div class="nav-menu">
-        <div class="nav-links">
-          <a href="index.html" data-i18n="nav_home">الرئيسية</a>
-          <a href="features.html" data-i18n="nav_features">المميزات</a>
-          <a href="gallery.html" data-i18n="nav_gallery">الصور</a>
-          <a href="install.html" data-i18n="nav_install">التثبيت</a>
-          <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
-          <a href="dev.html" data-i18n="nav_dev">المطورون</a>
-          <a href="changelog.html" data-i18n="nav_changelog">التغييرات</a>
-          <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
-          <a href="faq.html" data-i18n="nav_faq">الأسئلة</a>
-        </div>
-        <div class="nav-actions">
-          <select id="themeSelect" class="theme-select" aria-label="Theme">
-            <option value="tokyonight">Tokyo Night (Dark)</option>
-            <option value="tokyonight-light">Tokyo Night (Light)</option>
-            <option value="dracula">Dracula (Dark)</option>
-            <option value="dracula-light">Dracula (Light)</option>
-            <option value="catppuccin">Catppuccin (Dark)</option>
-            <option value="catppuccin-light">Catppuccin (Light)</option>
-            <option value="gruvbox">Gruvbox (Dark)</option>
-            <option value="gruvbox-light">Gruvbox (Light)</option>
-            <option value="nord">Nord (Dark)</option>
-            <option value="nord-light">Nord (Light)</option>
-            <option value="material">Material You (Dark)</option>
-            <option value="material-light">Material You (Light)</option>
-          </select>
-          <select id="langSelect" class="lang-select" aria-label="Language">
-            <option value="ar">AR</option>
-            <option value="en">EN</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <span class="ribbon" data-i18n="hero_badge">واجهة عربية قابلة للتخصيص بالكامل</span>
-          <h1 data-i18n="hero_title">تجربة سطح مكتب حديثة، ذكية، ومتكاملة</h1>
-          <p data-i18n="hero_desc">
-            NibrasShell يقدم واجهة غنية تجمع بين الشريط العلوي، القائمة الجانبية، الكبسولة الذكية،
-            ولوحة إعدادات احترافية مع خدمات خلفية للطقس والموسيقى والمراقبة.
-          </p>
-          <div class="cta-row">
-            <a class="btn primary" href="features.html" data-i18n="cta_features">استعرض المميزات</a>
-            <a class="btn" href="install.html" data-i18n="cta_install">ابدأ التثبيت</a>
-            <a class="btn" href="docs.html" data-i18n="cta_docs">اقرأ الوثائق</a>
-          </div>
-        </div>
-        <div class="hero-visual card">
-          <img src="assets/smart-c.gif" alt="Smart Capsule" />
-          <div class="chip a" data-i18n="hero_chip_1">Smart Capsule</div>
-          <div class="chip b" data-i18n="hero_chip_2">Dynamic Themes</div>
-          <div class="chip c" data-i18n="hero_chip_3">System Monitoring</div>
-        </div>
-      </div>
-    </section>
+    <main class="container">
+        <section class="hero hero-v2">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <span class="ribbon ribbon-live" data-i18n="hero_badge">واجهة مدمجة بالذكاء الاصطناعي</span>
+                    <h1 data-i18n="hero_title">تجربة سطح مكتب حديثة، ذكية، ومتكاملة</h1>
+                    <p data-i18n="hero_desc">
+                        واجهة تركّز على أفضل ما في التجربة: شريط علوي ذكي، كبسولة تفاعلية، وثيمات مصممة بعناية.
+                    </p>
+                    <div class="cta-row">
+                        <a class="btn primary" href="docs.html" data-i18n="cta_docs">اقرأ الوثائق</a>
+                        <a class="btn" href="https://github.com/AhmedSaadi0/NibrasShell" target="_blank" rel="noopener"
+                            data-i18n="cta_github">المستودع</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-card float-a">
+                            <strong>12+</strong>
+                            <span data-i18n="stat_themes">ثيمات جاهزة</span>
+                        </div>
+                        <div class="stat-card float-b">
+                            <strong>10+</strong>
+                            <span data-i18n="stat_modules">وحدات رئيسية</span>
+                        </div>
+                        <div class="stat-card float-c">
+                            <strong>24/7</strong>
+                            <span data-i18n="stat_live">مراقبة حيّة</span>
+                        </div>
+                    </div>
+                </div>
 
-    <section class="section">
-      <h2 data-i18n="why_title">لماذا NibrasShell؟</h2>
-      <div class="grid-3">
-        <div class="card">
-          <div class="kpi"><span class="dot"></span><strong data-i18n="why_1_title">واجهة ذكية</strong></div>
-          <p data-i18n="why_1_desc">كبسولة تفاعلية تلخّص الطقس والموسيقى وتعرض معلومات فورية.</p>
-        </div>
-        <div class="card">
-          <div class="kpi"><span class="dot"></span><strong data-i18n="why_2_title">تخصيص عميق</strong></div>
-          <p data-i18n="why_2_desc">تحكم شامل بالألوان والخطوط والخلفيات وأسلوب القوائم.</p>
-        </div>
-        <div class="card">
-          <div class="kpi"><span class="dot"></span><strong data-i18n="why_3_title">خدمات متكاملة</strong></div>
-          <p data-i18n="why_3_desc">مراقبة النظام، إشعارات ذكية، شبكة، حافظة، ومركز إعدادات كامل.</p>
-        </div>
-      </div>
-    </section>
+                <div class="hero-stage">
+                    <div class="hero-visual">
+                        <img id="heroImage" src="assets/material-dark.png" alt="UI Preview" />
+                    </div>
+                </div>
+            </div>
 
-    <section class="section">
-      <h2 data-i18n="components_title">لمحة عن المكونات</h2>
-      <ul class="list">
-        <li data-i18n="components_1">الشريط العلوي مع مؤشرات النظام ومساحات العمل.</li>
-        <li data-i18n="components_2">الشريط الجانبي مع لوحة تنقل ذكية.</li>
-        <li data-i18n="components_3">كبسولة ذكية ثنائية الوضع (خامل وموسع).</li>
-        <li data-i18n="components_4">سطح مكتب بخلفيات ديناميكية وتأثير عمق للساعة.</li>
-        <li data-i18n="components_5">لوحة إعدادات شاملة لكل التفاصيل.</li>
-      </ul>
-    </section>
+            <div class="hero-signals">
+                <div class="signal-pill">
+                    <span class="pulse-dot"></span>
+                    <span data-i18n="signal_1">واجهة متجددة باستمرار</span>
+                </div>
+                <div class="signal-pill">
+                    <span class="pulse-dot"></span>
+                    <span data-i18n="signal_2">ذكاء مدمج في تفاصيل التجربة</span>
+                </div>
+                <div class="signal-pill">
+                    <span class="pulse-dot"></span>
+                    <span data-i18n="signal_3">تخصيص عميق بضغطة واحدة</span>
+                </div>
+            </div>
+            <div class="ai-provider-note">
+                <span data-i18n="ai_providers_note">يدعم عدة مزودين للذكاء الاصطناعي، بما فيها مزود محلي عبر:</span>
+                <code>http://127.0.0.1:8080/v1/chat/completions</code>
+            </div>
+        </section>
 
-    <section class="section">
-      <h2 data-i18n="ai_now_title">الذكاء الاصطناعي حالياً</h2>
-      <ul class="list">
-        <li data-i18n="ai_now_1">تحليل بيانات الطقس.</li>
-        <li data-i18n="ai_now_2">تحليل الموسيقى.</li>
-        <li data-i18n="ai_now_3">تحليل حالة النظام بعد الإقلاع مباشرة.</li>
-        <li data-i18n="ai_now_4">تلخيص ما حدث عند ارتفاع مفاجئ في CPU/RAM/الحرارة داخل سجل.</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2 data-i18n="why_title">لماذا نبراس شِل؟</h2>
+            <div class="bento-grid">
+                <article class="card bento-item large">
+                    <div class="kpi"><span class="dot"></span><strong data-i18n="why_1_title">واجهة ذكية</strong></div>
+                    <p data-i18n="why_1_desc">كبسولة تفاعلية تلخّص الطقس والموسيقى وتعرض معلومات فورية.</p>
+                    <div class="smart-preview">
+                        <img src="assets/smart-c.gif" alt="Smart capsule preview" />
+                        <div class="smart-preview-label" data-i18n="smart_preview_label">معاينة الكبسولة الذكية</div>
+                    </div>
+                </article>
+                <article class="card bento-item">
+                    <div class="kpi"><span class="dot"></span><strong data-i18n="why_2_title">تخصيص عميق</strong></div>
+                    <p data-i18n="why_2_desc">تحكم شامل بالألوان والخطوط والخلفيات وأسلوب القوائم.</p>
+                </article>
+                <article class="card bento-item">
+                    <div class="kpi"><span class="dot"></span><strong data-i18n="why_3_title">خدمات متكاملة</strong>
+                    </div>
+                    <p data-i18n="why_3_desc">مراقبة النظام، إشعارات ذكية، شبكة، حافظة، ومركز إعدادات كامل.</p>
+                </article>
+            </div>
+        </section>
 
-    <section class="section">
-      <h2 data-i18n="ai_future_title">وحدات مرتبطة بالذكاء الاصطناعي (قريباً)</h2>
-      <ul class="list">
-        <li data-i18n="ai_future_1">الحافظة: ربطها بالذكاء الاصطناعي لجلب ملخصات لاحقاً.</li>
-        <li data-i18n="ai_future_2">قائمة المهام: ملخصات وتنبيهات بحسب التاريخ.</li>
-        <li data-i18n="ai_future_3">مراقب الشبكة: ملخص الاستهلاك بحسب التطبيق.</li>
-      </ul>
-    </section>
+        <section class="section">
+            <h2 data-i18n="shots_title">لقطات من الواجهة</h2>
+            <p class="muted" data-i18n="shots_desc">صور قليلة تبيّن الجو العام للواجهة والثيمات.</p>
+            <div class="gallery-grid">
+                <div class="gallery-card lift"><img src="assets/colors.jpg" alt="Colors Theme" />
+                    <div class="caption" data-i18n="cap_colors">Colors Theme</div>
+                </div>
+                <div class="gallery-card lift"><img src="assets/deer.jpg" alt="Deer Theme" />
+                    <div class="caption" data-i18n="cap_deer">Deer Theme</div>
+                </div>
+                <div class="gallery-card lift"><img src="assets/gruvbox-light.png" alt="Gruvbox Light" />
+                    <div class="caption" data-i18n="cap_gruv_light">Gruvbox – فاتح</div>
+                </div>
+            </div>
+        </section>
 
-    <section class="section">
-      <h2 data-i18n="quick_gallery_title">معرض سريع</h2>
-      <div class="gallery-grid">
-        <div class="gallery-card"><img src="assets/smart-c.gif" alt="Smart Capsule" /><div class="caption" data-i18n="cap_smart">الكبسولة الذكية</div></div>
-        <div class="gallery-card"><img src="assets/settings1.png" alt="Settings" /><div class="caption" data-i18n="cap_settings">لوحة الإعدادات</div></div>
-        <div class="gallery-card"><img src="assets/m3-dark.png" alt="Material Dark" /><div class="caption" data-i18n="cap_m3_dark">Material You – داكن</div></div>
-        <div class="gallery-card"><img src="assets/nord-dark.png" alt="Nord Dark" /><div class="caption" data-i18n="cap_nord_dark">Nord – داكن</div></div>
-        <div class="gallery-card"><img src="assets/gruvbox-dark.png" alt="Gruvbox Dark" /><div class="caption" data-i18n="cap_gruv_dark">Gruvbox – داكن</div></div>
-        <div class="gallery-card"><img src="assets/tokyonight.png" alt="Tokyo Night" /><div class="caption" data-i18n="cap_tokyo">Tokyo Night</div></div>
-      </div>
-      <div class="cta-row" style="margin-top:12px">
-        <a class="btn" href="gallery.html" data-i18n="quick_gallery_btn">عرض كل الصور</a>
-      </div>
-    </section>
+        <section class="section">
+            <h2 data-i18n="quick_value_title">ما الذي يميز الواجهة بسرعة؟</h2>
+            <p class="muted" data-i18n="quick_value_desc">نظرة مختصرة على أهم نقاط القوة العملية للمستخدم اليومي.</p>
+            <ol class="value-track">
+                <li class="value-step">
+                    <span class="value-index">01</span>
+                    <div>
+                        <h3 data-i18n="quick_value_1_title">أداء متوازن</h3>
+                        <p data-i18n="quick_value_1_desc">واجهة خفيفة نسبيًا مع تنظيم واضح للعناصر المهمة بدون فوضى.</p>
+                    </div>
+                </li>
+                <li class="value-step">
+                    <span class="value-index">02</span>
+                    <div>
+                        <h3 data-i18n="quick_value_2_title">وصول أسرع</h3>
+                        <p data-i18n="quick_value_2_desc">الإعدادات، التطبيقات، والإشعارات في أماكن ثابتة وسهلة الوصول.</p>
+                    </div>
+                </li>
+                <li class="value-step">
+                    <span class="value-index">03</span>
+                    <div>
+                        <h3 data-i18n="quick_value_3_title">ذكاء مفيد</h3>
+                        <p data-i18n="quick_value_3_desc">تحليلات وتلميحات ذكية تركز على المعلومات التي تهمك فعلاً.</p>
+                    </div>
+                </li>
+            </ol>
+        </section>
 
-    <section class="section">
-      <h2 data-i18n="quick_start_title">ابدأ بسرعة</h2>
-      <div class="code">git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
-cd NibrasShell
-python install.py</div>
-    </section>
+        <section class="footer">
+            <div data-i18n="footer_pages">هذا الموقع يُعرض عبر GitHub Pages.</div>
+        </section>
+    </main>
 
-    <section class="section">
-      <h2 data-i18n="compat_title">التوافق</h2>
-      <div class="grid-2">
-        <div class="card">
-          <strong data-i18n="compat_supported">توزيعات مدعومة في السكربت</strong>
-          <p data-i18n="compat_distros">Arch و Fedora و Void</p>
-        </div>
-        <div class="card">
-          <strong data-i18n="compat_note_title">تنويه</strong>
-          <p data-i18n="compat_note">يمكن التثبيت اليدوي على أي توزيعة أخرى.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="footer">
-      <div data-i18n="footer_pages">هذا الموقع يُعرض عبر GitHub Pages.</div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

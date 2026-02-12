@@ -2,9 +2,13 @@ const themeSelect = document.getElementById("themeSelect");
 const langSelect = document.getElementById("langSelect");
 const navToggle = document.getElementById("navToggle");
 const navRoot = document.getElementById("navRoot");
+const heroImage = document.getElementById("heroImage");
 
 const translations = {
   ar: {
+    page_title: "نِبراس شِل - واجهة مدمجة بالذكاء الاصطناعي",
+    brand_name: "نِبراس شِل",
+    brand_tagline: "واجهة مدمجة بالذكاء الاصطناعي",
     nav_home: "الرئيسية",
     nav_features: "المميزات",
     nav_gallery: "الصور",
@@ -16,23 +20,46 @@ const translations = {
     nav_faq: "الأسئلة",
     nav_menu: "فتح القائمة",
 
-    hero_badge: "واجهة عربية قابلة للتخصيص بالكامل",
+    hero_badge: "واجهة مدمجة بالذكاء الاصطناعي",
     hero_title: "تجربة سطح مكتب حديثة، ذكية، ومتكاملة",
-    hero_desc: "NibrasShell يقدم واجهة غنية تجمع بين الشريط العلوي، القائمة الجانبية، الكبسولة الذكية، ولوحة إعدادات احترافية مع خدمات خلفية للطقس والموسيقى والمراقبة.",
+    hero_desc: "واجهة تركّز على أفضل ما في التجربة: شريط علوي ذكي، كبسولة تفاعلية، وثيمات مصممة بعناية.",
     hero_chip_1: "الكبسولة الذكية",
     hero_chip_2: "الثيمات الديناميكية",
     hero_chip_3: "مراقبة النظام",
     cta_features: "استعرض المميزات",
     cta_install: "ابدأ التثبيت",
     cta_docs: "اقرأ الوثائق",
+    cta_github: "المستودع",
+    stat_themes: "ثيمات جاهزة",
+    stat_modules: "وحدات رئيسية",
+    stat_live: "مراقبة حيّة",
+    ticker_1: "واجهة متجددة باستمرار",
+    ticker_2: "ذكاء مدمج في تفاصيل التجربة",
+    ticker_3: "تخصيص عميق بضغطة واحدة",
+    signal_1: "واجهة متجددة باستمرار",
+    signal_2: "ذكاء مدمج في تفاصيل التجربة",
+    signal_3: "تخصيص عميق بضغطة واحدة",
+    ai_providers_note: "يدعم عدة مزودين للذكاء الاصطناعي، بما فيها مزود محلي عبر:",
+    smart_preview_label: "معاينة الكبسولة الذكية",
 
-    why_title: "لماذا NibrasShell؟",
+    why_title: "لماذا نبراس شِل؟",
     why_1_title: "واجهة ذكية",
     why_1_desc: "كبسولة تفاعلية تلخّص الطقس والموسيقى وتعرض معلومات فورية.",
     why_2_title: "تخصيص عميق",
     why_2_desc: "تحكم شامل بالألوان والخطوط والخلفيات وأسلوب القوائم.",
     why_3_title: "خدمات متكاملة",
     why_3_desc: "مراقبة النظام، إشعارات ذكية، شبكة، حافظة، ومركز إعدادات كامل.",
+
+    shots_title: "لقطات من الواجهة",
+    shots_desc: "صور قليلة تبيّن الجو العام للواجهة والثيمات.",
+    quick_value_title: "ما الذي يميز الواجهة بسرعة؟",
+    quick_value_desc: "نظرة مختصرة على أهم نقاط القوة العملية للمستخدم اليومي.",
+    quick_value_1_title: "أداء متوازن",
+    quick_value_1_desc: "واجهة خفيفة نسبيًا مع تنظيم واضح للعناصر المهمة بدون فوضى.",
+    quick_value_2_title: "وصول أسرع",
+    quick_value_2_desc: "الإعدادات، التطبيقات، والإشعارات في أماكن ثابتة وسهلة الوصول.",
+    quick_value_3_title: "ذكاء مفيد",
+    quick_value_3_desc: "تحليلات وتلميحات ذكية تركز على المعلومات التي تهمك فعلاً.",
 
     components_title: "لمحة عن المكونات",
     components_1: "الشريط العلوي مع مؤشرات النظام ومساحات العمل.",
@@ -104,7 +131,19 @@ const translations = {
     install_footer: "إذا واجهتك مشكلة، راجع صفحة استكشاف الأخطاء في الوثائق.",
 
     docs_title: "الوثائق",
-    docs_sub: "اختصر طريقك إلى التفاصيل التقنية.",
+    docs_sub: "كل شيء في مكان واحد: التثبيت الكامل وتوثيق التطوير.",
+    docs_sidebar_title: "دليل الوثائق",
+    docs_sidebar_overview: "نظرة عامة",
+    docs_sidebar_install: "التثبيت الكامل",
+    docs_sidebar_dev: "توثيق التطوير",
+    docs_overview_title: "الوثائق",
+    docs_overview_desc: "اختر القسم المناسب من الشريط الجانبي للوصول إلى شرح التثبيت أو توثيق التطوير.",
+    docs_overview_install_title: "التثبيت الكامل",
+    docs_overview_install_desc: "خطوات تلقائية ويدوية مفصلة مع أمثلة للتوزيعات.",
+    docs_overview_install_btn: "افتح التثبيت",
+    docs_overview_dev_title: "توثيق التطوير",
+    docs_overview_dev_desc: "المعمارية، السكربتات، والخدمات الأساسية.",
+    docs_overview_dev_btn: "افتح التوثيق",
     docs_ui_title: "الواجهة",
     docs_ui_1: "الشريط العلوي",
     docs_ui_2: "القائمة الجانبية",
@@ -180,6 +219,7 @@ const translations = {
     cap_gruv_dark: "Gruvbox – داكن",
     cap_gruv_light: "Gruvbox – فاتح",
     cap_gruv_mix: "Gruvbox – متنوع",
+    cap_colors: "Colors Theme",
     cap_tokyo: "Tokyo Night",
     cap_tokyo_light: "Tokyo Night – فاتح",
     cap_deer: "Deer Theme",
@@ -230,6 +270,9 @@ const translations = {
     change_footer: "سيتم تحديث سجل التغييرات عند كل إصدار."
   },
   en: {
+    page_title: "NibrasShell - AI integrated shell",
+    brand_name: "NibrasShell",
+    brand_tagline: "AI integrated shell",
     nav_home: "Home",
     nav_features: "Features",
     nav_gallery: "Gallery",
@@ -241,15 +284,27 @@ const translations = {
     nav_faq: "FAQ",
     nav_menu: "Open menu",
 
-    hero_badge: "Fully customizable Arabic-first desktop",
+    hero_badge: "AI integrated shell",
     hero_title: "A modern, smart, and complete desktop experience",
-    hero_desc: "NibrasShell combines the top bar, side menu, smart capsule, and a pro settings panel with background services for weather, music, and monitoring.",
+    hero_desc: "A focused UI that highlights the best: a smart top bar, an interactive capsule, and carefully crafted themes.",
     hero_chip_1: "Smart Capsule",
     hero_chip_2: "Dynamic Themes",
     hero_chip_3: "System Monitoring",
     cta_features: "Explore Features",
     cta_install: "Start Install",
     cta_docs: "Read Docs",
+    cta_github: "Repository",
+    stat_themes: "Ready themes",
+    stat_modules: "Core modules",
+    stat_live: "Live monitoring",
+    ticker_1: "Continuously evolving interface",
+    ticker_2: "Intelligence built into the experience",
+    ticker_3: "Deep customization in one click",
+    signal_1: "Continuously evolving interface",
+    signal_2: "Intelligence built into the experience",
+    signal_3: "Deep customization in one click",
+    ai_providers_note: "Supports multiple AI providers, including a local provider via:",
+    smart_preview_label: "Smart capsule preview",
 
     why_title: "Why NibrasShell?",
     why_1_title: "Smart UI",
@@ -258,6 +313,17 @@ const translations = {
     why_2_desc: "Full control over colors, fonts, wallpapers, and menu behavior.",
     why_3_title: "Integrated Services",
     why_3_desc: "System monitoring, smart notifications, network, clipboard, and a full settings hub.",
+
+    shots_title: "UI Highlights",
+    shots_desc: "A few shots that capture the look and feel of the themes.",
+    quick_value_title: "Why this interface works",
+    quick_value_desc: "A compact view of the most practical strengths for daily use.",
+    quick_value_1_title: "Balanced performance",
+    quick_value_1_desc: "Relatively lightweight UI with clear structure and less visual noise.",
+    quick_value_2_title: "Faster access",
+    quick_value_2_desc: "Settings, apps, and notifications stay in predictable, easy-to-reach places.",
+    quick_value_3_title: "Useful intelligence",
+    quick_value_3_desc: "Smart summaries and hints focused on the information that actually matters.",
 
     components_title: "Components at a glance",
     components_1: "Top bar with system indicators and workspaces.",
@@ -329,7 +395,19 @@ const translations = {
     install_footer: "If you hit issues, check the troubleshooting section.",
 
     docs_title: "Docs",
-    docs_sub: "Shortcuts to the technical details.",
+    docs_sub: "Everything in one place: full install and developer docs.",
+    docs_sidebar_title: "Docs Guide",
+    docs_sidebar_overview: "Overview",
+    docs_sidebar_install: "Full Install",
+    docs_sidebar_dev: "Developer Docs",
+    docs_overview_title: "Documentation",
+    docs_overview_desc: "Pick a section from the sidebar to reach install steps or developer docs.",
+    docs_overview_install_title: "Full Install",
+    docs_overview_install_desc: "Automatic and manual steps with distro examples.",
+    docs_overview_install_btn: "Open Install",
+    docs_overview_dev_title: "Developer Docs",
+    docs_overview_dev_desc: "Architecture, scripts, and core services.",
+    docs_overview_dev_btn: "Open Docs",
     docs_ui_title: "UI",
     docs_ui_1: "Top Bar",
     docs_ui_2: "Side Menu",
@@ -405,6 +483,7 @@ const translations = {
     cap_gruv_dark: "Gruvbox – Dark",
     cap_gruv_light: "Gruvbox – Light",
     cap_gruv_mix: "Gruvbox – Mixed",
+    cap_colors: "Colors Theme",
     cap_tokyo: "Tokyo Night",
     cap_tokyo_light: "Tokyo Night – Light",
     cap_deer: "Deer Theme",
@@ -457,9 +536,10 @@ const translations = {
 };
 
 function applyLanguage(lang) {
-  const dict = translations[lang] || translations.ar;
+  const dict = translations[lang] || translations.en;
   document.documentElement.lang = lang === "en" ? "en" : "ar";
   document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+  if (dict.page_title) document.title = dict.page_title;
 
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
@@ -477,20 +557,47 @@ function applyLanguage(lang) {
   });
 }
 
-const savedTheme = localStorage.getItem("nibras-theme");
-if (savedTheme) {
-  document.documentElement.setAttribute("data-theme", savedTheme);
-  if (themeSelect) themeSelect.value = savedTheme;
+function resolveHeroImage(theme) {
+  const map = {
+    "tokyonight": "assets/tokyonight-dark.png",
+    "tokyonight-light": "assets/tokyonight-light.jpg",
+    "dracula": "assets/dracula-dark.png",
+    "dracula-light": "assets/dracula-light.png",
+    "catppuccin": "assets/catppuccin-dark.png",
+    "catppuccin-light": "assets/catppuccin-light.jpg",
+    "gruvbox": "assets/gruvbox-dark.png",
+    "gruvbox-light": "assets/gruvbox-light.png",
+    "nord": "assets/nord-dark.png",
+    "nord-light": "assets/nord-light.png",
+    "material": "assets/material-dark.png",
+    "material-light": "assets/material-light.png"
+  };
+  return map[theme] || "assets/material-dark.png";
 }
 
-const savedLang = localStorage.getItem("nibras-lang") || "ar";
-if (langSelect) langSelect.value = savedLang;
-applyLanguage(savedLang);
+function applyTheme(theme) {
+  if (!theme) return;
+  document.documentElement.setAttribute("data-theme", theme);
+  if (themeSelect) themeSelect.value = theme;
+  if (heroImage) heroImage.src = resolveHeroImage(theme);
+}
+
+const savedTheme = localStorage.getItem("nibras-theme");
+const initialTheme = savedTheme || (themeSelect ? themeSelect.value : null);
+if (initialTheme) {
+  applyTheme(initialTheme);
+}
+
+const savedLang = localStorage.getItem("nibras-lang");
+const browserLang = (navigator.language || "").toLowerCase();
+const initialLang = savedLang || (browserLang.startsWith("ar") ? "ar" : "en");
+if (langSelect) langSelect.value = initialLang;
+applyLanguage(initialLang);
 
 if (themeSelect) {
   themeSelect.addEventListener("change", (e) => {
     const theme = e.target.value;
-    document.documentElement.setAttribute("data-theme", theme);
+    applyTheme(theme);
     localStorage.setItem("nibras-theme", theme);
   });
 }

@@ -1,5 +1,9 @@
 # NibrasShell – Hyprland + Quickshell
 
+A simple, AI-integrated shell interface for Hyprland built with Quickshell.
+
+واجهة بسيطة ومتكاملة مع الذكاء الاصطناعي لـ Hyprland ومبنية باستخدام Quickshell.
+
 **Join our [Discord Server](https://discord.gg/EUcGgRGhrs) for discussions and support!**
 
 [![Discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/EUcGgRGhrs)
