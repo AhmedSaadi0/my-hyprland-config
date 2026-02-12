@@ -113,6 +113,7 @@ const translations = {
 
     install_title: "التثبيت",
     install_sub: "خطوات التثبيت السريعة والملاحظات الأساسية.",
+    install_pre_note: "قبل البدء: سكربت التثبيت يثبت المتطلبات، يجهز الملفات، ينشئ ملف الإعدادات <span dir=\"ltr\">~/.nibrasshell.json</span>، ويحدث Quickshell مع خيار إزالة الواجهة عند الحاجة. السكربت يعمل على Fedora و Arch و Nix فقط، وبقية التوزيعات تحتاج تثبيتاً يدوياً.",
     install_auto: "التثبيت التلقائي",
     install_manual_title: "التثبيت اليدوي الكامل",
     install_manual_intro: "هذه الخطوات مفصّلة لتثبيت الواجهة يدوياً على أي توزيعة عند عدم توفر السكربت.",
@@ -123,6 +124,62 @@ const translations = {
     install_manual_depth_title: "متطلبات تأثير العمق للساعة",
     install_manual_files_title: "تهيئة الملفات يدوياً",
     install_manual_config_title: "إعداد ملف الإعدادات",
+    install_arch_code: `# تثبيت البرامج المطلوبة
+yay -S base-devel brightnessctl konsole blueman ark dolphin ffmpegthumbs
+playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker
+hyprshot-git bc sysstat kitty systemsettings acpi fish kde-material-you-colors plasma5support
+plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil
+libjpeg6-turbo python-regex copyq quickshell
+
+# تثبيت البرامج الاختيارية
+yay -S discord firefox visual-studio-code-bin nwg-look-bin qt5ct telegram-desktop strawberry`,
+    install_fedora_code: `# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
+sudo dnf install ffmpeg --allowerasing
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect
+ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing
+kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge
+NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings
+imsettings-libs sddm playerctl brightnessctl gammastep sysstat
+plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop
+kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core
+gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg
+gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools
+plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip
+p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack
+lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst
+lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13
+python3.13-devel cliphist
+
+# تفعيل مستودع هيبر لاند
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install hyprland hyprshot hyprpicker wl-clipboard
+
+# تفعيل مستودع كويك شل
+sudo dnf copr enable errornointernet/quickshell
+sudo dnf install quickshell`,
+    install_manual_files_code: `git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
+
+# نسخ احتياطي للملفات الأصلية
+mv ~/.config/hypr/ ~/.config/hypr-old
+mv ~/.config/quickshell/ ~/.config/quickshell-old
+mv ~/.config/wofi/ ~/.config/wofi-old
+mv ~/.config/easyeffects ~/.config/easyeffects-old
+mv ~/.config/fish/config.fish ~/.config/fish/config.back.fish
+
+# نسخ ملفات المشروع
+cp -r NibrasShell ~/.config/hypr
+cp -r ~/.config/hypr/config/quickshell ~/.config/quickshell
+cp -r ~/.config/hypr/config/wofi ~/.config/wofi
+cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
+
+# صلاحيات السكربتات
+sudo chmod +x ~/.config/hypr/scripts/*
+sudo chmod +x ~/.config/quickshell/scripts/*`,
+    install_manual_after: "بعد تهيئة الملفات يدوياً يمكنك تشغيل سكربت التثبيت الآن واختيار رقم 2 (تثبيت نبراس شل).",
     install_supported: "التوزيعات المدعومة في السكربت",
     install_notes: "ملاحظات مهمة",
     install_note_1: "قد تختلف أسماء الحزم حسب التوزيعة.",
@@ -377,6 +434,7 @@ const translations = {
 
     install_title: "Install",
     install_sub: "Quick install steps and notes.",
+    install_pre_note: "Before you start: the install script installs dependencies, prepares files, creates the <span dir=\"ltr\">~/.nibrasshell.json</span> config, updates Quickshell, and can remove the setup if needed. The script works on Fedora, Arch, and Nix only; other distros require manual setup.",
     install_auto: "Automatic Install",
     install_manual_title: "Full Manual Installation",
     install_manual_intro: "Detailed steps for manual setup on any distro if the script isn't available.",
@@ -387,6 +445,62 @@ const translations = {
     install_manual_depth_title: "Depth effect requirements",
     install_manual_files_title: "Manual file setup",
     install_manual_config_title: "Config file setup",
+    install_arch_code: `# Install required packages
+yay -S base-devel brightnessctl konsole blueman ark dolphin ffmpegthumbs
+playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker
+hyprshot-git bc sysstat kitty systemsettings acpi fish kde-material-you-colors plasma5support
+plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil
+libjpeg6-turbo python-regex copyq quickshell
+
+# Install optional packages
+yay -S discord firefox visual-studio-code-bin nwg-look-bin qt5ct telegram-desktop strawberry`,
+    install_fedora_code: `# Enable rpmfusion repository
+sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# Install required packages and audio-related extras
+sudo dnf install ffmpeg --allowerasing
+sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect
+ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing
+kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge
+NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings
+imsettings-libs sddm playerctl brightnessctl gammastep sysstat
+plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop
+kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core
+gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg
+gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools
+plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip
+p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack
+lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst
+lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13
+python3.13-devel cliphist
+
+# Enable Hyprland repo
+sudo dnf copr enable solopasha/hyprland
+sudo dnf install hyprland hyprshot hyprpicker wl-clipboard
+
+# Enable Quickshell repo
+sudo dnf copr enable errornointernet/quickshell
+sudo dnf install quickshell`,
+    install_manual_files_code: `git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
+
+# Backup existing configs
+mv ~/.config/hypr/ ~/.config/hypr-old
+mv ~/.config/quickshell/ ~/.config/quickshell-old
+mv ~/.config/wofi/ ~/.config/wofi-old
+mv ~/.config/easyeffects ~/.config/easyeffects-old
+mv ~/.config/fish/config.fish ~/.config/fish/config.back.fish
+
+# Copy project files
+cp -r NibrasShell ~/.config/hypr
+cp -r ~/.config/hypr/config/quickshell ~/.config/quickshell
+cp -r ~/.config/hypr/config/wofi ~/.config/wofi
+cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
+
+# Script permissions
+sudo chmod +x ~/.config/hypr/scripts/*
+sudo chmod +x ~/.config/quickshell/scripts/*`,
+    install_manual_after: "After preparing the files manually, you can run the install script and choose option 2 (Install NibrasShell).",
     install_supported: "Supported distros in script",
     install_notes: "Important notes",
     install_note_1: "Package names may vary by distro.",
@@ -544,6 +658,10 @@ function applyLanguage(lang) {
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
     if (dict[key]) el.textContent = dict[key];
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach(el => {
+    const key = el.getAttribute("data-i18n-html");
+    if (dict[key]) el.innerHTML = dict[key];
   });
 
   document.querySelectorAll("[data-i18n-aria]").forEach(el => {

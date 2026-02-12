@@ -592,6 +592,9 @@ nav {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 13px;
   color: var(--code-text);
+  white-space: pre-line;
+  line-height: 1.55;
+  tab-size: 2;
   overflow-x: auto;
 }
 

@@ -9,6 +9,7 @@ Item {
     id: root
     signal itemClicked
     property var desktopEntity
+    property bool isSelected: false
 
     width: listView.width
     height: 70
@@ -19,7 +20,15 @@ Item {
         anchors.topMargin: 5
         anchors.bottomMargin: 5
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        color: "transparent"
+        color: {
+            if (root.isSelected) {
+                return ThemeManager.selectedTheme.colors.primary.alpha(0.15);
+            }
+            if (mouseArea.containsMouse) {
+                return ThemeManager.selectedTheme.colors.primary.alpha(0.1);
+            }
+            return "transparent";
+        }
 
         Behavior on color {
             ColorAnimation {
@@ -71,6 +80,7 @@ Item {
     }
 
     MouseArea {
+        id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
@@ -79,9 +89,6 @@ Item {
             root.itemClicked();
             bounceAnim.restart();
         }
-
-        onEntered: hoverBg.color = ThemeManager.selectedTheme.colors.primary.alpha(0.1)
-        onExited: hoverBg.color = "transparent"
     }
 
     SequentialAnimation {

@@ -253,6 +253,9 @@ NibrasShell هو سطح مكتب مبني على Hyprland و Quickshell، يرك
 
 ## التثبيت
 
+قبل البدء: سكربت التثبيت يثبت المتطلبات، يجهز الملفات، ينشئ ملف الإعدادات `~/.nibrasshell.json`، ويحدث Quickshell مع خيار إزالة الواجهة عند الحاجة. السكربت يعمل على Fedora و Arch و Nix فقط، وبقية التوزيعات تحتاج تثبيتاً يدوياً.
+Before you start: the install script installs dependencies, prepares files, creates the `~/.nibrasshell.json` config, updates Quickshell, and can remove the setup if needed. The script works on Fedora, Arch, and Nix only; other distros require manual setup.
+
 **تثبيت تلقائي**
 ```bash
 git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
@@ -270,7 +273,7 @@ python install.py
 **التوزيعات المدعومة في السكربت**
 - Arch
 - Fedora
-- Void
+- Nix
 
 ## التثبيت اليدوي الكامل
 
@@ -398,6 +401,8 @@ tar xvf ~/.config/hypr/config/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/ic
 tar xvf ~/.config/hypr/config/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
 tar xvf ~/.config/hypr/config/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
 ```
+بعد تهيئة الملفات يدوياً يمكنك تشغيل سكربت التثبيت الآن واختيار رقم 2 (تثبيت نبراس شل).
+After preparing the files manually, you can run the install script and choose option 2 (Install NibrasShell).
 
 ### إعداد ملف الإعدادات
 ```bash

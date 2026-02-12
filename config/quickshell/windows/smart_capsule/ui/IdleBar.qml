@@ -36,8 +36,12 @@ Item {
     readonly property color contentColor: isMusicPlaying ? "#000000" : themeColor
 
     property bool isEyesHovered: false
+    property bool hoverActive: false
+    property bool hoverLocked: false
+    property int hoverHoldMs: 2500
     function startHoverHold() {
         hoverHoldTimer.stop();
+        hoverHoldTimer.interval = hoverHoldMs;
         hoverHoldTimer.start();
     }
 
@@ -77,15 +81,36 @@ Item {
         });
     }
 
+    HoverHandler {
+        id: capsuleHoverHandler
+        acceptedDevices: PointerDevice.Mouse
+        onHoveredChanged: {
+            root.hoverActive = hovered;
+            if (hovered)
+                hoverHoldTimer.stop();
+            else
+                startHoverHold();
+        }
+    }
+
+    Connections {
+        target: CapsuleManager
+        function onCurrentPriorityChanged() {
+            if (CapsuleManager.currentPriority !== C.HOVER && !root.hoverActive)
+                root.hoverLocked = false;
+        }
+    }
+
     Timer {
         id: hoverHoldTimer
         interval: 2000
         repeat: false
         onTriggered: {
-            if (root.isEyesHovered || capsuleHoverArea.containsMouse)
+            if (root.hoverActive)
                 return;
             if (CapsuleManager.currentPriority > C.HOVER)
                 return;
+            root.hoverLocked = false;
             CapsuleManager.reset();
         }
     }
@@ -265,7 +290,11 @@ Item {
 
                     onClicked: root.requestExpand("weather")
                     onEntered: {
+                        if (root.hoverLocked)
+                            return;
                         if (Weather) {
+                            hoverHoldTimer.stop();
+                            root.hoverLocked = true;
                             CapsuleManager.request({
                                 priority: C.HOVER,
                                 source: C.SRC_WEATHER,
@@ -277,7 +306,7 @@ Item {
                         }
                     }
                     onExited: {
-                        CapsuleManager.reset();
+                        startHoverHold();
                     }
                 }
             }
@@ -360,6 +389,8 @@ Item {
                 hoverEnabled: true
                 onEntered: {
                     root.isEyesHovered = true;
+                    if (root.hoverLocked)
+                        return;
                     if (CapsuleManager.currentPriority > C.HOVER)
                         return;
 
@@ -381,6 +412,7 @@ Item {
                             progress: (MusicService.progress * 100),
                             showProgress: true
                         });
+                        root.hoverLocked = true;
                         EyeController.showEmotion("happy", 2000);
                         return;
                     }
@@ -394,6 +426,7 @@ Item {
                         timeout: 0,
                         changeW: true
                     });
+                    root.hoverLocked = true;
                     EyeController.showEmotion(response.emotion, 2000);
 
                     HoverResponseManager.scheduleExtraIfAny(response);
@@ -490,15 +523,33 @@ Item {
                 }
 
                 onExited: {
-                    CapsuleManager.startRestTimer(3000);
+                    if (CapsuleManager.currentPriority <= C.HOVER) {
+                        startHoverHold();
+                    } else {
+                        CapsuleManager.startRestTimer(3000);
+                    }
                 }
-            }
+                preventStealing: true
+                property real pressY: 0
+                property bool swipeTriggered: false
 
-            MouseArea {
-                id: capsuleHoverArea
-                anchors.fill: parent
-                hoverEnabled: true
-                onExited: startHoverHold()
+                onPressed: mouse => {
+                    pressY = mouse.y;
+                    swipeTriggered = false;
+                }
+
+                onPositionChanged: mouse => {
+                    if (swipeTriggered)
+                        return;
+                    if (!(mouse.buttons & Qt.LeftButton))
+                        return;
+                    if (mouse.y - pressY < -28) {
+                        swipeTriggered = true;
+                        hoverHoldTimer.stop();
+                        CapsuleManager.stopRestTimer();
+                        CapsuleManager.reset();
+                    }
+                }
             }
 
             Text {

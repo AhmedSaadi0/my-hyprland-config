@@ -62,6 +62,34 @@ Item {
         }
     }
 
+    Connections {
+        target: Hyprland
+        ignoreUnknownSignals: true
+        function onToplevelsChanged() {
+            iconResolveDebounce.restart();
+        }
+        function onActiveToplevelChanged() {
+            iconResolveDebounce.restart();
+        }
+    }
+
+    Connections {
+        target: Hyprland.toplevels
+        ignoreUnknownSignals: true
+        function onRowsInserted() {
+            iconResolveDebounce.restart();
+        }
+        function onRowsRemoved() {
+            iconResolveDebounce.restart();
+        }
+        // function onDataChanged() {
+        //     iconResolveDebounce.restart();
+        // }
+        // function onModelReset() {
+        //     iconResolveDebounce.restart();
+        // }
+    }
+
     Component.onCompleted: iconResolveDebounce.start()
 
     Timer {

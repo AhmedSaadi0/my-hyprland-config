@@ -14,6 +14,7 @@ Item {
     // -- Properties & Logic --
     property var lv: ListView.view
     property bool isExpanded: false
+    property bool isSelected: lv.currentIndex === index && matchesSearch
 
     // Check if item matches search text
     property bool matchesSearch: {
@@ -136,7 +137,13 @@ Item {
 
             // Visual feedback
             opacity: 1 - (swipeContainer.x / 300)
-            color: (wrapper.isExpanded || dragArea.pressed) ? ThemeManager.selectedTheme.colors.secondary.alpha(0.1) : "transparent"
+            color: {
+                if (wrapper.isSelected)
+                    return ThemeManager.selectedTheme.colors.primary.alpha(0.15);
+                if (wrapper.isExpanded || dragArea.pressed)
+                    return ThemeManager.selectedTheme.colors.secondary.alpha(0.1);
+                return "transparent";
+            }
 
             Behavior on color {
                 ColorAnimation {

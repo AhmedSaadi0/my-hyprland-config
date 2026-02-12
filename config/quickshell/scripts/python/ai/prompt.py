@@ -4,6 +4,54 @@ PROGRAMMER_PROMPT = "You are an expert programmer. Respond with clean code and b
 
 ASSISTANT_PROMPT = "You are a helpful assistant."
 
+IDLE_CAPSULE_BULK_MESSAGE = (
+    "Generate {count} short hover replies for an idle UI widget. "
+    "Use variety and keep them under 8 words. "
+    "Some responses should include extra_text (a follow-up line, at least 20 characters) "
+    "and extra_delay_ms (1200-2500)."
+)
+
+IDLE_CAPSULE_STARTUP_MESSAGE = (
+    "Generate exactly {count} short hover replies for an idle UI widget. "
+    "Use variety and keep them under 8 words. "
+    "Some responses should include extra_text (a follow-up line, at least 20 characters) "
+    "and extra_delay_ms (1200-2500). "
+    "Use the system boot context below to craft 2-6 responses about the system state "
+    "(errors, warnings, or health). The rest should be general idle responses. "
+    "Avoid line breaks.\n"
+    "BOOT_STATUS: {boot_status}\n"
+    "BOOT_TITLE: {boot_title}\n"
+    "BOOT_SUMMARY: {boot_summary}\n"
+    "BOOT_TIME: {boot_time}\n"
+    "BOOT_LOGS: {boot_logs}"
+)
+
+IDLE_CAPSULE_FRESH_MESSAGE = (
+    "Generate 1 short hover reply for right now. "
+    "Keep it playful and under 8 words. "
+    "You may include extra_text (at least 20 characters)."
+)
+
+MESSAGE_TEMPLATES = {
+    "idle_capsule_bulk": IDLE_CAPSULE_BULK_MESSAGE,
+    "idle_capsule_startup": IDLE_CAPSULE_STARTUP_MESSAGE,
+    "idle_capsule_fresh": IDLE_CAPSULE_FRESH_MESSAGE,
+}
+
+
+def build_message(key, **kwargs):
+    template = MESSAGE_TEMPLATES.get(key)
+    if not template:
+        return None
+    try:
+        safe_kwargs = {}
+        for k, v in kwargs.items():
+            safe_kwargs[k] = str(v).replace("{", "{{").replace("}", "}}")
+        return template.format(**safe_kwargs)
+    except Exception:
+        return template
+
+
 IDLE_CAPSULE_PROMPT = """
 ### SYSTEM ROLE
 You are 'Nibras' (نبراس), a lively UI companion.
@@ -127,11 +175,11 @@ You will process two raw data streams:
 {SYSTEM_LOGS}
 
 ### 4. ANALYSIS LOGIC & HEURISTICS
-- **Boot Speed**: 
+- **Boot Speed**:
   - < 15s: Excellent (Green).
   - 15s - 45s: Normal (Green/Orange).
   - > 45s: Slow/Bloated (Orange/Red).
-- **Error Filtering**: 
+- **Error Filtering**:
   - **IGNORE** harmless ACPI warnings, "dmesg" spam, or minor bluetooth timeouts unless they flood the log.
   - **FOCUS** on: Filesystem corruption, GPU driver failures, Service crashes (Core Dump), or Kernel Panics.
 
@@ -167,7 +215,7 @@ Select the most appropriate **NerdFont Icon** and **Color** based on the severes
 
 SPIKE_ANALYST_PROMPT = """
 ### 1. ROLE
-You are an Elite Linux Systems Engineer. Analyze sudden spikes in CPU/RAM/Temperature with precision.
+**Identity**: You are 'Nibras' (نبراس), an Elite Linux Systems Engineer. Analyze sudden spikes in CPU/RAM/Temperature with precision.
 
 ### 2. INPUT
 You will receive a single JSON object in the user message with:

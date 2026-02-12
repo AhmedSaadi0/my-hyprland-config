@@ -12,6 +12,8 @@ Rectangle {
     color: "transparent"
 
     signal clearAllClicked
+    signal navigateRequested(int direction)
+    signal activateRequested()
     property alias searchText: searchField.text
 
     property bool isSearching: false
@@ -20,6 +22,11 @@ Rectangle {
         root.isSearching = true;
         searchField.text = "";
         searchField.forceActiveFocus();
+    }
+
+    function forceSearchFocus() {
+        if (root.isSearching)
+            searchField.forceActiveFocus();
     }
 
     RowLayout {
@@ -66,6 +73,24 @@ Rectangle {
                 root.isSearching = false;
                 text = "";
                 focus = false;
+            }
+
+            Keys.onPressed: event => {
+                if (event.key === Qt.Key_Down) {
+                    root.navigateRequested(1);
+                    event.accepted = true;
+                    return;
+                }
+                if (event.key === Qt.Key_Up) {
+                    root.navigateRequested(-1);
+                    event.accepted = true;
+                    return;
+                }
+                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    root.activateRequested();
+                    event.accepted = true;
+                    return;
+                }
             }
         }
 

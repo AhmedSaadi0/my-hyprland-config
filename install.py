@@ -273,7 +273,7 @@ def install_dependencies(distro, install_optional=False):
         )
         run_command_verbose("sudo dnf install -y hyprland quickshell")
 
-        required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs power-profiles-daemon lm_sensors copyq vnstat nethogs swww jq dbus-devel python3-devel python3.13 python3.13-devel"
+        required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard cliphist sysstat bc plasma-systemsettings acpi fish lm_sensors copyq vnstat jq dbus-devel python3-devel python3.13 python3.13-devel"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
 
         command = f"sudo dnf install -y {required_pkgs}"
@@ -289,7 +289,7 @@ def install_dependencies(distro, install_optional=False):
         print(YELLOW + "Starting Arch installer" + NC)
         # في آرتش: python هي الحزمة الكاملة وتشمل headers (لا يوجد dev)
         # حالياً python في آرتش هي 3.13
-        required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww python"
+        required_pkgs = "base-devel quickshell brightnessctl konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard cliphist hyprpicker hyprshot-git bc sysstat systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-fantasque-nerd powerdevil libjpeg6-turbo python-regex copyq python python313"
         optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
 
         command = f"yay -S --noconfirm {required_pkgs}"

@@ -2,6 +2,7 @@ import argparse
 import json
 import re
 
+import prompt
 from config import PRESETS, get_provider
 
 try:
@@ -77,7 +78,9 @@ def get_fallback_response(language="en"):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--message", required=True)
+    parser.add_argument("--message", default=None)
+    parser.add_argument("--message_key", default=None)
+    parser.add_argument("--message_vars", default="{}")
     parser.add_argument("--api_key")
     parser.add_argument("--model")
     parser.add_argument("--preset", choices=PRESETS.keys(), default=None)
@@ -106,6 +109,17 @@ def main():
     output = {"success": False, "response": None, "error": ""}
 
     try:
+        final_message = args.message
+        if not final_message and args.message_key:
+            try:
+                message_vars = json.loads(args.message_vars) if args.message_vars else {}
+            except Exception:
+                message_vars = {}
+            final_message = prompt.build_message(args.message_key, **message_vars)
+
+        if not final_message:
+            raise ValueError("Missing --message or invalid --message_key")
+
         final_system = args.system_instruction
         final_temp = args.temperature if args.temperature is not None else 0.7
         final_json_mode = args.json_mode
@@ -125,7 +139,7 @@ def main():
             history = []
 
         llm = get_provider(args, final_system, final_temp, final_json_mode)
-        raw_response_text, _ = llm.generate(args.message, history)
+        raw_response_text, _ = llm.generate(final_message, history)
 
         final_response_data = raw_response_text
 
