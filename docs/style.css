@@ -1230,3 +1230,125 @@ details.manual-install-details[open] summary::after {
 [dir="rtl"] .value-track::before {
   inset-inline-start: 24px;
 }
+
+/* Roadmap Styles */
+.roadmap-flex-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  margin-top: 40px;
+  padding-bottom: 40px;
+}
+
+.roadmap-block {
+  position: relative;
+  padding-inline-start: 30px;
+  border-inline-start: 2px solid var(--border-muted);
+}
+
+.roadmap-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.category-icon {
+  font-size: 20px;
+  background: var(--panel-strong);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--border-muted);
+}
+
+.roadmap-phase {
+  margin-bottom: 25px;
+  margin-inline-start: 20px;
+}
+.roadmap-phase h4 {
+  font-size: 15px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.roadmap-list {
+  list-style: none;
+  padding: 0;
+}
+.roadmap-list li {
+  padding: 10px 0;
+  padding-inline-start: 25px;
+  position: relative;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* حالة: مخطط لها (Planned) */
+.roadmap-list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 16px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+}
+
+/* حالة: قيد التنفيذ (In Progress) */
+.roadmap-list li.in-progress {
+  color: var(--text);
+  font-weight: 500;
+}
+.roadmap-list li.in-progress::before {
+  content: "⚡";
+  border: none;
+  color: var(--accent-3);
+  font-size: 12px;
+  top: 12px;
+}
+
+/* حالة: منتهية (Done) */
+.roadmap-list li.done {
+  color: var(--muted);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+.roadmap-list li.done::before {
+  content: "✓";
+  border: none;
+  color: var(--success);
+  font-weight: bold;
+  top: 12px;
+}
+
+/* الأرشيف */
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+}
+.archive-col h4 {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border-muted);
+  padding-bottom: 5px;
+}
+.done-only li::before {
+  content: "✓";
+  border: none;
+  color: var(--success);
+}
+
+@media (max-width: 768px) {
+  .roadmap-block {
+    padding-inline-start: 20px;
+  }
+  .roadmap-flex-layout {
+    gap: 40px;
+  }
+}

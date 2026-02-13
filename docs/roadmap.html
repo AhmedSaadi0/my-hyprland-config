@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-i18n="nav_roadmap">خارطة الطريق – NibrasShell</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav id="navRoot">
+        <div class="container nav-inner">
+            <div class="brand">
+                <img class="brand-logo" src="assets/logo.jpeg" alt="NibrasShell logo" />
+                <div>
+                    <div data-i18n="brand_name">نِبراس شِل</div>
+                    <div style="font-size:12px;color:var(--muted)" data-i18n="brand_tagline">واجهة مدمجة بالذكاء
+                        الاصطناعي</div>
+                </div>
+            </div>
+            <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+            <div class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+                    <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+                    <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+                </div>
+                <div class="nav-actions">
+                    <div class="nav-icons">
+                        <a class="icon-btn" href="https://github.com/AhmedSaadi0/NibrasShell" target="_blank"
+                            rel="noopener" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.86 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.36-3.37-1.36-.46-1.2-1.12-1.52-1.12-1.52-.92-.65.07-.64.07-.64 1.02.07 1.56 1.08 1.56 1.08.9 1.58 2.36 1.12 2.94.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.74 0 0 .84-.27 2.75 1.05.8-.23 1.66-.35 2.52-.35.86 0 1.72.12 2.52.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.43.2 2.48.1 2.74.64.72 1.03 1.64 1.03 2.76 0 3.93-2.34 4.8-4.57 5.05.36.32.69.95.69 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.18.6.69.49 3.98-1.35 6.84-5.17 6.84-9.67C22 6.58 17.52 2 12 2z" />
+                            </svg>
+                        </a>
+                        <a class="icon-btn" href="https://discord.gg/EUcGgRGhrs" target="_blank" rel="noopener"
+                            aria-label="Discord">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M20.3 4.3A19.6 19.6 0 0 0 16 3a14.6 14.6 0 0 0-.7 1.5 18.2 18.2 0 0 0-4.6 0A14.6 14.6 0 0 0 10 3a19.6 19.6 0 0 0-4.3 1.3C3.4 7.7 2.8 11 3 14.3a19.9 19.9 0 0 0 5.1 2.7 15.3 15.3 0 0 0 1.1-1.7 12.6 12.6 0 0 1-1.7-.8l.4-.3c3.3 1.5 6.8 1.5 10.1 0l.4.3c-.5.3-1.1.6-1.7.8a15.3 15.3 0 0 0 1.1 1.7 19.9 19.9 0 0 0 5.1-2.7c.4-4-.7-7.3-2.8-10zM9.2 13.2c-.8 0-1.4-.7-1.4-1.6 0-.9.6-1.6 1.4-1.6.8 0 1.4.7 1.4 1.6 0 .9-.6 1.6-1.4 1.6zm5.6 0c-.8 0-1.4-.7-1.4-1.6 0-.9.6-1.6 1.4-1.6.8 0 1.4.7 1.4 1.6 0 .9-.6 1.6-1.4 1.6z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <select id="themeSelect" class="theme-select" aria-label="Theme">
+                        <option value="tokyonight">Tokyo Night (Dark)</option>
+                        <option value="tokyonight-light">Tokyo Night (Light)</option>
+                        <option value="dracula">Dracula (Dark)</option>
+                        <option value="dracula-light">Dracula (Light)</option>
+                        <option value="catppuccin">Catppuccin (Dark)</option>
+                        <option value="catppuccin-light">Catppuccin (Light)</option>
+                        <option value="gruvbox">Gruvbox (Dark)</option>
+                        <option value="gruvbox-light">Gruvbox (Light)</option>
+                        <option value="nord">Nord (Dark)</option>
+                        <option value="nord-light">Nord (Light)</option>
+                        <option value="material">Material You (Dark)</option>
+                        <option value="material-light">Material You (Light)</option>
+                    </select>
+                    <select id="langSelect" class="lang-select" aria-label="Language">
+                        <option value="ar">AR</option>
+                        <option value="en">EN</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- قسم المانيفستو والشغف -->
+        <section class="manifesto-section">
+            <h1 class="huge-text" data-i18n="roadmap_title">خارطة الطريق</h1>
+            <p class="muted" data-i18n="roadmap_sub">نبراس شِل هو نتاج هوايتي المستمرة. إليك ما أعمل عليه الآن وما أطمح
+                لتحقيقه في المستقبل.</p>
+        </section>
+
+        <div class="roadmap-flex-layout">
+
+            <!-- 🧠 القسم الأول: العقل والجسد (AI & Capsule) -->
+            <div class="roadmap-block">
+                <div class="roadmap-header">
+                    <span class="category-icon">🧠</span>
+                    <h2 data-i18n="roadmap_ai_title">الذكاء الاصطناعي والكبسولة الذكية</h2>
+                </div>
+
+                <div class="roadmap-phase">
+                    <h4 data-i18n="rd_ai_phases">الجزء 1: خارطة العقل (الذكاء المدمج)</h4>
+                    <ul class="roadmap-list">
+                        <li class="in-progress" data-i18n="rd_ai_li1">المرحلة 1: المراقبة والتسجيل</li>
+                        <li class="planned" data-i18n="rd_ai_li2">المرحلة 2: التشخيص</li>
+                        <li class="planned" data-i18n="rd_ai_li3">المرحلة 3: المحادثة السياقية</li>
+                        <li class="planned" data-i18n="rd_ai_li4">المرحلة 4: اقتراح الحلول</li>
+                        <li class="planned" data-i18n="rd_ai_li5">المرحلة 5: التنفيذ الذاتي</li>
+                    </ul>
+                </div>
+
+                <div class="roadmap-phase">
+                    <h4 data-i18n="rd_capsule_features">الجزء 2: ميزات الجسد (الكبسولة)</h4>
+                    <ul class="roadmap-list">
+                        <li class="done" data-i18n="rd_cap_li1">ردود فعل النظام</li>
+                        <li class="planned" data-i18n="rd_cap_li2">ألوان الكبسولة</li>
+                        <li class="planned" data-i18n="rd_cap_li3">ساعة تقريبية (Fuzzy Clock)</li>
+                        <li class="planned" data-i18n="rd_cap_li4">ملخص الحافظة الذكي</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 🖥️ القسم الثاني: سطح المكتب والشل -->
+            <div class="roadmap-block">
+                <div class="roadmap-header">
+                    <span class="category-icon">🖥️</span>
+                    <h2 data-i18n="roadmap_desktop_title">تخطيط سطح المكتب والشل</h2>
+                </div>
+                <div class="roadmap-phase">
+                    <h4 data-i18n="rd_desktop_bars">الأشرطة والدك (Bars & Dock)</h4>
+                    <ul class="roadmap-list">
+                        <li class="planned" data-i18n="rd_desk_li1">تغيير مواقع الأشرطة</li>
+                        <li class="planned" data-i18n="rd_desk_li2">الإخفاء التلقائي للأشرطة</li>
+                        <li class="planned" data-i18n="rd_desk_li3">إضافة شريط تطبيقات سفلي</li>
+                        <li class="planned" data-i18n="rd_desk_li4">التكيف الذكي للـ Dock</li>
+                    </ul>
+                </div>
+                <div class="roadmap-phase">
+                    <h4 data-i18n="rd_desktop_workspaces">مساحات العمل (Workspaces)</h4>
+                    <ul class="roadmap-list">
+                        <li class="done" data-i18n="rd_ws_li1">أيقونات ديناميكية</li>
+                        <li class="done" data-i18n="rd_ws_li2">سحب وإفلات الأيقونات</li>
+                        <li class="planned" data-i18n="rd_ws_li3">واجهة مرئية (Overview)</li>
+                        <li class="planned" data-i18n="rd_ws_li4">النقر للتركيز</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 🎨 القسم الثالث: الواجهة والثيمات -->
+            <div class="roadmap-block">
+                <div class="roadmap-header">
+                    <span class="category-icon">Art</span>
+                    <h2 data-i18n="roadmap_ui_title">الواجهة والثيمات</h2>
+                </div>
+                <ul class="roadmap-list">
+                    <li class="done" data-i18n="rd_ui_li1">تحسين هيكلية ThemeManager</li>
+                    <li class="done" data-i18n="rd_ui_li2">دعم خلفيات GIF و Video</li>
+                    <li class="done" data-i18n="rd_ui_li3">ضبط متغيرات Material 3</li>
+                    <li class="planned" data-i18n="rd_ui_li4">وضع الألعاب (Game Mode)</li>
+                    <li class="in-progress" data-i18n="rd_ui_li5">تأثير العمق التلقائي</li>
+                    <li class="planned" data-i18n="rd_ui_li6">ثيمات جديدة</li>
+                </ul>
+            </div>
+
+            <!-- 🧰 القسم الرابع: الإنتاجية والنظام -->
+            <div class="roadmap-block">
+                <div class="roadmap-header">
+                    <span class="category-icon">⚙️</span>
+                    <h2 data-i18n="roadmap_sys_title">الإنتاجية والنظام</h2>
+                </div>
+                <ul class="roadmap-list">
+                    <li class="done" data-i18n="rd_sys_li1">مؤشر اللغة والبطارية</li>
+                    <li class="done" data-i18n="rd_sys_li2">مدير الحافظة وقائمة المهام</li>
+                    <li class="planned" data-i18n="rd_sys_li3">ودجت الملاحظات السريعة</li>
+                    <li class="planned" data-i18n="rd_sys_li4">مواقيت الصلاة والتاريخ الهجري</li>
+                    <li class="planned" data-i18n="rd_sys_li5">مدير البلوتوث وإعدادات الشاشة</li>
+                    <li class="in-progress" data-i18n="rd_sys_li6">تحسين الكود: EventBus</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- ✅ القسم الخامس: الأرشيف المكتمل -->
+        <section class="section archive-section">
+            <details class="manual-install-details">
+                <summary><strong data-i18n="roadmap_archive_title">ما تم إنجازه (أرشيف الإصدارات السابقة)</strong>
+                </summary>
+                <div class="manual-content archive-grid">
+                    <!-- الأرشيف يبقى ثابتاً لأنه تاريخي -->
+                    <div class="archive-col">
+                        <h4>Smart Capsule & AI</h4>
+                        <ul class="roadmap-list done-only">
+                            <li>Dynamic Island Support</li>
+                            <li>AI Weather Analysts & Alerts</li>
+                            <li>AI Audiophile Critic</li>
+                            <li>Animated Robot Eye</li>
+                        </ul>
+                    </div>
+                    <div class="archive-col">
+                        <h4>UI & UX</h4>
+                        <ul class="roadmap-list done-only">
+                            <li>System Tray & Launcher</li>
+                            <li>Notification Center & History</li>
+                            <li>OSD (Volume, Brightness)</li>
+                            <li>Cheatsheet Menu</li>
+                        </ul>
+                    </div>
+                    <div class="archive-col">
+                        <h4>System & Theming</h4>
+                        <ul class="roadmap-list done-only">
+                            <li>Material 3 Dynamic Coloring</li>
+                            <li>Automatic Wallpaper Changer</li>
+                            <li>GTK4 Theme Support</li>
+                            <li>Settings Window (Full UI)</li>
+                        </ul>
+                    </div>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container" data-i18n="footer_pages">NibrasShell Project © 2024</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
