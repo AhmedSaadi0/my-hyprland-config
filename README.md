@@ -1,7 +1,6 @@
-````markdown
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/AhmedSaadi0/NibrasShell/main/docs/assets/logo.jpeg" width="120" height="120" style="border-radius: 20px;">
+<img src="https://ahmedsaadi0.github.io/NibrasShell/assets/logo.jpeg" width="120" height="120" style="border-radius: 20px;">
 
 # NibrasShell
 
@@ -17,7 +16,7 @@ _A modern, smart AI-integrated Hyprland shell built with passion._
 
 <br>
 
-<img src="https://raw.githubusercontent.com/AhmedSaadi0/NibrasShell/main/docs/assets/material-dark.png" alt="NibrasShell Preview" width="100%">
+<img src="https://ahmedsaadi0.github.io/NibrasShell/assets/material-dark.png" alt="NibrasShell Preview" width="100%">
 
 </div>
 
@@ -45,7 +44,6 @@ git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
 cd NibrasShell
 python install.py
 ```
-````
 
 For full manual installation steps, please visit the **[Documentation](https://ahmedsaadi0.github.io/NibrasShell/docs-install.html)**.
 
@@ -53,8 +51,3 @@ For full manual installation steps, please visit the **[Documentation](https://a
 
 > **🔗 Stay Updated:**
 > Check out the [Development Roadmap](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html) to see what I'm building next!
-
-```
-
-
-```
