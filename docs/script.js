@@ -33,8 +33,9 @@ const translations = {
 
     // --- الصفحة الرئيسية: لماذا والأدوات ---
     why_title: "لماذا نبراس شِل؟",
-    tools_title: "أدوات تحكم وإنتاجية متكاملة",
-    tools_sub: "كل ما تحتاجه للتحكم في نظامك موجود بداخل الواجهة.",
+    tools_title: "هي هواية، ليس إلا",
+    tools_sub:
+      "كل سطر كود في هذه الأدوات كُتب من أجل المتعة الشخصية وحب الاستكشاف، دون أي أهداف أخرى.",
 
     tool_settings_title: "تطبيق إعدادات مدمج وشامل",
     tool_settings_desc:
@@ -255,8 +256,9 @@ Choose your language / اختر لغتك / Vyberte jazyk:
 
     // --- Why & Tools ---
     why_title: "Why NibrasShell?",
-    tools_title: "Integrated Control & Productivity",
-    tools_sub: "Everything you need to control your system is built right in.",
+    tools_title: "It's just a hobby, nothing more",
+    tools_sub:
+      "Every line of code in these tools was written for personal enjoyment and the love of exploration, with no other goals.",
 
     tool_settings_title: "Comprehensive Built-in Settings",
     tool_settings_desc:
