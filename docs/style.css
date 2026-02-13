@@ -280,7 +280,7 @@ a:hover {
 }
 
 .container {
-  width: min(1100px, 92vw);
+  width: min(1300px, 92vw);
   margin: 0 auto;
 }
 
@@ -694,7 +694,7 @@ nav {
 .smart-preview video,
 .smart-preview img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
   display: block;
 }
@@ -786,32 +786,60 @@ nav {
    ========================================= */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  /* تحديد 3 أعمدة متساوية الحجم */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px; /* المسافة بين الصور */
+  margin-top: 40px;
 }
+
 .gallery-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
   background: var(--panel);
   border: 1px solid var(--border-muted);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: var(--transition);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  aspect-ratio: 16 / 10; /* توحيد أبعاد جميع الكروت لتبدو منظمة */
 }
-.gallery-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--accent);
-}
+
 .gallery-card img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover; /* لضمان ملء الصورة للكارت دون تشويه */
   display: block;
+  transition: transform 0.5s ease;
 }
-.gallery-card .caption {
-  padding: 12px 16px;
-  color: var(--muted);
-  font-size: 13px;
-  border-top: 1px solid var(--border-muted);
+
+/* تأثير الارتفاع عند الحوم (Hover) */
+.gallery-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+}
+
+.gallery-card:hover img {
+  transform: scale(1.05); /* زووم خفيف للصورة عند التأشير */
+}
+
+/* --- التجاوب (Responsive) --- */
+
+/* للشاشات المتوسطة (أجهزة التابلت): صورتين في الصف */
+@media (max-width: 992px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* للشاشات الصغيرة (الموبايل): صورة واحدة في الصف */
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
 /* Value Track */

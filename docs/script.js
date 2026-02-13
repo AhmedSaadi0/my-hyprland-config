@@ -44,25 +44,34 @@ const translations = {
       "يدعم عدة مزودين للذكاء الاصطناعي، بما فيها مزود محلي عبر:",
     smart_preview_label: "معاينة الكبسولة الذكية",
 
-    why_title: "لماذا نبراس شِل؟",
-    why_1_title: "واجهة ذكية",
-    why_1_desc:
-      "كبسولة ذكية تتفاعل مع المستخدم عبر الهوفر، وتعرض رسائل الذكاء الاصطناعي مع ملخصات الطقس والموسيقى.",
-    why_2_title: "تخصيص عميق",
-    why_2_desc: "تحكم شامل بالألوان والخطوط والخلفيات وأسلوب القوائم.",
-    why_3_title: "خدمات متكاملة",
-    why_3_desc: "مراقبة النظام، إشعارات ذكية، شبكة، حافظة، ومركز إعدادات كامل.",
-    tools_title: "أدوات تحكم وإنتاجية متكاملة",
-    tools_sub: "كل ما تحتاجه للتحكم في نظامك موجود بداخل الواجهة.",
-    tool_settings_title: "تطبيق إعدادات مدمج وشامل",
-    tool_settings_desc:
-      "لا حاجة لتعديل ملفات التكوين يدوياً. تطبيق الإعدادات المدمج يمنحك السيطرة الكاملة على الألوان، الثيمات، الخلفيات، وحتى اختيار نماذج الذكاء الاصطناعي المفضلة لديك.",
-    tool_settings_li1: "تعديل الثيمات والألوان لحظياً.",
-    tool_settings_li2: "إدارة نماذج AI وتخصيصها.",
+    why_title: "خلف الكواليس: لماذا قمت ببناء نبراس شِل؟",
+    tools_title: "أدوات طورتها لتسهيل تجربتي الخاصة",
+    tools_sub:
+      "بنيت هذه الواجهة لأنني أحب تخصيص كل تفصيلة في نظامي، وهذه الأدوات هي نتاج ساعات من الهواية الممتعة.",
 
-    tool_launcher_title: "مشغل تطبيقات ذكي ومتصل",
+    tool_settings_title: "تطبيق الإعدادات: مكاني الخاص للتحكم",
+    tool_settings_desc:
+      "بدلاً من تعديل الملفات النصية المعقدة، كتبت هذا التطبيق المدمج لأعدل الألوان والثيمات ونماذج الذكاء الاصطناعي مباشرة وبسهولة، تماماً كما أحب أن أراها.",
+    tool_settings_li1: "تعديل لحظي للثيمات حسب مزاجي.",
+    tool_settings_li2: "تخصيص نماذج AI التي أهوى العمل عليها.",
+
+    tool_launcher_title: "مشغل التطبيقات: بساطة وسرعة",
     tool_launcher_desc:
-      "أكثر من مجرد قائمة تطبيقات. يوفر لك وضع الأوامر المتطور وخاصية جلب الخلفيات مباشرة.",
+      "أردت مشغل تطبيقات يقوم بما أحتاجه فعلاً؛ يفتح برامجي، ينفذ أوامري السريعة عبر الرمز >، ويجلب لي خلفيات جميلة من Wallhaven تلقائياً.",
+
+    hobby_note_title: "هواية لا تتوقف",
+    hobby_note_desc:
+      "نبراس شِل هو مشروعي الشخصي وهوايتي المفضلة. طالما أنني أستمتع بكتابة الكود واستكشاف إمكانيات Linux، سأستمر في تطويره وتحسينه. بالنسبة لي، الشغف هو الضمان الوحيد للاستمرارية.",
+
+    why_1_title: "تفاعلات ذكية",
+    why_1_desc:
+      "أضفت الكبسولة الذكية لتكون رفيقي في سطح المكتب، تعرض لي ما أحتاج معرفته عن الطقس والموسيقى بلمسة شخصية.",
+    why_2_title: "حرية التخصيص",
+    why_2_desc:
+      "لا توجد قيود، الواجهة مفتوحة لكل فكرة تخطر ببالي لتغيير الألوان أو أسلوب القوائم.",
+    why_3_title: "تكامل الخدمات",
+    why_3_desc:
+      "جمعت كل ما أحتاجه من مراقبة للنظام وإشعارات وحافظة في مكان واحد يخدمني يومياً.",
     tool_launcher_li1: "استخدم الرمز > للوصول لأوامر النظام السريعة.",
     tool_launcher_li2: "تكامل مع Wallhaven لجلب وتغيير الخلفيات مباشرة.",
 
@@ -369,20 +378,7 @@ Choose your language / اختر لغتك / Vyberte jazyk:
       "Supports multiple AI providers, including a local provider via:",
     smart_preview_label: "Smart capsule preview",
 
-    tools_title: "Integrated Control & Productivity",
-    tools_sub: "Everything you need to control your system is built right in.",
-    tool_settings_title: "Comprehensive Built-in Settings",
-    tool_settings_desc:
-      "No need to edit config files manually. The built-in settings app gives you full control over colors, themes, wallpapers, and even your preferred AI models.",
-    tool_settings_li1: "Modify themes and colors instantly.",
-    tool_settings_li2: "Manage and customize AI models.",
-
-    tool_launcher_title: "Smart Connected Launcher",
-    tool_launcher_desc:
-      "More than just an app list. It offers an advanced command mode and direct wallpaper fetching.",
-    tool_launcher_li1: "Use the > symbol for quick system commands.",
-    tool_launcher_li2: "Wallhaven integration to fetch wallpapers directly.",
-    why_title: "Why NibrasShell?",
+    why_title: "Behind the Scenes: Why I built NibrasShell",
     why_1_title: "Smart UI",
     why_1_desc:
       "A smart capsule that reacts to user hover and shows AI messages with weather and music summaries.",
@@ -392,6 +388,25 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     why_3_title: "Integrated Services",
     why_3_desc:
       "System monitoring, smart notifications, network, clipboard, and a full settings hub.",
+    tool_launcher_li1: "Use the > symbol for quick system commands.",
+    tool_launcher_li2: "Wallhaven integration to fetch wallpapers directly.",
+    tools_title: "Tools built for my own experience",
+    tools_sub:
+      "I built this shell because I love customizing every detail of my system. These tools are the result of countless hours of hobbyist joy.",
+
+    tool_settings_title: "Settings App: My Control Hub",
+    tool_settings_desc:
+      "Instead of editing complex config files, I wrote this integrated app to tweak colors, themes, and AI models directly—exactly how I like to see them.",
+    tool_settings_li1: "Real-time theme adjustments based on my mood.",
+    tool_settings_li2: "Customizing AI models I enjoy working with.",
+
+    tool_launcher_title: "App Launcher: Simple & Fast",
+    tool_launcher_desc:
+      "I wanted a launcher that does what I actually need: opens my apps, executes quick commands via the > symbol, and fetches beautiful Wallhaven wallpapers automatically.",
+
+    hobby_note_title: "A Never-ending Hobby",
+    hobby_note_desc:
+      "NibrasShell is my personal project and my favorite hobby. As long as I enjoy writing code and exploring Linux possibilities, I will keep developing and improving it. To me, passion is the only guarantee of continuity.",
 
     shots_title: "UI Highlights",
     shots_desc: "A few shots that capture the look and feel of the themes.",
