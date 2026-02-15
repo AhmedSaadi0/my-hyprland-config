@@ -1352,3 +1352,75 @@ details.manual-install-details[open] summary::after {
     gap: 40px;
   }
 }
+/* تصميم قسم التبرعات المتعددة */
+.donation-main-card {
+  border: 2px solid var(--accent-3); /* لون ذهبي/برتقالي لجذب الانتباه */
+  background: var(--panel-strong);
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.donation-intro {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 30px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.donation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* عمودين */
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.mini-donate-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: var(--bg);
+  border: 1px solid var(--border-muted);
+  border-radius: 12px;
+  text-align: right;
+  transition: var(--transition);
+}
+
+.mini-donate-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  background: var(--panel);
+}
+
+.org-emoji {
+  font-size: 24px;
+}
+
+.org-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.org-name {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.org-type {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* التجاوب للهواتف */
+@media (max-width: 600px) {
+  .donation-grid {
+    grid-template-columns: 1fr; /* عمود واحد في الموبايل */
+  }
+  .donation-main-card {
+    padding: 20px;
+  }
+}

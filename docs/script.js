@@ -223,7 +223,14 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     dev_note_1: "الكبسولة الذكية في `config/quickshell/windows/smart_capsule`.",
     dev_note_2: "القائمة الجانبية في `config/quickshell/windows/leftwindow`.",
     dev_note_3: "الإعدادات في `config/quickshell/windows/settings`.",
-
+    donate_title: "دعم المشروع؟",
+    donate_desc:
+      "إذا كنت ترغب في دعمي مالياً، فشكراً لك! لكن الحمد لله وضعي المادي جيد. بدلاً من ذلك، أدعوك للتبرع لأهلنا في غزة، فهم في أمسّ الحاجة للدعم الآن.",
+    donate_btn: "تبرع لغزة الآن 🇵🇸",
+    org_medical: "إغاثة طبية للأطفال",
+    org_general: "إغاثة عامة وطوارئ",
+    org_food: "توفير الغذاء والوجبات",
+    org_msf: "دعم الفرق الطبية",
     // --- Footer ---
     footer_pages: "NibrasShell Project © " + new Date().getFullYear(),
   },
@@ -441,7 +448,14 @@ Choose an option: 2
     dev_note_1: "Smart capsule: `config/quickshell/windows/smart_capsule`.",
     dev_note_2: "Side menu: `config/quickshell/windows/leftwindow`.",
     dev_note_3: "Settings: `config/quickshell/windows/settings`.",
-
+    donate_title: "Support the project?",
+    donate_desc:
+      "If you're considering a financial donation, thank you! However, my financial situation is stable. Instead, I invite you to donate to the people of Gaza, as they are in much greater need of support right now.",
+    donate_btn: "Donate to Gaza Now 🇵🇸",
+    org_medical: "Medical relief for children",
+    org_general: "General & emergency relief",
+    org_food: "Food & meal programs",
+    org_msf: "Support medical teams",
     // --- Footer ---
     footer_pages: "NibrasShell Project © " + new Date().getFullYear(),
   },

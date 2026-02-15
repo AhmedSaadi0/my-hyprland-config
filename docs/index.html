@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="auto">
 
 <head>
     <meta charset="utf-8" />
@@ -22,6 +22,7 @@
             <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
             <div class="nav-menu">
                 <div class="nav-links">
+                    <a href="#donate" data-i18n="donate_btn" style="color:var(--success)">تبرع لغزة 🇵🇸</a>
                     <a href="index.html" data-i18n="nav_home">الرئيسية</a>
                     <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
                     <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
@@ -67,6 +68,9 @@
     </nav>
 
     <main class="container">
+
+
+
         <section class="hero hero-v2">
             <div class="hero-grid">
                 <div class="hero-copy">
@@ -238,7 +242,58 @@
                 </li>
             </ol>
         </section>
+        <section class="section" id="donate">
+            <div class="card donation-main-card">
+                <div class="kpi">
+                    <span class="dot gaza-dot"></span>
+                    <strong data-i18n="donate_title">دعم المشروع؟</strong>
+                </div>
 
+                <p class="donation-intro" data-i18n="donate_desc">
+                    إذا كنت ترغب في دعم "نبراس شِل"، فأنا أشكرك جداً! ولكن الحمد لله وضعي المادي مستقر. بدلاً من ذلك،
+                    أدعوك لتوجيه هذا الدعم لأهلنا في غزة عبر جهات موثوقة:
+                </p>
+
+                <div class="donation-grid">
+                    <!-- PCRF -->
+                    <a href="https://www.pcrf.net/" target="_blank" class="mini-donate-card">
+                        <span class="org-emoji">🏥</span>
+                        <div class="org-info">
+                            <span class="org-name">PCRF</span>
+                            <span class="org-type" data-i18n="org_medical">إغاثة طبية للأطفال</span>
+                        </div>
+                    </a>
+
+                    <!-- Islamic Relief -->
+                    <a href="https://www.islamic-relief.org/" target="_blank" class="mini-donate-card">
+                        <span class="org-emoji">📦</span>
+                        <div class="org-info">
+                            <span class="org-name">Islamic Relief</span>
+                            <span class="org-type" data-i18n="org_general">إغاثة عامة وغذاء</span>
+                        </div>
+                    </a>
+
+                    <!-- WFP -->
+                    <a href="https://www.wfp.org/emergencies/palestine-emergency" target="_blank"
+                        class="mini-donate-card">
+                        <span class="org-emoji">🍲</span>
+                        <div class="org-info">
+                            <span class="org-name">WFP</span>
+                            <span class="org-type" data-i18n="org_food">برنامج الأغذية العالمي</span>
+                        </div>
+                    </a>
+
+                    <!-- MSF -->
+                    <a href="https://www.msf.org/" target="_blank" class="mini-donate-card">
+                        <span class="org-emoji">🩺</span>
+                        <div class="org-info">
+                            <span class="org-name">MSF</span>
+                            <span class="org-type" data-i18n="org_msf">أطباء بلا حدود</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
         <section class="footer">
             <div class="container" data-i18n="footer_pages">NibrasShell Project © 2024</div>
         </section>
