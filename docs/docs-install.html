@@ -12,17 +12,20 @@
     <nav id="navRoot">
         <div class="container nav-inner">
             <div class="brand">
-                <div class="brand-badge"></div>
+                <img class="brand-logo" src="assets/logo.jpeg" alt="NibrasShell logo" />
                 <div>
-                    <div>NibrasShell</div>
-                    <div style="font-size:12px;color:var(--muted)">Hyprland + Quickshell</div>
+                    <div data-i18n="brand_name">نِبراس شِل</div>
+                    <div style="font-size:12px;color:var(--muted)" data-i18n="brand_tagline">واجهة مدمجة بالذكاء
+                        الاصطناعي</div>
                 </div>
             </div>
             <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
             <div class="nav-menu">
                 <div class="nav-links">
+                    <a href="index.html#donate" data-i18n="donate_btn" style="color:var(--success)">تبرع لغزة 🇵🇸</a>
                     <a href="index.html" data-i18n="nav_home">الرئيسية</a>
                     <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+                    <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
                 </div>
                 <div class="nav-actions">
                     <div class="nav-icons">
@@ -74,188 +77,200 @@
 
         <section class="docs-content">
             <h1 data-i18n="install_title">التثبيت</h1>
-            <p class="muted" data-i18n="install_sub">خطوات التثبيت السريعة والملاحظات الأساسية.</p>
-            <p class="muted" data-i18n-html="install_pre_note">قبل البدء: سكربت التثبيت يثبت المتطلبات، يجهز الملفات،
-                ينشئ ملف الإعدادات <span dir="ltr">~/.nibrasshell.json</span>، ويحدث Quickshell مع خيار إزالة الواجهة
-                عند
-                الحاجة. السكربت يعمل على Fedora و Arch و Nix فقط، وبقية التوزيعات تحتاج تثبيتاً يدوياً.</p>
 
             <section class="section">
-                <h2 data-i18n="install_auto">التثبيت التلقائي</h2>
-                <div class="code" dir="ltr">git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
-                    cd NibrasShell
-                    python install.py</div>
-            </section>
-
-            <section class="section">
-                <h2 data-i18n="install_manual_title">التثبيت اليدوي الكامل</h2>
-                <p class="muted" data-i18n="install_manual_intro">هذه الخطوات مفصّلة لتثبيت الواجهة يدوياً على أي توزيعة
-                    عند عدم توفر السكربت.</p>
-
-                <h3 data-i18n="install_manual_deps_title">الاعتماديات الأساسية</h3>
-                <ul class="list">
-                    <li>Hyprland</li>
-                    <li>Quickshell</li>
-                    <li>playerctl</li>
-                    <li>polkit-kde-agent أو polkit-gnome</li>
-                    <li>FantasqueSansM Nerd Font</li>
-                    <li>dolphin</li>
-                    <li>konsole</li>
-                    <li>brightnessctl</li>
-                    <li>gammastep</li>
-                    <li>wl-clipboard</li>
-                    <li>cliphist</li>
-                    <li>hyprpicker</li>
-                    <li>sysstat</li>
-                    <li>bc</li>
-                    <li>systemsettings</li>
-                    <li>acpi</li>
-                    <li>fish</li>
-                    <li>lm_sensors</li>
-                    <li>copyq</li>
-                    <li>kde-material-you-colors</li>
-                    <li>vnstat</li>
-                </ul>
-
-                <h3 data-i18n="install_manual_optional_title">اعتماديات اختيارية</h3>
-                <ul class="list">
-                    <li>strawberry</li>
-                    <li>easyeffects</li>
-                    <li>blueman</li>
-                    <li>telegram-desktop</li>
-                    <li>discord</li>
-                    <li>kvantum</li>
-                    <li>firefox</li>
-                </ul>
-
-                <h3 data-i18n="install_manual_arch_title">مثال لمستخدمي Arch</h3>
-                <div class="code" dir="ltr" data-i18n="install_arch_code"># تثبيت البرامج المطلوبة
-                    yay -S base-devel brightnessctl konsole blueman ark dolphin ffmpegthumbs
-                    playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker
-                    hyprshot-git bc sysstat kitty systemsettings acpi fish kde-material-you-colors plasma5support
-                    plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil
-                    libjpeg6-turbo python-regex copyq quickshell
-
-                    # تثبيت البرامج الاختيارية
-                    yay -S discord firefox visual-studio-code-bin nwg-look-bin qt5ct telegram-desktop strawberry
-                </div>
-
-                <h3 data-i18n="install_manual_fedora_title">مثال لمستخدمي Fedora</h3>
-                <div class="code" dir="ltr" data-i18n="install_fedora_code"># Enable rpmfusion repository
-                    sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E
-                    %fedora).noarch.rpm
-                    sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E
-                    %fedora).noarch.rpm
-
-                    # تثبيت البرامج المطلوبه وبرامج اخرى مثل دعم الصوتيات
-                    sudo dnf install ffmpeg --allowerasing
-                    sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3 kde-connect
-                    ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings kdenetwork-filesharing
-                    kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze xwaylandvideobridge
-                    NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm kde-connect-libs imsettings
-                    imsettings-libs sddm playerctl brightnessctl gammastep sysstat
-                    plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects blueman telegram-desktop
-                    kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav strawberry dnf-plugins-core
-                    gstreamer1-plugins-ugly gstreamer1-plugins-bad-free gstreamer1-plugins-bad-freeworld ffmpeg
-                    gstreamer1-plugins-base-devel vnstat nethogs retroarch inkscape gimp g4music android-tools
-                    plasma-integration-qt5 plasma-integration vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip
-                    p7zip p7zip-plugins unrar copyq jq lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack
-                    lsp-plugins-ladspa lv2-calf-plugins lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst
-                    lsp-plugins-vst3 lsp-plugins-jack lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13
-                    python3.13-devel cliphist
-
-                    # تفعيل مستودع هيبر لاند
-                    sudo dnf copr enable solopasha/hyprland
-                    sudo dnf install hyprland hyprshot hyprpicker wl-clipboard
-
-                    # تفعيل مستودع كويك شل
-                    sudo dnf copr enable errornointernet/quickshell
-                    sudo dnf install quickshell
-                </div>
-
-                <h3 data-i18n="install_manual_depth_title">متطلبات تأثير العمق للساعة</h3>
-                <div class="code" dir="ltr">python3.13 -m venv ~/.cache/nibrasshell/venv
-                    ~/.cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools
-                    ~/.cache/nibrasshell/venv/bin/pip install -r
-                    ~/.config/quickshell/scripts/python/requirements-3.13.txt</div>
-                <p class="muted" data-i18n="install_manual_after">بعد تهيئة الملفات يدوياً يمكنك تشغيل سكربت التثبيت
-                    الآن
-                    واختيار رقم 2 (تثبيت نبراس شل).</p>
-                <h3 data-i18n="install_manual_files_title">تهيئة الملفات يدوياً</h3>
-                <div class="code" dir="ltr" data-i18n="install_manual_files_code">
+                <h2 data-i18n="install_auto_title">الطريقة التلقائية (موصى بها)</h2>
+                <p class="muted" data-i18n="install_auto_desc">قم باستنساخ المستودع، ثم قم بتشغيل السكربت التالي الذي
+                    سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات
+                <div class="code" dir="ltr">
                     git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
                     cd NibrasShell
-
-                    # نسخ احتياطي للملفات الأصلية
-                    mv ~/.config/hypr/ ~/.config/hypr-old
-                    mv ~/.config/quickshell/ ~/.config/quickshell-old
-                    mv ~/.config/wofi/ ~/.config/wofi-old
-                    mv ~/.config/easyeffects ~/.config/easyeffects-old
-                    mv ~/.config/fish/config.fish ~/.config/fish/config.back.fish
-
-                    # نسخ ملفات المشروع
-                    cp -r nibrasshell ~/.config/hypr
-                    cp -r ~/.config/hypr/config/quickshell ~/.config/quickshell
-                    cp -r ~/.config/hypr/config/wofi ~/.config/wofi
-                    cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
-
-                    # صلاحيات السكربتات
-                    sudo chmod +x ~/.config/hypr/scripts/*
-                    sudo chmod +x ~/.config/quickshell/scripts/*
-
-                    # easyeffects
-                    cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
-
-                    # Copy files
-                    mkdir ~/.local/share/color-schemes/
-                    mkdir ~/.local/share/konsole/
-                    mkdir ~/.config/Kvantum/
-                    mkdir ~/.config/qt5ct/
-                    mkdir ~/.config/qt6ct/
-
-                    cp -r ~/.config/hypr/config/plasma-colors/* ~/.local/share/color-schemes/
-                    cp -r ~/.config/hypr/config/kvantum-themes/* ~/.config/Kvantum/
-                    cp -r ~/.config/hypr/config/konsole/* ~/.local/share/konsole/
-                    cp ~/.config/hypr/config/qt5ct.conf ~/.config/qt5ct/
-                    cp ~/.config/hypr/config/qt6ct.conf ~/.config/qt6ct/
-
-                    mkdir ~/.fonts
-                    cp -r ~/.config/hypr/config/.fonts/* ~/.fonts
-
-                    mkdir ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/BeautySolar.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
-                    tar xvf ~/.config/hypr/config/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons
+                    python install.py
                 </div>
-
-
-                <h3 data-i18n="install_manual_config_title">إعداد ملف الإعدادات</h3>
             </section>
 
-            <section class="section">
-                <h2 data-i18n="install_supported">التوزيعات المدعومة في السكربت</h2>
-                <ul class="list">
-                    <li>Arch</li>
-                    <li>Fedora</li>
-                    <li>Nix</li>
-                </ul>
-            </section>
+            <details class="manual-install-details">
+                <summary><strong data-i18n="install_manual_toggle">التثبيت اليدوي (اضغط للفتح)</strong></summary>
 
-            <section class="section">
-                <h2 data-i18n="install_notes">ملاحظات مهمة</h2>
-                <ul class="list">
-                    <li data-i18n="install_note_1">قد تختلف أسماء الحزم حسب التوزيعة.</li>
-                    <li data-i18n="install_note_2">يفضّل إعادة تشغيل النظام بعد التثبيت.</li>
-                    <li data-i18n="install_note_3">يمكنك التثبيت اليدوي على أي توزيعة أخرى.</li>
-                </ul>
-            </section>
+                <div class="manual-content" style="margin-top: 20px;">
+                    <h3 data-i18n="install_manual_deps">برامج ضرورية</h3>
+                    <ul class="list" dir="auto">
+                        <li><a href="https://wiki.hyprland.org/Getting-Started/Installation/"
+                                target="_blank">Hyprland</a></li>
+                        <li><a href="https://quickshell.outfoxxed.me/docs/guide/install-setup/"
+                                target="_blank">Quickshell</a></li>
+                        <li>network-manager-applet</li>
+                        <li>playerctl</li>
+                        <li>polkit-kde-agent أو polkit-gnome</li>
+                        <li><a href="https://www.nerdfonts.com/font-downloads" target="_blank">FantasqueSansM Nerd
+                                Font</a></li>
+                        <li>dolphin</li>
+                        <li>konsole</li>
+                        <li>brightnessctl</li>
+                        <li>gammastep</li>
+                        <li>wl-clipboard</li>
+                        <li>hyprpicker</li>
+                        <li>sysstat</li>
+                        <li>bc</li>
+                        <li>sassc</li>
+                        <li>swww</li>
+                        <li>systemsettings</li>
+                        <li>acpi</li>
+                        <li>fish</li>
+                        <li>gnome-bluetooth-3.0</li>
+                        <li>power-profiles-daemon</li>
+                        <li>lm_sensors</li>
+                        <li>copyq</li>
+                        <li><a href="https://github.com/luisbocanegra/kde-material-you-colors" target="_blank">KDE
+                                Material You Colors</a></li>
+                        <li>vnstat</li>
+                        <li>nethogs</li>
+                    </ul>
+
+                    <h3 data-i18n="install_manual_optional">برامج اختيارية</h3>
+                    <ul class="list" dir="auto">
+                        <li>strawberry</li>
+                        <li>easyeffects</li>
+                        <li>blueman</li>
+                        <li>telegram-desktop</li>
+                        <li>discord</li>
+                        <li>kvantum</li>
+                        <li>firefox</li>
+                    </ul>
+
+                    <h3 data-i18n="install_arch_title">تثبيت البرامج لمستخدمي Arch:</h3>
+                    <div class="code" dir="ltr">
+                        yay -S base-devel brightnessctl network-manager-applet konsole blueman ark dolphin ffmpegthumbs
+                        playerctl kvantum polkit-kde-agent jq gufw tar gammastep wl-clipboard easyeffects hyprpicker
+                        hyprshot-git bc sysstat kitty sassc systemsettings acpi fish kde-material-you-colors
+                        plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd
+                        powerdevil power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww quickshell
+
+                        yay -S orchis-theme-git discord firefox visual-studio-code-bin nwg-look-bin qt5ct
+                        telegram-desktop strawberry</div>
+
+                    <h3 data-i18n="install_fedora_title">مستخدمي Fedora</h3>
+                    <div class="code" dir="ltr"># Enable rpmfusion repository
+                        sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E
+                        %fedora).noarch.rpm
+                        sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm
+                        -E %fedora).noarch.rpm
+
+
+                        sudo dnf install ffmpeg --allowerasing
+                        sudo dnf install lsp-plugins calf rubberband zam-plugins breeze-gtk-gtk4 breeze-gtk-gtk3
+                        kde-connect ffmpegthumbs bluedevil kde-gtk-config kde-settings-pulseaudio kdebugsettings
+                        kdenetwork-filesharing kdeplasma-addons plasma-nm plasma-systemmonitor plasma-vault sddm-breeze
+                        xwaylandvideobridge NetworkManager-l2tp NetworkManager-libreswan kde-settings-sddm
+                        kde-connect-libs imsettings imsettings-libs sddm network-manager-applet playerctl brightnessctl
+                        gammastep sysstat sassc plasma-systemsettings acpi fish gnome-bluetooth lm_sensors easyeffects
+                        blueman telegram-desktop kvantum konsole pulseaudio-utils polkit-qt polkit-kde gstreamer1-libav
+                        strawberry dnf-plugins-core gstreamer1-plugins-ugly gstreamer1-plugins-bad-free
+                        gstreamer1-plugins-bad-freeworld ffmpeg gstreamer1-plugins-base-devel vnstat nethogs retroarch
+                        inkscape gimp g4music android-tools plasma-integration-qt5 plasma-integration
+                        vlc-plugin-gstreamer vlc mpv kget kteatime gwenview unzip p7zip p7zip-plugins unrar copyq jq
+                        lsp-plugins lmms lsp-plugins-clap lsp-plugins-jack lsp-plugins-ladspa lv2-calf-plugins
+                        lv2-calf-plugins-gui lsp-plugins-lv2 lsp-plugins-vst lsp-plugins-vst3 lsp-plugins-jack
+                        lsp-plugins-gstreamer lsp-plugins lsp-plugins-clap gh python3.13 python3.13-devel
+
+                        sudo dnf copr enable solopasha/hyprland
+                        sudo dnf install hyprland hyprshot hyprpicker wl-clipboard swww
+
+                        sudo dnf copr enable errornointernet/quickshell
+                        sudo dnf install quickshell
+
+                        sudo dnf install plasma-desktop ark kate dolphin</div>
+
+                    <p class="muted" data-i18n="install_other_distros"><strong>ملاحظة:</strong> إذا كنت تستخدم نظام
+                        تشغيل آخر غير أرش او فيدورا فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً
+                        على نوع توزيعتك.</p>
+
+                    <h3 data-i18n="install_depth_effect">متطلبات تأثير العمق للساعة في سطح المكتب</h3>
+                    <p class="muted" data-i18n="install_depth_desc">نحتاج مكتبه rembg و pillow لانشاء الصور ذات تاثير
+                        العمق</p>
+                    <div class="code" dir="ltr">python3.13 -m venv ~/.cache/nibrasshell/venv
+                        ~/.cache/nibrasshell/venv/bin/pip install --upgrade pip wheel setuptools
+                        ~/.cache/nibrasshell/venv/bin/pip install -r
+                        .config/quickshell/scripts/python/requirements-3.13.txt</div>
+
+                    <h3 data-i18n="install_script_step">الآن يمكنك استخدام سكربت التثبيت واختيار رقم 2</h3>
+                    <div class="code" dir="ltr" data-i18n="install_script_step_2">
+                        python install.py
+                        Choose your language / اختر لغتك / Vyberte jazyk:
+                        1. English
+                        2. العربية
+                        3. Česky
+                        > 2
+
+                        =============================================
+                        سكربت تثبيت NibrasShell
+                        =============================================
+                        1. تثبيت المتطلبات
+                        2. تثبيت الواجهة
+                        3. تحديث QuickShell
+                        4. حذف الواجهة
+                        5. إنشاء/تعديل ملف الإعدادات
+                        6. خروج
+                        اختر أحد الخيارات: 2
+                    </div>
+
+                    <h3 data-i18n="install_manual_files">في حال لم يعمل السكربت الآن اكمل مع التثبيت اليدوي لتهيئة
+                        الملفات:</h3>
+                    <div class="code" dir="ltr">
+                        git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
+
+                        # Backup files
+                        mv ~/.config/hypr/ ~/.config/hypr-old
+                        mv ~/.config/quickshell/ ~/.config/quickshell-old
+                        mv ~/.config/wofi/ ~/.config/wofi-old
+                        mv ~/.config/easyeffects ~/.config/easyeffects-old
+                        mv ~/.config/fish/config.fish ~/.config/fish/config.back.fish
+
+                        # Copy files
+                        cp -r NibrasShell ~/.config/hypr
+                        cp -r ~/.config/hypr/config/quickshell ~/.config/quickshell
+                        cp -r ~/.config/hypr/config/wofi ~/.config/wofi
+                        cp ~/.config/hypr/config/config.fish ~/.config/fish/config.fish
+
+                        # Permissions
+                        sudo chmod +x ~/.config/hypr/scripts/*
+                        sudo chmod +x ~/.config/quickshell/scripts/*
+
+                        # easyeffects
+                        cp -r ~/.config/hypr/config/easyeffects ~/.config/easyeffects
+
+                        # Copy themes
+                        mkdir ~/.local/share/color-schemes/
+                        mkdir ~/.local/share/konsole/
+                        mkdir ~/.config/Kvantum/
+                        mkdir ~/.config/qt5ct/
+                        mkdir ~/.config/qt6ct/
+
+                        cp -r ~/.config/hypr/config/plasma-colors/* ~/.local/share/color-schemes/
+                        cp -r ~/.config/hypr/config/kvantum-themes/* ~/.config/Kvantum/
+                        cp -r ~/.config/hypr/config/konsole/* ~/.local/share/konsole/
+                        cp ~/.config/hypr/config/qt5ct.conf ~/.config/qt5ct/
+                        cp ~/.config/hypr/config/qt6ct.conf ~/.config/qt6ct/
+
+                        mkdir ~/.fonts
+                        cp -r ~/.config/hypr/config/.fonts/* ~/.fonts
+
+                        mkdir ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/BeautySolar.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/Delight-brown-dark.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/Gradient-Dark-Icons.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/Infinity-Dark-Icons.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/la-capitaine-icon-theme.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/Magma.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/oomox-aesthetic-dark.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/Vivid-Dark-Icons.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/Windows11-red-dark.tar.gz -C ~/.local/share/icons
+                        tar xvf ~/.config/hypr/config/icons/Zafiro-Nord-Dark-Black.tar.gz -C ~/.local/share/icons</div>
+
+                    <p class="muted" data-i18n="install_final_note">بإمكانك تغيير خط الجهاز إلى 'JF Flat' وتخصيص الواجهة
+                        من خلال الإعدادات المتقدمة (win+s).</p>
+                </div>
+            </details>
         </section>
     </main>
 
