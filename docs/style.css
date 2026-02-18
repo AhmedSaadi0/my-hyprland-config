@@ -808,7 +808,7 @@ nav {
 .gallery-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* لضمان ملء الصورة للكارت دون تشويه */
+  /* object-fit: cover;  */
   display: block;
   transition: transform 0.5s ease;
 }
