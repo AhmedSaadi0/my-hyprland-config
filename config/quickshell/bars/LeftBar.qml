@@ -1,3 +1,4 @@
+// bars/LeftBar.qml
 // pragma ComponentBehavior: Bound
 
 import Quickshell
@@ -213,9 +214,12 @@ PanelWindow {
     function updateGlobalState(localIndex, offset, groupName) {
         if (localIndex !== -1) {
             // Reset other groups
-            if (groupName !== "top") topButtonGroup.currentIndex = -1;
-            if (groupName !== "middle") middleButtonGroup.currentIndex = -1;
-            if (groupName !== "bottom") bottomButtonGroup.currentIndex = -1;
+            if (groupName !== "top")
+                topButtonGroup.currentIndex = -1;
+            if (groupName !== "middle")
+                middleButtonGroup.currentIndex = -1;
+            if (groupName !== "bottom")
+                bottomButtonGroup.currentIndex = -1;
 
             const globalIndex = offset + localIndex;
 
@@ -230,10 +234,10 @@ PanelWindow {
             if (groupName === "bottom" && localIndex === 1) {
                 // Deselect visually
                 bottomButtonGroup.currentIndex = -1;
-                
+
                 // Trigger the external PanelWindow
                 EventBus.emit(Events.TOGGLE_POWER_MENU);
-                
+
                 // Stop the side panel from expanding
                 return;
             }
@@ -257,7 +261,6 @@ PanelWindow {
 
         changeIsMenuOpen.start();
     }
-    
 
     // ---------------------------------------------------------
     // 3. UI GROUPS (الواجهات)

@@ -559,7 +559,7 @@ function applyTheme(theme) {
 // --- تهيئة الصفحة عند التحميل ---
 document.addEventListener("DOMContentLoaded", () => {
   // تحميل الثيم المحفوظ
-  const savedTheme = localStorage.getItem("nibras-theme") || "tokyonight";
+  const savedTheme = localStorage.getItem("nibras-theme") || "material";
   applyTheme(savedTheme);
 
   // تحميل اللغة المحفوظة

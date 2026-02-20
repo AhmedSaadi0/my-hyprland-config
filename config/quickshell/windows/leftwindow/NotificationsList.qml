@@ -9,6 +9,7 @@ import "root:/components/notifications"
 
 Item {
     id: root
+    readonly property int sidePadding: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
     // ============================================================
     // Data & Connections
@@ -43,19 +44,22 @@ Item {
         anchors.fill: parent
         spacing: 0
 
-        // Header
+        TopAppBar {
+            Layout.fillWidth: true
+            title: qsTr("Notifications")
+            icon: "󰂚"
+            scrollY: notifView.contentY
+            primaryActionVisible: false
+        }
+
+        // Header Actions
         RowLayout {
             Layout.fillWidth: true
-            Layout.margins: 5
+            Layout.leftMargin: root.sidePadding
+            Layout.rightMargin: root.sidePadding
+            Layout.topMargin: 6
+            Layout.bottomMargin: 6
             spacing: 5
-
-            Text {
-                text: qsTr("Notifications")
-                font.bold: true
-                font.pixelSize: 16
-                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-                Layout.alignment: Qt.AlignVCenter
-            }
 
             Rectangle {
                 visible: notifModel.count > 0
@@ -144,6 +148,8 @@ Item {
             // Notification List
             ScrollView {
                 anchors.fill: parent
+                anchors.leftMargin: root.sidePadding
+                anchors.rightMargin: root.sidePadding
                 visible: notifModel.count > 0
                 ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
                 ScrollBar.vertical.policy: ScrollBar.AsNeeded

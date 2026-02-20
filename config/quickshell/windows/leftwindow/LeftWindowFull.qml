@@ -79,11 +79,8 @@ PanelWindow {
         height: parent.height
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        // anchors.right: parent.right
 
         layer.enabled: root.visible && opacity === 0
-        // layer.enabled: opacity < 1.0 && opacity > 0.0
-        // layer.enabled: true
         layer.smooth: true
 
         radius: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.dimensions.elementRadius * 1.3 : 0
@@ -91,28 +88,13 @@ PanelWindow {
         border.width: root.menuStyle === C.FLOATING ? 2 : 0
         boxColor: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.colors.topbarColor : "transparent"
 
-        Column {
-            id: col
-            width: parent.width
-            height: parent.height
-            spacing: 10
-            property int sideMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-
-            Header {
-                id: menuHeader
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: col.sideMargin
-                anchors.rightMargin: col.sideMargin
-            }
+        Item {
+            id: layoutRoot
+            anchors.fill: parent
 
             Menus {
                 id: menus
-                height: contentContainer.height - menuHeader.height - col.sideMargin
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: col.sideMargin
-                anchors.rightMargin: col.sideMargin
+                anchors.fill: parent
             }
         }
 

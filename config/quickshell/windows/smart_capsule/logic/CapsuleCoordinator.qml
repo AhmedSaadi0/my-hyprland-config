@@ -108,6 +108,17 @@ Singleton {
         }
     }
 
+    // --- Todo ---
+    Connections {
+        target: TodoService
+        function onTaskDue(task) {
+            root.handleTodoDue(task);
+        }
+        function onStartupSummaryReady(summary) {
+            root.handleTodoStartupSummary(summary);
+        }
+    }
+
     // --- Themes & Wallpapers ---
     Connections {
         target: ThemeManager
@@ -196,6 +207,55 @@ Singleton {
             fgColor: colors.fg,
             tags: tags,
             playTone: false
+        });
+    }
+
+    // 2.5 Todo Logic
+    function handleTodoDue(task) {
+        if (!task || !task.title)
+            return;
+
+        const isUrgent = !!task.isUrgent;
+        const stateType = isUrgent ? "warning" : "info";
+        const priority = isUrgent ? C.WARNING : C.NOTIFICATION;
+        const colors = getColorsForState(stateType);
+
+        root.updateEyes(isUrgent ? "focused" : "thinking", 2500);
+
+        CapsuleManager.request({
+            priority: priority,
+            source: C.SRC_TODO,
+            icon: "󰄳",
+            text: `Task due: ${task.title}`,
+            timeout: 5000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            tags: task.isUrgent ? ["Urgent"] : []
+        });
+    }
+
+    function handleTodoStartupSummary(summary) {
+        if (!summary || !summary.summary)
+            return;
+
+        if (currentPriority > C.IDLE)
+            return;
+
+        let colors = getColorsForState("info");
+        root.updateEyes("thinking", 3500);
+
+        CapsuleManager.request({
+            priority: C.NOTIFICATION,
+            source: C.SRC_TODO,
+            icon: "󰄳",
+            text: summary.summary,
+            timeout: 6000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            tags: summary.tags || [],
+            changeH: true
         });
     }
 

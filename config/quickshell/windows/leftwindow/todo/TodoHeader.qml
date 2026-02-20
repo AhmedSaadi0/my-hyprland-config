@@ -32,19 +32,6 @@ ColumnLayout {
         }
     }
 
-    // --- Visual Elements ---
-
-    // 1. Header Title
-    Text {
-        text: "Tasks"
-        font.family: typo.bodyFont
-        font.pixelSize: typo.heading2Size
-        font.bold: true
-        color: colors.leftMenuFgColorV1
-        opacity: 0.9
-        Layout.leftMargin: 4
-    }
-
     // 2. Input Card
     Rectangle {
         Layout.fillWidth: true

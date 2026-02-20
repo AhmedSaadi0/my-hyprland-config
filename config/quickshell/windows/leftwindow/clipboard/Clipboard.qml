@@ -5,6 +5,7 @@ import "root:/config/EventNames.js" as Events
 import "root:/config"
 import "root:/services"
 import "root:/themes"
+import "root:/components"
 
 ColumnLayout {
     id: root
@@ -12,6 +13,7 @@ ColumnLayout {
     Layout.fillHeight: true
     spacing: 0
     focus: true
+    readonly property int sidePadding: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
     property int selectedIndex: -1
 
@@ -108,9 +110,22 @@ ColumnLayout {
         }
     }
 
+    TopAppBar {
+        Layout.fillWidth: true
+        title: qsTr("Clipboard")
+        icon: "󰅍"
+        scrollY: listView.contentY
+        primaryActionVisible: false
+    }
+
     // Header
     ClipboardHeader {
         id: header // ID للربط مع البحث
+        Layout.fillWidth: true
+        Layout.leftMargin: root.sidePadding
+        Layout.rightMargin: root.sidePadding
+        Layout.topMargin: ThemeManager.selectedTheme.dimensions.spacingMedium
+        Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.spacingSmall
         onClearAllClicked: listView.animateAndClearAll()
         onNavigateRequested: direction => {
             root.moveSelection(direction);
@@ -126,6 +141,8 @@ ColumnLayout {
     ScrollView {
         Layout.fillWidth: true
         Layout.fillHeight: true
+        Layout.leftMargin: root.sidePadding
+        Layout.rightMargin: root.sidePadding
         clip: true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: ScrollBar.AsNeeded

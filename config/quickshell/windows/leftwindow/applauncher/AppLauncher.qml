@@ -17,6 +17,7 @@ ColumnLayout {
     height: parent.height
     spacing: 0
     focus: true
+    readonly property int sidePadding: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
     // --- Logic & Properties ---
 
@@ -123,12 +124,21 @@ ColumnLayout {
     }
 
     // --- UI Elements ---
+    TopAppBar {
+        Layout.fillWidth: true
+        title: qsTr("Apps")
+        icon: "󰀻"
+        scrollY: 0
+        primaryActionVisible: false
+    }
 
     EditableField {
         id: searchField
         Layout.fillWidth: true
-        Layout.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.leftMargin: root.sidePadding
+        Layout.rightMargin: root.sidePadding
+        Layout.topMargin: ThemeManager.selectedTheme.dimensions.spacingMedium
+        Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.spacingMedium
         placeholderText: "Search apps... or use > for commands"
         font.pixelSize: 16
 
@@ -185,6 +195,8 @@ ColumnLayout {
         id: viewStack
         Layout.fillWidth: true
         Layout.fillHeight: true
+        Layout.leftMargin: root.sidePadding
+        Layout.rightMargin: root.sidePadding
         currentIndex: root.currentViewIndex
         interactive: false
         clip: true

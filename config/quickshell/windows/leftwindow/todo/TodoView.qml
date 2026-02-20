@@ -1,156 +1,201 @@
+// windows/leftwindow/todo/TodoView.qml
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Quickshell.Io
 import "root:/themes"
-import "root:/config"
 import "root:/components"
+import "root:/services"
 
 Item {
     id: root
 
-    // --- Constants for Ranking ---
-    readonly property int rankUrgent: 0
-    readonly property int rankNormal: 1
-    readonly property int rankDone: 2
-
-    // --- Theme Properties ---
     readonly property var colors: ThemeManager.selectedTheme.colors
     readonly property var dims: ThemeManager.selectedTheme.dimensions
     readonly property var typo: ThemeManager.selectedTheme.typography
 
-    // --- State Properties ---
     property date selectedDate: new Date()
-    
-    // -1 = Editing the Header (New Task), 0+ = Editing an existing item index
-    property int activeCalendarIndex: -1 
+    property int activeCalendarIndex: -1
 
     Layout.fillWidth: true
     Layout.fillHeight: true
 
-    // --- Functions ---
-    function getTaskRank(item) {
-        if (item.completed) return root.rankDone;
-        if (item.isUrgent) return root.rankUrgent;
-        return root.rankNormal;
+    function addTask(title, urgent) {
+        TodoService.addTask(title, root.selectedDate, urgent);
     }
 
-    function shouldSwap(itemA, itemB) {
-        let rankA = getTaskRank(itemA);
-        let rankB = getTaskRank(itemB);
-
-        if (rankA > rankB) return true;
-        if (rankA < rankB) return false;
-
-        let timeA = itemA.timestamp || 0;
-        let timeB = itemB.timestamp || 0;
-        return timeA < timeB;
-    }
-
-    function sortTasks() {
-        let n = todoModel.count;
-        let swapped;
-        do {
-            swapped = false;
-            for (let i = 0; i < n - 1; i++) {
-                let item1 = todoModel.get(i);
-                let item2 = todoModel.get(i + 1);
-                if (shouldSwap(item1, item2)) {
-                    todoModel.move(i, i + 1, 1);
-                    swapped = true;
-                }
-            }
-        } while (swapped)
-    }
-
-    function saveTasks() {
-        let arr = [];
-        for (let i = 0; i < todoModel.count; i++) {
-            let item = todoModel.get(i);
-            arr.push({
-                "title": item.title,
-                "date": item.date,
-                "timestamp": item.timestamp || 0,
-                "isUrgent": item.isUrgent,
-                "completed": item.completed
-            });
-        }
-        tasksFile.setText(JSON.stringify(arr, null, 2));
-    }
-
-    // --- Data Components ---
-    ListModel { id: todoModel }
-
-    FileView {
-        id: tasksFile
-        path: App.todoFilePath
-        onLoaded: {
-            if (!text() || text().trim() === "") return;
-            try {
-                let data = JSON.parse(text());
-                todoModel.clear();
-                for (let i = 0; i < data.length; i++) {
-                    todoModel.append(data[i]);
-                }
-                root.sortTasks();
-            } catch (e) {
-                console.error("Error loading JSON: " + e);
-            }
-        }
-        onSaved: console.info("Tasks saved")
-        onSaveFailed: error => console.error("Save failed: " + error)
-    }
-    Component.onCompleted: tasksFile.reload()
-
-    // --- UI Structure ---
     ColumnLayout {
         anchors.fill: parent
-        spacing: dims.spacingMedium
+        spacing: 0    // صفر لأن TopAppBar يجب أن يكون ملتصقاً بالأعلى
 
-        TodoHeader {
-            id: header
+        // ① TopAppBar — الشريط العلوي الحديث
+        TopAppBar {
             Layout.fillWidth: true
-            selectedDate: root.selectedDate
-
-            onOpenCalendar: {
-                // Set index to -1 so we know we are editing the new task date
-                root.activeCalendarIndex = -1
-                calendarPopup.open()
-            }
-
-            onAddTask: (title, urgent) => {
-                todoModel.append({
-                    "title": title,
-                    "date": root.selectedDate.toLocaleDateString(Qt.locale(), "MMM d"),
-                    "timestamp": new Date().getTime(),
-                    "isUrgent": urgent,
-                    "completed": false
-                });
-                root.sortTasks();
-                root.saveTasks();
-            }
+            title: qsTr("Todo")
+            icon: "󰄳"
+            scrollY: bodyItems.ScrollBar.vertical.position * bodyItems.contentHeight
+            primaryActionVisible: false
+            // actions:
         }
 
-        ScrollView {
-            id: bodyItems
+        // --- حاوية المحتوى الداخلي (لضبط الهوامش الجانبية للكل) ---
+        ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            clip: true
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+            Layout.leftMargin: dims.menuWidgetsMargin
+            Layout.rightMargin: dims.menuWidgetsMargin
+            Layout.topMargin: dims.spacingMedium
+            spacing: dims.spacingMedium
 
-            TodoItems {
-                listModel: todoModel
+            // ② AISummaryCard — كرت الذكاء الاصطناعي الفخم
+            AISummaryCard {
+                id: smartTodoCard
+                Layout.fillWidth: true
+                visible: TodoService.aiSummaryText !== ""
 
-                onRequestSave: {
-                    root.sortTasks();
-                    root.saveTasks();
+                // البيانات
+                title: TodoService.aiSummaryTitle !== "" ? TodoService.aiSummaryTitle : qsTr("محلل المهام الذكي")
+                summaryText: TodoService.aiSummaryText
+                iconText: "✨📋"
+
+                // الأزرار
+                showDataRefreshButton: false // لا نحتاج زر لتحديث المهام لأنها تتحدث محلياً غالباً
+                showAiRefreshButton: true
+
+                onRefreshAiClicked: {
+                    // استدعِ الدالة الخاصة بإعادة تحليل المهام من الـ Backend هنا
+                    // مثال: TodoService.requestAiAnalysis();
+                    console.log("طلب إعادة تحليل المهام من الذكاء الاصطناعي...");
                 }
 
-                // Handle request from a list item to edit its date
-                onRequestCalendar: (index) => {
-                    root.activeCalendarIndex = index
-                    calendarPopup.open()
+                // الكلمات الدلالية (Tags) في أسفل الكرت
+                bottomContent: Flow {
+                    width: smartTodoCard.width - (dims.menuWidgetsMargin * 2)
+                    spacing: 6
+                    topPadding: 4
+                    visible: TodoService.aiSummaryTags && TodoService.aiSummaryTags.length > 0
+
+                    Repeater {
+                        model: TodoService.aiSummaryTags
+                        delegate: Rectangle {
+                            height: 24
+                            width: tagText.contentWidth + 16
+                            // استخدام ألوان الذكاء الاصطناعي المستخرجة من الكرت
+                            color: smartTodoCard.aiBorderColor.alpha(0.3)
+                            radius: 6
+                            border.color: smartTodoCard.aiBorderColor.alpha(0.5)
+                            border.width: 1
+
+                            Text {
+                                id: tagText
+                                anchors.centerIn: parent
+                                text: modelData
+                                font.family: typo.bodyFont
+                                font.pixelSize: 12
+                                color: smartTodoCard.aiTextColor
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ③ TodoHeader — حقل إدخال مهمة جديدة
+            TodoHeader {
+                id: header
+                Layout.fillWidth: true
+                selectedDate: root.selectedDate
+
+                onOpenCalendar: {
+                    root.activeCalendarIndex = -1;
+                    calendarPopup.open();
+                }
+                onAddTask: (title, urgent) => {
+                    root.addTask(title, urgent);
+                }
+            }
+
+            // ④ Due Now — المهام العاجلة (تم تحسين مظهرها قليلاً)
+            ColumnLayout {
+                Layout.fillWidth: true
+                visible: TodoService.dueNowModel.count > 0
+                spacing: 8
+
+                Text {
+                    text: qsTr("Due Now")
+                    font.family: typo.bodyFont
+                    font.pixelSize: typo.small
+                    font.bold: true
+                    color: root.colors.leftMenuFgColorV1
+                    opacity: 0.8
+                    Layout.leftMargin: 4
+                }
+
+                Repeater {
+                    model: TodoService.dueNowModel
+                    delegate: Rectangle {
+                        width: parent.width
+                        height: 44 // زيادة الارتفاع قليلاً لراحة العين
+                        radius: dims.elementRadius
+                        color: Qt.rgba(root.colors.error.r, root.colors.error.g, root.colors.error.b, 0.08)
+                        border.width: 1
+                        border.color: Qt.rgba(root.colors.error.r, root.colors.error.g, root.colors.error.b, isUrgent ? 0.35 : 0.15)
+
+                        // إضافة ظل خفيف للمهام العاجلة
+                        layer.enabled: isUrgent
+                        layer.effect: Shadow {
+                            alpha: 0.15
+                            color: root.colors.error
+                        }
+
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.margins: 12
+                            spacing: 10
+
+                            Text {
+                                text: isUrgent ? "🔥" : "⏰"
+                                font.pixelSize: 16
+                            }
+                            Text {
+                                text: title
+                                font.family: typo.bodyFont
+                                font.pixelSize: typo.small
+                                color: root.colors.leftMenuFgColorV1
+                                font.bold: isUrgent // الخط غامق للمهام العاجلة
+                                Layout.fillWidth: true
+                                elide: Text.ElideRight
+                            }
+                            Text {
+                                text: date
+                                font.family: typo.bodyFont
+                                font.pixelSize: 11
+                                color: root.colors.error
+                                opacity: 0.8
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ⑤ ScrollView + TodoItems — قائمة المهام الرئيسية
+            ScrollView {
+                id: bodyItems
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                clip: true
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+
+                TodoItems {
+                    listModel: TodoService.tasksModel
+
+                    onRequestSave: {
+                        TodoService.saveAndSort();
+                    }
+                    onRequestCalendar: index => {
+                        root.activeCalendarIndex = index;
+                        calendarPopup.open();
+                    }
                 }
             }
         }
@@ -164,20 +209,9 @@ Item {
 
         onDateSelected: date => {
             if (root.activeCalendarIndex === -1) {
-                // Editing Header Date
                 root.selectedDate = date;
             } else {
-                // Editing Existing Task Date
-                let formattedDate = date.toLocaleDateString(Qt.locale(), "MMM d");
-                
-                // Directly update the model
-                todoModel.setProperty(root.activeCalendarIndex, "date", formattedDate);
-                
-                // Note: We don't save immediately, the user will save when clicking 'Done' (Checkmark) 
-                // in the list item, or we can force a save here if preferred. 
-                // For now, let's leave it to the user to confirm via the edit button, 
-                // but since the date update is instant in UI, saving immediately is safer for consistency:
-                // root.saveTasks(); 
+                TodoService.updateTaskDate(root.activeCalendarIndex, date);
             }
         }
     }

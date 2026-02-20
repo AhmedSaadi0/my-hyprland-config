@@ -20,8 +20,8 @@ ColumnLayout {
     property bool isAnyItemExpanded: expandedBssid !== ""
     property string loadingBssid: ""
     property bool forceScan: false
-
     // Process to handle connect/disconnect/forget actions
+
     Process {
         id: wifiActionProcess
         property bool closeLeftbar: false
@@ -187,8 +187,21 @@ ColumnLayout {
         }
     }
 
+    TopAppBar {
+        id: topBar
+        Layout.fillWidth: true
+        title: qsTr("Network")
+        icon: "󰖨"
+        scrollY: weatherRoot.contentY
+        primaryActionVisible: false
+    }
+
     ListModel {
         id: wifiModel
+
+        Layout.topMargin: topBar.implicitHeight + ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
     }
 
     function formatBytes(bytes, decimals = 2) {
@@ -257,6 +270,11 @@ ColumnLayout {
 
         Layout.fillWidth: true
         Layout.bottomMargin: 10
+
+        Layout.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
         cardColor: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
         cardLeftPadding: 8
         cardRightPadding: 8
@@ -397,6 +415,8 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.bottomMargin: 10
         spacing: 0
+        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
         MButton {
             id: hiddenToggleBtn
@@ -528,6 +548,9 @@ ColumnLayout {
         Layout.fillHeight: true
         clip: true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
         ListView {
             id: listView

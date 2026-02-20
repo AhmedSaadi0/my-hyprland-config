@@ -15,12 +15,24 @@ Item {
 
     // نجعل القائمة تأخذ كامل مساحة الأب (التي هي عادة MenuContainer)
     // anchors.fill: parent
+    TopAppBar {
+        id: topBar
+        Layout.fillWidth: true
+        title: qsTr("System")
+        icon: "󰄳"
+        scrollY: bodyItems.ScrollBar.vertical.position * bodyItems.contentHeight
+        primaryActionVisible: false
+        // actions:
+    }
 
     ScrollView {
         id: mainScrollView
         anchors.fill: parent
         contentWidth: availableWidth
         clip: true
+        anchors.topMargin: topBar.implicitHeight + ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        anchors.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        anchors.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: ScrollBar.AlwaysOff
@@ -28,12 +40,6 @@ Item {
         ColumnLayout {
             width: mainScrollView.availableWidth
             spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-
-            // إضافة هوامش جانبية وعلوية
-            Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-            Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-            Layout.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-            // Layout.bottomMargin: 30 // مساحة إضافية في الأسفل
 
             Progresses {
                 id: progresses

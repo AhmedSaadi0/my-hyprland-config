@@ -38,6 +38,11 @@ PRESETS = {
         "json_mode": True,
         "temperature": 0.5,
     },
+    "todo": {
+        "system_instruction": prompt.TODO_MASTER_PROMPT,
+        "json_mode": True,
+        "temperature": 0.4,
+    },
     "boot_analyze": {
         "system_instruction": prompt.SYSTEM_ANALYST_PROMPT,
         "json_mode": True,
