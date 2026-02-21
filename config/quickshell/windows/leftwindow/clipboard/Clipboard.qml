@@ -114,8 +114,8 @@ ColumnLayout {
         Layout.fillWidth: true
         title: qsTr("Clipboard")
         icon: "󰅍"
-        scrollY: listView.contentY
-        primaryActionVisible: false
+        // scrollY: listView.contentY
+        // primaryActionVisible: false
     }
 
     // Header

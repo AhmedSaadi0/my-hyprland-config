@@ -11,14 +11,12 @@ import "root:/components"
 HeaderCard {
     id: root
     Layout.fillWidth: true
-    // ارتفاع مرن يتناسب مع المحتوى
     implicitHeight: mainCol.implicitHeight + 40
 
     readonly property var theme: ThemeManager.selectedTheme
     readonly property var colors: theme.colors
     readonly property var typo: theme.typography
 
-    // 1. زر التحديث (Refresh) - في الزاوية العلوية اليمنى
     Rectangle {
         id: refreshBtn
         width: 32
@@ -27,7 +25,6 @@ HeaderCard {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 12
-        z: 10 // لضمان بقائه فوق العناصر
 
         color: refreshMouse.containsMouse ? colors.leftMenuFgColorV1.alpha(0.1) : "transparent"
 
@@ -191,7 +188,7 @@ HeaderCard {
 
                 // الحرارة المحسوسة
                 Text {
-                    text: "Feels like " + Weather.feelsLike + "°"
+                    text: qsTr("Feels like ") + Weather.feelsLike + "°"
                     font.family: typo.bodyFont
                     font.pixelSize: 13
                     color: colors.subtleText
@@ -215,25 +212,25 @@ HeaderCard {
             StatBox {
                 icon: ""
                 value: Weather.humidity + "%"
-                label: "Humidity"
+                label: qsTr("Humidity")
                 iconColor: colors.primary // الأزرق للرطوبة
             }
             StatBox {
                 icon: ""
                 value: Weather.windSpeed + " km"
-                label: "Wind"
+                label: qsTr("Wind")
                 iconColor: colors.subtleText
             }
             StatBox {
                 icon: ""
                 value: String(Weather.uvIndex)
-                label: "UV Index"
+                label: qsTr("UV Index")
                 iconColor: colors.warning // البرتقالي للشمس/UV
             }
             StatBox {
                 icon: ""
                 value: Weather.sunrise
-                label: "Sunrise"
+                label: qsTr("Sunrise")
                 iconColor: colors.warning
             }
         }

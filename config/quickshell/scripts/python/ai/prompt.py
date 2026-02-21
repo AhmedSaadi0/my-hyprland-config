@@ -16,7 +16,7 @@ IDLE_CAPSULE_STARTUP_MESSAGE = (
     "Use variety and keep them under 8 words. "
     "Some responses should include extra_text (a follow-up line, at least 20 characters) "
     "and extra_delay_ms (1200-2500). "
-    "Use the system boot context below to craft 2-6 responses about the system state "
+    "Use the system boot context below to craft only 1 responses about the system state that sums everything "
     "(errors, warnings, or health). The rest should be general idle responses. "
     "Avoid line breaks.\n"
     "BOOT_STATUS: {boot_status}\n"

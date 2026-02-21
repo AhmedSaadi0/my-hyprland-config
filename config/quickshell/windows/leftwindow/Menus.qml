@@ -9,7 +9,7 @@ import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
 import "./weather"
 import "./applauncher"
-import "./animations"
+import "./notifications"
 import "./network"
 import "./clipboard"
 

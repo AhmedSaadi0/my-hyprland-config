@@ -128,8 +128,8 @@ ColumnLayout {
         Layout.fillWidth: true
         title: qsTr("Apps")
         icon: "󰀻"
-        scrollY: 0
-        primaryActionVisible: false
+        // scrollY: 0
+        // primaryActionVisible: false
     }
 
     EditableField {

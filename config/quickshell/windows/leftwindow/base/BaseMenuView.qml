@@ -1,0 +1,102 @@
+// windows/leftwindow/base/BaseMenuView.qml
+
+import QtQuick
+import QtQuick.Layouts
+import "root:/themes"
+import "root:/components"
+
+Item {
+    id: root
+
+    // ─── خصائص عامة ──────────────────────────────────────────────
+    property string menuTitle: ""
+    property string menuIcon: ""
+    property bool showPrimaryAction: false
+    property string primaryActionIcon: "󰅗"
+    property var menuActions: []
+
+    default property alias pageContent: innerContent.data
+
+    readonly property int sidePadding: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+    readonly property int topAppBarHeight: 64
+    property alias headerContent: headerContainer.data
+
+    signal primaryActionTriggered
+    signal menuActionTriggered(int index, var action)
+
+    // ─── TopAppBar ثابت في الأعلى ────────────────────────────────
+    TopAppBar {
+        id: appBar
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        z: 10  // فوق كل شيء
+
+        title: root.menuTitle
+        icon: root.menuIcon
+        scrollY: scrollArea.contentY
+        actions: root.menuActions
+        primaryActionVisible: root.showPrimaryAction
+        primaryActionIcon: root.primaryActionIcon
+
+        onPrimaryActionTriggered: root.primaryActionTriggered()
+        onActionTriggered: (index, action) => root.menuActionTriggered(index, action)
+    }
+
+    Item {
+        id: headerContainer
+        anchors.top: appBar.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        visible: children.length > 0
+        implicitHeight: visible ? childrenRect.height : 0
+        z: 9
+    }
+
+    Rectangle {
+        id: appBarShadow
+        anchors.top: headerContainer.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 12
+        z: 9
+
+        gradient: Gradient {
+            GradientStop {
+                position: 0.0
+                color: Qt.rgba(0, 0, 0, Math.min(scrollArea.contentY / 30.0, 1.0) * 0.05)
+            }
+            GradientStop {
+                position: 0.4
+                color: "transparent"
+            }
+        }
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+        }
+    }
+
+    // ─── Flickable يبدأ من تحت TopAppBar ─────────────────────────
+    Flickable {
+        id: scrollArea
+        // anchors.top: appBar.bottom
+        anchors.top: headerContainer.visible ? headerContainer.bottom : appBar.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        flickableDirection: Flickable.VerticalFlick
+        contentHeight: innerContent.implicitHeight
+        clip: true
+
+        ColumnLayout {
+            id: innerContent
+            width: scrollArea.width
+            spacing: 0
+        }
+    }
+}

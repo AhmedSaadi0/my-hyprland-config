@@ -192,8 +192,8 @@ ColumnLayout {
         Layout.fillWidth: true
         title: qsTr("Network")
         icon: "󰖨"
-        scrollY: weatherRoot.contentY
-        primaryActionVisible: false
+        // scrollY: weatherRoot.contentY
+        // primaryActionVisible: false
     }
 
     ListModel {

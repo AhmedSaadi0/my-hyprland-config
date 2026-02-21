@@ -20,8 +20,8 @@ Item {
         Layout.fillWidth: true
         title: qsTr("System")
         icon: "󰄳"
-        scrollY: bodyItems.ScrollBar.vertical.position * bodyItems.contentHeight
-        primaryActionVisible: false
+        // scrollY: bodyItems.ScrollBar.vertical.position * bodyItems.contentHeight
+        // primaryActionVisible: false
         // actions:
     }
 

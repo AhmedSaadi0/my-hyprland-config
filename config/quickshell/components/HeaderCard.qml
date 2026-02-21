@@ -5,14 +5,6 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import "root:/themes"
 
-// كارد مشترك يُستخدم مباشرة تحت TopAppBar في كل قائمة
-// كل قائمة تضع محتواها الخاص داخله عبر default property
-//
-// الاستخدام:
-//   HeaderCard {
-//       Layout.fillWidth: true
-//       // أي محتوى هنا
-//   }
 Rectangle {
     id: root
 

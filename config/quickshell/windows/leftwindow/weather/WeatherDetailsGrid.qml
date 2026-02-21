@@ -34,9 +34,13 @@ ColumnLayout {
             // العنوان
             RowLayout {
                 spacing: 8
-                Text { text: ""; font.family: typo.iconFont; color: colors.primary }
-                Text { 
-                    text: "التوقعات القادمة"
+                Text {
+                    text: "󰥔"
+                    font.family: typo.iconFont
+                    color: colors.primary
+                }
+                Text {
+                    text: qsTr("Upcoming Forecast")
                     font.family: typo.bodyFont
                     font.pixelSize: typo.small
                     color: colors.subtleText
@@ -51,30 +55,34 @@ ColumnLayout {
                 spacing: 20 // مسافة كبيرة بين كل ساعة وأخرى
                 clip: true
                 model: Weather.hourlyForecast
-                
+
                 // ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AlwaysOff }
 
                 delegate: ColumnLayout {
                     spacing: 8 // مسافة بين الوقت والأيقونة والحرارة
                     width: 50
-                    
-                    Text { 
+
+                    Text {
                         text: modelData.time
-                        font.family: typo.bodyFont; font.pixelSize: 12
+                        font.family: typo.bodyFont
+                        font.pixelSize: 12
                         color: colors.subtleText
-                        Layout.alignment: Qt.AlignHCenter 
+                        Layout.alignment: Qt.AlignHCenter
                     }
-                    Text { 
-                        text: modelData.icon 
-                        font.family: typo.iconFont; font.pixelSize: 28
+                    Text {
+                        text: modelData.icon
+                        font.family: typo.iconFont
+                        font.pixelSize: 28
                         color: colors.primary
-                        Layout.alignment: Qt.AlignHCenter 
+                        Layout.alignment: Qt.AlignHCenter
                     }
-                    Text { 
+                    Text {
                         text: modelData.temp + "°"
-                        font.family: typo.bodyFont; font.pixelSize: 16; font.bold: true
+                        font.family: typo.bodyFont
+                        font.pixelSize: 16
+                        font.bold: true
                         color: colors.leftMenuFgColorV1
-                        Layout.alignment: Qt.AlignHCenter 
+                        Layout.alignment: Qt.AlignHCenter
                     }
                 }
             }
@@ -101,9 +109,13 @@ ColumnLayout {
             // العنوان
             RowLayout {
                 spacing: 8
-                Text { text: ""; font.family: typo.iconFont; color: colors.primary }
-                Text { 
-                    text: "الأيام القادمة"
+                Text {
+                    text: ""
+                    font.family: typo.iconFont
+                    color: colors.primary
+                }
+                Text {
+                    text: qsTr("Upcoming Days")
                     font.family: typo.bodyFont
                     font.pixelSize: typo.small
                     color: colors.subtleText
@@ -115,47 +127,59 @@ ColumnLayout {
                 delegate: RowLayout {
                     Layout.fillWidth: true
                     spacing: 10
-                    
+
                     // اسم اليوم
-                    Text { 
+                    Text {
                         text: modelData.dayName
-                        font.family: typo.bodyFont; font.pixelSize: 14
+                        font.family: typo.bodyFont
+                        font.pixelSize: 14
                         color: colors.leftMenuFgColorV1
-                        Layout.preferredWidth: 90 
+                        Layout.preferredWidth: 90
                     }
-                    
+
                     // الأيقونة
-                    Text { 
+                    Text {
                         text: modelData.icon
-                        font.family: typo.iconFont; font.pixelSize: 20
+                        font.family: typo.iconFont
+                        font.pixelSize: 20
                         color: colors.primary
                         Layout.alignment: Qt.AlignHCenter
                     }
-                    
-                    Item { Layout.fillWidth: true } // مسافة مرنة
-                    
+
+                    Item {
+                        Layout.fillWidth: true
+                    } // مسافة مرنة
+
                     // الصغرى
-                    Text { 
+                    Text {
                         text: modelData.minTemp + "°"
-                        font.family: typo.bodyFont; font.pixelSize: 14
-                        color: colors.subtleText 
+                        font.family: typo.bodyFont
+                        font.pixelSize: 14
+                        color: colors.subtleText
                     }
-                    
+
                     // البار المرئي
                     Rectangle {
-                        Layout.preferredWidth: 60; Layout.preferredHeight: 4; radius: 2
+                        Layout.preferredWidth: 60
+                        Layout.preferredHeight: 4
+                        radius: 2
                         color: colors.primary.alpha(0.15)
                         Rectangle {
-                            height: parent.height; radius: 2; color: colors.primary
-                            width: parent.width * 0.7; anchors.centerIn: parent
+                            height: parent.height
+                            radius: 2
+                            color: colors.primary
+                            width: parent.width * 0.7
+                            anchors.centerIn: parent
                         }
                     }
-                    
+
                     // العظمى
-                    Text { 
+                    Text {
                         text: modelData.maxTemp + "°"
-                        font.family: typo.bodyFont; font.pixelSize: 14; font.bold: true
-                        color: colors.leftMenuFgColorV1 
+                        font.family: typo.bodyFont
+                        font.pixelSize: 14
+                        font.bold: true
+                        color: colors.leftMenuFgColorV1
                     }
                 }
             }
@@ -171,12 +195,43 @@ ColumnLayout {
         columnSpacing: 16 // زيادة المسافة بين الأعمدة
         rowSpacing: 16    // زيادة المسافة بين الصفوف
 
-        DetailCard { title: "Feels Like"; value: Weather.feelsLike + "°"; icon: ""; iconColor: colors.error }
-        DetailCard { title: "Humidity"; value: Weather.humidity + "%"; icon: ""; iconColor: colors.primary }
-        DetailCard { title: "Wind"; value: Weather.windSpeed + " km/h"; subtitle: Weather.windDirection; icon: ""; iconColor: colors.secondary }
-        DetailCard { title: "UV Index"; value: Weather.uvIndex; icon: ""; iconColor: colors.warning }
-        DetailCard { title: "Visibility"; value: Weather.visibility + " km"; icon: ""; iconColor: colors.subtleText }
-        DetailCard { title: "Pressure"; value: Weather.pressure + " hPa"; icon: ""; iconColor: colors.success }
+        DetailCard {
+            title: qsTr("Feels Like")
+            value: Weather.feelsLike + "°"
+            icon: ""
+            iconColor: colors.error
+        }
+        DetailCard {
+            title: qsTr("Humidity")
+            value: Weather.humidity + "%"
+            icon: ""
+            iconColor: colors.primary
+        }
+        DetailCard {
+            title: qsTr("Wind")
+            value: Weather.windSpeed + " km/h"
+            subtitle: Weather.windDirection
+            icon: ""
+            iconColor: colors.secondary
+        }
+        DetailCard {
+            title: qsTr("UV Index")
+            value: Weather.uvIndex
+            icon: "󱟾"
+            iconColor: colors.warning
+        }
+        DetailCard {
+            title: qsTr("Visibility")
+            value: Weather.visibility + " km"
+            icon: "󰈈"
+            iconColor: colors.subtleText
+        }
+        DetailCard {
+            title: qsTr("Pressure")
+            value: Weather.pressure + " hPa"
+            icon: ""
+            iconColor: colors.success
+        }
     }
 
     // ==========================================
@@ -194,25 +249,53 @@ ColumnLayout {
             anchors.fill: parent
             anchors.margins: 20 // هوامش مريحة جداً
             spacing: 0
-            
-            AstroCard { Layout.fillWidth: true; title: "Sunrise"; time: Weather.sunrise; icon: ""; iconColor: colors.warning }
-            
+
+            AstroCard {
+                Layout.fillWidth: true
+                title: qsTr("Sunrise")
+                time: Weather.sunrise
+                icon: "󰖜"
+                iconColor: colors.warning
+            }
+
             // فاصل عمودي
-            Rectangle { Layout.preferredWidth: 1; Layout.fillHeight: true; color: colors.leftMenuFgColorV1.alpha(0.1); Layout.margins: 10 }
-            
-            AstroCard { Layout.fillWidth: true; title: "Sunset"; time: Weather.sunset; icon: ""; iconColor: colors.error }
-            
+            Rectangle {
+                Layout.preferredWidth: 1
+                Layout.fillHeight: true
+                color: colors.leftMenuFgColorV1.alpha(0.1)
+                Layout.margins: 10
+            }
+
+            AstroCard {
+                Layout.fillWidth: true
+                title: qsTr("Sunset")
+                time: Weather.sunset
+                icon: "󰖛"
+                iconColor: colors.error
+            }
+
             // فاصل عمودي
-            Rectangle { Layout.preferredWidth: 1; Layout.fillHeight: true; color: colors.leftMenuFgColorV1.alpha(0.1); Layout.margins: 10 }
-            
-            AstroCard { Layout.fillWidth: true; title: "Moon"; time: Weather.moonPhase; icon: ""; iconColor: colors.primary }
+            Rectangle {
+                Layout.preferredWidth: 1
+                Layout.fillHeight: true
+                color: colors.leftMenuFgColorV1.alpha(0.1)
+                Layout.margins: 10
+            }
+
+            AstroCard {
+                Layout.fillWidth: true
+                title: qsTr("Moon")
+                time: Weather.moonPhase
+                icon: ""
+                iconColor: colors.primary
+            }
         }
     }
 
     // ==========================================
     // Components Definitions (Improved Padding)
     // ==========================================
-    
+
     // المكون المسؤول عن كروت الشبكة
     component DetailCard: Rectangle {
         property string title
@@ -220,53 +303,76 @@ ColumnLayout {
         property string subtitle: ""
         property string icon
         property color iconColor: colors.primary
-        
         Layout.fillWidth: true
-        implicitHeight: 110 // ارتفاع مريح
-        
+        implicitHeight: 110
         color: colors.topbarBgColorV1.alpha(0.5)
         radius: root.cardRadius
         border.color: colors.leftMenuFgColorV1.alpha(0.05)
         border.width: 1
+        clip: true
 
-        // استخدام ColumnLayout مع هوامش داخلية لحل مشكلة الالتصاق
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 14 // الهامش السحري لحل مشكلة الالتصاق
-            spacing: 6
-            
-            // الأيقونة في الزاوية العلوية
+            anchors.margins: 14
+            spacing: 8
+
+            // ── الصف الأول: العنوان + الأيقونة ──
             RowLayout {
                 Layout.fillWidth: true
-                Text { 
+
+                Text {
+                    text: title
+                    font.pixelSize: 12
+                    color: colors.subtleText
+                    Layout.fillWidth: true
+                    elide: Text.ElideRight
+                }
+
+                Text {
                     text: icon
-                    font.pixelSize: 22
+                    font.pixelSize: 20
                     font.family: typo.iconFont
                     color: iconColor
                 }
-                Item { Layout.fillWidth: true } // دفع الأيقونة لليسار
             }
-            
-            // القيمة في المنتصف/الأسفل
-            Text { 
+
+            // ── القيمة ──
+            Text {
                 text: value
-                font.pixelSize: 20
+                font.pixelSize: 22
                 font.bold: true
                 color: colors.leftMenuFgColorV1
+                Layout.fillWidth: true
+                elide: Text.ElideRight
             }
-            
-            // العنوان في الأسفل
-            Text { 
-                text: title
-                font.pixelSize: 12
-                color: colors.subtleText
-            }
-            
-            Text { 
+
+            // ── الصف الأخير: العنوان الفرعي + مؤشر صغير ──
+            RowLayout {
+                Layout.fillWidth: true
                 visible: subtitle !== ""
-                text: subtitle
-                font.pixelSize: 11
-                color: colors.primary
+
+                Rectangle {
+                    width: 6
+                    height: 6
+                    radius: 3
+                    color: iconColor
+                    opacity: 0.7
+                }
+
+                Text {
+                    text: subtitle
+                    font.pixelSize: 10
+                    color: colors.subtleText
+                    opacity: 0.8
+                    Layout.fillWidth: true
+                    elide: Text.ElideRight
+                }
+            }
+
+            // فراغ يملأ الباقي لو ما في subtitle
+            Item {
+                Layout.fillHeight: true
+                visible: subtitle === ""
             }
         }
     }
@@ -278,25 +384,25 @@ ColumnLayout {
         property color iconColor: colors.primary
 
         spacing: 6
-        Text { 
+        Text {
             text: icon
             font.pixelSize: 26
             font.family: typo.iconFont
             color: iconColor
-            Layout.alignment: Qt.AlignHCenter 
+            Layout.alignment: Qt.AlignHCenter
         }
-        Text { 
+        Text {
             text: time
             font.pixelSize: 16
             font.bold: true
             color: colors.leftMenuFgColorV1
-            Layout.alignment: Qt.AlignHCenter 
+            Layout.alignment: Qt.AlignHCenter
         }
-        Text { 
+        Text {
             text: title
             font.pixelSize: 12
             color: colors.subtleText
-            Layout.alignment: Qt.AlignHCenter 
+            Layout.alignment: Qt.AlignHCenter
         }
     }
 }

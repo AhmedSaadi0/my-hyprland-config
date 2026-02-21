@@ -33,8 +33,8 @@ Item {
             Layout.fillWidth: true
             title: qsTr("Todo")
             icon: "󰄳"
-            scrollY: bodyItems.ScrollBar.vertical.position * bodyItems.contentHeight
-            primaryActionVisible: false
+            // scrollY: bodyItems.ScrollBar.vertical.position * bodyItems.contentHeight
+            // primaryActionVisible: false
             // actions:
         }
 
