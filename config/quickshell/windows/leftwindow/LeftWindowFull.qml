@@ -91,6 +91,7 @@ PanelWindow {
         Item {
             id: layoutRoot
             anchors.fill: parent
+            anchors.bottomMargin: root.menuStyle === C.FLOATING ? 4 : 0
 
             Menus {
                 id: menus

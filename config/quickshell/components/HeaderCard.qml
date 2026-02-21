@@ -4,21 +4,19 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import "root:/themes"
+import "root:/components"
 
 Rectangle {
     id: root
 
     default property alias content: contentLayout.data
 
-    // أيقونة اختيارية في الزاوية (للـ refresh مثلاً)
     property string actionIcon: ""
-    readonly property int actionButtonSize: 40
     signal actionClicked
 
     Layout.fillWidth: true
     implicitHeight: contentLayout.implicitHeight + ThemeManager.selectedTheme.dimensions.spacingMedium * 2
 
-    // خلفية طفيفة تميّزه عن الـ panel لكن بدون مبالغة
     color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.04)
     radius: 0
 
@@ -33,47 +31,33 @@ Rectangle {
         spacing: ThemeManager.selectedTheme.dimensions.spacingSmall
     }
 
-    // زر الأكشن (refresh إلخ) — يظهر فقط إذا مُرر icon
-    Item {
-        visible: root.actionIcon.length > 0
+    // ─── زر الأكشن بـ MButton ────────────────────────────────────
+    MButton {
+        visible: root.actionIcon !== ""
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.margins: 4
-        width: root.actionButtonSize
-        height: root.actionButtonSize
+        anchors.rightMargin: 14
 
-        Rectangle {
-            anchors.centerIn: parent
-            width: root.actionButtonSize - 8
-            height: root.actionButtonSize - 8
-            radius: (root.actionButtonSize - 8) / 2
-            color: refreshArea.containsMouse ? ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.08) : "transparent"
-            Behavior on color {
-                ColorAnimation {
-                    duration: 100
-                }
-            }
+        width: 36
+        height: 36
 
-            Text {
-                id: actionIconText
-                anchors.centerIn: parent
-                text: root.actionIcon
-                font.family: ThemeManager.selectedTheme.typography.iconFont
-                font.pixelSize: 24
-                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.7)
-            }
-        }
+        iconText: root.actionIcon
+        showIcon: true
+        text: ""
+        textPreferredWidth: 0
+        iconPreferredWidth: 10
 
-        MouseArea {
-            id: refreshArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: root.actionClicked()
-        }
+        normalBackground: ThemeManager.selectedTheme.colors.primary.alpha(0.1)
+        normalForeground: ThemeManager.selectedTheme.colors.primary
+        hoveredBackground: ThemeManager.selectedTheme.colors.primary.alpha(0.5)
+        downForeground: ThemeManager.selectedTheme.colors.primary
+        cursorShape: Qt.PointingHandCursor
+
+        onClicked: root.actionClicked()
     }
 
-    // خط سفلي
+    // ─── خط سفلي ─────────────────────────────────────────────────
     Rectangle {
         anchors.bottom: parent.bottom
         anchors.left: parent.left

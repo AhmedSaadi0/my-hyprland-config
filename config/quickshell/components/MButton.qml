@@ -55,10 +55,10 @@ Button {
     property var normalForeground: Kirigami.Theme.textColor
     property var activeForeground: ThemeManager.selectedTheme.colors.onPrimary
 
-    property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / 1.3
+    property int topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / 1.3
+    property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / 1.3
+    property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / 1.3
 
     // ---------------------------------------------------------
     // 1. إضافة تأثير الانكماش (Scale Animation)

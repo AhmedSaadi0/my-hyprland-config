@@ -3,104 +3,76 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-
 import "root:/components"
 import "root:/themes"
 import "root:/config/EventNames.js" as Events
 import "root:/config"
+import "../base"
 
-Item {
+BaseMenuView {
     id: monitoringMenu
     objectName: "monitoring"
 
-    // نجعل القائمة تأخذ كامل مساحة الأب (التي هي عادة MenuContainer)
-    // anchors.fill: parent
-    TopAppBar {
-        id: topBar
-        Layout.fillWidth: true
-        title: qsTr("System")
-        icon: "󰄳"
-        // scrollY: bodyItems.ScrollBar.vertical.position * bodyItems.contentHeight
-        // primaryActionVisible: false
-        // actions:
+    menuTitle: qsTr("System")
+    menuIcon: ""
+    showPrimaryAction: false
+
+    // ─── Progresses كهيدر يتمرر مع المحتوى ──────────────────────
+    Progresses {
+        width: parent.width
     }
 
-    ScrollView {
-        id: mainScrollView
-        anchors.fill: parent
-        contentWidth: availableWidth
-        clip: true
-        anchors.topMargin: topBar.implicitHeight + ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        anchors.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        anchors.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+    // ─── المحتوى ─────────────────────────────────────────────────
+    ColumnLayout {
+        Layout.fillWidth: true
+        Layout.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-
-        ColumnLayout {
-            width: mainScrollView.availableWidth
+        RowLayout {
+            Layout.fillWidth: true
             spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-            Progresses {
-                id: progresses
+            ProcessTable {
+                id: cpuTable
                 Layout.fillWidth: true
+                title: "Cpu Usage"
+                command: App.scripts.python.topCpuUsageCommand
             }
-
-            // لترتيب الجداول جنباً إلى جنب بشكل مرن
-            RowLayout {
+            ProcessTable {
+                id: ramTable
                 Layout.fillWidth: true
-                spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-
-                ProcessTable {
-                    id: cpuTable
-                    Layout.fillWidth: true
-                    title: "Cpu Usage"
-                    command: App.scripts.python.topCpuUsageCommand
-                    // أزل الـ anchors اليدوية
-                }
-
-                ProcessTable {
-                    id: ramTable
-                    Layout.fillWidth: true
-                    title: "Mem Usage"
-                    command: App.scripts.python.topRamUsageCommand
-                }
+                title: "Mem Usage"
+                command: App.scripts.python.topRamUsageCommand
             }
+        }
 
-            RowLayout {
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+
+            TempTable {
+                id: tempTable
                 Layout.fillWidth: true
-                spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-
-                TempTable {
-                    id: tempTable
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 120
-                }
-
-                BatteryTable {
-                    id: batteryTable
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 120
-                }
+                Layout.preferredHeight: 120
             }
-
-            SystemMonitor {
-                id: systemMonitor
+            BatteryTable {
+                id: batteryTable
                 Layout.fillWidth: true
-                // لا نضع height ثابت هنا، سيأخذ طوله من implicitHeight الذي عرفناه
-                Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2
+                Layout.preferredHeight: 120
             }
+        }
+
+        SystemMonitor {
+            id: systemMonitor
+            Layout.fillWidth: true
+            Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2
         }
     }
 
+    // ─── دورة حياة القائمة ───────────────────────────────────────
     Component.onCompleted: {
-        EventBus.on(Events.LEFT_MENU_IS_OPENED, function () {
-            monitoringMenu.menuIsOpened();
-        });
-
-        EventBus.on(Events.LEFT_MENU_IS_CLOSED, function () {
-            monitoringMenu.menuIsClosed();
-        });
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, () => monitoringMenu.menuIsOpened());
+        EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => monitoringMenu.menuIsClosed());
     }
 
     function menuIsOpened() {
@@ -109,7 +81,7 @@ Item {
             ramTable.running = true;
             tempTable.running = true;
             batteryTable.running = true;
-            console.info("Start menu monotoring tables");
+            console.info("Start menu monitoring tables");
         }
     }
 
@@ -119,7 +91,7 @@ Item {
             ramTable.running = false;
             tempTable.running = false;
             batteryTable.running = false;
-            console.info("Stop menu monotoring tables");
+            console.info("Stop menu monitoring tables");
         }
     }
 }

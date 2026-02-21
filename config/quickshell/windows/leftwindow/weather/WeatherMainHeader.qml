@@ -17,58 +17,19 @@ HeaderCard {
     readonly property var colors: theme.colors
     readonly property var typo: theme.typography
 
-    Rectangle {
-        id: refreshBtn
-        width: 32
-        height: 32
-        radius: 16
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.margins: 12
-
-        color: refreshMouse.containsMouse ? colors.leftMenuFgColorV1.alpha(0.1) : "transparent"
-
-        Behavior on color {
-            ColorAnimation {
-                duration: 200
-            }
-        }
-
-        Text {
-            anchors.centerIn: parent
-            text: "󰑓"
-            font.family: typo.iconFont
-            font.pixelSize: 16
-            color: colors.subtleText
-
-            // دوران الأيقونة عند الضغط
-            rotation: refreshMouse.pressed ? 180 : 0
-            Behavior on rotation {
-                NumberAnimation {
-                    duration: 300
-                    easing.type: Easing.OutBack
-                }
-            }
-        }
-
-        MouseArea {
-            id: refreshMouse
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                Weather.getWeatherData();
-            }
-        }
-    }
+    actionIcon: "󰑓"
+    onActionClicked: Weather.getWeatherData()
 
     // 2. المحتوى الرئيسي
     ColumnLayout {
         id: mainCol
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.margins: 20
+
+        Layout.fillWidth: true
+        Layout.margins: 20
+        // anchors.top: parent.top
+        // anchors.left: parent.left
+        // anchors.right: parent.right
+        // anchors.margins: 20
         spacing: 12
 
         // --- أ: الموقع وتوقيت التحديث ---
