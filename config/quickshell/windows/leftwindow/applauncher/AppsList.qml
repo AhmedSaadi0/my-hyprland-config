@@ -1,0 +1,139 @@
+// windows/leftwindow/applauncher/AppsList.qml
+
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+
+import "root:/themes"
+import "root:/components"
+import "root:/windows/bottomlauncher"
+
+Item {
+    id: rootList
+
+    property var listModel
+    property int selectedIndex: -1
+    property alias selectedCategory: categoryFilter.selectedCategory
+
+    signal appClicked(int index, var appData)
+    signal categoryChanged
+
+    CategoryFilter {
+        id: categoryFilter
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 32
+
+        onSelectedCategoryChanged: {
+            rootList.categoryChanged();
+        }
+    }
+
+    ScrollView {
+        anchors.top: categoryFilter.bottom
+        anchors.topMargin: 8
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        clip: true
+        contentWidth: availableWidth
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+        ListView {
+            id: listView
+            anchors.fill: parent
+            model: rootList.listModel
+            clip: true
+            spacing: 0
+
+            onCurrentIndexChanged: {
+                if (currentIndex >= 0) {
+                    positionViewAtIndex(currentIndex, ListView.Contain);
+                }
+            }
+
+            Connections {
+                target: rootList
+                function onSelectedIndexChanged() {
+                    listView.currentIndex = rootList.selectedIndex;
+                }
+            }
+
+            displaced: Transition {
+                NumberAnimation {
+                    properties: "x,y"
+                    duration: 200
+                    easing.type: Easing.OutQuad
+                }
+            }
+
+            delegate: Item {
+                id: delegateRoot
+                width: listView.width
+                height: modelData.isHeader ? 40 : 70
+
+                opacity: 0
+                transform: Translate {
+                    id: itemTrans
+                    y: 15
+                }
+
+                Component.onCompleted: entranceAnim.start()
+
+                ParallelAnimation {
+                    id: entranceAnim
+                    SequentialAnimation {
+                        PauseAnimation {
+                            duration: Math.min(index, 10) * 20
+                        }
+                        ParallelAnimation {
+                            NumberAnimation {
+                                target: delegateRoot
+                                property: "opacity"
+                                to: 1
+                                duration: 200
+                            }
+                            NumberAnimation {
+                                target: itemTrans
+                                property: "y"
+                                to: 0
+                                duration: 250
+                                easing.type: Easing.OutBack
+                            }
+                        }
+                    }
+                }
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: ThemeManager.selectedTheme.colors.primary.alpha(0.15)
+                    visible: modelData.isHeader
+                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
+
+                    Text {
+                        text: modelData.letter !== undefined ? modelData.letter : ""
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 16
+                        font.pixelSize: 18
+                        font.bold: true
+                        color: ThemeManager.selectedTheme.colors.topbarFgColor
+                    }
+                }
+
+                AppItem {
+                    anchors.fill: parent
+                    visible: !modelData.isHeader
+                    desktopEntity: modelData.appData
+                    isSelected: rootList.selectedIndex === index
+
+                    onItemClicked: {
+                        rootList.appClicked(index, modelData.appData);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -3,64 +3,88 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+
 import "root:/themes"
+import "root:/components" // يحتوي على MButton و EditableField و HeaderCard
 
-Rectangle {
-    id: root
-    Layout.fillWidth: true
-    Layout.preferredHeight: 50
-    color: "transparent"
+HeaderCard {
+    id: headerRoot
 
-    signal clearAllClicked
-    signal navigateRequested(int direction)
-    signal activateRequested
+    // --- Properties ---
     property alias searchText: searchField.text
-
     property bool isSearching: false
 
+    // Theme Helpers
+    readonly property var colors: ThemeManager.selectedTheme.colors
+    readonly property var dims: ThemeManager.selectedTheme.dimensions
+    readonly property var typo: ThemeManager.selectedTheme.typography
+
+    // --- Layout Settings ---
+    Layout.fillWidth: true
+    Layout.preferredHeight: 74
+    Layout.leftMargin: 10
+    Layout.rightMargin: 10
+    Layout.bottomMargin: 10
+
+    // --- Signals ---
+    signal clearAllClicked
+    signal moveSelection(int direction)
+    signal activateSelection
+
     function focusSearch() {
-        root.isSearching = true;
+        headerRoot.isSearching = true;
         searchField.text = "";
         searchField.forceActiveFocus();
     }
 
     function forceSearchFocus() {
-        if (root.isSearching)
+        if (headerRoot.isSearching)
             searchField.forceActiveFocus();
     }
 
     RowLayout {
-        anchors.fill: parent
-        anchors.margins: 15
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        Layout.margins: 10
         spacing: 10
 
         // 1. العنوان (يظهر فقط عندما لا نبحث)
-        Label {
-            visible: !root.isSearching
+        Text {
+            visible: !headerRoot.isSearching
             text: qsTr("Clipboard History")
-            font.pixelSize: ThemeManager.selectedTheme.typography.heading4Size
+            font.family: typo.bodyFont
+            font.pixelSize: 18
             font.bold: true
-            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+            color: colors.leftMenuFgColorV1
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignVCenter
         }
 
-        // 2. حقل البحث (يظهر فقط عند البحث)
-        TextField {
+        // 2. حقل البحث باستخدام EditableField المخصص
+        EditableField {
             id: searchField
-            visible: root.isSearching
+            visible: headerRoot.isSearching
             Layout.fillWidth: true
-            Layout.preferredHeight: 30
-            placeholderText: qsTr("Search...")
-            font.family: ThemeManager.selectedTheme.typography.bodyFont
-            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+            Layout.preferredHeight: 38
+            Layout.alignment: Qt.AlignVCenter
 
-            // تخصيص شكل حقل البحث ليناسب الثيم
-            background: Rectangle {
-                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.05)
-                radius: 4
-                border.width: 1
-                border.color: searchField.activeFocus ? ThemeManager.selectedTheme.colors.primary : "transparent"
-            }
+            // محاذاة النص لليسار (لأن EditableField افتراضياً في المنتصف)
+            horizontalAlignment: Text.AlignLeft
+
+            placeholderText: qsTr("Search...")
+            font.family: typo.bodyFont
+
+            // تخصيص الألوان بناءً على خصائص EditableField الخاصة بك
+            normalBackground: colors.leftMenuFgColorV1.alpha(0.05)
+            normalForeground: colors.leftMenuFgColorV1
+            borderColor: "transparent"
+            focusedBorderColor: colors.primary
+            borderSize: 1
+
+            topLeftRadius: dims.elementRadius
+            topRightRadius: dims.elementRadius
+            bottomLeftRadius: dims.elementRadius
+            bottomRightRadius: dims.elementRadius
 
             onVisibleChanged: {
                 if (!visible)
@@ -70,89 +94,71 @@ Rectangle {
             }
 
             Keys.onEscapePressed: {
-                root.isSearching = false;
+                headerRoot.isSearching = false;
                 text = "";
                 focus = false;
             }
 
             Keys.onPressed: event => {
                 if (event.key === Qt.Key_Down) {
-                    root.navigateRequested(1);
+                    headerRoot.moveSelection(1);
                     event.accepted = true;
-                    return;
-                }
-                if (event.key === Qt.Key_Up) {
-                    root.navigateRequested(-1);
+                } else if (event.key === Qt.Key_Up) {
+                    headerRoot.moveSelection(-1);
                     event.accepted = true;
-                    return;
-                }
-                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                    root.activateRequested();
+                } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    headerRoot.activateSelection();
                     event.accepted = true;
-                    return;
                 }
             }
         }
 
-        // 3. زر تفعيل/إلغاء البحث
-        Rectangle {
-            Layout.preferredWidth: 32
-            Layout.preferredHeight: 32
-            radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: searchMA.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.15) : "transparent"
+        // 3. زر تفعيل/إلغاء البحث باستخدام MButton المخصص
+        MButton {
+            Layout.preferredWidth: 34
+            Layout.preferredHeight: 34
+            Layout.alignment: Qt.AlignVCenter
 
-            Text {
-                anchors.centerIn: parent
-                text: root.isSearching ? "󰅖" : "󰍉"
-                font.family: ThemeManager.selectedTheme.typography.iconFont
-                color: searchMA.containsMouse ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.subtleText
-            }
+            showIcon: true
+            iconText: headerRoot.isSearching ? "󰅖" : "󰍉"
+            text: "" // إخفاء النص العادي
+            textPreferredWidth: 0
+            iconPreferredWidth: 16
 
-            MouseArea {
-                id: searchMA
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    root.isSearching = !root.isSearching;
-                }
-            }
+            // الألوان
+            normalBackground: "transparent"
+            normalForeground: colors.subtleText
+            hoveredBackground: colors.primary.alpha(0.15)
+            downBackground: colors.primary.alpha(0.3)
+            downForeground: colors.primary
+
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: headerRoot.isSearching = !headerRoot.isSearching
         }
 
-        // 4. زر الحذف (Clear All)
-        Rectangle {
-            Layout.preferredWidth: 32
-            Layout.preferredHeight: 32
-            radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: clearMA.containsMouse ? ThemeManager.selectedTheme.colors.error.alpha(0.15) : "transparent"
+        // 4. زر الحذف (Clear All) باستخدام MButton المخصص
+        MButton {
+            Layout.preferredWidth: 34
+            Layout.preferredHeight: 34
+            Layout.alignment: Qt.AlignVCenter
 
-            Behavior on color {
-                ColorAnimation {
-                    duration: 200
-                }
-            }
+            showIcon: true
+            iconText: "󰆴"
+            text: ""
+            textPreferredWidth: 0
+            iconPreferredWidth: 16
 
-            Text {
-                anchors.centerIn: parent
-                text: "󰆴"
-                font.family: ThemeManager.selectedTheme.typography.iconFont
-                color: clearMA.containsMouse ? ThemeManager.selectedTheme.colors.error : ThemeManager.selectedTheme.colors.subtleText
-            }
+            // الألوان (استخدام لون الخطأ error)
+            normalBackground: "transparent"
+            normalForeground: colors.subtleText
+            hoveredBackground: colors.error.alpha(0.15)
+            downBackground: colors.error.alpha(0.3)
+            downForeground: colors.error
 
-            MouseArea {
-                id: clearMA
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: root.clearAllClicked()
-            }
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: headerRoot.clearAllClicked()
         }
-    }
-
-    Rectangle {
-        anchors.bottom: parent.bottom
-        width: parent.width
-        height: 1
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.1)
     }
 }
