@@ -12,6 +12,7 @@ Rectangle {
     default property alias content: contentLayout.data
 
     property string actionIcon: ""
+    property alias actionButton: actionBtn
     signal actionClicked
 
     Layout.fillWidth: true
@@ -33,6 +34,7 @@ Rectangle {
 
     // ─── زر الأكشن بـ MButton ────────────────────────────────────
     MButton {
+        id: actionBtn
         visible: root.actionIcon !== ""
         anchors.top: parent.top
         anchors.right: parent.right

@@ -18,7 +18,19 @@ HeaderCard {
     readonly property var typo: theme.typography
 
     actionIcon: "󰑓"
-    onActionClicked: Weather.getWeatherData()
+    onActionClicked: {
+        Weather.getWeatherData();
+        rotationAnim.start();
+    }
+
+    RotationAnimation {
+        id: rotationAnim
+        target: root.actionButton
+        property: "rotation"
+        from: 0
+        to: 360
+        duration: 1000
+    }
 
     // 2. المحتوى الرئيسي
     ColumnLayout {
@@ -88,6 +100,22 @@ HeaderCard {
                 Layout.preferredWidth: 80
                 Layout.preferredHeight: 80
 
+                SequentialAnimation on y {
+                    loops: Animation.Infinite
+                    NumberAnimation {
+                        from: 0
+                        to: -5
+                        duration: 2500
+                        easing.type: Easing.InOutSine
+                    }
+                    NumberAnimation {
+                        from: -5
+                        to: 0
+                        duration: 2500
+                        easing.type: Easing.InOutSine
+                    }
+                }
+
                 Text {
                     anchors.centerIn: parent
                     text: Weather.weatherIcon
@@ -97,21 +125,7 @@ HeaderCard {
                     color: colors.primary
 
                     // حركة طفو هادئة
-                    SequentialAnimation on y {
-                        loops: Animation.Infinite
-                        NumberAnimation {
-                            from: 0
-                            to: -5
-                            duration: 2500
-                            easing.type: Easing.InOutSine
-                        }
-                        NumberAnimation {
-                            from: -5
-                            to: 0
-                            duration: 2500
-                            easing.type: Easing.InOutSine
-                        }
-                    }
+
                 }
 
                 // ظل ملون خلف الأيقونة ليعطي عمقاً
@@ -228,7 +242,7 @@ HeaderCard {
                     anchors.centerIn: parent
                     spacing: 6
                     Text {
-                        text: "" // سهم للأعلى أو أيقونة حرارة
+                        text: ""
                         font.family: typo.iconFont
                         color: colors.error
                         font.pixelSize: 14
@@ -257,7 +271,7 @@ HeaderCard {
                     anchors.centerIn: parent
                     spacing: 6
                     Text {
-                        text: ""
+                        text: ""
                         font.family: typo.iconFont
                         color: colors.primary
                         font.pixelSize: 14

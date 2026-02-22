@@ -15,9 +15,6 @@ HeaderCard {
     id: root
     implicitHeight: 170
     width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2) - (App.menuStyle === C.FLOATING ? 10 : 0)
-    radius: ThemeManager.selectedTheme.dimensions.elementRadius
-    // color: Kirigami.Theme.linkBackgroundColor
-    // color: ThemeManager.selectedTheme.colors.topbarBgColorV2
 
     property int monitorWidth: 65
     property int monitorHeight: 65
@@ -26,32 +23,6 @@ HeaderCard {
 
     property int thickness: 7
     property int iconFontSize: 24
-
-    // layer.enabled: true
-    // layer.smooth: true
-    // layer.effect: Shadow {}
-
-    // ShaderEffect {
-    //     width: 200
-    //     height: 100
-    //     // fragmentShader: "
-    //     // varying highp vec2 qt_TexCoord0;
-    //     // void main() {
-    //     //     // Simple shadow simulation (darken background)
-    //     //     gl_FragColor = vec4(0, 0, 0, 0.3);
-    //     // }"
-    // }
-
-    // MultiEffect {
-    //     source: root
-    //     anchors.fill: root
-    //     autoPaddingEnabled: false
-    //     paddingRect: Qt.rect(0, 10 * (-1), 100, 100)
-    //     shadowBlur: 1.0
-    //     shadowColor: 'black'
-    //     shadowEnabled: true
-    //     shadowVerticalOffset: 10
-    // }
 
     // Define the components to be loaded by MonitorWidget
     Component {

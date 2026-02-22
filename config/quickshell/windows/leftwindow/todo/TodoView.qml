@@ -26,11 +26,9 @@ BaseMenuView {
         TodoService.addTask(title, root.selectedDate, urgent);
     }
 
-    // ─── TodoHeader كهيدر يتمرر مع المحتوى ───────────────────────
-    TodoHeader {
-        width: parent.width
+    headerContent: TodoHeader {
+        width: root.width
         selectedDate: root.selectedDate
-
         onOpenCalendar: {
             root.activeCalendarIndex = -1;
             calendarPopup.open();
@@ -38,36 +36,31 @@ BaseMenuView {
         onAddTask: (title, urgent) => root.addTask(title, urgent)
     }
 
-    // ─── المحتوى ─────────────────────────────────────────────────
+    // المحتوى الرئيسي
     ColumnLayout {
         Layout.fillWidth: true
-        Layout.fillHeight: true
+        spacing: root.dims.spacingLarge
+
         Layout.leftMargin: root.dims.menuWidgetsMargin
         Layout.rightMargin: root.dims.menuWidgetsMargin
-        Layout.topMargin: root.dims.spacingMedium
-        spacing: root.dims.spacingMedium
+        Layout.topMargin: root.dims.menuWidgetsMargin
 
-        // كرت الذكاء الاصطناعي
+        // --- 1. كرت الذكاء الاصطناعي ---
         AISummaryCard {
             id: smartTodoCard
             Layout.fillWidth: true
             visible: TodoService.aiSummaryText !== ""
 
-            title: TodoService.aiSummaryTitle !== "" ? TodoService.aiSummaryTitle : qsTr("محلل المهام الذكي")
+            title: TodoService.aiSummaryTitle !== "" ? TodoService.aiSummaryTitle : qsTr("المحلل الذكي")
             summaryText: TodoService.aiSummaryText
-            iconText: "✨📋"
+            iconText: "✨"
 
             showDataRefreshButton: false
             showAiRefreshButton: true
 
-            onRefreshAiClicked: {
-                console.log("طلب إعادة تحليل المهام من الذكاء الاصطناعي...");
-            }
-
             bottomContent: Flow {
-                width: smartTodoCard.width - (root.dims.menuWidgetsMargin * 2)
+                Layout.fillWidth: true
                 spacing: 6
-                topPadding: 4
                 visible: TodoService.aiSummaryTags && TodoService.aiSummaryTags.length > 0
 
                 Repeater {
@@ -75,17 +68,14 @@ BaseMenuView {
                     delegate: Rectangle {
                         height: 24
                         width: tagText.contentWidth + 16
-                        color: smartTodoCard.aiBorderColor.alpha(0.3)
+                        color: smartTodoCard.aiBorderColor.alpha(0.1)
                         radius: 6
-                        border.color: smartTodoCard.aiBorderColor.alpha(0.5)
-                        border.width: 1
-
+                        border.color: smartTodoCard.aiBorderColor.alpha(0.2)
                         Text {
                             id: tagText
                             anchors.centerIn: parent
                             text: modelData
-                            font.family: root.typo.bodyFont
-                            font.pixelSize: 12
+                            font.pixelSize: 11
                             color: smartTodoCard.aiTextColor
                         }
                     }
@@ -93,19 +83,19 @@ BaseMenuView {
             }
         }
 
-        // المهام العاجلة
+        // --- 2. المهام العاجلة (Due Now) ---
         ColumnLayout {
             Layout.fillWidth: true
             visible: TodoService.dueNowModel.count > 0
-            spacing: 8
+            spacing: 10
 
             Text {
                 text: qsTr("Due Now")
                 font.family: root.typo.bodyFont
-                font.pixelSize: root.typo.small
+                font.pixelSize: 13
                 font.bold: true
-                color: root.colors.leftMenuFgColorV1
-                opacity: 0.8
+                color: root.colors.error
+                opacity: 0.9
                 Layout.leftMargin: 4
             }
 
@@ -113,17 +103,11 @@ BaseMenuView {
                 model: TodoService.dueNowModel
                 delegate: Rectangle {
                     Layout.fillWidth: true
-                    height: 44
+                    height: 48
                     radius: root.dims.elementRadius
                     color: Qt.rgba(root.colors.error.r, root.colors.error.g, root.colors.error.b, 0.08)
                     border.width: 1
-                    border.color: Qt.rgba(root.colors.error.r, root.colors.error.g, root.colors.error.b, isUrgent ? 0.35 : 0.15)
-
-                    layer.enabled: isUrgent
-                    layer.effect: Shadow {
-                        alpha: 0.15
-                        color: root.colors.error
-                    }
+                    border.color: Qt.rgba(root.colors.error.r, root.colors.error.g, root.colors.error.b, 0.15)
 
                     RowLayout {
                         anchors.fill: parent
@@ -140,7 +124,6 @@ BaseMenuView {
                             font.family: root.typo.bodyFont
                             font.pixelSize: root.typo.small
                             color: root.colors.leftMenuFgColorV1
-                            font.bold: isUrgent
                             Layout.fillWidth: true
                             elide: Text.ElideRight
                         }
@@ -148,7 +131,7 @@ BaseMenuView {
                         Text {
                             text: date
                             font.family: root.typo.bodyFont
-                            font.pixelSize: 11
+                            font.pixelSize: 10
                             color: root.colors.error
                             opacity: 0.8
                         }
@@ -157,17 +140,19 @@ BaseMenuView {
             }
         }
 
-        // قائمة المهام
-        ScrollView {
+        // --- 3. بقية المهام
+        ColumnLayout {
             Layout.fillWidth: true
-            Layout.fillHeight: true
-            clip: true
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+            spacing: 10
+            Layout.bottomMargin: root.dims.menuWidgetsMargin
 
             TodoItems {
-                listModel: TodoService.tasksModel
+                id: tasksList
+                Layout.fillWidth: true
+                // TODO: -> Convert 64 to a const and use it instead
+                Layout.preferredHeight: contentHeight + 4
 
+                listModel: TodoService.tasksModel
                 onRequestSave: TodoService.saveAndSort()
                 onRequestCalendar: index => {
                     root.activeCalendarIndex = index;
@@ -177,13 +162,11 @@ BaseMenuView {
         }
     }
 
-    // ─── التقويم ──────────────────────────────────────────────────
     CustomCalendar {
         id: calendarPopup
         x: (root.width - width) / 2
         y: 80
         z: 100
-
         onDateSelected: date => {
             if (root.activeCalendarIndex === -1) {
                 root.selectedDate = date;

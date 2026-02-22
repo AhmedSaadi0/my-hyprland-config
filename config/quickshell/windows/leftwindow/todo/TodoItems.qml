@@ -18,10 +18,8 @@ ListView {
     readonly property var dims: ThemeManager.selectedTheme.dimensions
     readonly property var typo: ThemeManager.selectedTheme.typography
 
-    // --- Layout Settings ---
-    Layout.fillWidth: true
-    Layout.fillHeight: true
     clip: true
+    interactive: false
 
     spacing: dims.spacingMedium
     topMargin: dims.spacingSmall

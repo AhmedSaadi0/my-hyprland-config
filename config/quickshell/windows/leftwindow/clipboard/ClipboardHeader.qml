@@ -13,7 +13,7 @@ Rectangle {
 
     signal clearAllClicked
     signal navigateRequested(int direction)
-    signal activateRequested()
+    signal activateRequested
     property alias searchText: searchField.text
 
     property bool isSearching: false
