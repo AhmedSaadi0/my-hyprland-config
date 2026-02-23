@@ -10,7 +10,9 @@ LANG = "en"
 
 def load_languages():
     global MESSAGES
-    json_path = os.path.join(PROJECT_ROOT, "data", "locales.json")
+    base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    json_path = os.path.join(base_path, "data", "locales.json")
+    print(PROJECT_ROOT)
     try:
         with open(json_path, "r", encoding="utf-8") as f:
             MESSAGES = json.load(f)
