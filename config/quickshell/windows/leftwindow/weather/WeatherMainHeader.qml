@@ -7,11 +7,12 @@ import QtQuick.Effects
 import "root:/themes"
 import "root:/services"
 import "root:/components"
+import "root:/windows/leftwindow/base"
 
 HeaderCard {
     id: root
-    Layout.fillWidth: true
     implicitHeight: mainCol.implicitHeight + 40
+    implicitWidth: mainCol.implicitWidth + 40
 
     readonly property var theme: ThemeManager.selectedTheme
     readonly property var colors: theme.colors
@@ -25,7 +26,7 @@ HeaderCard {
 
     RotationAnimation {
         id: rotationAnim
-        target: root.actionButton
+        target: root.actionButton.iconItem
         property: "rotation"
         from: 0
         to: 360
@@ -35,13 +36,8 @@ HeaderCard {
     // 2. المحتوى الرئيسي
     ColumnLayout {
         id: mainCol
-
         Layout.fillWidth: true
         Layout.margins: 20
-        // anchors.top: parent.top
-        // anchors.left: parent.left
-        // anchors.right: parent.right
-        // anchors.margins: 20
         spacing: 12
 
         // --- أ: الموقع وتوقيت التحديث ---
@@ -121,11 +117,7 @@ HeaderCard {
                     text: Weather.weatherIcon
                     font.family: typo.iconFont
                     font.pixelSize: 72
-                    // استخدام اللون الأساسي للثيم للأيقونة
                     color: colors.primary
-
-                    // حركة طفو هادئة
-
                 }
 
                 // ظل ملون خلف الأيقونة ليعطي عمقاً
@@ -188,7 +180,7 @@ HeaderCard {
                 icon: ""
                 value: Weather.humidity + "%"
                 label: qsTr("Humidity")
-                iconColor: colors.primary // الأزرق للرطوبة
+                iconColor: colors.primary
             }
             StatBox {
                 icon: ""
@@ -200,7 +192,7 @@ HeaderCard {
                 icon: ""
                 value: String(Weather.uvIndex)
                 label: qsTr("UV Index")
-                iconColor: colors.warning // البرتقالي للشمس/UV
+                iconColor: colors.warning
             }
             StatBox {
                 icon: ""
@@ -232,8 +224,7 @@ HeaderCard {
             Rectangle {
                 Layout.preferredWidth: 100
                 Layout.preferredHeight: 32
-                radius: 16
-                // لون الخلفية: أحمر شفاف (Error color)
+                radius: ThemeManager.selectedTheme.dimensions.elementRadius
                 color: colors.error.alpha(0.1)
                 border.color: colors.error.alpha(0.2)
                 border.width: 1
@@ -261,7 +252,7 @@ HeaderCard {
             Rectangle {
                 Layout.preferredWidth: 100
                 Layout.preferredHeight: 32
-                radius: 16
+                radius: ThemeManager.selectedTheme.dimensions.elementRadius
                 // لون الخلفية: لون الثيم الأساسي شفاف (Primary)
                 color: colors.primary.alpha(0.1)
                 border.color: colors.primary.alpha(0.2)
@@ -301,7 +292,7 @@ HeaderCard {
             Layout.alignment: Qt.AlignHCenter
             width: 40
             height: 40
-            radius: 12
+            radius: ThemeManager.selectedTheme.dimensions.elementRadius
             // خلفية شفافة جداً بلون الثيم
             color: colors.leftMenuFgColorV1.alpha(0.05)
 

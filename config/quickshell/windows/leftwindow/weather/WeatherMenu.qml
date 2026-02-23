@@ -55,17 +55,17 @@ BaseMenuView {
     // headerContent: WeatherMainHeader {
     WeatherMainHeader {
         Layout.fillWidth: true
-        width: parent.width
     }
 
     ColumnLayout {
         Layout.fillWidth: true
         Layout.margins: weatherRoot.sidePadding
-        spacing: ThemeManager.selectedTheme.dimensions.spacingMedium
+        spacing: weatherRoot.sidePadding
 
         AISummaryCard {
             id: smartWeatherCard
             Layout.fillWidth: true
+            // Layout.bottomMargin: weatherRoot.sidePadding
 
             title: Weather.aiTrendBadge !== "" ? Weather.aiTrendBadge : "محلل الطقس الذكي"
             summaryText: Weather.aiSummaryText !== "" ? Weather.aiSummaryText : "جاري تحليل حالة الطقس..."
@@ -91,7 +91,7 @@ BaseMenuView {
                         height: 24
                         width: tagText.contentWidth + 16
                         color: smartWeatherCard.aiBorderColor.alpha(0.3)
-                        radius: 6
+                        radius: ThemeManager.selectedTheme.dimensions.elementRadius
                         border.color: smartWeatherCard.aiBorderColor.alpha(0.5)
                         border.width: 1
 

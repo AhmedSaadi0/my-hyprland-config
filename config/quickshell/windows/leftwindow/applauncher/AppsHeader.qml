@@ -6,6 +6,7 @@ import QtQuick.Controls
 
 import "root:/themes"
 import "root:/components"
+import "root:/windows/leftwindow/base"
 
 HeaderCard {
     id: headerRoot

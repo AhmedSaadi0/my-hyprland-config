@@ -5,7 +5,8 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 import "root:/themes"
-import "root:/components" // يحتوي على MButton و EditableField و HeaderCard
+import "root:/components"
+import "root:/windows/leftwindow/base"
 
 HeaderCard {
     id: headerRoot
@@ -65,7 +66,7 @@ HeaderCard {
             id: searchField
             visible: headerRoot.isSearching
             Layout.fillWidth: true
-            Layout.preferredHeight: 38
+            Layout.preferredHeight: 30
             Layout.alignment: Qt.AlignVCenter
 
             // محاذاة النص لليسار (لأن EditableField افتراضياً في المنتصف)
@@ -115,8 +116,8 @@ HeaderCard {
 
         // 3. زر تفعيل/إلغاء البحث باستخدام MButton المخصص
         MButton {
-            Layout.preferredWidth: 34
-            Layout.preferredHeight: 34
+            Layout.preferredWidth: 30
+            Layout.preferredHeight: 30
             Layout.alignment: Qt.AlignVCenter
 
             showIcon: true
@@ -139,8 +140,8 @@ HeaderCard {
 
         // 4. زر الحذف (Clear All) باستخدام MButton المخصص
         MButton {
-            Layout.preferredWidth: 34
-            Layout.preferredHeight: 34
+            Layout.preferredWidth: 30
+            Layout.preferredHeight: 30
             Layout.alignment: Qt.AlignVCenter
 
             showIcon: true

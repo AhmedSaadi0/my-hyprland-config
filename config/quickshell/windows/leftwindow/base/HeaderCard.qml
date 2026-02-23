@@ -41,8 +41,8 @@ Rectangle {
         anchors.margins: 4
         anchors.rightMargin: 14
 
-        width: 36
-        height: 36
+        width: 30
+        height: 30
 
         iconText: root.actionIcon
         showIcon: true

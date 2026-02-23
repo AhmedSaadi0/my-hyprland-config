@@ -2,10 +2,10 @@
 
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io
 import Quickshell.Services.UPower
 import org.kde.kirigami as Kirigami
 
+import "root:/windows/smart_capsule/logic"
 import "root:/themes"
 import "root:/components"
 
@@ -37,114 +37,162 @@ MenuCard {
     property string balancedButtonLabel: qsTr("Balanced")
     property string lowButtonLabel: qsTr("Low")
 
-    property string highPerformanceProfileCmd: "performance"
-    property string balancedProfileCmd: "balanced"
-    property string powerSaverProfileCmd: "power-saver"
-
-    // --- Constants for Profile Indices (matching UPower.profile values) ---
-    readonly property int profileIndexPerformance: 2
-    readonly property int profileIndexBalanced: 1
-    readonly property int profileIndexPowerSaver: 0
+    // --- Power Profile Enums (from Quickshell.Services.UPower) ---
+    readonly property int profileIndexPerformance: PowerProfile.Performance
+    readonly property int profileIndexBalanced: PowerProfile.Balanced
+    readonly property int profileIndexPowerSaver: PowerProfile.PowerSaver
 
     // -------------------------------------------------------------------------
     // --- State Properties
     // -------------------------------------------------------------------------
     property var selectedProfile: PowerProfiles.profile // Comes from UPower
-    property string profileToSetOnClick: "" // Stores the command string for the Process
+    property bool _readyForNotifications: false
+    property int _lastNotifiedProfile: -1
+    property int _pendingProfile: -1
+    property bool _pendingUserChange: false
 
-    // Replace Row with RowLayout
-    RowLayout { // <--- MODIFIED: Was 'Row'
-        id: widgetsRow
-        Layout.fillWidth: true // <--- ADDED: Tell the layout to fill the available width
-        spacing: root.buttonsRowSpacing
+    function _notifyProfileChange(profile) {
+        CapsuleCoordinator.handlePowerProfileChange(profile);
+    }
 
-        // Now, you can decide how the buttons should behave inside the RowLayout.
-        // Option 1: Keep them fixed width (they will be aligned to the left).
-        // Option 2 (Recommended): Make them fill the available space equally.
+    function _notifyProfileError(message) {
+        CapsuleCoordinator.handlePowerProfileError(message);
+    }
 
-        // --- Using Option 2 (Recommended for a better look) ---
+    function _requestProfileChange(profile) {
+        if (PowerProfiles.profile === profile)
+            return;
 
-        MButton {
-            id: highPerformanceButton
-            Layout.fillWidth: true // <--- ADDED: Make button fill available width
-            height: root.defaultButtonHeight
-            text: root.highPerformanceButtonLabel
-            onClicked: {
-                root.profileToSetOnClick = root.highPerformanceProfileCmd;
-                profileProcess.running = true;
-            }
-            isActive: root.selectedProfile === root.profileIndexPerformance
-            // normalBackground: (root.selectedProfile === root.profileIndexPerformance) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
-            // normalForeground: (root.selectedProfile === root.profileIndexPerformance) ? root.highlightedStateTextColor : root.baseTextColor
+        _pendingProfile = profile;
+        _pendingUserChange = true;
+        PowerProfiles.profile = profile;
+        profileChangeTimer.restart();
+    }
 
-            topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
-            bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+    onSelectedProfileChanged: {
+        if (!_readyForNotifications) {
+            _lastNotifiedProfile = selectedProfile;
+            return;
         }
 
-        MButton {
-            id: balancedButton
-            Layout.fillWidth: true // <--- ADDED
-            height: root.defaultButtonHeight
-            text: root.balancedButtonLabel
-            onClicked: {
-                root.profileToSetOnClick = root.balancedProfileCmd;
-                profileProcess.running = true;
-            }
+        if (selectedProfile === _lastNotifiedProfile)
+            return;
 
-            isActive: root.selectedProfile === root.profileIndexBalanced
-            // normalBackground: (root.selectedProfile === root.profileIndexBalanced) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
-            // normalForeground: (root.selectedProfile === root.profileIndexBalanced) ? root.highlightedStateTextColor : root.baseTextColor
+        _lastNotifiedProfile = selectedProfile;
 
-            topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
-            topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
-            bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
-            bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+        if (_pendingUserChange && selectedProfile === _pendingProfile) {
+            _pendingUserChange = false;
+            profileChangeTimer.stop();
         }
 
-        MButton {
-            id: batterySavingButton
-            Layout.fillWidth: true // <--- ADDED
-            height: root.defaultButtonHeight
-            text: root.lowButtonLabel
-            onClicked: {
-                root.profileToSetOnClick = root.powerSaverProfileCmd;
-                profileProcess.running = true;
-            }
-            isActive: root.selectedProfile === root.profileIndexPowerSaver
-            // normalBackground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
-            // normalForeground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.highlightedStateTextColor : root.baseTextColor
+        _notifyProfileChange(selectedProfile);
+    }
 
-            bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
-            topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+    Component.onCompleted: {
+        _readyForNotifications = true;
+        _lastNotifiedProfile = selectedProfile;
+    }
+
+    Timer {
+        id: profileChangeTimer
+        interval: 2500
+        repeat: false
+        onTriggered: {
+            if (_pendingUserChange && PowerProfiles.profile !== _pendingProfile) {
+                _pendingUserChange = false;
+                _notifyProfileError(qsTr("Failed to change power profile. Check system permissions."));
+            }
         }
     }
 
-    // -------------------------------------------------------------------------
-    // --- Non-Visual Child Elements (Logic, Processes, etc.)
-    // -------------------------------------------------------------------------
-    Process {
-        id: profileProcess
-        running: false
-        command: ["powerprofilesctl", "set", root.profileToSetOnClick]
+    ColumnLayout {
+        id: mainLayout
+        Layout.fillWidth: true
+        spacing: 6
 
-        property string stdErrString: ""
-        property string stdOutString: ""
+        // Replace Row with RowLayout
+        RowLayout { // <--- MODIFIED: Was 'Row'
+            id: widgetsRow
+            Layout.fillWidth: true // <--- ADDED: Tell the layout to fill the available width
+            spacing: root.buttonsRowSpacing
 
-        stderr: SplitParser {
-            onRead: data => {
-                profileProcess.stdErrString += data;
+            // Now, you can decide how the buttons should behave inside the RowLayout.
+            // Option 1: Keep them fixed width (they will be aligned to the left).
+            // Option 2 (Recommended): Make them fill the available space equally.
+
+            // --- Using Option 2 (Recommended for a better look) ---
+
+            MButton {
+                id: highPerformanceButton
+                Layout.fillWidth: true // <--- ADDED: Make button fill available width
+                height: root.defaultButtonHeight
+                text: root.highPerformanceButtonLabel
+                onClicked: {
+                    _requestProfileChange(PowerProfile.Performance);
+                }
+                enabled: PowerProfiles.hasPerformanceProfile
+                isActive: root.selectedProfile === root.profileIndexPerformance
+                // normalBackground: (root.selectedProfile === root.profileIndexPerformance) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+                // normalForeground: (root.selectedProfile === root.profileIndexPerformance) ? root.highlightedStateTextColor : root.baseTextColor
+
+                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+            }
+
+            MButton {
+                id: balancedButton
+                Layout.fillWidth: true // <--- ADDED
+                height: root.defaultButtonHeight
+                text: root.balancedButtonLabel
+                onClicked: {
+                    _requestProfileChange(PowerProfile.Balanced);
+                }
+
+                isActive: root.selectedProfile === root.profileIndexBalanced
+                // normalBackground: (root.selectedProfile === root.profileIndexBalanced) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+                // normalForeground: (root.selectedProfile === root.profileIndexBalanced) ? root.highlightedStateTextColor : root.baseTextColor
+
+                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+            }
+
+            MButton {
+                id: batterySavingButton
+                Layout.fillWidth: true // <--- ADDED
+                height: root.defaultButtonHeight
+                text: root.lowButtonLabel
+                onClicked: {
+                    _requestProfileChange(PowerProfile.PowerSaver);
+                }
+                isActive: root.selectedProfile === root.profileIndexPowerSaver
+                // normalBackground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
+                // normalForeground: (root.selectedProfile === root.profileIndexPowerSaver) ? root.highlightedStateTextColor : root.baseTextColor
+
+                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
             }
         }
-        stdout: SplitParser {
-            onRead: data => {
-                profileProcess.stdOutString += data;
-            }
-        }
 
-        onRunningChanged: {
-            if (running) {
-                stdErrString = "";
-                stdOutString = "";
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 6
+            visible: !PowerProfiles.hasPerformanceProfile
+
+            Text {
+                text: ""
+                font.family: ThemeManager.selectedTheme.typography.iconFont
+                font.pixelSize: 12
+                color: ThemeManager.selectedTheme.colors.warning
+            }
+            Text {
+                Layout.fillWidth: true
+                text: qsTr("High performance profile is not available on this device.")
+                font.family: ThemeManager.selectedTheme.typography.bodyFont
+                font.pixelSize: 11
+                color: ThemeManager.selectedTheme.colors.warning
+                wrapMode: Text.Wrap
             }
         }
     }

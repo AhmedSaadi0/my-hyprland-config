@@ -94,7 +94,10 @@ def activate_item(clip_id):
 def delete_item(clip_id):
     try:
         list_proc = subprocess.run(
-            "cliphist list", shell=True, capture_output=True, text=True
+            "cliphist list",
+            shell=True,
+            capture_output=True,
+            text=True,
         )
         lines = list_proc.stdout.splitlines()
 

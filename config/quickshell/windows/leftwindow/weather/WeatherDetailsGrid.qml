@@ -20,7 +20,7 @@ ColumnLayout {
     // ==========================================
     Rectangle {
         Layout.fillWidth: true
-        Layout.preferredHeight: 150 // زدنا الارتفاع لراحة العناصر
+        Layout.preferredHeight: 150
         color: colors.topbarBgColorV1.alpha(0.5)
         radius: root.cardRadius
         border.color: colors.leftMenuFgColorV1.alpha(0.05)
@@ -28,7 +28,7 @@ ColumnLayout {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 16 // هامش داخلي مريح للكرت بالكامل
+            anchors.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
             spacing: 10
 
             // العنوان
@@ -52,7 +52,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 orientation: ListView.Horizontal
-                spacing: 20 // مسافة كبيرة بين كل ساعة وأخرى
+                spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
                 clip: true
                 model: Weather.hourlyForecast
 
@@ -103,8 +103,8 @@ ColumnLayout {
         ColumnLayout {
             id: dailyLayout
             anchors.fill: parent
-            anchors.margins: 16 // هامش داخلي
-            spacing: 16 // تباعد بين الأسطر
+            anchors.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+            spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
             // العنوان
             RowLayout {
@@ -192,8 +192,8 @@ ColumnLayout {
     GridLayout {
         Layout.fillWidth: true
         columns: 2
-        columnSpacing: 16 // زيادة المسافة بين الأعمدة
-        rowSpacing: 16    // زيادة المسافة بين الصفوف
+        columnSpacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        rowSpacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
         DetailCard {
             title: qsTr("Feels Like")
@@ -247,7 +247,7 @@ ColumnLayout {
 
         RowLayout {
             anchors.fill: parent
-            anchors.margins: 20 // هوامش مريحة جداً
+            anchors.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
             spacing: 0
 
             AstroCard {

@@ -6,6 +6,7 @@ import QtQuick.Controls
 
 import "root:/themes"
 import "root:/components"
+import "root:/windows/leftwindow/base"
 
 HeaderCard {
     id: headerRoot
@@ -131,7 +132,7 @@ HeaderCard {
                 }
 
                 background: Rectangle {
-                    radius: 18
+                    radius: dims.elementRadius
                     color: urgentBtn.checked ? colors.error : "transparent"
                     border.width: urgentBtn.checked ? 0 : 1.5
                     border.color: urgentBtn.checked ? colors.error : colors.subtleText
@@ -194,7 +195,7 @@ HeaderCard {
                 onClicked: headerRoot.submitNewTask()
 
                 background: Rectangle {
-                    radius: 17
+                    radius: dims.elementRadius
                     color: addTaskBtn.pressed ? Qt.darker(colors.primary, 1.1) : colors.primary
                     layer.enabled: true
                 }

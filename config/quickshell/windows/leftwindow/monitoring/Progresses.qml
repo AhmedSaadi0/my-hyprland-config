@@ -10,6 +10,7 @@ import "root:/config/EventNames.js" as Events
 import "root:/config/ConstValues.js" as C
 import "root:/config"
 import "root:/components"
+import "root:/windows/leftwindow/base"
 
 HeaderCard {
     id: root

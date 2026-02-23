@@ -58,7 +58,7 @@ BaseMenuView {
     Item {
         Layout.fillWidth: true
         Layout.preferredHeight: root.height - root.topAppBarHeight - headerCard.implicitHeight - root.sidePadding - 5
-        Layout.topMargin: root.sidePadding
+        Layout.topMargin: root.sidePadding - 3
 
         // Empty State
         EmptyView {
@@ -79,7 +79,7 @@ BaseMenuView {
                 width: parent.width
                 model: notifModel
                 spacing: 12
-                bottomMargin: 10
+                bottomMargin: 3
                 cacheBuffer: 2000
 
                 property real pullStartDistance: 5

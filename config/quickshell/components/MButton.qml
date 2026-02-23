@@ -15,7 +15,9 @@ Button {
     property string iconText: ""
     property bool showIcon: iconText !== ""
     property bool iconFirst: false
+    property alias iconItem: iconTextItem
 
+    property alias textItem: buttonMainText
     property var textHorizontalAlignment: {
         if (showIcon) {
             if (iconFirst) {

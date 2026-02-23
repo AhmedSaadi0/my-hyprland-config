@@ -46,6 +46,11 @@ def create_user_config_file():
     use_prayer_ans = input(msg("prompt_use_prayer")).lower()
     config["usePrayerTimes"] = use_prayer_ans in ["y", "yes", "ن", "نعم"]
 
+    config["geminiApiKey"] = input(msg("gemini_api_key"))
+    config["musicAiApiKey"] = input(msg("music_ai_api_key"))
+    config["weatherAiApiKey"] = input(msg("weather_ai_api_key"))
+    config["aiPreferredLanguage"] = input(msg("ai_preferred_language"))
+
     # Set default values
     config["changePlasmaColor"] = True
     config["networkTimeout"] = 300
