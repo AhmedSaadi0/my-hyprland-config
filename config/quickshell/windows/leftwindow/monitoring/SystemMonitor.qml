@@ -154,10 +154,21 @@ Item {
                         aiText: model.aiAnalysis
                         isLoading: model.isLoading
                         aiModelName: model.aiModel
+
+                        // الحقول الجديدة
+                        aiTitle: model.aiTitle
+                        aiNarrative: model.aiNarrative
+                        aiRootCause: model.aiRootCause
+                        aiConfidence: model.aiConfidence
+                        aiThermalRisk: model.aiThermalRisk
+                        aiThermalDetails: model.aiThermalDetails
+                        aiProcessName: model.aiProcessName
+                        aiProcessBehavior: model.aiProcessBehavior
+                        aiActions: model.aiActions
+
                         isExpanded: root.expandedEventId === model.eventId
 
                         onExpandRequested: {
-                            // عند التوسيع، سيتغير contentHeight للقائمة وبالتالي يكبر المكون تلقائياً
                             root.expandedEventId = (root.expandedEventId === model.eventId) ? "" : model.eventId;
                         }
                     }

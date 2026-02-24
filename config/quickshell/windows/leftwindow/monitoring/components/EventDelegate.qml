@@ -1,4 +1,4 @@
-// windows/leftwindow/monitoring/EventDelegate.qml
+// windows/leftwindow/monitoring/components/EventDelegate.qml
 
 import QtQuick
 import QtQuick.Layouts
@@ -21,6 +21,29 @@ Item {
     property string aiModelName: "System AI"
     property bool isLoading: false
     property bool isExpanded: false
+
+    // --- حقول جديدة للتحليل المفصل ---
+    property string aiTitle: ""
+    property string aiNarrative: ""
+    property string aiRootCause: ""
+    property int aiConfidence: 0
+    property string aiThermalRisk: ""
+    property string aiThermalDetails: ""
+    property string aiProcessName: ""
+    property string aiProcessBehavior: ""
+    property var aiActions: []
+
+    function getActionsArray() {
+        try {
+            if (!aiActions || aiActions === "")
+                return [];
+            if (Array.isArray(aiActions))
+                return aiActions;
+            return JSON.parse(aiActions);
+        } catch (e) {
+            return [];
+        }
+    }
 
     signal expandRequested
 
@@ -85,7 +108,7 @@ Item {
             }
         }
 
-        color: isExpanded ? theme.colors.leftMenuBgColorV1 : Qt.rgba(theme.colors.leftMenuBgColorV1.r, theme.colors.leftMenuBgColorV1.g, theme.colors.leftMenuBgColorV1.b, 0.4)
+        color: isExpanded ? theme.colors.leftMenuBgColorV1 : Qt.rgba(theme.colors.leftMenuBgColorV1.r, theme.colors.leftMenuBgColorV1.g, theme.colors.leftMenuBgColorV1.b, 0.35)
         radius: theme.dimensions.elementRadius
         border.color: isExpanded ? theme.colors.primary : Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.2)
         border.width: 1
@@ -102,197 +125,30 @@ Item {
             spacing: 0
 
             // 1. Header Row
-            RowLayout {
-                id: headerRow
+            EventHeader {
                 Layout.fillWidth: true
-                Layout.preferredHeight: 45
-                spacing: 12
-
-                // Icon Box
-                Rectangle {
-                    Layout.preferredWidth: 36
-                    Layout.preferredHeight: 36
-                    radius: theme.dimensions.elementRadius
-                    color: theme.colors.leftMenuBgColorV2
-                    border.width: 1
-                    border.color: Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.1)
-                    Text {
-                        anchors.centerIn: parent
-                        text: (eventType === "CPU") ? "" : (eventType === "RAM") ? "" : (eventType === "TEMP") ? "" : ""
-                        font.family: theme.typography.iconFont
-                        font.pixelSize: 16
-                        color: stateColor
-                    }
-                }
-
-                // Text Info (هذا الجزء يملأ المنتصف)
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    spacing: 2
-                    RowLayout {
-                        spacing: 8
-                        Text {
-                            text: eventType + " Spike"
-                            color: theme.colors.secondary
-                            font.family: theme.typography.bodyFont
-                            font.pixelSize: theme.typography.small
-                            font.bold: true
-                        }
-                        Rectangle {
-                            visible: isCritical
-                            width: 32
-                            height: 14
-                            radius: 2
-                            color: Qt.rgba(theme.colors.error.r, theme.colors.error.g, theme.colors.error.b, 0.2)
-                            Text {
-                                anchors.centerIn: parent
-                                text: "CRIT"
-                                color: theme.colors.error
-                                font.pixelSize: 8
-                                font.bold: true
-                            }
-                        }
-                    }
-                    Text {
-                        text: "Value: <font color='" + theme.colors.secondary + "'>" + eventValue + "</font>"
-                        color: theme.colors.subtleText
-                        font.family: theme.typography.bodyFont
-                        font.pixelSize: theme.typography.small - 1
-                        textFormat: Text.StyledText
-                    }
-                }
-
-                // Time and Expand Icon (مجبورين جهة اليمين)
-                ColumnLayout {
-                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    spacing: 4
-
-                    // To fill space
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                    Text {
-                        Layout.alignment: Qt.AlignRight
-                        text: eventTime
-                        color: theme.colors.subtleText
-                        font.family: "Monospace"
-                        font.pixelSize: theme.typography.small - 2
-                    }
-                    Text {
-                        id: expandIcon
-                        Layout.alignment: Qt.AlignRight
-                        text: ""
-                        font.family: theme.typography.iconFont
-                        font.pixelSize: 14
-                        color: isExpanded ? theme.colors.primary : theme.colors.subtleText
-                        rotation: isExpanded ? 180 : 0
-                        Behavior on rotation {
-                            NumberAnimation {
-                                duration: 250
-                            }
-                        }
-                    }
-                }
+                eventType: delegateRoot.eventType
+                eventValue: delegateRoot.eventValue
+                eventSeverity: delegateRoot.eventSeverity
+                eventTime: delegateRoot.eventTime
+                isExpanded: delegateRoot.isExpanded
+                stateColor: delegateRoot.stateColor
             }
 
-            // 2. AI Analysis Section (القسم القابل للتمدد)
-            ColumnLayout {
-                id: aiSection
+            // 2. AI Analysis Section (القسم القابل للتمدد - مفصل)
+            EventAnalysis {
                 Layout.fillWidth: true
-
-                // التحكم في الظهور: إذا لم يكن مفتوحاً، الارتفاع 0 والشفافية 0
-                visible: opacity > 0
-                opacity: isExpanded ? 1 : 0
-
-                // منع العنصر من أخذ مساحة عند الإغلاق
-                Layout.preferredHeight: isExpanded ? -1 : 0
-
-                // أنيميشن الشفافية
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: 400
-                    }
-                }
-
-                Item {
-                    Layout.preferredHeight: 12
-                } // فاصل (Top Margin)
-
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 1
-                    color: Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.1)
-                }
-
-                Item {
-                    Layout.preferredHeight: 12
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 12
-                    Layout.alignment: Qt.AlignTop
-
-                    Text {
-                        text: ""
-                        font.family: theme.typography.iconFont
-                        color: theme.colors.tertiary
-                        Layout.alignment: Qt.AlignTop
-                    }
-
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        spacing: 6
-
-                        RowLayout {
-                            Layout.fillWidth: true
-                            Text {
-                                text: "ANALYSIS REPORT"
-                                font.pixelSize: 9
-                                font.bold: true
-                                color: theme.colors.tertiary
-                            }
-                            Item {
-                                Layout.fillWidth: true
-                            }
-                            Text {
-                                text: aiModelName
-                                font.pixelSize: 8
-                                color: theme.colors.subtleText
-                            }
-                        }
-
-                        Text {
-                            id: aiDescription
-                            Layout.fillWidth: true
-                            text: isLoading ? "Analyzing... Please wait." : aiText
-                            wrapMode: Text.WordWrap
-                            font.family: theme.typography.bodyFont
-                            font.pixelSize: theme.typography.small - 1
-                            color: Qt.lighter(theme.colors.subtleText, 1.4)
-                            lineHeight: 1.2
-                        }
-
-                        Rectangle {
-                            Layout.topMargin: 4
-                            width: 85
-                            height: 22
-                            radius: theme.dimensions.elementRadius
-                            color: Qt.rgba(theme.colors.tertiary.r, theme.colors.tertiary.g, theme.colors.tertiary.b, 0.1)
-                            border.color: Qt.rgba(theme.colors.tertiary.r, theme.colors.tertiary.g, theme.colors.tertiary.b, 0.2)
-                            Text {
-                                anchors.centerIn: parent
-                                text: isLoading ? "Analyzing" : "View Details"
-                                font.pixelSize: 9
-                                color: theme.colors.tertiary
-                            }
-                        }
-                    }
-                }
-                // هامش سفلي للتأكد من عدم قص المحتوى
-                Item {
-                    Layout.preferredHeight: 8
-                }
+                isExpanded: delegateRoot.isExpanded
+                isLoading: delegateRoot.isLoading
+                aiTitle: delegateRoot.aiTitle
+                aiConfidence: delegateRoot.aiConfidence
+                aiNarrative: delegateRoot.aiNarrative
+                aiRootCause: delegateRoot.aiRootCause
+                aiProcessName: delegateRoot.aiProcessName
+                aiProcessBehavior: delegateRoot.aiProcessBehavior
+                aiThermalRisk: delegateRoot.aiThermalRisk
+                aiThermalDetails: delegateRoot.aiThermalDetails
+                actionsModel: delegateRoot.getActionsArray()
             }
         }
 

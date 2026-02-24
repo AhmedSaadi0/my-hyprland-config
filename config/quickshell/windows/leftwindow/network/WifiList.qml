@@ -6,7 +6,6 @@ import QtQuick.Layouts
 import Quickshell.Io
 
 import "root:/themes"
-import "./WifiItem.qml"
 import "root:/config/EventNames.js" as Events
 import "root:/config"
 import "root:/utils" as Utils
@@ -27,137 +26,22 @@ BaseMenuView {
     property bool forceScan: false
 
     // ─── DataUsage كهيدر يتمرر مع المحتوى ────────────────────────
-    MenuCard {
+    DataUsageHeader {
         id: dataUsage
         Layout.fillWidth: true
 
-        Layout.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        subtitle: qsTr("Loading data...")
+        receivedData: "..."
+        sentData: "..."
+        totalData: "..."
+        dailyReceivedData: "..."
+        dailySentData: "..."
+        dailyTotalData: "..."
 
-        cardColor: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
-        cardLeftPadding: 8
-        cardRightPadding: 8
-
-        title: "Data Usage"
-        subtitle: "Loading data..."
-        icon: "󰑓"
-        iconCursorShape: Qt.PointingHandCursor
-
-        property string receivedData: "..."
-        property string sentData: "..."
-        property string totalData: "..."
-        property string dailyReceivedData: "..."
-        property string dailySentData: "..."
-        property string dailyTotalData: "..."
-
-        onIconClicked: {
-            rotationAnim.start();
+        onRefreshRequested: {
             dataUsageProcess.start();
             dailyDataUsageProcess.start();
             wifiScannerProcess.scan();
-        }
-
-        RotationAnimation on rotation {
-            id: rotationAnim
-            target: dataUsage.iconItem
-            from: 0
-            to: 360
-            duration: 500
-            easing.type: Easing.InOutCubic
-        }
-
-        GridLayout {
-            Layout.fillWidth: true
-
-            columns: 3
-            columnSpacing: 10
-            rowSpacing: 8
-
-            Item {
-                Layout.fillWidth: true
-            }
-            Label {
-                text: qsTr("Today")
-                font.bold: true
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
-            Label {
-                text: qsTr("This Month")
-                font.bold: true
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
-
-            RowLayout {
-                spacing: 14
-                Label {
-                    text: "󰁅"
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 22
-                }
-                Label {
-                    text: qsTr("Received")
-                    font.bold: true
-                }
-            }
-            Label {
-                text: dataUsage.dailyReceivedData
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
-            Label {
-                text: dataUsage.receivedData
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
-
-            RowLayout {
-                spacing: 14
-                Label {
-                    text: "󰁝"
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 22
-                }
-                Label {
-                    text: qsTr("Sent")
-                    font.bold: true
-                }
-            }
-            Label {
-                text: dataUsage.dailySentData
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
-            Label {
-                text: dataUsage.sentData
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
-
-            RowLayout {
-                spacing: 6
-                Label {
-                    text: "󰯙"
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
-                    font.pixelSize: 22
-                }
-                Label {
-                    text: qsTr("Total")
-                    font.bold: true
-                }
-            }
-            Label {
-                text: dataUsage.dailyTotalData
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
-            Label {
-                text: dataUsage.totalData
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-            }
         }
     }
 
@@ -171,200 +55,25 @@ BaseMenuView {
 
         spacing: 0
 
-        // زر الشبكة المخفية
-        MButton {
-            id: hiddenToggleBtn
+        HiddenNetworkSection {
             Layout.fillWidth: true
-            text: qsTr("Connect to Hidden Network") + "  󰤨"
-            normalBackground: hiddenNetworkContainer.isOpen ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-            normalForeground: hiddenNetworkContainer.isOpen ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-            onClicked: hiddenNetworkContainer.isOpen = !hiddenNetworkContainer.isOpen
-        }
-
-        // نموذج الشبكة المخفية
-        Item {
-            id: hiddenNetworkContainer
-            Layout.fillWidth: true
-            Layout.topMargin: isOpen ? 10 : 0
-            property bool isOpen: false
-            implicitHeight: isOpen ? contentRect.implicitHeight : 0
-            clip: true
-            opacity: isOpen ? 1.0 : 0.0
-
-            Behavior on implicitHeight {
-                NumberAnimation {
-                    duration: 300
-                    easing.type: Easing.InOutQuad
-                }
-            }
-            Behavior on Layout.topMargin {
-                NumberAnimation {
-                    duration: 300
-                    easing.type: Easing.InOutQuad
-                }
-            }
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: 300
-                }
-            }
-
-            Rectangle {
-                id: contentRect
-                width: parent.width
-                implicitHeight: hiddenFormLayout.implicitHeight + 24
-                color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2.alpha(0.5)
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
-                border.width: 1
-
-                ColumnLayout {
-                    id: hiddenFormLayout
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        right: parent.right
-                        margins: 12
-                    }
-                    spacing: 12
-
-                    EditableField {
-                        id: hiddenSsidField
-                        Layout.fillWidth: true
-                        placeholderText: qsTr("Network Name (SSID)")
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-                        placeholderTextColor: ThemeManager.selectedTheme.colors.subtleText
-                        background: Rectangle {
-                            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV3.alpha(0.5)
-                            radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                            border.color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.1)
-                            border.width: 1
-                        }
-                    }
-
-                    EditableField {
-                        id: hiddenPasswordField
-                        Layout.fillWidth: true
-                        placeholderText: qsTr("Password (Optional)")
-                        echoMode: TextInput.Password
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-                        placeholderTextColor: ThemeManager.selectedTheme.colors.subtleText
-                        background: Rectangle {
-                            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV3.alpha(0.5)
-                            radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                            border.color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.1)
-                            border.width: 1
-                        }
-                    }
-
-                    MButton {
-                        Layout.fillWidth: true
-                        text: qsTr("Connect")
-                        normalBackground: ThemeManager.selectedTheme.colors.primary.darker(1.1)
-                        normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-                        enabled: hiddenSsidField.text.length > 0
-                        onClicked: {
-                            root.connectToHiddenWifi(hiddenSsidField.text, hiddenPasswordField.text);
-                            hiddenSsidField.text = "";
-                            hiddenPasswordField.text = "";
-                            hiddenNetworkContainer.isOpen = false;
-                        }
-                    }
-                }
-            }
+            onConnectRequested: (ssid, password) => root.connectToHiddenWifi(ssid, password)
         }
     }
 
     // قائمة الشبكات
-    ScrollView {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+    WifiNetworksList {
+        id: wifiList
         Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
         Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        clip: true
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        model: wifiModel
+        expandedBssid: root.expandedBssid
+        loadingBssid: root.loadingBssid
 
-        ListView {
-            id: listView
-            anchors.fill: parent
-            model: wifiModel
-            clip: true
-            spacing: ThemeManager.selectedTheme.dimensions.spacingMedium
-            currentIndex: -1
-
-            displaced: Transition {
-                NumberAnimation {
-                    properties: "x,y"
-                    duration: 250
-                    easing.type: Easing.OutCubic
-                }
-            }
-            add: Transition {
-                ParallelAnimation {
-                    PropertyAnimation {
-                        property: "opacity"
-                        from: 0
-                        to: 1.0
-                        duration: 250
-                        easing.type: Easing.OutQuad
-                    }
-                    PropertyAnimation {
-                        property: "scale"
-                        from: 0.85
-                        to: 1.0
-                        duration: 300
-                        easing.type: Easing.OutBack
-                    }
-                }
-            }
-            remove: Transition {
-                ParallelAnimation {
-                    PropertyAnimation {
-                        property: "opacity"
-                        to: 0
-                        duration: 200
-                        easing.type: Easing.InQuad
-                    }
-                    PropertyAnimation {
-                        property: "scale"
-                        to: 0.85
-                        duration: 200
-                        easing.type: Easing.InCubic
-                    }
-                }
-            }
-
-            delegate: WifiItem {
-                width: listView.width
-                ssid: model.ssid
-                bssid: model.bssid
-                signal: model.signal
-                security: model.security
-                in_use: model.in_use
-                is_saved: model.is_saved
-                expanded: root.expandedBssid === model.bssid
-                isLoading: root.loadingBssid === model.bssid
-
-                onItemToggled: {
-                    if (root.loadingBssid === model.bssid)
-                        return;
-                    listView.currentIndex = (listView.currentIndex === index ? -1 : index);
-                    root.expandedBssid = (listView.currentIndex !== -1) ? model.bssid : "";
-                }
-                onConnectClicked: (ssid, password) => root.connectToWifi(ssid, password)
-                onDisconnectClicked: ssid => root.disconnectFromWifi(ssid)
-                onForgetClicked: ssid => root.forgetWifi(ssid)
-            }
-
-            Label {
-                anchors.centerIn: parent
-                visible: listView.model.count === 0
-                text: qsTr("Searching for networks ...")
-                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.7)
-            }
-        }
+        onExpandedBssidSelected: bssid => root.expandedBssid = bssid
+        onConnectClicked: (ssid, password) => root.connectToWifi(ssid, password)
+        onDisconnectClicked: ssid => root.disconnectFromWifi(ssid)
+        onForgetClicked: ssid => root.forgetWifi(ssid)
     }
 
     // ─── Processes ───────────────────────────────────────────────
@@ -376,7 +85,7 @@ BaseMenuView {
                 try {
                     const response = JSON.parse(data);
                     if (response.status === "success") {
-                        listView.currentIndex = -1;
+                        wifiList.currentIndex = -1;
                         root.expandedBssid = "";
                         if (wifiActionProcess.closeLeftbar)
                             EventBus.emit(Events.CLOSE_LEFTBAR);
@@ -531,12 +240,12 @@ BaseMenuView {
         if (root.expandedBssid !== "") {
             for (let i = 0; i < wifiModel.count; i++) {
                 if (wifiModel.get(i).bssid === root.expandedBssid) {
-                    listView.currentIndex = i;
+                    wifiList.currentIndex = i;
                     return;
                 }
             }
             root.expandedBssid = "";
-            listView.currentIndex = -1;
+            wifiList.currentIndex = -1;
         }
     }
 

@@ -431,6 +431,15 @@ Singleton {
             severity: severity,
             timestamp: _formatTime(new Date()),
             aiAnalysis: "Analyzing... Please wait.",
+            aiTitle: "Analyzing...",
+            aiNarrative: "",
+            aiRootCause: "",
+            aiConfidence: 0,
+            aiThermalRisk: "",
+            aiThermalDetails: "",
+            aiProcessName: "",
+            aiProcessBehavior: "",
+            aiActions: [],
             isLoading: true,
             aiModel: App.systemAiModel || "System AI"
         });
@@ -514,17 +523,31 @@ Singleton {
         if (idx === -1)
             return;
 
-        const lines = [];
-        if (data.title)
-            lines.push(data.title);
-        if (data.analysis)
-            lines.push(data.analysis);
-        if (data.causes && data.causes.length)
-            lines.push("Causes: " + data.causes.join(", "));
-        if (data.actions && data.actions.length)
-            lines.push("Actions: " + data.actions.join(", "));
+        // تخزين الحقول الجديدة من البرومبت المحسن
+        eventsModel.setProperty(idx, "aiTitle", data.title || "Analysis Complete");
+        eventsModel.setProperty(idx, "aiNarrative", data.narrative || data.analysis || "No detailed analysis available.");
+        eventsModel.setProperty(idx, "aiRootCause", data.root_cause_hypothesis || "Unknown cause");
+        eventsModel.setProperty(idx, "aiConfidence", data.confidence_score || 50);
 
-        eventsModel.setProperty(idx, "aiAnalysis", lines.join("\n"));
+        // تخزين thermal_impact كـ JSON string لاستخدامه في الواجهة
+        if (data.thermal_impact) {
+            eventsModel.setProperty(idx, "aiThermalRisk", data.thermal_impact.risk_level || "low");
+            eventsModel.setProperty(idx, "aiThermalDetails", data.thermal_impact.details || "");
+        }
+
+        // تخزين process_anomaly
+        if (data.process_anomaly) {
+            eventsModel.setProperty(idx, "aiProcessName", data.process_anomaly.name || "N/A");
+            eventsModel.setProperty(idx, "aiProcessBehavior", data.process_anomaly.behavior || "Unknown behavior");
+        }
+
+        // تخزين actions كـ array
+        if (data.actions && data.actions.length) {
+            eventsModel.setProperty(idx, "aiActions", data.actions);
+        } else {
+            eventsModel.setProperty(idx, "aiActions", []);
+        }
+
         eventsModel.setProperty(idx, "isLoading", false);
 
         if (data.severity) {
