@@ -3,10 +3,12 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Services.UPower
 import "root:/services"
 import "root:/config"
 import "root:/themes"
 import "root:/config/ConstValues.js" as C
+import "root:/utils/helpers.js" as Helper
 
 Singleton {
     id: root
@@ -108,6 +110,17 @@ Singleton {
         }
     }
 
+    // --- Todo ---
+    Connections {
+        target: TodoService
+        function onTaskDue(task) {
+            root.handleTodoDue(task);
+        }
+        function onStartupSummaryReady(summary) {
+            root.handleTodoStartupSummary(summary);
+        }
+    }
+
     // --- Themes & Wallpapers ---
     Connections {
         target: ThemeManager
@@ -141,7 +154,7 @@ Singleton {
 
         // مراقبة أخطاء التحميل
         function onWallpaperDownloadError(errorDetails) {
-            root.handleThemeError("Download Failed", errorDetails);
+            root.handleWallpaperDownloadError(errorDetails);
         }
     }
 
@@ -196,6 +209,55 @@ Singleton {
             fgColor: colors.fg,
             tags: tags,
             playTone: false
+        });
+    }
+
+    // 2.5 Todo Logic
+    function handleTodoDue(task) {
+        if (!task || !task.title)
+            return;
+
+        const isUrgent = !!task.isUrgent;
+        const stateType = isUrgent ? "warning" : "info";
+        const priority = isUrgent ? C.WARNING : C.NOTIFICATION;
+        const colors = getColorsForState(stateType);
+
+        root.updateEyes(isUrgent ? "focused" : "thinking", 2500);
+
+        CapsuleManager.request({
+            priority: priority,
+            source: C.SRC_TODO,
+            icon: "󰄳",
+            text: `Task due: ${task.title}`,
+            timeout: 5000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            tags: task.isUrgent ? ["Urgent"] : []
+        });
+    }
+
+    function handleTodoStartupSummary(summary) {
+        if (!summary || !summary.summary)
+            return;
+
+        if (currentPriority > C.IDLE)
+            return;
+
+        let colors = getColorsForState("info");
+        root.updateEyes("thinking", 3500);
+
+        CapsuleManager.request({
+            priority: C.NOTIFICATION,
+            source: C.SRC_TODO,
+            icon: "󰄳",
+            text: summary.summary,
+            timeout: 6000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            tags: summary.tags || [],
+            changeH: true
         });
     }
 
@@ -264,6 +326,44 @@ Singleton {
             changeH: false
             // playTone: true,
             // tone: App.assets.audio.notifySoft
+        });
+    }
+
+    function handlePowerProfileChange(profile) {
+        const label = getPowerProfileLabel(profile);
+        const color = getPowerProfileColor(profile);
+        const fg = Helper.getAccurteTextColor(color);
+        const message = qsTr("Power profile: %1").arg(label);
+
+        root.updateEyes(getPowerProfileEmotion(profile), 2500);
+        CapsuleManager.request({
+            priority: C.TRANSIENT,
+            source: C.SRC_SYSTEM,
+            icon: getPowerProfileIcon(profile),
+            text: message,
+            timeout: 3500,
+            bgColor1: color,
+            bgColor2: color,
+            fgColor: fg,
+            playTone: false,
+            changeH: false
+        });
+    }
+
+    function handlePowerProfileError(message) {
+        let colors = getColorsForState("critical");
+        root.updateEyes("confused", 3000);
+        CapsuleManager.request({
+            priority: C.WARNING,
+            source: C.SRC_SYSTEM,
+            icon: "",
+            text: message || qsTr("Failed to change power profile. Check system permissions."),
+            timeout: 5000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: true,
+            changeH: false
         });
     }
 
@@ -585,6 +685,83 @@ Singleton {
         });
     }
 
+    function handleWallpaperDownloadAlreadyActive() {
+        let colors = getColorsForState("warning");
+        CapsuleManager.request({
+            priority: C.WARNING,
+            source: C.SRC_SYSTEM,
+            icon: "󰅙",
+            text: "Already downloading this wallpaper",
+            timeout: 3000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: false,
+            changeH: false
+        });
+    }
+
+    function handleWallpaperDownloadStarted(intent) {
+        const text = intent === "apply" ? "Downloading & Applying..." : "Download started...";
+        CapsuleManager.request({
+            priority: C.TRANSIENT,
+            source: C.SRC_SYSTEM,
+            icon: "󰇚",
+            text: text,
+            withProgress: true,
+            changeH: false
+        });
+    }
+
+    function handleWallpaperLocalAlreadyAvailable() {
+        let colors = getColorsForState("info");
+        CapsuleManager.request({
+            priority: C.NOTIFICATION,
+            source: C.SRC_SYSTEM,
+            icon: "󰄬",
+            text: "Image is already available locally",
+            timeout: 3000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: false,
+            changeH: false
+        });
+    }
+
+    function handleWallpaperSavedToDownloaded() {
+        let colors = getColorsForState("success");
+        CapsuleManager.request({
+            priority: C.NOTIFICATION,
+            source: C.SRC_SYSTEM,
+            icon: "󰄬",
+            text: "Saved to Downloaded Wallpapers",
+            timeout: 3000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: true,
+            changeH: false
+        });
+    }
+
+    function handleWallpaperDownloadError(errorDetails) {
+        let colors = getColorsForState("critical");
+        const details = errorDetails ? `: ${errorDetails}` : "";
+        CapsuleManager.request({
+            priority: C.WARNING,
+            source: C.SRC_SYSTEM,
+            icon: "󰅙",
+            text: "Download failed" + details,
+            timeout: 5000,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: true,
+            changeH: false
+        });
+    }
+
     function handleDepthEffectStatus(status) {
         if (status === "processing") {
             root.updateEyes("focused", 100000);
@@ -699,11 +876,51 @@ Singleton {
             };
         default:
             return {
-                bg1: ThemeManager.selectedTheme.colors.primary,
-                bg2: ThemeManager.selectedTheme.colors.secondary,
-                fg: ThemeManager.selectedTheme.colors.onPrimary
-            };
-        }
+            bg1: ThemeManager.selectedTheme.colors.primary,
+            bg2: ThemeManager.selectedTheme.colors.secondary,
+            fg: ThemeManager.selectedTheme.colors.onPrimary
+        };
+    }
+
+    function getPowerProfileLabel(profile) {
+        if (profile === PowerProfile.Performance)
+            return qsTr("High");
+        if (profile === PowerProfile.Balanced)
+            return qsTr("Balanced");
+        if (profile === PowerProfile.PowerSaver)
+            return qsTr("Low");
+        return qsTr("Unknown");
+    }
+
+    function getPowerProfileIcon(profile) {
+        if (profile === PowerProfile.Performance)
+            return "";
+        if (profile === PowerProfile.Balanced)
+            return "";
+        if (profile === PowerProfile.PowerSaver)
+            return "󰂎";
+        return "";
+    }
+
+    function getPowerProfileEmotion(profile) {
+        if (profile === PowerProfile.Performance)
+            return "focused";
+        if (profile === PowerProfile.Balanced)
+            return "thinking";
+        if (profile === PowerProfile.PowerSaver)
+            return "sleeping";
+        return "wink";
+    }
+
+    function getPowerProfileColor(profile) {
+        if (profile === PowerProfile.Performance)
+            return ThemeManager.selectedTheme.colors.warning;
+        if (profile === PowerProfile.Balanced)
+            return ThemeManager.selectedTheme.colors.primary;
+        if (profile === PowerProfile.PowerSaver)
+            return ThemeManager.selectedTheme.colors.success;
+        return ThemeManager.selectedTheme.colors.primary;
+    }
     }
 
     function getBootColors() {

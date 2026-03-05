@@ -62,16 +62,16 @@ Item {
         }
     }
 
-    Connections {
-        target: Hyprland
-        ignoreUnknownSignals: true
-        function onToplevelsChanged() {
-            iconResolveDebounce.restart();
-        }
-        function onActiveToplevelChanged() {
-            iconResolveDebounce.restart();
-        }
-    }
+    // Connections {
+    //     target: Hyprland
+    //     ignoreUnknownSignals: true
+    //     // function onToplevelsChanged() {
+    //     //     iconResolveDebounce.restart();
+    //     // }
+    //     // function onActiveToplevelChanged() {
+    //     //     iconResolveDebounce.restart();
+    //     // }
+    // }
 
     Connections {
         target: Hyprland.toplevels
@@ -79,9 +79,9 @@ Item {
         function onRowsInserted() {
             iconResolveDebounce.restart();
         }
-        function onRowsRemoved() {
-            iconResolveDebounce.restart();
-        }
+        // function onRowsRemoved() {
+        //     iconResolveDebounce.restart();
+        // }
         // function onDataChanged() {
         //     iconResolveDebounce.restart();
         // }

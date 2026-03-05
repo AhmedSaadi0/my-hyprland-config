@@ -10,7 +10,6 @@ import "root:/config"
 import "root:/components/wallpaper_selector"
 
 import "root:/windows/smart_capsule/logic"
-import "root:/config/ConstValues.js" as C
 
 Item {
     id: root
@@ -122,13 +121,7 @@ Item {
     function _initiateDownload(wallpaperData, intent) {
         // التحقق من أن الملف غير موجود في قائمة التنزيل الحالية لتجنب التكرار
         if (activeDownloads.indexOf(wallpaperData.id) !== -1) {
-            CapsuleManager.request({
-                priority: C.WARNING,
-                source: "WallpaperSelector",
-                icon: "󰅙",
-                text: "Already downloading this wallpaper",
-                playTone: false
-            });
+            CapsuleCoordinator.handleWallpaperDownloadAlreadyActive();
             return;
         }
 
@@ -140,13 +133,7 @@ Item {
         newDownloads.push(wallpaperData.id);
         activeDownloads = newDownloads;
 
-        CapsuleManager.request({
-            priority: C.TRANSIENT,
-            source: "WallpaperSelector",
-            icon: "󰇚",
-            text: intent === "apply" ? "Downloading & Applying..." : "Download started...",
-            withProgress: true
-        });
+        CapsuleCoordinator.handleWallpaperDownloadStarted(intent);
 
         ThemeManager.downloadWallhaven(wallpaperData.id, wallpaperData.file_type, wallpaperData.path);
     }
@@ -174,13 +161,7 @@ Item {
             }
         } else {
             // Local: إشعار فقط
-            CapsuleManager.request({
-                priority: C.INFO,
-                source: "WallpaperSelector",
-                icon: "󰄬",
-                text: "Image is already available locally",
-                playTone: false
-            });
+            CapsuleCoordinator.handleWallpaperLocalAlreadyAvailable();
         }
     }
 
@@ -281,13 +262,7 @@ Item {
                 if (intent === "apply") {
                     root.applyWallpaper(filePath);
                 } else {
-                    CapsuleManager.request({
-                        priority: C.INFO,
-                        source: "WallpaperSelector",
-                        icon: "󰄬",
-                        text: "Saved to Downloaded Wallpapers",
-                        playTone: true
-                    });
+                    CapsuleCoordinator.handleWallpaperSavedToDownloaded();
                 }
 
                 // تنظيف النية
@@ -303,17 +278,7 @@ Item {
             }
         }
 
-        function onWallpaperDownloadError(errorDetails) {
-            CapsuleManager.request({
-                priority: C.ERROR,
-                source: "WallpaperSelector",
-                icon: "󰅙",
-                text: "Download failed",
-                bgColor1: ThemeManager.selectedTheme.colors.error || "#cc3333"
-            });
-        // كإجراء احترازي في حال الخطأ، يمكننا مسح القائمة إذا كنا متأكدين
-        // لكن لسلامة التنزيلات المتعددة، سنتركها للمستخدم ليحاول مرة أخرى
-        }
+        // onWallpaperDownloadError handled by CapsuleCoordinator
     }
 
     // --- الواجهة الرسومية ---

@@ -116,6 +116,10 @@ Singleton {
     readonly property bool isCpuHigh: cpuUsage >= (App.cpuHighLoadThreshold / 100)
     readonly property bool isRamHigh: ramUsage >= (App.ramHighLoadThreshold / 100)
     property string currentLayout: "EN"
+    property real _lastCpuPrev: -1
+    property real _lastCpuCurr: -1
+    property real _lastRamPrev: -1
+    property real _lastRamCurr: -1
 
     // --- Temp ---
     property real cpuMaxTemp: 0.0
@@ -132,6 +136,21 @@ Singleton {
             temp: 0
         })
     property int _spikeCooldownMs: 60000
+    property int _tempSpikeCooldownMs: 300000
+    property int _procSpikeCooldownMs: 300000
+    property var _lastProcSpikeAt: ({
+            cpu: ({}),
+            ram: ({})
+        })
+    property int _procAlertCooldownMs: 300000
+    property var _lastProcAlertAt: ({
+            cpu: ({}),
+            ram: ({})
+        })
+    property var _lastAlertAt: ({
+            cpu: 0,
+            ram: 0
+        })
     property real _cpuSpikeDelta: 0.25
     property real _ramSpikeDelta: 0.25
     property real _tempSpikeDelta: 8
@@ -152,10 +171,10 @@ Singleton {
     }
 
     onIsCpuHighChanged: {
-        isCpuHigh ? cpuAlert(cpuUsage) : cpuNormal();
+        isCpuHigh ? _emitCpuAlert(cpuUsage) : cpuNormal();
     }
     onIsRamHighChanged: {
-        isRamHigh ? ramAlert(ramUsage) : ramNormal();
+        isRamHigh ? _emitRamAlert(ramUsage) : ramNormal();
     }
 
     Process {
@@ -167,7 +186,8 @@ Singleton {
                 if (!isNaN(val)) {
                     var prev = root.cpuUsage;
                     root.cpuUsage = val / 100.0;
-                    root._checkCpuSpike(prev, root.cpuUsage);
+                    root._lastCpuPrev = prev;
+                    root._lastCpuCurr = root.cpuUsage;
                 }
             }
         }
@@ -182,7 +202,8 @@ Singleton {
                 if (!isNaN(val)) {
                     var prev = root.ramUsage;
                     root.ramUsage = val / 100.0;
-                    root._checkRamSpike(prev, root.ramUsage);
+                    root._lastRamPrev = prev;
+                    root._lastRamCurr = root.ramUsage;
                 }
             }
         }
@@ -272,8 +293,14 @@ Singleton {
             return;
         if (curr >= threshold) {
             const delta = curr - prev;
-            _lastSpikeAt.cpu = Date.now();
-            _createSpikeEvent("CPU", Math.round(curr * 100), Math.round(prev * 100), Math.round(delta * 100), threshold * 100);
+            _collectTopCpuProcesses(function (topList) {
+                const procKey = _getTopProcessKey("cpu", topList);
+                if (_isProcessOnCooldown("cpu", procKey))
+                    return;
+                _lastSpikeAt.cpu = Date.now();
+                _markProcessSpike("cpu", procKey);
+                _createSpikeEvent("CPU", Math.round(curr * 100), Math.round(prev * 100), Math.round(delta * 100), threshold * 100, topList, null);
+            });
         }
     }
 
@@ -285,8 +312,14 @@ Singleton {
             return;
         if (curr >= threshold) {
             const delta = curr - prev;
-            _lastSpikeAt.ram = Date.now();
-            _createSpikeEvent("RAM", Math.round(curr * 100), Math.round(prev * 100), Math.round(delta * 100), threshold * 100);
+            _collectTopRamProcesses(function (topList) {
+                const procKey = _getTopProcessKey("ram", topList);
+                if (_isProcessOnCooldown("ram", procKey))
+                    return;
+                _lastSpikeAt.ram = Date.now();
+                _markProcessSpike("ram", procKey);
+                _createSpikeEvent("RAM", Math.round(curr * 100), Math.round(prev * 100), Math.round(delta * 100), threshold * 100, topList, null);
+            });
         }
     }
 
@@ -298,16 +331,96 @@ Singleton {
         if (currMax >= _tempHighThreshold) {
             const delta = currMax - prevMax;
             _lastSpikeAt.temp = Date.now();
-            _createSpikeEvent("TEMP", Math.round(currMax), Math.round(prevMax), Math.round(delta), _tempHighThreshold);
+            _createSpikeEvent("TEMP", Math.round(currMax), Math.round(prevMax), Math.round(delta), _tempHighThreshold, [], {
+                cpu_max: root.cpuMaxTemp,
+                gpu_max: root.gpuMaxTemp,
+                storage_max: root.storageMaxTemp
+            });
         }
     }
 
     function _canTriggerSpike(kind) {
         const now = Date.now();
-        return now - _lastSpikeAt[kind] >= _spikeCooldownMs;
+        return now - _lastSpikeAt[kind] >= _getSpikeCooldownMs(kind);
     }
 
-    function _createSpikeEvent(type, currentValue, prevValue, deltaValue, thresholdValue) {
+    function _getSpikeCooldownMs(kind) {
+        if (kind === "temp")
+            return _tempSpikeCooldownMs;
+        return _spikeCooldownMs;
+    }
+
+    function _getTopProcessKey(kind, topList) {
+        if (!topList || !topList.length)
+            return "";
+        const top = topList[0];
+        if (kind === "ram") {
+            if (top.pid !== undefined && top.pid !== null)
+                return `${top.pid}:${top.name || ""}`;
+        }
+        return top.name || "";
+    }
+
+    function _isProcessOnCooldown(kind, procKey) {
+        if (!procKey)
+            return false;
+        const last = _lastProcSpikeAt[kind][procKey] || 0;
+        return Date.now() - last < _procSpikeCooldownMs;
+    }
+
+    function _markProcessSpike(kind, procKey) {
+        if (!procKey)
+            return;
+        _lastProcSpikeAt[kind][procKey] = Date.now();
+    }
+
+    function _isAlertOnCooldown(kind, procKey) {
+        const now = Date.now();
+        if (procKey) {
+            const last = _lastProcAlertAt[kind][procKey] || 0;
+            return now - last < _procAlertCooldownMs;
+        }
+        return now - _lastAlertAt[kind] < _procAlertCooldownMs;
+    }
+
+    function _markAlert(kind, procKey) {
+        const now = Date.now();
+        if (procKey)
+            _lastProcAlertAt[kind][procKey] = now;
+        _lastAlertAt[kind] = now;
+    }
+
+    function _emitCpuAlert(value) {
+        _collectTopCpuProcesses(function (topList) {
+            const procKey = _getTopProcessKey("cpu", topList);
+            if (_isAlertOnCooldown("cpu", procKey))
+                return;
+            _markAlert("cpu", procKey);
+            cpuAlert(value);
+            const curr = _lastCpuCurr >= 0 ? _lastCpuCurr : value;
+            const prev = _lastCpuPrev >= 0 ? _lastCpuPrev : curr;
+            const threshold = App.cpuHighLoadThreshold;
+            const delta = curr - prev;
+            _createSpikeEvent("CPU", Math.round(curr * 100), Math.round(prev * 100), Math.round(delta * 100), threshold, topList, null);
+        });
+    }
+
+    function _emitRamAlert(value) {
+        _collectTopRamProcesses(function (topList) {
+            const procKey = _getTopProcessKey("ram", topList);
+            if (_isAlertOnCooldown("ram", procKey))
+                return;
+            _markAlert("ram", procKey);
+            ramAlert(value);
+            const curr = _lastRamCurr >= 0 ? _lastRamCurr : value;
+            const prev = _lastRamPrev >= 0 ? _lastRamPrev : curr;
+            const threshold = App.ramHighLoadThreshold;
+            const delta = curr - prev;
+            _createSpikeEvent("RAM", Math.round(curr * 100), Math.round(prev * 100), Math.round(delta * 100), threshold, topList, null);
+        });
+    }
+
+    function _createSpikeEvent(type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride) {
         const eventId = `evt_${Date.now()}_${_eventCounter++}`;
         const severity = (type === "TEMP" ? (currentValue >= _tempHighThreshold + 10 ? "CRITICAL" : "WARNING") : (currentValue >= thresholdValue ? "WARNING" : "NORMAL"));
 
@@ -318,33 +431,49 @@ Singleton {
             severity: severity,
             timestamp: _formatTime(new Date()),
             aiAnalysis: "Analyzing... Please wait.",
+            aiTitle: "Analyzing...",
+            aiNarrative: "",
+            aiRootCause: "",
+            aiConfidence: 0,
+            aiThermalRisk: "",
+            aiThermalDetails: "",
+            aiProcessName: "",
+            aiProcessBehavior: "",
+            aiActions: [],
             isLoading: true,
             aiModel: App.systemAiModel || "System AI"
         });
 
-        _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue);
+        _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride);
     }
 
-    function _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue) {
+    function _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride) {
         if (type === "CPU") {
+            if (topListOverride && topListOverride.length) {
+                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, null);
+                return;
+            }
             _collectTopCpuProcesses(function (topList) {
                 _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, null);
             });
             return;
         }
         if (type === "RAM") {
+            if (topListOverride && topListOverride.length) {
+                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, null);
+                return;
+            }
             _collectTopRamProcesses(function (topList) {
                 _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, null);
             });
             return;
         }
         if (type === "TEMP") {
-            const temps = {
+            _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, [], tempsOverride || {
                 cpu_max: root.cpuMaxTemp,
                 gpu_max: root.gpuMaxTemp,
                 storage_max: root.storageMaxTemp
-            };
-            _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, [], temps);
+            });
         }
     }
 
@@ -394,17 +523,31 @@ Singleton {
         if (idx === -1)
             return;
 
-        const lines = [];
-        if (data.title)
-            lines.push(data.title);
-        if (data.analysis)
-            lines.push(data.analysis);
-        if (data.causes && data.causes.length)
-            lines.push("Causes: " + data.causes.join(", "));
-        if (data.actions && data.actions.length)
-            lines.push("Actions: " + data.actions.join(", "));
+        // تخزين الحقول الجديدة من البرومبت المحسن
+        eventsModel.setProperty(idx, "aiTitle", data.title || "Analysis Complete");
+        eventsModel.setProperty(idx, "aiNarrative", data.narrative || data.analysis || "No detailed analysis available.");
+        eventsModel.setProperty(idx, "aiRootCause", data.root_cause_hypothesis || "Unknown cause");
+        eventsModel.setProperty(idx, "aiConfidence", data.confidence_score || 50);
 
-        eventsModel.setProperty(idx, "aiAnalysis", lines.join("\n"));
+        // تخزين thermal_impact كـ JSON string لاستخدامه في الواجهة
+        if (data.thermal_impact) {
+            eventsModel.setProperty(idx, "aiThermalRisk", data.thermal_impact.risk_level || "low");
+            eventsModel.setProperty(idx, "aiThermalDetails", data.thermal_impact.details || "");
+        }
+
+        // تخزين process_anomaly
+        if (data.process_anomaly) {
+            eventsModel.setProperty(idx, "aiProcessName", data.process_anomaly.name || "N/A");
+            eventsModel.setProperty(idx, "aiProcessBehavior", data.process_anomaly.behavior || "Unknown behavior");
+        }
+
+        // تخزين actions كـ array
+        if (data.actions && data.actions.length) {
+            eventsModel.setProperty(idx, "aiActions", data.actions);
+        } else {
+            eventsModel.setProperty(idx, "aiActions", []);
+        }
+
         eventsModel.setProperty(idx, "isLoading", false);
 
         if (data.severity) {

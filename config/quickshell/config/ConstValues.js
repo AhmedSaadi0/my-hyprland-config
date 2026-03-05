@@ -25,6 +25,7 @@ const SRC_MUSIC = "music";
 const SRC_SYSTEM = "system";
 const SRC_BATTERY = "battery";
 const SRC_WEATHER = "weather";
+const SRC_TODO = "todo";
 
 // --- Capsule States (حالة النافذة) ---
 const STATE_IDLE = "idle";

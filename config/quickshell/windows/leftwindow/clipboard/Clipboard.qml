@@ -1,18 +1,29 @@
+// windows/leftwindow/clipboard/Clipboard.qml
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+
 import "root:/config/EventNames.js" as Events
 import "root:/config"
 import "root:/services"
 import "root:/themes"
+import "root:/components"
+import "../base"
 
-ColumnLayout {
+BaseMenuView {
     id: root
+
+    menuTitle: qsTr("Clipboard")
+    menuIcon: "󰅍"
+    showPrimaryAction: false
+
     Layout.fillWidth: true
     Layout.fillHeight: true
-    spacing: 0
-    focus: true
 
+    readonly property var dims: ThemeManager.selectedTheme.dimensions
+
+    // --- Logic & Properties ---
     property int selectedIndex: -1
 
     function matchesSearchAt(idx) {
@@ -59,7 +70,6 @@ ColumnLayout {
         }
         if (!matchesSearchAt(selectedIndex))
             selectedIndex = firstMatchingIndex();
-        listView.currentIndex = selectedIndex;
     }
 
     function moveSelection(dir) {
@@ -80,9 +90,11 @@ ColumnLayout {
             idx = firstMatchingIndex();
         if (idx < 0 || idx >= listView.count)
             return;
+
         const item = listView.model.get(idx);
         if (!item)
             return;
+
         ClipboardService.activate(item.clipId);
         EventBus.emit(Events.CLOSE_LEFTBAR);
     }
@@ -108,24 +120,29 @@ ColumnLayout {
         }
     }
 
-    // Header
-    ClipboardHeader {
-        id: header // ID للربط مع البحث
+    // --- Header Section ---
+    headerContent: ClipboardHeader {
+        id: header
+        width: root.width
         onClearAllClicked: listView.animateAndClearAll()
-        onNavigateRequested: direction => {
-            root.moveSelection(direction);
-            header.forceSearchFocus();
-        }
-        onActivateRequested: {
-            root.activateSelection();
-            header.forceSearchFocus();
-        }
+        onMoveSelection: dir => root.moveSelection(dir)
+        onActivateSelection: root.activateSelection()
     }
 
-    // List
+    // --- Main List Area ---
     ScrollView {
         Layout.fillWidth: true
         Layout.fillHeight: true
+
+        // ─── الإصلاح الجذري هنا ───
+        // نأخذ مساحة النافذة ونطرح منها مساحة الهيدر التقريبية (حوالي 120 بكسل) لتظهر العناصر بوضوح.
+        Layout.preferredHeight: root.height > 120 ? root.height - 120 : 500
+        implicitHeight: 0
+
+        Layout.leftMargin: root.dims.menuWidgetsMargin
+        Layout.rightMargin: root.dims.menuWidgetsMargin
+        Layout.bottomMargin: root.dims.menuWidgetsMargin
+
         clip: true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
@@ -136,16 +153,13 @@ ColumnLayout {
             id: listView
             anchors.fill: parent
 
-            // تم تغيير spacing إلى 0 لضمان اختفاء العناصر بالكامل عند البحث
             spacing: 0
-
             topMargin: 5
             bottomMargin: 10
 
             model: ClipboardService.model
             cacheBuffer: 2000
 
-            // *** ربط نص البحث بالهيدر ***
             property string currentSearchText: header.searchText
             onCurrentSearchTextChanged: root.ensureSelection()
             onCountChanged: root.ensureSelection()
@@ -157,10 +171,10 @@ ColumnLayout {
             function triggerSway() {
                 swayAnim.restart();
             }
+
             function animateAndClearAll() {
                 if (listView.count > 0) {
                     ClipboardService.wipe();
-                    // clearAllSequence.start(); // يمكن تفعيل هذا السطر إذا كنت تريد تشغيل الانميشن أدناه
                 }
             }
 
@@ -192,7 +206,6 @@ ColumnLayout {
                 }
             }
 
-            // هذا الجزء كان موجوداً في كودك الأصلي وتمت اعادته
             SequentialAnimation {
                 id: clearAllSequence
                 ParallelAnimation {
@@ -239,7 +252,6 @@ ColumnLayout {
                 }
             }
 
-            // هذا الترانزيشن كان مفقوداً في النسخة المختصرة
             displaced: Transition {
                 NumberAnimation {
                     properties: "y"
@@ -248,7 +260,6 @@ ColumnLayout {
                 }
             }
 
-            // هذا الترانزيشن كان مفقوداً في النسخة المختصرة
             remove: Transition {
                 SequentialAnimation {
                     ParallelAnimation {
@@ -273,22 +284,17 @@ ColumnLayout {
                 }
             }
 
-            // ----------------------------------------------------
-            // DELEGATE
-            // ----------------------------------------------------
             delegate: ClipboardItem {}
         }
     }
 
     Component.onCompleted: {
         ClipboardService.refresh();
-        // تم تحديث الحدث ليشمل السكرول والبحث التلقائي
         EventBus.on(Events.LEFT_MENU_IS_OPENED, function (idx) {
-            // تأكد من اسم الحدث (OPEN_LEFTBAR أو LEFT_MENU_IS_OPENED) حسب ملفك
             if (idx === 5) {
                 ClipboardService.refresh();
-                listView.positionViewAtBeginning(); // سكرول للأعلى
-                header.focusSearch(); // تفعيل البحث
+                listView.positionViewAtBeginning();
+                header.focusSearch();
                 root.ensureSelection();
             }
         });

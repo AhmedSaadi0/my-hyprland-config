@@ -31,32 +31,51 @@ def run_command_verbose(command):
         sys.exit(1)
 
 
+def _read_os_release():
+    info = {}
+    if not os.path.exists("/etc/os-release"):
+        return info
+    with open("/etc/os-release") as f:
+        for line in f:
+            if "=" not in line:
+                continue
+            key, value = line.strip().split("=", 1)
+            info[key.strip()] = value.strip().strip('"')
+    return info
+
+
 def detect_distro():
-    if os.path.exists("/etc/os-release"):
-        with open("/etc/os-release") as f:
-            for line in f:
-                if line.startswith("ID="):
-                    return line.strip().split("=")[1].lower().strip('"')
-    return None
+    info = _read_os_release()
+    distro_id = info.get("ID", "").lower()
+    id_like = info.get("ID_LIKE", "").lower().split()
+
+    fedora_like = {
+        "fedora",
+        "nobara",
+        "bazzite",
+        "ultramarine",
+        "silverblue",
+        "kinoite",
+        "ublue",
+    }
+
+    if distro_id == "void":
+        return "void"
+    if distro_id == "arch" or "arch" in id_like:
+        return "arch"
+    if (
+        distro_id in fedora_like
+        or "fedora" in id_like
+        or "rhel" in id_like
+        or "centos" in id_like
+    ):
+        return "fedora"
+
+    return distro_id or None
 
 
 def is_arch_based():
-    try:
-        with open("/etc/os-release", "r") as f:
-            lines = f.readlines()
-
-        os_info = {
-            k.strip(): v.strip().strip('"')
-            for k, v in (line.split("=", 1) for line in lines if "=" in line)
-        }
-
-        if os_info.get("ID") == "arch":
-            return True
-        if "arch" in os_info.get("ID_LIKE", "").split():
-            return True
-    except FileNotFoundError:
-        return False
-    return False
+    return detect_distro() == "arch"
 
 
 def check_for_root():

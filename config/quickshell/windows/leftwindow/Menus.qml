@@ -9,7 +9,7 @@ import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
 import "./weather"
 import "./applauncher"
-import "./animations"
+import "./notifications"
 import "./network"
 import "./clipboard"
 
@@ -31,6 +31,15 @@ StackView {
     readonly property int appLauncherIndex: 9
 
     property var _instantiatedPages: ({})
+    property var _scrollable: null
+    property real collapseProgress: 0
+    property bool _scrollActive: false
+    property real _lastContentY: 0
+    property string _lastScrollDir: "none"
+    readonly property int _headerCollapseDiff: 200
+
+    readonly property int _collapseStart: 6
+    readonly property int _collapseRelease: 2
 
     Component {
         id: dashboardComponent
@@ -153,6 +162,72 @@ StackView {
         return null;
     }
 
+    function _isScrollable(item) {
+        return item && item.contentY !== undefined && item.contentHeight !== undefined;
+    }
+
+    function _findScrollable(item) {
+        if (!item)
+            return null;
+
+        if (_isScrollable(item))
+            return item;
+
+        if (item.contentItem && _isScrollable(item.contentItem))
+            return item.contentItem;
+
+        const kids = item.children || [];
+        for (let i = 0; i < kids.length; i++) {
+            let found = _findScrollable(kids[i]);
+            if (found)
+                return found;
+        }
+        return null;
+    }
+
+    function _updateScrollPosition(y) {
+        const clamped = Math.max(0, y || 0);
+
+        // التحقق الأساسي: هل العنصر قابل للسكرول أصلاً؟
+        if (!_scrollable)
+            return;
+
+        // 1. حل مشكلة الارتداد (Loop):
+        // إذا كنا في وضع التوسعة (progress 0)
+        // يجب أن نتأكد أن المحتوى أطول من (ارتفاع العرض الحالي + الفرق الذي سيحدثه تصغير الهيدر)
+        // وإلا فإننا سنصغر الهيدر، وسيصبح المحتوى عائماً، وسيعود الهيدر للكبر فوراً
+        if (collapseProgress === 0) {
+            // هل المحتوى يستحق التصغير؟
+            if (_scrollable.contentHeight < (_scrollable.height + _headerCollapseDiff)) {
+                return; // المحتوى قصير جداً، ابقِ الهيدر كبيراً
+            }
+
+            if (clamped >= _collapseStart)
+                collapseProgress = 1;
+        } else {
+            // نحن في وضع التصغير (progress 1)
+            // نتحقق من شروط العودة للتوسعة
+            if (_scrollable.contentHeight <= _scrollable.height + 2) {
+                if (clamped <= _collapseRelease && !_scrollActive)
+                    collapseProgress = 0;
+                return;
+            }
+
+            if (clamped <= _collapseRelease && !_scrollActive && _lastScrollDir === "up") {
+                expandDelay.restart();
+            }
+        }
+    }
+
+    function _attachToCurrentScrollable() {
+        const current = stackView.currentItem;
+        _scrollable = _findScrollable(current);
+        if (_scrollable)
+            _updateScrollPosition(_scrollable.contentY);
+        else
+            _updateScrollPosition(0);
+    }
+
     // ---------------------------------------------------------
     // التهيئة والأحداث
     // ---------------------------------------------------------
@@ -196,6 +271,7 @@ StackView {
                 targetPage.visible = true;
 
                 stackView.replace(targetPage);
+                Qt.callLater(_attachToCurrentScrollable);
 
                 if (newIndex === stackView.appLauncherIndex && typeof targetPage.gainFocus === "function") {
                     targetPage.gainFocus();
@@ -206,6 +282,52 @@ StackView {
         ;
     }
 
+    onCurrentItemChanged: Qt.callLater(_attachToCurrentScrollable)
+
+    Connections {
+        target: _scrollable
+        function onContentYChanged() {
+            if (_scrollable) {
+                const dy = _scrollable.contentY - _lastContentY;
+                if (dy > 0.5)
+                    _lastScrollDir = "down";
+                else if (dy < -0.5)
+                    _lastScrollDir = "up";
+                _lastContentY = _scrollable.contentY;
+
+                if (_scrollable.contentY > _collapseRelease)
+                    expandDelay.stop();
+                _updateScrollPosition(_scrollable.contentY);
+            }
+        }
+        function onContentHeightChanged() {
+            if (_scrollable)
+                _updateScrollPosition(_scrollable.contentY);
+        }
+        function onMovingChanged() {
+            if (!_scrollable)
+                return;
+            _scrollActive = _scrollable.moving;
+            if (_scrollActive && _scrollable.contentY >= _collapseStart) {
+                collapseProgress = 1;
+                expandDelay.stop();
+            }
+            if (!_scrollActive && collapseProgress === 1 && _scrollable.contentY <= _collapseRelease && _lastScrollDir === "up") {
+                expandDelay.restart();
+            }
+        }
+    }
+
+    Timer {
+        id: expandDelay
+        interval: 140
+        repeat: false
+        onTriggered: {
+            if (_scrollable && _scrollable.contentY <= _collapseRelease && !_scrollActive)
+                collapseProgress = 0;
+        }
+    }
+
     // ---------------------------------------------------------
     // تأثيرات الحركة (Transitions)
     // ---------------------------------------------------------
@@ -214,38 +336,39 @@ StackView {
     Transition {
         id: enterFromBottom
         SequentialAnimation {
+            // تهيئة القيم قبل البدء
             PropertyAction {
                 property: "opacity"
                 value: 0
             }
             PropertyAction {
                 property: "scale"
-                value: 0.92
-            }
-            // نضمن أن يبدأ من الأسفل
+                value: 0.95
+            } // تكبير المقياس قليلاً ليبدو أهدأ
             PropertyAction {
                 property: "y"
-                value: stackView.height * 0.6
-            }
+                value: stackView.height * 0.15
+            } // تقليل المسافة من 0.6 إلى 0.15
 
             ParallelAnimation {
+                // حركة الموضع: استخدام OutQuart يمنع الارتداد (Overshoot)
                 NumberAnimation {
                     property: "y"
                     to: 0
-                    duration: 420
-                    easing.type: Easing.OutBack
+                    duration: 350 // تقليل الوقت قليلاً لسرعة الاستجابة
+                    easing.type: Easing.OutQuart
                 }
                 NumberAnimation {
                     property: "opacity"
                     to: 1
-                    duration: 350
-                    easing.type: Easing.OutCubic
+                    duration: 300
+                    easing.type: Easing.OutQuad
                 }
                 NumberAnimation {
                     property: "scale"
                     to: 1.0
-                    duration: 380
-                    easing.type: Easing.OutQuad
+                    duration: 350
+                    easing.type: Easing.OutQuart
                 }
             }
         }
@@ -256,21 +379,15 @@ StackView {
         ParallelAnimation {
             NumberAnimation {
                 property: "y"
-                to: -stackView.height * 0.3
-                duration: 300
-                easing.type: Easing.InCubic
+                to: -stackView.height * 0.15 // تقليل مسافة الخروج أيضاً لتتناسب مع الدخول
+                duration: 250
+                easing.type: Easing.InQuad
             }
             NumberAnimation {
                 property: "opacity"
                 to: 0
-                duration: 280
-                easing.type: Easing.InQuad
-            }
-            NumberAnimation {
-                property: "scale"
-                to: 0.95
-                duration: 300
-                easing.type: Easing.InCubic
+                duration: 200
+                easing.type: Easing.Linear
             }
         }
     }
@@ -285,32 +402,31 @@ StackView {
             }
             PropertyAction {
                 property: "scale"
-                value: 0.92
+                value: 0.95
             }
-            // نضمن أن يبدأ من الأعلى
             PropertyAction {
                 property: "y"
-                value: -stackView.height * 0.3
-            }
+                value: -stackView.height * 0.15
+            } // مسافة أقصر
 
             ParallelAnimation {
                 NumberAnimation {
                     property: "y"
                     to: 0
-                    duration: 420
-                    easing.type: Easing.OutBack
+                    duration: 350
+                    easing.type: Easing.OutQuart // حركة ناعمة بدون ارتداد
                 }
                 NumberAnimation {
                     property: "opacity"
                     to: 1
-                    duration: 350
-                    easing.type: Easing.OutCubic
+                    duration: 300
+                    easing.type: Easing.OutQuad
                 }
                 NumberAnimation {
                     property: "scale"
                     to: 1.0
-                    duration: 380
-                    easing.type: Easing.OutQuad
+                    duration: 350
+                    easing.type: Easing.OutQuart
                 }
             }
         }
@@ -321,21 +437,15 @@ StackView {
         ParallelAnimation {
             NumberAnimation {
                 property: "y"
-                to: stackView.height * 0.6
-                duration: 300
-                easing.type: Easing.InCubic
+                to: stackView.height * 0.15
+                duration: 250
+                easing.type: Easing.InQuad
             }
             NumberAnimation {
                 property: "opacity"
                 to: 0
-                duration: 280
-                easing.type: Easing.InQuad
-            }
-            NumberAnimation {
-                property: "scale"
-                to: 0.95
-                duration: 300
-                easing.type: Easing.InCubic
+                duration: 200
+                easing.type: Easing.Linear
             }
         }
     }
