@@ -60,7 +60,8 @@ QtObject {
     property bool useBottomLauncher: false  // false = side launcher, true = bottom launcher
     property int bottomLauncherWidth: 800
 
-    property string menuStyle: C.DOCKED_MOVING_BAR
+    // Default menu style changed to floating per user request
+    property string menuStyle: C.FLOATING
 
     property var _fileView: FileView {
         id: fileWatcher

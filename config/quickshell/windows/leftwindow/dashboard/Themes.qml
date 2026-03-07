@@ -9,8 +9,9 @@ import org.kde.kirigami as Kirigami
 
 import "../../../components"
 import "../../../themes"
-import "root:/config/EventNames.js" as Events
 import "root:/config"
+import "root:/config/EventNames.js" as Events
+import "root:/config/ConstValues.js" as Consts
 
 MenuCard {
     id: root
@@ -144,8 +145,8 @@ MenuCard {
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "ColorsTheme"
 
-                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
-                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
+                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
             }
             MButton {
                 text: qsTr("Deer")
@@ -157,8 +158,8 @@ MenuCard {
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "DeerTheme"
 
-                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
-                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? 1 : innerRadiusDiv)
+                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
+                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
             }
         }
 

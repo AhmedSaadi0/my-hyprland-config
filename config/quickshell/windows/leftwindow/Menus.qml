@@ -12,6 +12,7 @@ import "./applauncher"
 import "./notifications"
 import "./network"
 import "./clipboard"
+import "./ai"
 
 import "root:/utils"
 import "root:/config"
@@ -141,6 +142,9 @@ StackView {
         let selectedComponent = componentMap[index];
 
         if (selectedComponent) {
+            if (selectedComponent.status !== Component.Ready) {
+                console.error("Component not ready for index:", index, "status:", selectedComponent.status, "error:", selectedComponent.errorString());
+            }
             let newPage = selectedComponent.createObject(stackView, {
                 "visible": false,
                 "StackView.visible": false
@@ -156,6 +160,8 @@ StackView {
                 newPage.z = 1;
                 return newPage;
             }
+
+            console.error("Failed to create page object for index:", index, "componentError:", selectedComponent.errorString());
         }
 
         console.warn("Error: requested page index not found or failed to create:", index);
@@ -277,7 +283,7 @@ StackView {
                     targetPage.gainFocus();
                 }
             }
-        });
+        }, stackView);
         ;
         ;
     }

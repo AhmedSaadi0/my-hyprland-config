@@ -326,6 +326,23 @@ Singleton {
         return fullCommand;
     }
 
+    function wifiLiveUsageCommand({
+        limit = 8,
+        wifiInterface = Config.App.networkMonitor
+    }) {
+        const pythonCommand = Config.App.scripts.python.liveUsageCommand;
+        return [...pythonCommand, "--limit", `${limit}`, "--interface", `${wifiInterface}`];
+    }
+
+    function wifiLiveUsageSummaryCommand({
+        hours = 24,
+        top = 15,
+        wifiInterface = Config.App.networkMonitor
+    }) {
+        const pythonCommand = Config.App.scripts.python.liveUsageCommand;
+        return [...pythonCommand, "--mode", "summary", "--hours", `${hours}`, "--top", `${top}`, "--interface", `${wifiInterface}`];
+    }
+
     // ==========================================================
     // ==                 ICON UTILITIES                       ==
     // ==========================================================

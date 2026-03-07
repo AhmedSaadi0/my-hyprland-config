@@ -24,6 +24,7 @@ Item {
     property bool is_saved: false
     property bool expanded: false
     property bool isLoading: false
+    property int innerRadiusDiv: 4
 
     signal itemToggled
     signal connectClicked(string ssid, string password)
@@ -289,13 +290,13 @@ Item {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 0
+                spacing: 3
 
                 MButton {
                     Layout.fillWidth: true
                     text: root.is_saved || root.in_use ? qsTr("Forget") : qsTr("Cancel")
-                    topRightRadius: 0
-                    bottomRightRadius: 0
+                    topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / root.innerRadiusDiv
+                    bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / root.innerRadiusDiv
                     onClicked: {
                         if (root.is_saved || root.in_use) {
                             root.forgetClicked(root.ssid);
@@ -310,8 +311,8 @@ Item {
                     text: root.in_use ? qsTr("Disconnect") : qsTr("Connect")
                     normalBackground: ThemeManager.selectedTheme.colors.primary.darker(1.2)
                     normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-                    topLeftRadius: 0
-                    bottomLeftRadius: 0
+                    topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / root.innerRadiusDiv
+                    bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / root.innerRadiusDiv
                     onClicked: {
                         if (root.in_use) {
                             root.disconnectClicked(root.ssid);

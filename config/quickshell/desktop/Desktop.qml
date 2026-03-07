@@ -152,11 +152,11 @@ PanelWindow {
         EventBus.on(Events.LEFT_MENU_IS_OPENED, () => {
             changeIsMenuOpen.newValue = true;
             changeIsMenuOpen.start();
-        });
+        }, desktopRoot);
         EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => {
             changeIsMenuOpen.newValue = false;
             changeIsMenuOpen.start();
-        });
+        }, desktopRoot);
 
         desktopRoot.updateThemeData();
         wallpaper.wallpaperSource = Theme.ThemeManager.currentWallpaper;

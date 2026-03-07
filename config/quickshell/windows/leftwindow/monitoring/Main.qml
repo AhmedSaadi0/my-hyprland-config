@@ -71,8 +71,8 @@ BaseMenuView {
 
     // ─── دورة حياة القائمة ───────────────────────────────────────
     Component.onCompleted: {
-        EventBus.on(Events.LEFT_MENU_IS_OPENED, () => monitoringMenu.menuIsOpened());
-        EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => monitoringMenu.menuIsClosed());
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, () => monitoringMenu.menuIsOpened(), monitoringMenu);
+        EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => monitoringMenu.menuIsClosed(), monitoringMenu);
     }
 
     function menuIsOpened() {

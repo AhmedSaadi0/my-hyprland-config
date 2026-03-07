@@ -6,17 +6,78 @@ QtObject {
     property var signals: ({})
 
     function emit(eventName, data) {
-        if (signals[eventName]) {
-            for (var i in signals[eventName]) {
-                signals[eventName][i](data);
+        const list = signals[eventName];
+        if (!list)
+            return;
+
+        // Iterate backwards so we can safely remove stale entries.
+        for (var i = list.length - 1; i >= 0; i--) {
+            const entry = list[i];
+            let callback = entry;
+            let owner = null;
+
+            if (entry && typeof entry === "object" && entry.cb) {
+                callback = entry.cb;
+                owner = entry.owner;
+
+                if (owner === null) {
+                    list.splice(i, 1);
+                    continue;
+                }
             }
+
+            if (typeof callback === "function") {
+                callback(data);
+            } else {
+                list.splice(i, 1);
+            }
+        }
+
+        if (list.length === 0) {
+            delete signals[eventName];
         }
     }
 
-    function on(eventName, callback) {
+    function on(eventName, callback, owner) {
         if (!signals[eventName]) {
             signals[eventName] = [];
         }
+
+        if (owner !== undefined) {
+            const entry = {
+                cb: callback,
+                owner: owner
+            };
+            signals[eventName].push(entry);
+
+            if (owner && Qt.isQtObject(owner) && owner.destroyed) {
+                owner.destroyed.connect(function () {
+                    off(eventName, entry);
+                });
+            }
+            return entry;
+        }
+
         signals[eventName].push(callback);
+        return callback;
+    }
+
+    function off(eventName, callbackOrEntry) {
+        const list = signals[eventName];
+        if (!list)
+            return;
+
+        for (var i = list.length - 1; i >= 0; i--) {
+            const entry = list[i];
+            if (entry === callbackOrEntry) {
+                list.splice(i, 1);
+            } else if (entry && entry.cb === callbackOrEntry) {
+                list.splice(i, 1);
+            }
+        }
+
+        if (list.length === 0) {
+            delete signals[eventName];
+        }
     }
 }

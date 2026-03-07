@@ -1,65 +1,416 @@
+import argparse
 import json
+import os
+import re
+import shutil
+import sqlite3
+import subprocess
+import time
 from collections import defaultdict
+from pathlib import Path
 
 import psutil
 
 
-def get_process_connections():
-    """
-    يعرض قائمة بالعمليات التي لديها اتصالات شبكية مفتوحة باستخدام psutil.
-    """
-    process_connections = defaultdict(list)
+NETHOGS_LINE_RE = re.compile(
+    r"^(?P<proc>.+?)\s+(?P<sent>[0-9]*\.?[0-9]+)\s+(?P<recv>[0-9]*\.?[0-9]+)\s*$"
+)
+REFRESH_RE = re.compile(r"^Refreshing:\s+(?P<seconds>[0-9]*\.?[0-9]+)\s*s")
 
+
+def parse_nethogs_process(proc_field):
+    parts = proc_field.rsplit("/", 2)
+    if len(parts) < 3:
+        return None, None, None
+
+    name, pid_raw, user = parts
     try:
-        # احصل على جميع الاتصالات الشبكية في النظام
-        connections = psutil.net_connections(kind="inet")
+        pid = int(pid_raw)
+    except ValueError:
+        return None, None, None
 
-        for conn in connections:
-            # نريد فقط الاتصالات التي لها PID (عملية مرتبطة بها) وحالة "ESTABLISHED"
-            if conn.pid is None or conn.status != "ESTABLISHED":
-                continue
+    display_name = os.path.basename(name) if name else "Unknown"
+    return pid, display_name or "Unknown", user or ""
 
+
+def parse_nethogs_output(text):
+    # Keep the latest complete cycle (closer to real-time than "max ever in run").
+    last_cycle = defaultdict(
+        lambda: {
+            "name": "Unknown",
+            "user": "",
+            "connections_count": 0,
+            "rx_rate_bps": 0,
+            "tx_rate_bps": 0,
+        }
+    )
+    current_cycle = defaultdict(
+        lambda: {
+            "name": "Unknown",
+            "user": "",
+            "connections_count": 0,
+            "rx_rate_bps": 0,
+            "tx_rate_bps": 0,
+        }
+    )
+    refresh_seconds = 1.0
+
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        refresh_match = REFRESH_RE.match(line)
+        if refresh_match:
             try:
-                proc = psutil.Process(conn.pid)
-                # تجاهل العمليات التي لا تملك اسم مستخدم (عمليات النظام الأساسية)
-                if proc.username() is None:
-                    continue
-
-                # أضف معلومات الاتصال إلى العملية
-                process_connections[conn.pid].append(
-                    {
-                        "local_address": f"{conn.laddr.ip}:{conn.laddr.port}",
-                        "remote_address": f"{conn.raddr.ip}:{conn.raddr.port}",
+                refresh_seconds = float(refresh_match.group("seconds"))
+            except ValueError:
+                refresh_seconds = 1.0
+            if current_cycle:
+                last_cycle = current_cycle
+                current_cycle = defaultdict(
+                    lambda: {
+                        "name": "Unknown",
+                        "user": "",
+                        "connections_count": 0,
+                        "rx_rate_bps": 0,
+                        "tx_rate_bps": 0,
                     }
                 )
+            continue
 
-            except (psutil.NoSuchProcess, psutil.AccessDenied):
-                # تجاهل العمليات التي اختفت أو لا يمكن الوصول إليها
-                continue
+        if line.startswith("unknown TCP"):
+            continue
 
-        # تحويل البيانات إلى صيغة JSON النهائية
-        output_list = []
-        for pid, conns in process_connections.items():
-            try:
-                proc = psutil.Process(pid)
-                output_list.append(
-                    {
-                        "pid": pid,
-                        "name": proc.name(),
-                        "user": proc.username(),
-                        "connections_count": len(conns),
-                        "connections": conns,
-                    }
-                )
-            except (psutil.NoSuchProcess, psutil.AccessDenied):
-                continue
+        match = NETHOGS_LINE_RE.match(line)
+        if not match:
+            continue
 
-        return {"status": "success", "data": output_list}
+        pid, name, user = parse_nethogs_process(match.group("proc"))
+        if pid is None:
+            continue
 
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
+        try:
+            sent_kbps = float(match.group("sent"))
+            recv_kbps = float(match.group("recv"))
+        except ValueError:
+            continue
+
+        entry = current_cycle[pid]
+        entry["name"] = name
+        entry["user"] = user
+        entry["connections_count"] += 1
+        entry["tx_rate_bps"] += int(sent_kbps * 1024)
+        entry["rx_rate_bps"] += int(recv_kbps * 1024)
+
+    cycle_to_use = last_cycle if last_cycle else current_cycle
+
+    rows = []
+    for pid, item in cycle_to_use.items():
+        rows.append(
+            {
+                "pid": pid,
+                "name": item["name"],
+                "user": item["user"],
+                "connections_count": max(1, item["connections_count"]),
+                "rx_rate_bps": item["rx_rate_bps"],
+                "tx_rate_bps": item["tx_rate_bps"],
+                "total_rate_bps": item["rx_rate_bps"] + item["tx_rate_bps"],
+                "bytes_recv": 0,
+                "bytes_sent": 0,
+                "bytes_total": 0,
+                "source": "nethogs",
+            }
+        )
+
+    rows.sort(key=lambda item: (item["total_rate_bps"], item["connections_count"]), reverse=True)
+    return rows, refresh_seconds
+
+
+def run_nethogs(interface=None, timeout_sec=8, cycles=3):
+    if shutil.which("nethogs") is None:
+        raise RuntimeError("nethogs is not installed")
+
+    cmd = ["nethogs", "-t", "-c", str(max(2, cycles))]
+    if interface:
+        cmd.append(interface)
+
+    proc = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        timeout=timeout_sec,
+        check=False,
+    )
+
+    output = (proc.stdout or "").strip()
+    errors = (proc.stderr or "").strip()
+    rows, refresh_seconds = parse_nethogs_output(output)
+
+    if rows:
+        return rows, refresh_seconds, ""
+
+    if errors:
+        raise RuntimeError(errors)
+    raise RuntimeError("nethogs returned no parsable rows")
+
+
+def fallback_psutil(limit):
+    by_pid = defaultdict(lambda: {"connections_count": 0})
+
+    for conn in psutil.net_connections(kind="inet"):
+        if conn.pid is None or conn.status != "ESTABLISHED":
+            continue
+        by_pid[conn.pid]["connections_count"] += 1
+
+    rows = []
+    for pid, item in by_pid.items():
+        try:
+            proc = psutil.Process(pid)
+            rows.append(
+                {
+                    "pid": pid,
+                    "name": proc.name() or "Unknown",
+                    "user": proc.username() or "",
+                    "connections_count": item["connections_count"],
+                    "rx_rate_bps": 0,
+                    "tx_rate_bps": 0,
+                    "total_rate_bps": 0,
+                    "bytes_recv": 0,
+                    "bytes_sent": 0,
+                    "bytes_total": 0,
+                    "source": "psutil_fallback",
+                }
+            )
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            continue
+
+    rows.sort(key=lambda item: item["connections_count"], reverse=True)
+    return rows[:limit] if limit > 0 else rows
+
+
+def ensure_db(db_path):
+    path_obj = Path(db_path)
+    path_obj.parent.mkdir(parents=True, exist_ok=True)
+
+    con = sqlite3.connect(str(path_obj))
+    con.execute(
+        """
+        CREATE TABLE IF NOT EXISTS app_samples (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ts INTEGER NOT NULL,
+            interface TEXT NOT NULL,
+            app_name TEXT NOT NULL,
+            user_name TEXT,
+            pid INTEGER NOT NULL,
+            source TEXT NOT NULL,
+            connections_count INTEGER NOT NULL,
+            rx_rate_bps INTEGER NOT NULL,
+            tx_rate_bps INTEGER NOT NULL,
+            total_rate_bps INTEGER NOT NULL,
+            approx_rx_bytes INTEGER NOT NULL,
+            approx_tx_bytes INTEGER NOT NULL,
+            approx_total_bytes INTEGER NOT NULL
+        )
+        """
+    )
+    con.execute("CREATE INDEX IF NOT EXISTS idx_app_samples_ts ON app_samples(ts)")
+    con.execute("CREATE INDEX IF NOT EXISTS idx_app_samples_name_ts ON app_samples(app_name, ts)")
+    con.commit()
+    return con
+
+
+def persist_rows(db_path, interface, rows, sample_seconds, retention_days):
+    now_ts = int(time.time())
+    iface = interface or "unknown"
+    seconds = max(1.0, float(sample_seconds))
+    con = ensure_db(db_path)
+
+    with con:
+        for row in rows:
+            rx_rate = int(row.get("rx_rate_bps", 0) or 0)
+            tx_rate = int(row.get("tx_rate_bps", 0) or 0)
+            total_rate = int(row.get("total_rate_bps", rx_rate + tx_rate) or 0)
+            rx_bytes = int(rx_rate * seconds)
+            tx_bytes = int(tx_rate * seconds)
+            total_bytes = int(total_rate * seconds)
+            con.execute(
+                """
+                INSERT INTO app_samples (
+                    ts, interface, app_name, user_name, pid, source,
+                    connections_count, rx_rate_bps, tx_rate_bps, total_rate_bps,
+                    approx_rx_bytes, approx_tx_bytes, approx_total_bytes
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    now_ts,
+                    iface,
+                    row.get("name") or "Unknown",
+                    row.get("user") or "",
+                    int(row.get("pid") or 0),
+                    row.get("source") or "unknown",
+                    int(row.get("connections_count") or 0),
+                    rx_rate,
+                    tx_rate,
+                    total_rate,
+                    rx_bytes,
+                    tx_bytes,
+                    total_bytes,
+                ),
+            )
+
+        cutoff_ts = now_ts - int(max(1, retention_days) * 86400)
+        con.execute("DELETE FROM app_samples WHERE ts < ?", (cutoff_ts,))
+
+    con.close()
+    return now_ts
+
+
+def get_live_usage(limit=10, interface=None, db_path=None, retention_days=14):
+    warning = ""
+    sample_seconds = 1.0
+    try:
+        rows, sample_seconds, _ = run_nethogs(interface=interface)
+    except Exception as exc:
+        warning = f"nethogs unavailable ({exc}); using connection-count fallback"
+        rows = fallback_psutil(limit=limit)
+
+    if limit > 0:
+        rows = rows[:limit]
+
+    persisted = False
+    snapshot_ts = None
+    if db_path:
+        try:
+            snapshot_ts = persist_rows(
+                db_path=db_path,
+                interface=interface,
+                rows=rows,
+                sample_seconds=sample_seconds,
+                retention_days=retention_days,
+            )
+            persisted = True
+        except Exception as exc:
+            persist_warning = f"persist failed ({exc})"
+            warning = f"{warning}; {persist_warning}" if warning else persist_warning
+
+    return {
+        "status": "success",
+        "data": rows,
+        "warning": warning,
+        "persisted": persisted,
+        "sample_seconds": sample_seconds,
+        "snapshot_ts": snapshot_ts,
+    }
+
+
+def summarize_usage(db_path, hours=24, top=15, interface=None):
+    if not Path(db_path).exists():
+        return {
+            "status": "success",
+            "range_hours": hours,
+            "data": [],
+            "meta": {"message": "database file not found yet"},
+        }
+
+    now_ts = int(time.time())
+    start_ts = now_ts - int(max(1, hours) * 3600)
+    params = [start_ts]
+    where = "WHERE ts >= ?"
+    if interface:
+        where += " AND interface = ?"
+        params.append(interface)
+
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+
+    query = f"""
+        SELECT
+            app_name AS name,
+            SUM(approx_rx_bytes) AS rx_bytes,
+            SUM(approx_tx_bytes) AS tx_bytes,
+            SUM(approx_total_bytes) AS total_bytes,
+            MAX(total_rate_bps) AS peak_rate_bps,
+            COUNT(*) AS samples_count
+        FROM app_samples
+        {where}
+        GROUP BY app_name
+        ORDER BY total_bytes DESC
+        LIMIT ?
+    """
+    params.append(max(1, int(top)))
+    rows = [dict(row) for row in con.execute(query, params).fetchall()]
+
+    totals_query = f"""
+        SELECT
+            SUM(approx_rx_bytes) AS rx_bytes,
+            SUM(approx_tx_bytes) AS tx_bytes,
+            SUM(approx_total_bytes) AS total_bytes,
+            MAX(total_rate_bps) AS peak_rate_bps,
+            COUNT(*) AS samples_count
+        FROM app_samples
+        {where}
+    """
+    totals = dict(con.execute(totals_query, params[:-1]).fetchone())
+    con.close()
+
+    for item in rows:
+        item["rx_bytes"] = int(item.get("rx_bytes") or 0)
+        item["tx_bytes"] = int(item.get("tx_bytes") or 0)
+        item["total_bytes"] = int(item.get("total_bytes") or 0)
+        item["peak_rate_bps"] = int(item.get("peak_rate_bps") or 0)
+        item["samples_count"] = int(item.get("samples_count") or 0)
+
+    totals = {
+        "rx_bytes": int(totals.get("rx_bytes") or 0),
+        "tx_bytes": int(totals.get("tx_bytes") or 0),
+        "total_bytes": int(totals.get("total_bytes") or 0),
+        "peak_rate_bps": int(totals.get("peak_rate_bps") or 0),
+        "samples_count": int(totals.get("samples_count") or 0),
+    }
+
+    return {
+        "status": "success",
+        "range_hours": int(max(1, hours)),
+        "data": rows,
+        "totals": totals,
+    }
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Live and historical per-app network usage.")
+    parser.add_argument("--mode", choices=["live", "summary"], default="live")
+    parser.add_argument("--limit", type=int, default=10, help="Max live rows to return.")
+    parser.add_argument("--interface", type=str, default="", help="Interface for nethogs filtering.")
+    parser.add_argument("--db-path", type=str, default="", help="SQLite db path.")
+    parser.add_argument("--retention-days", type=int, default=14, help="History retention window.")
+    parser.add_argument("--hours", type=int, default=24, help="Summary range in hours.")
+    parser.add_argument("--top", type=int, default=15, help="Top apps in summary mode.")
+    return parser.parse_args()
+
+
+def default_db_path():
+    return os.path.expanduser("~/.cache/nibrasshell/network_usage/live_usage.sqlite")
 
 
 if __name__ == "__main__":
-    result = get_process_connections()
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    args = parse_args()
+    db_path = args.db_path or default_db_path()
+
+    if args.mode == "summary":
+        result = summarize_usage(
+            db_path=db_path,
+            hours=max(1, args.hours),
+            top=max(1, args.top),
+            interface=(args.interface or None),
+        )
+    else:
+        result = get_live_usage(
+            limit=max(0, args.limit),
+            interface=(args.interface or None),
+            db_path=db_path,
+            retention_days=max(1, args.retention_days),
+        )
+
+    print(json.dumps(result, ensure_ascii=False))

@@ -109,11 +109,11 @@ HeaderCard {
     Component.onCompleted: {
         EventBus.on(Events.LEFT_MENU_IS_OPENED, function () {
             root.menuIsOpened();
-        });
+        }, root);
 
         EventBus.on(Events.LEFT_MENU_IS_CLOSED, function () {
             root.menuIsClosed();
-        });
+        }, root);
     }
 
     function menuIsOpened() {

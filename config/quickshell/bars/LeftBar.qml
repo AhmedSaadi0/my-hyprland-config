@@ -170,7 +170,7 @@ PanelWindow {
                 LeftMenuStatus.changeIndex(-1);
             }
             changeIsMenuOpen.start();
-        });
+        }, root);
     }
 
     // استقبال التغيير من الخارج وتوزيعه على المجموعة الصحيحة

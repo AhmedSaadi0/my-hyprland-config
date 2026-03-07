@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import "root:/components"
 import "root:/config"
+import "root:/config/ConstValues.js" as Consts
 
 Rectangle {
     id: root
@@ -13,6 +14,8 @@ Rectangle {
     property string defaultIcon: App.assets.icons.notification
     property real progress: 0.0
     property bool visibleProgress: false
+
+    property int innerRadiusDiv: 4
 
     property bool dismissPressed: closeBtnMouseArea.pressed
 
@@ -157,16 +160,24 @@ Rectangle {
         RowLayout {
             Layout.fillWidth: true
             visible: notification && notification.displayActions && notification.displayActions.length > 0
-            spacing: root.theme ? root.theme.typography.spacingMedium : 6
+            spacing: 3
 
             Repeater {
+                id: actionRepeater
                 model: notification ? notification.displayActions : []
 
                 delegate: MButton {
+                    property int groupRadius: root.theme ? root.theme.dimensions.elementRadius / Consts.M3_BUTTON_RADIUS_DIVISOR : 8
+
                     text: modelData.text !== "" ? modelData.text : "Do Action"
                     Layout.fillWidth: true
                     textElide: Text.ElideRight
                     onClicked: root.actionInvoked(index)
+
+                    topLeftRadius: index === 0 ? groupRadius : groupRadius / root.innerRadiusDiv
+                    bottomLeftRadius: index === 0 ? groupRadius : groupRadius / root.innerRadiusDiv
+                    topRightRadius: index === actionRepeater.count - 1 ? groupRadius : groupRadius / root.innerRadiusDiv
+                    bottomRightRadius: index === actionRepeater.count - 1 ? groupRadius : groupRadius / root.innerRadiusDiv
                 }
             }
         }

@@ -24,14 +24,39 @@ ScrollView {
     Layout.fillHeight: true
     clip: true
     ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+    ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
     ListView {
         id: listView
         anchors.fill: parent
         model: root.model
         clip: true
+        interactive: true
+        boundsBehavior: Flickable.StopAtBounds
         spacing: ThemeManager.selectedTheme.dimensions.spacingMedium
         currentIndex: -1
+
+        WheelHandler {
+            target: listView
+            onWheel: function (event) {
+                if (listView.contentHeight <= listView.height) {
+                    event.accepted = false;
+                    return;
+                }
+
+                const delta = event.pixelDelta.y !== 0 ? event.pixelDelta.y : (event.angleDelta.y / 8);
+                const maxY = Math.max(0, listView.contentHeight - listView.height);
+                const nextY = Math.max(0, Math.min(maxY, listView.contentY - delta));
+
+                if (nextY !== listView.contentY) {
+                    listView.contentY = nextY;
+                    event.accepted = true;
+                    return;
+                }
+
+                event.accepted = false;
+            }
+        }
 
         displaced: Transition {
             NumberAnimation {

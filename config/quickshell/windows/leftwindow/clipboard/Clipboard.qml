@@ -297,7 +297,7 @@ BaseMenuView {
                 header.focusSearch();
                 root.ensureSelection();
             }
-        });
+        }, root);
     }
 
     onSelectedIndexChanged: {

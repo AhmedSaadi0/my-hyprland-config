@@ -48,7 +48,7 @@ PanelWindow {
         getBindings.startAction();
         EventBus.on(Events.OPEN_CHEATSHEET, function () {
             root.visible = !root.visible;
-        });
+        }, root);
     }
 
     NibrasShellShortcut {

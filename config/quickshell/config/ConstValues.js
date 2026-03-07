@@ -34,3 +34,5 @@ const STATE_EXPANDED = "expanded";
 const FLOATING = "floating";
 const DOCKED_FIXED_BAR = "docked_fixed_bar";
 const DOCKED_MOVING_BAR = "docked_moving_bar";
+
+const M3_BUTTON_RADIUS_DIVISOR = 1.3;
