@@ -7,13 +7,13 @@ import QtQuick.Layouts
 import "root:/themes"
 import "."
 
-ScrollView {
+Item {
     id: root
 
     property var model
     property string expandedBssid: ""
     property string loadingBssid: ""
-    property alias currentIndex: listView.currentIndex
+    property int currentIndex: -1
 
     signal expandedBssidSelected(string bssid)
     signal connectClicked(string ssid, string password)
@@ -21,111 +21,53 @@ ScrollView {
     signal forgetClicked(string ssid)
 
     Layout.fillWidth: true
-    Layout.fillHeight: true
-    clip: true
-    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-    ScrollBar.vertical.policy: ScrollBar.AsNeeded
+    implicitHeight: contentColumn.implicitHeight
 
-    ListView {
-        id: listView
-        anchors.fill: parent
-        model: root.model
-        clip: true
-        interactive: true
-        boundsBehavior: Flickable.StopAtBounds
+    Column {
+        id: contentColumn
+        width: parent.width
         spacing: ThemeManager.selectedTheme.dimensions.spacingMedium
-        currentIndex: -1
 
-        WheelHandler {
-            target: listView
-            onWheel: function (event) {
-                if (listView.contentHeight <= listView.height) {
-                    event.accepted = false;
-                    return;
-                }
+        Repeater {
+            model: root.model
 
-                const delta = event.pixelDelta.y !== 0 ? event.pixelDelta.y : (event.angleDelta.y / 8);
-                const maxY = Math.max(0, listView.contentHeight - listView.height);
-                const nextY = Math.max(0, Math.min(maxY, listView.contentY - delta));
+            Row {
+                width: contentColumn.width
+                height: wifiItem.height
+                spacing: 0
 
-                if (nextY !== listView.contentY) {
-                    listView.contentY = nextY;
-                    event.accepted = true;
-                    return;
-                }
+                WifiItem {
+                    id: wifiItem
+                    width: parent.width
+                    ssid: model.ssid
+                    bssid: model.bssid
+                    signal: model.signal
+                    security: model.security
+                    in_use: model.in_use
+                    is_saved: model.is_saved
+                    expanded: root.expandedBssid === model.bssid
+                    isLoading: root.loadingBssid === model.bssid
 
-                event.accepted = false;
-            }
-        }
-
-        displaced: Transition {
-            NumberAnimation {
-                properties: "x,y"
-                duration: 250
-                easing.type: Easing.OutCubic
-            }
-        }
-        add: Transition {
-            ParallelAnimation {
-                PropertyAnimation {
-                    property: "opacity"
-                    from: 0
-                    to: 1.0
-                    duration: 250
-                    easing.type: Easing.OutQuad
-                }
-                PropertyAnimation {
-                    property: "scale"
-                    from: 0.85
-                    to: 1.0
-                    duration: 300
-                    easing.type: Easing.OutBack
+                    onItemToggled: {
+                        if (root.loadingBssid === wifiItem.bssid)
+                            return;
+                        root.currentIndex = (root.currentIndex === index ? -1 : index);
+                        const newBssid = (root.currentIndex !== -1) ? wifiItem.bssid : "";
+                        root.expandedBssidSelected(newBssid);
+                    }
+                    onConnectClicked: (ssid, password) => root.connectClicked(ssid, password)
+                    onDisconnectClicked: ssid => root.disconnectClicked(ssid)
+                    onForgetClicked: ssid => root.forgetClicked(ssid)
                 }
             }
-        }
-        remove: Transition {
-            ParallelAnimation {
-                PropertyAnimation {
-                    property: "opacity"
-                    to: 0
-                    duration: 200
-                    easing.type: Easing.InQuad
-                }
-                PropertyAnimation {
-                    property: "scale"
-                    to: 0.85
-                    duration: 200
-                    easing.type: Easing.InCubic
-                }
-            }
-        }
-
-        delegate: WifiItem {
-            width: listView.width
-            ssid: model.ssid
-            bssid: model.bssid
-            signal: model.signal
-            security: model.security
-            in_use: model.in_use
-            is_saved: model.is_saved
-            expanded: root.expandedBssid === model.bssid
-            isLoading: root.loadingBssid === model.bssid
-
-            onItemToggled: {
-                if (root.loadingBssid === model.bssid)
-                    return;
-                listView.currentIndex = (listView.currentIndex === index ? -1 : index);
-                const newBssid = (listView.currentIndex !== -1) ? model.bssid : "";
-                root.expandedBssidSelected(newBssid);
-            }
-            onConnectClicked: (ssid, password) => root.connectClicked(ssid, password)
-            onDisconnectClicked: ssid => root.disconnectClicked(ssid)
-            onForgetClicked: ssid => root.forgetClicked(ssid)
         }
 
         Label {
-            anchors.centerIn: parent
-            visible: listView.model && listView.model.count === 0
+            width: contentColumn.width
+            horizontalAlignment: Text.AlignHCenter
+            topPadding: ThemeManager.selectedTheme.dimensions.spacingMedium
+            bottomPadding: ThemeManager.selectedTheme.dimensions.spacingMedium
+            visible: root.model && root.model.count === 0
             text: qsTr("Searching for networks ...")
             color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.7)
         }
