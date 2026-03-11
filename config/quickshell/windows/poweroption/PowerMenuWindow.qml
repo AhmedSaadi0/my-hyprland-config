@@ -76,6 +76,6 @@ PanelWindow {
     Component.onCompleted: {
         EventBus.on(Events.TOGGLE_POWER_MENU, function () {
             root.visible = !root.visible;
-        });
+        }, root);
     }
 }

@@ -174,7 +174,7 @@ PanelWindow {
         EventBus.on(Events.CLOSE_LEFTBAR, function () {
             isShown = false;
             EventBus.emit(Events.LEFT_MENU_IS_CLOSED);
-        });
+        }, root);
 
         EventBus.on(Events.OPEN_LEFTBAR, function (newIndex) {
             if (newIndex === -1) {
@@ -183,7 +183,7 @@ PanelWindow {
                 isShown = true;
                 EventBus.emit(Events.LEFT_MENU_IS_OPENED, newIndex);
             }
-        });
+        }, root);
     }
 
     Connections {

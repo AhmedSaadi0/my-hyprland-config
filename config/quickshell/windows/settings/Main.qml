@@ -38,7 +38,7 @@ Controls.ApplicationWindow {
     Component.onCompleted: {
         EventBus.on(Events.OPEN_SETTINGS, () => {
             root.visible = !root.visible;
-        });
+        }, root);
     }
 
     RowLayout {

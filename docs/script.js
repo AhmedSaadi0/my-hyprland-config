@@ -48,6 +48,11 @@ const translations = {
       "أكثر من مجرد قائمة تطبيقات. يوفر لك وضع الأوامر المتطور وخاصية جلب الخلفيات مباشرة.",
     tool_launcher_li1: "استخدم الرمز > للوصول لأوامر النظام السريعة.",
     tool_launcher_li2: "تكامل مع Wallhaven لجلب وتغيير الخلفيات مباشرة.",
+    tool_network_title: "إدارة الشبكة الكاملة ومراقبة الاستهلاك",
+    tool_network_desc:
+      "تحكم كامل بالشبكة من مكان واحد، مع مراقبة مباشرة لاستهلاك البيانات لكل تطبيق وتوثيق الحركة داخل سجل تاريخي واضح.",
+    tool_network_li1: "عرض الاستهلاك الفوري على مستوى كل تطبيق.",
+    tool_network_li2: "تسجيل الحركة في تبويب History للرجوع إليها لاحقًا.",
 
     // --- الصفحة الرئيسية: المميزات (Bento) ---
     why_1_title: "واجهة ذكية",
@@ -124,6 +129,8 @@ const translations = {
     rd_sys_li4: "مواقيت الصلاة والتاريخ الهجري",
     rd_sys_li5: "مدير البلوتوث وإعدادات الشاشة الكاملة",
     rd_sys_li6: "تحسين الكود: الانتقال إلى نظام EventBus",
+    rd_sys_li7:
+      "مراقبة تفصيلية للشبكة، تتضمن رصد حركة التطبيقات لحظياً وتوثيق استهلاكها للبيانات",
 
     // --- صفحة الوثائق (Docs) ---
     docs_sidebar_title: "دليل الوثائق",
@@ -278,6 +285,11 @@ Choose your language / اختر لغتك / Vyberte jazyk:
       "More than just an app list. It offers an advanced command mode and direct wallpaper fetching.",
     tool_launcher_li1: "Use the > symbol for quick system commands.",
     tool_launcher_li2: "Wallhaven integration to fetch wallpapers directly.",
+    tool_network_title: "Full Network Management and Usage Monitoring",
+    tool_network_desc:
+      "Manage networking from one place with live per-application data usage visibility and a clear historical activity log.",
+    tool_network_li1: "Live data usage view for each running application.",
+    tool_network_li2: "Traffic logging in the History tab for later review.",
 
     // --- Features (Bento) ---
     why_1_title: "Smart Interactions",
@@ -357,6 +369,8 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     rd_sys_li4: "Prayer Times & Hijri Date",
     rd_sys_li5: "Bluetooth Manager & Display Settings",
     rd_sys_li6: "Code Refactoring: Migration to EventBus",
+    rd_sys_li7:
+      "Detailed network monitoring, including real-time application traffic tracking and data usage logging",
 
     // --- Docs ---
     docs_sidebar_title: "Docs Guide",

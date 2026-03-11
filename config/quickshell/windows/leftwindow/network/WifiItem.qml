@@ -24,6 +24,7 @@ Item {
     property bool is_saved: false
     property bool expanded: false
     property bool isLoading: false
+    property int innerRadiusDiv: 4
 
     signal itemToggled
     signal connectClicked(string ssid, string password)
@@ -247,79 +248,83 @@ Item {
             }
         }
 
-        ColumnLayout {
-            id: controlsColumn
+        Item {
+            id: controlsWrapper
             Layout.fillWidth: true
-            Layout.maximumHeight: (root.expanded && !root.isLoading) ? implicitHeight : 0
-            visible: root.expanded && !root.isLoading
-            spacing: 12
+            Layout.preferredHeight: controlsColumn.implicitHeight * expandProgress
+            Layout.bottomMargin: (ThemeManager.selectedTheme.dimensions.spacingMedium + 5) * expandProgress
+            clip: true
+            opacity: expandProgress
+            visible: expandProgress > 0
 
-            Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.spacingMedium + 5
-            // anchors.topMargin: 10
-            // anchors.bottomMargin: 10
+            property real expandProgress: (root.expanded && !root.isLoading) ? 1 : 0
 
-            Behavior on visible {
+            Behavior on expandProgress {
                 NumberAnimation {
-                    properties: "opacity, scale"
-                    from: 0.0
-                    to: 1.0
                     duration: 250
                     easing.type: Easing.OutCubic
                 }
             }
-            scale: visible ? 1.0 : 0.8
-            opacity: visible ? 1.0 : 0.0
 
-            EditableField {
-                id: passwordField
-                Layout.fillWidth: true
-                placeholderText: qsTr("Password ... ")
-                echoMode: TextInput.Password
-                visible: root.security !== "None" && !root.in_use && !root.is_saved
-                font.pixelSize: 14
-                color: ThemeManager.selectedTheme.colors.onPrimary
-                placeholderTextColor: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.6)
-                background: Rectangle {
-                    color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
-                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                    border.color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.5)
-                    border.width: 1
-                }
-            }
+            ColumnLayout {
+                id: controlsColumn
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                spacing: 12
+                enabled: controlsWrapper.expandProgress > 0.99
 
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: 0
-
-                MButton {
+                EditableField {
+                    id: passwordField
                     Layout.fillWidth: true
-                    text: root.is_saved || root.in_use ? qsTr("Forget") : qsTr("Cancel")
-                    topRightRadius: 0
-                    bottomRightRadius: 0
-                    onClicked: {
-                        if (root.is_saved || root.in_use) {
-                            root.forgetClicked(root.ssid);
-                        } else {
-                            root.itemToggled();
-                        }
+                    placeholderText: qsTr("Password ... ")
+                    echoMode: TextInput.Password
+                    visible: root.security !== "None" && !root.in_use && !root.is_saved
+                    font.pixelSize: 14
+                    color: ThemeManager.selectedTheme.colors.onPrimary
+                    placeholderTextColor: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.6)
+                    background: Rectangle {
+                        color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.1)
+                        radius: ThemeManager.selectedTheme.dimensions.elementRadius
+                        border.color: ThemeManager.selectedTheme.colors.onPrimary.alpha(0.5)
+                        border.width: 1
                     }
                 }
 
-                MButton {
+                RowLayout {
                     Layout.fillWidth: true
-                    text: root.in_use ? qsTr("Disconnect") : qsTr("Connect")
-                    normalBackground: ThemeManager.selectedTheme.colors.primary.darker(1.2)
-                    normalForeground: ThemeManager.selectedTheme.colors.onPrimary
-                    topLeftRadius: 0
-                    bottomLeftRadius: 0
-                    onClicked: {
-                        if (root.in_use) {
-                            root.disconnectClicked(root.ssid);
-                        } else {
-                            root.connectClicked(root.ssid, passwordField.text);
+                    spacing: 3
+
+                    MButton {
+                        Layout.fillWidth: true
+                        text: root.is_saved || root.in_use ? qsTr("Forget") : qsTr("Cancel")
+                        topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / root.innerRadiusDiv
+                        bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / root.innerRadiusDiv
+                        onClicked: {
+                            if (root.is_saved || root.in_use) {
+                                root.forgetClicked(root.ssid);
+                            } else {
+                                root.itemToggled();
+                            }
                         }
                     }
-                    enabled: root.in_use || root.is_saved || root.security === "None" || (passwordField.visible && passwordField.text.length > 0)
+
+                    MButton {
+                        Layout.fillWidth: true
+                        text: root.in_use ? qsTr("Disconnect") : qsTr("Connect")
+                        normalBackground: ThemeManager.selectedTheme.colors.primary.darker(1.2)
+                        normalForeground: ThemeManager.selectedTheme.colors.onPrimary
+                        topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / root.innerRadiusDiv
+                        bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / root.innerRadiusDiv
+                        onClicked: {
+                            if (root.in_use) {
+                                root.disconnectClicked(root.ssid);
+                            } else {
+                                root.connectClicked(root.ssid, passwordField.text);
+                            }
+                        }
+                        enabled: root.in_use || root.is_saved || root.security === "None" || (passwordField.visible && passwordField.text.length > 0)
+                    }
                 }
             }
         }

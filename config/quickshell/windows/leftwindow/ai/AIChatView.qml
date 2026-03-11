@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Services
+import Quickshell.Io
 
 import "root:/themes"
 import "root:/components" // لاستدعاء SettingsComboBox

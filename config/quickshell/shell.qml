@@ -260,9 +260,9 @@ ShellRoot {
             Connections {
                 target: null
                 Component.onCompleted: {
-                    EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
-                        bottomLauncherPanel.toggle();
-                    });
+                EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
+                    bottomLauncherPanel.toggle();
+                }, shellRoot);
                 }
             }
 
