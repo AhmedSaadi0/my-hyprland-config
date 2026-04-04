@@ -9,7 +9,7 @@ ProcessTable {
     height: 120
     interval: 1000 * 60
     running: true
-    command: App.scripts.python.devicesTempCommand
+    command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "temps"]
     title: qsTr("Temp")
     value: ""
 

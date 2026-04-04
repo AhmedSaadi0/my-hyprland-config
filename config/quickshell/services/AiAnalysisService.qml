@@ -41,8 +41,17 @@ Singleton {
             ram: 0
         })
 
-    property var _topCpuCallbacks: []
-    property var _topRamCallbacks: []
+    property var _diagnosticCallbacks: ({
+            cpu: [],
+            ram: [],
+            temps: []
+        })
+    property var _diagnosticQueue: []
+    property string _activeDiagnosticAction: ""
+    property string _diagnosticStdoutText: ""
+    property string _diagnosticStderrText: ""
+    property int _diagnosticExitCode: 0
+    property int _diagnosticExitStatus: 0
 
     Connections {
         target: SystemService
@@ -266,50 +275,116 @@ Singleton {
     }
 
     function _collectTopCpuProcesses(callback) {
-        _topCpuCallbacks.push(callback);
-        if (!topCpuProc.running)
-            topCpuProc.running = true;
+        _enqueueDiagnosticsRequest("cpu", callback);
     }
 
     function _collectTopRamProcesses(callback) {
-        _topRamCallbacks.push(callback);
-        if (!topRamProc.running)
-            topRamProc.running = true;
+        _enqueueDiagnosticsRequest("ram", callback);
     }
 
     function _collectTopTempProcesses(callback) {
-        _collectTopCpuProcesses(function (cpuList) {
-            _collectTopRamProcesses(function (ramList) {
-                callback(_mergeTempProcessLists(cpuList, ramList));
-            });
+        _enqueueDiagnosticsRequest("temps", function (tempsData) {
+            callback(_buildTempProcessList(tempsData));
         });
     }
 
-    function _mergeTempProcessLists(cpuList, ramList) {
+    function _enqueueDiagnosticsRequest(action, callback) {
+        if (!_diagnosticCallbacks[action])
+            _diagnosticCallbacks[action] = [];
+
+        _diagnosticCallbacks[action].push(callback);
+
+        if (_activeDiagnosticAction === action || _diagnosticQueue.indexOf(action) !== -1)
+            return;
+
+        _diagnosticQueue.push(action);
+        _pumpDiagnosticsQueue();
+    }
+
+    function _pumpDiagnosticsQueue() {
+        if (_activeDiagnosticAction || !_diagnosticQueue.length)
+            return;
+
+        _activeDiagnosticAction = _diagnosticQueue.shift();
+        _diagnosticStdoutText = "";
+        _diagnosticStderrText = "";
+        _diagnosticExitCode = 0;
+        _diagnosticExitStatus = 0;
+        diagnosticsProc.command = [...App.scripts.python.systemDiagnosticsCommand, "--action", _activeDiagnosticAction];
+        diagnosticsProc.running = true;
+    }
+
+    function _defaultDiagnosticResult(action) {
+        return action === "temps" ? {} : [];
+    }
+
+    function _normalizeDiagnosticResult(action, data) {
+        if (!data || data.error) {
+            if (data && data.error)
+                console.error(`[AiAnalysisService] Diagnostics error for ${action}: ${data.error}`);
+            return _defaultDiagnosticResult(action);
+        }
+
+        if (action === "temps")
+            return typeof data === "object" ? data : {};
+
+        return Array.isArray(data) ? data : [];
+    }
+
+    function _finishDiagnosticsRequest(action, data) {
+        if (!action)
+            return;
+
+        const callbacks = _diagnosticCallbacks[action] || [];
+        _diagnosticCallbacks[action] = [];
+        _flushCallbacks(callbacks, _normalizeDiagnosticResult(action, data));
+        _activeDiagnosticAction = "";
+        _pumpDiagnosticsQueue();
+    }
+
+    function _buildTempProcessList(tempsData) {
         const combined = [];
 
-        for (let i = 0; i < (cpuList || []).length; i++) {
-            const proc = cpuList[i];
+        if (tempsData && tempsData.cpu_max_temp !== undefined && tempsData.cpu_max_temp !== null) {
             combined.push({
-                name: proc.name || "Unknown",
-                value: Math.round((proc.value || 0) * 100) / 100,
-                metric: "cpu"
+                name: "CPU package",
+                value: Math.round(Number(tempsData.cpu_max_temp) * 100) / 100,
+                metric: "temp"
             });
         }
 
-        for (let i = 0; i < (ramList || []).length; i++) {
-            const proc = ramList[i];
+        if (tempsData && tempsData.gpu_max_temp !== undefined && tempsData.gpu_max_temp !== null) {
             combined.push({
-                pid: proc.pid,
-                name: proc.name || "Unknown",
-                value: Math.round((proc.value || 0) * 100) / 100,
-                memory_usage_mb: proc.memory_usage_mb || 0,
-                metric: "ram"
+                name: "GPU",
+                value: Math.round(Number(tempsData.gpu_max_temp) * 100) / 100,
+                metric: "temp"
+            });
+        }
+
+        if (tempsData && tempsData.storage_max_temp !== undefined && tempsData.storage_max_temp !== null) {
+            combined.push({
+                name: "Storage",
+                value: Math.round(Number(tempsData.storage_max_temp) * 100) / 100,
+                metric: "temp"
             });
         }
 
         combined.sort((a, b) => (b.value || 0) - (a.value || 0));
-        return combined.slice(0, 10);
+        return combined;
+    }
+
+    function _readDiagnosticsOutput(action, rawText) {
+        const text = (rawText || "").toString().trim();
+        if (!text)
+            return _defaultDiagnosticResult(action);
+
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error(`[AiAnalysisService] Failed to parse diagnostics output for ${action}: ${e}`);
+            console.error(`[AiAnalysisService] Raw diagnostics output: ${text}`);
+            return _defaultDiagnosticResult(action);
+        }
     }
 
     function _currentTempsPayload() {
@@ -402,32 +477,41 @@ Singleton {
     }
 
     Process {
-        id: topCpuProc
-        command: App.scripts.python.topCpuUsageCommand
+        id: diagnosticsProc
 
         stdout: StdioCollector {
             onStreamFinished: {
-                try {
-                    root._flushCallbacks(root._topCpuCallbacks, JSON.parse(this.text.toString()));
-                } catch (e) {
-                    root._flushCallbacks(root._topCpuCallbacks, []);
-                }
+                root._diagnosticStdoutText = this.text.toString();
             }
         }
-    }
 
-    Process {
-        id: topRamProc
-        command: App.scripts.python.topRamUsageCommand
-
-        stdout: StdioCollector {
+        stderr: StdioCollector {
             onStreamFinished: {
-                try {
-                    root._flushCallbacks(root._topRamCallbacks, JSON.parse(this.text.toString()));
-                } catch (e) {
-                    root._flushCallbacks(root._topRamCallbacks, []);
-                }
+                root._diagnosticStderrText = this.text.toString();
             }
+        }
+
+        onExited: (exitCode, exitStatus) => {
+            root._diagnosticExitCode = exitCode;
+            root._diagnosticExitStatus = exitStatus;
+        }
+
+        onRunningChanged: {
+            if (running)
+                return;
+
+            const action = root._activeDiagnosticAction;
+
+            if (root._diagnosticStderrText.trim().length)
+                console.error(`[AiAnalysisService] Diagnostics stderr for ${action}: ${root._diagnosticStderrText.trim()}`);
+
+            if (root._diagnosticExitCode !== 0) {
+                console.error(`[AiAnalysisService] Diagnostics process failed for ${action} with exit code ${root._diagnosticExitCode} (${root._diagnosticExitStatus})`);
+                root._finishDiagnosticsRequest(action, root._defaultDiagnosticResult(action));
+                return;
+            }
+
+            root._finishDiagnosticsRequest(action, root._readDiagnosticsOutput(action, root._diagnosticStdoutText));
         }
     }
 

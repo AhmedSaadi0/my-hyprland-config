@@ -155,46 +155,92 @@ Singleton {
     }
 
     Process {
-        id: cpuProc
-        command: App.scripts.bash.cpuCommand
+        id: hardwareMonitorProc
+        command: App.scripts.python.systemMonitorCommand // مسار سكربت البايثون الموحد
         running: true
 
         stdout: SplitParser {
             onRead: data => {
-                const val = parseFloat(data.trim());
-                if (isNaN(val))
-                    return;
+                try {
+                    var metrics = JSON.parse(data.trim());
 
-                const prev = root._lastCpuUsage;
-                root.cpuUsage = val / 100.0;
-                root.cpuSampled(prev, root.cpuUsage);
-                root._lastCpuUsage = root.cpuUsage;
+                    if (metrics.error) {
+                        console.warn("[SystemService] Monitor script error:", metrics.error);
+                        return;
+                    }
+
+                    // --- 1. تحديث المعالج وإرسال الإشارة ---
+                    var prevCpu = root.cpuUsage;
+                    root.cpuUsage = metrics.cpu / 100.0;
+                    root.cpuSampled(prevCpu, root.cpuUsage);
+
+                    // --- 2. تحديث الرام وإرسال الإشارة ---
+                    var prevRam = root.ramUsage;
+                    root.ramUsage = metrics.ram / 100.0;
+                    root.ramSampled(prevRam, root.ramUsage);
+
+                    // --- 3. تحديث الحرارة وإرسال الإشارة ---
+                    var prevTemp = root.cpuMaxTemp;
+                    root.cpuMaxTemp = metrics.temp;
+                    root.temperatureSampled(prevTemp, root.cpuMaxTemp);
+
+                    // (اختياري) تنبيهات الحمل الزائد التلقائية
+                    if (root.cpuUsage >= (App.cpuHighLoadThreshold / 100.0)) {
+                        root.cpuAlert(root.cpuUsage);
+                    }
+                    if (root.ramUsage >= (App.ramHighLoadThreshold / 100.0)) {
+                        root.ramAlert(root.ramUsage);
+                    }
+                } catch (e) {
+                    console.error("[SystemService] Error parsing JSON:", e, "Data:", data);
+                }
             }
         }
     }
 
-    Process {
-        id: ramProc
-        command: App.scripts.bash.ramCommand
-        running: true
+    // Process {
+    //     id: cpuProc
+    //     command: App.scripts.bash.cpuCommand
+    //     running: true
+    //
+    //     stdout: SplitParser {
+    //         onRead: data => {
+    //             console.info("CPU USAGE -> " + root.cpuUsage);
+    //             const val = parseFloat(data.trim());
+    //             if (isNaN(val))
+    //                 return;
+    //
+    //             const prev = root._lastCpuUsage;
+    //             root.cpuUsage = val / 100.0;
+    //             root.cpuSampled(prev, root.cpuUsage);
+    //             root._lastCpuUsage = root.cpuUsage;
+    //             console.info("CPU USAGE -> " + root.cpuUsage);
+    //         }
+    //     }
+    // }
 
-        stdout: SplitParser {
-            onRead: data => {
-                const val = parseFloat(data.trim());
-                if (isNaN(val))
-                    return;
-
-                const prev = root._lastRamUsage;
-                root.ramUsage = val / 100.0;
-                root.ramSampled(prev, root.ramUsage);
-                root._lastRamUsage = root.ramUsage;
-            }
-        }
-    }
+    // Process {
+    //     id: ramProc
+    //     command: App.scripts.bash.ramCommand
+    //     running: true
+    //
+    //     stdout: SplitParser {
+    //         onRead: data => {
+    //             const val = parseFloat(data.trim());
+    //             if (isNaN(val))
+    //                 return;
+    //
+    //             const prev = root._lastRamUsage;
+    //             root.ramUsage = val / 100.0;
+    //             root.ramSampled(prev, root.ramUsage);
+    //             root._lastRamUsage = root.ramUsage;
+    //         }
+    //     }
+    // }
 
     Process {
         id: tempProc
-        command: App.scripts.python.devicesTempCommand
+        command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "temps"]
         running: true
 
         stdout: SplitParser {
