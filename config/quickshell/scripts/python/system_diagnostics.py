@@ -22,14 +22,14 @@ except ImportError:
 # ==========================================
 
 
-def get_top_cpu(limit=10):
+def get_top_cpu(limit=20):
     processes_data = []
     num_logical_cores = psutil.cpu_count(logical=True)
     if num_logical_cores is None or num_logical_cores == 0:
         num_logical_cores = 1
 
     primed_procs = {}
-    for proc in psutil.process_iter(["pid", "name"]):
+    for proc in psutil.process_iter(["pid", "name", "cmdline"]):
         try:
             if not proc.is_running():
                 continue
@@ -51,8 +51,14 @@ def get_top_cpu(limit=10):
             cpu_usage = proc.cpu_percent(interval=None)
             if cpu_usage is not None:
                 normalized_cpu_usage = cpu_usage / num_logical_cores
+                cmdline = proc.info.get("cmdline") or []
                 processes_data.append(
-                    {"name": proc.info["name"], "value": normalized_cpu_usage}
+                    {
+                        "pid": pid,
+                        "name": proc.info.get("name", "Unknown"),
+                        "value": round(normalized_cpu_usage, 2),
+                        "cmdline": " ".join(cmdline[:8]),
+                    }
                 )
         except (
             psutil.NoSuchProcess,

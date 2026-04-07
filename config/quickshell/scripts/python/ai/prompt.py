@@ -268,7 +268,10 @@ You will receive a JSON object containing:
   "threshold": number,
   "timestamp": "ISO8601 string",
   "top_processes": [
-    {"name": "proc", "value": number, "memory_usage_mb": number?}
+    {"pid": number, "name": "proc", "value": number, "cmdline": "string?"}
+  ],
+  "temp_devices": [
+    {"name": "sensor/device", "value": number, "category": "cpu|gpu|storage", "metric": "temp", "source": "string?"}
   ],
   "temps": {
     "cpu_max": number,
@@ -280,6 +283,7 @@ You will receive a JSON object containing:
 ### 3. DEEP ANALYSIS LOGIC (CRITICAL)
 - **Avoid Superficiality**: Do not say "CPU is high". Say "Python script likely entered an infinite loop".
 - **Correlation**: Correlate Temperature with Frequency. If Temp > 85°C and CPU High -> Mention Thermal Throttling Risk.
+- **Temperature Events**: For `event_type = TEMP`, use `top_processes` to identify which CPU-heavy process is likely generating the heat, and use `temp_devices` to identify which hardware sensor is hottest.
 - **Process Behavior**:
   - Sudden Spike (0 to 100%): Likely user action or script trigger.
   - Gradual Rise: Likely Memory Leak or Background Service accumulation.

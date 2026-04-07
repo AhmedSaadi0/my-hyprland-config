@@ -126,8 +126,10 @@ Singleton {
         const delta = currMax - prevMax;
         _lastSpikeAt.temp = Date.now();
 
-        _collectTopTempProcesses(function (topList) {
-            _createSpikeEvent("TEMP", Math.round(currMax), Math.round(prevMax), Math.round(delta), _tempHighThreshold, topList, _currentTempsPayload());
+        _collectTopCpuProcesses(function (topList) {
+            _collectTempDiagnostics(function (tempsData) {
+                _createSpikeEvent("TEMP", Math.round(currMax), Math.round(prevMax), Math.round(delta), _tempHighThreshold, topList, _tempsSummaryFromData(tempsData), _buildTempDevicesList(tempsData));
+            });
         });
     }
 
@@ -204,7 +206,7 @@ Singleton {
         });
     }
 
-    function _createSpikeEvent(type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride) {
+    function _createSpikeEvent(type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride, tempDevicesOverride) {
         const eventId = `evt_${Date.now()}_${_eventCounter++}`;
         const severity = type === "TEMP" ? (currentValue >= _tempHighThreshold + 10 ? "CRITICAL" : "WARNING") : (currentValue >= thresholdValue ? "WARNING" : "NORMAL");
 
@@ -229,7 +231,7 @@ Singleton {
         });
 
         _trimEventsModel();
-        _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride);
+        _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride, tempDevicesOverride);
     }
 
     function _trimEventsModel() {
@@ -237,39 +239,41 @@ Singleton {
             eventsModel.remove(eventsModel.count - 1);
     }
 
-    function _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride) {
+    function _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride, tempDevicesOverride) {
         if (type === "CPU") {
             if (topListOverride && topListOverride.length) {
-                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, null);
+                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, null, []);
                 return;
             }
 
             _collectTopCpuProcesses(function (topList) {
-                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, null);
+                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, null, []);
             });
             return;
         }
 
         if (type === "RAM") {
             if (topListOverride && topListOverride.length) {
-                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, null);
+                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, null, []);
                 return;
             }
 
             _collectTopRamProcesses(function (topList) {
-                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, null);
+                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, null, []);
             });
             return;
         }
 
         if (type === "TEMP") {
-            if (topListOverride && topListOverride.length) {
-                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride || _currentTempsPayload());
+            if (topListOverride && topListOverride.length && tempDevicesOverride) {
+                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride || _currentTempsPayload(), tempDevicesOverride);
                 return;
             }
 
-            _collectTopTempProcesses(function (topList) {
-                _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, tempsOverride || _currentTempsPayload());
+            _collectTopCpuProcesses(function (topList) {
+                _collectTempDiagnostics(function (tempsData) {
+                    _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride && topListOverride.length ? topListOverride : topList, tempsOverride || _tempsSummaryFromData(tempsData), tempDevicesOverride || _buildTempDevicesList(tempsData));
+                });
             });
         }
     }
@@ -282,10 +286,8 @@ Singleton {
         _enqueueDiagnosticsRequest("ram", callback);
     }
 
-    function _collectTopTempProcesses(callback) {
-        _enqueueDiagnosticsRequest("temps", function (tempsData) {
-            callback(_buildTempProcessList(tempsData));
-        });
+    function _collectTempDiagnostics(callback) {
+        _enqueueDiagnosticsRequest("temps", callback);
     }
 
     function _enqueueDiagnosticsRequest(action, callback) {
@@ -342,35 +344,45 @@ Singleton {
         _pumpDiagnosticsQueue();
     }
 
-    function _buildTempProcessList(tempsData) {
+    function _buildTempDevicesList(tempsData) {
         const combined = [];
 
-        if (tempsData && tempsData.cpu_max_temp !== undefined && tempsData.cpu_max_temp !== null) {
-            combined.push({
-                name: "CPU package",
-                value: Math.round(Number(tempsData.cpu_max_temp) * 100) / 100,
-                metric: "temp"
-            });
-        }
-
-        if (tempsData && tempsData.gpu_max_temp !== undefined && tempsData.gpu_max_temp !== null) {
-            combined.push({
-                name: "GPU",
-                value: Math.round(Number(tempsData.gpu_max_temp) * 100) / 100,
-                metric: "temp"
-            });
-        }
-
-        if (tempsData && tempsData.storage_max_temp !== undefined && tempsData.storage_max_temp !== null) {
-            combined.push({
-                name: "Storage",
-                value: Math.round(Number(tempsData.storage_max_temp) * 100) / 100,
-                metric: "temp"
-            });
-        }
+        _appendTempDevices(combined, tempsData ? tempsData.cpu_temps : [], "cpu");
+        _appendTempDevices(combined, tempsData ? tempsData.gpu_temps : [], "gpu");
+        _appendTempDevices(combined, tempsData ? tempsData.storage_temps : [], "storage");
 
         combined.sort((a, b) => (b.value || 0) - (a.value || 0));
         return combined;
+    }
+
+    function _appendTempDevices(target, entries, category) {
+        if (!entries || !entries.length)
+            return;
+
+        for (let i = 0; i < entries.length; i++) {
+            const entry = entries[i];
+            if (!entry || entry.temperature === undefined || entry.temperature === null)
+                continue;
+
+            target.push({
+                name: entry.label || `${category}_${i + 1}`,
+                value: Math.round(Number(entry.temperature) * 100) / 100,
+                metric: "temp",
+                category: category,
+                source: entry.source || ""
+            });
+        }
+    }
+
+    function _tempsSummaryFromData(tempsData) {
+        if (!tempsData)
+            return _currentTempsPayload();
+
+        return {
+            cpu_max: tempsData.cpu_max_temp !== undefined && tempsData.cpu_max_temp !== null ? tempsData.cpu_max_temp : SystemService.cpuMaxTemp,
+            gpu_max: tempsData.gpu_max_temp !== undefined && tempsData.gpu_max_temp !== null ? tempsData.gpu_max_temp : SystemService.gpuMaxTemp,
+            storage_max: tempsData.storage_max_temp !== undefined && tempsData.storage_max_temp !== null ? tempsData.storage_max_temp : SystemService.storageMaxTemp
+        };
     }
 
     function _readDiagnosticsOutput(action, rawText) {
@@ -395,7 +407,15 @@ Singleton {
         };
     }
 
-    function _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, temps) {
+    function _safePrettyJson(value) {
+        try {
+            return JSON.stringify(value, null, 2);
+        } catch (e) {
+            return `[unserializable: ${e}]`;
+        }
+    }
+
+    function _sendSpikeAi(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topList, temps, tempDevices) {
         const payload = {
             event_type: type,
             current_value: currentValue,
@@ -404,8 +424,12 @@ Singleton {
             threshold: thresholdValue,
             timestamp: new Date().toISOString(),
             top_processes: topList || [],
+            temp_devices: tempDevices || [],
             temps: temps || _currentTempsPayload()
         };
+
+        console.info(`[AiAnalysisService] Sending spike analysis for ${type} event ${eventId}`);
+        console.info(`[AiAnalysisService] Spike payload:\n${_safePrettyJson(payload)}`);
 
         AiService.sendRequest(App.scripts.python.callSpikeAnalysisAi, ["--message", JSON.stringify(payload)], function (data) {
             root._applySpikeAnalysis(eventId, data);

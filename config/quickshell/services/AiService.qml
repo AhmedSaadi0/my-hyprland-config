@@ -24,6 +24,44 @@ Singleton {
         _processQueue();
     }
 
+    function _safePrettyJson(value) {
+        try {
+            return JSON.stringify(value, null, 2);
+        } catch (e) {
+            return `[unserializable: ${e}]`;
+        }
+    }
+
+    function _extractMessageArg(args) {
+        if (!args || !args.length)
+            return "";
+
+        const messageIndex = args.indexOf("--message");
+        if (messageIndex === -1 || messageIndex + 1 >= args.length)
+            return "";
+
+        return args[messageIndex + 1];
+    }
+
+    function _logOutgoingRequest(request, fullCmd) {
+        console.info(`[AiService] Dispatching AI request`);
+        console.info(`[AiService] Command: ${_safePrettyJson(fullCmd)}`);
+
+        const rawMessage = _extractMessageArg(request.args);
+        if (!rawMessage) {
+            console.info(`[AiService] Args: ${_safePrettyJson(request.args || [])}`);
+            return;
+        }
+
+        console.info(`[AiService] Raw --message payload:\n${rawMessage}`);
+
+        try {
+            console.info(`[AiService] Parsed --message payload:\n${JSON.stringify(JSON.parse(rawMessage), null, 2)}`);
+        } catch (e) {
+            console.warn(`[AiService] --message payload is not valid JSON: ${e}`);
+        }
+    }
+
     function _processQueue() {
         if (_isBusy || _queue.length === 0)
             return;
@@ -40,7 +78,7 @@ Singleton {
         if (request.args)
             fullCmd = fullCmd.concat(request.args);
 
-        // console.info(`[AiService] command to send ${fullCmd}`);
+        _logOutgoingRequest(request, fullCmd);
 
         aiProcess.command = fullCmd;
         aiProcess.running = true;
