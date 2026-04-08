@@ -16,10 +16,10 @@ Singleton {
     property ListModel eventsModel: ListModel {}
     property int _eventCounter: 0
 
-    property int _spikeCooldownMs: 60000
+    property int _spikeCooldownMs: App.resourceAlertCooldownMs
     property int _tempSpikeCooldownMs: 300000
-    property int _procSpikeCooldownMs: 300000
-    property int _procAlertCooldownMs: 300000
+    property int _procSpikeCooldownMs: App.resourceAlertCooldownMs
+    property int _procAlertCooldownMs: App.resourceAlertCooldownMs
 
     property real _tempHighThreshold: 85
 
@@ -57,23 +57,23 @@ Singleton {
         target: SystemService
 
         function onCpuSampled(previousValue, currentValue) {
-            root._checkCpuSpike(previousValue, currentValue);
+            return;
         }
 
         function onRamSampled(previousValue, currentValue) {
-            root._checkRamSpike(previousValue, currentValue);
+            return;
         }
 
         function onTemperatureSampled(previousMax, currentMax) {
             root._checkTempSpike(previousMax, currentMax);
         }
 
-        function onCpuAlert(value) {
-            root._emitCpuAlert(value);
+        function onCpuAlert(value, isReminder, activeForMs) {
+            root._emitCpuAlert(value, isReminder, activeForMs);
         }
 
-        function onRamAlert(value) {
-            root._emitRamAlert(value);
+        function onRamAlert(value, isReminder, activeForMs) {
+            root._emitRamAlert(value, isReminder, activeForMs);
         }
     }
 
@@ -148,7 +148,7 @@ Singleton {
             return "";
 
         const top = topList[0];
-        if (kind === "ram" && top.pid !== undefined && top.pid !== null)
+        if (top.pid !== undefined && top.pid !== null)
             return `${top.pid}:${top.name || ""}`;
 
         return top.name || "";
@@ -184,25 +184,25 @@ Singleton {
         _lastAlertAt[kind] = now;
     }
 
-    function _emitCpuAlert(value) {
+    function _emitCpuAlert(value, isReminder, activeForMs) {
         _collectTopCpuProcesses(function (topList) {
             const procKey = _getTopProcessKey("cpu", topList);
             if (_isAlertOnCooldown("cpu", procKey))
                 return;
 
             _markAlert("cpu", procKey);
-            _createSpikeEvent("CPU", Math.round(value * 100), Math.round(value * 100), 0, App.cpuHighLoadThreshold, topList, null);
+            _createSpikeEvent("CPU", Math.round(value * 100), Math.round(value * 100), isReminder ? Math.round((activeForMs || 0) / 1000) : 0, App.cpuHighLoadThreshold, topList, null);
         });
     }
 
-    function _emitRamAlert(value) {
+    function _emitRamAlert(value, isReminder, activeForMs) {
         _collectTopRamProcesses(function (topList) {
             const procKey = _getTopProcessKey("ram", topList);
             if (_isAlertOnCooldown("ram", procKey))
                 return;
 
             _markAlert("ram", procKey);
-            _createSpikeEvent("RAM", Math.round(value * 100), Math.round(value * 100), 0, App.ramHighLoadThreshold, topList, null);
+            _createSpikeEvent("RAM", Math.round(value * 100), Math.round(value * 100), isReminder ? Math.round((activeForMs || 0) / 1000) : 0, App.ramHighLoadThreshold, topList, null);
         });
     }
 
@@ -541,11 +541,11 @@ Singleton {
 
     NibrasShellShortcut {
         name: "testHighCpu"
-        onPressed: SystemService.cpuAlert(0.5)
+        onPressed: SystemService.cpuAlert(0.5, false, 0)
     }
 
     NibrasShellShortcut {
         name: "testHighRam"
-        onPressed: SystemService.ramAlert(0.50)
+        onPressed: SystemService.ramAlert(0.50, false, 0)
     }
 }

@@ -18,6 +18,7 @@ Singleton {
 
     readonly property var players: Mpris.players.values
     property int activeIndex: 0
+    property int timerDelayInSeconds: 5
     readonly property var activePlayer: (players.length > 0) ? players[activeIndex < players.length ? activeIndex : 0] : null
     readonly property bool hasPlayer: activePlayer !== null
     readonly property bool isPlaying: activePlayer ? activePlayer.isPlaying : false
@@ -75,7 +76,7 @@ Singleton {
     // ============================================================
     Timer {
         id: analysisDebouncer
-        interval: 1000 * 3
+        interval: 1000 * root.timerDelayInSeconds
         repeat: false
         onTriggered: {
             root.processCurrentSong(false); // false تعني هذا ليس تعليق استئناف

@@ -47,6 +47,7 @@ QtObject {
 
     property int cpuHighLoadThreshold: 85
     property int ramHighLoadThreshold: 85
+    property int resourceAlertCooldownMs: 60000
 
     property int topBarActiveWindowMinWidth: 200
     property int topBarActiveWindowMaxWidth: 400
@@ -190,6 +191,8 @@ QtObject {
             store.cpuHighLoadThreshold = data.cpuHighLoadThreshold;
         if (data.ramHighLoadThreshold !== undefined)
             store.ramHighLoadThreshold = data.ramHighLoadThreshold;
+        if (data.resourceAlertCooldownMs !== undefined)
+            store.resourceAlertCooldownMs = data.resourceAlertCooldownMs;
 
         store.settingsLoaded();
         console.info("Config reloaded successfully.");

@@ -78,6 +78,7 @@ Singleton {
 
     property alias cpuHighLoadThreshold: root.config.cpuHighLoadThreshold
     property alias ramHighLoadThreshold: root.config.ramHighLoadThreshold
+    property alias resourceAlertCooldownMs: root.config.resourceAlertCooldownMs
 
     // Shell layout configs
     property alias useBottomLauncher: root.config.useBottomLauncher
