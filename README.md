@@ -30,10 +30,19 @@ I didn't build this interface as a product, but simply because I genuinely enjoy
 
 ## ✨ Features / المميزات
 
+- **🧠 AI System Daemon:** A highly advanced background service that silently monitors CPU, RAM, and Temp spikes. It runs autonomous diagnostics to catch resource-hungry processes and generates AI root-cause analysis without spamming notifications (Smart Cooldowns).
 - **💊 Smart Capsule:** An AI-powered interactive island for weather, media, and system stats.
 - **🎨 Deep Theming:** Full Material 3 dynamic coloring + support for GIF/Video wallpapers.
-- **🛠️ Control Hub:** A built-in Settings App to manage everything visually.
-- **🚀 Performance:** Built on **Quickshell** & **Hyprland** for speed and fluidity.
+- **🛠️ Control Hub:** A built-in Settings App to manage everything visually without touching config files.
+- **🚀 Performance:** Built on **Quickshell** & **Hyprland** for speed and fluidity, with asynchronous architecture to prevent UI freezing.
+
+---
+
+- **🧠 مراقب النظام الذكي:** "جهاز عصبي" يعمل في الخلفية بصمت لمراقبة استهلاك الموارد والحرارة. يكتشف البرامج المسببة للضغط تلقائياً ويقدم تقرير تشخيصي فوري بالذكاء الاصطناعي (Root-cause analysis) مع نظام ذكي لمنع التنبيهات المزعجة والمكررة.
+- **💊 الكبسولة الذكية:** جزيرة تفاعلية مدعومة بالـ AI لعرض الطقس، الميديا، وحالة النظام.
+- **🎨 تخصيص عميق:** دعم كامل لألوان Material 3 الديناميكية، وخلفيات الفيديو والـ GIF.
+- **🛠️ مركز التحكم:** تطبيق إعدادات مدمج للتحكم بكل شيء بصرياً دون الحاجة لتعديل ملفات التكوين.
+- **🚀 الأداء:** مبنية على **Quickshell** و **Hyprland** للسرعة والسلاسة، مع بنية برمجية غير متزامنة (Asynchronous) تمنع تشنج الواجهة.
 
 ## ⚡ Quick Install / التثبيت السريع
 
