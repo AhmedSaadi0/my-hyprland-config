@@ -50,13 +50,19 @@ Item {
     property string currentIconTheme: (ThemeManager.selectedTheme && ThemeManager.selectedTheme.systemSettings) ? ThemeManager.selectedTheme.systemSettings.themeIcons : ""
     property var themedIconPaths: ({})
     property bool pendingResolve: false
+    property string pendingIconClass: currentClass
+    property string displayedIconClass: currentClass
+    property string displayedIconSource: ""
 
     function resolveActiveIconSource(windowClass, iconThemeName, resolvedPaths) {
         void iconThemeName;
-        void resolvedPaths;
 
         let iconKey = Helper.iconNameFromAppId(windowClass);
-        return Helper.resolveThemedIcon(iconKey, themedIconPaths);
+        let themedSource = Helper.resolveThemedIcon(iconKey, resolvedPaths);
+        if (themedSource && themedSource !== "")
+            return themedSource;
+
+        return Helper.toImageSource(Quickshell.iconPath(iconKey, "application-x-executable"));
     }
 
     function collectRequestedIconNames() {
@@ -64,12 +70,30 @@ Item {
         let iconKey = Helper.iconNameFromAppId(currentClass);
         if (iconKey && iconKey !== "")
             unique[iconKey] = true;
+        let displayedIconKey = Helper.iconNameFromAppId(displayedIconClass);
+        if (displayedIconKey && displayedIconKey !== "")
+            unique[displayedIconKey] = true;
         unique["application-x-executable"] = true;
         return Object.keys(unique).sort();
     }
 
     function requestIconResolve() {
         iconResolveDebounce.restart();
+    }
+
+    function queueDisplayedIconUpdate() {
+        pendingIconClass = currentClass;
+        iconChangeDebounce.restart();
+        requestIconResolve();
+    }
+
+    function applyDisplayedIcon(windowClass) {
+        const nextClass = windowClass || "Active Window";
+        const nextSource = resolveActiveIconSource(nextClass, currentIconTheme, themedIconPaths);
+
+        displayedIconClass = nextClass;
+        if (nextSource && nextSource !== "")
+            displayedIconSource = nextSource;
     }
 
     // الحسابات الديناميكية للعرض
@@ -87,12 +111,23 @@ Item {
         }
     }
 
-    onCurrentClassChanged: requestIconResolve()
+    onCurrentClassChanged: queueDisplayedIconUpdate()
     onCurrentIconThemeChanged: {
         themedIconPaths = ({});
         requestIconResolve();
     }
-    Component.onCompleted: requestIconResolve()
+    onThemedIconPathsChanged: applyDisplayedIcon(displayedIconClass)
+    Component.onCompleted: {
+        applyDisplayedIcon(currentClass);
+        requestIconResolve();
+    }
+
+    Timer {
+        id: iconChangeDebounce
+        interval: 300
+        repeat: false
+        onTriggered: applyDisplayedIcon(pendingIconClass)
+    }
 
     Timer {
         id: iconResolveDebounce
@@ -220,9 +255,7 @@ Item {
                     anchors.fill: parent
                     anchors.margins: 2
                     anchors.leftMargin: 4
-                    // fillMode: Image.PreserveAspectFit
-                    // source: Quickshell.iconPath(root.iconName, "application-x-executable")
-                    source: root.resolveActiveIconSource(root.currentClass, root.currentIconTheme, root.themedIconPaths)
+                    source: root.displayedIconSource
 
                     onSourceChanged: iconAnim.restart()
                     asynchronous: true

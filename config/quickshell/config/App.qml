@@ -78,6 +78,7 @@ Singleton {
 
     property alias cpuHighLoadThreshold: root.config.cpuHighLoadThreshold
     property alias ramHighLoadThreshold: root.config.ramHighLoadThreshold
+    property alias resourceAlertCooldownMs: root.config.resourceAlertCooldownMs
 
     // Shell layout configs
     property alias useBottomLauncher: root.config.useBottomLauncher
@@ -221,9 +222,8 @@ Singleton {
         readonly property QtObject python: QtObject {
             // Monotoring
             readonly property string batteryInfo: root.pythonScriptsPath + "/battery_info.py"
-            readonly property string devicesTemp: root.pythonScriptsPath + "/devices_temp.py"
-            readonly property string topCpuUsage: root.pythonScriptsPath + "/top_cpu_usage.py"
-            readonly property string topRamUsage: root.pythonScriptsPath + "/top_ram_usage.py"
+            readonly property string systemDiagnostics: root.pythonScriptsPath + "/system_diagnostics.py"
+            readonly property string systemMonitor: root.pythonScriptsPath + "/system_monitor.py"
 
             // Wallpaper & coloring
             // To get the wallpapers in a single folder
@@ -251,9 +251,9 @@ Singleton {
 
             // Commands
             readonly property var batteryInfoCommand: [pythonPath, batteryInfo]
-            readonly property var devicesTempCommand: [pythonPath, devicesTemp]
-            readonly property var topCpuUsageCommand: [pythonPath, topCpuUsage]
-            readonly property var topRamUsageCommand: [pythonPath, topRamUsage]
+            readonly property var systemDiagnosticsCommand: [pythonPath, systemDiagnostics]
+            readonly property var systemMonitorCommand: [pythonPath, systemMonitor]
+
             readonly property var dynamicM3Command: [pythonPath, dynamicM3]
             readonly property var scanWallpapersCommand: [pythonPath, scanWallpapers, "--themes_cache_dir", root.themeCacheFolderPath, "--shell_dir", root.mainPath]
             readonly property var rembgOverylayWallpaperCommand: [pythonPath, rembgOverylayWallpaper]
@@ -272,17 +272,15 @@ Singleton {
             readonly property var callSpikeAnalysisAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "spike_analyze", "--json_mode", "--user_persona", root.systemPersona, "--model", root.systemAiModel]
             readonly property var callWeatherAi: [...initialAiCommand, "--api_key", (root.weatherAiApiKey !== "" ? root.weatherAiApiKey : root.aiApiKey), "--preset", "weather", "--user_persona", root.weatherPersona, "--model", root.weatherAiModel]
             readonly property var callMusicAi: [...initialAiCommand, "--api_key", (root.musicAiApiKey !== "" ? root.musicAiApiKey : root.aiApiKey), "--preset", "music", "--user_persona", root.musicPersona, "--model", root.musicAiModel]
-    readonly property var callIdleCapsuleAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "idle_capsule", "--json_mode", "--model", root.systemAiModel]
-    readonly property var callIdleCapsuleHoverBulkAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_bulk"]
-    readonly property var callIdleCapsuleHoverStartupAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_startup"]
-    readonly property var callIdleCapsuleHoverFreshAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_fresh"]
+            readonly property var callIdleCapsuleAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "idle_capsule", "--json_mode", "--model", root.systemAiModel]
+            readonly property var callIdleCapsuleHoverBulkAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_bulk"]
+            readonly property var callIdleCapsuleHoverStartupAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_startup"]
+            readonly property var callIdleCapsuleHoverFreshAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_fresh"]
             readonly property var callTodoAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "todo", "--json_mode", "--user_persona", root.todoPersona, "--model", root.systemAiModel]
         }
 
         readonly property QtObject bash: QtObject {
             // Files
-            readonly property string cpuUsage: root.bashScriptsPath + "/cpu_usage.sh"
-            readonly property string ramUsage: root.bashScriptsPath + "/ram_usage.sh"
             readonly property string internet: root.bashScriptsPath + "/internet.sh"
             readonly property string deviceTempreture: root.bashScriptsPath + "/temp.sh"
             readonly property string quickActions: root.bashScriptsPath + "/quick_actions.sh"
@@ -291,8 +289,6 @@ Singleton {
 
             // Commands
             readonly property var internetCommand: ["sh", "-c", `${internet} ${root.networkMonitor}`]
-            readonly property var cpuCommand: ["sh", "-c", cpuUsage]
-            readonly property var ramCommand: ["sh", "-c", ramUsage]
             readonly property var deviceTempretureCommand: ["sh", "-c", deviceTempreture]
 
             function downloadWallpaperCommand(destPath, url) {

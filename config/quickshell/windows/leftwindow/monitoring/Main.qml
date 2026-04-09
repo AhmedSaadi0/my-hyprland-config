@@ -36,13 +36,13 @@ BaseMenuView {
                 id: cpuTable
                 Layout.fillWidth: true
                 title: "Cpu Usage"
-                command: App.scripts.python.topCpuUsageCommand
+                command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "cpu"]
             }
             ProcessTable {
                 id: ramTable
                 Layout.fillWidth: true
                 title: "Mem Usage"
-                command: App.scripts.python.topRamUsageCommand
+                command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "ram"]
             }
         }
 

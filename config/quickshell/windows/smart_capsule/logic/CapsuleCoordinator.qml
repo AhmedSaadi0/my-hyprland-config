@@ -91,11 +91,11 @@ Singleton {
         function onBootAnalysisStatusChanged() {
             root.handleBootAnalysisStatus();
         }
-        function onCpuAlert(value) {
-            root.handleResourceAlert("CPU", value, App.playCpuAlarmSound);
+        function onCpuAlert(value, isReminder, activeForMs) {
+            root.handleResourceAlert("CPU", value, App.playCpuAlarmSound, isReminder, activeForMs);
         }
-        function onRamAlert(value) {
-            root.handleResourceAlert("RAM", value, App.playRamAlarmSound);
+        function onRamAlert(value, isReminder, activeForMs) {
+            root.handleResourceAlert("RAM", value, App.playRamAlarmSound, isReminder, activeForMs);
         }
         function onCurrentLayoutChanged() {
             root.handleLayoutChanged();
@@ -522,7 +522,19 @@ Singleton {
         });
     }
 
-    function handleResourceAlert(type, value, playTone) {
+    function _formatAlertDuration(activeForMs) {
+        const totalSeconds = Math.max(0, Math.round(activeForMs / 1000));
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+
+        if (minutes <= 0)
+            return `${seconds}s`;
+        if (seconds === 0)
+            return `${minutes}m`;
+        return `${minutes}m ${seconds}s`;
+    }
+
+    function handleResourceAlert(type, value, playTone, isReminder, activeForMs) {
         var pct = Math.round(value * 100);
 
         var isCritical = pct >= 95;
@@ -533,19 +545,22 @@ Singleton {
 
         if (type === "CPU") {
             icon = "";
-            title = "High CPU Load";
-            emotion = isCritical ? "shocked" : "focused";
+            title = isReminder ? "CPU Still High" : "High CPU Load";
+            emotion = isReminder ? "thinking" : (isCritical ? "shocked" : "focused");
         } else {
             icon = "";
-            title = "High Memory Usage";
-            emotion = isCritical ? "sad" : "confused";
+            title = isReminder ? "Memory Still High" : "High Memory Usage";
+            emotion = isReminder ? "thinking" : (isCritical ? "sad" : "confused");
         }
 
         var stateType = isCritical ? "critical" : "warning";
         var priority = isCritical ? C.CRITICAL : C.WARNING;
         var colors = getColorsForState(stateType);
 
-        console.warn(`Coordinator: ${type} Alert! Usage: ${pct}%`);
+        const durationText = isReminder ? root._formatAlertDuration(activeForMs) : "";
+        const message = isReminder ? `${title}: ${pct}% for ${durationText}` : `${title}: ${pct}%`;
+
+        console.warn(`Coordinator: ${type} Alert! Usage: ${pct}%${isReminder ? `, active for ${durationText}` : ""}`);
 
         root.updateEyes(emotion, root._resourceAlertTimeout);
 
@@ -553,7 +568,7 @@ Singleton {
             priority: priority,
             source: C.SRC_SYSTEM,
             icon: icon,
-            text: `${title}: ${pct}%`,
+            text: message,
             progress: value,
             withProgress: true,
             changeH: false,
@@ -561,7 +576,7 @@ Singleton {
             bgColor1: colors.bg1,
             bgColor2: colors.bg2,
             fgColor: colors.fg,
-            playTone: playTone
+            playTone: isReminder ? false : playTone
         });
     }
 

@@ -31,6 +31,7 @@ BaseGeneralSettings {
     property bool localEnableHighRamAlert: false
     property bool localPlayRamAlarmSound: false
     property int localRamThreshold: 90
+    property int localResourceAlertCooldownMinutes: 1
 
     // Internal
     ListModel {
@@ -51,6 +52,7 @@ BaseGeneralSettings {
         localEnableHighRamAlert = App.enableHighRamAlert;
         localPlayRamAlarmSound = App.playRamAlarmSound;
         localRamThreshold = App.ramHighLoadThreshold || 90;
+        localResourceAlertCooldownMinutes = Math.max(1, Math.round((App.resourceAlertCooldownMs || 60000) / 60000));
 
         // تحديث قائمة الشبكات عند الفتح
         refreshNetworkList();
@@ -68,7 +70,8 @@ BaseGeneralSettings {
             "cpuHighLoadThreshold": localCpuThreshold,
             "enableHighRamAlert": localEnableHighRamAlert,
             "playRamAlarmSound": localPlayRamAlarmSound,
-            "ramHighLoadThreshold": localRamThreshold
+            "ramHighLoadThreshold": localRamThreshold,
+            "resourceAlertCooldownMs": localResourceAlertCooldownMinutes * 60000
         };
     }
 
@@ -361,6 +364,50 @@ BaseGeneralSettings {
                     font.family: theme.typography.bodyFont
                     color: theme.colors.subtleText
                     Layout.preferredWidth: 40
+                    horizontalAlignment: Text.AlignRight
+                }
+            }
+
+            Rectangle {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                Layout.topMargin: 8
+                Layout.bottomMargin: 4
+                implicitHeight: 1
+                color: theme.colors.subtleText
+                opacity: 0.22
+            }
+
+            Controls.Label {
+                text: qsTr("Repeat Reminder Cooldown")
+                font.bold: true
+                font.family: theme.typography.bodyFont
+                font.pixelSize: theme.typography.medium
+                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+            }
+            Controls.Label {
+                text: qsTr("Controls how often repeated alerts are shown while usage stays high.")
+                font.family: theme.typography.bodyFont
+                font.pixelSize: theme.typography.small
+                color: theme.colors.subtleText
+                wrapMode: Text.WordWrap
+                Layout.fillWidth: true
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                Controls.Slider {
+                    Layout.fillWidth: true
+                    from: 1
+                    to: 15
+                    stepSize: 1
+                    value: page.localResourceAlertCooldownMinutes
+                    onMoved: page.localResourceAlertCooldownMinutes = value
+                }
+                Text {
+                    text: page.localResourceAlertCooldownMinutes + " min"
+                    font.family: theme.typography.bodyFont
+                    color: theme.colors.subtleText
+                    Layout.preferredWidth: 55
                     horizontalAlignment: Text.AlignRight
                 }
             }

@@ -84,7 +84,8 @@ Item {
     Flickable {
         id: scrollArea
         // anchors.top: appBar.bottom
-        anchors.top: headerContainer.visible ? headerContainer.bottom : appBar.bottom
+        // anchors.top: headerContainer.visible ? headerContainer.bottom : appBar.bottom
+        anchors.top: headerContainer.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

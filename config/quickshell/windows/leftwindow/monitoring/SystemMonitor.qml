@@ -72,7 +72,7 @@ Item {
     readonly property color bootStatusBgColor: root.theme.colors.leftMenuBgColorV3
 
     // --- Data Model ---
-    readonly property var eventModel: SystemService.eventsModel
+    readonly property var eventModel: AiAnalysisService.eventsModel
 
     // --- Main Container ---
     Rectangle {

@@ -10,7 +10,7 @@ TopbarCircularProgress {
     id: tempUsage
     icon: ""
     command: App.scripts.bash.deviceTempretureCommand
-    updateInterval: 1000 * 10
+    updateInterval: 1000 * 4
 
     readonly property color fgNormal: ThemeManager.selectedTheme.colors.tertiary
     readonly property color bgNormal: ThemeManager.selectedTheme.colors.tertiary.alpha(0.4)

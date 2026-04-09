@@ -240,6 +240,13 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     org_msf: "دعم الفرق الطبية",
     // --- Footer ---
     footer_pages: "NibrasShell Project © " + new Date().getFullYear(),
+    tool_daemon_title: "رقيب نظام ذكي ومستقل (System Daemon)",
+    tool_daemon_desc:
+      'نبراس شِل لا يعرض لك الأرقام فقط، بل يمتلك "جهازاً عصبياً" يعمل في الخلفية. يقوم بمراقبة استهلاك المعالج، الذاكرة، والحرارة بصمت. وعند حدوث أي ضغط مفاجئ (Spike)، يقوم تلقائياً بالتقاط البرامج المسببة للمشكلة وتحليلها عبر الذكاء الاصطناعي لتشخيص العطل وإعطائك الحلول.',
+    tool_daemon_li1:
+      "تحليل جذري (Root-Cause Analysis) لاستهلاك الموارد والحرارة.",
+    tool_daemon_li2: "نظام تنبيهات ذكي (Smart Cooldowns) يمنع الإزعاج المتكرر.",
+    tool_daemon_li3: "طابور مهام (Queue System) يمنع تجميد النظام أثناء الفحص.",
   },
 
   en: {
@@ -472,6 +479,14 @@ Choose an option: 2
     org_msf: "Support medical teams",
     // --- Footer ---
     footer_pages: "NibrasShell Project © " + new Date().getFullYear(),
+    tool_daemon_title: "Autonomous & Smart System Daemon",
+    tool_daemon_desc:
+      "NibrasShell doesn't just show you numbers; it has a 'nervous system' running in the background. It silently monitors CPU, Memory, and Thermals. Upon any sudden spike, it automatically captures the culprit processes and analyzes them via AI to diagnose the issue and provide solutions.",
+    tool_daemon_li1: "Root-Cause Analysis for resource and thermal spikes.",
+    tool_daemon_li2:
+      "Smart alert system (Cooldowns) to prevent notification spam.",
+    tool_daemon_li3:
+      "Task Queue system to prevent UI freezing during diagnostics.",
   },
 };
 
