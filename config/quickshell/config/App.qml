@@ -86,6 +86,8 @@ Singleton {
     property alias firstDayOfWeek: root.config.firstDayOfWeek
     property alias menuStyle: root.config.menuStyle
 
+    property alias favoriteApps: root.config.favoriteApps
+
     property alias topBarActiveWindowMinWidth: root.config.topBarActiveWindowMinWidth
     property alias topBarActiveWindowMaxWidth: root.config.topBarActiveWindowMaxWidth
 

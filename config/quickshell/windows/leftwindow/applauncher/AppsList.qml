@@ -7,6 +7,7 @@ import QtQuick.Controls
 import "root:/themes"
 import "root:/components"
 import "root:/windows/bottomlauncher"
+import "root:/config"
 
 Item {
     id: rootList
@@ -125,12 +126,15 @@ Item {
 
                 AppItem {
                     anchors.fill: parent
-                    visible: !modelData.isHeader
-                    desktopEntity: modelData.appData
-                    isSelected: rootList.selectedIndex === index
+                    visible: modelData && !modelData.isHeader
+                    desktopEntity: modelData && modelData.appData ? modelData.appData : null
+                    isSelected: modelData && !modelData.isHeader && rootList.selectedIndex === index
+                    isFavorite: (modelData && modelData.appData) ? App.favoriteApps.includes(modelData.appData.name) : false
 
                     onItemClicked: {
-                        rootList.appClicked(index, modelData.appData);
+                        if (modelData && modelData.appData) {
+                            rootList.appClicked(index, modelData.appData);
+                        }
                     }
                 }
             }

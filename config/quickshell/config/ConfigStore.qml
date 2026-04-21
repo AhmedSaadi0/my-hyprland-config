@@ -64,6 +64,8 @@ QtObject {
     // Default menu style changed to floating per user request
     property string menuStyle: C.FLOATING
 
+    property var favoriteApps: []
+
     property var _fileView: FileView {
         id: fileWatcher
         path: Qt.resolvedUrl(store.configPath)
@@ -114,6 +116,8 @@ QtObject {
             store.useBottomLauncher = data.useBottomLauncher;
         if (data.bottomLauncherWidth !== undefined)
             store.bottomLauncherWidth = data.bottomLauncherWidth;
+        if (data.favoriteApps !== undefined)
+            store.favoriteApps = data.favoriteApps;
 
         // -------------------------------------------------------
         // الموقع والطقس

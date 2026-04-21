@@ -122,9 +122,7 @@ MouseArea {
                     }
                 } catch (e) {
                     console.warn("[TrayItem] Failed to parse icon resolver JSON:", e);
-                    resolvedIconSource = Helper.isDirectImageSource(iconValue)
-                        ? Helper.toImageSource(iconValue)
-                        : Helper.toImageSource(Quickshell.iconPath(iconKey || iconValue, "application-x-executable"));
+                    resolvedIconSource = Helper.isDirectImageSource(iconValue) ? Helper.toImageSource(iconValue) : Helper.toImageSource(Quickshell.iconPath(iconKey || iconValue, "application-x-executable"));
                     console.info("[TrayItem] resolver JSON parse error -> fallback. iconKey:", iconKey, "iconValue:", iconValue, "resolved:", resolvedIconSource);
                 }
             }
@@ -135,9 +133,7 @@ MouseArea {
             if (exitCode !== 0) {
                 const iconValue = root.lastIconValue || "";
                 const iconKey = root.lastRequestedIconKey || "";
-                resolvedIconSource = Helper.isDirectImageSource(iconValue)
-                    ? Helper.toImageSource(iconValue)
-                    : Helper.toImageSource(Quickshell.iconPath(iconKey || iconValue, "application-x-executable"));
+                resolvedIconSource = Helper.isDirectImageSource(iconValue) ? Helper.toImageSource(iconValue) : Helper.toImageSource(Quickshell.iconPath(iconKey || iconValue, "application-x-executable"));
                 console.info("[TrayItem] resolver exited with code:", exitCode, "iconKey:", iconKey, "iconValue:", iconValue, "resolved:", resolvedIconSource);
             }
         }

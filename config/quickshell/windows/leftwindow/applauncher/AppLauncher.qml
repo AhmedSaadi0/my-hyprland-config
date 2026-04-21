@@ -1,5 +1,4 @@
 // windows/leftwindow/applauncher/AppLauncher.qml
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -18,28 +17,191 @@ BaseMenuView {
     menuIcon: "󰀻"
     showPrimaryAction: false
 
-    // ضمان أن القائمة نفسها تأخذ الطول الكامل المتاح لها
+    // Ensure the menu itself takes the full available height and width
     Layout.fillWidth: true
     Layout.fillHeight: true
 
     readonly property var dims: ThemeManager.selectedTheme.dimensions
 
-    // --- Logic & Properties ---
-    property bool isCommandMode: CommandsRegistry.isCommandMode(appsHeader.searchText)
-    property string commandText: CommandsRegistry.getCommandText(appsHeader.searchText)
-    property var filteredCommands: isCommandMode ? CommandsRegistry.filterCommands(commandText) : []
+    // --- Base Launcher Instance ---
+    BaseLauncher {
+        id: baseLauncher
 
-    property string activeCommandView: ""
-    property int selectedAppIndex: -1
-    property int selectedCommandIndex: -1
+        // Managed centrally in BaseLauncher via searchText
+        selectedCategory: categoryFilter.selectedCategory
 
-    property int currentViewIndex: {
-        if (activeCommandView === "wallpaper")
-            return 2;
-        if (isCommandMode)
-            return 1;
-        return 0;
+        // Override shared functions with implementations
+        function toggleFavorite(appData) {
+            const appId = appData.name;
+            const index = App.favoriteApps.indexOf(appId);
+            if (index === -1) {
+                App.favoriteApps.push(appId);
+            } else {
+                App.favoriteApps.splice(index, 1);
+            }
+            App.updateConfig("favoriteApps", App.favoriteApps);
+        }
+
+        function isFavorite(appData) {
+            const appId = appData.name;
+            return App.favoriteApps.indexOf(appId) !== -1;
+        }
+
+        function executeCommand(cmd) {
+            if (cmd.enabled === false)
+                return;
+            if (cmd.isAction) {
+                if (cmd.action === "openSettings") {
+                    EventBus.emit(Events.OPEN_SETTINGS);
+                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                } else if (cmd.action === "nextWallpaper") {
+                    ThemeManager.switchToNextWallpaper();
+                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                } else if (cmd.action === "previousWallpaper") {
+                    ThemeManager.switchToPreviousWallpaper();
+                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                }
+            } else if (cmd.view !== "") {
+                activeCommandView = cmd.view;
+            }
+        }
+
+        function launchApp(command, workingDirectory) {
+            clearSearchText.stop();
+            Quickshell.execDetached({
+                command: command,
+                workingDirectory: workingDirectory
+            });
+            clearSearchText.start();
+            EventBus.emit(Events.CLOSE_LEFTBAR);
+        }
+
+        function ensureAppSelection() {
+            if (baseLauncher.isCommandMode || baseLauncher.activeCommandView !== "") {
+                baseLauncher.selectedAppIndex = -1;
+                return;
+            }
+            if (!isSelectableAppIndex(baseLauncher.selectedAppIndex)) {
+                baseLauncher.selectedAppIndex = firstSelectableAppIndex();
+            }
+        }
+
+        function ensureCommandSelection() {
+            if (!baseLauncher.isCommandMode || baseLauncher.filteredCommands.length === 0) {
+                baseLauncher.selectedCommandIndex = -1;
+                return;
+            }
+            if (baseLauncher.selectedCommandIndex < 0 || baseLauncher.selectedCommandIndex >= baseLauncher.filteredCommands.length) {
+                baseLauncher.selectedCommandIndex = 0;
+            }
+        }
+
+        function moveSelection(dir) {
+            if (baseLauncher.isCommandMode) {
+                moveCommandSelection(dir);
+                return;
+            }
+            if (baseLauncher.activeCommandView !== "")
+                return;
+            if (baseLauncher.filteredAppsModel.values.length === 0)
+                return;
+            let idx = baseLauncher.selectedAppIndex;
+            if (idx < 0)
+                idx = dir > 0 ? 0 : baseLauncher.filteredAppsModel.values.length - 1;
+            else
+                idx = Math.max(0, Math.min(baseLauncher.filteredAppsModel.values.length - 1, idx + dir));
+            baseLauncher.selectedAppIndex = idx;
+        }
+
+        function moveCommandSelection(dir) {
+            if (baseLauncher.filteredCommands.length === 0)
+                return;
+            let idx = baseLauncher.selectedCommandIndex;
+            if (idx < 0)
+                idx = dir > 0 ? 0 : baseLauncher.filteredCommands.length - 1;
+            else
+                idx = Math.max(0, Math.min(baseLauncher.filteredCommands.length - 1, idx + dir));
+            baseLauncher.selectedCommandIndex = idx;
+        }
+
+        function firstEnabledCommandIndex(startIdx) {
+            if (baseLauncher.filteredCommands.length === 0)
+                return -1;
+            let idx = Math.max(0, Math.min(baseLauncher.filteredCommands.length - 1, startIdx));
+            for (let i = idx; i < baseLauncher.filteredCommands.length; i++) {
+                if (baseLauncher.filteredCommands[i].enabled !== false)
+                    return i;
+            }
+            for (let i = idx - 1; i >= 0; i--) {
+                if (baseLauncher.filteredCommands[i].enabled !== false)
+                    return i;
+            }
+            return -1;
+        }
+
+        function activateSelection() {
+            if (baseLauncher.isCommandMode) {
+                activateCommandSelection();
+                return;
+            }
+            if (baseLauncher.activeCommandView !== "")
+                return;
+            let idx = baseLauncher.selectedAppIndex;
+            if (idx < 0)
+                idx = 0;
+            if (idx < 0 || idx >= baseLauncher.filteredAppsModel.values.length)
+                return;
+            const app = baseLauncher.filteredAppsModel.values[idx];
+            if (!app)
+                return;
+            baseLauncher.launchApp(app.command, app.workingDirectory);
+        }
+
+        function activateCommandSelection() {
+            if (baseLauncher.filteredCommands.length === 0)
+                return;
+            let idx = baseLauncher.selectedCommandIndex >= 0 ? baseLauncher.selectedCommandIndex : 0;
+            idx = firstEnabledCommandIndex(idx);
+            if (idx === -1)
+                return;
+            baseLauncher.executeCommand(baseLauncher.filteredCommands[idx]);
+        }
+
+        function resetState() {
+            appsHeader.searchText = "";
+            baseLauncher.searchText = "";
+            baseLauncher.activeCommandView = "";
+            baseLauncher.selectedAppIndex = -1;
+            baseLauncher.selectedCommandIndex = -1;
+        }
+
+        function doGainFocus() {
+            forceActiveFocus();
+            focusTimer.start();
+        }
+
+        Timer {
+            id: focusTimer
+            interval: 10
+            repeat: false
+            onTriggered: appsHeader.forceSearchFocus()
+        }
+
+        Timer {
+            id: clearSearchText
+            interval: 100
+            repeat: false
+            onTriggered: {
+                appsHeader.searchText = "";
+                baseLauncher.searchText = "";
+                baseLauncher.activeCommandView = "";
+            }
+        }
     }
+
+    // ==========================================================================
+    // Original AppLauncher Specific Logic and UI
+    // ==========================================================================
 
     // --- Header Section ---
     headerContent: AppsHeader {
@@ -47,15 +209,20 @@ BaseMenuView {
         width: root.width
 
         onSearchTextChanged: {
-            Qt.callLater(root.ensureCommandSelection);
-            Qt.callLater(root.ensureAppSelection);
+            // Sync to source of truth
+            baseLauncher.searchText = appsHeader.searchText;
+            Qt.callLater(baseLauncher.ensureCommandSelection);
+            Qt.callLater(baseLauncher.ensureAppSelection);
         }
 
-        onMoveSelection: dir => root.moveSelection(dir)
-        onActivateSelection: root.activateSelection()
+        onMoveSelection: dir => baseLauncher.moveSelection(dir)
+        onActivateSelection: baseLauncher.activateSelection()
         onEscapePressed: {
-            if (activeCommandView !== "") {
-                exitCommandView();
+            if (baseLauncher.activeCommandView !== "") {
+                baseLauncher.activeCommandView = "";
+                appsHeader.searchText = "";
+                baseLauncher.searchText = "";
+                appsHeader.forceSearchFocus();
             }
         }
     }
@@ -66,16 +233,14 @@ BaseMenuView {
         Layout.fillWidth: true
         Layout.fillHeight: true
 
-        // --- الإصلاح هنا لكسر الـ Binding loop وإظهار التطبيقات ---
-        // في حال فشل Layout.fillHeight، نضمن وجود ارتفاع مبدئي يمنع انهياره للصفر
         Layout.preferredHeight: root.height > 150 ? root.height - 150 : 500
-        implicitHeight: 0 // يمنع الـ Layout الأب من الاعتماد على هذا العنصر لحساب ارتفاعه
+        implicitHeight: 0
 
         Layout.leftMargin: root.dims.menuWidgetsMargin
         Layout.rightMargin: root.dims.menuWidgetsMargin
         Layout.bottomMargin: root.dims.menuWidgetsMargin
 
-        currentIndex: root.currentViewIndex
+        currentIndex: baseLauncher.currentViewIndex
         interactive: false
         clip: true
         orientation: Qt.Horizontal
@@ -83,23 +248,23 @@ BaseMenuView {
         // Page 0: App List
         AppsList {
             id: appsList
-            listModel: processedModel.values
-            selectedIndex: root.selectedAppIndex
+            listModel: baseLauncher.filteredAppsModel.values
+            selectedIndex: baseLauncher.selectedAppIndex
 
-            onCategoryChanged: Qt.callLater(root.ensureAppSelection)
+            onCategoryChanged: Qt.callLater(baseLauncher.ensureAppSelection)
             onAppClicked: (index, appData) => {
-                root.selectedAppIndex = index;
-                root.launchSelectedApp(appData.command, appData.workingDirectory);
+                baseLauncher.selectedAppIndex = index;
+                baseLauncher.launchApp(appData.command, appData.workingDirectory);
             }
         }
 
         // Page 1: Command List
         CommandsList {
             id: commandsList
-            listModel: root.filteredCommands
-            selectedIndex: root.selectedCommandIndex
+            listModel: baseLauncher.filteredCommands
+            selectedIndex: baseLauncher.selectedCommandIndex
 
-            onCommandClicked: cmdData => root.executeCommand(cmdData)
+            onCommandClicked: cmdData => baseLauncher.executeCommand(cmdData)
         }
 
         // Page 2: Wallpaper Selector
@@ -109,11 +274,17 @@ BaseMenuView {
                 anchors.fill: parent
 
                 onWallpaperSelected: path => {
-                    root.exitCommandView();
+                    baseLauncher.activeCommandView = "";
+                    appsHeader.searchText = "";
+                    baseLauncher.searchText = "";
+                    appsHeader.forceSearchFocus();
                     EventBus.emit(Events.CLOSE_LEFTBAR);
                 }
                 onCloseRequested: {
-                    root.exitCommandView();
+                    baseLauncher.activeCommandView = "";
+                    appsHeader.searchText = "";
+                    baseLauncher.searchText = "";
+                    appsHeader.forceSearchFocus();
                 }
             }
         }
@@ -123,237 +294,49 @@ BaseMenuView {
     Keys.onPressed: event => {
         if (event.text && !appsHeader.activeFocus) {
             appsHeader.appendText(event.text);
+            // Manually sync since appendText is called
+            baseLauncher.searchText = appsHeader.searchText;
             focusTimer.start();
             event.accepted = true;
         }
     }
 
-    onIsCommandModeChanged: {
-        if (!isCommandMode && activeCommandView !== "") {
-            activeCommandView = "";
-        }
-        ensureCommandSelection();
-        ensureAppSelection();
-    }
-
     onVisibleChanged: {
         if (!visible)
-            resetState();
-        else
-            focusTimer.start();
+            baseLauncher.resetState();
     }
 
-    // --- Timers & Models ---
-    Timer {
-        id: clearSearchText
-        interval: 100
-        repeat: false
-        onTriggered: root.resetState()
-    }
-
-    Timer {
-        id: focusTimer
-        interval: 10
-        onTriggered: appsHeader.forceSearchFocus()
-    }
-
-    ScriptModel {
-        id: processedModel
-        values: {
-            if (root.isCommandMode || root.activeCommandView !== "")
-                return [];
-
-            const searchText = appsHeader.searchText.toLowerCase();
-            const selectedCat = appsList.selectedCategory;
-
-            const sortedApps = [...DesktopEntries.applications.values].filter(app => app && app.name && app.noDisplay !== true).sort((a, b) => a.name.localeCompare(b.name)).filter(app => {
-                if (selectedCat !== "") {
-                    const appCats = app.categories || [];
-                    if (!appCats.some(c => c.toLowerCase().includes(selectedCat.toLowerCase())))
-                        return false;
-                }
-
-                if (searchText === "")
-                    return true;
-
-                return app.name.toLowerCase().includes(searchText) || (app.comment || "").toLowerCase().includes(searchText) || (app.genericName || "").toLowerCase().includes(searchText) || (app.categories || []).some(cat => cat.toLowerCase().includes(searchText));
-            });
-
-            let finalList = [];
-            let currentLetter = "";
-
-            for (let i = 0; i < sortedApps.length; i++) {
-                const app = sortedApps[i];
-                const firstLetter = app.name.charAt(0).toUpperCase();
-
-                if (firstLetter !== currentLetter) {
-                    currentLetter = firstLetter;
-                    finalList.push({
-                        isHeader: true,
-                        letter: currentLetter
-                    });
-                }
-                finalList.push({
-                    isHeader: false,
-                    appData: app
-                });
-            }
-            return finalList;
-        }
-    }
-
-    // --- Functions ---
-    function executeCommand(cmd) {
-        if (cmd.enabled === false)
-            return;
-        if (cmd.isAction) {
-            if (cmd.action === "openSettings") {
-                EventBus.emit(Events.OPEN_SETTINGS);
-                EventBus.emit(Events.CLOSE_LEFTBAR);
-            } else if (cmd.action === "nextWallpaper") {
-                ThemeManager.switchToNextWallpaper();
-                EventBus.emit(Events.CLOSE_LEFTBAR);
-            } else if (cmd.action === "previousWallpaper") {
-                ThemeManager.switchToPreviousWallpaper();
-                EventBus.emit(Events.CLOSE_LEFTBAR);
-            }
-        } else if (cmd.view !== "") {
-            root.activeCommandView = cmd.view;
-        }
-    }
-
-    function launchSelectedApp(command, workingDirectory) {
-        clearSearchText.stop();
-        Quickshell.execDetached({
-            command: command,
-            workingDirectory: workingDirectory
-        });
-        clearSearchText.start();
-        EventBus.emit(Events.CLOSE_LEFTBAR);
-    }
-
-    function exitCommandView() {
-        activeCommandView = "";
-        appsHeader.searchText = "";
-        appsHeader.forceSearchFocus();
-    }
-
-    function resetState() {
-        appsHeader.searchText = "";
-        activeCommandView = "";
-        appsList.selectedCategory = "";
-        selectedAppIndex = -1;
-        selectedCommandIndex = -1;
+    Item {
+        id: categoryFilter
+        // dummy for mapping, or you can add real logic if needed
+        property string selectedCategory: ""
     }
 
     function isSelectableAppIndex(idx) {
-        return idx >= 0 && idx < processedModel.values.length && !processedModel.values[idx].isHeader;
+        return idx >= 0 && idx < baseLauncher.filteredAppsModel.values.length;
     }
 
     function firstSelectableAppIndex() {
-        for (let i = 0; i < processedModel.values.length; i++) {
-            if (isSelectableAppIndex(i))
-                return i;
-        }
-        return -1;
+        return baseLauncher.filteredAppsModel.values.length > 0 ? 0 : -1;
     }
 
-    function lastSelectableAppIndex() {
-        for (let i = processedModel.values.length - 1; i >= 0; i--) {
-            if (isSelectableAppIndex(i))
-                return i;
-        }
-        return -1;
-    }
-
-    function nextSelectableAppIndex(start, dir) {
-        let i = start + dir;
-        while (i >= 0 && i < processedModel.values.length) {
-            if (isSelectableAppIndex(i))
-                return i;
-            i += dir;
-        }
-        return -1;
-    }
-
-    function ensureAppSelection() {
-        if (root.isCommandMode || root.activeCommandView !== "") {
-            selectedAppIndex = -1;
-            return;
-        }
-        if (!isSelectableAppIndex(selectedAppIndex)) {
-            selectedAppIndex = firstSelectableAppIndex();
-        }
-    }
-
-    function ensureCommandSelection() {
-        if (!root.isCommandMode || root.filteredCommands.length === 0) {
-            selectedCommandIndex = -1;
-            return;
-        }
-        if (selectedCommandIndex < 0 || selectedCommandIndex >= root.filteredCommands.length) {
-            selectedCommandIndex = 0;
-        }
-    }
-
-    function moveSelection(dir) {
-        if (root.isCommandMode) {
-            if (root.filteredCommands.length === 0)
-                return;
-            let idx = selectedCommandIndex;
-            if (idx < 0)
-                idx = dir > 0 ? 0 : root.filteredCommands.length - 1;
-            else
-                idx = Math.max(0, Math.min(root.filteredCommands.length - 1, idx + dir));
-            selectedCommandIndex = idx;
-            return;
-        }
-        if (root.activeCommandView !== "")
-            return;
-
-        let idx = selectedAppIndex;
-        if (idx < 0)
-            idx = dir > 0 ? firstSelectableAppIndex() : lastSelectableAppIndex();
-        else
-            idx = nextSelectableAppIndex(idx, dir);
-
-        if (idx !== -1)
-            selectedAppIndex = idx;
-    }
-
-    function activateSelection() {
-        if (root.isCommandMode) {
-            if (root.filteredCommands.length === 0)
-                return;
-            let idx = selectedCommandIndex >= 0 ? selectedCommandIndex : 0;
-            let targetIdx = -1;
-            for (let i = idx; i < root.filteredCommands.length; i++) {
-                if (root.filteredCommands[i].enabled !== false) {
-                    targetIdx = i;
-                    break;
-                }
+    Connections {
+        target: baseLauncher
+        function onIsCommandModeChanged() {
+            if (!baseLauncher.isCommandMode && baseLauncher.activeCommandView !== "") {
+                baseLauncher.activeCommandView = "";
             }
-            if (targetIdx === -1) {
-                for (let i = idx - 1; i >= 0; i--) {
-                    if (root.filteredCommands[i].enabled !== false) {
-                        targetIdx = i;
-                        break;
-                    }
-                }
-            }
-            if (targetIdx !== -1)
-                root.executeCommand(root.filteredCommands[targetIdx]);
-            return;
+            baseLauncher.ensureCommandSelection();
+            baseLauncher.ensureAppSelection();
         }
+    }
 
-        if (root.activeCommandView !== "")
-            return;
-
-        let idx = selectedAppIndex < 0 ? firstSelectableAppIndex() : selectedAppIndex;
-        if (idx !== -1) {
-            const item = processedModel.values[idx];
-            if (!item.isHeader)
-                root.launchSelectedApp(item.appData.command, item.appData.workingDirectory);
+    // Forward the appLaunched signal from baseLauncher
+    Connections {
+        target: baseLauncher
+        function onAppLaunched() {
+            // In Left App Launcher, we normally close the bar when an app is launched
+            EventBus.emit(Events.CLOSE_LEFTBAR);
         }
     }
 }

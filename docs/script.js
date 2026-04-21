@@ -125,11 +125,12 @@ const translations = {
 
     rd_sys_li1: "مؤشر اللغة، البطارية، وأوضاع الطاقة",
     rd_sys_li2: "مدير الحافظة وقائمة المهام",
-    rd_sys_li3: "ودجت الملاحظات السريعة والتطبيقات المفضلة",
-    rd_sys_li4: "مواقيت الصلاة والتاريخ الهجري",
-    rd_sys_li5: "مدير البلوتوث وإعدادات الشاشة الكاملة",
-    rd_sys_li6: "تحسين الكود: الانتقال إلى نظام EventBus",
-    rd_sys_li7:
+    rd_sys_li3: "ودجت الملاحظات السريعة",
+    rd_sys_li4: "قائمة التطبيقات المفضلة",
+    rd_sys_li5: "مواقيت الصلاة والتاريخ الهجري",
+    rd_sys_li6: "مدير البلوتوث وإعدادات الشاشة الكاملة",
+    rd_sys_li7: "تحسين الكود: الانتقال إلى نظام EventBus",
+    rd_sys_li8:
       "مراقبة تفصيلية للشبكة، تتضمن رصد حركة التطبيقات لحظياً وتوثيق استهلاكها للبيانات",
 
     // --- صفحة الوثائق (Docs) ---
@@ -372,11 +373,12 @@ Choose your language / اختر لغتك / Vyberte jazyk:
 
     rd_sys_li1: "Indicators: Language, Battery, Power Profiles",
     rd_sys_li2: "Clipboard Manager & Todo List",
-    rd_sys_li3: "Widgets: Quick Notes & Favorite Apps",
-    rd_sys_li4: "Prayer Times & Hijri Date",
-    rd_sys_li5: "Bluetooth Manager & Display Settings",
-    rd_sys_li6: "Code Refactoring: Migration to EventBus",
-    rd_sys_li7:
+    rd_sys_li3: "Widgets: Quick Notes",
+    rd_sys_li4: "Favorite Apps List",
+    rd_sys_li5: "Prayer Times & Hijri Date",
+    rd_sys_li6: "Bluetooth Manager & Display Settings",
+    rd_sys_li7: "Code Refactoring: Migration to EventBus",
+    rd_sys_li8:
       "Detailed network monitoring, including real-time application traffic tracking and data usage logging",
 
     // --- Docs ---

@@ -328,10 +328,14 @@ Singleton {
 
     function wifiLiveUsageCommand({
         limit = 8,
-        wifiInterface = Config.App.networkMonitor
+        wifiInterface = Config.App.networkMonitor,
+        persist = true
     }) {
         const pythonCommand = Config.App.scripts.python.liveUsageCommand;
-        return [...pythonCommand, "--limit", `${limit}`, "--interface", `${wifiInterface}`];
+        let fullCommand = [...pythonCommand, "--limit", `${limit}`, "--interface", `${wifiInterface}`];
+        if (!persist)
+            fullCommand.push("--no-persist");
+        return fullCommand;
     }
 
     function wifiLiveUsageSummaryCommand({

@@ -34,16 +34,7 @@ def parse_nethogs_process(proc_field):
 
 
 def parse_nethogs_output(text):
-    # Keep the latest complete cycle (closer to real-time than "max ever in run").
-    last_cycle = defaultdict(
-        lambda: {
-            "name": "Unknown",
-            "user": "",
-            "connections_count": 0,
-            "rx_rate_bps": 0,
-            "tx_rate_bps": 0,
-        }
-    )
+    # Keep the latest cycle for live UI, but aggregate all cycles for history persistence.
     current_cycle = defaultdict(
         lambda: {
             "name": "Unknown",
@@ -53,7 +44,44 @@ def parse_nethogs_output(text):
             "tx_rate_bps": 0,
         }
     )
-    refresh_seconds = 1.0
+    current_cycle_seconds = 1.0
+    cycles = []
+
+    def new_cycle():
+        return defaultdict(
+            lambda: {
+                "name": "Unknown",
+                "user": "",
+                "connections_count": 0,
+                "rx_rate_bps": 0,
+                "tx_rate_bps": 0,
+            }
+        )
+
+    def cycle_to_rows(cycle):
+        rows = []
+        for pid, item in cycle.items():
+            rows.append(
+                {
+                    "pid": pid,
+                    "name": item["name"],
+                    "user": item["user"],
+                    "connections_count": max(1, item["connections_count"]),
+                    "rx_rate_bps": item["rx_rate_bps"],
+                    "tx_rate_bps": item["tx_rate_bps"],
+                    "total_rate_bps": item["rx_rate_bps"] + item["tx_rate_bps"],
+                    "bytes_recv": 0,
+                    "bytes_sent": 0,
+                    "bytes_total": 0,
+                    "source": "nethogs",
+                }
+            )
+
+        rows.sort(
+            key=lambda item: (item["total_rate_bps"], item["connections_count"]),
+            reverse=True,
+        )
+        return rows
 
     for raw_line in text.splitlines():
         line = raw_line.strip()
@@ -63,20 +91,13 @@ def parse_nethogs_output(text):
         refresh_match = REFRESH_RE.match(line)
         if refresh_match:
             try:
-                refresh_seconds = float(refresh_match.group("seconds"))
+                next_cycle_seconds = float(refresh_match.group("seconds"))
             except ValueError:
-                refresh_seconds = 1.0
+                next_cycle_seconds = 1.0
             if current_cycle:
-                last_cycle = current_cycle
-                current_cycle = defaultdict(
-                    lambda: {
-                        "name": "Unknown",
-                        "user": "",
-                        "connections_count": 0,
-                        "rx_rate_bps": 0,
-                        "tx_rate_bps": 0,
-                    }
-                )
+                cycles.append((current_cycle, current_cycle_seconds))
+                current_cycle = new_cycle()
+            current_cycle_seconds = next_cycle_seconds
             continue
 
         if line.startswith("unknown TCP"):
@@ -103,11 +124,46 @@ def parse_nethogs_output(text):
         entry["tx_rate_bps"] += int(sent_kbps * 1024)
         entry["rx_rate_bps"] += int(recv_kbps * 1024)
 
-    cycle_to_use = last_cycle if last_cycle else current_cycle
+    if current_cycle:
+        cycles.append((current_cycle, current_cycle_seconds))
 
-    rows = []
-    for pid, item in cycle_to_use.items():
-        rows.append(
+    latest_cycle = cycles[-1][0] if cycles else new_cycle()
+    latest_rows = cycle_to_rows(latest_cycle)
+
+    aggregated = defaultdict(
+        lambda: {
+            "name": "Unknown",
+            "user": "",
+            "connections_count": 0,
+            "rx_rate_bps": 0,
+            "tx_rate_bps": 0,
+            "total_rate_bps": 0,
+            "approx_rx_bytes": 0,
+            "approx_tx_bytes": 0,
+            "approx_total_bytes": 0,
+        }
+    )
+
+    for cycle, seconds in cycles:
+        observed_seconds = max(0.0, float(seconds))
+        for pid, item in cycle.items():
+            entry = aggregated[pid]
+            total_rate = item["rx_rate_bps"] + item["tx_rate_bps"]
+            entry["name"] = item["name"]
+            entry["user"] = item["user"]
+            entry["connections_count"] = max(
+                entry["connections_count"], item["connections_count"]
+            )
+            entry["rx_rate_bps"] = max(entry["rx_rate_bps"], item["rx_rate_bps"])
+            entry["tx_rate_bps"] = max(entry["tx_rate_bps"], item["tx_rate_bps"])
+            entry["total_rate_bps"] = max(entry["total_rate_bps"], total_rate)
+            entry["approx_rx_bytes"] += int(item["rx_rate_bps"] * observed_seconds)
+            entry["approx_tx_bytes"] += int(item["tx_rate_bps"] * observed_seconds)
+            entry["approx_total_bytes"] += int(total_rate * observed_seconds)
+
+    persist_rows = []
+    for pid, item in aggregated.items():
+        persist_rows.append(
             {
                 "pid": pid,
                 "name": item["name"],
@@ -115,16 +171,20 @@ def parse_nethogs_output(text):
                 "connections_count": max(1, item["connections_count"]),
                 "rx_rate_bps": item["rx_rate_bps"],
                 "tx_rate_bps": item["tx_rate_bps"],
-                "total_rate_bps": item["rx_rate_bps"] + item["tx_rate_bps"],
-                "bytes_recv": 0,
-                "bytes_sent": 0,
-                "bytes_total": 0,
+                "total_rate_bps": item["total_rate_bps"],
+                "approx_rx_bytes": item["approx_rx_bytes"],
+                "approx_tx_bytes": item["approx_tx_bytes"],
+                "approx_total_bytes": item["approx_total_bytes"],
                 "source": "nethogs",
             }
         )
 
-    rows.sort(key=lambda item: (item["total_rate_bps"], item["connections_count"]), reverse=True)
-    return rows, refresh_seconds
+    persist_rows.sort(
+        key=lambda item: (item["approx_total_bytes"], item["total_rate_bps"]),
+        reverse=True,
+    )
+    observed_total_seconds = sum(max(0.0, float(seconds)) for _, seconds in cycles)
+    return latest_rows, persist_rows, observed_total_seconds or 1.0
 
 
 def run_nethogs(interface=None, timeout_sec=8, cycles=3):
@@ -146,10 +206,10 @@ def run_nethogs(interface=None, timeout_sec=8, cycles=3):
 
     output = (proc.stdout or "").strip()
     errors = (proc.stderr or "").strip()
-    rows, refresh_seconds = parse_nethogs_output(output)
+    rows, persist_rows, observed_seconds = parse_nethogs_output(output)
 
     if rows:
-        return rows, refresh_seconds, ""
+        return rows, persist_rows, observed_seconds, ""
 
     if errors:
         raise RuntimeError(errors)
@@ -232,9 +292,11 @@ def persist_rows(db_path, interface, rows, sample_seconds, retention_days):
             rx_rate = int(row.get("rx_rate_bps", 0) or 0)
             tx_rate = int(row.get("tx_rate_bps", 0) or 0)
             total_rate = int(row.get("total_rate_bps", rx_rate + tx_rate) or 0)
-            rx_bytes = int(rx_rate * seconds)
-            tx_bytes = int(tx_rate * seconds)
-            total_bytes = int(total_rate * seconds)
+            rx_bytes = int(row.get("approx_rx_bytes", rx_rate * seconds) or 0)
+            tx_bytes = int(row.get("approx_tx_bytes", tx_rate * seconds) or 0)
+            total_bytes = int(
+                row.get("approx_total_bytes", total_rate * seconds) or 0
+            )
             con.execute(
                 """
                 INSERT INTO app_samples (
@@ -267,26 +329,25 @@ def persist_rows(db_path, interface, rows, sample_seconds, retention_days):
     return now_ts
 
 
-def get_live_usage(limit=10, interface=None, db_path=None, retention_days=14):
+def get_live_usage(limit=10, interface=None, db_path=None, retention_days=14, persist=True):
     warning = ""
     sample_seconds = 1.0
+    persistable_rows = []
     try:
-        rows, sample_seconds, _ = run_nethogs(interface=interface)
+        rows, persistable_rows, sample_seconds, _ = run_nethogs(interface=interface)
     except Exception as exc:
         warning = f"nethogs unavailable ({exc}); using connection-count fallback"
         rows = fallback_psutil(limit=limit)
-
-    if limit > 0:
-        rows = rows[:limit]
+        persistable_rows = rows
 
     persisted = False
     snapshot_ts = None
-    if db_path:
+    if persist and db_path:
         try:
             snapshot_ts = persist_rows(
                 db_path=db_path,
                 interface=interface,
-                rows=rows,
+                rows=persistable_rows,
                 sample_seconds=sample_seconds,
                 retention_days=retention_days,
             )
@@ -295,9 +356,11 @@ def get_live_usage(limit=10, interface=None, db_path=None, retention_days=14):
             persist_warning = f"persist failed ({exc})"
             warning = f"{warning}; {persist_warning}" if warning else persist_warning
 
+    display_rows = rows[:limit] if limit > 0 else rows
+
     return {
         "status": "success",
-        "data": rows,
+        "data": display_rows,
         "warning": warning,
         "persisted": persisted,
         "sample_seconds": sample_seconds,
@@ -387,6 +450,7 @@ def parse_args():
     parser.add_argument("--retention-days", type=int, default=14, help="History retention window.")
     parser.add_argument("--hours", type=int, default=24, help="Summary range in hours.")
     parser.add_argument("--top", type=int, default=15, help="Top apps in summary mode.")
+    parser.add_argument("--no-persist", action="store_true", help="Do not persist live samples to the history database.")
     return parser.parse_args()
 
 
@@ -411,6 +475,7 @@ if __name__ == "__main__":
             interface=(args.interface or None),
             db_path=db_path,
             retention_days=max(1, args.retention_days),
+            persist=not args.no_persist,
         )
 
     print(json.dumps(result, ensure_ascii=False))

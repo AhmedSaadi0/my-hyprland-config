@@ -43,13 +43,13 @@ Item {
         onActionTriggered: (index, action) => root.menuActionTriggered(index, action)
     }
 
-    Item {
+    Column {
         id: headerContainer
         anchors.top: appBar.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         visible: children.length > 0
-        implicitHeight: visible ? childrenRect.height : 0
+        spacing: 0
         z: 9
     }
 

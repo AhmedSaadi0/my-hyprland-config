@@ -5,11 +5,11 @@ import subprocess
 import sys
 
 
-def get_cliphist_items():
+def get_cliphist_items(max_lines=100):
     try:
         # 1. جلب القائمة الخام
         result = subprocess.run(
-            "cliphist list | head -n 25",
+            f"cliphist list | head -n {max_lines}",
             shell=True,
             capture_output=True,
             text=True,
@@ -126,7 +126,14 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         cmd = sys.argv[1]
         if cmd == "list":
-            print(json.dumps(get_cliphist_items()))
+            # Check if a line count was specified
+            max_lines = 100  # Default value
+            if len(sys.argv) > 2:
+                try:
+                    max_lines = int(sys.argv[2])
+                except ValueError:
+                    pass  # Keep default if not a valid number
+            print(json.dumps(get_cliphist_items(max_lines)))
         elif cmd == "activate" and len(sys.argv) > 2:
             activate_item(sys.argv[2])
         elif cmd == "delete" and len(sys.argv) > 2:

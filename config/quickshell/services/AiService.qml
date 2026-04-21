@@ -78,7 +78,7 @@ Singleton {
         if (request.args)
             fullCmd = fullCmd.concat(request.args);
 
-        _logOutgoingRequest(request, fullCmd);
+        // _logOutgoingRequest(request, fullCmd);
 
         aiProcess.command = fullCmd;
         aiProcess.running = true;

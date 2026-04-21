@@ -20,7 +20,8 @@ import "root:/utils"
 import "root:/config"
 import "root:/desktop"
 import "root:/themes"
-import "root:/shadows"
+// import "root:/shadows"
+import "root:/services"
 import "root:/windows/smart_capsule/logic"
 import "root:/config/ConstValues.js" as Consts
 import "root:/config/EventNames.js" as Events
@@ -31,12 +32,14 @@ ShellRoot {
     // --- Properties ---
     property var settingsWindowInstance: null
     property var notificationsInstance: null
+    readonly property var _networkService: NetworkService
     readonly property var _selectedTheme: ThemeManager.selectedTheme
 
     signal openLeftPanelRequested(int selectedIndex)
 
     Component.onCompleted: {
         Qt.uiLanguage = "ar";
+        NetworkService.syncTimers();
     }
 
     // // --- Initialization Logic ---
@@ -260,9 +263,9 @@ ShellRoot {
             Connections {
                 target: null
                 Component.onCompleted: {
-                EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
-                    bottomLauncherPanel.toggle();
-                }, shellRoot);
+                    EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
+                        bottomLauncherPanel.toggle();
+                    }, shellRoot);
                 }
             }
 
