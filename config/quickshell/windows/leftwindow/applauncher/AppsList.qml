@@ -13,11 +13,24 @@ Item {
     id: rootList
 
     property var listModel
+    property var baseLauncher
     property int selectedIndex: -1
     property alias selectedCategory: categoryFilter.selectedCategory
 
     signal appClicked(int index, var appData)
     signal categoryChanged
+
+    Keys.onPressed: event => {
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+            if (rootList.selectedIndex >= 0 && rootList.selectedIndex < rootList.listModel.length) {
+                const item = rootList.listModel[rootList.selectedIndex];
+                if (item && !item.isHeader) {
+                    rootList.appClicked(rootList.selectedIndex, item.appData);
+                }
+            }
+            event.accepted = true;
+        }
+    }
 
     CategoryFilter {
         id: categoryFilter
@@ -56,9 +69,12 @@ Item {
             }
 
             Connections {
-                target: rootList
-                function onSelectedIndexChanged() {
-                    listView.currentIndex = rootList.selectedIndex;
+                target: rootList.baseLauncher
+                function onSelectedAppIndexChanged() {
+                    if (rootList.baseLauncher.selectedAppIndex >= 0 && listView.currentIndex !== rootList.baseLauncher.selectedAppIndex) {
+                        listView.currentIndex = rootList.baseLauncher.selectedAppIndex;
+                        listView.positionViewAtIndex(rootList.baseLauncher.selectedAppIndex, ListView.Contain);
+                    }
                 }
             }
 

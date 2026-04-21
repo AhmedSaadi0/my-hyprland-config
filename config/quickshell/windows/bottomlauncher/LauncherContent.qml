@@ -17,202 +17,45 @@ Item {
 
     onGainFocus: baseLauncher.doGainFocus()
 
-    // --- Base Launcher Instance ---
     BaseLauncher {
         id: baseLauncher
 
-        // Properties are now managed centrally in BaseLauncher via searchText
         selectedCategory: categoryFilter.selectedCategory
 
-        // Override shared functions with implementations
-        function toggleFavorite(appData) {
-            const appId = appData.name;
-            const index = App.favoriteApps.indexOf(appId);
-            if (index === -1) {
-                App.favoriteApps.push(appId);
-            } else {
-                App.favoriteApps.splice(index, 1);
-            }
-            App.updateConfig("favoriteApps", App.favoriteApps);
-        }
-
-        function isFavorite(appData) {
-            const appId = appData.name;
-            return App.favoriteApps.indexOf(appId) !== -1;
-        }
-
-        function executeCommand(cmd) {
-            if (cmd.enabled === false)
-                return;
-            if (cmd.isAction) {
-                if (cmd.action === "openSettings") {
-                    EventBus.emit(Events.OPEN_SETTINGS);
-                    root.appLaunched();
-                } else if (cmd.action === "nextWallpaper") {
-                    ThemeManager.switchToNextWallpaper();
-                    root.appLaunched();
-                } else if (cmd.action === "previousWallpaper") {
-                    ThemeManager.switchToPreviousWallpaper();
-                    root.appLaunched();
-                }
-            } else if (cmd.view !== "") {
-                activeCommandView = cmd.view;
-            }
-        }
-
-        function launchApp(command, workingDirectory) {
-            clearSearchText.start();
-            Quickshell.execDetached({
-                command: command,
-                workingDirectory: workingDirectory
-            });
+        onAppLaunchedCallback: function() {
             root.appLaunched();
         }
-
-        function ensureAppSelection() {
-            if (baseLauncher.isCommandMode || baseLauncher.activeCommandView !== "") {
-                baseLauncher.selectedAppIndex = -1;
-                return;
-            }
-            if (baseLauncher.filteredAppsModel.values.length === 0) {
-                baseLauncher.selectedAppIndex = -1;
-                return;
-            }
-            if (baseLauncher.selectedAppIndex < 0 || baseLauncher.selectedAppIndex >= baseLauncher.filteredAppsModel.values.length) {
-                baseLauncher.selectedAppIndex = 0;
-            }
-            appListView.currentIndex = baseLauncher.selectedAppIndex;
+        onCommandExecutedCallback: function() {
+            root.appLaunched();
         }
-
-        function ensureCommandSelection() {
-            if (!baseLauncher.isCommandMode) {
-                baseLauncher.selectedCommandIndex = -1;
-                return;
-            }
-            if (baseLauncher.filteredCommands.length === 0) {
-                baseLauncher.selectedCommandIndex = -1;
-                return;
-            }
-            if (baseLauncher.selectedCommandIndex < 0 || baseLauncher.selectedCommandIndex >= baseLauncher.filteredCommands.length) {
-                baseLauncher.selectedCommandIndex = 0;
-            }
-            commandListView.currentIndex = baseLauncher.selectedCommandIndex;
-        }
-
-        function moveSelection(dir) {
-            if (baseLauncher.isCommandMode) {
-                moveCommandSelection(dir);
-                return;
-            }
-            if (baseLauncher.activeCommandView !== "")
-                return;
-            if (baseLauncher.filteredAppsModel.values.length === 0)
-                return;
-            let idx = baseLauncher.selectedAppIndex;
-            if (idx < 0)
-                idx = dir > 0 ? 0 : baseLauncher.filteredAppsModel.values.length - 1;
-            else
-                idx = Math.max(0, Math.min(baseLauncher.filteredAppsModel.values.length - 1, idx + dir));
-            baseLauncher.selectedAppIndex = idx;
-        }
-
-        function moveCommandSelection(dir) {
-            if (baseLauncher.filteredCommands.length === 0)
-                return;
-            let idx = baseLauncher.selectedCommandIndex;
-            if (idx < 0)
-                idx = dir > 0 ? 0 : baseLauncher.filteredCommands.length - 1;
-            else
-                idx = Math.max(0, Math.min(baseLauncher.filteredCommands.length - 1, idx + dir));
-            baseLauncher.selectedCommandIndex = idx;
-        }
-
-        function firstEnabledCommandIndex(startIdx) {
-            if (baseLauncher.filteredCommands.length === 0)
-                return -1;
-            let idx = Math.max(0, Math.min(baseLauncher.filteredCommands.length - 1, startIdx));
-            for (let i = idx; i < baseLauncher.filteredCommands.length; i++) {
-                if (baseLauncher.filteredCommands[i].enabled !== false)
-                    return i;
-            }
-            for (let i = idx - 1; i >= 0; i--) {
-                if (baseLauncher.filteredCommands[i].enabled !== false)
-                    return i;
-            }
-            return -1;
-        }
-
-        function activateSelection() {
-            if (baseLauncher.isCommandMode) {
-                activateCommandSelection();
-                return;
-            }
-            if (baseLauncher.activeCommandView !== "")
-                return;
-            let idx = baseLauncher.selectedAppIndex;
-            if (idx < 0)
-                idx = 0;
-            if (idx < 0 || idx >= baseLauncher.filteredAppsModel.values.length)
-                return;
-            const app = baseLauncher.filteredAppsModel.values[idx];
-            if (!app)
-                return;
-            baseLauncher.launchApp(app.command, app.workingDirectory);
-        }
-
-        function activateCommandSelection() {
-            if (baseLauncher.filteredCommands.length === 0)
-                return;
-            let idx = baseLauncher.selectedCommandIndex >= 0 ? baseLauncher.selectedCommandIndex : 0;
-            idx = firstEnabledCommandIndex(idx);
-            if (idx === -1)
-                return;
-            baseLauncher.executeCommand(baseLauncher.filteredCommands[idx]);
-        }
-
-        function resetState() {
+        onResetStateCallback: function() {
             searchField.text = "";
-            baseLauncher.searchText = "";
-            baseLauncher.activeCommandView = "";
             categoryFilter.selectedCategory = "";
-            baseLauncher.selectedAppIndex = -1;
-            baseLauncher.selectedCommandIndex = -1;
         }
-
-        function doGainFocus() {
-            forceActiveFocus();
-            focusTimer.start();
+        onRequestFocusCallback: function() {
+            searchField.forceActiveFocus();
         }
+    }
 
-        // Override timers with specific implementations
-        Timer {
-            id: focusTimer
-            interval: 10
-            repeat: false
-            onTriggered: searchField.forceActiveFocus()
-        }
+    CategoryFilter {
+        id: categoryFilter
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 32
 
-        Timer {
-            id: clearSearchText
-            interval: 100
-            repeat: false
-            onTriggered: {
-                searchField.text = "";
-                baseLauncher.searchText = "";
-                categoryFilter.selectedCategory = "";
-                baseLauncher.activeCommandView = "";
+        Connections {
+            target: categoryFilter
+            function onSelectedCategoryChanged() {
+                Qt.callLater(baseLauncher.ensureAppSelection);
             }
         }
     }
 
-    // ==========================================================================
-    // UI Structure (unchanged from original)
-    // ==========================================================================
-
-    // 1. Search Bar
     RowLayout {
         id: searchRow
-        anchors.top: parent.top
+        anchors.top: categoryFilter.bottom
+        anchors.topMargin: 8
         anchors.left: parent.left
         anchors.right: parent.right
         height: 40
@@ -265,7 +108,6 @@ Item {
             }
 
             onTextChanged: {
-                // Source of truth is updated here
                 baseLauncher.searchText = searchField.text;
                 Qt.callLater(baseLauncher.ensureCommandSelection);
                 Qt.callLater(baseLauncher.ensureAppSelection);
@@ -273,7 +115,6 @@ Item {
         }
     }
 
-    // 2. Animated Content Area
     SwipeView {
         id: contentStack
         anchors.top: searchRow.bottom
@@ -287,29 +128,10 @@ Item {
         clip: true
         orientation: Qt.Horizontal
 
-        // Page 0: Apps List & Categories
         Item {
-            CategoryFilter {
-                id: categoryFilter
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 32
-            }
-            Connections {
-                target: categoryFilter
-                function onSelectedCategoryChanged() {
-                    Qt.callLater(baseLauncher.ensureAppSelection);
-                }
-            }
-
             ScrollView {
                 id: appScrollView
-                anchors.top: categoryFilter.bottom
-                anchors.topMargin: 8
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
+                anchors.fill: parent
 
                 clip: true
 
@@ -390,7 +212,7 @@ Item {
                                 anchors.leftMargin: 12
                                 font.pixelSize: 14
                                 font.bold: true
-                                color: modelData && modelData.isFavoritesHeader ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.primary
+                                color: ThemeManager.selectedTheme.colors.primary
                             }
                         }
 
@@ -413,6 +235,19 @@ Item {
                     }
                 }
 
+                Connections {
+                    target: baseLauncher
+                    function onSelectedAppIndexChanged() {
+                        if (baseLauncher.selectedAppIndex >= 0) {
+                            appListView.currentIndex = baseLauncher.selectedAppIndex;
+                            appListView.positionViewAtIndex(
+                                baseLauncher.selectedAppIndex,
+                                ListView.Contain
+                            );
+                        }
+                    }
+                }
+
                 Text {
                     anchors.centerIn: parent
                     visible: baseLauncher.filteredAppsModel.values.length === 0
@@ -424,7 +259,6 @@ Item {
             }
         }
 
-        // Page 1: Command List
         Item {
             ListView {
                 id: commandListView
@@ -476,7 +310,6 @@ Item {
             }
         }
 
-        // Page 2: Wallpaper Selector
         Item {
             WallpaperSelector {
                 id: wallpaperSelector
@@ -486,7 +319,7 @@ Item {
                     searchField.text = "";
                     baseLauncher.searchText = "";
                     searchField.forceActiveFocus();
-                    EventBus.emit(Events.CLOSE_LEFTBAR);
+                    root.appLaunched();
                 }
                 onCloseRequested: {
                     baseLauncher.activeCommandView = "";
@@ -498,10 +331,6 @@ Item {
         }
     }
 
-    // ==========================================================================
-    // Keyboard Handling
-    // ==========================================================================
-
     Keys.onPressed: event => {
         if (event.key === Qt.Key_Escape) {
             if (baseLauncher.activeCommandView !== "") {
@@ -512,7 +341,7 @@ Item {
                 event.accepted = true;
                 return;
             }
-            baseLauncher.appLaunched();
+            root.appLaunched();
             event.accepted = true;
             return;
         }
@@ -539,14 +368,9 @@ Item {
         if (event.text && !searchField.activeFocus) {
             searchField.text += event.text;
             baseLauncher.searchText = searchField.text;
-            baseLauncher.focusTimer.start();
             event.accepted = true;
         }
     }
-
-    // ==========================================================================
-    // Connections and State Management
-    // ==========================================================================
 
     Connections {
         target: baseLauncher
@@ -564,7 +388,6 @@ Item {
             baseLauncher.resetState();
     }
 
-    // Forward the appLaunched signal from baseLauncher
     Connections {
         target: baseLauncher
         onAppLaunched: root.appLaunched()

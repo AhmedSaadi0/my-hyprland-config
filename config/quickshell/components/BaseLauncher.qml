@@ -40,12 +40,20 @@ Item {
     }
 
     // ==========================================================================
-    // Shared Functions (to be overridden or used as-is by consumers)
+    // Hooks for subclass behavior
+    // ==========================================================================
+
+    property var onAppLaunchedCallback: null
+    property var onCommandExecutedCallback: null
+    property var onResetStateCallback: null
+    property var onRequestFocusCallback: null
+
+    // ==========================================================================
+    // Shared Functions
     // ==========================================================================
 
     // --- Favorites Management ---
     function toggleFavorite(appData) {
-        // Default implementation - can be overridden by consumer
         if (typeof App !== 'undefined' && appData && appData.name) {
             const appId = appData.name;
             const index = App.favoriteApps.indexOf(appId);
@@ -59,7 +67,6 @@ Item {
     }
 
     function isFavorite(appData) {
-        // Default implementation - can be overridden by consumer
         if (typeof App !== 'undefined' && appData && appData.name) {
             const appId = appData.name;
             return App.favoriteApps.indexOf(appId) !== -1;
@@ -69,7 +76,6 @@ Item {
 
     // --- Command Execution ---
     function executeCommand(cmd) {
-        // Default implementation - can be overridden by consumer
         if (cmd && cmd.enabled !== false) {
             if (cmd.isAction) {
                 if (cmd.action === "openSettings") {
@@ -83,37 +89,228 @@ Item {
                 activeCommandView = cmd.view;
             }
         }
+        if (onCommandExecutedCallback) {
+            onCommandExecutedCallback(cmd);
+        }
     }
 
     function launchApp(command, workingDirectory) {
-        // Default implementation - can be overridden by consumer
         if (command) {
+            clearSearchText.stop();
             Quickshell.execDetached({
                 command: command,
                 workingDirectory: workingDirectory
             });
+            clearSearchText.start();
+            if (onAppLaunchedCallback) {
+                onAppLaunchedCallback();
+            }
         }
     }
 
-    // --- Selection Management (default implementations) ---
+    // --- Selection Helpers ---
+    function getActualListIndex(logicalIndex) {
+        if (logicalIndex < 0) return -1;
+        
+        let appCount = 0;
+        for (let i = 0; i < filteredAppsModel.values.length; i++) {
+            const item = filteredAppsModel.values[i];
+            if (item && !item.isHeader) {
+                if (appCount === logicalIndex) {
+                    return i;
+                }
+                appCount++;
+            }
+        }
+        return -1;
+    }
+
+    function getFirstActualAppIndex() {
+        for (let i = 0; i < filteredAppsModel.values.length; i++) {
+            const item = filteredAppsModel.values[i];
+            if (item && !item.isHeader) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    function getLogicalIndex(actualListIndex) {
+        let appCount = 0;
+        for (let i = 0; i < filteredAppsModel.values.length && i <= actualListIndex; i++) {
+            const item = filteredAppsModel.values[i];
+            if (item && !item.isHeader) {
+                appCount++;
+            }
+        }
+        return appCount - 1;
+    }
+
+    function getAppCount() {
+        let count = 0;
+        for (let i = 0; i < filteredAppsModel.values.length; i++) {
+            const item = filteredAppsModel.values[i];
+            if (item && !item.isHeader) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    
+
+    // --- Selection Management ---
     function ensureAppSelection() {
-    // To be implemented by consumer if needed
+        if (isCommandMode || activeCommandView !== "") {
+            selectedAppIndex = -1;
+            return;
+        }
+
+        let appCount = getAppCount();
+        if (appCount === 0) {
+            selectedAppIndex = -1;
+            return;
+        }
+
+        if (selectedAppIndex < 0) {
+            selectedAppIndex = getActualListIndex(0);
+            if (selectedAppIndex < 0) {
+                selectedAppIndex = -1;
+            }
+            return;
+        }
+
+        let logicalIndex = getLogicalIndex(selectedAppIndex);
+        if (logicalIndex < 0 || logicalIndex >= appCount) {
+            selectedAppIndex = getActualListIndex(0);
+        }
     }
 
     function ensureCommandSelection() {
-    // To be implemented by consumer if needed
+        if (!isCommandMode || filteredCommands.length === 0) {
+            selectedCommandIndex = -1;
+            return;
+        }
+        if (selectedCommandIndex < 0 || selectedCommandIndex >= filteredCommands.length) {
+            selectedCommandIndex = 0;
+        }
     }
 
     function moveSelection(dir) {
-    // To be implemented by consumer if needed
+        if (isCommandMode) {
+            moveCommandSelection(dir);
+            return;
+        }
+        if (activeCommandView !== "")
+            return;
+
+        const model = filteredAppsModel.values;
+        let currentActualIndex = selectedAppIndex;
+
+        let newActualIndex = currentActualIndex;
+        let found = false;
+
+        if (dir > 0) {
+            for (let j = currentActualIndex + 1; j < model.length; j++) {
+                const item = model[j];
+                if (item && !item.isHeader) {
+                    newActualIndex = j;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                for (let j = 0; j < currentActualIndex; j++) {
+                    const item = model[j];
+                    if (item && !item.isHeader) {
+                        newActualIndex = j;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        } else {
+            for (let j = currentActualIndex - 1; j >= 0; j--) {
+                const item = model[j];
+                if (item && !item.isHeader) {
+                    newActualIndex = j;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                for (let j = model.length - 1; j > currentActualIndex; j--) {
+                    const item = model[j];
+                    if (item && !item.isHeader) {
+                        newActualIndex = j;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (found && newActualIndex >= 0) {
+            selectedAppIndex = newActualIndex;
+        }
+    }
+
+    function moveCommandSelection(dir) {
+        if (filteredCommands.length === 0)
+            return;
+        let idx = selectedCommandIndex;
+        if (idx < 0)
+            idx = dir > 0 ? 0 : filteredCommands.length - 1;
+        else
+            idx = Math.max(0, Math.min(filteredCommands.length - 1, idx + dir));
+        selectedCommandIndex = idx;
     }
 
     function activateSelection() {
-    // To be implemented by consumer if needed
+        if (isCommandMode) {
+            activateCommandSelection();
+            return;
+        }
+        if (activeCommandView !== "")
+            return;
+
+        const item = filteredAppsModel.values[selectedAppIndex];
+        if (item && !item.isHeader) {
+            launchApp(item.appData.command, item.appData.workingDirectory);
+        }
+    }
+
+    function activateCommandSelection() {
+        if (filteredCommands.length === 0)
+            return;
+        let idx = selectedCommandIndex >= 0 ? selectedCommandIndex : 0;
+        for (let i = 0; i < filteredCommands.length; i++) {
+            if (filteredCommands[i] && filteredCommands[i].enabled !== false) {
+                idx = i;
+                break;
+            }
+        }
+        if (idx >= 0 && idx < filteredCommands.length) {
+            executeCommand(filteredCommands[idx]);
+        }
     }
 
     function resetState() {
-    // To be implemented by consumer if needed
+        searchText = "";
+        activeCommandView = "";
+        selectedAppIndex = -1;
+        selectedCommandIndex = -1;
+        if (onResetStateCallback) {
+            onResetStateCallback();
+        }
+    }
+
+    function doGainFocus() {
+        forceActiveFocus();
+        focusTimer.start();
+        if (onRequestFocusCallback) {
+            onRequestFocusCallback();
+        }
     }
 
     // ==========================================================================
@@ -125,9 +322,9 @@ Item {
         interval: 10
         running: false
         repeat: false
-        onTriggered:
-        // To be implemented by consumer
-        {}
+        onTriggered: {
+            // To be implemented by consumer
+        }
     }
 
     Timer {
@@ -135,9 +332,9 @@ Item {
         interval: 100
         running: false
         repeat: false
-        onTriggered:
-        // To be implemented by consumer
-        {}
+        onTriggered: {
+            // To be implemented by consumer
+        }
     }
 
     // ==========================================================================
