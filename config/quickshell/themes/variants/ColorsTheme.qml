@@ -12,6 +12,15 @@ BaseTheme {
     _themeMode: "dark"
 
     _wallpaper: App.assets.getWallpaperPath("colors.png")
+    _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("colors_depth.png")
+    _desktopClockFont: "Xenophobia"
+    _desktopClockFormat: "hh mm AP - MM/dd"
+    _desktopClockPosition: Qt.point(7, 11)
+    _desktopClockDepthEffectEnabled: true
+    _desktopClockSize: Qt.size(1860, 600)
+    _desktopClockSahdowEnabled: false
+    _desktopClockUseThemeColor: false
+    _desktopClockColor: "#22c1eb"
 
     _primary: "#22C1EB"
     _secondary: "#FD02FF"

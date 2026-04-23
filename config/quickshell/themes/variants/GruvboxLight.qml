@@ -10,6 +10,15 @@ BaseTheme {
     _themeMode: "light"
 
     _wallpaper: App.assets.getWallpaperPath("gruvbox-light.png")
+    _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("gruvbox-light-depth.png")
+    _desktopClockFont: "Xenophobia"
+    _desktopClockFormat: "hh mm AP - MM/dd"
+    _desktopClockPosition: Qt.point(31.29, 45.73)
+    _desktopClockDepthEffectEnabled: true
+    _desktopClockSize: Qt.size(1829.6484375, 453.57421875)
+    _desktopClockSahdowEnabled: false
+    _desktopClockUseThemeColor: false
+    _desktopClockColor: Qt.rgba(0.80, 0.75, 0.69, 0.8)
 
     _primary: "#6B9E6B"
     _secondary: "#d79921"
