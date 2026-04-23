@@ -172,181 +172,181 @@ PanelWindow {
         Item {
             anchors.fill: parent
 
-Rectangle {
+            Rectangle {
                 anchors.fill: parent
                 color: "#dd000000"
                 opacity: panelProgress
             }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: root.closeOverlay()
-        }
-
-        Item {
-            id: previewShell
-            anchors.fill: parent
-            anchors.margins: 24
-            opacity: panelProgress
-            scale: 0.985 + (panelProgress * 0.015)
-
             MouseArea {
                 anchors.fill: parent
-                onClicked: mouse => mouse.accepted = true
-            }
-
-            Rectangle {
-                anchors.fill: parent
-                radius: 8
-                color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1.alpha(0.55)
-                border.width: 1
-                border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.22)
+                onClicked: root.closeOverlay()
             }
 
             Item {
-                id: imageFrame
+                id: previewShell
                 anchors.fill: parent
-                anchors.margins: 20
+                anchors.margins: 24
+                opacity: panelProgress
+                scale: 0.985 + (panelProgress * 0.015)
 
-                Image {
-                    id: previewImage
+                MouseArea {
                     anchors.fill: parent
-                    source: OverlayService.imagePreviewSource
-                    fillMode: Image.PreserveAspectFit
-                    asynchronous: true
-                    smooth: true
-                    mipmap: true
-                    sourceSize.width: Math.max(root.width, 1)
-                    sourceSize.height: Math.max(root.height, 1)
-                    opacity: {
-                        if (!root.showImage || !root.previewReady)
-                            return 0;
-                        if (root.sameImageSource)
-                            return root.imageProgress;
-                        return root.imageProgress * (1 - root.fullImageBlend);
-                    }
-                    scale: 1.01 - (root.imageProgress * 0.01)
-
-                    onStatusChanged: root.revealImageIfPossible()
+                    onClicked: mouse => mouse.accepted = true
                 }
 
-                Image {
-                    id: fullImage
+                Rectangle {
                     anchors.fill: parent
-                    source: OverlayService.imageFullSource
-                    fillMode: Image.PreserveAspectFit
-                    asynchronous: true
-                    smooth: true
-                    mipmap: true
-                    sourceSize.width: Math.max(root.width, 1)
-                    sourceSize.height: Math.max(root.height, 1)
-                    visible: !root.sameImageSource
-                    opacity: root.showImage && root.fullReady ? root.imageProgress * root.fullImageBlend : 0
-                    scale: 1.012 - (root.imageProgress * 0.012)
+                    radius: 8
+                    color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1.alpha(0.55)
+                    border.width: 1
+                    border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.22)
+                }
 
-                    onStatusChanged: {
-                        root.revealImageIfPossible();
-                        if (status === Image.Ready) {
-                            console.info("[OverlayWindow]", modelData.name, "full image ready");
+                Item {
+                    id: imageFrame
+                    anchors.fill: parent
+                    anchors.margins: 20
+
+                    Image {
+                        id: previewImage
+                        anchors.fill: parent
+                        source: OverlayService.imagePreviewSource
+                        fillMode: Image.PreserveAspectFit
+                        asynchronous: true
+                        smooth: true
+                        mipmap: true
+                        sourceSize.width: Math.max(root.width, 1)
+                        sourceSize.height: Math.max(root.height, 1)
+                        opacity: {
+                            if (!root.showImage || !root.previewReady)
+                                return 0;
+                            if (root.sameImageSource)
+                                return root.imageProgress;
+                            return root.imageProgress * (1 - root.fullImageBlend);
+                        }
+                        scale: 1.01 - (root.imageProgress * 0.01)
+
+                        onStatusChanged: root.revealImageIfPossible()
+                    }
+
+                    Image {
+                        id: fullImage
+                        anchors.fill: parent
+                        source: OverlayService.imageFullSource
+                        fillMode: Image.PreserveAspectFit
+                        asynchronous: true
+                        smooth: true
+                        mipmap: true
+                        sourceSize.width: Math.max(root.width, 1)
+                        sourceSize.height: Math.max(root.height, 1)
+                        visible: !root.sameImageSource
+                        opacity: root.showImage && root.fullReady ? root.imageProgress * root.fullImageBlend : 0
+                        scale: 1.012 - (root.imageProgress * 0.012)
+
+                        onStatusChanged: {
+                            root.revealImageIfPossible();
+                            if (status === Image.Ready) {
+                                console.info("[OverlayWindow]", modelData.name, "full image ready");
+                            }
+                        }
+                    }
+
+                    BusyIndicator {
+                        anchors.centerIn: parent
+                        running: panelProgress > 0.2 && !root.showImage
+                        width: 64
+                        height: 64
+                        opacity: running ? 1 : 0
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 120
+                            }
                         }
                     }
                 }
 
-                BusyIndicator {
-                    anchors.centerIn: parent
-                    running: panelProgress > 0.2 && !root.showImage
-                    width: 64
-                    height: 64
-                    opacity: running ? 1 : 0
+                Rectangle {
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.margins: 16
+                    visible: OverlayService.imageTitle !== ""
+                    radius: 6
+                    color: "#7a000000"
+                    border.width: 1
+                    border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.24)
+                    width: Math.min(titleText.implicitWidth + 20, parent.width * 0.45)
+                    height: titleText.implicitHeight + 14
+                    opacity: imageProgress
 
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 120
+                    Text {
+                        id: titleText
+                        anchors.fill: parent
+                        anchors.margins: 10
+                        text: OverlayService.imageTitle
+                        color: ThemeManager.selectedTheme.colors.topbarFgColor || "white"
+                        elide: Text.ElideRight
+                        font.family: ThemeManager.selectedTheme.typography.bodyFont
+                        font.pixelSize: ThemeManager.selectedTheme.typography.baseFontSize
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
+
+                Row {
+                    anchors.top: parent.top
+                    anchors.right: parent.right
+                    anchors.margins: 16
+                    spacing: 10
+                    opacity: imageProgress
+
+                    Rectangle {
+                        width: 44
+                        height: 44
+                        radius: 22
+                        visible: OverlayService.mode === OverlayService.modeImagePreview
+                        color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary : "#55ffffff"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "󰄬"
+                            font.family: ThemeManager.selectedTheme.typography.iconFont
+                            font.pixelSize: 20
+                            color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.onPrimary : "white"
+                        }
+
+                        MouseArea {
+                            id: applyMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: OverlayService.requestImagePreviewApply()
+                        }
+                    }
+
+                    Rectangle {
+                        width: 44
+                        height: 44
+                        radius: 22
+                        color: closeMouse.containsMouse ? "#ff4444" : "#55ffffff"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "✕"
+                            color: "white"
+                            font.pixelSize: 18
+                        }
+
+                        MouseArea {
+                            id: closeMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.closeOverlay()
                         }
                     }
                 }
             }
-
-            Rectangle {
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.margins: 16
-                visible: OverlayService.imageTitle !== ""
-                radius: 6
-                color: "#7a000000"
-                border.width: 1
-                border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.24)
-                width: Math.min(titleText.implicitWidth + 20, parent.width * 0.45)
-                height: titleText.implicitHeight + 14
-                opacity: imageProgress
-
-                Text {
-                    id: titleText
-                    anchors.fill: parent
-                    anchors.margins: 10
-                    text: OverlayService.imageTitle
-                    color: ThemeManager.selectedTheme.colors.topbarFgColor || "white"
-                    elide: Text.ElideRight
-                    font.family: ThemeManager.selectedTheme.typography.bodyFont
-                    font.pixelSize: ThemeManager.selectedTheme.typography.baseFontSize
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-
-            Row {
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.margins: 16
-                spacing: 10
-                opacity: imageProgress
-
-                Rectangle {
-                    width: 44
-                    height: 44
-                    radius: 22
-                    visible: OverlayService.mode === OverlayService.modeImagePreview
-                    color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary : "#55ffffff"
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: "󰄬"
-                        font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 20
-                        color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.onPrimary : "white"
-                    }
-
-                    MouseArea {
-                        id: applyMouse
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: OverlayService.requestImagePreviewApply()
-                    }
-                }
-
-                Rectangle {
-                    width: 44
-                    height: 44
-                    radius: 22
-                    color: closeMouse.containsMouse ? "#ff4444" : "#55ffffff"
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: "✕"
-                        color: "white"
-                        font.pixelSize: 18
-                    }
-
-                    MouseArea {
-                        id: closeMouse
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: root.closeOverlay()
-                    }
-                }
-            }
-        }
         }
     }
 }
