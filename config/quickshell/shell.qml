@@ -251,7 +251,7 @@ ShellRoot {
             Cheatsheet {
                 id: cheatsheetPanel
             }
-            BottomAppLauncher {
+            BottomLauncher {
                 id: bottomLauncherPanel
             }
             PowerMenuWindow {

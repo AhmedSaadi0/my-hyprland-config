@@ -1,4 +1,4 @@
-// windows/bottomlauncher/BottomAppLauncher.qml
+// windows/bottomlauncher/BottomLauncher.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -36,14 +36,12 @@ PanelWindow {
         bottom: 20
     }
 
-    // Keyboard shortcut to toggle the launcher
     NibrasShellShortcut {
         id: toggleLauncherShortcut
         name: "toggleBottomLauncher"
         onPressed: root.toggle()
     }
 
-    // Toggle visibility
     function toggle() {
         isShown = !isShown;
     }
@@ -81,12 +79,11 @@ PanelWindow {
         onTriggered: {
             if (root.isShown) {
                 contentContainer.state = "visible";
-                launcherContent.gainFocus();
+                launcherContent.baseLauncher.doGainFocus();
             }
         }
     }
 
-    // Close when clicking outside
     MouseArea {
         anchors.fill: parent
         onClicked: root.hide()
@@ -109,7 +106,6 @@ PanelWindow {
         layer.enabled: root.visible && opacity < 1
         layer.smooth: true
 
-        // Shadow effect
         Rectangle {
             id: shadowRect
             anchors.fill: parent
@@ -122,12 +118,12 @@ PanelWindow {
             visible: false
         }
 
-        LauncherContent {
+        AppLauncherBase {
             id: launcherContent
             anchors.fill: parent
             anchors.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-            onAppLaunched: {
+            onAppLaunchedCallback: function() {
                 root.hide();
             }
         }

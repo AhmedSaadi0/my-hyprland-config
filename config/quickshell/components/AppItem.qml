@@ -1,5 +1,4 @@
-// windows/leftwindow/applauncher/AppItem.qml
-
+// components/AppItem.qml
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -12,21 +11,27 @@ import "root:/utils"
 
 Item {
     id: root
-    signal itemClicked
-    property var desktopEntity
+
+    signal clicked
+    signal hovered
+    signal favoriteToggled
+
+    property var appData
     property bool isSelected: false
+    property bool isHighlighted: false
     property bool isFavorite: false
 
-    width: listView.width
-    height: 70
+    height: 64
 
     Rectangle {
         id: hoverBg
         anchors.fill: parent
-        anchors.topMargin: 5
-        anchors.bottomMargin: 5
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
+
         color: {
+            if (root.isHighlighted) {
+                return ThemeManager.selectedTheme.colors.primary.alpha(0.25);
+            }
             if (root.isSelected) {
                 return ThemeManager.selectedTheme.colors.primary.alpha(0.15);
             }
@@ -36,10 +41,19 @@ Item {
             return "transparent";
         }
 
+        border.color: root.isHighlighted ? ThemeManager.selectedTheme.colors.primary : "transparent"
+        border.width: root.isHighlighted ? 1 : 0
+
         Behavior on color {
             ColorAnimation {
-                duration: 180
+                duration: 150
                 easing.type: Easing.OutQuad
+            }
+        }
+
+        Behavior on border.color {
+            ColorAnimation {
+                duration: 150
             }
         }
     }
@@ -48,16 +62,29 @@ Item {
         anchors.fill: parent
         anchors.leftMargin: 12
         anchors.rightMargin: 12
-        spacing: 8
+        spacing: 12
 
-        IconImage {
-            id: icon
-            Layout.preferredWidth: 48
-            Layout.preferredHeight: 48
+        Rectangle {
+            Layout.preferredWidth: 44
+            Layout.preferredHeight: 44
             Layout.alignment: Qt.AlignVCenter
-            source: desktopEntity && desktopEntity.icon ? Helper.toImageSource(Quickshell.iconPath(desktopEntity.icon, "application-x-executable")) : ""
-            transformOrigin: Item.Center
-            asynchronous: true
+            radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.8
+            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+
+            IconImage {
+                id: appIcon
+                anchors.centerIn: parent
+                width: 38
+                height: 38
+                source: Quickshell.iconPath(appData ? appData.icon : "application-x-executable", "application-x-executable")
+                transformOrigin: Item.Center
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 150
+                        easing.type: Easing.OutQuad
+                    }
+                }
+            }
         }
 
         ColumnLayout {
@@ -67,19 +94,65 @@ Item {
 
             Text {
                 Layout.fillWidth: true
-                text: desktopEntity ? desktopEntity.name : "Not available"
+                text: appData ? appData.name : "Unknown"
                 font.pixelSize: 16
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
-                horizontalAlignment: Text.AlignLeft
-                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                font.weight: Font.Medium
+                color: root.isHighlighted ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                elide: Text.ElideRight
+
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 150
+                    }
+                }
             }
+
             Text {
-                text: desktopEntity ? (desktopEntity.genericName || desktopEntity.comment || "") : ""
-                font.pixelSize: 12
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV1.alpha(0.7)
-                horizontalAlignment: Text.AlignLeft
-                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                Layout.fillWidth: true
+                text: appData ? (appData.genericName || appData.comment || "") : ""
+                font.pixelSize: 14
+                color: ThemeManager.selectedTheme.colors.subtleText
+                elide: Text.ElideRight
                 visible: text !== ""
+            }
+        }
+
+        ColumnLayout {
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+            spacing: 6
+
+            Rectangle {
+                Layout.alignment: Qt.AlignRight
+                width: 24
+                height: 24
+                radius: 6
+                color: ThemeManager.selectedTheme.colors.primary.alpha(0.12)
+                visible: root.isFavorite
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "󰓎"
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
+                    font.pixelSize: 13
+                    color: ThemeManager.selectedTheme.colors.primary
+                }
+            }
+
+            Rectangle {
+                Layout.alignment: Qt.AlignRight
+                width: 24
+                height: 24
+                radius: 6
+                color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+                visible: mouseArea.containsMouse || root.isHighlighted || root.isSelected
+                opacity: 0.85
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "↵"
+                    font.pixelSize: 12
+                    color: ThemeManager.selectedTheme.colors.subtleText
+                }
             }
         }
     }
@@ -89,36 +162,36 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        acceptedButtons: Qt.LeftButton | Qt.RightButton // السماح بالزرين
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         onPressed: mouse => {
             if (mouse.button === Qt.LeftButton) {
                 bounceAnim.restart();
-                root.itemClicked();
+                root.clicked();
             } else if (mouse.button === Qt.RightButton) {
                 contextMenu.x = mouse.x;
                 contextMenu.y = mouse.y;
                 contextMenu.open();
             }
         }
+
+        onEntered: root.hovered()
     }
 
-    // القائمة المنبثقة (Context Menu)
     Popup {
         id: contextMenu
-        width: 170
+        width: 160
         padding: 6
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
         transformOrigin: Item.TopLeft
 
         background: Rectangle {
             radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2 || "#2A2A2A" // Fallback color if undefined
+            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
             border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
             border.width: 1
         }
 
-        // أنيميشن الفتح
         enter: Transition {
             ParallelAnimation {
                 NumberAnimation {
@@ -138,7 +211,6 @@ Item {
             }
         }
 
-        // أنيميشن الإغلاق
         exit: Transition {
             ParallelAnimation {
                 NumberAnimation {
@@ -161,7 +233,6 @@ Item {
         contentItem: ColumnLayout {
             spacing: 4
 
-            // زر فتح التطبيق
             Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 36
@@ -172,7 +243,7 @@ Item {
                     anchors.centerIn: parent
                     text: "فتح"
                     font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.topbarFgColorV1
+                    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
                 }
 
                 MouseArea {
@@ -183,19 +254,17 @@ Item {
                     onClicked: {
                         contextMenu.close();
                         bounceAnim.restart();
-                        root.itemClicked();
+                        root.clicked();
                     }
                 }
             }
 
-            // خط فاصل
             Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 1
                 color: ThemeManager.selectedTheme.colors.primary.alpha(0.1)
             }
 
-            // زر المفضلة
             Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 36
@@ -216,7 +285,7 @@ Item {
                     Text {
                         text: root.isFavorite ? "إزالة من المفضلة" : "إضافة للمفضلة"
                         font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.topbarFgColorV1
+                        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
                     }
                 }
 
@@ -227,15 +296,7 @@ Item {
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
                         contextMenu.close();
-                        // اللوجيك الخاص بإضافة/حذف التطبيق من المفضلة
-                        const appId = desktopEntity.name;
-                        const index = App.favoriteApps.indexOf(appId);
-                        if (index === -1) {
-                            App.favoriteApps.push(appId);
-                        } else {
-                            App.favoriteApps.splice(index, 1);
-                        }
-                        App.updateConfig("favoriteApps", App.favoriteApps);
+                        root.favoriteToggled();
                     }
                 }
             }
@@ -245,26 +306,27 @@ Item {
     SequentialAnimation {
         id: bounceAnim
         running: false
+
         PropertyAnimation {
-            target: icon
+            target: appIcon
             property: "scale"
             to: 0.85
-            duration: 100
+            duration: 80
             easing.type: Easing.InOutQuad
         }
         PropertyAnimation {
-            target: icon
+            target: appIcon
             property: "scale"
             to: 1.1
-            duration: 120
+            duration: 100
             easing.type: Easing.OutQuad
         }
         PropertyAnimation {
-            target: icon
+            target: appIcon
             property: "scale"
             to: 1.0
-            duration: 100
-            easing.type: Easing.OutBack
+            duration: 80
+            easing.type: Easing.OutQuad
         }
     }
 }

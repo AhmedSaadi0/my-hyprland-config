@@ -93,7 +93,7 @@ StackView {
     }
     Component {
         id: appLauncherComponent
-        AppLauncher {}
+        SidebarLauncher {}
     }
 
     // ---------------------------------------------------------

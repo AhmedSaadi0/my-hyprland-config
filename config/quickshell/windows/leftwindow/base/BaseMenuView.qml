@@ -91,12 +91,16 @@ Item {
         anchors.bottom: parent.bottom
 
         flickableDirection: Flickable.VerticalFlick
+        contentWidth: width
+        // contentHeight: Math.max(height, innerContent.implicitHeight)
         contentHeight: innerContent.implicitHeight
+        boundsBehavior: Flickable.StopAtBounds
         clip: true
 
         ColumnLayout {
             id: innerContent
             width: scrollArea.width
+            // height: Math.max(implicitHeight, scrollArea.height)
             spacing: 0
         }
     }

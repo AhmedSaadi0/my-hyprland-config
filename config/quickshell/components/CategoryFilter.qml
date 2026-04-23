@@ -1,4 +1,4 @@
-// windows/bottomlauncher/CategoryFilter.qml
+// components/CategoryFilter.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts

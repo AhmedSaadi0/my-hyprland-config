@@ -191,8 +191,17 @@ Item {
             selectedCommandIndex = -1;
             return;
         }
-        if (selectedCommandIndex < 0 || selectedCommandIndex >= filteredCommands.length) {
-            selectedCommandIndex = 0;
+
+        if (selectedCommandIndex >= 0 && selectedCommandIndex < filteredCommands.length && filteredCommands[selectedCommandIndex] && filteredCommands[selectedCommandIndex].enabled !== false) {
+            return;
+        }
+
+        selectedCommandIndex = -1;
+        for (let i = 0; i < filteredCommands.length; i++) {
+            if (filteredCommands[i] && filteredCommands[i].enabled !== false) {
+                selectedCommandIndex = i;
+                return;
+            }
         }
     }
 
@@ -258,12 +267,34 @@ Item {
     function moveCommandSelection(dir) {
         if (filteredCommands.length === 0)
             return;
+
         let idx = selectedCommandIndex;
-        if (idx < 0)
-            idx = dir > 0 ? 0 : filteredCommands.length - 1;
-        else
-            idx = Math.max(0, Math.min(filteredCommands.length - 1, idx + dir));
-        selectedCommandIndex = idx;
+        if (idx < 0) {
+            idx = dir > 0 ? -1 : filteredCommands.length;
+        }
+
+        let nextIndex = idx;
+        while (true) {
+            nextIndex += dir;
+            if (nextIndex < 0 || nextIndex >= filteredCommands.length)
+                break;
+
+            const candidate = filteredCommands[nextIndex];
+            if (candidate && candidate.enabled !== false) {
+                selectedCommandIndex = nextIndex;
+                return;
+            }
+        }
+
+        const fallbackStart = dir > 0 ? 0 : filteredCommands.length - 1;
+        const fallbackEnd = dir > 0 ? filteredCommands.length : -1;
+        for (let i = fallbackStart; i !== fallbackEnd; i += dir) {
+            const candidate = filteredCommands[i];
+            if (candidate && candidate.enabled !== false) {
+                selectedCommandIndex = i;
+                return;
+            }
+        }
     }
 
     function activateSelection() {
@@ -283,13 +314,18 @@ Item {
     function activateCommandSelection() {
         if (filteredCommands.length === 0)
             return;
-        let idx = selectedCommandIndex >= 0 ? selectedCommandIndex : 0;
-        for (let i = 0; i < filteredCommands.length; i++) {
-            if (filteredCommands[i] && filteredCommands[i].enabled !== false) {
-                idx = i;
-                break;
+
+        let idx = selectedCommandIndex;
+        if (idx < 0 || idx >= filteredCommands.length || !filteredCommands[idx] || filteredCommands[idx].enabled === false) {
+            idx = -1;
+            for (let i = 0; i < filteredCommands.length; i++) {
+                if (filteredCommands[i] && filteredCommands[i].enabled !== false) {
+                    idx = i;
+                    break;
+                }
             }
         }
+
         if (idx >= 0 && idx < filteredCommands.length) {
             executeCommand(filteredCommands[idx]);
         }
@@ -323,7 +359,9 @@ Item {
         running: false
         repeat: false
         onTriggered: {
-            // To be implemented by consumer
+            if (onRequestFocusCallback) {
+                onRequestFocusCallback();
+            }
         }
     }
 
@@ -333,7 +371,7 @@ Item {
         running: false
         repeat: false
         onTriggered: {
-            // To be implemented by consumer
+            root.resetState();
         }
     }
 
@@ -352,14 +390,20 @@ Item {
     ScriptModel {
         id: filteredAppsModel
         values: {
-            if (root.isCommandMode || root.activeCommandView !== "")
+            if (root.isCommandMode || root.activeCommandView !== "") {
                 return [];
+            }
 
             const search = root.searchText.toLowerCase();
             const category = root.selectedCategory;
             const favoriteApps = (typeof App !== 'undefined') ? App.favoriteApps : [];
 
-            const allApps = [...DesktopEntries.applications.values].filter(app => app && app.name && app.noDisplay !== true);
+            const desktopEntriesValues = DesktopEntries ? DesktopEntries.applications.values : null;
+            
+            if (!desktopEntriesValues)
+                return [];
+            
+            const allApps = [...desktopEntriesValues].filter(app => app && app.name && app.noDisplay !== true);
 
             const filtered = allApps.filter(app => {
                 if (category !== "") {
@@ -377,7 +421,9 @@ Item {
                 const categoriesMatch = (app.categories || []).some(cat => cat.toLowerCase().includes(search));
 
                 return nameMatch || commentMatch || genericNameMatch || categoriesMatch;
-            }).sort((a, b) => {
+            });
+            
+            const sorted = filtered.sort((a, b) => {
                 const aIsFavorite = favoriteApps.includes(a.name);
                 const bIsFavorite = favoriteApps.includes(b.name);
                 if (aIsFavorite && !bIsFavorite)
@@ -390,7 +436,7 @@ Item {
             const structured = [];
 
             if (search === "") {
-                const favorites = filtered.filter(app => favoriteApps.includes(app.name));
+                const favorites = sorted.filter(app => favoriteApps.includes(app.name));
                 if (favorites.length > 0) {
                     structured.push({ isHeader: true, letter: "Favorites", isFavoritesHeader: true });
                     favorites.forEach(app => {
@@ -400,7 +446,7 @@ Item {
             }
 
             let currentLetter = "";
-            for (const app of filtered) {
+            for (const app of sorted) {
                 if (search === "" && favoriteApps.includes(app.name)) continue;
 
                 const firstLetter = app.name.charAt(0).toUpperCase();
