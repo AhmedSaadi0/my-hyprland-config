@@ -11,7 +11,17 @@ BaseTheme {
 
     _enableDynamicColoring: true
     _enableDynamicWallpapers: true
-    _dynamicWallpapersPath: "/home/ahmed/wallpapers/dark"
+    // _dynamicWallpapersPath: "/home/ahmed/wallpapers/dark"
+    _wallpaper: App.assets.getWallpaperPath("n3_dark.png")
+    _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("m3_dark_depth.png")
+    _desktopClockFont: "Unrealised"
+    _desktopClockFormat: "hh:mm AP - MM/dd"
+    _desktopClockPosition: Qt.point(3.0234375, 8.60546875)
+    _desktopClockDepthEffectEnabled: true
+    _desktopClockSize: Qt.size(1859.52734375, 498.1171875)
+    _desktopClockSahdowEnabled: false
+    _desktopClockUseThemeColor: false
+    _desktopClockColor: Qt.rgba(0.79, 0.97, 0.77, 0.8)
 
     _themeMode: "dark"
     _baseRadius: 14

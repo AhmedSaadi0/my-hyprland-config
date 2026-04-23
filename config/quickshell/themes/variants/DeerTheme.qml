@@ -12,6 +12,15 @@ BaseTheme {
     _themeMode: "dark"
 
     _wallpaper: App.assets.getWallpaperPath("deer.jpg")
+    _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("deer_depth.png")
+    _desktopClockFont: "Xenophobia"
+    _desktopClockFormat: "hh:mm AP MM/dd"
+    _desktopClockPosition: Qt.point(8.015625, 8.015625)
+    _desktopClockDepthEffectEnabled: true
+    _desktopClockSize: Qt.size(1848.86328125, 612.8984375)
+    _desktopClockSahdowEnabled: false
+    _desktopClockUseThemeColor: false
+    _desktopClockColor: Qt.rgba(0.05, 0.08, 0.13, 0.8)
 
     _primary: "#DCB5F3"
     _secondary: "#F7B28A"
