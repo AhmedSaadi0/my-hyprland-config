@@ -4,9 +4,11 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import Quickshell
 
 import "root:/themes"
 import "root:/config"
+import "root:/services"
 import "root:/components/wallpaper_selector"
 
 import "root:/windows/smart_capsule/logic"
@@ -36,10 +38,6 @@ Item {
     // كائن لتخزين نية المستخدم لكل عملية تنزيل
     // المفتاح هو الـ ID والقيمة هي "apply" أو "save"
     property var downloadIntents: ({})
-
-    // --- إدارة المعاينة ---
-    property string previewImageUrl: ""
-    property var currentPreviewData: null
 
     ListModel {
         id: wallhavenModel
@@ -165,23 +163,39 @@ Item {
         }
     }
 
-    // 3. منطق المعاينة (Popup)
+    // 3. منطق المعاينة
     function handlePreview(wallpaperData) {
-        // حفظ البيانات لاستخدامها لاحقاً في زر التطبيق
-        root.currentPreviewData = wallpaperData;
+        let previewUrl = "";
+        let fullUrl = "";
+        let title = "";
+        let screenName = "";
 
-        let url = "";
-        if (sourceMode === 2) {
-            // Wallhaven: استخدم الصورة المصغرة (thumb) للعرض السريع بدلاً من الأصلية
-            // إذا لم تتوفر thumb نعود للأصلية كاحتياط
-            url = wallpaperData.thumb || wallpaperData.path;
-        } else {
-            const path = typeof wallpaperData === 'string' ? wallpaperData : wallpaperData.path;
-            url = "file://" + path; // رابط محلي
+        const windowObj = root.QsWindow.window;
+        if (windowObj && windowObj.screen) {
+            screenName = windowObj.screen.name || "";
         }
 
-        root.previewImageUrl = url;
-        previewPopup.open();
+        if (sourceMode === 2) {
+            previewUrl = wallpaperData.thumb || wallpaperData.path || "";
+            fullUrl = wallpaperData.path || previewUrl;
+            title = wallpaperData.resolution || wallpaperData.id || "";
+        } else {
+            const path = typeof wallpaperData === 'string' ? wallpaperData : wallpaperData.path;
+            fullUrl = "file://" + path;
+            previewUrl = fullUrl;
+            title = path.split('/').pop();
+        }
+
+        console.info("[WallpaperSelector] handlePreview", "screen:", screenName, "title:", title, "preview:", previewUrl, "full:", fullUrl);
+
+        OverlayService.openImagePreview({
+            previewSource: previewUrl,
+            fullSource: fullUrl,
+            title: title,
+            previewData: wallpaperData,
+            sourceMode: root.sourceMode,
+            screenName: screenName
+        });
     }
 
     function applyWallpaper(path) {
@@ -217,7 +231,7 @@ Item {
                     wallhavenModel.append({
                         "id": w.id,
                         "path": w.path,
-                        "thumb": w.thumbs.original,
+                        "thumb": (w.thumbs && (w.thumbs.large || w.thumbs.small || w.thumbs.original)) ? (w.thumbs.large || w.thumbs.small || w.thumbs.original) : w.path,
                         "resolution": w.resolution,
                         "file_type": w.file_type,
                         "favorites": w.favorites
@@ -279,6 +293,26 @@ Item {
         }
 
         // onWallpaperDownloadError handled by CapsuleCoordinator
+    }
+
+    Connections {
+        target: OverlayService
+
+        function onImagePreviewApplyRequested(previewData, sourceMode) {
+            console.info("[WallpaperSelector] onImagePreviewApplyRequested", "sourceMode:", sourceMode);
+            OverlayService.close();
+
+            if (sourceMode !== 2) {
+                const path = typeof previewData === 'string' ? previewData : previewData.path;
+                if (path)
+                    root.applyWallpaper(path);
+                return;
+            }
+
+            if (previewData) {
+                root.handleDownloadAndApply(previewData);
+            }
+        }
     }
 
     // --- الواجهة الرسومية ---
@@ -430,125 +464,4 @@ Item {
         }
     }
 
-    // --- نافذة المعاينة (Popup) ---
-    Popup {
-        id: previewPopup
-        anchors.centerIn: parent
-        width: parent.width * 0.9
-        height: parent.height * 0.9
-        modal: true
-        focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-
-        // خلفية الـ Popup (شفافة لتبدو كـ Overlay)
-        background: Rectangle {
-            color: "#cc000000"
-            radius: 8
-        }
-
-        // محتوى المعاينة
-        Item {
-            anchors.fill: parent
-
-            // الصورة الكبيرة
-            Image {
-                id: previewImg
-                anchors.fill: parent
-                anchors.margins: 20
-                source: root.previewImageUrl
-                fillMode: Image.PreserveAspectFit
-                asynchronous: true
-                smooth: true
-                mipmap: true
-
-                // تحديد حجم الذاكرة المستخدم
-                // هذا يمنع فك تشفير الصورة بحجم هائل إذا كانت محلية، ويحسن الأداء
-                sourceSize.width: 1280
-                sourceSize.height: 720
-            }
-
-            // مؤشر التحميل (للصور من النت)
-            BusyIndicator {
-                anchors.centerIn: parent
-                running: previewImg.status === Image.Loading
-                width: 64
-                height: 64
-            }
-
-            // زر الإغلاق
-            Rectangle {
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.margins: 10
-                width: 40
-                height: 40
-                radius: 20
-                color: closeMouse.containsMouse ? "#ff4444" : "#44ffffff"
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "✕"
-                    color: "white"
-                    font.pixelSize: 18
-                }
-
-                MouseArea {
-                    id: closeMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: previewPopup.close()
-                }
-            }
-
-            // زر "تطبيق" من المعاينة (اختياري - ميزة إضافية)
-            Rectangle {
-                anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.margins: 20
-                width: 140
-                height: 40
-                radius: 20
-                color: ThemeManager.selectedTheme.colors.primary || "#6366f1"
-                visible: previewImg.status === Image.Ready
-
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 8
-                    Text {
-                        text: "󰄬"
-                        font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-                        color: ThemeManager.selectedTheme.colors.onPrimary
-                    }
-                    Text {
-                        text: "Apply Wallpaper"
-                        color: ThemeManager.selectedTheme.colors.onPrimary
-                        font.bold: true
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        previewPopup.close();
-
-                        // منطق ذكي: إذا كانت محلية طبقها، وإذا من النت قم بتحميل الأصلية
-                        if (root.sourceMode !== 2) {
-                            // محلي
-                            let path = root.previewImageUrl.replace("file://", "");
-                            root.applyWallpaper(path);
-                        } else {
-                            // Wallhaven:
-                            // نستخدم currentPreviewData المخزنة لأنها تحتوي على ID و Path الأصلي
-                            // بينما previewImageUrl يحتوي فقط على رابط الصورة المصغرة (thumb)
-                            if (root.currentPreviewData) {
-                                root.handleDownloadAndApply(root.currentPreviewData);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

@@ -14,6 +14,7 @@ import "root:/windows/settings"
 import "root:/windows/cheatsheet"
 import "root:/windows/bottomlauncher"
 import "root:/windows/poweroption"
+import "root:/windows/overlay"
 import "root:/bars"
 import "root:/osd"
 import "root:/utils"
@@ -239,6 +240,14 @@ ShellRoot {
                 model: Quickshell.screens
                 LeftBar {
                     id: leftBar
+                    required property ShellScreen modelData
+                    screen: modelData
+                }
+            }
+
+            Variants {
+                model: Quickshell.screens
+                OverlayWindow {
                     required property ShellScreen modelData
                     screen: modelData
                 }
