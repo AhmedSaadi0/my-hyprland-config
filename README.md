@@ -28,6 +28,28 @@ I didn't build this interface as a product, but simply because I genuinely enjoy
 **هي هواية، ليس إلا.**
 لم أقم ببناء هذه الواجهة كمنتج، بل لأنني أستمتع حقاً بكتابة الكود والتحكم في كل تفصيلة في نظامي.
 
+## 💡 Inspiration / الإلهام
+
+Some inspiration came from:
+
+- [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) - notification center and some animations
+- [caelestia-dots/shell](https://github.com/caelestia-dots/shell) - some desktop layout and visual design
+
+---
+
+- [end-4/dots-hyprland](https://github.com/end-4/dots-hyprland) - مركز الإشعارات وبعض الأنميشنات
+- [caelestia-dots/shell](https://github.com/caelestia-dots/shell) - بعض تخطيط سطح المكتب والتصميم المرئي
+
+شكر خاص لـ:
+
+- [Quickshell](https://quickshell.org/) developers for their amazing framework
+- [Alaa Elsamouly](https://samouly.is-a.dev/) for being a good friend
+
+---
+
+- مطورو [Quickshell](https://quickshell.org/) لإطارهم الرائع
+- [Alaa Elsamouly](https://samouly.is-a.dev/) لكونه صديقاً جيداً
+
 ## ✨ Features / المميزات
 
 - **🧠 AI System Daemon:** A highly advanced background service that silently monitors CPU, RAM, and Temp spikes. It runs autonomous diagnostics to catch resource-hungry processes and generates AI root-cause analysis without spamming notifications (Smart Cooldowns).
