@@ -417,7 +417,7 @@ Item {
                         normalForeground: style.textPrimary
                         // enabled: root.player && root.player.canGoPrevious
                         opacity: enabled ? 1 : 0.5
-                        onClicked: MusicService.prev()
+                        onClicked: MusicService.previous()
                     }
 
                     MorphPlayButton {
