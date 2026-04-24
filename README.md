@@ -39,8 +39,8 @@ To install on Arch, Fedora, or Nix (Automatic Script):
 
 ```bash
 git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
-cd NibrasShell
-python install.py
+cd NibrasShell/nibras_installer
+python main.py
 ```
 
 For full manual installation steps, please visit the **[Documentation](https://ahmedsaadi0.github.io/NibrasShell/docs-install.html)**.
@@ -49,7 +49,7 @@ For full manual installation steps, please visit the **[Documentation](https://a
 
 ## 🔗 Stay Updated
 
-Check out the [Development Roadmap](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html) to see what I'm building next!
+> Check out the [Development Roadmap](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html) to see what I'm building next!
 
 ---
 
@@ -64,3 +64,4 @@ Special thanks to:
 
 - [Quickshell](https://quickshell.org/) developers for their amazing framework
 - [Alaa Elsamouly](https://samouly.is-a.dev/) for being a good friend
+

@@ -168,7 +168,8 @@ const translations = {
       "نحتاج مكتبه rembg و pillow لانشاء الصور ذات تاثير العمق",
     install_script_step: "الآن يمكنك استخدام سكربت التثبيت واختيار رقم 2",
     install_script_step_2: `
-$ python3 install.py                                                                                       ↵ 130
+$ cd nibras_installer
+python main.py
 Choose your language / اختر لغتك / Vyberte jazyk:
 1. English
 2. العربية
@@ -401,7 +402,7 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     install_title: "Installation",
     install_auto_title: "Automatic Method (Recommended)",
     install_auto_desc:
-      'Clone the repo and run <span dir="ltr">python install.py</span>.',
+      'Clone the repo and run <span dir="ltr">python nibras_installer/main.py</span>.',
     install_manual_toggle: "Manual Installation (Click to expand)",
     install_manual_deps: "Essential Software",
     install_manual_optional: "Optional Software",
@@ -413,7 +414,9 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     install_depth_desc: "We need 'rembg' and 'pillow' libraries.",
     install_script_step: "Now run the install script and choose option 2",
     install_script_step_2: `
-$ python3 install.py
+
+$ cd nibras_installer
+python main.py
 Choose your language / اختر لغتك / Vyberte jazyk:
 1. English
 2. العربية

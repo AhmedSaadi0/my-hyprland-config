@@ -6,9 +6,9 @@
 
 ---
 
-[![الموقع](https://img.shields.io/badge/الموقع-زر_الآن-blue?style=for-the-badge&logo=firefox)](https://ahmedsaadi0.github.io/NibrasShell/index.html)
-[![الوثائق](https://img.shields.io/badge/الوثائق-اقرأ_الوثائق-green?style=for-the-badge&logo=bookstack)](https://ahmedsaadi0.github.io/NibrasShell/docs.html)
-[![Discord](https://img.shields.io/badge/Discord-انضم_إلينا-7289da?style=for-the-badge&logo=discord)](https://discord.gg/EUcGgRGhrs)
+[![Website](https://img.shields.io/badge/Website-Visit%20Now-blue?style=for-the-badge&logo=firefox)](https://ahmedsaadi0.github.io/NibrasShell/index.html)
+[![Docs](https://img.shields.io/badge/Docs-Read%20Documentation-green?style=for-the-badge&logo=bookstack)](https://ahmedsaadi0.github.io/NibrasShell/docs.html)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?style=for-the-badge&logo=discord)](https://discord.gg/EUcGgRGhrs)
 
 <br>
 
@@ -39,8 +39,8 @@
 
 ```bash
 git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
-cd NibrasShell
-python install.py
+cd NibrasShell/nibras_installer
+python main.py
 ```
 
 للخطوات الكاملة، راجع **[الوثائق](https://ahmedsaadi0.github.io/NibrasShell/docs-install.html)**.
@@ -49,7 +49,7 @@ python install.py
 
 ## 🔗 تابعنا
 
-تابع **[خارطة الطريق](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html)** لتعرف ما أعمل عليه التالي!
+> تابع **[خارطة الطريق](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html)** لتعرف ما أعمل عليه التالي!
 
 ---
 
@@ -64,3 +64,4 @@ python install.py
 
 - مطورو [Quickshell](https://quickshell.org/) لإطارهم الرائع
 - [Alaa Elsamouly](https://samouly.is-a.dev/) لكونه صديقاً جيداً
+
