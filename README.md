@@ -25,6 +25,8 @@ _A modern, smart AI-integrated Hyprland shell built with passion._
 **It's just a hobby, nothing more.**
 I didn't build this interface as a product, but simply because I genuinely enjoy coding and having full control over my system.
 
+---
+
 **هي هواية، ليس إلا.**
 لم أقم ببناء هذه الواجهة كمنتج، بل لأنني أستمتع حقاً بكتابة الكود والتحكم في كل تفصيلة في نظامي.
 
@@ -46,6 +48,8 @@ I didn't build this interface as a product, but simply because I genuinely enjoy
 - **🛠️ مركز التحكم:** تطبيق إعدادات مدمج للتحكم بكل شيء بصرياً دون الحاجة لتعديل ملفات التكوين.
 - **🚀 الأداء:** مبنية على **Quickshell** و **Hyprland** للسرعة والسلاسة، مع بنية برمجية غير متزامنة (Asynchronous) تمنع تشنج الواجهة.
 
+---
+
 ## ⚡ Quick Install / التثبيت السريع
 
 To install on Arch, Fedora, or Nix (Automatic Script):
@@ -60,8 +64,25 @@ For full manual installation steps, please visit the **[Documentation](https://a
 
 ---
 
-> **🔗 Stay Updated:**
-> Check out the [Development Roadmap](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html) to see what I'm building next!
+للثبيت على Arch أو Fedora أو Nix (سكريبت تلقائي):
+
+```bash
+git clone --depth 1 https://github.com/AhmedSaadi0/NibrasShell.git
+cd NibrasShell
+python install.py
+```
+
+للخطوات الكاملة، راجع **[الوثائق](https://ahmedsaadi0.github.io/NibrasShell/docs-install.html)**.
+
+---
+
+## 🔗 Stay Updated / تابعنا
+
+Check out the [Development Roadmap](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html) to see what I'm building next!
+
+---
+
+تابع **[خارطة الطريق](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html)** لتعرف ما أعمل عليه التالي!
 
 ---
 
