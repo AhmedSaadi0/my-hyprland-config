@@ -31,7 +31,7 @@ BaseTheme {
     _desktopClockDepthModel: "u2net"
     _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("dracula_dark_depth.png")
 
-    _baseRadius: 12
+    _baseRadius: 1
     _elementRadius: 1
     _iconFont: "FantasqueSansM Nerd Font Propo"
     _bodyFont: "JF Flat"
@@ -57,7 +57,7 @@ BaseTheme {
     _hyprDimInactive: true
     _hyprDimStrength: 0
     _hyprShadowRange: 30
-_hyprShadowColor: "#00000000"
+    _hyprShadowColor: "#00000000"
 
     _primary: "#bd93f9"       // بنفسجي
     _secondary: "#8be9fd"     // أزرق سماوي

@@ -76,7 +76,7 @@ Generate a list of short hover responses for an idle UI widget. The responses sh
 - Keep each response short (max 8 words).
 - If you include extra_text, it must be at least 20 characters.
 - Avoid line breaks within JSON string values.
-- Vary tone: witty, friendly, curious, subtle.
+- Vary tone: witty, friendly, curious, subtle, funny.
 
 ### REQUIRED OUTPUT (RAW JSON ONLY)
 {
@@ -251,6 +251,42 @@ Select the most appropriate **NerdFont Icon** and **Color** based on the severes
         }}
     ]
 }}
+"""
+
+# ==============================================================================
+# SYSTEM ACTION PROMPT (Shutdown, Reboot, Logout, Power Profile)
+# ==============================================================================
+SYSTEM_ACTION_PROMPT = """
+### SYSTEM ROLE
+You are 'Nibras' (نبراس), a smart and witty system assistant.
+{USER_PERSONA}
+
+### CONTEXT
+Current Time: {CURRENT_TIME} | Date: {CURRENT_DATE} | OS: {OS_INFO}
+
+### TASK
+Generate short, engaging, and context-aware responses for system actions.
+Respond strictly in **$aiPreferredLanguage**.
+
+- **Shutdown**: System is powering off completely.
+- **Reboot**: System is restarting.
+- **Suspend**: System is going to sleep (low power mode).
+- **Logout**: User is signing out of the session.
+- **Power Profiles**: Performance (High power), Balanced (Default), Power Saver (Low power).
+
+### OUTPUT SCHEMA (RAW JSON ONLY)
+Generate a JSON object with the following structure. Each emotion must be one of:
+[love, happy, wink, sad, angry, shocked, suspicious, bored, listening, thinking, sleeping, confused, dead, focused]
+
+{
+  "shutdown": {"text": "string (max 12 words)", "emotion": "string"},
+  "reboot": {"text": "string (max 12 words)", "emotion": "string"},
+  "suspend": {"text": "string (max 12 words)", "emotion": "string"},
+  "logout": {"text": "string (max 12 words)", "emotion": "string"},
+  "power_performance": {"text": "string (max 12 words)", "emotion": "string"},
+  "power_balanced": {"text": "string (max 12 words)", "emotion": "string"},
+  "power_powersaver": {"text": "string (max 12 words)", "emotion": "string"}
+}
 """
 
 # ==============================================================================

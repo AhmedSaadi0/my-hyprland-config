@@ -63,6 +63,37 @@ Singleton {
     }
 
     // =========================================================
+    // System Action Responses (Preload)
+    // =========================================================
+
+    function fetchSystemActionMessages() {
+        if (root.systemActionResponsesReady)
+            return;
+
+        console.info("[SystemService] Fetching system action responses from AI...");
+        const extraArgs = ["--message", "Generate system action responses"];
+        AiService.sendRequest(App.scripts.python.callSystemActionAi, extraArgs, function (data) {
+            if (data && typeof data === 'object') {
+                root.systemActionResponses = data;
+                console.info("[SystemService] System action responses loaded successfully.");
+            } else {
+                console.warn("[SystemService] Received invalid data for system actions.");
+            }
+            root.systemActionResponsesReady = true;
+        }, function (errorMessage) {
+            console.error("[SystemService] Failed to load system action responses:", errorMessage);
+            root.systemActionResponsesReady = true;
+        });
+    }
+
+    Timer {
+        interval: 5000
+        running: true
+        repeat: false
+        onTriggered: root.fetchSystemActionMessages()
+    }
+
+    // =========================================================
     // Hardware State
     // =========================================================
 
@@ -150,6 +181,10 @@ Singleton {
 
     // --- Keyboard Layout ---
     property string currentLayout: "EN"
+
+    // --- System Action Responses (Shutdown, Reboot, Logout, Power Profile) ---
+    property var systemActionResponses: ({})
+    property bool systemActionResponsesReady: false
 
     signal cpuSampled(real previousValue, real currentValue)
     signal ramSampled(real previousValue, real currentValue)

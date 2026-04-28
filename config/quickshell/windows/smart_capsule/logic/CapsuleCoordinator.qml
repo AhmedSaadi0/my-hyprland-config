@@ -330,17 +330,21 @@ Singleton {
     }
 
     function handlePowerProfileChange(profile) {
-        const label = getPowerProfileLabel(profile);
-        const color = getPowerProfileColor(profile);
+        const profileKey = profile === PowerProfile.Performance ? "power_performance" : profile === PowerProfile.PowerSaver ? "power_powersaver" : "power_balanced";
+        const label = root.getPowerProfileLabel(profile);
+        const color = root.getPowerProfileColor(profile);
         const fg = Helper.getAccurteTextColor(color);
-        const message = qsTr("Power profile: %1").arg(label);
+        const fallbackEmotion = root.getPowerProfileEmotion(profile);
+        const fallbackText = qsTr("Power profile: %1").arg(label);
 
-        root.updateEyes(getPowerProfileEmotion(profile), 2500);
+        const response = root.getSystemActionResponse(profileKey, fallbackEmotion, fallbackText);
+
+        root.updateEyes(response.emotion || fallbackEmotion, 2500);
         CapsuleManager.request({
-            priority: C.TRANSIENT,
+            priority: C.WARNING,
             source: C.SRC_SYSTEM,
             icon: getPowerProfileIcon(profile),
-            text: message,
+            text: response.text || fallbackText,
             timeout: 3500,
             bgColor1: color,
             bgColor2: color,
@@ -662,6 +666,23 @@ Singleton {
         return "thinking";
     }
 
+    // ========================================================================
+    // 🛠️ System Action Response Helper
+    // ========================================================================
+    function getSystemActionResponse(actionKey, fallbackEmotion, fallbackText) {
+        const responses = SystemService.systemActionResponses;
+        if (responses && responses[actionKey] && responses[actionKey].text) {
+            return {
+                text: responses[actionKey].text,
+                emotion: responses[actionKey].emotion || fallbackEmotion
+            };
+        }
+        return {
+            text: fallbackText,
+            emotion: fallbackEmotion
+        };
+    }
+
     function handleThemeUpdate(themeName) {
         root.updateEyes("happy", 3000);
         let colors = getColorsForState("theme_applied"); // سنضيف هذه الحالة في Helpers
@@ -891,10 +912,11 @@ Singleton {
             };
         default:
             return {
-            bg1: ThemeManager.selectedTheme.colors.primary,
-            bg2: ThemeManager.selectedTheme.colors.secondary,
-            fg: ThemeManager.selectedTheme.colors.onPrimary
-        };
+                bg1: ThemeManager.selectedTheme.colors.primary,
+                bg2: ThemeManager.selectedTheme.colors.secondary,
+                fg: ThemeManager.selectedTheme.colors.onPrimary
+            };
+        }
     }
 
     function getPowerProfileLabel(profile) {
@@ -935,7 +957,6 @@ Singleton {
         if (profile === PowerProfile.PowerSaver)
             return ThemeManager.selectedTheme.colors.success;
         return ThemeManager.selectedTheme.colors.primary;
-    }
     }
 
     function getBootColors() {
