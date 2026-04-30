@@ -31,6 +31,12 @@ BaseGeneralSettings {
     property bool localEnableHighRamAlert: false
     property bool localPlayRamAlarmSound: false
     property int localRamThreshold: 90
+
+    // Temperature Alert
+    property bool localEnableHighTempAlert: false
+    property bool localPlayTempAlarmSound: false
+    property int localTempThreshold: 85
+
     property int localResourceAlertCooldownMinutes: 1
 
     // Internal
@@ -52,6 +58,11 @@ BaseGeneralSettings {
         localEnableHighRamAlert = App.enableHighRamAlert;
         localPlayRamAlarmSound = App.playRamAlarmSound;
         localRamThreshold = App.ramHighLoadThreshold || 90;
+
+        localEnableHighTempAlert = App.enableHighTempAlert;
+        localPlayTempAlarmSound = App.playTempAlarmSound;
+        localTempThreshold = App.tempHighThreshold || 85;
+
         localResourceAlertCooldownMinutes = Math.max(1, Math.round((App.resourceAlertCooldownMs || 60000) / 60000));
 
         // تحديث قائمة الشبكات عند الفتح
@@ -71,6 +82,9 @@ BaseGeneralSettings {
             "enableHighRamAlert": localEnableHighRamAlert,
             "playRamAlarmSound": localPlayRamAlarmSound,
             "ramHighLoadThreshold": localRamThreshold,
+            "enableHighTempAlert": localEnableHighTempAlert,
+            "playTempAlarmSound": localPlayTempAlarmSound,
+            "tempHighThreshold": localTempThreshold,
             "resourceAlertCooldownMs": localResourceAlertCooldownMinutes * 60000
         };
     }
@@ -364,6 +378,68 @@ BaseGeneralSettings {
                     font.family: theme.typography.bodyFont
                     color: theme.colors.subtleText
                     Layout.preferredWidth: 40
+                    horizontalAlignment: Text.AlignRight
+                }
+            }
+
+            // --- Temperature Configuration ---
+            Controls.Label {
+                text: qsTr("Temperature Alert")
+                font.bold: true
+                font.family: theme.typography.bodyFont
+                font.pixelSize: theme.typography.medium
+                Layout.alignment: Qt.AlignVCenter
+                Layout.topMargin: 10
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: 10
+                SettingSwitch {
+                    isChecked: page.localEnableHighTempAlert
+                    onIsCheckedChanged: page.localEnableHighTempAlert = isChecked
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                Text {
+                    text: "Sound"
+                    font.family: theme.typography.bodyFont
+                    font.pixelSize: theme.typography.small
+                    color: theme.colors.subtleText
+                    visible: page.localEnableHighTempAlert
+                }
+                SettingSwitch {
+                    visible: page.localEnableHighTempAlert
+                    isChecked: page.localPlayTempAlarmSound
+                    onIsCheckedChanged: page.localPlayTempAlarmSound = isChecked
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Temperature Threshold")
+                font.bold: true
+                font.family: theme.typography.bodyFont
+                font.pixelSize: theme.typography.medium
+                visible: page.localEnableHighTempAlert
+                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                Layout.topMargin: 8
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                visible: page.localEnableHighTempAlert
+                Controls.Slider {
+                    Layout.fillWidth: true
+                    from: 60
+                    to: 110
+                    stepSize: 1
+                    value: page.localTempThreshold
+                    onMoved: page.localTempThreshold = value
+                }
+                Text {
+                    text: page.localTempThreshold + "°C"
+                    font.family: theme.typography.bodyFont
+                    color: theme.colors.subtleText
+                    Layout.preferredWidth: 50
                     horizontalAlignment: Text.AlignRight
                 }
             }

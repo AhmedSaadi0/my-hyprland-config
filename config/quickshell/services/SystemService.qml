@@ -142,6 +142,8 @@ Singleton {
     property real ramUsage: 0.0
     readonly property bool isCpuHigh: cpuUsage >= (App.cpuHighLoadThreshold / 100)
     readonly property bool isRamHigh: ramUsage >= (App.ramHighLoadThreshold / 100)
+    readonly property real tempHighThreshold: Math.max(1, App.tempHighThreshold || 85)
+    readonly property real tempResetThreshold: Math.max(0, tempHighThreshold - 3)
     property real _lastCpuUsage: -1
     property real _lastRamUsage: -1
     property var _cpuAlertState: ({
@@ -161,6 +163,12 @@ Singleton {
             episodeProcessKey: "",
             hasSentCurrentEpisode: false,
             requestPending: false
+        })
+    property var _tempAlertState: ({
+            active: false,
+            lastAlertAt: 0,
+            breachedAt: 0,
+            hasSentCurrentEpisode: false
         })
     property var _resourceDiagnosticCallbacks: ({
             cpu: [],
@@ -186,13 +194,63 @@ Singleton {
     property var systemActionResponses: ({})
     property bool systemActionResponsesReady: false
 
+    // --- Rotation indices for array responses ---
+    property var _responseRotationState: ({
+            charging: 0,
+            discharging: 0,
+            cpu_alerts: 0,
+            ram_alerts: 0,
+            temp_alerts: 0
+        })
+
+    function _normalizeResponseKey(key) {
+        const aliases = {
+            charge: "charging",
+            charging: "charging",
+            discharge: "discharging",
+            discharging: "discharging",
+            cpuAlert: "cpu_alerts",
+            cpuAlerts: "cpu_alerts",
+            cpu_alerts: "cpu_alerts",
+            ramAlert: "ram_alerts",
+            ramAlerts: "ram_alerts",
+            ram_alerts: "ram_alerts",
+            tempAlert: "temp_alerts",
+            tempAlerts: "temp_alerts",
+            temp_alerts: "temp_alerts"
+        };
+
+        return aliases[key] || key;
+    }
+
+    function _nextArrayResponse(key, fallbackText, fallbackEmotion) {
+        const responses = root.systemActionResponses;
+        const responseKey = root._normalizeResponseKey(key);
+        const arr = responses[responseKey];
+        if (arr && Array.isArray(arr) && arr.length > 0) {
+            const idx = root._responseRotationState[responseKey] || 0;
+            const result = arr[idx % arr.length];
+            root._responseRotationState[responseKey] = (idx + 1) % arr.length;
+
+            if (result && result.text)
+                return { text: result.text, emotion: result.emotion || fallbackEmotion };
+        }
+
+        return {
+            text: fallbackText,
+            emotion: fallbackEmotion || "thinking"
+        };
+    }
+
     signal cpuSampled(real previousValue, real currentValue)
     signal ramSampled(real previousValue, real currentValue)
     signal temperatureSampled(real previousMax, real currentMax)
     signal cpuAlert(real value, bool isReminder, int activeForMs)
     signal ramAlert(real value, bool isReminder, int activeForMs)
+    signal tempAlert(real value, bool isReminder, int activeForMs)
     signal cpuNormal
     signal ramNormal
+    signal tempNormal
 
     function _formatLayout(rawName) {
         const lower = rawName.toLowerCase();
@@ -300,6 +358,62 @@ Singleton {
             root.cpuAlert(currentValue, isReminder, activeForMs);
         else
             root.ramAlert(currentValue, isReminder, activeForMs);
+    }
+
+    function _resetTempAlertState(notifyNormal) {
+        root._tempAlertState.active = false;
+        root._tempAlertState.breachedAt = 0;
+        root._tempAlertState.hasSentCurrentEpisode = false;
+
+        if (notifyNormal)
+            root.tempNormal();
+    }
+
+    function _handleTempAlert(currentValue) {
+        const state = root._tempAlertState;
+        const alertsEnabled = App.enableHighTempAlert;
+        const now = Date.now();
+        const cooldownExpired = state.lastAlertAt === 0 || (now - state.lastAlertAt >= App.resourceAlertCooldownMs);
+
+        if (currentValue <= 0)
+            return;
+
+        if (!alertsEnabled) {
+            if (state.active)
+                root._resetTempAlertState(true);
+            return;
+        }
+
+        if (currentValue < root.tempResetThreshold) {
+            if (state.active)
+                root._resetTempAlertState(true);
+            return;
+        }
+
+        if (currentValue < root.tempHighThreshold)
+            return;
+
+        if (!state.active) {
+            state.active = true;
+            state.breachedAt = now;
+            state.hasSentCurrentEpisode = false;
+        }
+
+        if (!state.hasSentCurrentEpisode) {
+            if (!cooldownExpired)
+                return;
+
+            state.hasSentCurrentEpisode = true;
+            state.lastAlertAt = now;
+            root.tempAlert(currentValue, false, 0);
+            return;
+        }
+
+        if (!cooldownExpired)
+            return;
+
+        state.lastAlertAt = now;
+        root.tempAlert(currentValue, true, Math.max(0, now - state.breachedAt));
     }
 
     function _evaluateResourceEpisode(kind, currentValue, procKey) {
@@ -427,6 +541,7 @@ Singleton {
                     var prevTemp = root.cpuMaxTemp;
                     root.cpuMaxTemp = metrics.temp;
                     root.temperatureSampled(prevTemp, root.cpuMaxTemp);
+                    root._handleTempAlert(root.cpuMaxTemp);
 
                 } catch (e) {
                     console.error("[SystemService] Error parsing JSON:", e, "Data:", data);
@@ -532,6 +647,7 @@ Singleton {
                     const currentMax = Math.max(root.cpuMaxTemp, root.gpuMaxTemp, root.storageMaxTemp);
                     root.temperatureSampled(prevMax, currentMax);
                     root._lastMaxTemp = currentMax;
+                    root._handleTempAlert(currentMax);
                 } catch (e) {
                     console.error("[SystemService] Temp JSON parse error:", e);
                 }

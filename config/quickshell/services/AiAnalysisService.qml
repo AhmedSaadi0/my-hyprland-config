@@ -21,7 +21,7 @@ Singleton {
     property int _procSpikeCooldownMs: App.resourceAlertCooldownMs
     property int _procAlertCooldownMs: App.resourceAlertCooldownMs
 
-    property real _tempHighThreshold: 85
+    property real _tempHighThreshold: Math.max(1, App.tempHighThreshold || 85)
 
     property var _lastSpikeAt: ({
             cpu: 0,

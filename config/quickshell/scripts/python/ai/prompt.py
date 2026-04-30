@@ -273,6 +273,30 @@ Respond strictly in **$aiPreferredLanguage**.
 - **Suspend**: System is going to sleep (low power mode).
 - **Logout**: User is signing out of the session.
 - **Power Profiles**: Performance (High power), Balanced (Default), Power Saver (Low power).
+- **Battery Levels**: Battery reaching critical thresholds during discharge. Each level should have a unique, escalating response that matches the urgency.
+- **Charging State**: Plugging in and unplugging the charger — vary the tone each time.
+- **CPU Alert**: CPU usage is high — vary the response each time.
+- **RAM Alert**: Memory usage is high — vary the response each time.
+- **Temperature Alert**: Temperature is above 85°C — vary the response each time.
+
+### BATTERY RESPONSE GUIDELINES
+- **40%**: Mild concern, casual reminder about charging soon.
+- **30%**: Noticeable warning, suggest finding a charger.
+- **23%**: Unusual threshold — a quirky or dramatic remark about the battery's survival.
+- **22%-21%**: Escalating urgency, playful or dramatic tone.
+- **20%**: Standard low battery warning.
+- **15%**: Serious warning, suggest saving work.
+- **10%**: Critical urgency, very brief message.
+- **8%-7%**: Desperate tone, system about to die.
+- **6%-5%**: Near death, dramatic or dark humor.
+- **4%-3%**: Final moments, minimal message, maximum drama.
+
+### ARRAY RESPONSE RULES
+For charging, discharging, cpu_alerts, ram_alerts, and temp_alerts:
+- Generate exactly 7 unique responses.
+- Each response must be different from the others.
+- Vary tone: witty, dramatic, calm, humorous, concerned, sarcastic, playful.
+- Keep each text under 12 words.
 
 ### OUTPUT SCHEMA (RAW JSON ONLY)
 Generate a JSON object with the following structure. Each emotion must be one of:
@@ -285,7 +309,66 @@ Generate a JSON object with the following structure. Each emotion must be one of
   "logout": {"text": "string (max 12 words)", "emotion": "string"},
   "power_performance": {"text": "string (max 12 words)", "emotion": "string"},
   "power_balanced": {"text": "string (max 12 words)", "emotion": "string"},
-  "power_powersaver": {"text": "string (max 12 words)", "emotion": "string"}
+  "power_powersaver": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_40": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_30": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_23": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_22": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_21": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_20": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_15": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_10": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_8": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_7": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_6": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_5": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_4": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_3": {"text": "string (max 12 words)", "emotion": "string"},
+  "charging": [
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"}
+  ],
+  "discharging": [
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"}
+  ],
+  "cpu_alerts": [
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"}
+  ],
+  "ram_alerts": [
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"}
+  ],
+  "temp_alerts": [
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"},
+    {"text": "string (max 12 words)", "emotion": "string"}
+  ]
 }
 """
 

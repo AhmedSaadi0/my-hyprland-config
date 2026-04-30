@@ -73,11 +73,14 @@ Singleton {
     // Hardware configs
     property alias enableHighCpuAlert: root.config.enableHighCpuAlert
     property alias enableHighRamAlert: root.config.enableHighRamAlert
+    property alias enableHighTempAlert: root.config.enableHighTempAlert
     property alias playCpuAlarmSound: root.config.playCpuAlarmSound
     property alias playRamAlarmSound: root.config.playRamAlarmSound
+    property alias playTempAlarmSound: root.config.playTempAlarmSound
 
     property alias cpuHighLoadThreshold: root.config.cpuHighLoadThreshold
     property alias ramHighLoadThreshold: root.config.ramHighLoadThreshold
+    property alias tempHighThreshold: root.config.tempHighThreshold
     property alias resourceAlertCooldownMs: root.config.resourceAlertCooldownMs
 
     // Shell layout configs
