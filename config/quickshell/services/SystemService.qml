@@ -275,19 +275,23 @@ Singleton {
         return [];
     }
 
-    function _readResourceDiagnosticOutput(rawText) {
+    function _readResourceDiagnosticOutput(action, rawText) {
         const text = (rawText || "").toString().trim();
         if (!text)
-            return _defaultResourceDiagnosticResult();
+            return action === "temps" ? {} : _defaultResourceDiagnosticResult();
 
         try {
             const parsed = JSON.parse(text);
-            if (parsed && !parsed.error && Array.isArray(parsed))
-                return parsed;
-            return _defaultResourceDiagnosticResult();
+            if (parsed && !parsed.error) {
+                if (action === "temps")
+                    return typeof parsed === "object" ? parsed : {};
+                if (Array.isArray(parsed))
+                    return parsed;
+            }
+            return action === "temps" ? {} : _defaultResourceDiagnosticResult();
         } catch (e) {
             console.error(`[SystemService] Failed to parse resource diagnostics output: ${e}`);
-            return _defaultResourceDiagnosticResult();
+            return action === "temps" ? {} : _defaultResourceDiagnosticResult();
         }
     }
 
@@ -334,6 +338,18 @@ Singleton {
         _resourceDiagnosticExitStatus = 0;
         resourceDiagnosticsProc.command = [...App.scripts.python.systemDiagnosticsCommand, "--action", _activeResourceDiagnosticAction];
         resourceDiagnosticsProc.running = true;
+    }
+
+    function requestTopCpuProcesses(callback) {
+        _enqueueResourceDiagnosticRequest("cpu", callback);
+    }
+
+    function requestTopRamProcesses(callback) {
+        _enqueueResourceDiagnosticRequest("ram", callback);
+    }
+
+    function requestTempDiagnostics(callback) {
+        _enqueueResourceDiagnosticRequest("temps", callback);
     }
 
     function _resetResourceAlertState(kind, notifyNormal) {
@@ -581,11 +597,11 @@ Singleton {
 
             if (root._resourceDiagnosticExitCode !== 0) {
                 console.error(`[SystemService] Resource diagnostics failed for ${action} with exit code ${root._resourceDiagnosticExitCode} (${root._resourceDiagnosticExitStatus})`);
-                root._finishResourceDiagnosticRequest(action, root._defaultResourceDiagnosticResult());
+                root._finishResourceDiagnosticRequest(action, action === "temps" ? {} : root._defaultResourceDiagnosticResult());
                 return;
             }
 
-            root._finishResourceDiagnosticRequest(action, root._readResourceDiagnosticOutput(root._resourceDiagnosticStdoutText));
+            root._finishResourceDiagnosticRequest(action, root._readResourceDiagnosticOutput(action, root._resourceDiagnosticStdoutText));
         }
     }
 
