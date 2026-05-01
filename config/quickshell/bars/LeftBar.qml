@@ -39,8 +39,9 @@ PanelWindow {
 
     Behavior on margins.left {
         NumberAnimation {
-            duration: panelOpen ? 600 : 500
-            easing.type: panelOpen ? Easing.OutExpo : Easing.OutCubic
+            duration: AnimationConfig.barExpandDuration
+            easing.type: Easing.Bezier
+            easing.bezierCurve: AnimationConfig.bezierAccelerate
         }
     }
 
@@ -200,13 +201,6 @@ PanelWindow {
                 middleButtonGroup.currentIndex = -1;
                 bottomButtonGroup.currentIndex = newIndex - root.bottomOffset;
             }
-        }
-    }
-
-    Behavior on implicitWidth {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.InOutCubic
         }
     }
 

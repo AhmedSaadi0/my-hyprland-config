@@ -3,6 +3,7 @@
 import QtQuick
 import Quickshell
 import org.kde.kirigami as Kirigami
+import "root:/config"
 
 PersistentProperties {
     id: root
@@ -139,9 +140,17 @@ PersistentProperties {
 
     // Animations
     property bool _hyprAnimationsEnabled: true
-    property string _hyprBezier: "decel, 0.05, 0.7, 0.1, 1"
-    property string _hyprAnimWindows: "1, 5, decel, slidefade 18%"
-    property string _hyprAnimWorkspaces: "1, 3, md_standard, slidefade 8%"
+    property string _hyprBezier: AnimationConfig.hyprBezierAccelerate
+    property string _hyprAnimWindows: AnimationConfig.hyprAnimWindows
+    property string _hyprAnimWindowsMove: AnimationConfig.hyprAnimWindowsMove
+    property string _hyprAnimWindowsOut: AnimationConfig.hyprAnimWindowsOut
+    property string _hyprAnimBorder: AnimationConfig.hyprAnimBorder
+    property string _hyprAnimBorderAngle: AnimationConfig.hyprAnimBorderAngle
+    property string _hyprAnimFadeIn: AnimationConfig.hyprAnimFadeIn
+    property string _hyprAnimFadeOut: AnimationConfig.hyprAnimFadeOut
+
+    // مساحات العمل
+    property string _hyprAnimWorkspaces: AnimationConfig.hyprAnimWorkspaces
 
     // Visual Effects (Blur & Dim)
     property bool _hyprBlurEnabled: true
@@ -313,6 +322,12 @@ PersistentProperties {
         property alias animationsEnabled: root._hyprAnimationsEnabled
         property alias bezier: root._hyprBezier
         property alias animWindows: root._hyprAnimWindows
+        property alias animWindowsMove: root._hyprAnimWindowsMove
+        property alias animWindowsOut: root._hyprAnimWindowsOut
+        property alias animBorder: root._hyprAnimBorder
+        property alias animBorderAngle: root._hyprAnimBorderAngle
+        property alias animFadeIn: root._hyprAnimFadeIn
+        property alias animFadeOut: root._hyprAnimFadeOut
         property alias animWorkspaces: root._hyprAnimWorkspaces
 
         // --- Visual Effects ---

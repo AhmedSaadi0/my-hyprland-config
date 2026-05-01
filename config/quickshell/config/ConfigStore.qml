@@ -65,7 +65,7 @@ QtObject {
     property int bottomLauncherWidth: 800
 
     // Default menu style changed to floating per user request
-    property string menuStyle: C.FLOATING
+    property string menuStyle: C.DOCKED_MOVING_BAR
 
     property var favoriteApps: []
 

@@ -233,7 +233,10 @@ Singleton {
             root._responseRotationState[responseKey] = (idx + 1) % arr.length;
 
             if (result && result.text)
-                return { text: result.text, emotion: result.emotion || fallbackEmotion };
+                return {
+                    text: result.text,
+                    emotion: result.emotion || fallbackEmotion
+                };
         }
 
         return {
@@ -290,7 +293,10 @@ Singleton {
             }
             return action === "temps" ? {} : _defaultResourceDiagnosticResult();
         } catch (e) {
-            console.error(`[SystemService] Failed to parse resource diagnostics output: ${e}`);
+            // التعديل الاحترافي بناءً على النصيحة
+            console.error(`[SystemService] Failed to parse resource diagnostics output for action '${action}': ${e}`);
+            console.error(`[SystemService] Raw output was: \n${rawText}`); // طباعة النص الخام لمعرفة سبب فشل الـ JSON
+
             return action === "temps" ? {} : _defaultResourceDiagnosticResult();
         }
     }
@@ -558,7 +564,6 @@ Singleton {
                     root.cpuMaxTemp = metrics.temp;
                     root.temperatureSampled(prevTemp, root.cpuMaxTemp);
                     root._handleTempAlert(root.cpuMaxTemp);
-
                 } catch (e) {
                     console.error("[SystemService] Error parsing JSON:", e, "Data:", data);
                 }

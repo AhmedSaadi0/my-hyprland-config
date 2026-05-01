@@ -12,7 +12,6 @@ PanelWindow {
     id: root
 
     property bool isShown: false
-    property int animationDuration: 600
     property string menuStyle: App.menuStyle
 
     color: "transparent"
@@ -63,7 +62,7 @@ PanelWindow {
 
     Timer {
         id: startOpenAnimTimer
-        interval: 30
+        interval: 0
         repeat: false
         onTriggered: {
             if (root.isShown) {
@@ -127,13 +126,15 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: root.animationDuration + 150
-                        easing.type: Easing.OutExpo
+                        duration: AnimationConfig.animDuration
+                        easing.type: Easing.Bezier
+                        easing.bezierCurve: AnimationConfig.bezierAccelerate
                     }
                     NumberAnimation {
                         properties: "opacity"
-                        duration: 100
-                        easing.type: Easing.OutQuad
+                        duration: AnimationConfig.fadeDuration
+                        easing.type: Easing.Bezier
+                        easing.bezierCurve: AnimationConfig.bezierAccelerate // شفافية متسارعة
                     }
                 }
             },
@@ -143,23 +144,26 @@ PanelWindow {
                 SequentialAnimation {
                     ParallelAnimation {
                         NumberAnimation {
-                            properties: "x"
-                            duration: root.animationDuration
-                            easing.type: Easing.OutCubic
+                            target: contentContainer
+                            property: "x"
+                            to: -root.width
+                            duration: AnimationConfig.animDuration
+                            easing.type: Easing.Bezier
+                            easing.bezierCurve: AnimationConfig.bezierAccelerate
                         }
                         NumberAnimation {
-                            properties: "opacity"
-                            duration: root.animationDuration * 2
-                            easing.type: Easing.InQuad
+                            target: contentContainer
+                            property: "opacity"
+                            to: 0
+                            duration: AnimationConfig.animDuration
+                            easing.type: Easing.Bezier
+                            easing.bezierCurve: AnimationConfig.bezierAccelerate
                         }
                     }
-
-                    ScriptAction {
-                        script: {
-                            if (!root.isShown) {
-                                root.visible = false;
-                            }
-                        }
+                    PropertyAction {
+                        target: root
+                        property: "visible"
+                        value: false
                     }
                 }
             }
