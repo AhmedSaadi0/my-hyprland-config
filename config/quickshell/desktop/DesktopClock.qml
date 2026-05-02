@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import QtQuick.Effects
+import "root:/config"
 
 Item {
     id: root
@@ -11,7 +12,6 @@ Item {
     property bool editMode: false
     property bool pressed: false
 
-    // إعدادات الثيم
     property bool enableAnimation: false
     property bool shadowEnabled: false
     property color shadowColor: "#40000000"
@@ -20,124 +20,174 @@ Item {
     property string clockFormat: "hh:mm"
     property string clockLocale: "en_US"
 
+    // متغيرات العرض الداخلية (لفصلها عن التحديث الفوري للثيم)
     property color _displayedColor: root.clockColor
     property string _displayedFont: root.clockFont
     property string _displayedFormat: root.clockFormat
-
-    // متغير للتحقق من التحميل الأولي
     property bool _isReady: false
 
     signal requestNewGeometry(point newPosition, size newSize)
     signal themeChanged
 
-    // ================= إعدادات النافذة والتحريك =================
-    x: position.x
-    y: position.y
-    width: size.width
-    height: size.height
+    // ================= متغيرات تحريك النافذة (الموقع والحجم) =================
+    property real _currentX: position.x
+    property real _currentY: position.y
+    property real _currentW: size.width
+    property real _currentH: size.height
 
-    Behavior on x {
-        enabled: !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.InExpo
-        }
-    }
-    Behavior on y {
-        enabled: !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.InExpo
-        }
-    }
+    x: _currentX
+    y: _currentY
+    width: _currentW
+    height: _currentH
 
-    Behavior on width {
-        enabled: !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.InExpo
-        }
-    }
-    Behavior on height {
-        enabled: !root.editMode
-        NumberAnimation {
-            duration: 600
-            easing.type: Easing.InExpo
+    // ================= مؤقتات الاستجابة (Debounce) =================
+
+    // 1. مؤقت تحديث الموقع والحجم
+    Timer {
+        id: movementDelayTimer
+        interval: 450
+        repeat: false
+        onTriggered: {
+            root._currentX = root.position.x;
+            root._currentY = root.position.y;
+            root._currentW = root.size.width;
+            root._currentH = root.size.height;
         }
     }
 
-    function updateClockStyle() {
-        if (!root._isReady) {
+    onPositionChanged: {
+        if (root.editMode) {
+            root._currentX = root.position.x;
+            root._currentY = root.position.y;
+        } else if (root._isReady)
+            movementDelayTimer.restart();
+    }
+    onSizeChanged: {
+        if (root.editMode) {
+            root._currentW = root.size.width;
+            root._currentH = root.size.height;
+        } else if (root._isReady)
+            movementDelayTimer.restart();
+    }
+
+    // 2. مؤقت تحديث المظهر (اللون والخط)
+    Timer {
+        id: styleDelayTimer
+        interval: 450
+        repeat: false
+        onTriggered: {
+            // اللون يتحدث فوراً لأن له ColorAnimation خاص به في الأسفل
             root._displayedColor = root.clockColor;
-            root._displayedFont = root.clockFont;
-            root._displayedFormat = root.clockFormat;
-            return;
-        }
 
-        // إذا كان هناك تغيير فعلي، شغل أنيميشن التحول
-        if (root._displayedFont !== root.clockFont || root._displayedColor !== root.clockColor || root._displayedFormat !== root.clockFormat) {
-            styleChangeAnim.restart();
+            // إذا تغير الخط أو التنسيق، شغل تأثير "النبض الطبيعي"
+            if (root._displayedFont !== root.clockFont || root._displayedFormat !== root.clockFormat) {
+                cinematicMorph.restart();
+            }
         }
     }
 
-    onClockColorChanged: updateClockStyle()
-    onClockFontChanged: updateClockStyle()
-    onClockFormatChanged: updateClockStyle()
+    onClockColorChanged: if (root._isReady)
+        styleDelayTimer.restart()
+    onClockFontChanged: if (root._isReady)
+        styleDelayTimer.restart()
+    onClockFormatChanged: if (root._isReady)
+        styleDelayTimer.restart()
 
+    // ================= أنميشن النبض الطبيعي (Natural Morphing) =================
     SequentialAnimation {
-        id: styleChangeAnim
+        id: cinematicMorph
 
-        // 1. الخروج: تصغير + اختفاء (يخفي القفزة القديمة)
         ParallelAnimation {
             NumberAnimation {
                 target: contentContainer
-                property: "opacity"
-                to: 0
-                duration: 450
+                property: "scale"
+                to: 0.75
+                duration: 180
                 easing.type: Easing.InQuad
             }
             NumberAnimation {
                 target: contentContainer
-                property: "scale"
-                to: 0.8
-                duration: 450
-                easing.type: Easing.InQuad
+                property: "opacity"
+                to: 0.3
+                duration: 180
+            }
+            NumberAnimation {
+                target: shadowEffect
+                property: "blur"
+                to: 2.5
+                duration: 180
             }
         }
 
-        // 2. التبديل: تغيير القيم والخط والنص مختفي تماماً
         ScriptAction {
             script: {
-                root._displayedColor = root.clockColor;
                 root._displayedFont = root.clockFont;
                 root._displayedFormat = root.clockFormat;
             }
         }
 
-        // 3. الدخول: تكبير + ظهور (بالشكل الجديد)
         ParallelAnimation {
             NumberAnimation {
                 target: contentContainer
-                property: "opacity"
-                to: 1
-                duration: 550
-                easing.type: Easing.OutBack
+                property: "scale"
+                to: 1.0
+                duration: 500
+                easing.type: Easing.OutCubic
             }
             NumberAnimation {
                 target: contentContainer
-                property: "scale"
-                to: 1
-                duration: 550
-                easing.type: Easing.OutBack
+                property: "opacity"
+                to: 1.0
+                duration: 500
+            }
+            NumberAnimation {
+                target: shadowEffect
+                property: "blur"
+                to: 0.0
+                duration: 500
             }
         }
     }
 
-    // مصدر الوقت
+    // ================= أنميشن تحريك الودجت =================
+    Behavior on x {
+        enabled: !root.editMode && root._isReady
+        NumberAnimation {
+            duration: 450
+            easing.type: Easing.OutBack
+            easing.overshoot: 1.4
+        }
+    }
+    Behavior on y {
+        enabled: !root.editMode && root._isReady
+        NumberAnimation {
+            duration: 450
+            easing.type: Easing.OutBack
+            easing.overshoot: 1.4
+        }
+    }
+    Behavior on width {
+        enabled: !root.editMode && root._isReady
+        NumberAnimation {
+            duration: 450
+            easing.type: Easing.OutBack
+            easing.overshoot: 1.4
+        }
+    }
+    Behavior on height {
+        enabled: !root.editMode && root._isReady
+        NumberAnimation {
+            duration: 450
+            easing.type: Easing.OutBack
+            easing.overshoot: 1.4
+        }
+    }
+
     SystemClock {
         id: systemClock
     }
 
+    // ================= محتوى الساعة =================
     Item {
         id: contentContainer
         anchors.fill: parent
@@ -148,8 +198,17 @@ Item {
             anchors.centerIn: parent
 
             text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root._displayedFormat)
-            color: root._displayedColor
             font.family: root._displayedFont
+
+            // ================= السر البصري لتغير اللون =================
+            // ColorAnimation يقوم بمزج الألوان كيميائياً بدلاً من التبديل الفوري
+            color: root._displayedColor
+            Behavior on color {
+                ColorAnimation {
+                    duration: 450
+                    easing.type: Easing.InOutQuad
+                }
+            }
 
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -168,22 +227,21 @@ Item {
             renderType: Text.QtRendering
             font.hintingPreference: Font.PreferFullHinting
 
-            layer.enabled: root.shadowEnabled && !root.pressed
+            layer.enabled: true
             layer.smooth: true
             layer.effect: MultiEffect {
-                shadowEnabled: true
+                id: shadowEffect
+
+                blurEnabled: true
+                blurMax: 8 // تمكين التمويه للأنميشن
+                blur: 0
+
+                shadowEnabled: root.shadowEnabled && !root.pressed
                 shadowColor: root.shadowColor
-
-                // 1. التنعيم الكامل للحصول على تأثير التوهج
                 shadowBlur: 1.0
-
-                shadowOpacity: 0.8
-
-                // 3. جعل الظل في المنتصف تماماً
+                shadowOpacity: 0.6
                 shadowVerticalOffset: 0
                 shadowHorizontalOffset: 0
-
-                // 4. عدم تغيير الحجم لمنع التشوه
                 shadowScale: 1.0
             }
         }
@@ -191,12 +249,15 @@ Item {
 
     // ================= التهيئة الأولية =================
     Component.onCompleted: {
-        // مزامنة فورية عند البدء
+        root._currentX = root.position.x;
+        root._currentY = root.position.y;
+        root._currentW = root.size.width;
+        root._currentH = root.size.height;
+
         root._displayedColor = root.clockColor;
         root._displayedFont = root.clockFont;
         root._displayedFormat = root.clockFormat;
 
-        // تأخير بسيط لتفعيل الأنيميشن المستقبلي
         initTimer.start();
     }
 
@@ -238,7 +299,6 @@ Item {
             startDragPos = mapToItem(null, mouse.x, mouse.y);
             mouse.accepted = true;
         }
-
         onPositionChanged: mouse => {
             if (pressed && root.editMode) {
                 var currentDragPos = mapToItem(null, mouse.x, mouse.y);
@@ -255,11 +315,19 @@ Item {
         height: 20
         color: "white"
         radius: 10
+        opacity: root.editMode ? 1 : 0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+            }
+        }
+
         anchors {
             right: parent.right
             bottom: parent.bottom
             margins: -10
         }
+
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.SizeFDiagCursor
