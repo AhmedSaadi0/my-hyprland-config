@@ -253,6 +253,14 @@ Singleton {
 
             readonly property string getClipboard: root.pythonScriptsPath + "/get_clipboard.py"
             readonly property string applyKonsoleProfileOpenSessions: root.pythonScriptsPath + "/apply_konsole_profile_open_sessions.py"
+            // Integration settings scripts
+            readonly property string listQtStyles: root.pythonScriptsPath + "/list_qt_styles.py"
+            readonly property string listIconThemes: root.pythonScriptsPath + "/list_icon_themes.py"
+            readonly property string listPlasmaSchemes: root.pythonScriptsPath + "/list_plasma_schemes.py"
+            readonly property string listKvantumThemes: root.pythonScriptsPath + "/list_kvantum_themes.py"
+            readonly property string listKonsoleProfiles: root.pythonScriptsPath + "/list_konsole_profiles.py"
+            readonly property string listGtkThemes: root.pythonScriptsPath + "/list_gtk_themes.py"
+            readonly property string listCursorThemes: root.pythonScriptsPath + "/list_cursor_themes.py"
 
             // Commands
             readonly property var batteryInfoCommand: [pythonPath, batteryInfo]
@@ -270,6 +278,14 @@ Singleton {
             readonly property var dataUsageCommand: [pythonPath, dataUsage]
             readonly property var connectWifiCommand: [pythonPath, connectWifi]
             readonly property var applyKonsoleProfileOpenSessionsCommand: [pythonPath, applyKonsoleProfileOpenSessions]
+            // Integration settings commands
+            readonly property var listQtStylesCommand: [pythonPath, listQtStyles]
+            readonly property var listIconThemesCommand: [pythonPath, listIconThemes]
+            readonly property var listPlasmaSchemesCommand: [pythonPath, listPlasmaSchemes]
+            readonly property var listKvantumThemesCommand: [pythonPath, listKvantumThemes]
+            readonly property var listKonsoleProfilesCommand: [pythonPath, listKonsoleProfiles]
+            readonly property var listGtkThemesCommand: [pythonPath, listGtkThemes]
+            readonly property var listCursorThemesCommand: [pythonPath, listCursorThemes]
 
             readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", aiProvider]
 

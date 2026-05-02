@@ -6,3 +6,4 @@ google-generativeai==0.8.5
 openai==2.9.0
 json_repair==0.54.3
 ollama==0.6.1
+PyQt6==6.11.0

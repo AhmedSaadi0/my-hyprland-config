@@ -135,24 +135,22 @@ Singleton {
         let message = "";
         if (isResumeContext) {
             message = `
-            Action: User RESUMED playback.
-            Playin: ${title} by ${artist}
-            Resume Time: ${resumeTimeStr}
-            Volume: ${volume}
-            Player: ${player}
-            `;
+[ACTION]: USER RESUMED PLAYBACK
+[CURRENTLY_PLAYING]: ${root.fullInfo}
+[POSITION]: ${resumeTimeStr}
+[SYSTEM]: Player: ${player}, Volume: ${volume}
+`;
         } else {
             message = `
-            Currently Playin: ${title} by ${artist}
-            Context:
-            - Time: ${currentTime}
-            - Volume: ${volume}
-            - Player: ${player}
-            - Play History: [${historyStr}]
-            - Repetition Info: ${historyContextMsg}`;
+[PRIMARY_FOCUS]: ${root.fullInfo} (Comment specifically on this song)
+[STATE]: Playing now
+[CONTEXT]: Time: ${currentTime}, Volume: ${volume}, Player: ${player}
+[PLAY_HISTORY]: ${root.recentTracks.slice(0, 7).join(" -> ")}
+[REPETITION_INFO]: ${historyContextMsg}
+`;
         }
 
-        console.info(`[MusicService] Sending to AI Gateway... ${message}`);
+        console.info(`[MusicService] Requesting AI for: ${message}`);
 
         // =========================================================
         // الاتصال عبر AiService
@@ -177,7 +175,7 @@ Singleton {
             }
         }, function (errorMessage) {
             console.error("[MusicService] AI Failed via Gateway: " + errorMessage);
-        });
+        }, "MusicService", 2);
     }
 
     // ============================================================

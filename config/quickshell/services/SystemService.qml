@@ -52,7 +52,7 @@ Singleton {
         }, function (errorMessage) {
             console.error("[SystemService] AI Process Error: " + errorMessage);
             root.bootAnalysisStatus = "ERROR";
-        });
+        }, "BootDetails", 0);
     }
 
     Timer {
@@ -83,7 +83,7 @@ Singleton {
         }, function (errorMessage) {
             console.error("[SystemService] Failed to load system action responses:", errorMessage);
             root.systemActionResponsesReady = true;
-        });
+        }, "SystemActions", 0);
     }
 
     Timer {

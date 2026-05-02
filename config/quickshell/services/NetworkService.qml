@@ -266,7 +266,6 @@ Singleton {
     }
 
     function updateHistoryUsageModel(summaryResponse) {
-        console.info(JSON.stringify(summaryResponse));
         const rows = Array.isArray(summaryResponse.data) ? summaryResponse.data : [];
         const totals = summaryResponse.totals || {};
         historyUsageListModel.clear();

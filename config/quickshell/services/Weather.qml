@@ -268,7 +268,7 @@ Singleton {
                     // في حال الفشل، نعود للتحديث الافتراضي (مثلاً كل 15 دقيقة)
                     refreshTimer.interval = 15 * 60 * 1000;
                     refreshTimer.restart();
-                });
+                }, "WeatherService", 1);
             } else {
                 console.error("Missing required weather fields for AI analysis.");
             }

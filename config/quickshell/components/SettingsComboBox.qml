@@ -2,7 +2,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import org.kde.kirigami as Kirigami
 
 import "root:/themes"
 
@@ -29,32 +28,18 @@ ComboBox {
         border.color: root.hovered || root.activeFocus ? root.componentActiveBorderColor : root.componentBorderColor
 
         color: root.popup.visible ? root.componentOpenColor : root.componentColor
-
-        // Behavior on color {
-        //     ColorAnimation {
-        //         duration: 150
-        //     }
-        // }
-        // Behavior on border.color {
-        //     ColorAnimation {
-        //         duration: 150
-        //     }
-        // }
-
     }
 
     contentItem: Text {
         text: root.displayText
         font: root.font
-        // استخدام لون النص من الثيم لضمان الوضوح
         color: ThemeManager.selectedTheme.colors.topbarFgColorV2
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         elide: Text.ElideRight
-        rightPadding: indicatorIcon.width + Kirigami.Units.smallSpacing * 2
+        rightPadding: indicatorIcon.width + 10
         leftPadding: 8
 
-        // لإسكات تحذير KDE Desktop Style
         function positionToRectangle(pos) {
             return Qt.rect(0, 0, 0, 0);
         }
@@ -81,6 +66,14 @@ ComboBox {
                 duration: 200
                 easing.type: Easing.InOutQuad
             }
+        }
+    }
+
+    // Prevent wheel events from changing selection when popup is closed
+    WheelHandler {
+        enabled: !root.popup.visible
+        onWheel: (event) => {
+            event.accepted = true;
         }
     }
 }

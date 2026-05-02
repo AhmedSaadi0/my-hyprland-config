@@ -114,7 +114,7 @@ PanelWindow {
                 PropertyChanges {
                     target: contentContainer
                     x: -root.width
-                    opacity: 0.0
+                    opacity: 0.9
                 }
             }
         ]

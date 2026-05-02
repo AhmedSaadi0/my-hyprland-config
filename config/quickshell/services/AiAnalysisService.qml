@@ -41,8 +41,6 @@ Singleton {
             ram: 0
         })
 
- 
-
     Connections {
         target: SystemService
 
@@ -269,24 +267,22 @@ Singleton {
     }
 
     function _collectTopCpuProcesses(callback) {
-        SystemService.requestTopCpuProcesses(function(data) {
+        SystemService.requestTopCpuProcesses(function (data) {
             callback(_normalizeDiagnosticResult("cpu", data));
         });
     }
 
     function _collectTopRamProcesses(callback) {
-        SystemService.requestTopRamProcesses(function(data) {
+        SystemService.requestTopRamProcesses(function (data) {
             callback(_normalizeDiagnosticResult("ram", data));
         });
     }
 
     function _collectTempDiagnostics(callback) {
-        SystemService.requestTempDiagnostics(function(data) {
+        SystemService.requestTempDiagnostics(function (data) {
             callback(_normalizeDiagnosticResult("temps", data));
         });
     }
-
-  
 
     function _defaultDiagnosticResult(action) {
         return action === "temps" ? {} : [];
@@ -304,8 +300,6 @@ Singleton {
 
         return Array.isArray(data) ? data : [];
     }
-
-  
 
     function _buildTempDevicesList(tempsData) {
         const combined = [];
@@ -347,8 +341,6 @@ Singleton {
             storage_max: tempsData.storage_max_temp !== undefined && tempsData.storage_max_temp !== null ? tempsData.storage_max_temp : SystemService.storageMaxTemp
         };
     }
-
-   
 
     function _currentTempsPayload() {
         return {
@@ -392,7 +384,7 @@ Singleton {
                 causes: [],
                 actions: []
             });
-        });
+        }, "spike_analyze_" + eventId, 2);
     }
 
     function _applySpikeAnalysis(eventId, data) {
@@ -442,10 +434,6 @@ Singleton {
         const ss = dt.getSeconds().toString().padStart(2, "0");
         return `${hh}:${mm}:${ss}`;
     }
-
-   
-
-  
 
     NibrasShellShortcut {
         name: "testHighCpu"

@@ -106,6 +106,12 @@ QtObject {
             if (entry.value)
                 dispatch('animations:animation', `${entry.name}, ${entry.value}`);
         }
+
+        // Cursor Theme for Hyprland
+        if (hyprConfig.cursorTheme) {
+            const cursorSize = hyprConfig.cursorSize || 24;
+            Hyprland.dispatch(`exec hyprctl setcursor ${hyprConfig.cursorTheme} ${cursorSize}`);
+        }
     }
 
     function addLeftMenuSpacing(hyprConfig, dimensions) {

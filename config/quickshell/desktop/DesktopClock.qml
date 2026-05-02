@@ -112,7 +112,7 @@ Item {
                 duration: 180
             }
             NumberAnimation {
-                target: shadowEffect
+                target: timeText.shadowEffect
                 property: "blur"
                 to: 2.5
                 duration: 180
@@ -141,7 +141,7 @@ Item {
                 duration: 500
             }
             NumberAnimation {
-                target: shadowEffect
+                target: timeText.shadowEffect
                 property: "blur"
                 to: 0.0
                 duration: 500

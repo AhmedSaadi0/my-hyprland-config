@@ -1,29 +1,24 @@
 // services/AiService.qml
-
 pragma Singleton
 import QtQuick
 import Quickshell
-import Quickshell.Io
 
 Singleton {
     id: root
 
     // =========================================================
-    // Request Handler
+    // إعدادات الحماية من الحظر (Rate Limiting)
     // =========================================================
+    property int requestCooldownMs: 3000   // وقت الانتظار بين كل طلب وطلب (3 ثواني)
+    property int requestThrottleMs: 15000  // الوقت المطلوب قبل السماح بتكرار نفس نوع الطلب (15 ثانية)
+
     property var _queue: []
     property bool _isBusy: false
+    property var _lastRunTimes: ({}) // سجل يحفظ متى تم تشغيل كل طلب
 
-    function sendRequest(command, args, callback, errorCallback) {
-        _queue.push({
-            command: command,
-            args: args,
-            callback: callback,
-            errorCallback: errorCallback
-        });
-        _processQueue();
-    }
-
+    // =========================================================
+    // أدوات الطباعة للوج
+    // =========================================================
     function _safePrettyJson(value) {
         try {
             return JSON.stringify(value, null, 2);
@@ -35,143 +30,155 @@ Singleton {
     function _extractMessageArg(args) {
         if (!args || !args.length)
             return "";
-
-        const messageIndex = args.indexOf("--message");
-        if (messageIndex === -1 || messageIndex + 1 >= args.length)
-            return "";
-
-        return args[messageIndex + 1];
+        const idx = args.indexOf("--message");
+        return (idx !== -1 && idx + 1 < args.length) ? args[idx + 1] : "";
     }
 
-    function _logOutgoingRequest(request, fullCmd) {
-        console.info(`[AiService] Dispatching AI request`);
-        console.info(`[AiService] Command: ${_safePrettyJson(fullCmd)}`);
-
-        const rawMessage = _extractMessageArg(request.args);
-        if (!rawMessage) {
-            console.info(`[AiService] Args: ${_safePrettyJson(request.args || [])}`);
-            return;
-        }
-
-        console.info(`[AiService] Raw --message payload:\n${rawMessage}`);
-
-        try {
-            console.info(`[AiService] Parsed --message payload:\n${JSON.stringify(JSON.parse(rawMessage), null, 2)}`);
-        } catch (e) {
-            console.warn(`[AiService] --message payload is not valid JSON: ${e}`);
-        }
+    function _logOutgoingRequest(requestId, args, fullCmd) {
+        console.info(`[AiService] [Queue: ${_queue.length}] Preparing request: ${requestId}`);
     }
 
-    function _processQueue() {
-        if (_isBusy || _queue.length === 0)
-            return;
+    // =========================================================
+    // الدالة الرئيسية الذكية
+    // =========================================================
+    // 0 = Low (Background tasks like Hover, System Actions)
+    // 1 = Normal (Weather, Todo, Boot Analysis)
+    // 2 = High (Music changes, System Spikes, Direct User Actions)
 
-        var request = _queue.shift(); // أخذ أول طلب
-        _isBusy = true;
+    function sendRequest(command, args, callback, errorCallback, requestId = "default", priority = 1) {
+        const now = Date.now();
 
-        // إعداد العملية
-        aiProcess.currentRequest = request;
-        aiProcess.hasFinishedSuccessfully = false;
-
-        // دمج الأمر
-        var fullCmd = [...request.command];
-        if (request.args)
-            fullCmd = fullCmd.concat(request.args);
-
-        // _logOutgoingRequest(request, fullCmd);
-
-        aiProcess.command = fullCmd;
-        aiProcess.running = true;
-    }
-
-    Process {
-        id: aiProcess
-        property var currentRequest: null
-        property bool hasFinishedSuccessfully: false
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                console.info(`[AiService] Ai Process Result :-> ${this.text}`);
-                var data = root.cleanAndParseJson(this.text);
-
-                if (data) {
-                    // بيانات سليمة
-                    if (aiProcess.currentRequest && aiProcess.currentRequest.callback) {
-                        aiProcess.currentRequest.callback(data);
-                    }
-                    aiProcess.hasFinishedSuccessfully = true;
-                } else {
-                    console.error("AiService: Invalid JSON received.");
-                }
+        // منع التكرار (كما هو)
+        if (requestId !== "default" && root._lastRunTimes[requestId]) {
+            if (now - root._lastRunTimes[requestId] < root.requestThrottleMs) {
+                console.warn(`[AiService] ⏳ Ignored '${requestId}' (Too soon).`);
+                return;
             }
         }
 
-        stderr: SplitParser {
-            onRead: data => console.error("AiService Stderr:", data)
+        // إزالة القديم إذا كان موجوداً
+        if (requestId !== "default") {
+            root._queue = root._queue.filter(item => item.id !== requestId);
         }
 
-        onRunningChanged: {
-            // "running" أصبح false (انتهت العملية سواء بنجاح أو فشل)
-            if (!running && root._isBusy) {
+        // إنشاء كائن الطلب مع الأولوية
+        let requestItem = {
+            cmd: command,
+            args: args,
+            cb: callback,
+            errCb: errorCallback,
+            id: requestId,
+            prio: priority
+        };
 
-                // إذا لم يتم وضع علامة النجاح (يعني لم يمر عبر stdout بنجاح)
-                if (!aiProcess.hasFinishedSuccessfully) {
-                    console.error("AiService: Process failed or crashed without valid output.");
+        // إدراج الطلب في المكان الصحيح بناءً على الأولوية
+        _insertWithPriority(requestItem);
 
-                    // إبلاغ الخدمة الطالبة بالفشل
-                    if (aiProcess.currentRequest && aiProcess.currentRequest.errorCallback) {
-                        aiProcess.currentRequest.errorCallback("Process Crash or No Output");
-                    }
-                }
+        _processNext();
+    }
 
-                // تنظيف المتغيرات
-                aiProcess.currentRequest = null;
-
-                // تحرير العلم وتشغيل التالي
-                root._isBusy = false;
-                root._processQueue();
+    // دالة جديدة لترتيب الطابور حسب الأولوية
+    function _insertWithPriority(item) {
+        let inserted = false;
+        // نبحث عن أول عنصر أولويته أقل من العنصر الجديد، ونضعه قبله
+        for (let i = 0; i < root._queue.length; i++) {
+            if (root._queue[i].prio < item.prio) {
+                root._queue.splice(i, 0, item);
+                inserted = true;
+                break;
             }
+        }
+        // إذا لم نجد (أو كان الطابور فارغاً)، نضعه في النهاية
+        if (!inserted) {
+            root._queue.push(item);
         }
     }
 
     // =========================================================
-    // JSON Cleaner
+    // المعالجة والطابور
+    // =========================================================
+    function _processNext() {
+        if (root._isBusy || root._queue.length === 0)
+            return;
+
+        root._isBusy = true;
+        var next = root._queue.shift();
+
+        // تسجيل وقت التشغيل لهذا النوع من الطلبات
+        if (next.id !== "default") {
+            root._lastRunTimes[next.id] = Date.now();
+        }
+
+        _runTask(next.cmd, next.args, next.cb, next.errCb, next.id);
+    }
+
+    function _runTask(command, args, callback, errorCallback, requestId) {
+        const component = Qt.createComponent("AiTask.qml");
+
+        var fullCmd = [...command];
+        if (args)
+            fullCmd = fullCmd.concat(args);
+
+        _logOutgoingRequest(requestId, args, fullCmd);
+
+        const task = component.createObject(root, {
+            "command": fullCmd
+        });
+
+        task.success.connect(data => {
+            if (callback)
+                callback(data);
+            task.destroy();
+            cooldownTimer.start(); // تشغيل العداد قبل معالجة الطلب التالي
+        });
+
+        task.failed.connect(err => {
+            if (errorCallback)
+                errorCallback(err);
+            task.destroy();
+            cooldownTimer.start(); // حتى عند الفشل ننتظر لتجنب الانهيار المتكرر
+        });
+
+        task.start();
+    }
+
+    // مؤقت التبريد (يسمح للـ API بالتنفس)
+    Timer {
+        id: cooldownTimer
+        interval: root.requestCooldownMs
+        onTriggered: {
+            root._isBusy = false;
+            root._processNext();
+        }
+    }
+
+    // =========================================================
+    // منظف الـ JSON
     // =========================================================
     function cleanAndParseJson(rawText) {
+        if (!rawText || rawText.trim() === "")
+            return null;
+
         try {
-            // 1. محاولة تحويل مباشر
             var result = JSON.parse(rawText);
 
-            // 2. التحقق من هيكل الرد
-            if (!result.success || !result.response) {
-                console.warn("AiService: API returned success:false or missing response.");
+            if (!result.success || !result.response)
                 return null;
-            }
 
             var finalData = result.response;
 
-            // 3. التنظيف العميق (المشكلة التي تواجهها دائماً مع LLMs)
-            // إذا كان الرد نصاً يحتوي على ماركداون ```json
             if (typeof finalData === 'string') {
-                var cleanJson = finalData.replace(/```json/g, "") // حذف بداية الكود
-                .replace(/```/g, "")     // حذف نهاية الكود
-                .trim();
-
-                // استخراج ما بين الأقواس فقط لضمان عدم وجود نصوص زائدة
+                var cleanJson = finalData.replace(/```json/g, "").replace(/```/g, "").trim();
                 var firstBrace = cleanJson.indexOf("{");
                 var lastBrace = cleanJson.lastIndexOf("}");
                 if (firstBrace !== -1 && lastBrace !== -1) {
                     cleanJson = cleanJson.substring(firstBrace, lastBrace + 1);
                 }
-
-                // تحويل النص المنظف إلى كائن
                 finalData = JSON.parse(cleanJson);
             }
-
             return finalData;
         } catch (e) {
-            console.error("AiService: Parsing Error:", e);
-            console.error("AiService: Raw Text was:", rawText);
+            console.error("[AiService] Parsing Error.");
             return null;
         }
     }

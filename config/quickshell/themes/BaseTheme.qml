@@ -106,6 +106,9 @@ PersistentProperties {
 
     property string _themeIcons: "breeze-dark"
 
+    property string _cursorTheme: "breeze_cursors"
+    property int _cursorSize: 24
+
     // -------------------------
     // -- Wallpapers Settings --
     // -------------------------
@@ -286,6 +289,8 @@ PersistentProperties {
         property alias gtkTheme: root._gtkTheme
         property alias themeIcons: root._themeIcons
         property alias themeMode: root._themeMode
+        property alias cursorTheme: root._cursorTheme
+        property alias cursorSize: root._cursorSize
         property alias plasmaColorScheme: root._plasmaColorScheme
         property alias konsoleProfile: root._konsoleProfile
         property alias fontName: root._bodyFont
@@ -341,6 +346,10 @@ PersistentProperties {
         property alias shadowRange: root._hyprShadowRange
         property alias shadowOffset: root._hyprShadowOffset
         property alias shadowColor: root._hyprShadowColor
+
+        // --- Cursor Settings ---
+        property alias cursorTheme: root._cursorTheme
+        property alias cursorSize: root._cursorSize
     }
 
     // --- Desktop Clock Widget Configuration ---
