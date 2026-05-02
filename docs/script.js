@@ -109,6 +109,7 @@ const translations = {
     rd_desk_li2: "الإخفاء التلقائي للأشرطة",
     rd_desk_li3: "إضافة شريط تطبيقات سفلي مستقل (Dock)",
     rd_desk_li4: "التكيف الذكي للـ Dock عند تغيير موقع الشريط",
+    rd_desk_li5: "تحسين تكامل أدوات التحكم في Hyprland",
 
     rd_desktop_workspaces: "مساحات العمل (Workspaces)",
     rd_ws_li1: "أيقونات ديناميكية بدلاً من الأرقام",
@@ -122,8 +123,12 @@ const translations = {
     rd_ui_li4: "وضع الألعاب (Game Mode) للأداء العالي",
     rd_ui_li5: "تأثير العمق التلقائي وربطه بـ Cava",
     rd_ui_li6: "ثيمات جديدة: Solarized, Rosé Pine, Oxocarbon",
+    rd_ui_li7: "تحسين حركات سطح المكتب والمزامنة مع Quickshell",
+    rd_ui_li8: "دعم سمات المؤشر (Plasma, GTK, Hyprland)",
+    rd_ui_li9: "الكشف الديناميكي لأنماط Qt عبر PyQt6",
+    rd_ui_li10: "مكونات واجهة قابلة لإعادة الاستخدام (SectionCard/FieldLabel)",
 
-    rd_sys_li1: "مؤشر اللغة، البطارية، وأوضاع الطاقة",
+    rd_sys_li1: "مؤشر اللغة، البطارية، وأوضع الطاقة",
     rd_sys_li2: "مدير الحافظة وقائمة المهام",
     rd_sys_li3: "ودجت الملاحظات السريعة",
     rd_sys_li4: "قائمة التطبيقات المفضلة",
@@ -358,6 +363,7 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     rd_desk_li2: "Auto-hide: Implement auto-hide for bars",
     rd_desk_li3: "Standalone Dock: Add a bottom application dock",
     rd_desk_li4: "Smart Adaptation: Dock auto-adjusts layout",
+    rd_desk_li5: "Enhanced Hyprland controls integration",
 
     rd_desktop_workspaces: "Workspaces",
     rd_ws_li1: "Dynamic Icons: Show app icons instead of numbers",
@@ -371,6 +377,10 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     rd_ui_li4: "Game Mode: Toggle for high performance",
     rd_ui_li5: "Depth Effect: Auto-generation linked with Cava",
     rd_ui_li6: "New Themes: Solarized, Rosé Pine, Oxocarbon",
+    rd_ui_li7: "Enhanced desktop animations & Quickshell sync",
+    rd_ui_li8: "Cursor theme support (Plasma, GTK, Hyprland)",
+    rd_ui_li9: "Dynamic Qt widget styles via PyQt6",
+    rd_ui_li10: "Reusable UI components (SectionCard/FieldLabel)",
 
     rd_sys_li1: "Indicators: Language, Battery, Power Profiles",
     rd_sys_li2: "Clipboard Manager & Todo List",
