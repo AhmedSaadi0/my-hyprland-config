@@ -14,7 +14,7 @@ Item {
     property bool blurEnabled: false
     property bool isMenuOpen: false
     property real blurValue: 0.9
-    property string graphicsQuality: "high"
+    property string graphicsQuality: "High"
 
     default property alias content: widgetsContainer.data
 

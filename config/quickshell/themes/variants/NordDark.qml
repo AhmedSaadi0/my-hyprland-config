@@ -9,7 +9,15 @@ BaseTheme {
     themeName: "NordDark"
     _themeMode: "dark"
 
-    _wallpaper: App.assets.getWallpaperPath("nord-dark.png")
+    _wallpaper: App.assets.getWallpaperPath("nord-dark.gif")
+    _desktopClockFont: "Daydream"
+    _desktopClockFormat: "hh:mm AP"
+    _desktopClockPosition: Qt.point(346, 121)
+    _desktopClockDepthEffectEnabled: false
+    _desktopClockSize: Qt.size(818, 266)
+    _desktopClockSahdowEnabled: false
+    _desktopClockUseThemeColor: false
+    _desktopClockColor: Qt.rgba(0.22, 0.18, 0.47, 0.6)
 
     // الألوان الأساسية (باستخدام Frost + Aurora)
     _primary: "#799ddc"      // nord8  (فيروزي - كأساس لتحسين الوضوح)
