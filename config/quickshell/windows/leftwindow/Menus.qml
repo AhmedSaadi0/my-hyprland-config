@@ -93,7 +93,7 @@ StackView {
     }
     Component {
         id: appLauncherComponent
-        AppLauncher {}
+        SidebarLauncher {}
     }
 
     // ---------------------------------------------------------
@@ -251,6 +251,18 @@ StackView {
         });
         _instantiatedPages[1] = notificationCompoObj;
 
+        // Init monitorComponent to start register
+        const monitorComponentObj = monitorComponent.createObject(stackView, {
+            "visible": false
+        });
+        _instantiatedPages[3] = monitorComponentObj;
+
+        // Init networkComponent to start register
+        const networkComponentObj = networkComponent.createObject(stackView, {
+            "visible": false
+        });
+        _instantiatedPages[4] = networkComponentObj;
+
         EventBus.on(Events.LEFT_MENU_IS_OPENED, function (newIndex) {
             if (newIndex < 0 || newIndex === currentIndex)
                 return;
@@ -284,8 +296,6 @@ StackView {
                 }
             }
         }, stackView);
-        ;
-        ;
     }
 
     onCurrentItemChanged: Qt.callLater(_attachToCurrentScrollable)

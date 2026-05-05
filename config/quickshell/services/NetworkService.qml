@@ -87,7 +87,7 @@ Singleton {
     }
 
     function shouldCollectLiveSamples() {
-        return root.shouldRunUsageSection();
+        return true;
     }
 
     function shouldCollectHistory() {
@@ -183,10 +183,13 @@ Singleton {
         root.liveUsageLoading = true;
         liveUsageProcess.command = Utils.Helper.wifiLiveUsageCommand({
             limit: root.liveLimit,
-            wifiInterface: root.wifiInterface
+            wifiInterface: root.wifiInterface,
+            persist: true
         });
         liveUsageProcess.running = true;
     }
+
+    Component.onCompleted: root.syncTimers()
 
     function refreshHistoryUsage() {
         if (historyUsageProcess.running)
@@ -449,7 +452,7 @@ Singleton {
 
     Timer {
         id: liveSamplingTimer
-        interval: 2000
+        interval: 500
         repeat: true
         running: false
         onTriggered: root.refreshLiveUsage()

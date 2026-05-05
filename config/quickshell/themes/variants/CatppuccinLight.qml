@@ -11,7 +11,53 @@ BaseTheme {
     themeName: "CatppuccinLight"
     _themeMode: "light"
 
-    _wallpaper: App.assets.getWallpaperPath("Cat.jpg")
+    // wallpaper
+    _wallpaper: App.assets.getWallpaperPath("catppuccin_light.jpeg")
+
+    // desktopClock
+    _desktopClockEnabled: true
+    _desktopClockFont: "Overhead BRK"
+    _desktopClockColor: "#281F34"
+    _desktopClockFormat: "hh:mm AP - MM/dd"
+    _desktopClockSize: Qt.size(638.23, 225.73)
+    _desktopClockPosition: Qt.point(638.09, 552.60)
+    _desktopClockSahdowEnabled: false
+    _desktopClockSahdowColor: "#00000044"
+    _desktopClockUseThemeColor: false
+    _desktopClockUseAnimation: true
+
+    // Clock Depth Effect
+    _desktopClockDepthEffectEnabled: true
+    _desktopClockDepthModel: "u2net"
+    _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("catppuccin_light_depth.png")
+
+    _baseRadius: 12
+    _elementRadius: 15
+    _iconFont: "FantasqueSansM Nerd Font Propo"
+    _bodyFont: "JF Flat"
+
+    _themeIcons: "Colloid-Purple-Dracula-Dark"
+
+    // Hyprland
+    _hyprBorderWidth: 2
+    _hyprActiveBorder: "rgba(219FB5ff) rgba(E976CBff) 0deg"
+    _hyprInactiveBorder: "rgba(E6E9EFaa) 0deg"
+    _hyprRounding: 12
+    _hyprDropShadow: "yes"
+    _hyprGapsIn: 5
+    _hyprGapsOut: "12, 15, 15, 52"
+    _hyprLayout: "dwindle"
+    _hyprAnimationsEnabled: true
+    _hyprBezier: "decel, 0.05, 0.7, 0.1, 1"
+    _hyprAnimWindows: "1, 5, decel, slidefade 18%"
+    _hyprAnimWorkspaces: "1, 3, md_standard, slidefade 8%"
+    _hyprBlurEnabled: true
+    _hyprBlurSize: 4
+    _hyprBlurPasses: 2
+    _hyprDimInactive: false
+    _hyprDimStrength: 0
+    _hyprShadowRange: 28
+    _hyprShadowColor: "#ffffff"
 
     // --- الألوان الأساسية ---
     _primary: "#209fb5" // Blue
@@ -59,11 +105,6 @@ BaseTheme {
     _plasmaColorScheme: "NibrasCatppuccinLight"
     _konsoleProfile: "CatppuccinLight.profile"
 
-    // _themeIcons: "Catppuccin-Latte"
-    _themeIcons: "Vivid-Dark-Icons"
     // _kvantumTheme: "Tellgo"
     _gtkTheme: "Catppuccin-Latte-Standard-Blue-Light"
-
-    _hyprActiveBorder: "rgba(219FB5ff) rgba(E976CBff) 0deg" // Blue and Pink
-    _hyprInactiveBorder: "rgba(E6E9EFaa) 0deg"
 }

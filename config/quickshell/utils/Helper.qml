@@ -144,6 +144,19 @@ Singleton {
         // This command sets the theme for both GTK3 and GTK4 in most modern environments.
         return ['gsettings', 'set', 'org.gnome.desktop.interface', 'font-name', `'${fontName} ${fontSize}'`];
     }
+
+    function changeCursorTheme(themeName) {
+        return ['kwriteconfig5', '--file', 'kcminputrc', '--group', 'Mouse', '--key', 'cursorTheme', themeName];
+    }
+
+    function changeCursorSize(size) {
+        return ['kwriteconfig5', '--file', 'kcminputrc', '--group', 'Mouse', '--key', 'cursorSize', String(size)];
+    }
+
+    function changeGtkCursorTheme(themeName) {
+        return ['gsettings', 'set', 'org.gnome.desktop.interface', 'cursor-theme', themeName];
+    }
+
     // ==========================================================
     // ==               APPLICATION STYLING                    ==
     // ==========================================================
@@ -328,10 +341,14 @@ Singleton {
 
     function wifiLiveUsageCommand({
         limit = 8,
-        wifiInterface = Config.App.networkMonitor
+        wifiInterface = Config.App.networkMonitor,
+        persist = true
     }) {
         const pythonCommand = Config.App.scripts.python.liveUsageCommand;
-        return [...pythonCommand, "--limit", `${limit}`, "--interface", `${wifiInterface}`];
+        let fullCommand = [...pythonCommand, "--limit", `${limit}`, "--interface", `${wifiInterface}`];
+        if (!persist)
+            fullCommand.push("--no-persist");
+        return fullCommand;
     }
 
     function wifiLiveUsageSummaryCommand({

@@ -21,7 +21,7 @@ Singleton {
     property int _procSpikeCooldownMs: App.resourceAlertCooldownMs
     property int _procAlertCooldownMs: App.resourceAlertCooldownMs
 
-    property real _tempHighThreshold: 85
+    property real _tempHighThreshold: Math.max(1, App.tempHighThreshold || 85)
 
     property var _lastSpikeAt: ({
             cpu: 0,
@@ -40,18 +40,6 @@ Singleton {
             cpu: 0,
             ram: 0
         })
-
-    property var _diagnosticCallbacks: ({
-            cpu: [],
-            ram: [],
-            temps: []
-        })
-    property var _diagnosticQueue: []
-    property string _activeDiagnosticAction: ""
-    property string _diagnosticStdoutText: ""
-    property string _diagnosticStderrText: ""
-    property int _diagnosticExitCode: 0
-    property int _diagnosticExitStatus: 0
 
     Connections {
         target: SystemService
@@ -279,41 +267,21 @@ Singleton {
     }
 
     function _collectTopCpuProcesses(callback) {
-        _enqueueDiagnosticsRequest("cpu", callback);
+        SystemService.requestTopCpuProcesses(function (data) {
+            callback(_normalizeDiagnosticResult("cpu", data));
+        });
     }
 
     function _collectTopRamProcesses(callback) {
-        _enqueueDiagnosticsRequest("ram", callback);
+        SystemService.requestTopRamProcesses(function (data) {
+            callback(_normalizeDiagnosticResult("ram", data));
+        });
     }
 
     function _collectTempDiagnostics(callback) {
-        _enqueueDiagnosticsRequest("temps", callback);
-    }
-
-    function _enqueueDiagnosticsRequest(action, callback) {
-        if (!_diagnosticCallbacks[action])
-            _diagnosticCallbacks[action] = [];
-
-        _diagnosticCallbacks[action].push(callback);
-
-        if (_activeDiagnosticAction === action || _diagnosticQueue.indexOf(action) !== -1)
-            return;
-
-        _diagnosticQueue.push(action);
-        _pumpDiagnosticsQueue();
-    }
-
-    function _pumpDiagnosticsQueue() {
-        if (_activeDiagnosticAction || !_diagnosticQueue.length)
-            return;
-
-        _activeDiagnosticAction = _diagnosticQueue.shift();
-        _diagnosticStdoutText = "";
-        _diagnosticStderrText = "";
-        _diagnosticExitCode = 0;
-        _diagnosticExitStatus = 0;
-        diagnosticsProc.command = [...App.scripts.python.systemDiagnosticsCommand, "--action", _activeDiagnosticAction];
-        diagnosticsProc.running = true;
+        SystemService.requestTempDiagnostics(function (data) {
+            callback(_normalizeDiagnosticResult("temps", data));
+        });
     }
 
     function _defaultDiagnosticResult(action) {
@@ -331,17 +299,6 @@ Singleton {
             return typeof data === "object" ? data : {};
 
         return Array.isArray(data) ? data : [];
-    }
-
-    function _finishDiagnosticsRequest(action, data) {
-        if (!action)
-            return;
-
-        const callbacks = _diagnosticCallbacks[action] || [];
-        _diagnosticCallbacks[action] = [];
-        _flushCallbacks(callbacks, _normalizeDiagnosticResult(action, data));
-        _activeDiagnosticAction = "";
-        _pumpDiagnosticsQueue();
     }
 
     function _buildTempDevicesList(tempsData) {
@@ -383,20 +340,6 @@ Singleton {
             gpu_max: tempsData.gpu_max_temp !== undefined && tempsData.gpu_max_temp !== null ? tempsData.gpu_max_temp : SystemService.gpuMaxTemp,
             storage_max: tempsData.storage_max_temp !== undefined && tempsData.storage_max_temp !== null ? tempsData.storage_max_temp : SystemService.storageMaxTemp
         };
-    }
-
-    function _readDiagnosticsOutput(action, rawText) {
-        const text = (rawText || "").toString().trim();
-        if (!text)
-            return _defaultDiagnosticResult(action);
-
-        try {
-            return JSON.parse(text);
-        } catch (e) {
-            console.error(`[AiAnalysisService] Failed to parse diagnostics output for ${action}: ${e}`);
-            console.error(`[AiAnalysisService] Raw diagnostics output: ${text}`);
-            return _defaultDiagnosticResult(action);
-        }
     }
 
     function _currentTempsPayload() {
@@ -441,7 +384,7 @@ Singleton {
                 causes: [],
                 actions: []
             });
-        });
+        }, "spike_analyze_" + eventId, 2);
     }
 
     function _applySpikeAnalysis(eventId, data) {
@@ -490,53 +433,6 @@ Singleton {
         const mm = dt.getMinutes().toString().padStart(2, "0");
         const ss = dt.getSeconds().toString().padStart(2, "0");
         return `${hh}:${mm}:${ss}`;
-    }
-
-    function _flushCallbacks(callbacks, data) {
-        const pending = callbacks.slice();
-        callbacks.length = 0;
-
-        for (let i = 0; i < pending.length; i++)
-            pending[i](data);
-    }
-
-    Process {
-        id: diagnosticsProc
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                root._diagnosticStdoutText = this.text.toString();
-            }
-        }
-
-        stderr: StdioCollector {
-            onStreamFinished: {
-                root._diagnosticStderrText = this.text.toString();
-            }
-        }
-
-        onExited: (exitCode, exitStatus) => {
-            root._diagnosticExitCode = exitCode;
-            root._diagnosticExitStatus = exitStatus;
-        }
-
-        onRunningChanged: {
-            if (running)
-                return;
-
-            const action = root._activeDiagnosticAction;
-
-            if (root._diagnosticStderrText.trim().length)
-                console.error(`[AiAnalysisService] Diagnostics stderr for ${action}: ${root._diagnosticStderrText.trim()}`);
-
-            if (root._diagnosticExitCode !== 0) {
-                console.error(`[AiAnalysisService] Diagnostics process failed for ${action} with exit code ${root._diagnosticExitCode} (${root._diagnosticExitStatus})`);
-                root._finishDiagnosticsRequest(action, root._defaultDiagnosticResult(action));
-                return;
-            }
-
-            root._finishDiagnosticsRequest(action, root._readDiagnosticsOutput(action, root._diagnosticStdoutText));
-        }
     }
 
     NibrasShellShortcut {

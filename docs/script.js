@@ -109,6 +109,7 @@ const translations = {
     rd_desk_li2: "الإخفاء التلقائي للأشرطة",
     rd_desk_li3: "إضافة شريط تطبيقات سفلي مستقل (Dock)",
     rd_desk_li4: "التكيف الذكي للـ Dock عند تغيير موقع الشريط",
+    rd_desk_li5: "تحسين تكامل أدوات التحكم في Hyprland",
 
     rd_desktop_workspaces: "مساحات العمل (Workspaces)",
     rd_ws_li1: "أيقونات ديناميكية بدلاً من الأرقام",
@@ -122,14 +123,19 @@ const translations = {
     rd_ui_li4: "وضع الألعاب (Game Mode) للأداء العالي",
     rd_ui_li5: "تأثير العمق التلقائي وربطه بـ Cava",
     rd_ui_li6: "ثيمات جديدة: Solarized, Rosé Pine, Oxocarbon",
+    rd_ui_li7: "تحسين حركات سطح المكتب والمزامنة مع Quickshell",
+    rd_ui_li8: "دعم سمات المؤشر (Plasma, GTK, Hyprland)",
+    rd_ui_li9: "الكشف الديناميكي لأنماط Qt عبر PyQt6",
+    rd_ui_li10: "مكونات واجهة قابلة لإعادة الاستخدام (SectionCard/FieldLabel)",
 
-    rd_sys_li1: "مؤشر اللغة، البطارية، وأوضاع الطاقة",
+    rd_sys_li1: "مؤشر اللغة، البطارية، وأوضع الطاقة",
     rd_sys_li2: "مدير الحافظة وقائمة المهام",
-    rd_sys_li3: "ودجت الملاحظات السريعة والتطبيقات المفضلة",
-    rd_sys_li4: "مواقيت الصلاة والتاريخ الهجري",
-    rd_sys_li5: "مدير البلوتوث وإعدادات الشاشة الكاملة",
-    rd_sys_li6: "تحسين الكود: الانتقال إلى نظام EventBus",
-    rd_sys_li7:
+    rd_sys_li3: "ودجت الملاحظات السريعة",
+    rd_sys_li4: "قائمة التطبيقات المفضلة",
+    rd_sys_li5: "مواقيت الصلاة والتاريخ الهجري",
+    rd_sys_li6: "مدير البلوتوث وإعدادات الشاشة الكاملة",
+    rd_sys_li7: "تحسين الكود: الانتقال إلى نظام EventBus",
+    rd_sys_li8:
       "مراقبة تفصيلية للشبكة، تتضمن رصد حركة التطبيقات لحظياً وتوثيق استهلاكها للبيانات",
 
     // --- صفحة الوثائق (Docs) ---
@@ -167,7 +173,8 @@ const translations = {
       "نحتاج مكتبه rembg و pillow لانشاء الصور ذات تاثير العمق",
     install_script_step: "الآن يمكنك استخدام سكربت التثبيت واختيار رقم 2",
     install_script_step_2: `
-$ python3 install.py                                                                                       ↵ 130
+$ cd nibras_installer
+python main.py
 Choose your language / اختر لغتك / Vyberte jazyk:
 1. English
 2. العربية
@@ -356,6 +363,7 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     rd_desk_li2: "Auto-hide: Implement auto-hide for bars",
     rd_desk_li3: "Standalone Dock: Add a bottom application dock",
     rd_desk_li4: "Smart Adaptation: Dock auto-adjusts layout",
+    rd_desk_li5: "Enhanced Hyprland controls integration",
 
     rd_desktop_workspaces: "Workspaces",
     rd_ws_li1: "Dynamic Icons: Show app icons instead of numbers",
@@ -369,14 +377,19 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     rd_ui_li4: "Game Mode: Toggle for high performance",
     rd_ui_li5: "Depth Effect: Auto-generation linked with Cava",
     rd_ui_li6: "New Themes: Solarized, Rosé Pine, Oxocarbon",
+    rd_ui_li7: "Enhanced desktop animations & Quickshell sync",
+    rd_ui_li8: "Cursor theme support (Plasma, GTK, Hyprland)",
+    rd_ui_li9: "Dynamic Qt widget styles via PyQt6",
+    rd_ui_li10: "Reusable UI components (SectionCard/FieldLabel)",
 
     rd_sys_li1: "Indicators: Language, Battery, Power Profiles",
     rd_sys_li2: "Clipboard Manager & Todo List",
-    rd_sys_li3: "Widgets: Quick Notes & Favorite Apps",
-    rd_sys_li4: "Prayer Times & Hijri Date",
-    rd_sys_li5: "Bluetooth Manager & Display Settings",
-    rd_sys_li6: "Code Refactoring: Migration to EventBus",
-    rd_sys_li7:
+    rd_sys_li3: "Widgets: Quick Notes",
+    rd_sys_li4: "Favorite Apps List",
+    rd_sys_li5: "Prayer Times & Hijri Date",
+    rd_sys_li6: "Bluetooth Manager & Display Settings",
+    rd_sys_li7: "Code Refactoring: Migration to EventBus",
+    rd_sys_li8:
       "Detailed network monitoring, including real-time application traffic tracking and data usage logging",
 
     // --- Docs ---
@@ -399,7 +412,7 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     install_title: "Installation",
     install_auto_title: "Automatic Method (Recommended)",
     install_auto_desc:
-      'Clone the repo and run <span dir="ltr">python install.py</span>.',
+      'Clone the repo and run <span dir="ltr">python nibras_installer/main.py</span>.',
     install_manual_toggle: "Manual Installation (Click to expand)",
     install_manual_deps: "Essential Software",
     install_manual_optional: "Optional Software",
@@ -411,7 +424,9 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     install_depth_desc: "We need 'rembg' and 'pillow' libraries.",
     install_script_step: "Now run the install script and choose option 2",
     install_script_step_2: `
-$ python3 install.py
+
+$ cd nibras_installer
+python main.py
 Choose your language / اختر لغتك / Vyberte jazyk:
 1. English
 2. العربية

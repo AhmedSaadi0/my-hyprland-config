@@ -50,7 +50,7 @@ Item {
 
     Behavior on width {
         NumberAnimation {
-            duration: 400
+            duration: 320
             easing.type: Easing.OutCubic
         }
     }
@@ -196,7 +196,7 @@ Item {
                 height: Math.round(root.height)
                 width: ready ? Math.round(contentRow.width + 12) : 0
                 opacity: ready ? 1 : 0
-                scale: ready ? 1 : 0.8
+                scale: ready ? 1 : 0.92
 
                 clip: false
 
@@ -211,19 +211,20 @@ Item {
 
                 Behavior on width {
                     NumberAnimation {
-                        duration: 450
+                        duration: 340
                         easing.type: Easing.OutCubic
                     }
                 }
                 Behavior on opacity {
                     NumberAnimation {
-                        duration: 300
+                        duration: 220
+                        easing.type: Easing.OutQuad
                     }
                 }
                 Behavior on scale {
                     NumberAnimation {
-                        duration: 400
-                        easing.type: Easing.OutBack
+                        duration: 280
+                        easing.type: Easing.OutCubic
                     }
                 }
 
@@ -234,7 +235,8 @@ Item {
                     opacity: workspaceBox.width > 20 ? 1 : 0
                     Behavior on opacity {
                         NumberAnimation {
-                            duration: 200
+                            duration: 160
+                            easing.type: Easing.OutQuad
                         }
                     }
 
@@ -290,15 +292,15 @@ Item {
                                     Behavior on x {
                                         enabled: !dragArea.drag.active
                                         NumberAnimation {
-                                            duration: 200
-                                            easing.type: Easing.OutQuad
+                                            duration: 220
+                                            easing.type: Easing.OutCubic
                                         }
                                     }
                                     Behavior on y {
                                         enabled: !dragArea.drag.active
                                         NumberAnimation {
-                                            duration: 200
-                                            easing.type: Easing.OutQuad
+                                            duration: 220
+                                            easing.type: Easing.OutCubic
                                         }
                                     }
 

@@ -1,32 +1,24 @@
-// windows/settings/LayoutSettings.qml
-
 pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
-import org.kde.kirigami as Kirigami
 import Qt.labs.platform
 
 import "root:/components"
-import "root:/config"
 import "root:/themes"
 import "root:/windows/settings/components"
 
 BaseThemeSettings {
     id: root
 
-    // --- Header ---
     title: qsTr("Layout & Fonts")
     icon: ""
     showApplyButton: true
 
-    // --- Local State ---
-    // Typography
     property string localIconFont: ""
     property string localBodyFont: ""
 
-    // Font Sizes
     property int localBaseFontSize: 12
     property int localMediumFontSize: 14
     property int localSmallFontSize: 12
@@ -35,12 +27,10 @@ BaseThemeSettings {
     property int localHeading3Size: 18
     property int localHeading4Size: 16
 
-    // Spacing
     property int localSpacingSmall: 4
     property int localSpacingMedium: 8
     property int localSpacingLarge: 12
 
-    // Dimensions (Radii & Layout)
     property int localElementRadius: 12
     property int localBarHeight: 30
     property int localBarBottomMargin: 10
@@ -50,11 +40,9 @@ BaseThemeSettings {
     property int localMenuWidgetsMargin: 15
 
     function syncFromTheme() {
-        // Fonts
         localIconFont = theme._iconFont;
         localBodyFont = theme._bodyFont;
 
-        // Font Sizes
         localBaseFontSize = theme._baseFontSize;
         localMediumFontSize = theme._mediumFontSize;
         localSmallFontSize = theme._smallFontSize;
@@ -63,12 +51,10 @@ BaseThemeSettings {
         localHeading3Size = theme._heading3Size;
         localHeading4Size = theme._heading4Size;
 
-        // Spacing
         localSpacingSmall = theme._spacingSmall;
         localSpacingMedium = theme._spacingMedium;
         localSpacingLarge = theme._spacingLarge;
 
-        // Dimensions
         localElementRadius = theme._elementRadius;
         localBarHeight = theme._barHeight;
         localBarBottomMargin = theme._barBottomMargin;
@@ -80,11 +66,8 @@ BaseThemeSettings {
 
     function serializeData() {
         return {
-            // Typography
             "_iconFont": localIconFont,
             "_bodyFont": localBodyFont,
-
-            // Sizes
             "_baseFontSize": localBaseFontSize,
             "_mediumFontSize": localMediumFontSize,
             "_smallFontSize": localSmallFontSize,
@@ -92,13 +75,9 @@ BaseThemeSettings {
             "_heading2Size": localHeading2Size,
             "_heading3Size": localHeading3Size,
             "_heading4Size": localHeading4Size,
-
-            // Spacing
             "_spacingSmall": localSpacingSmall,
             "_spacingMedium": localSpacingMedium,
             "_spacingLarge": localSpacingLarge,
-
-            // Dimensions
             "_elementRadius": localElementRadius,
             "_barHeight": localBarHeight,
             "_barBottomMargin": localBarBottomMargin,
@@ -109,7 +88,6 @@ BaseThemeSettings {
         };
     }
 
-    // --- Font Dialog ---
     FontDialog {
         id: fontDialog
         property var activeCallback: null
@@ -121,347 +99,429 @@ BaseThemeSettings {
         onRejected: activeCallback = null
     }
 
-    // 1. Size Field Component (للأرقام)
-    component SizeRow: ColumnLayout {
+    component SectionCard: Rectangle {
+        id: sectionCard
+        property string title: ""
+        property string subtitle: ""
+        default property alias content: sectionContent.data
+
         Layout.fillWidth: true
-        spacing: 2
-        property string label
-        property int value: 0
-        signal userChanged(int newValue)
+        color: root.theme.colors.leftMenuBgColorV1.alpha(0.72)
+        radius: root.theme.dimensions.baseRadius
+        border.color: root.theme.colors.primary.alpha(0.12)
+        border.width: 1
+        implicitHeight: sectionColumn.implicitHeight + 28
 
-        Controls.Label {
-            text: qsTr(parent.label)
-        }
+        ColumnLayout {
+            id: sectionColumn
+            anchors.fill: parent
+            anchors.margins: 14
+            spacing: 12
 
-        EditableField {
-            Layout.fillWidth: true
-            Layout.preferredHeight: 30
-            Layout.minimumWidth: 50
-            text: value.toString()
-            selectedTheme: root.theme
-            validator: IntValidator {
-                bottom: 0
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 3
+
+                Controls.Label {
+                    text: sectionCard.title
+                    font.pixelSize: root.typ("heading4Size", 16)
+                    font.bold: true
+                    color: root.theme.colors.primary
+                }
+
+                SettingsHelperText {
+                    visible: sectionCard.subtitle !== ""
+                    text: sectionCard.subtitle
+                    Layout.preferredWidth: 540
+                }
             }
-            onEditingFinished: {
-                let num = parseInt(text);
-                if (!isNaN(num))
-                    userChanged(num);
+
+            ColumnLayout {
+                id: sectionContent
+                Layout.fillWidth: true
+                spacing: 12
             }
         }
     }
 
-    // 2. Font Field Component (للخطوط)
-    component FontRow: ColumnLayout {
+    component PreviewBox: Rectangle {
+        property alias text: previewLabel.text
+        property alias previewFont: previewLabel.font
+
         Layout.fillWidth: true
-        spacing: 2
-        property string label
+        color: root.theme.colors.leftMenuBgColorV2.alpha(0.65)
+        radius: root.theme.dimensions.baseRadius / 1.5
+        border.color: root.theme.colors.primary.alpha(0.14)
+        border.width: 1
+        implicitHeight: previewLabel.implicitHeight + 22
+
+        Controls.Label {
+            id: previewLabel
+            anchors.fill: parent
+            anchors.margins: 11
+            color: root.theme.colors.leftMenuFgColorV1
+            wrapMode: Text.WordWrap
+        }
+    }
+
+    component FontPickerRow: ColumnLayout {
+        property string label: ""
         property string value: ""
+        property string previewText: ""
         property bool isIconFont: false
         signal userChanged(string newValue)
 
+        Layout.fillWidth: true
+        spacing: 6
+
         Controls.Label {
-            text: qsTr(parent.label)
+            text: label
             font.bold: true
+            color: root.theme.colors.leftMenuFgColorV1
         }
 
         RowLayout {
             Layout.fillWidth: true
-            spacing: 4
+            spacing: 8
+
             EditableField {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 30
-                Layout.minimumWidth: 50
-                text: value
                 selectedTheme: root.theme
+                horizontalAlignment: Text.AlignLeft
+                text: value
                 onEditingFinished: userChanged(text)
             }
+
             MButton {
-                Layout.preferredWidth: 40
-                Layout.preferredHeight: 30
-                text: ""
-                font.family: isIconFont ? value : root.theme.typography.iconFont
+                text: qsTr("Choose")
+                Layout.preferredWidth: 88
                 onClicked: {
                     fontDialog.currentFont.family = value;
-                    fontDialog.activeCallback = f => userChanged(f);
+                    fontDialog.activeCallback = fontFamily => userChanged(fontFamily);
                     fontDialog.open();
                 }
             }
         }
+
+        PreviewBox {
+            text: previewText
+            previewFont.family: value
+            previewFont.pixelSize: isIconFont ? 18 : root.localBaseFontSize
+        }
     }
 
-    // --- Main Layout ---
     ColumnLayout {
-        spacing: root.dim("spacingMedium", 10)
-        Layout.preferredWidth: 590
+        spacing: root.dim("spacingMedium", 8)
+        Layout.preferredWidth: 620
 
-        // ==========================
-        // --- Typography Section ---
-        // ==========================
-        Controls.Label {
-            text: qsTr("Typography")
-            font.pixelSize: root.typ("heading2Size", 18)
-            font.bold: true
-            Layout.topMargin: 10
+        SettingsHelperText {
+            Layout.fillWidth: true
+            Layout.preferredWidth: 580
+            text: qsTr("This page controls typography and shell proportions. The controls below focus on the values that affect readability and spacing the most.")
         }
 
-        // Fonts Name
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 15
+        SectionCard {
+            title: qsTr("Fonts")
+            subtitle: qsTr("Choose the body font for normal text and the icon font used in workspace indicators, buttons, and glyph-based widgets.")
 
-            FontRow {
-                label: "Icon Font"
-                value: root.localIconFont
-                isIconFont: true
-                onUserChanged: v => {
-                    root.localIconFont = v;
-                    root.applySingleProperty("_iconFont", v);
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 12
+
+                FontPickerRow {
+                    Layout.fillWidth: true
+                    label: qsTr("Body Font")
+                    value: root.localBodyFont
+                    previewText: qsTr("The quick brown fox jumps over the lazy dog. 1234567890")
+                    onUserChanged: newValue => {
+                        root.localBodyFont = newValue;
+                        root.applySingleProperty("_bodyFont", newValue);
+                    }
+                }
+
+                FontPickerRow {
+                    Layout.fillWidth: true
+                    label: qsTr("Icon Font")
+                    value: root.localIconFont
+                    isIconFont: true
+                    previewText: "󰋜 󰿣 󰂔 󰉋 󱙋 󰭹"
+                    onUserChanged: newValue => {
+                        root.localIconFont = newValue;
+                        root.applySingleProperty("_iconFont", newValue);
+                    }
                 }
             }
-            FontRow {
-                label: "Body Font"
-                value: root.localBodyFont
-                onUserChanged: v => {
-                    root.localBodyFont = v;
-                    root.applySingleProperty("_bodyFont", v);
-                }
-            }
         }
 
-        // Font Sizes
-        Controls.Label {
-            text: qsTr("Font Sizes")
-            font.bold: true
-            Layout.topMargin: 15
-        }
+        SectionCard {
+            title: qsTr("Typography Scale")
+            subtitle: qsTr("These values control how large text appears across widgets, menus, and section headers.")
 
-        GridLayout {
-            columns: 3
-            Layout.fillWidth: true
-            columnSpacing: 15
-            rowSpacing: 10
-            uniformCellWidths: true
-
-            SizeRow {
-                label: "Base"
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Base Text")
+                from: 10
+                to: 20
                 value: root.localBaseFontSize
-                onUserChanged: v => {
+                onEditingFinished: v => {
                     root.localBaseFontSize = v;
                     root.applySingleProperty("_baseFontSize", v);
                 }
             }
-            SizeRow {
-                label: "Medium"
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Medium Text")
+                from: 10
+                to: 24
                 value: root.localMediumFontSize
-                onUserChanged: v => {
+                onEditingFinished: v => {
                     root.localMediumFontSize = v;
                     root.applySingleProperty("_mediumFontSize", v);
                 }
             }
-            SizeRow {
-                label: "Small"
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Small Text")
+                from: 8
+                to: 18
                 value: root.localSmallFontSize
-                onUserChanged: v => {
+                onEditingFinished: v => {
                     root.localSmallFontSize = v;
                     root.applySingleProperty("_smallFontSize", v);
                 }
             }
 
-            SizeRow {
-                label: "Heading 1"
-                value: root.localHeading1Size
-                onUserChanged: v => {
-                    root.localHeading1Size = v;
-                    root.applySingleProperty("_heading1Size", v);
-                }
-            }
-            SizeRow {
-                label: "Heading 2"
-                value: root.localHeading2Size
-                onUserChanged: v => {
-                    root.localHeading2Size = v;
-                    root.applySingleProperty("_heading2Size", v);
-                }
-            }
-            SizeRow {
-                label: "Heading 3"
-                value: root.localHeading3Size
-                onUserChanged: v => {
-                    root.localHeading3Size = v;
-                    root.applySingleProperty("_heading3Size", v);
-                }
-            }
-            SizeRow {
-                label: "Heading 4"
-                value: root.localHeading4Size
-                onUserChanged: v => {
-                    root.localHeading4Size = v;
-                    root.applySingleProperty("_heading4Size", v);
-                }
-            }
-        }
-
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.topMargin: 15
-        }
-
-        // ===================================
-        // --- Dimensions & Spacing Section ---
-        // ===================================
-        Controls.Label {
-            text: qsTr("Dimensions & Spacing")
-            font.pixelSize: root.typ("heading2Size", 18)
-            font.bold: true
-            Layout.topMargin: 10
-        }
-
-        // Spacing
-        Controls.Label {
-            text: qsTr("Spacing")
-            font.bold: true
-        }
-        GridLayout {
-            columns: 3
-            Layout.fillWidth: true
-            columnSpacing: 15
-            uniformCellWidths: true
-
-            SizeRow {
-                label: "Small"
-                value: root.localSpacingSmall
-                onUserChanged: v => {
-                    root.localSpacingSmall = v;
-                    root.applySingleProperty("_spacingSmall", v);
-                }
-            }
-            SizeRow {
-                label: "Medium"
-                value: root.localSpacingMedium
-                onUserChanged: v => {
-                    root.localSpacingMedium = v;
-                    root.applySingleProperty("_spacingMedium", v);
-                }
-            }
-            SizeRow {
-                label: "Large"
-                value: root.localSpacingLarge
-                onUserChanged: v => {
-                    root.localSpacingLarge = v;
-                    root.applySingleProperty("_spacingLarge", v);
-                }
-            }
-        }
-
-        // Radii
-        Controls.Label {
-            text: qsTr("Corner Radii")
-            font.bold: true
-            Layout.topMargin: 10
-        }
-        GridLayout {
-            columns: 2
-            Layout.fillWidth: true
-            columnSpacing: 15
-
-            SizeRow {
-                label: "Element Radius"
-                value: root.localElementRadius
-                onUserChanged: v => {
-                    root.localElementRadius = v;
-                    root.applySingleProperty("_elementRadius", v);
-                }
-            }
-        }
-
-        // Bar & Menu Layouts
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.topMargin: 15
-            spacing: 20
-
-            // Bar Settings Column
-            ColumnLayout {
+            GridLayout {
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
-                Controls.Label {
-                    text: qsTr("Bar")
-                    font.bold: true
-                }
-                GridLayout {
-                    columns: 1
-                    Layout.fillWidth: true
-                    rowSpacing: 10
+                columns: 2
+                columnSpacing: 12
+                rowSpacing: 8
 
-                    SizeRow {
-                        label: "Height"
-                        value: root.localBarHeight
-                        onUserChanged: v => {
-                            root.localBarHeight = v;
-                            root.applySingleProperty("_barHeight", v);
-                        }
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Heading 1")
+                    from: 16
+                    to: 34
+                    value: root.localHeading1Size
+                    onEditingFinished: v => {
+                        root.localHeading1Size = v;
+                        root.applySingleProperty("_heading1Size", v);
                     }
-                    SizeRow {
-                        label: "Bottom Margin"
-                        value: root.localBarBottomMargin
-                        onUserChanged: v => {
-                            root.localBarBottomMargin = v;
-                            root.applySingleProperty("_barBottomMargin", v);
-                        }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Heading 2")
+                    from: 14
+                    to: 30
+                    value: root.localHeading2Size
+                    onEditingFinished: v => {
+                        root.localHeading2Size = v;
+                        root.applySingleProperty("_heading2Size", v);
                     }
-                    SizeRow {
-                        label: "Widgets Height"
-                        value: root.localBarWidgetsHeight
-                        onUserChanged: v => {
-                            root.localBarWidgetsHeight = v;
-                            root.applySingleProperty("_barWidgetsHeight", v);
-                        }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Heading 3")
+                    from: 12
+                    to: 26
+                    value: root.localHeading3Size
+                    onEditingFinished: v => {
+                        root.localHeading3Size = v;
+                        root.applySingleProperty("_heading3Size", v);
+                    }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Heading 4")
+                    from: 11
+                    to: 24
+                    value: root.localHeading4Size
+                    onEditingFinished: v => {
+                        root.localHeading4Size = v;
+                        root.applySingleProperty("_heading4Size", v);
                     }
                 }
             }
 
-            // Menu Settings Column
-            ColumnLayout {
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
-                Controls.Label {
-                    text: qsTr("Menu")
-                    font.bold: true
-                }
-                GridLayout {
-                    columns: 1
-                    Layout.fillWidth: true
-                    rowSpacing: 10
+            PreviewBox {
+                text: qsTr("Preview: headings and labels will follow the body font and size scale you choose here.")
+                previewFont.family: root.localBodyFont
+                previewFont.pixelSize: root.localMediumFontSize
+            }
+        }
 
-                    SizeRow {
-                        label: "Height"
-                        value: root.localMenuHeight
-                        onUserChanged: v => {
-                            root.localMenuHeight = v;
-                            root.applySingleProperty("_menuHeight", v);
-                        }
+        SectionCard {
+            title: qsTr("Spacing & Radius")
+            subtitle: qsTr("Use these controls to make the interface denser or more relaxed without touching every component manually.")
+
+            GridLayout {
+                Layout.fillWidth: true
+                columns: 2
+                columnSpacing: 12
+                rowSpacing: 8
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Small Spacing")
+                    from: 0
+                    to: 24
+                    value: root.localSpacingSmall
+                    onEditingFinished: v => {
+                        root.localSpacingSmall = v;
+                        root.applySingleProperty("_spacingSmall", v);
                     }
-                    SizeRow {
-                        label: "Width"
-                        value: root.localMenuWidth
-                        onUserChanged: v => {
-                            root.localMenuWidth = v;
-                            root.applySingleProperty("_menuWidth", v);
-                        }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Medium Spacing")
+                    from: 0
+                    to: 32
+                    value: root.localSpacingMedium
+                    onEditingFinished: v => {
+                        root.localSpacingMedium = v;
+                        root.applySingleProperty("_spacingMedium", v);
                     }
-                    SizeRow {
-                        label: "Widgets Margin"
-                        value: root.localMenuWidgetsMargin
-                        onUserChanged: v => {
-                            root.localMenuWidgetsMargin = v;
-                            root.applySingleProperty("_menuWidgetsMargin", v);
-                        }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Large Spacing")
+                    from: 0
+                    to: 40
+                    value: root.localSpacingLarge
+                    onEditingFinished: v => {
+                        root.localSpacingLarge = v;
+                        root.applySingleProperty("_spacingLarge", v);
+                    }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Element Radius")
+                    from: 0
+                    to: 36
+                    value: root.localElementRadius
+                    onEditingFinished: v => {
+                        root.localElementRadius = v;
+                        root.applySingleProperty("_elementRadius", v);
                     }
                 }
             }
         }
 
-        // Spacer
+        SectionCard {
+            title: qsTr("Shell Layout")
+            subtitle: qsTr("These values control the physical size of bars and menus across the shell.")
+
+            Controls.Label {
+                text: qsTr("Bar")
+                font.bold: true
+                color: root.theme.colors.primary
+            }
+
+            GridLayout {
+                Layout.fillWidth: true
+                columns: 2
+                columnSpacing: 12
+                rowSpacing: 8
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Bar Height")
+                    from: 22
+                    to: 64
+                    value: root.localBarHeight
+                    onEditingFinished: v => {
+                        root.localBarHeight = v;
+                        root.applySingleProperty("_barHeight", v);
+                    }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Bottom Margin")
+                    from: 0
+                    to: 40
+                    value: root.localBarBottomMargin
+                    onEditingFinished: v => {
+                        root.localBarBottomMargin = v;
+                        root.applySingleProperty("_barBottomMargin", v);
+                    }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Widgets Height")
+                    from: 16
+                    to: 44
+                    value: root.localBarWidgetsHeight
+                    onEditingFinished: v => {
+                        root.localBarWidgetsHeight = v;
+                        root.applySingleProperty("_barWidgetsHeight", v);
+                    }
+                }
+            }
+
+            Controls.Label {
+                text: qsTr("Menu")
+                font.bold: true
+                color: root.theme.colors.primary
+                Layout.topMargin: 8
+            }
+
+            GridLayout {
+                Layout.fillWidth: true
+                columns: 2
+                columnSpacing: 12
+                rowSpacing: 8
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Menu Height")
+                    from: 420
+                    to: 1400
+                    stepSize: 10
+                    value: root.localMenuHeight
+                    onEditingFinished: v => {
+                        root.localMenuHeight = v;
+                        root.applySingleProperty("_menuHeight", v);
+                    }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Menu Width")
+                    from: 240
+                    to: 720
+                    stepSize: 10
+                    value: root.localMenuWidth
+                    onEditingFinished: v => {
+                        root.localMenuWidth = v;
+                        root.applySingleProperty("_menuWidth", v);
+                    }
+                }
+
+                SliderWithLabel {
+                    Layout.fillWidth: true
+                    label: qsTr("Widgets Margin")
+                    from: 0
+                    to: 48
+                    value: root.localMenuWidgetsMargin
+                    onEditingFinished: v => {
+                        root.localMenuWidgetsMargin = v;
+                        root.applySingleProperty("_menuWidgetsMargin", v);
+                    }
+                }
+            }
+        }
+
         Item {
             Layout.fillHeight: true
             width: 1

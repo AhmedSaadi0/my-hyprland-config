@@ -14,7 +14,7 @@ Item {
     property bool blurEnabled: false
     property bool isMenuOpen: false
     property real blurValue: 0.9
-    property string graphicsQuality: "high"
+    property string graphicsQuality: "High"
 
     default property alias content: widgetsContainer.data
 
@@ -43,12 +43,12 @@ Item {
         z: 0
         anchors.fill: parent
         transformOrigin: Item.Center
-        scale: root.isMenuOpen ? 1.05 : 1.0
+        scale: root.isMenuOpen ? 1.03 : 1.0
 
         Behavior on scale {
             NumberAnimation {
-                duration: 800
-                easing.type: Easing.OutQuart
+                duration: 520
+                easing.type: Easing.OutCubic
             }
         }
 
@@ -60,7 +60,7 @@ Item {
             saturation: 0.2
             Behavior on blur {
                 NumberAnimation {
-                    duration: 800
+                    duration: 480
                     easing.type: Easing.OutCubic
                 }
             }
@@ -99,7 +99,8 @@ Item {
                     to: "active"
                     NumberAnimation {
                         property: "opacity"
-                        duration: 800
+                        duration: 520
+                        easing.type: Easing.OutCubic
                     }
                 },
                 Transition {
@@ -107,7 +108,7 @@ Item {
                     to: "inactive"
                     SequentialAnimation {
                         PauseAnimation {
-                            duration: 800
+                            duration: 520
                         }
                         PropertyAction {
                             property: "opacity"
@@ -151,7 +152,8 @@ Item {
                     to: "active"
                     NumberAnimation {
                         property: "opacity"
-                        duration: 800
+                        duration: 520
+                        easing.type: Easing.OutCubic
                     }
                 },
                 Transition {
@@ -159,7 +161,7 @@ Item {
                     to: "inactive"
                     SequentialAnimation {
                         PauseAnimation {
-                            duration: 800
+                            duration: 520
                         }
                         PropertyAction {
                             property: "opacity"
@@ -189,17 +191,18 @@ Item {
         visible: opacity > 0
 
         transformOrigin: Item.Center
-        scale: root.isMenuOpen ? 1.15 : 1.0
+        scale: root.isMenuOpen ? 1.08 : 1.0
 
         Behavior on opacity {
             NumberAnimation {
-                duration: 600
+                duration: 320
+                easing.type: Easing.OutQuad
             }
         }
         Behavior on scale {
             NumberAnimation {
-                duration: 800
-                easing.type: Easing.OutQuart
+                duration: 540
+                easing.type: Easing.OutCubic
             }
         }
 
@@ -212,7 +215,8 @@ Item {
             opacity: root.fgShowChannel1 ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 800
+                    duration: 520
+                    easing.type: Easing.OutCubic
                 }
             }
         }
@@ -226,7 +230,8 @@ Item {
             opacity: !root.fgShowChannel1 ? 1 : 0
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 800
+                    duration: 520
+                    easing.type: Easing.OutCubic
                 }
             }
         }
@@ -235,7 +240,7 @@ Item {
     // --- Controller Logic ---
     Timer {
         id: cleanupTimer
-        interval: 900
+        interval: 620
         repeat: false
         onTriggered: {
             if (root.bgShowChannel1)

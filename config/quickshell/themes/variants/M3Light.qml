@@ -4,21 +4,30 @@ import org.kde.kirigami as Kirigami
 import QtQuick
 
 import "root:/themes"
+import "root:/config"
 
 BaseTheme {
     id: root
     themeName: "M3Light"
 
     _enableDynamicColoring: true
-    _enableDynamicWallpapers: true
-    _dynamicWallpapersPath: "/home/ahmed/wallpapers/light"
+    _enableDynamicWallpapers: false
 
     _themeMode: "light"
 
     _baseRadius: 14
     _hyprBorderWidth: 3
 
-    _wallpaper: "light.png"
+    _wallpaper: App.assets.getWallpaperPath("m3_light.png")
+    _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("m3_light_depth.png")
+    _desktopClockFont: "Xenophobia"
+    _desktopClockFormat: "hh:mm A - MM/dd"
+    _desktopClockPosition: Qt.point(166.453125, 276)
+    _desktopClockDepthEffectEnabled: true
+    _desktopClockSize: Qt.size(1504.37890625, 453.2109375)
+    _desktopClockSahdowEnabled: false
+    _desktopClockUseThemeColor: false
+    _desktopClockColor: Qt.rgba(0.19, 0.14, 0.40, 0.8)
 
     _primary: Kirigami.Theme.highlightColor
     _onPrimary: Kirigami.Theme.highlightedTextColor

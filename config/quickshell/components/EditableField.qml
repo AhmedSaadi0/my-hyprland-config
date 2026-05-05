@@ -37,7 +37,7 @@ TextField {
         width: 2
         height: root.height - 10
         color: root.normalForeground
-        visible: root.cursorVisible
+        visible: root.activeFocus
         anchors.verticalCenter: parent.verticalCenter
     }
 

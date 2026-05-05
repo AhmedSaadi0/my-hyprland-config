@@ -61,6 +61,9 @@ Item {
         _dispatch("GTK 4 Clean", Utils.Helper.removeOldGtk4Theme());
         _dispatch("GTK 4 Apply", Utils.Helper.changeGtk4Theme(settings.gtkTheme));
         _dispatch("GTK Font", Utils.Helper.changeGtkFont(settings.fontName, typography.baseFontSize));
+        _dispatch("Cursor Theme", Utils.Helper.changeCursorTheme(settings.cursorTheme));
+        _dispatch("GTK Cursor Theme", Utils.Helper.changeGtkCursorTheme(settings.cursorTheme));
+        _dispatch("Cursor Size", Utils.Helper.changeCursorSize(settings.cursorSize));
 
         // Accent Color
         if (!settings.enableDynamicColoring && settings.enableAccentColoring) {

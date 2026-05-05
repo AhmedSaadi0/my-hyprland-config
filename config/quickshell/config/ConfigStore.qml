@@ -42,11 +42,14 @@ QtObject {
 
     property bool enableHighCpuAlert: true
     property bool enableHighRamAlert: true
+    property bool enableHighTempAlert: true
     property bool playCpuAlarmSound: true
     property bool playRamAlarmSound: true
+    property bool playTempAlarmSound: true
 
     property int cpuHighLoadThreshold: 85
     property int ramHighLoadThreshold: 85
+    property int tempHighThreshold: 85
     property int resourceAlertCooldownMs: 60000
 
     property int topBarActiveWindowMinWidth: 200
@@ -62,7 +65,9 @@ QtObject {
     property int bottomLauncherWidth: 800
 
     // Default menu style changed to floating per user request
-    property string menuStyle: C.FLOATING
+    property string menuStyle: C.DOCKED_MOVING_BAR
+
+    property var favoriteApps: []
 
     property var _fileView: FileView {
         id: fileWatcher
@@ -114,6 +119,8 @@ QtObject {
             store.useBottomLauncher = data.useBottomLauncher;
         if (data.bottomLauncherWidth !== undefined)
             store.bottomLauncherWidth = data.bottomLauncherWidth;
+        if (data.favoriteApps !== undefined)
+            store.favoriteApps = data.favoriteApps;
 
         // -------------------------------------------------------
         // الموقع والطقس
@@ -175,22 +182,28 @@ QtObject {
             store.systemAiModel = data.systemAiModel;
 
         // -------------------------------------------------------
-        // انذارات الرام والمعالج
+        // انذارات الموارد
         // -------------------------------------------------------
         if (data.enableHighCpuAlert !== undefined)
             store.enableHighCpuAlert = data.enableHighCpuAlert;
         if (data.enableHighRamAlert !== undefined)
             store.enableHighRamAlert = data.enableHighRamAlert;
+        if (data.enableHighTempAlert !== undefined)
+            store.enableHighTempAlert = data.enableHighTempAlert;
 
         if (data.playCpuAlarmSound !== undefined)
             store.playCpuAlarmSound = data.playCpuAlarmSound;
         if (data.playRamAlarmSound !== undefined)
             store.playRamAlarmSound = data.playRamAlarmSound;
+        if (data.playTempAlarmSound !== undefined)
+            store.playTempAlarmSound = data.playTempAlarmSound;
 
         if (data.cpuHighLoadThreshold !== undefined)
             store.cpuHighLoadThreshold = data.cpuHighLoadThreshold;
         if (data.ramHighLoadThreshold !== undefined)
             store.ramHighLoadThreshold = data.ramHighLoadThreshold;
+        if (data.tempHighThreshold !== undefined || data.tempHighLoadThreshold !== undefined)
+            store.tempHighThreshold = data.tempHighLoadThreshold !== undefined ? data.tempHighLoadThreshold : data.tempHighThreshold;
         if (data.resourceAlertCooldownMs !== undefined)
             store.resourceAlertCooldownMs = data.resourceAlertCooldownMs;
 

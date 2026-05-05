@@ -97,6 +97,9 @@ Singleton {
         function onRamAlert(value, isReminder, activeForMs) {
             root.handleResourceAlert("RAM", value, App.playRamAlarmSound, isReminder, activeForMs);
         }
+        function onTempAlert(value, isReminder, activeForMs) {
+            root.handleTemperatureAlert(value, App.playTempAlarmSound, isReminder, activeForMs);
+        }
         function onCurrentLayoutChanged() {
             root.handleLayoutChanged();
         }
@@ -330,17 +333,21 @@ Singleton {
     }
 
     function handlePowerProfileChange(profile) {
-        const label = getPowerProfileLabel(profile);
-        const color = getPowerProfileColor(profile);
+        const profileKey = profile === PowerProfile.Performance ? "power_performance" : profile === PowerProfile.PowerSaver ? "power_powersaver" : "power_balanced";
+        const label = root.getPowerProfileLabel(profile);
+        const color = root.getPowerProfileColor(profile);
         const fg = Helper.getAccurteTextColor(color);
-        const message = qsTr("Power profile: %1").arg(label);
+        const fallbackEmotion = root.getPowerProfileEmotion(profile);
+        const fallbackText = qsTr("Power profile: %1").arg(label);
 
-        root.updateEyes(getPowerProfileEmotion(profile), 2500);
+        const response = root.getSystemActionResponse(profileKey, fallbackEmotion, fallbackText);
+
+        root.updateEyes(response.emotion || fallbackEmotion, 2500);
         CapsuleManager.request({
-            priority: C.TRANSIENT,
+            priority: C.WARNING,
             source: C.SRC_SYSTEM,
             icon: getPowerProfileIcon(profile),
-            text: message,
+            text: response.text || fallbackText,
             timeout: 3500,
             bgColor1: color,
             bgColor2: color,
@@ -398,11 +405,12 @@ Singleton {
                 root.updateEyes("happy", 4000);
 
             let colors = getColorsForState("success");
+            const chargeResponse = SystemService._nextArrayResponse("charging", "Charging: " + Math.round(SystemService.batteryPercent * 100) + "%", "happy");
             CapsuleManager.request({
                 priority: C.NOTIFICATION,
                 source: C.SRC_BATTERY,
                 icon: SystemService.batteryIcon,
-                text: `Charging: ${Math.round(SystemService.batteryPercent * 100)}%`,
+                text: chargeResponse.text + " " + Math.round(SystemService.batteryPercent * 100) + "%",
                 bgColor1: colors.bg1,
                 bgColor2: colors.bg2,
                 fgColor: colors.fg,
@@ -416,20 +424,18 @@ Singleton {
                 root.updateEyes("suspicious", 3000);
 
             let colors = getColorsForState("info");
+            const dischargeResponse = SystemService._nextArrayResponse("discharging", "Power Disconnected: " + Math.round(SystemService.batteryPercent * 100) + "%", "suspicious");
             CapsuleManager.request({
                 priority: C.NOTIFICATION,
                 source: C.SRC_BATTERY,
                 icon: SystemService.batteryIcon,
-                text: `Power Disconnected: ${Math.round(SystemService.batteryPercent * 100)}%`,
+                text: dischargeResponse.text + " " + Math.round(SystemService.batteryPercent * 100) + "%",
                 bgColor1: colors.bg1,
                 bgColor2: colors.bg2,
                 fgColor: colors.fg,
                 timeout: root._batChargingTimeout
-                // playTone: true,
-                // tone: App.assets.audio.powerDisconnect
             });
 
-            // التحقق فوراً من مستوى البطارية في حال فصلنا الشاحن والبطارية منخفضة جداً
             monitorBatteryDischarge();
         }
     }
@@ -470,39 +476,44 @@ Singleton {
     function triggerBatteryAlert(level) {
         let alertType = "info";
         let priority = C.NOTIFICATION;
-        let msg = `Battery at ${level}%`;
-        let emotion = "bored";
+        let fallbackMsg = `Battery at ${level}%`;
+        let fallbackEmotion = "bored";
         let timeout = root._batTimeoutWarning;
         let tone = App.assets.audio.smartCapsuleWarning;
 
         if (level <= root._batLevelWarning) {
             alertType = "warning";
-            emotion = "suspicious";
+            fallbackEmotion = "suspicious";
             tone = App.assets.audio.batteryLow;
         }
         if (level <= root._batLevelLow) {
             alertType = "warning";
-            emotion = "sad";
+            fallbackEmotion = "sad";
             priority = C.WARNING;
-            msg = `Low Battery (${level}%). Please plug in.`;
+            fallbackMsg = `Low Battery (${level}%). Please plug in.`;
             tone = App.assets.audio.batteryLow;
         }
         if (level <= root._batLevelCritical) {
             alertType = "critical";
-            emotion = "shocked";
+            fallbackEmotion = "shocked";
             priority = C.CRITICAL;
-            msg = `Critical Battery (${level}%)!`;
+            fallbackMsg = `Critical Battery (${level}%)!`;
             timeout = root._batTimeoutCritical;
             tone = App.assets.audio.smartCapsuleWarning;
         }
         if (level <= root._batLevelDying) {
             alertType = "critical";
-            emotion = "dead";
+            fallbackEmotion = "dead";
             priority = C.CRITICAL;
-            msg = `Battery Dying (${level}%)... Goodbye?`;
+            fallbackMsg = `Battery Dying (${level}%)... Goodbye?`;
             timeout = root._batTimeoutDying;
             tone = App.assets.audio.smartCapsuleCritical;
         }
+
+        const actionKey = "battery_" + level;
+        const response = root.getSystemActionResponse(actionKey, fallbackEmotion, fallbackMsg);
+        const msg = response.text;
+        const emotion = response.emotion;
 
         let colors = getColorsForState(alertType);
         root.updateEyes(emotion, timeout);
@@ -534,6 +545,51 @@ Singleton {
         return `${minutes}m ${seconds}s`;
     }
 
+    function handleTemperatureAlert(currentTemp, playTone, isReminder, activeForMs) {
+        var icon = "󰔏";
+        var isCritical = currentTemp >= 95;
+        var stateType = isCritical ? "critical" : "warning";
+        var priority = isCritical ? C.CRITICAL : C.WARNING;
+        var colors = getColorsForState(stateType);
+
+        var title;
+        var fallbackText;
+        if (isCritical) {
+            title = "Thermal Emergency";
+            fallbackText = "Thermal Emergency: " + Math.round(currentTemp) + "°C";
+        } else if (currentTemp >= 90) {
+            title = "High Temperature";
+            fallbackText = "High Temperature: " + Math.round(currentTemp) + "°C";
+        } else {
+            title = "Elevated Temperature";
+            fallbackText = "Elevated Temperature: " + Math.round(currentTemp) + "°C";
+        }
+
+        const durationText = isReminder ? root._formatAlertDuration(activeForMs) : "";
+        const fallbackEmotion = isCritical ? "shocked" : "suspicious";
+        const tempResponse = isReminder ? {
+            text: title + ": " + Math.round(currentTemp) + "°C for " + durationText,
+            emotion: "thinking"
+        } : SystemService._nextArrayResponse("temp_alerts", fallbackText, fallbackEmotion);
+
+        root.updateEyes(tempResponse.emotion || fallbackEmotion, root._resourceAlertTimeout);
+
+        CapsuleManager.request({
+            priority: priority,
+            source: C.SRC_SYSTEM,
+            icon: icon,
+            text: tempResponse.text,
+            progress: Math.min(1, currentTemp / 110),
+            withProgress: true,
+            changeH: false,
+            timeout: root._resourceAlertTimeout,
+            bgColor1: colors.bg1,
+            bgColor2: colors.bg2,
+            fgColor: colors.fg,
+            playTone: isReminder ? false : playTone
+        });
+    }
+
     function handleResourceAlert(type, value, playTone, isReminder, activeForMs) {
         var pct = Math.round(value * 100);
 
@@ -558,17 +614,37 @@ Singleton {
         var colors = getColorsForState(stateType);
 
         const durationText = isReminder ? root._formatAlertDuration(activeForMs) : "";
-        const message = isReminder ? `${title}: ${pct}% for ${durationText}` : `${title}: ${pct}%`;
+
+        var aiResponse;
+        if (isReminder) {
+            if (type === "CPU") {
+                aiResponse = {
+                    text: title + ": " + pct + "% for " + durationText,
+                    emotion: emotion
+                };
+            } else {
+                aiResponse = {
+                    text: title + ": " + pct + "% for " + durationText,
+                    emotion: emotion
+                };
+            }
+        } else {
+            if (type === "CPU") {
+                aiResponse = SystemService._nextArrayResponse("cpu_alerts", title + ": " + pct + "%", emotion);
+            } else {
+                aiResponse = SystemService._nextArrayResponse("ram_alerts", title + ": " + pct + "%", emotion);
+            }
+        }
 
         console.warn(`Coordinator: ${type} Alert! Usage: ${pct}%${isReminder ? `, active for ${durationText}` : ""}`);
 
-        root.updateEyes(emotion, root._resourceAlertTimeout);
+        root.updateEyes(aiResponse.emotion, root._resourceAlertTimeout);
 
         CapsuleManager.request({
             priority: priority,
             source: C.SRC_SYSTEM,
             icon: icon,
-            text: message,
+            text: aiResponse.text,
             progress: value,
             withProgress: true,
             changeH: false,
@@ -660,6 +736,23 @@ Singleton {
         if (stateType === "success")
             return "happy";
         return "thinking";
+    }
+
+    // ========================================================================
+    // 🛠️ System Action Response Helper
+    // ========================================================================
+    function getSystemActionResponse(actionKey, fallbackEmotion, fallbackText) {
+        const responses = SystemService.systemActionResponses;
+        if (responses && responses[actionKey] && responses[actionKey].text) {
+            return {
+                text: responses[actionKey].text,
+                emotion: responses[actionKey].emotion || fallbackEmotion
+            };
+        }
+        return {
+            text: fallbackText,
+            emotion: fallbackEmotion
+        };
     }
 
     function handleThemeUpdate(themeName) {
@@ -891,10 +984,11 @@ Singleton {
             };
         default:
             return {
-            bg1: ThemeManager.selectedTheme.colors.primary,
-            bg2: ThemeManager.selectedTheme.colors.secondary,
-            fg: ThemeManager.selectedTheme.colors.onPrimary
-        };
+                bg1: ThemeManager.selectedTheme.colors.primary,
+                bg2: ThemeManager.selectedTheme.colors.secondary,
+                fg: ThemeManager.selectedTheme.colors.onPrimary
+            };
+        }
     }
 
     function getPowerProfileLabel(profile) {
@@ -935,7 +1029,6 @@ Singleton {
         if (profile === PowerProfile.PowerSaver)
             return ThemeManager.selectedTheme.colors.success;
         return ThemeManager.selectedTheme.colors.primary;
-    }
     }
 
     function getBootColors() {

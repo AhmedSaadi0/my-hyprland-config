@@ -1,0 +1,24 @@
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ VIEW THIS USING A MONOSPACED FONT!!!
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+ :: SPECIFIC INFO FOR THIS FONT ::
+ 
+ One of my classic fonts, based on the ALIENS movie logo. This one is something
+ ALIENS fans shouldn't miss. Unlike my other fonts this one wasn't intended for
+ on-screen use, but of course it can be used that way, only preferably at sizes
+ over 20.
+
+ How to get the ALIENS logo? Just type: A L i E N S
+ The letters and spaces should be used just like that.
+
+ How to get the hive logo? Insert a ® symbol, or hold ALT and enter 0174 on the
+ keypad.
+
+ Enjoy, and don't forget to send feedback and tell me what characters you would
+ like to see added.
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+ Revision: 1.60 | 02.01.2001
+ [EOF]

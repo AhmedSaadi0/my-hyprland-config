@@ -56,15 +56,16 @@ PanelWindow {
         // -----------------------------------------------------
         // الإضافة الجديدة: تحريك الحاوية بالكامل لليمين
         // -----------------------------------------------------
+        // داخل Desktop.qml - جزء الـ transform
         transform: Translate {
-            // التحرك 400 بكسل لليمين عند فتح القائمة، وصفر عند إغلاقها
             x: App.menuStyle !== C.FLOATING && desktopRoot.isMenuOpened ? Theme.ThemeManager.selectedTheme.dimensions.menuWidth + 5 : 0
 
-            // جعل الحركة ناعمة
             Behavior on x {
                 NumberAnimation {
-                    duration: 600
-                    easing.type: desktopRoot.isMenuOpened ? Easing.OutCubic : Easing.OutExpo
+                    duration: AnimationConfig.animDuration
+                    easing.type: Easing.Bezier
+                    // نستخدم نفس منحنى التسارع في الفتح والإغلاق
+                    easing.bezierCurve: AnimationConfig.bezierAccelerate
                 }
             }
         }
@@ -164,7 +165,7 @@ PanelWindow {
 
     Timer {
         id: changeIsMenuOpen
-        interval: 30
+        interval: 0
         repeat: false
         property bool newValue: false
         onTriggered: {

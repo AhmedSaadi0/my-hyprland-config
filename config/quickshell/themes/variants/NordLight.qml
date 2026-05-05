@@ -15,7 +15,16 @@ BaseTheme {
     // Frost (Accents): #8FBCBB, #88C0D0, #81A1C1, #5E81AC
     // Aurora (Syntax/Status): #BF616A (Red), #A3BE8C (Green), #EBCB8B (Yellow)
 
-    _wallpaper: App.assets.getWallpaperPath("nord-light.png")
+    _wallpaper: App.assets.getWallpaperPath("nord-light.gif")
+
+    _desktopClockFont: "Daydream"
+    _desktopClockFormat: "hh:mm AP"
+    _desktopClockPosition: Qt.point(675, 435)
+    _desktopClockDepthEffectEnabled: false
+    _desktopClockSize: Qt.size(470, 188)
+    _desktopClockSahdowEnabled: false
+    _desktopClockUseThemeColor: false
+    _desktopClockColor: Qt.rgba(0.36, 0.37, 0.50, 0.6)
 
     // الألوان الأساسية (طبقًا لوحة Frost)
     _primary: "#5E81AC"      // nord10 (أزرق عميق - للتأكيدات الأساسية)

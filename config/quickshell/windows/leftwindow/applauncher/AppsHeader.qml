@@ -10,25 +10,18 @@ import "root:/windows/leftwindow/base"
 
 HeaderCard {
     id: headerRoot
+    color: "transparent"
 
-    // --- Signals ---
-    // (تم حذف searchTextChanged لتجنب التعارض لأن property alias تنشئها تلقائياً)
     signal moveSelection(int direction)
     signal activateSelection
     signal escapePressed
 
-    // --- Properties ---
     property alias searchText: searchField.text
+    property alias selectedCategory: categoryFilter.selectedCategory
+    readonly property bool isCommandMode: searchField.text.length > 0 && searchField.text.charAt(0) === ">"
 
-    // Theme Helpers
     readonly property var colors: ThemeManager.selectedTheme.colors
     readonly property var dims: ThemeManager.selectedTheme.dimensions
-
-    Layout.fillWidth: true
-    Layout.preferredHeight: 80
-    Layout.leftMargin: 10
-    Layout.rightMargin: 10
-    Layout.bottomMargin: 10
 
     function forceSearchFocus() {
         searchField.forceActiveFocus();
@@ -40,11 +33,8 @@ HeaderCard {
 
     EditableField {
         id: searchField
-        Layout.fillHeight: true
         Layout.fillWidth: true
-        // anchors.fill: parent
-        Layout.margins: 10
-        Layout.topMargin: 0
+        Layout.preferredHeight: 30
 
         placeholderText: qsTr("Search apps... or use > for commands")
         font.pixelSize: 16
@@ -77,6 +67,21 @@ HeaderCard {
             } else if (event.key === Qt.Key_Escape) {
                 headerRoot.escapePressed();
                 event.accepted = true;
+            }
+        }
+    }
+
+    CategoryFilter {
+        id: categoryFilter
+        Layout.fillWidth: true
+        Layout.preferredHeight: 34
+        visible: !headerRoot.isCommandMode
+        opacity: visible ? 1 : 0
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 120
+                easing.type: Easing.OutQuad
             }
         }
     }

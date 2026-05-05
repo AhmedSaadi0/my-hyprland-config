@@ -53,6 +53,11 @@ PRESETS = {
         "json_mode": True,
         "temperature": 0.2,
     },
+    "system_action": {
+        "system_instruction": prompt.SYSTEM_ACTION_PROMPT,
+        "json_mode": True,
+        "temperature": 0.7,
+    },
 }
 
 

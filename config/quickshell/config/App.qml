@@ -73,11 +73,14 @@ Singleton {
     // Hardware configs
     property alias enableHighCpuAlert: root.config.enableHighCpuAlert
     property alias enableHighRamAlert: root.config.enableHighRamAlert
+    property alias enableHighTempAlert: root.config.enableHighTempAlert
     property alias playCpuAlarmSound: root.config.playCpuAlarmSound
     property alias playRamAlarmSound: root.config.playRamAlarmSound
+    property alias playTempAlarmSound: root.config.playTempAlarmSound
 
     property alias cpuHighLoadThreshold: root.config.cpuHighLoadThreshold
     property alias ramHighLoadThreshold: root.config.ramHighLoadThreshold
+    property alias tempHighThreshold: root.config.tempHighThreshold
     property alias resourceAlertCooldownMs: root.config.resourceAlertCooldownMs
 
     // Shell layout configs
@@ -85,6 +88,8 @@ Singleton {
     property alias bottomLauncherWidth: root.config.bottomLauncherWidth
     property alias firstDayOfWeek: root.config.firstDayOfWeek
     property alias menuStyle: root.config.menuStyle
+
+    property alias favoriteApps: root.config.favoriteApps
 
     property alias topBarActiveWindowMinWidth: root.config.topBarActiveWindowMinWidth
     property alias topBarActiveWindowMaxWidth: root.config.topBarActiveWindowMaxWidth
@@ -248,6 +253,14 @@ Singleton {
 
             readonly property string getClipboard: root.pythonScriptsPath + "/get_clipboard.py"
             readonly property string applyKonsoleProfileOpenSessions: root.pythonScriptsPath + "/apply_konsole_profile_open_sessions.py"
+            // Integration settings scripts
+            readonly property string listQtStyles: root.pythonScriptsPath + "/list_qt_styles.py"
+            readonly property string listIconThemes: root.pythonScriptsPath + "/list_icon_themes.py"
+            readonly property string listPlasmaSchemes: root.pythonScriptsPath + "/list_plasma_schemes.py"
+            readonly property string listKvantumThemes: root.pythonScriptsPath + "/list_kvantum_themes.py"
+            readonly property string listKonsoleProfiles: root.pythonScriptsPath + "/list_konsole_profiles.py"
+            readonly property string listGtkThemes: root.pythonScriptsPath + "/list_gtk_themes.py"
+            readonly property string listCursorThemes: root.pythonScriptsPath + "/list_cursor_themes.py"
 
             // Commands
             readonly property var batteryInfoCommand: [pythonPath, batteryInfo]
@@ -265,6 +278,14 @@ Singleton {
             readonly property var dataUsageCommand: [pythonPath, dataUsage]
             readonly property var connectWifiCommand: [pythonPath, connectWifi]
             readonly property var applyKonsoleProfileOpenSessionsCommand: [pythonPath, applyKonsoleProfileOpenSessions]
+            // Integration settings commands
+            readonly property var listQtStylesCommand: [pythonPath, listQtStyles]
+            readonly property var listIconThemesCommand: [pythonPath, listIconThemes]
+            readonly property var listPlasmaSchemesCommand: [pythonPath, listPlasmaSchemes]
+            readonly property var listKvantumThemesCommand: [pythonPath, listKvantumThemes]
+            readonly property var listKonsoleProfilesCommand: [pythonPath, listKonsoleProfiles]
+            readonly property var listGtkThemesCommand: [pythonPath, listGtkThemes]
+            readonly property var listCursorThemesCommand: [pythonPath, listCursorThemes]
 
             readonly property var initialAiCommand: [pythonPath, mainAI, "--preferred_language", root.aiPreferredLanguage, "--provider", aiProvider]
 
@@ -277,6 +298,7 @@ Singleton {
             readonly property var callIdleCapsuleHoverStartupAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_startup"]
             readonly property var callIdleCapsuleHoverFreshAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_fresh"]
             readonly property var callTodoAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "todo", "--json_mode", "--user_persona", root.todoPersona, "--model", root.systemAiModel]
+            readonly property var callSystemActionAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "system_action", "--json_mode", "--user_persona", root.systemPersona, "--model", root.systemAiModel]
         }
 
         readonly property QtObject bash: QtObject {

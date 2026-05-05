@@ -10,6 +10,7 @@ import "root:/utils/helpers.js" as Helpers
 import "root:/config/ConstValues.js" as C
 import "root:/components"
 import "root:/themes"
+import "root:/services"
 
 Item {
     id: root
@@ -31,6 +32,7 @@ Item {
 
     Process {
         id: powerActionProcess
+        // command: ["ls"];
         command: root.pendingActionCommand
         // onExited: exitCode => {
         //     if (exitCode === 0)
@@ -287,44 +289,61 @@ Item {
     // دالة لتجهيز الوداع
     function prepareGoodbye(actionType) {
         root.close();
-        let eyeEmotion = "wink";
-        let capsuleMsg = "";
+
+        // تحديد المفتاح والقيم الاحتياطية
+        let actionKey = "";
+        let fallbackEmotion = "wink";
+        let fallbackText = "";
         let capsuleIcon = "";
         let capsuleColor = theme.colors.primary;
 
         if (actionType === qsTr("Shut Down")) {
-            eyeEmotion = "sleeping";
-            capsuleMsg = "System shutting down... Goodbye!";
+            actionKey = "shutdown";
+            fallbackEmotion = "sleeping";
+            fallbackText = "System shutting down... Goodbye!";
             capsuleIcon = "\uf011";
             capsuleColor = theme.colors.error;
         } else if (actionType === qsTr("Restart")) {
-            eyeEmotion = "happy";
-            capsuleMsg = "System is restarting...";
+            actionKey = "reboot";
+            fallbackEmotion = "happy";
+            fallbackText = "System is restarting...";
             capsuleIcon = "\uf01e";
             capsuleColor = theme.colors.warning;
         } else if (actionType === qsTr("Suspend")) {
-            eyeEmotion = "sleeping";
-            capsuleMsg = "System is going to sleep...";
+            actionKey = "suspend";
+            fallbackEmotion = "sleeping";
+            fallbackText = "System is going to sleep...";
             capsuleIcon = "\uf186";
             capsuleColor = theme.colors.tertiary;
         } else {
-            eyeEmotion = "wink";
-            capsuleMsg = "Logging out... See you soon!";
+            actionKey = "logout";
+            fallbackEmotion = "wink";
+            fallbackText = "Logging out... See you soon!";
             capsuleIcon = "\uf08b";
         }
 
-        EyeController.showEmotion(eyeEmotion, 5000);
+        // محاولة جلب الرد من الذكاء الاصطناعي
+        const responses = SystemService.systemActionResponses;
+        let finalEmotion = fallbackEmotion;
+        let finalText = fallbackText;
+
+        if (responses && responses[actionKey] && responses[actionKey].text) {
+            finalEmotion = responses[actionKey].emotion || fallbackEmotion;
+            finalText = responses[actionKey].text;
+        }
+
+        EyeController.showEmotion(finalEmotion, 5000);
 
         CapsuleManager.request({
-            priority: C.TRANSIENT,
+            priority: C.NOTIFICATION,
             source: "System",
             icon: capsuleIcon,
-            text: capsuleMsg,
+            text: finalText,
             bgColor1: capsuleColor,
             timeout: 5000
         });
 
-        // 3. بدء العد التنازلي للتنفيذ
+        // بدء العد التنازلي للتنفيذ
         executionDelayTimer.start();
     }
 }

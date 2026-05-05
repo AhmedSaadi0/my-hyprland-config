@@ -14,13 +14,15 @@ import "root:/windows/settings"
 import "root:/windows/cheatsheet"
 import "root:/windows/bottomlauncher"
 import "root:/windows/poweroption"
+import "root:/windows/overlay"
 import "root:/bars"
 import "root:/osd"
 import "root:/utils"
 import "root:/config"
 import "root:/desktop"
 import "root:/themes"
-import "root:/shadows"
+// import "root:/shadows"
+import "root:/services"
 import "root:/windows/smart_capsule/logic"
 import "root:/config/ConstValues.js" as Consts
 import "root:/config/EventNames.js" as Events
@@ -31,12 +33,14 @@ ShellRoot {
     // --- Properties ---
     property var settingsWindowInstance: null
     property var notificationsInstance: null
+    readonly property var _networkService: NetworkService
     readonly property var _selectedTheme: ThemeManager.selectedTheme
 
     signal openLeftPanelRequested(int selectedIndex)
 
     Component.onCompleted: {
         Qt.uiLanguage = "ar";
+        NetworkService.syncTimers();
     }
 
     // // --- Initialization Logic ---
@@ -241,6 +245,14 @@ ShellRoot {
                 }
             }
 
+            Variants {
+                model: Quickshell.screens
+                OverlayWindow {
+                    required property ShellScreen modelData
+                    screen: modelData
+                }
+            }
+
             // 4. Global Panels (Single instance)
             LeftWindowFull {
                 id: leftPanelFull
@@ -248,7 +260,7 @@ ShellRoot {
             Cheatsheet {
                 id: cheatsheetPanel
             }
-            BottomAppLauncher {
+            BottomLauncher {
                 id: bottomLauncherPanel
             }
             PowerMenuWindow {
@@ -260,9 +272,9 @@ ShellRoot {
             Connections {
                 target: null
                 Component.onCompleted: {
-                EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
-                    bottomLauncherPanel.toggle();
-                }, shellRoot);
+                    EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
+                        bottomLauncherPanel.toggle();
+                    }, shellRoot);
                 }
             }
 

@@ -6,6 +6,23 @@ import "root:/config/ConstValues.js" as C
 QtObject {
     id: root
 
+    function _toHyprBool(value) {
+        return value === true || value === "yes" || value === 1 ? "yes" : "no";
+    }
+
+    function _formatVec2(value) {
+        if (value === undefined || value === null)
+            return "";
+
+        if (typeof value === "string")
+            return value.trim();
+
+        if (value.x !== undefined && value.y !== undefined)
+            return `${Number(value.x)}, ${Number(value.y)}`;
+
+        return String(value).trim();
+    }
+
     function applyConfig(hyprConfig) {
         if (!hyprConfig)
             return;
@@ -37,6 +54,15 @@ QtObject {
         dispatch('decoration:dim_inactive', hyprConfig.dimInactive ? "yes" : "no");
         dispatch('decoration:dim_strength', hyprConfig.dimStrength);
 
+        // Shadow
+        dispatch('decoration:shadow:enabled', _toHyprBool(hyprConfig.dropShadow));
+        dispatch('decoration:shadow:range', hyprConfig.shadowRange);
+        if (hyprConfig.shadowColor)
+            dispatch('decoration:shadow:color', hyprConfig.shadowColor);
+        const shadowOffset = _formatVec2(hyprConfig.shadowOffset);
+        if (shadowOffset)
+            dispatch('decoration:shadow:offset', shadowOffset);
+
         // Blur
         dispatch('decoration:blur:enabled', hyprConfig.blurEnabled ? "yes" : "no");
         dispatch('decoration:blur:size', hyprConfig.blurSize);
@@ -45,21 +71,47 @@ QtObject {
         // --- Animations ---
         dispatch('animations:enabled', hyprConfig.animationsEnabled ? "yes" : "no");
 
-        // معالجة Bezier (أسطر متعددة)
+        // معالجة Bezier
         if (hyprConfig.bezier) {
-            hyprConfig.bezier.split('\n').forEach(line => {
-                if (line.trim())
-                    dispatch('animations:bezier', line.trim());
-            });
+            dispatch('animations:bezier', hyprConfig.bezier.trim());
         }
 
-        // معالجة Animations
-        if (hyprConfig.animWindows)
-            dispatch('animations:animation', `windows, ${hyprConfig.animWindows}`);
-        if (hyprConfig.animWorkspaces)
-            dispatch('animations:animation', `workspaces, ${hyprConfig.animWorkspaces}`);
+        const animationEntries = [{
+                name: "windowsMove",
+                value: hyprConfig.animWindowsMove
+            }, {
+                name: "windows",
+                value: hyprConfig.animWindows
+            }, {
+                name: "windowsOut",
+                value: hyprConfig.animWindowsOut
+            }, {
+                name: "border",
+                value: hyprConfig.animBorder
+            }, {
+                name: "borderangle",
+                value: hyprConfig.animBorderAngle
+            }, {
+                name: "fadeIn",
+                value: hyprConfig.animFadeIn
+            }, {
+                name: "fadeOut",
+                value: hyprConfig.animFadeOut
+            }, {
+                name: "workspaces",
+                value: hyprConfig.animWorkspaces
+            }];
 
-    // dispatch('decoration:drop_shadow', hyprConfig.dropShadow ? "yes" : "no");
+        for (const entry of animationEntries) {
+            if (entry.value)
+                dispatch('animations:animation', `${entry.name}, ${entry.value}`);
+        }
+
+        // Cursor Theme for Hyprland
+        if (hyprConfig.cursorTheme) {
+            const cursorSize = hyprConfig.cursorSize || 24;
+            Hyprland.dispatch(`exec hyprctl setcursor ${hyprConfig.cursorTheme} ${cursorSize}`);
+        }
     }
 
     function addLeftMenuSpacing(hyprConfig, dimensions) {
