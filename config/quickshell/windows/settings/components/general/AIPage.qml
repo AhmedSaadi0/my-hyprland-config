@@ -112,12 +112,12 @@ BaseGeneralSettings {
             wrapMode: TextEdit.Wrap
             font.family: theme.typography.bodyFont
             font.pixelSize: theme.typography.small
-            color: theme.colors.leftMenuFgColorV1
+            color: theme.colors.leftMenuFgColorV2
             selectedTextColor: theme.colors.onPrimary
             selectionColor: theme.colors.primary
 
             background: Rectangle {
-                color: theme.colors.leftMenuBgColorV1
+                color: theme.colors.leftMenuBgColorV2
                 radius: theme.dimensions.baseRadius / 2
                 border.color: parent.activeFocus ? theme.colors.primary : theme.colors.subtleText
                 border.width: 1
@@ -135,228 +135,134 @@ BaseGeneralSettings {
         Layout.alignment: Qt.AlignHCenter
 
         // --- FORM CONTENT ---
-        GridLayout {
+        ColumnLayout {
             Layout.preferredWidth: 580
             Layout.alignment: Qt.AlignHCenter
-            columns: 2
-            rowSpacing: 20
-            columnSpacing: 20
+            spacing: theme.dimensions.spacingMedium
 
-            // ==========================
-            // Section 1: Provider
-            // ==========================
-            RowLayout {
-                Layout.columnSpan: 2
-                spacing: 10
-                Text {
-                    text: "" // Gears
-                    font.family: theme.typography.iconFont
-                    color: theme.colors.primary
-                    font.pixelSize: theme.typography.heading4Size
-                }
-                Text {
-                    text: qsTr("Provider & Locale")
-                    font.bold: true
-                    font.family: theme.typography.bodyFont
-                    font.pixelSize: theme.typography.heading4Size
-                    color: theme.colors.primary
-                }
-            }
+            SectionCard {
+                title: qsTr("Provider & Locale")
+                subtitle: qsTr("Select your AI provider and preferred language for responses.")
 
-            // AI Provider
-            Controls.Label {
-                text: qsTr("AI Provider")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                color: theme.colors.secondary
-                Layout.alignment: Qt.AlignVCenter
-            }
-            SettingsComboBox {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
-                // TODO: -> make as a const from App.qml or const.js
-                model: ["gemini", "openrouter", "ollama", "local"]
-
-                currentIndex: {
-                    var idx = model.indexOf(page.localProvider);
-                    return idx !== -1 ? idx : 0;
-                }
-                onActivated: index => page.localProvider = textAt(index)
-            }
-
-            // Language
-            Controls.Label {
-                text: qsTr("Preferred Language")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                color: theme.colors.secondary
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                Layout.topMargin: 6
-            }
-            EditableField {
-                Layout.fillWidth: true
-                text: page.localLanguage
-                placeholderText: "e.g. English, Arabic"
-                selectedTheme: page.theme
-                onEditingFinished: page.localLanguage = text
-            }
-
-            // ==========================
-            // Section 2: API Keys
-            // ==========================
-            Item {
-                Layout.columnSpan: 2
-                height: 10
-            }
-
-            RowLayout {
-                Layout.columnSpan: 2
-                spacing: 10
-                Text {
-                    text: "" // Key Icon
-                    font.family: theme.typography.iconFont
-                    color: theme.colors.primary
-                    font.pixelSize: theme.typography.heading4Size
-                }
-                Text {
-                    text: qsTr("API Configuration")
-                    font.bold: true
-                    font.family: theme.typography.bodyFont
-                    font.pixelSize: theme.typography.heading4Size
-                    color: theme.colors.primary
-                }
-                Item {
+                GridLayout {
+                    columns: 2
+                    rowSpacing: 16
+                    columnSpacing: 20
                     Layout.fillWidth: true
-                }
-                // Show/Hide Password Button
-                MButton {
-                    text: page.showKeys ? "" : ""
-                    font.family: theme.typography.iconFont
-                    Layout.preferredWidth: 30
-                    Layout.preferredHeight: 30
-                    checkable: true
-                    checked: page.showKeys
-                    onClicked: page.showKeys = !page.showKeys
+
+                    Controls.Label {
+                        text: qsTr("AI Provider")
+                        font.bold: true
+                        font.family: theme.typography.bodyFont
+                        font.pixelSize: theme.typography.medium
+                    }
+                    SettingsComboBox {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 30
+                        model: ["gemini", "openrouter", "ollama", "local"]
+                        currentIndex: {
+                            var idx = model.indexOf(page.localProvider);
+                            return idx !== -1 ? idx : 0;
+                        }
+                        onActivated: index => page.localProvider = textAt(index)
+                    }
+
+                    Controls.Label {
+                        text: qsTr("Preferred Language")
+                        font.bold: true
+                        font.family: theme.typography.bodyFont
+                        font.pixelSize: theme.typography.medium
+                    }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 8
+                        EditableField {
+                            Layout.fillWidth: true
+                            text: page.localLanguage
+                            placeholderText: "e.g. English, Arabic"
+                            selectedTheme: page.theme
+                            onEditingFinished: page.localLanguage = text
+                        }
+                        MButton {
+                            text: page.showKeys ? "" : ""
+                            font.family: theme.typography.iconFont
+                            Layout.preferredWidth: 30
+                            Layout.preferredHeight: 30
+                            checkable: true
+                            checked: page.showKeys
+                            onClicked: page.showKeys = !page.showKeys
+                        }
+                    }
                 }
             }
 
-            Controls.Label {
-                visible: page.localProvider !== "local"
-                text: qsTr("Main API Key")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                color: theme.colors.secondary
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                Layout.topMargin: 6
-            }
-            EditableField {
-                visible: page.localProvider !== "local"
-                Layout.fillWidth: true
-                text: page.localMainKey
-                placeholderText: "sk-..."
-                echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
-                selectedTheme: page.theme
-                onEditingFinished: page.localMainKey = text
-            }
-
-            // ==========================
-            // Section 3: Models
-            // ==========================
-            Item {
-                Layout.columnSpan: 2
-                height: 10
-            }
-
-            RowLayout {
-                Layout.columnSpan: 2
-                spacing: 10
-                Text {
-                    text: "" // Models Icon
-                    font.family: theme.typography.iconFont
-                    color: theme.colors.primary
-                    font.pixelSize: theme.typography.heading4Size
-                }
-                Text {
-                    text: qsTr("Models Selection")
-                    font.bold: true
-                    font.family: theme.typography.bodyFont
-                    font.pixelSize: theme.typography.heading4Size
-                    color: theme.colors.primary
-                }
-                Item {
-                    Layout.fillWidth: true
-                }
-                MButton {
-                    text: App.modelsManager.isLoading ? "Loading..." : "Refresh"
-                    iconText: ""
-                    enabled: !App.modelsManager.isLoading
-                    Layout.preferredHeight: 30
-                    Layout.preferredWidth: 120
-                    onClicked: App.modelsManager.refreshAll()
-                    visible: page.localProvider === "gemini"
-                }
-            }
-
-            // Error Message
-            Text {
-                visible: App.modelsManager.lastError !== ""
-                text: "Error: " + App.modelsManager.lastError
-                color: theme.colors.error
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.small
-                Layout.columnSpan: 2
-            }
-
-            // --- Weather Card ---
-            Rectangle {
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                color: theme.colors.leftMenuBgColorV1
-                radius: theme.dimensions.elementRadius
-                border.color: theme.colors.subtleText
-                border.width: 1
-                opacity: 0.95
-                implicitHeight: weatherCardContent.implicitHeight + 24
+            SectionCard {
+                title: qsTr("API Configuration")
+                subtitle: qsTr("Enter your main API key. Leave model-specific keys empty to use this key.")
 
                 ColumnLayout {
-                    id: weatherCardContent
-                    anchors.fill: parent
-                    anchors.margins: 12
-                    spacing: 10
+                    Layout.fillWidth: true
+                    spacing: 16
 
-                    RowLayout {
-                        spacing: 8
-                        Text {
-                            text: ""
-                            font.family: theme.typography.iconFont
-                            color: theme.colors.primary
-                            font.pixelSize: theme.typography.heading4Size
-                        }
-                        Text {
-                            text: qsTr("Weather Assistant")
-                            font.bold: true
-                            font.family: theme.typography.bodyFont
-                            font.pixelSize: theme.typography.medium
-                            color: theme.colors.primary
-                        }
+                    // Error Message
+                    Text {
+                        visible: App.modelsManager.lastError !== ""
+                        text: "Error: " + App.modelsManager.lastError
+                        color: theme.colors.error
+                        font.family: theme.typography.bodyFont
+                        font.pixelSize: theme.typography.small
                     }
 
                     RowLayout {
                         Controls.Label {
-                            text: qsTr("Model")
+                            text: qsTr("Main API Key")
                             font.bold: true
-                            font.family: theme.typography.bodyFont
+                            font.pixelSize: theme.typography.medium
+                            Layout.preferredWidth: 140
+                        }
+                        EditableField {
+                            visible: page.localProvider !== "local"
+                            Layout.fillWidth: true
+                            text: page.localMainKey
+                            placeholderText: "sk-..."
+                            echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
+                            selectedTheme: page.theme
+                            onEditingFinished: page.localMainKey = text
+                        }
+                    }
+                }
+            }
+
+            SectionCard {
+                title: qsTr("Models Selection")
+                subtitle: qsTr("Choose the AI model for each assistant. Click refresh to update the list.")
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 16
+
+                    MButton {
+                        text: App.modelsManager.isLoading ? "Loading..." : "Refresh Models"
+                        iconText: ""
+                        enabled: !App.modelsManager.isLoading
+                        Layout.alignment: Qt.AlignRight
+                        Layout.preferredHeight: 30
+                        Layout.preferredWidth: 140
+                        onClicked: App.modelsManager.refreshAll()
+                        visible: page.localProvider === "gemini"
+                    }
+
+                    // Weather Model
+                    RowLayout {
+                        Controls.Label {
+                            text: qsTr("Weather")
+                            font.bold: true
                             font.pixelSize: theme.typography.small
-                            color: theme.colors.secondary
                             Layout.preferredWidth: 140
                         }
                         StackLayout {
                             Layout.fillWidth: true
                             currentIndex: page.localProvider === "gemini" ? 0 : 1
-
                             SettingsComboBox {
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 30
@@ -375,74 +281,17 @@ BaseGeneralSettings {
                         }
                     }
 
+                    // Music Model
                     RowLayout {
                         Controls.Label {
-                            text: qsTr("API Key (Opt)")
+                            text: qsTr("Music")
                             font.bold: true
-                            font.family: theme.typography.bodyFont
                             font.pixelSize: theme.typography.small
-                            color: theme.colors.secondary
-                            Layout.preferredWidth: 140
-                        }
-                        EditableField {
-                            Layout.fillWidth: true
-                            text: page.localWeatherKey
-                            placeholderText: "Leave empty to use main key"
-                            echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
-                            selectedTheme: page.theme
-                            onEditingFinished: page.localWeatherKey = text
-                        }
-                    }
-                }
-            }
-
-            // --- Music Card ---
-            Rectangle {
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                color: theme.colors.leftMenuBgColorV1
-                radius: theme.dimensions.elementRadius
-                border.color: theme.colors.subtleText
-                border.width: 1
-                opacity: 0.95
-                implicitHeight: musicCardContent.implicitHeight + 24
-
-                ColumnLayout {
-                    id: musicCardContent
-                    anchors.fill: parent
-                    anchors.margins: 12
-                    spacing: 10
-
-                    RowLayout {
-                        spacing: 8
-                        Text {
-                            text: ""
-                            font.family: theme.typography.iconFont
-                            color: theme.colors.primary
-                            font.pixelSize: theme.typography.heading4Size
-                        }
-                        Text {
-                            text: qsTr("Music Assistant")
-                            font.bold: true
-                            font.family: theme.typography.bodyFont
-                            font.pixelSize: theme.typography.medium
-                            color: theme.colors.primary
-                        }
-                    }
-
-                    RowLayout {
-                        Controls.Label {
-                            text: qsTr("Model")
-                            font.bold: true
-                            font.family: theme.typography.bodyFont
-                            font.pixelSize: theme.typography.small
-                            color: theme.colors.secondary
                             Layout.preferredWidth: 140
                         }
                         StackLayout {
                             Layout.fillWidth: true
                             currentIndex: page.localProvider === "gemini" ? 0 : 1
-
                             SettingsComboBox {
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 30
@@ -461,74 +310,17 @@ BaseGeneralSettings {
                         }
                     }
 
+                    // System Model
                     RowLayout {
                         Controls.Label {
-                            text: qsTr("API Key (Opt)")
+                            text: qsTr("System")
                             font.bold: true
-                            font.family: theme.typography.bodyFont
                             font.pixelSize: theme.typography.small
-                            color: theme.colors.secondary
-                            Layout.preferredWidth: 140
-                        }
-                        EditableField {
-                            Layout.fillWidth: true
-                            text: page.localMusicKey
-                            placeholderText: "Leave empty to use main key"
-                            echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
-                            selectedTheme: page.theme
-                            onEditingFinished: page.localMusicKey = text
-                        }
-                    }
-                }
-            }
-
-            // --- System Card ---
-            Rectangle {
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                color: theme.colors.leftMenuBgColorV1
-                radius: theme.dimensions.elementRadius
-                border.color: theme.colors.subtleText
-                border.width: 1
-                opacity: 0.95
-                implicitHeight: systemCardContent.implicitHeight + 24
-
-                ColumnLayout {
-                    id: systemCardContent
-                    anchors.fill: parent
-                    anchors.margins: 12
-                    spacing: 10
-
-                    RowLayout {
-                        spacing: 8
-                        Text {
-                            text: ""
-                            font.family: theme.typography.iconFont
-                            color: theme.colors.primary
-                            font.pixelSize: theme.typography.heading4Size
-                        }
-                        Text {
-                            text: qsTr("System Assistant")
-                            font.bold: true
-                            font.family: theme.typography.bodyFont
-                            font.pixelSize: theme.typography.medium
-                            color: theme.colors.primary
-                        }
-                    }
-
-                    RowLayout {
-                        Controls.Label {
-                            text: qsTr("Model")
-                            font.bold: true
-                            font.family: theme.typography.bodyFont
-                            font.pixelSize: theme.typography.small
-                            color: theme.colors.secondary
                             Layout.preferredWidth: 140
                         }
                         StackLayout {
                             Layout.fillWidth: true
                             currentIndex: page.localProvider === "gemini" ? 0 : 1
-
                             SettingsComboBox {
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 30
@@ -546,167 +338,129 @@ BaseGeneralSettings {
                             }
                         }
                     }
+                }
+            }
 
-                    RowLayout {
-                        Controls.Label {
-                            text: qsTr("API Key (Opt)")
-                            font.bold: true
-                            font.family: theme.typography.bodyFont
-                            font.pixelSize: theme.typography.small
-                            color: theme.colors.secondary
-                            Layout.preferredWidth: 140
+            SectionCard {
+                title: qsTr("System Personas")
+                subtitle: qsTr("Customize the behavior and tone of each AI assistant.")
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 16
+
+                    // Weather Persona
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 6
+                        RowLayout {
+                            Controls.Label {
+                                text: qsTr("Weather Assistant")
+                                font.bold: true
+                                font.pixelSize: theme.typography.medium
+                            }
+                            Item {
+                                Layout.fillWidth: true
+                            }
+                            MButton {
+                                text: "Reset Default"
+                                Layout.preferredHeight: 24
+                                Layout.preferredWidth: 120
+                                flat: true
+                                onClicked: page.localWeatherPersona = page.defaultWeatherPersona
+                            }
                         }
-                        EditableField {
+                        StyledTextArea {
                             Layout.fillWidth: true
-                            text: page.localSystemKey
-                            placeholderText: "Leave empty to use main key"
-                            echoMode: page.showKeys ? TextInput.Normal : TextInput.Password
-                            selectedTheme: page.theme
-                            onEditingFinished: page.localSystemKey = text
+                            text: page.localWeatherPersona
+                            onTextChanged: page.localWeatherPersona = text
+                        }
+                    }
+
+                    // Music Persona
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 6
+                        RowLayout {
+                            Controls.Label {
+                                text: qsTr("Music Assistant")
+                                font.bold: true
+                                font.pixelSize: theme.typography.medium
+                            }
+                            Item {
+                                Layout.fillWidth: true
+                            }
+                            MButton {
+                                text: "Reset Default"
+                                Layout.preferredHeight: 24
+                                Layout.preferredWidth: 120
+                                flat: true
+                                onClicked: page.localMusicPersona = page.defaultMusicPersona
+                            }
+                        }
+                        StyledTextArea {
+                            Layout.fillWidth: true
+                            text: page.localMusicPersona
+                            onTextChanged: page.localMusicPersona = text
+                        }
+                    }
+
+                    // System Persona
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 6
+                        RowLayout {
+                            Controls.Label {
+                                text: qsTr("System Analyst")
+                                font.bold: true
+                                font.pixelSize: theme.typography.medium
+                            }
+                            Item {
+                                Layout.fillWidth: true
+                            }
+                            MButton {
+                                text: "Reset Default"
+                                Layout.preferredHeight: 24
+                                Layout.preferredWidth: 120
+                                flat: true
+                                onClicked: page.localSystemPersona = page.defaultSystemPersona
+                            }
+                        }
+                        StyledTextArea {
+                            Layout.fillWidth: true
+                            text: page.localSystemPersona
+                            onTextChanged: page.localSystemPersona = text
+                        }
+                    }
+
+                    // Todo Persona
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 6
+                        RowLayout {
+                            Controls.Label {
+                                text: qsTr("Todo Assistant")
+                                font.bold: true
+                                font.pixelSize: theme.typography.medium
+                            }
+                            Item {
+                                Layout.fillWidth: true
+                            }
+                            MButton {
+                                text: "Reset Default"
+                                Layout.preferredHeight: 24
+                                Layout.preferredWidth: 120
+                                flat: true
+                                onClicked: page.localTodoPersona = page.defaultTodoPersona
+                            }
+                        }
+                        StyledTextArea {
+                            Layout.fillWidth: true
+                            text: page.localTodoPersona
+                            onTextChanged: page.localTodoPersona = text
                         }
                     }
                 }
-            }
-
-            // ==========================
-            // Section 4: Personas
-            // ==========================
-            Item {
-                Layout.columnSpan: 2
-                height: 10
-            }
-
-            RowLayout {
-                Layout.columnSpan: 2
-                spacing: 10
-                Text {
-                    text: "" // Script/Text Icon
-                    font.family: theme.typography.iconFont
-                    color: theme.colors.primary
-                    font.pixelSize: theme.typography.heading4Size
-                }
-                Text {
-                    text: qsTr("System Personas")
-                    font.bold: true
-                    font.family: theme.typography.bodyFont
-                    font.pixelSize: theme.typography.heading4Size
-                    color: theme.colors.primary
-                }
-            }
-
-            // Weather Persona
-            RowLayout {
-                Layout.columnSpan: 2
-                spacing: 10
-                Controls.Label {
-                    text: qsTr("Weather Assistant Persona")
-                    font.bold: true
-                    font.family: theme.typography.bodyFont
-                    color: theme.colors.secondary
-                }
-                Item {
-                    Layout.fillWidth: true
-                }
-                MButton {
-                    text: "Reset Default"
-                    Layout.preferredHeight: 24
-                    Layout.preferredWidth: 120
-                    flat: true
-                    onClicked: page.localWeatherPersona = page.defaultWeatherPersona
-                }
-            }
-            StyledTextArea {
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                text: page.localWeatherPersona
-                onTextChanged: page.localWeatherPersona = text
-            }
-
-            // Music Persona
-            RowLayout {
-                Layout.columnSpan: 2
-                spacing: 10
-                Layout.topMargin: 10
-                Controls.Label {
-                    text: qsTr("Music Assistant Persona")
-                    font.bold: true
-                    font.family: theme.typography.bodyFont
-                    color: theme.colors.secondary
-                }
-                Item {
-                    Layout.fillWidth: true
-                }
-                MButton {
-                    text: "Reset Default"
-                    Layout.preferredHeight: 24
-                    Layout.preferredWidth: 120
-                    flat: true
-                    onClicked: page.localMusicPersona = page.defaultMusicPersona
-                }
-            }
-            StyledTextArea {
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                text: page.localMusicPersona
-                onTextChanged: page.localMusicPersona = text
-            }
-
-            // System Analyst Persona
-            RowLayout {
-                Layout.columnSpan: 2
-                spacing: 10
-                Layout.topMargin: 10
-                Controls.Label {
-                    text: qsTr("System Analyst Persona")
-                    font.bold: true
-                    font.family: theme.typography.bodyFont
-                    color: theme.colors.secondary
-                }
-                Item {
-                    Layout.fillWidth: true
-                }
-                MButton {
-                    text: "Reset Default"
-                    Layout.preferredHeight: 24
-                    Layout.preferredWidth: 120
-                    flat: true
-                    onClicked: page.localSystemPersona = page.defaultSystemPersona
-                }
-            }
-            StyledTextArea {
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                text: page.localSystemPersona
-                onTextChanged: page.localSystemPersona = text
-            }
-
-            // Todo Persona
-            RowLayout {
-                Layout.columnSpan: 2
-                spacing: 10
-                Layout.topMargin: 10
-                Controls.Label {
-                    text: qsTr("Todo Assistant Persona")
-                    font.bold: true
-                    font.family: theme.typography.bodyFont
-                    color: theme.colors.secondary
-                }
-                Item {
-                    Layout.fillWidth: true
-                }
-                MButton {
-                    text: "Reset Default"
-                    Layout.preferredHeight: 24
-                    Layout.preferredWidth: 120
-                    flat: true
-                    onClicked: page.localTodoPersona = page.defaultTodoPersona
-                }
-            }
-            StyledTextArea {
-                Layout.columnSpan: 2
-                Layout.fillWidth: true
-                text: page.localTodoPersona
-                onTextChanged: page.localTodoPersona = text
             }
         }
 

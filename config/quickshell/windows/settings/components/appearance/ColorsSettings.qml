@@ -137,13 +137,6 @@ BaseThemeSettings {
             activeCallback = null;
         }
         onRejected: activeCallback = null
-
-        // onCurrentColorChanged: {
-        //     if (activeCallback)
-        //         activeCallback(currentColor.toString());
-        //     activeCallback = null;
-        //     // root.applySingleProperty(targetedProp, color.toString());
-        // }
     }
 
     component ColorRow: ColumnLayout {
@@ -194,313 +187,293 @@ BaseThemeSettings {
 
     // --- UI Content ---
     ColumnLayout {
-        spacing: root.dim("spacingMedium", 10)
+        spacing: 15
         Layout.preferredWidth: 590
 
         // --- Core Palette ---
-        Controls.Label {
-            text: qsTr("Core Palette")
-            font.pixelSize: root.typ("heading2Size", 18)
-            font.bold: true
-            Layout.topMargin: 10
-        }
-
-        GridLayout {
-            columns: 2
+        SectionCard {
+            title: qsTr("Core Palette")
             Layout.fillWidth: true
-            columnSpacing: 15
-            rowSpacing: 10
 
-            ColorRow {
-                label: qsTr("Primary")
-                value: root.localPrimary
-                onUserChanged: v => {
-                    root.localPrimary = v;
-                    root.applySingleProperty("_primary", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("On Primary")
-                value: root.localOnPrimary
-                onUserChanged: v => {
-                    root.localOnPrimary = v;
-                    root.applySingleProperty("_onPrimary", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("Secondary")
-                value: root.localSecondary
-                onUserChanged: v => {
-                    root.localSecondary = v;
-                    root.applySingleProperty("_secondary", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("On Secondary")
-                value: root.localOnSecondary
-                onUserChanged: v => {
-                    root.localOnSecondary = v;
-                    root.applySingleProperty("_onSecondary", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("Tertiary")
-                value: root.localTertiary
-                onUserChanged: v => {
-                    root.localTertiary = v;
-                    root.applySingleProperty("_tertiary", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("On Tertiary")
-                value: root.localOnTertiary
-                onUserChanged: v => {
-                    root.localOnTertiary = v;
-                    root.applySingleProperty("_onTertiary", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("Error")
-                value: root.localError
-                onUserChanged: v => {
-                    root.localError = v;
-                    root.applySingleProperty("_error", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("On Error")
-                value: root.localOnError
-                onUserChanged: v => {
-                    root.localOnError = v;
-                    root.applySingleProperty("_onError", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("Success")
-                value: root.localSuccess
-                onUserChanged: v => {
-                    root.localSuccess = v;
-                    root.applySingleProperty("_success", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("On Success")
-                value: root.localOnSuccess
-                onUserChanged: v => {
-                    root.localOnSuccess = v;
-                    root.applySingleProperty("_onSuccess", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("Warning")
-                value: root.localWarning
-                onUserChanged: v => {
-                    root.localWarning = v;
-                    root.applySingleProperty("_warning", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("On Warning")
-                value: root.localOnWarning
-                onUserChanged: v => {
-                    root.localOnWarning = v;
-                    root.applySingleProperty("_onWarning", v);
-                }
-            }
-            ColorRow {
-                label: qsTr("Subtle Text")
-                value: root.localSubtleText
-                onUserChanged: v => {
-                    root.localSubtleText = v;
-                    root.applySingleProperty("_subtleTextColor", v);
-                }
-            }
-        }
+            GridLayout {
+                columns: 2
+                Layout.fillWidth: true
+                columnSpacing: 15
+                rowSpacing: 10
 
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.topMargin: 15
+                ColorRow {
+                    label: qsTr("Primary")
+                    value: root.localPrimary
+                    onUserChanged: v => {
+                        root.localPrimary = v;
+                        root.applySingleProperty("_primary", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("On Primary")
+                    value: root.localOnPrimary
+                    onUserChanged: v => {
+                        root.localOnPrimary = v;
+                        root.applySingleProperty("_onPrimary", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("Secondary")
+                    value: root.localSecondary
+                    onUserChanged: v => {
+                        root.localSecondary = v;
+                        root.applySingleProperty("_secondary", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("On Secondary")
+                    value: root.localOnSecondary
+                    onUserChanged: v => {
+                        root.localOnSecondary = v;
+                        root.applySingleProperty("_onSecondary", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("Tertiary")
+                    value: root.localTertiary
+                    onUserChanged: v => {
+                        root.localTertiary = v;
+                        root.applySingleProperty("_tertiary", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("On Tertiary")
+                    value: root.localOnTertiary
+                    onUserChanged: v => {
+                        root.localOnTertiary = v;
+                        root.applySingleProperty("_onTertiary", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("Error")
+                    value: root.localError
+                    onUserChanged: v => {
+                        root.localError = v;
+                        root.applySingleProperty("_error", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("On Error")
+                    value: root.localOnError
+                    onUserChanged: v => {
+                        root.localOnError = v;
+                        root.applySingleProperty("_onError", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("Success")
+                    value: root.localSuccess
+                    onUserChanged: v => {
+                        root.localSuccess = v;
+                        root.applySingleProperty("_success", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("On Success")
+                    value: root.localOnSuccess
+                    onUserChanged: v => {
+                        root.localOnSuccess = v;
+                        root.applySingleProperty("_onSuccess", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("Warning")
+                    value: root.localWarning
+                    onUserChanged: v => {
+                        root.localWarning = v;
+                        root.applySingleProperty("_warning", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("On Warning")
+                    value: root.localOnWarning
+                    onUserChanged: v => {
+                        root.localOnWarning = v;
+                        root.applySingleProperty("_onWarning", v);
+                    }
+                }
+                ColorRow {
+                    label: qsTr("Subtle Text")
+                    value: root.localSubtleText
+                    onUserChanged: v => {
+                        root.localSubtleText = v;
+                        root.applySingleProperty("_subtleTextColor", v);
+                    }
+                }
+            }
         }
 
         // --- Topbar ---
-        Controls.Label {
-            text: qsTr("Topbar")
-            font.bold: true
-            font.pixelSize: 18
-            Layout.topMargin: 10
-        }
-        GridLayout {
-            columns: 2
+        SectionCard {
+            title: qsTr("Topbar")
             Layout.fillWidth: true
-            columnSpacing: 15
-            rowSpacing: 10
 
-            ColorRow {
-                label: "Background"
-                value: root.localTopbarColor
-                onUserChanged: v => {
-                    root.localTopbarColor = v;
-                    root.applySingleProperty("_topbarColor", v);
-                }
-            }
-            ColorRow {
-                label: "Foreground"
-                value: root.localTopbarFgColor
-                onUserChanged: v => {
-                    root.localTopbarFgColor = v;
-                    root.applySingleProperty("_topbarFgColor", v);
-                }
-            }
-            ColorRow {
-                label: "BG V1"
-                value: root.localTopbarBgV1
-                onUserChanged: v => {
-                    root.localTopbarBgV1 = v;
-                    root.applySingleProperty("_topbarBgColorV1", v);
-                }
-            }
-            ColorRow {
-                label: "FG V1"
-                value: root.localTopbarFgV1
-                onUserChanged: v => {
-                    root.localTopbarFgV1 = v;
-                    root.applySingleProperty("_topbarFgColorV1", v);
-                }
-            }
-            ColorRow {
-                label: "BG V2"
-                value: root.localTopbarBgV2
-                onUserChanged: v => {
-                    root.localTopbarBgV2 = v;
-                    root.applySingleProperty("_topbarBgColorV2", v);
-                }
-            }
-            ColorRow {
-                label: "FG V2"
-                value: root.localTopbarFgV2
-                onUserChanged: v => {
-                    root.localTopbarFgV2 = v;
-                    root.applySingleProperty("_topbarFgColorV2", v);
-                }
-            }
-            ColorRow {
-                label: "BG V3"
-                value: root.localTopbarBgV3
-                onUserChanged: v => {
-                    root.localTopbarBgV3 = v;
-                    root.applySingleProperty("_topbarBgColorV3", v);
-                }
-            }
-            ColorRow {
-                label: "FG V3"
-                value: root.localTopbarFgV3
-                onUserChanged: v => {
-                    root.localTopbarFgV3 = v;
-                    root.applySingleProperty("_topbarFgColorV3", v);
-                }
-            }
-        }
+            GridLayout {
+                columns: 2
+                Layout.fillWidth: true
+                columnSpacing: 15
+                rowSpacing: 10
 
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.topMargin: 15
+                ColorRow {
+                    label: "Background"
+                    value: root.localTopbarColor
+                    onUserChanged: v => {
+                        root.localTopbarColor = v;
+                        root.applySingleProperty("_topbarColor", v);
+                    }
+                }
+                ColorRow {
+                    label: "Foreground"
+                    value: root.localTopbarFgColor
+                    onUserChanged: v => {
+                        root.localTopbarFgColor = v;
+                        root.applySingleProperty("_topbarFgColor", v);
+                    }
+                }
+                ColorRow {
+                    label: "BG V1"
+                    value: root.localTopbarBgV1
+                    onUserChanged: v => {
+                        root.localTopbarBgV1 = v;
+                        root.applySingleProperty("_topbarBgColorV1", v);
+                    }
+                }
+                ColorRow {
+                    label: "FG V1"
+                    value: root.localTopbarFgV1
+                    onUserChanged: v => {
+                        root.localTopbarFgV1 = v;
+                        root.applySingleProperty("_topbarFgColorV1", v);
+                    }
+                }
+                ColorRow {
+                    label: "BG V2"
+                    value: root.localTopbarBgV2
+                    onUserChanged: v => {
+                        root.localTopbarBgV2 = v;
+                        root.applySingleProperty("_topbarBgColorV2", v);
+                    }
+                }
+                ColorRow {
+                    label: "FG V2"
+                    value: root.localTopbarFgV2
+                    onUserChanged: v => {
+                        root.localTopbarFgV2 = v;
+                        root.applySingleProperty("_topbarFgColorV2", v);
+                    }
+                }
+                ColorRow {
+                    label: "BG V3"
+                    value: root.localTopbarBgV3
+                    onUserChanged: v => {
+                        root.localTopbarBgV3 = v;
+                        root.applySingleProperty("_topbarBgColorV3", v);
+                    }
+                }
+                ColorRow {
+                    label: "FG V3"
+                    value: root.localTopbarFgV3
+                    onUserChanged: v => {
+                        root.localTopbarFgV3 = v;
+                        root.applySingleProperty("_topbarFgColorV3", v);
+                    }
+                }
+            }
         }
 
         // --- Left Menu ---
-        Controls.Label {
-            text: qsTr("Left Menu")
-            font.bold: true
-            font.pixelSize: 18
-            Layout.topMargin: 10
-        }
-        GridLayout {
-            columns: 2
+        SectionCard {
+            title: qsTr("Left Menu")
             Layout.fillWidth: true
-            columnSpacing: 15
-            rowSpacing: 10
 
-            ColorRow {
-                label: "BG V1"
-                value: root.localMenuBgV1
-                onUserChanged: v => {
-                    root.localMenuBgV1 = v;
-                    root.applySingleProperty("_leftMenuBgColorV1", v);
-                }
-            }
-            ColorRow {
-                label: "FG V1"
-                value: root.localMenuFgV1
-                onUserChanged: v => {
-                    root.localMenuFgV1 = v;
-                    root.applySingleProperty("_leftMenuFgColorV1", v);
-                }
-            }
-            ColorRow {
-                label: "BG V2"
-                value: root.localMenuBgV2
-                onUserChanged: v => {
-                    root.localMenuBgV2 = v;
-                    root.applySingleProperty("_leftMenuBgColorV2", v);
-                }
-            }
-            ColorRow {
-                label: "FG V2"
-                value: root.localMenuFgV2
-                onUserChanged: v => {
-                    root.localMenuFgV2 = v;
-                    root.applySingleProperty("_leftMenuFgColorV2", v);
-                }
-            }
-            ColorRow {
-                label: "BG V3"
-                value: root.localMenuBgV3
-                onUserChanged: v => {
-                    root.localMenuBgV3 = v;
-                    root.applySingleProperty("_leftMenuBgColorV3", v);
-                }
-            }
-            ColorRow {
-                label: "FG V3"
-                value: root.localMenuFgV3
-                onUserChanged: v => {
-                    root.localMenuFgV3 = v;
-                    root.applySingleProperty("_leftMenuFgColorV3", v);
-                }
-            }
-        }
+            GridLayout {
+                columns: 2
+                Layout.fillWidth: true
+                columnSpacing: 15
+                rowSpacing: 10
 
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.topMargin: 15
+                ColorRow {
+                    label: "BG V1"
+                    value: root.localMenuBgV1
+                    onUserChanged: v => {
+                        root.localMenuBgV1 = v;
+                        root.applySingleProperty("_leftMenuBgColorV1", v);
+                    }
+                }
+                ColorRow {
+                    label: "FG V1"
+                    value: root.localMenuFgV1
+                    onUserChanged: v => {
+                        root.localMenuFgV1 = v;
+                        root.applySingleProperty("_leftMenuFgColorV1", v);
+                    }
+                }
+                ColorRow {
+                    label: "BG V2"
+                    value: root.localMenuBgV2
+                    onUserChanged: v => {
+                        root.localMenuBgV2 = v;
+                        root.applySingleProperty("_leftMenuBgColorV2", v);
+                    }
+                }
+                ColorRow {
+                    label: "FG V2"
+                    value: root.localMenuFgV2
+                    onUserChanged: v => {
+                        root.localMenuFgV2 = v;
+                        root.applySingleProperty("_leftMenuFgColorV2", v);
+                    }
+                }
+                ColorRow {
+                    label: "BG V3"
+                    value: root.localMenuBgV3
+                    onUserChanged: v => {
+                        root.localMenuBgV3 = v;
+                        root.applySingleProperty("_leftMenuBgColorV3", v);
+                    }
+                }
+                ColorRow {
+                    label: "FG V3"
+                    value: root.localMenuFgV3
+                    onUserChanged: v => {
+                        root.localMenuFgV3 = v;
+                        root.applySingleProperty("_leftMenuFgColorV3", v);
+                    }
+                }
+            }
         }
 
         // --- Misc ---
-        Controls.Label {
-            text: qsTr("Misc")
-            font.bold: true
-            font.pixelSize: 18
-            Layout.topMargin: 10
-        }
-        GridLayout {
-            columns: 2
+        SectionCard {
+            title: qsTr("Misc")
             Layout.fillWidth: true
-            columnSpacing: 15
-            rowSpacing: 10
 
-            ColorRow {
-                label: "Vol OSD BG"
-                value: root.localVolOsdBg
-                onUserChanged: v => {
-                    root.localVolOsdBg = v;
-                    root.applySingleProperty("_volOsdBgColor", v);
+            GridLayout {
+                columns: 2
+                Layout.fillWidth: true
+                columnSpacing: 15
+                rowSpacing: 10
+
+                ColorRow {
+                    label: "Vol OSD BG"
+                    value: root.localVolOsdBg
+                    onUserChanged: v => {
+                        root.localVolOsdBg = v;
+                        root.applySingleProperty("_volOsdBgColor", v);
+                    }
                 }
-            }
-            ColorRow {
-                label: "Vol OSD FG"
-                value: root.localVolOsdFg
-                onUserChanged: v => {
-                    root.localVolOsdFg = v;
-                    root.applySingleProperty("_volOsdFgColor", v);
+                ColorRow {
+                    label: "Vol OSD FG"
+                    value: root.localVolOsdFg
+                    onUserChanged: v => {
+                        root.localVolOsdFg = v;
+                        root.applySingleProperty("_volOsdFgColor", v);
+                    }
                 }
             }
         }

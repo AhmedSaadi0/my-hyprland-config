@@ -255,126 +255,109 @@ BaseGeneralSettings {
                 height: 15
             }
 
-            // --- Location Header ---
-            RowLayout {
+            // --- Converted to SectionCard: Regional Settings ---
+            SectionCard {
                 Layout.columnSpan: 2
-                spacing: 10
-                Text {
-                    text: ""
-                    font.family: theme.typography.iconFont
-                    color: theme.colors.primary
-                    font.pixelSize: theme.typography.heading3Size
-                }
-                Text {
-                    text: qsTr("Regional Settings")
+                title: qsTr("Regional Settings")
+                Layout.fillWidth: true
+
+                // --- Location Fields ---
+                Controls.Label {
+                    text: qsTr("Country")
                     font.bold: true
                     font.family: theme.typography.bodyFont
-                    font.pixelSize: theme.typography.heading3Size
-                    color: theme.colors.primary
+                    font.pixelSize: theme.typography.medium
+                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                    Layout.topMargin: 6
                 }
-            }
-
-            // --- Location Fields ---
-            Controls.Label {
-                text: qsTr("Country")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                Layout.topMargin: 6
-            }
-            EditableField {
-                Layout.fillWidth: true
-                text: page.localCountry
-                placeholderText: "e.g. Yemen"
-                selectedTheme: page.theme
-                onEditingFinished: page.localCountry = text
-            }
-
-            Controls.Label {
-                text: qsTr("City")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                Layout.topMargin: 6
-            }
-            EditableField {
-                Layout.fillWidth: true
-                text: page.localCity
-                placeholderText: "e.g. Sanaa"
-                selectedTheme: page.theme
-                onEditingFinished: page.localCity = text
-            }
-
-            Controls.Label {
-                text: qsTr("Weather API")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                Layout.topMargin: 6
-            }
-            ColumnLayout {
-                Layout.fillWidth: true
-                spacing: 2
                 EditableField {
                     Layout.fillWidth: true
-                    text: page.localWeatherLocation
-                    placeholderText: "e.g. Sanaa,YE"
+                    text: page.localCountry
+                    placeholderText: "e.g. Yemen"
                     selectedTheme: page.theme
-                    onEditingFinished: page.localWeatherLocation = text
+                    onEditingFinished: page.localCountry = text
                 }
-                Text {
-                    text: "Specific location for weather service (City,Code)"
+
+                Controls.Label {
+                    text: qsTr("City")
+                    font.bold: true
                     font.family: theme.typography.bodyFont
-                    font.pixelSize: theme.typography.small
-                    color: theme.colors.subtleText
+                    font.pixelSize: theme.typography.medium
+                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                    Layout.topMargin: 6
                 }
-            }
+                EditableField {
+                    Layout.fillWidth: true
+                    text: page.localCity
+                    placeholderText: "e.g. Sanaa"
+                    selectedTheme: page.theme
+                    onEditingFinished: page.localCity = text
+                }
 
-            // --- Time & Calendar ---
-            Controls.Label {
-                text: qsTr("First Day")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                Layout.alignment: Qt.AlignVCenter
-            }
+                Controls.Label {
+                    text: qsTr("Weather API")
+                    font.bold: true
+                    font.family: theme.typography.bodyFont
+                    font.pixelSize: theme.typography.medium
+                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                    Layout.topMargin: 6
+                }
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 2
+                    EditableField {
+                        Layout.fillWidth: true
+                        text: page.localWeatherLocation
+                        placeholderText: "e.g. Sanaa,YE"
+                        selectedTheme: page.theme
+                        onEditingFinished: page.localWeatherLocation = text
+                    }
+                    Text {
+                        text: "Specific location for weather service (City,Code)"
+                        font.family: theme.typography.bodyFont
+                        font.pixelSize: theme.typography.small
+                        color: theme.colors.subtleText
+                    }
+                }
 
-            // استخدام SettingsComboBox
-            SettingsComboBox {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 30
+                // --- Time & Calendar ---
+                Controls.Label {
+                    text: qsTr("First Day")
+                    font.bold: true
+                    font.family: theme.typography.bodyFont
+                    font.pixelSize: theme.typography.medium
+                    Layout.alignment: Qt.AlignVCenter
+                }
 
-                model: page.daysOfWeek
+                SettingsComboBox {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
 
-                // نستخدم currentIndex لأننا نريد حفظ الرقم (0-6)
-                currentIndex: page.localFirstDayOfWeek
+                    model: page.daysOfWeek
 
-                // غير قابل للكتابة (قائمة منسدلة فقط)
-                editable: false
+                    currentIndex: page.localFirstDayOfWeek
 
-                // تحديث القيمة عند الاختيار
-                onActivated: index => page.localFirstDayOfWeek = index
-            }
+                    editable: false
 
-            Controls.Label {
-                text: qsTr("Prayer Times")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-                Layout.alignment: Qt.AlignVCenter
-                visible: false
-            }
+                    onActivated: index => page.localFirstDayOfWeek = index
+                }
 
-            // استخدام SettingSwitch (يفترض أنه موجود في components)
-            SettingSwitch {
-                label: qsTr("Enable Prayer Times")
-                isChecked: page.localUsePrayerTimes
-                onIsCheckedChanged: page.localUsePrayerTimes = isChecked
-                Layout.alignment: Qt.AlignLeft
-                visible: false
+                Controls.Label {
+                    text: qsTr("Prayer Times")
+                    font.bold: true
+                    font.family: theme.typography.bodyFont
+                    font.pixelSize: theme.typography.medium
+                    Layout.alignment: Qt.AlignVCenter
+                    visible: false
+                }
+
+                SettingSwitch {
+                    label: qsTr("Enable Prayer Times")
+                    isChecked: page.localUsePrayerTimes
+                    onIsCheckedChanged: page.localUsePrayerTimes = isChecked
+                    Layout.alignment: Qt.AlignLeft
+                    visible: false
+                }
             }
         }
 

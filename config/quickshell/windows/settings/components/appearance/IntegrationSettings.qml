@@ -59,53 +59,6 @@ BaseThemeSettings {
     property bool isCursorThemesLoading: false
     property string cursorThemesError: ""
 
-    // --- Reusable Components (match HyprlandSettings.qml) ---
-    component SectionCard: Rectangle {
-        id: sectionCard
-        property string title: ""
-        property string subtitle: ""
-        default property alias content: sectionContent.data
-
-        Layout.fillWidth: true
-        color: root.theme.colors.leftMenuBgColorV1.alpha(0.72)
-        radius: root.theme.dimensions.baseRadius
-        border.color: root.theme.colors.primary.alpha(0.12)
-        border.width: 1
-
-        implicitHeight: sectionColumn.implicitHeight + 28
-
-        ColumnLayout {
-            id: sectionColumn
-            anchors.fill: parent
-            anchors.margins: 14
-            spacing: 12
-
-            ColumnLayout {
-                Layout.fillWidth: true
-                spacing: 3
-
-                Controls.Label {
-                    text: sectionCard.title
-                    font.pixelSize: root.typ("heading4Size", 16)
-                    font.bold: true
-                    color: root.theme.colors.primary
-                }
-
-                SettingsHelperText {
-                    visible: sectionCard.subtitle !== ""
-                    text: sectionCard.subtitle
-                    Layout.preferredWidth: 540
-                }
-            }
-
-            ColumnLayout {
-                id: sectionContent
-                Layout.fillWidth: true
-                spacing: 12
-            }
-        }
-    }
-
     component FieldLabel: Controls.Label {
         font.bold: true
         color: root.theme.colors.leftMenuFgColorV1

@@ -122,24 +122,15 @@ BaseThemeSettings {
     // ========================================================================
     ColumnLayout {
         id: mainLayout
-        spacing: 0
+        spacing: 15
         Layout.preferredWidth: 590
 
         // --------------------------------------------------------------------
         // SECTION 1: ACTIVATION MODES
         // --------------------------------------------------------------------
-        ColumnLayout {
+        SectionCard {
+            title: qsTr("Modes & Activation")
             Layout.fillWidth: true
-            spacing: 5 // Tighter spacing between control and description
-            Layout.bottomMargin: 15
-
-            Controls.Label {
-                text: qsTr("Modes & Activation")
-                font.pixelSize: root.typ("heading2Size", 18)
-                font.bold: true
-                color: root.theme ? root.theme.colors.primary : "#fff"
-                Layout.bottomMargin: 5
-            }
 
             // Dynamic Switch
             SettingSwitch {
@@ -187,7 +178,7 @@ BaseThemeSettings {
             ColumnLayout {
                 Layout.fillWidth: true
                 visible: root.localEnableWallpaperBlur
-                Layout.leftMargin: 20 // إزاحة للداخل لتدل على التبعية
+                Layout.leftMargin: 20
 
                 SliderWithLabel {
                     label: qsTr("Blur Strength")
@@ -208,27 +199,13 @@ BaseThemeSettings {
             }
         }
 
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.bottomMargin: 15
-        }
-
         // --------------------------------------------------------------------
         // SECTION 2: COLOR ENGINE CONFIGURATION
         // --------------------------------------------------------------------
-        ColumnLayout {
+        SectionCard {
+            title: qsTr("Dynamic Color Engine")
             Layout.fillWidth: true
-            spacing: 8
-            Layout.bottomMargin: 15
             visible: root.localEnableColoring
-
-            Controls.Label {
-                text: qsTr("Dynamic Color Engine")
-                font.pixelSize: root.typ("heading2Size", 18)
-                font.bold: true
-                color: root.theme ? root.theme.colors.primary : "#fff"
-                Layout.bottomMargin: 5
-            }
 
             // 1. Scheme Variant
             RowLayout {
@@ -289,29 +266,15 @@ BaseThemeSettings {
             }
         }
 
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.bottomMargin: 15
-            visible: root.localEnableColoring
-        }
-
         // --------------------------------------------------------------------
         // SECTION 3: WALLPAPER SOURCE (Dynamic OR Static)
         // --------------------------------------------------------------------
 
         // A. DYNAMIC MODE UI
-        ColumnLayout {
+        SectionCard {
+            title: qsTr("Dynamic Collection Config")
             Layout.fillWidth: true
-            spacing: 8
             visible: root.localEnableDynamic
-
-            Controls.Label {
-                text: qsTr("Dynamic Collection Config")
-                font.pixelSize: root.typ("heading2Size", 18)
-                font.bold: true
-                color: root.theme ? root.theme.colors.primary : "#fff"
-                Layout.bottomMargin: 5
-            }
 
             // Folder Path
             Controls.Label {
@@ -342,7 +305,7 @@ BaseThemeSettings {
             }
             DescriptionLabel {
                 text: qsTr("The folder containing your wallpaper collection. The system will pick random images from here.")
-                Layout.leftMargin: 0 // Align with label
+                Layout.leftMargin: 0
             }
 
             // Interval
@@ -350,13 +313,11 @@ BaseThemeSettings {
                 label: qsTr("Change Interval (Minutes)")
                 from: 1
                 to: 59
-                // stepSize: 1
                 stepSize: 0.01
                 decimals: 2
                 value: root.localInterval / 60
                 onEditingFinished: val => {
                     root.localInterval = (val * 60);
-                    // root.applySingleProperty("_dynamicWallpapersInterval", (val * 60) * 1000);
                 }
             }
             DescriptionLabel {
@@ -390,7 +351,6 @@ BaseThemeSettings {
                     onClicked: {
                         ThemeManager.switchToPreviousWallpaper();
                         root.localWallpaperIndex = theme._selectedWallpaperIndex;
-                        // root.applySingleProperty("_selectedWallpaperIndex", root.localWallpaperIndex);
                     }
                 }
                 MButton {
@@ -405,7 +365,6 @@ BaseThemeSettings {
                     onClicked: {
                         ThemeManager.switchToNextWallpaper();
                         root.localWallpaperIndex = theme._selectedWallpaperIndex;
-                        // root.applySingleProperty("_selectedWallpaperIndex", root.localWallpaperIndex);
                     }
                 }
             }
@@ -416,18 +375,10 @@ BaseThemeSettings {
         }
 
         // B. STATIC MODE UI
-        ColumnLayout {
+        SectionCard {
+            title: qsTr("Static Image Config")
             Layout.fillWidth: true
-            spacing: 8
             visible: !root.localEnableDynamic
-
-            Controls.Label {
-                text: qsTr("Static Image Config")
-                font.pixelSize: root.typ("heading2Size", 18)
-                font.bold: true
-                color: root.theme ? root.theme.colors.primary : "#fff"
-                Layout.bottomMargin: 5
-            }
 
             Controls.Label {
                 text: qsTr("Image Path")
