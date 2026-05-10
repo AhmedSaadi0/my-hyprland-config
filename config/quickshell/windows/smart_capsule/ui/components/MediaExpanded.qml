@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
-import QtQuick.Controls.Material
-import QtQuick.Shapes 1.15
+// import QtQuick.Controls
+// import QtQuick.Controls.Material
+// import QtQuick.Shapes 1.15
 
 import "root:/themes"
 import "root:/services"
@@ -210,7 +210,7 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: ""
-                font.family: style.iconFont || ""
+                font.family: ThemeManager.selectedTheme.typography.iconFont
                 font.pixelSize: 20
                 color: iconColor
                 opacity: playing ? 0 : 1

@@ -19,7 +19,8 @@ def install_fedora(install_optional):
     run_command_verbose(
         "sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
     )
-    run_command_verbose("sudo dnf copr enable -y solopasha/hyprland")
+    # run_command_verbose("sudo dnf copr enable -y solopasha/hyprland")
+    run_command_verbose("sudo dnf copr enable lionheartp/Hyprland")
     run_command_verbose("sudo dnf copr enable -y errornointernet/quickshell")
     run_command_verbose("sudo dnf install -y hyprland quickshell")
 
