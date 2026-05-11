@@ -24,7 +24,7 @@ def install_fedora(install_optional):
     run_command_verbose("sudo dnf copr enable -y errornointernet/quickshell")
     run_command_verbose("sudo dnf install -y hyprland quickshell")
 
-    required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard cliphist sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs lm_sensors copyq vnstat nethogs swww jq dbus-devel python3-devel python3.13 python3.13-devel"
+    required_pkgs = "plasma-nm playerctl polkit-kde dolphin konsole brightnessctl gammastep wl-clipboard cliphist sysstat bc sassc plasma-systemsettings acpi fish gnome-bluetooth-libs lm_sensors copyq vnstat nethogs jq dbus-devel python3-devel python3.13 python3.13-devel"
     optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
 
     base_command = f"sudo dnf install -y {required_pkgs}"
@@ -70,7 +70,7 @@ def install_fedora(install_optional):
 
 def install_arch(install_optional):
     print(YELLOW + "Starting Arch installer" + NC)
-    required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard cliphist hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo swww python-regex copyq swww python-pillow python-psutil python python313"
+    required_pkgs = "base-devel quickshell brightnessctl network-manager-applet konsole ark dolphin ffmpegthumbs playerctl polkit-kde-agent jq gammastep wl-clipboard cliphist hyprpicker hyprshot-git bc sysstat sassc systemsettings acpi fish kde-material-you-colors plasma5support plasma5-integration plasma-framework5 ttf-jetbrains-mono-nerd ttf-fantasque-nerd powerdevil gnome-bluetooth-3.0 power-profiles-daemon libjpeg6-turbo python-regex copyq python-pillow python-psutil python python313"
     optional_pkgs = "strawberry easyeffects blueman telegram-desktop discord kvantum firefox"
 
     command = f"yay -S {required_pkgs}"
@@ -88,7 +88,7 @@ def install_void(install_optional):
     )
     run_command_verbose("sudo xbps-install -S")
 
-    required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz swww jq python3-devel dbus-devel glib-devel cmake"
+    required_pkgs = "hyprland quickshell plasma-nm playerctl polkit-kde-agent dolphin konsole brightnessctl gammastep wl-clipboard sysstat bc sassc systemsettings acpi fish-shell gnome-bluetooth power-profiles-daemon lm_sensors CopyQ vnstat nethogs xz jq python3-devel dbus-devel glib-devel cmake"
     optional_pkgs = (
         "strawberry easyeffects blueman telegram-desktop kvantum firefox"
     )
