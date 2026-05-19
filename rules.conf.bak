@@ -1,0 +1,111 @@
+# Terminals & Main
+windowrulev2=workspace 1,class:^(.*konsole.*)$
+windowrulev2=workspace 1,class:^(.*kitty.*)$
+windowrulev2=workspace 1,class:^(.*systemsettings.*)$
+windowrulev2=workspace 1,class:^(.*gnome-terminal.*)$
+
+# Internet
+windowrulev2=workspace 2,class:^(.*firefox.*)$
+windowrulev2=workspace 2,class:^(.*opera.*)$
+windowrulev2=workspace 2,class:^(.*edge.*)$
+windowrulev2=workspace 2,class:^(.*Chromium.*)$
+windowrulev2=workspace 2,class:^(.*Google-chrome.*)$
+windowrulev2=workspace 2,class:^(.*thorium-browser.*)$
+windowrulev2=workspace 2,class:brave-browser
+
+# Coding
+windowrulev2=workspace 3,class:^(.*Code.*)$
+windowrulev2=workspace 3,class:^(.*neovide.*)$
+windowrulev2=workspace 3,class:^(.*VSCodium.*)$
+windowrulev2=workspace 3,class:^(.*jetbrains-pycharm-ce.*)$
+
+# Files
+windowrulev2=workspace 4,class:^(.*dolphin.*)$
+windowrulev2=workspace 4,class:^(.*pcmanfm-qt.*)$
+windowrulev2=workspace 4,class:^(.*nemo.*)$
+windowrulev2=workspace 4,class:^(.*ark.*)$
+windowrulev2=workspace 4,class:.*Nautilus.*
+
+# Android & Database
+windowrulev2=workspace 5,class:^(.*studio.*)$
+windowrulev2=workspace 5,class:^(.*jetbrains-studio.*)$
+windowrulev2=workspace 5,class:^(.*DBeaver.*)$
+windowrulev2=workspace 5,title:^(.*LibreOffice.*)$
+windowrulev2=workspace 5,title:^(.*pgadmin4.*)$
+
+# Chatting
+windowrulev2=workspace 6,title:^(.*Telegram.*)$
+windowrulev2=workspace 6,title:^(.*Messages for web.*)$
+windowrulev2=workspace 6,class:^(.*discord.*)$
+windowrulev2=workspace 6,class:^(.*thunderbird.*)$
+
+# Media
+windowrulev2=workspace 7,class:^(.*amarok.*)$
+windowrulev2=workspace 7,class:^(.*G4Music.*)$
+windowrulev2=workspace 7,class:.*music.*
+windowrulev2=workspace 7,class:.*lollypop.*
+windowrulev2=workspace 7,class:^(.*elisa.*)$
+windowrulev2=workspace 7,class:^(.*vlc.*)$
+windowrulev2=workspace 7,class:^(.*easyeffects.*)$
+windowrulev2=workspace 7,class:^(.*mpv.*)$
+windowrulev2=workspace 7,class:^(.*strawberry.*)$
+
+# Games
+windowrulev2=workspace 8,class:^(.*org.libretro.RetroArch.*)$
+windowrulev2=workspace 8,class:^(.*pcsx2-qt.*)$
+windowrulev2=workspace 8,class:.*PCSX2.*
+windowrulev2=workspace 8,class:^(.*PPSSPPQt.*)$
+windowrulev2=workspace 8,class:^(.*steam.*)$
+windowrulev2=workspace 8,class:^(.*lutris.*)$
+windowrulev2=workspace 8,title:^(.*Winetricks.*)$
+
+# Other temp workspaces
+windowrulev2=workspace 9,class:^(.*Postman.*)$
+windowrulev2=workspace 9,initialTitle:.*MetaTrader.*
+
+# Dialogs
+windowrulev2=float,class:^(.*org.kde.polkit-kde-authentication-agent-1.*)$
+windowrulev2=float,class:.*portal.*
+windowrulev2=float,class:^(.*org.kde.kteatime.*)$
+windowrulev2=float,title:^(.*Open File.*)$
+windowrulev2=float,title:^(.*Open Folder.*)$
+windowrulev2=float,title:^(.*Save As.*)$
+windowrulev2=float,title:^(.*Library.*)$
+windowrulev2=noborder,class:^(.*org.libretro.RetroArch.*)$,title:^(.*)$,maximize:1
+windowrulev2=float,class:^(.*dialog.*)$
+windowrulev2=float,title:^(.*dialog.*)$
+windowrulev2=float,title:^(.*Winetricks.*)$
+
+# Floating
+windowrulev2=float,class:^(.*com.github.hluk.copyq.*)$
+windowrulev2=float,class:Windscribe
+
+# Layer rules
+layerrule=blur,gtk-layer-shell
+layerrule=ignorezero,gtk-layer-shell
+layerrule=blur,notifications
+layerrule=ignorezero,notifications
+layerrule=blur,session
+layerrule=blur,popup
+layerrule=ignorezero,class:^(.*GLava.*)$
+
+# Others
+windowrulev2=pin,class:^(.*9i.*)$
+windowrulev2=noblur,class:^(.*GLava.*)$
+windowrulev2=noblur,class:^(.*neovide.*)$
+windowrulev2=noborder,class:^(.*GLava.*)$
+windowrulev2=pseudo,class:^(.*GLava.*)$
+windowrulev2=noshadow,class:^(.*GLava.*)$
+windowrulev2=float,class:^(.*GLava.*)$
+# windowrulev2=nofocus,class:^jetbrains-(?!toolbox),floating:1,title:^win\d+$
+windowrule=nofocus,class:^jetbrains-.*$,floating:1,title:^$|^\s$|^win\d+$
+
+
+windowrulev2 = float, title:^(NibrasShellSettings)$
+windowrulev2 = size 950 950, title:^(NibrasShellSettings)$
+windowrulev2 = center, title:^(NibrasShellSettings)$
+
+layerrule = blur, NibrasShell:logout
+layerrule = ignorealpha 0, NibrasShell:logout
+# layerrule = ignorealpha 0, NibrasShell:logout
+# layerrule = dimaround, NibrasShell:logout

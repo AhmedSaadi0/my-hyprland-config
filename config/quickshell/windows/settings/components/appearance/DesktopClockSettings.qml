@@ -138,9 +138,9 @@ BaseThemeSettings {
     // --- Content ---
     ColumnLayout {
         Layout.preferredWidth: 590
-        spacing: root.dim("spacingSmall", 5)
+        spacing: 15
 
-        // --- Enable Switch ---
+        // --- Enable Switch (kept separate, not in SectionCard) ---
         SettingSwitch {
             id: _clockEnabledSwitch
             label: qsTr("Enable Desktop Clock")
@@ -163,23 +163,11 @@ BaseThemeSettings {
             Layout.preferredWidth: 500
         }
 
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.topMargin: 10
-        }
-
         // --- General Section ---
-        ColumnLayout {
+        SectionCard {
+            title: qsTr("General")
             Layout.fillWidth: true
             enabled: root.localEnabled
-            spacing: 5
-
-            Controls.Label {
-                text: qsTr("General")
-                font.pixelSize: root.typ("heading2Size", 18)
-                font.bold: true
-                Layout.topMargin: 5
-            }
 
             // Font
             Controls.Label {
@@ -213,76 +201,55 @@ BaseThemeSettings {
                 }
             }
 
-            // Format & Locale
-            RowLayout {
-                Layout.fillWidth: true
+            // Format
+            Controls.Label {
+                text: qsTr("Format")
+                font.bold: true
                 Layout.topMargin: 10
-                spacing: 15
-
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    Controls.Label {
-                        text: qsTr("Format")
-                        font.bold: true
-                    }
-                    EditableField {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 30
-                        Layout.minimumWidth: 50
-                        text: root.localFormat
-                        selectedTheme: root.theme
-                        onEditingFinished: {
-                            if (root.isLoading)
-                                return;
-                            root.localFormat = text;
-                            root.applySingleProperty("_desktopClockFormat", text);
-                        }
-                    }
-                }
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    Controls.Label {
-                        text: qsTr("Locale")
-                        font.bold: true
-                    }
-                    EditableField {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 30
-                        Layout.minimumWidth: 50
-                        text: root.localLocale
-                        selectedTheme: root.theme
-                        onEditingFinished: {
-                            if (root.isLoading)
-                                return;
-                            root.localLocale = text;
-                            root.applySingleProperty("_desktopClockLocal", text);
-                        }
-                    }
+            }
+            EditableField {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 30
+                Layout.minimumWidth: 50
+                text: root.localFormat
+                selectedTheme: root.theme
+                onEditingFinished: {
+                    if (root.isLoading)
+                        return;
+                    root.localFormat = text;
+                    root.applySingleProperty("_desktopClockFormat", text);
                 }
             }
-        }
 
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.topMargin: 10
+            // Locale
+            Controls.Label {
+                text: qsTr("Locale")
+                font.bold: true
+                Layout.topMargin: 10
+            }
+            EditableField {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 30
+                Layout.minimumWidth: 50
+                text: root.localLocale
+                selectedTheme: root.theme
+                onEditingFinished: {
+                    if (root.isLoading)
+                        return;
+                    root.localLocale = text;
+                    root.applySingleProperty("_desktopClockLocal", text);
+                }
+            }
         }
 
         // --- Appearance Section ---
-        ColumnLayout {
+        SectionCard {
+            title: qsTr("Appearance")
             Layout.fillWidth: true
             enabled: root.localEnabled
-            spacing: 5
-
-            Controls.Label {
-                text: qsTr("Appearance")
-                font.pixelSize: root.typ("heading2Size", 18)
-                font.bold: true
-                Layout.topMargin: 5
-            }
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: 5
                 spacing: 20
 
                 // Color Settings
@@ -409,24 +376,12 @@ BaseThemeSettings {
             }
         }
 
-        Kirigami.Separator {
-            Layout.fillWidth: true
-            Layout.topMargin: 10
-        }
-
         // --- Depth Effect Section ---
-        ColumnLayout {
+        SectionCard {
             id: depthEffectUi
+            title: qsTr("Depth Effect")
             Layout.fillWidth: true
             enabled: root.localEnabled
-            spacing: 5
-
-            Controls.Label {
-                text: qsTr("Depth Effect")
-                font.pixelSize: root.typ("heading2Size", 18)
-                font.bold: true
-                Layout.topMargin: 5
-            }
 
             SettingSwitch {
                 label: qsTr("Enable depth effect")
@@ -503,7 +458,6 @@ BaseThemeSettings {
                     onIsCheckedChanged: root.alphaMatting = isChecked
                 }
 
-                // استخدام ColumnLayout بدلاً من RowLayout لتسهيل عرض Sliders بشكل رأسي
                 ColumnLayout {
                     enabled: _alphaMattingSwitch.isChecked
                     Layout.fillWidth: true
