@@ -1,0 +1,414 @@
+{
+  "/home/ahmed/.config/quickshell/translations/ar.ts": {
+    "mtime": 1766927461.7552516,
+    "hash": "ac874c7f820d543fd463f9898c833834"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/system_diagnostics.py": {
+    "mtime": 1775547402.9327521,
+    "hash": "462a4f20be4cfc09d93ecdb0b8579c65"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/get_clipboard.py": {
+    "mtime": 1776106209.991508,
+    "hash": "2b12894e5b54e3664cc6c9f100f6dcb7"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/list_konsole_profiles.py": {
+    "mtime": 1777735822.1186113,
+    "hash": "150591dae94fd451316993ee1ed67329"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/create_depth_image_rembg.py": {
+    "mtime": 1759412899.2629387,
+    "hash": "1b0903c214bd943d85fc5c4ae3b7ecd8"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/battery_info.py": {
+    "mtime": 1759412899.2629757,
+    "hash": "4c7b717134a961e4af59c7f3d164f352"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/list_kvantum_themes.py": {
+    "mtime": 1777735818.4276206,
+    "hash": "29f1529d1443d0474fd18175b3356b9e"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/system_monitor.py": {
+    "mtime": 1775324426.3218572,
+    "hash": "d6a6833cf07a842307968bb32bb99d0f"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/overlay_cache_images_cleaner.py": {
+    "mtime": 1759412899.2630098,
+    "hash": "508648adba028c06ce990bf3acc75226"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/create_depth_image_opencv.py": {
+    "mtime": 1759412899.2630262,
+    "hash": "e0a628cad83e0d8620afeea64ca76b8c"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/list_icon_themes.py": {
+    "mtime": 1777736513.6048667,
+    "hash": "21f4a40c8e823c1bf3ac76aacc98874f"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/list_gtk_themes.py": {
+    "mtime": 1777735827.7125974,
+    "hash": "b64f6f1b123d5aca1cf7e191dc07a4b7"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/scan_wallpapers.py": {
+    "mtime": 1767977131.386486,
+    "hash": "526d5c8aaa18c08d79d23ddf46acfedb"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/__init__.py": {
+    "mtime": 1759412899.263041,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/apply_konsole_profile_open_sessions.py": {
+    "mtime": 1770851018.0755608,
+    "hash": "7077f6edac1118cc70af52f2f538f151"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/list_qt_styles.py": {
+    "mtime": 1777738199.9726956,
+    "hash": "8cbb1720c8f8929d2d598f74c3d56b95"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/resolve_theme_icons.py": {
+    "mtime": 1770845684.3988643,
+    "hash": "0094112a95d6314815c9bb27de934d85"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/list_plasma_schemes.py": {
+    "mtime": 1777735813.4196334,
+    "hash": "b80cb943735edbefe220c7978171884f"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/list_cursor_themes.py": {
+    "mtime": 1777741211.9914453,
+    "hash": "ea2c80bbc778092321ca77312040174c"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/m3/plasma_color.py": {
+    "mtime": 1766583473.107544,
+    "hash": "76f7ce699fdd601f350ce2f2df1f7142"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/m3/dynamic-m3.py": {
+    "mtime": 1766583477.3059256,
+    "hash": "5e6d09218783ea65f3d4ba0e18122ee9"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/m3/create_thumbnail.py": {
+    "mtime": 1759412899.262733,
+    "hash": "ef78a675e166f9341180340eec3c732b"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/m3/kitty_theme.py": {
+    "mtime": 1759412899.2627478,
+    "hash": "7828a1dd04e69f30cec5d350451b3e2d"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/m3/css_theme.py": {
+    "mtime": 1759412899.2627628,
+    "hash": "514171f24c71a27e312f4b2e53906560"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/m3/__init__.py": {
+    "mtime": 1759412899.2627628,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/m3/gtk_theme.py": {
+    "mtime": 1759412899.2628171,
+    "hash": "fcc08a9b37c4361365d88f149d10dc38"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/main.py": {
+    "mtime": 1770903708.8191385,
+    "hash": "b324b5efca237799e5cdec9b3754beb2"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/gemini_provider.py": {
+    "mtime": 1765201337.5831933,
+    "hash": "9bebad61bd2c0876a72bebe2ac6965bf"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/local_provider.py": {
+    "mtime": 1767609985.3058214,
+    "hash": "00f8edd3139e43464458e87f146f7b4f"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/base_provider.py": {
+    "mtime": 1765200617.5381887,
+    "hash": "e34b88c5505b89424d6f2241a0ad5a2c"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/list-gemini.py": {
+    "mtime": 1765263688.4611423,
+    "hash": "197b71d2c77bd7abfa2500b66a26265a"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/config.py": {
+    "mtime": 1777736922.3446648,
+    "hash": "e2215eedd973ae37ddee91ea23390287"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/ollama_provider.py": {
+    "mtime": 1769945932.4189212,
+    "hash": "892e74da9204411cbc97123f725c615e"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/openrouter_provider.py": {
+    "mtime": 1767987504.8605628,
+    "hash": "15ed0f473eea24a2bd08cdb2fa57f96f"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/__init__.py": {
+    "mtime": 1765119619.7926435,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/openai_provider.py": {
+    "mtime": 1765201333.9572034,
+    "hash": "405432f107efcbdded9100adc7a4a376"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/prompt.py": {
+    "mtime": 1777731452.8630996,
+    "hash": "802bc483ea654b9863de4670157c1c09"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/tools/boot_analyzer.py": {
+    "mtime": 1770642233.4514475,
+    "hash": "265385eb3b189d30e14255540b453b8f"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/ai/tools/__init__.py": {
+    "mtime": 1765119619.7926435,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/devices/list_devices.py": {
+    "mtime": 1761047952.5536234,
+    "hash": "b84ef9d898cb7db577777580d60612db"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/devices/__init__.py": {
+    "mtime": 1761046139.957732,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/network/list_wifi.py": {
+    "mtime": 1759412899.26285,
+    "hash": "239976e274b5e568302137406b343cfa"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/network/connect_wifi.py": {
+    "mtime": 1759412899.2628717,
+    "hash": "986c4b76f22d0245c904e275ab00975a"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/network/__init__.py": {
+    "mtime": 1759412899.2628717,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/network/data_usage.py": {
+    "mtime": 1759412899.262909,
+    "hash": "3b2f690996d4ccd63f0d0c30af8f2f3f"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/network/live_usage.py": {
+    "mtime": 1775641297.4041007,
+    "hash": "04a7c3d386bb438acb138768ccd7af85"
+  },
+  "/home/ahmed/.config/quickshell/utils/helpers.js": {
+    "mtime": 1766574267.0792556,
+    "hash": "96d254ebbdaf18203cfe5341634b8503"
+  },
+  "/home/ahmed/.config/quickshell/config/ConstValues.js": {
+    "mtime": 1772864773.341302,
+    "hash": "9f61db8d00182c7be6aa1892986a29d1"
+  },
+  "/home/ahmed/.config/quickshell/config/EventNames.js": {
+    "mtime": 1767431440.2059996,
+    "hash": "0b19950288db9ad152911b615e92ae07"
+  },
+  "/home/ahmed/.config/quickshell/todo.md": {
+    "mtime": 1770859553.928112,
+    "hash": "1a614dffcfdbb23772906163e66c938c"
+  },
+  "/home/ahmed/.config/quickshell/scripts/python/requirements-3.13.txt": {
+    "mtime": 1777743752.5735345,
+    "hash": "10f47e0154a663590e8d04b8b5d73eed"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/catppuccin_light.jpeg": {
+    "mtime": 1771999482.1458843,
+    "hash": "b45a680bf1b779efdec973ac9c556685"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/deer_depth.png": {
+    "mtime": 1776953079.2740543,
+    "hash": "60aee2b699ee2db2f429b811fa532282"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/tokyonight-dark.png": {
+    "mtime": 1759412899.2640605,
+    "hash": "240c68989592b8bdc7a625970f805a44"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/ign_wanderlust.jpg": {
+    "mtime": 1759412899.2640784,
+    "hash": "393ccf1f289057295ff122b14a5e85e5"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/m3_dark.png": {
+    "mtime": 1725694476.0,
+    "hash": "3e583198768daeff373c4557ea8fdb4b"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/m3_light.png": {
+    "mtime": 1774869128.5065198,
+    "hash": "8ddeb680ed7ecb90647edfcaa09b9464"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/colors_depth.png": {
+    "mtime": 1776960942.2748735,
+    "hash": "de9dc43ed3aba2926ea16db50e566c50"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/dracula_dark.png": {
+    "mtime": 1767545074.6542916,
+    "hash": "7c8fe365a84b1cefb2070fc79f355d8b"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/linux.png": {
+    "mtime": 1759412899.2641897,
+    "hash": "010728e2e75780b86ddf516570d272dc"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/m3_light_depth.png": {
+    "mtime": 1774873847.9427786,
+    "hash": "3999cc099f63e0a431b008aa7aad4682"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/CatppuccinDark.png": {
+    "mtime": 1759412899.2642767,
+    "hash": "852fb433c1d8c3a2186961e998290a70"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/nord-light.gif": {
+    "mtime": 1712667797.0,
+    "hash": "54f81331a9da88c623b96363fb0a4da1"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/nord-dark.gif": {
+    "mtime": 1712667797.0,
+    "hash": "c065c55e72bc6169fe727317494cdd71"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/gruvbox-light-depth.png": {
+    "mtime": 1776959986.8396008,
+    "hash": "b58f9bebb6a730905693a48a14a8f129"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/tokyonight-light.png": {
+    "mtime": 1759412899.264294,
+    "hash": "f5d7cea39313ce5645133c0bb7c5434d"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/m3_dark_depth.png": {
+    "mtime": 1776954096.4246004,
+    "hash": "514ba4ad90a458770ab5a0d33fbda476"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/catppuccin_light_depth.png": {
+    "mtime": 1776952097.0525715,
+    "hash": "f07e4dc1e403a5a39e8d4619b91a74bb"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/deer.jpg": {
+    "mtime": 1759412899.2643113,
+    "hash": "2df9652fb09258228e1d6ffb8426fcae"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/gruvbox-light.png": {
+    "mtime": 1648573651.0,
+    "hash": "210d21aa2710250adb0a99d762262fc5"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/dracula_dark_depth.png": {
+    "mtime": 1767693408.3074338,
+    "hash": "0854f4dbfe3e1b3d4f64b1dfd4d6585c"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/colors.png": {
+    "mtime": 1759412899.265581,
+    "hash": "e75e7f197b0074777f057aea374137b1"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/Cat.jpg": {
+    "mtime": 1759412899.2661254,
+    "hash": "21402be1400955873a22eb9ea6af521a"
+  },
+  "/home/ahmed/.config/quickshell/assets/wallpapers/gruvbox-dark.png": {
+    "mtime": 1759412899.2662926,
+    "hash": "0af9c462d6b006be6b42c5e8d772bda4"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/rain.png": {
+    "mtime": 1759412899.2670066,
+    "hash": "6eea78b7fa7cc86d71085bf8744f67be"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/weather-icon.png": {
+    "mtime": 1759412899.267031,
+    "hash": "d621464496302f7c12404e96651a96ae"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/profile-modified.png": {
+    "mtime": 1759412899.2671254,
+    "hash": "a6e39803e7ecae9833599504dc1c7a09"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/electrical-danger-sign.png": {
+    "mtime": 1759412899.2672179,
+    "hash": "cc1053fbdd216e2f00d71f6efd768cc7"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/fog.png": {
+    "mtime": 1759412899.2672386,
+    "hash": "d73ee79899ef1d0faf7b51e1f1ad44c7"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/cold-weather.png": {
+    "mtime": 1759412899.2672591,
+    "hash": "df1a04107e8452fec3f63c98d1076345"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/thunder.png": {
+    "mtime": 1759412899.267282,
+    "hash": "67618b8968a2511bbe905426693ff511"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/wind.png": {
+    "mtime": 1759412899.2673037,
+    "hash": "535a6d9dc2362ff1feb860d4c31e21a9"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/image.png": {
+    "mtime": 1759412899.2673256,
+    "hash": "7e34b504f38aae5dfddfc350f5953cd4"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/hot-weather.png": {
+    "mtime": 1759412899.2674327,
+    "hash": "044f71bb11bced17c006eb680ae3e6bb"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/notification.png": {
+    "mtime": 1759412899.2674527,
+    "hash": "37f263df272de76686e513d17693e1e9"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/logo.jpeg": {
+    "mtime": 1756560624.0800943,
+    "hash": "13ab2323f38c510fcbb7921452ecb07e"
+  },
+  "/home/ahmed/.config/quickshell/assets/icons/mosque.png": {
+    "mtime": 1759412899.2674732,
+    "hash": "7cfbf099f59f529f0d679359d596080d"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/morning.mp3": {
+    "mtime": 1759412899.2663503,
+    "hash": "3b8b67f0e9f3c2fbf880649cb15ea7b6"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/notification.wav": {
+    "mtime": 1769702343.9540594,
+    "hash": "a6053ef29464b85bd5a5a6fde8cdf157"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/desktop-login.mp3": {
+    "mtime": 1759412899.2665377,
+    "hash": "6d700d0b3243f25daec3b15931bb081c"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/notification2.wav": {
+    "mtime": 1769700420.3455698,
+    "hash": "47d737977b7470e41983004b6cdc46d4"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/athan.mp3": {
+    "mtime": 1759412899.2665594,
+    "hash": "f195e777d2e96d2e6a182247c6cf8b67"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/rain-notification.mp3": {
+    "mtime": 1759412899.2665899,
+    "hash": "8992864d78c6dcf4114a7313f4d5ae96"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/cpu_high_usage.wav": {
+    "mtime": 1759412899.2666135,
+    "hash": "445e6ac6b0ad01c030a617d5e1ba469b"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/power_in.mp3": {
+    "mtime": 1769701289.647795,
+    "hash": "5c1b1c1ff314850eb22aff716ab9930e"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/smart_capsule.wav": {
+    "mtime": 1769702046.202401,
+    "hash": "cc415aecacf3ff8d2a477221e3f788c9"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/low-battery.mp3": {
+    "mtime": 1769701528.462675,
+    "hash": "3f5952d1e4f74ecd31a13322588eda74"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/desktop-login.wav": {
+    "mtime": 1769702783.4346852,
+    "hash": "46fb69b9e7e71a0071353ed4f15093bb"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/cold-weather.mp3": {
+    "mtime": 1759412899.2668307,
+    "hash": "c21c33277e1672f5185819b4e05d6260"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/smart_capsule.mp3": {
+    "mtime": 1765489973.6304135,
+    "hash": "ed1a4f8a909974fcb615a3859f85efad"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/desktop-logout.mp3": {
+    "mtime": 1759412899.2668974,
+    "hash": "cbe7fd6d46687a44ee2baf6728223734"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/evening.mp3": {
+    "mtime": 1759412899.2669194,
+    "hash": "34ffdb207238fa12f699620b25ce4229"
+  },
+  "/home/ahmed/.config/quickshell/assets/audio/warning-sound.mp3": {
+    "mtime": 1759412899.266967,
+    "hash": "d71d7cd542ec9a8fd961f76f862a73a4"
+  }
+}

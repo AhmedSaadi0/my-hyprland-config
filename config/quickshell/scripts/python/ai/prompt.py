@@ -231,9 +231,14 @@ Do not simply remove technical noise. Instead, **RE-INTERPRET** and **SIMPLIFY**
 - **Service Crashes (Core Dump)**:
   *Interpretation*: "A system service [Process Name] unexpectedly closed and was managed by the system."
 - **Filesystem / GPU / Kernel Panic**:
-  *Interpretation*: Maintain high urgency. "CRITICAL: Potential hardware or driver failure detected in [Component]."
+  *Interpretation*: "CRITICAL: Potential hardware or driver failure detected in [Component]."
 
-### 5. VISUAL REPRESENTATION RULES
+### 5. RAW LOG PRESERVATION
+For each entry in the `logs` array:
+- Set `"raw_details"` to the **exact, unmodified log line** from the input `--- CRITICAL LOGS ---` section for this entry. Do NOT translate or summarize it.
+- This field MUST contain the original journalctl output line verbatim so users can inspect the raw error.
+
+### 6. VISUAL REPRESENTATION RULES
 Select the most appropriate **NerdFont Icon** and **Color** based on the severest issue found:
 
 | Status | Condition | Icon Choice | Color Code |
@@ -242,11 +247,11 @@ Select the most appropriate **NerdFont Icon** and **Color** based on the severes
 | **WARNING** | Slow boot (>30s) OR real driver limitations (Bluetooth/Wifi). |      | "orange" |
 | **CRITICAL** | Kernel panic, filesystem corruption, GPU failure. |      | "red" |
 
-### 6. OUTPUT CONFIGURATION
+### 7. OUTPUT CONFIGURATION
 - **Language**: Translate all human-readable fields (title, summary, message) STRICTLY into **$aiPreferredLanguage**.
 - **Format**: **RAW JSON ONLY**. Do not include markdown blocks (```json). No introductory or closing text.
 
-### 7. REQUIRED JSON STRUCTURE
+### 8. REQUIRED JSON STRUCTURE
 {{
     "title": "Short Professional Status (Max 3 words)",
     "summary": "Human-friendly diagnostic summary (Max 20 words). Focus on the 'Why' in a reassuring tone.",
@@ -257,8 +262,11 @@ Select the most appropriate **NerdFont Icon** and **Color** based on the severes
         {{
             "time": "HH:MM:SS",
             "process": "Simplified Process Name",
-            "message": "Translated, human-friendly explanation of the error/notice"
+            "message": "Translated, human-friendly explanation of the error/notice",
+            "raw_details": "The exact, original journalctl log line for this entry, preserved verbatim"
         }}
+    ]
+}}
     ]
 }}
 """

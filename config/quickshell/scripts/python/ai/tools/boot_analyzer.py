@@ -84,7 +84,7 @@ def main():
 
     # 2. تجهيز البرومبت
     # نقوم بحقن البيانات داخل القالب
-    final_prompt = SYSTEM_ANALYST_PROMPT.replace("{SYSTEM_DATA}", raw_data)
+    final_prompt = SYSTEM_ANALYST_PROMPT.replace("{SYSTEM_LOGS}", raw_data)
 
     # 3. تجهيز المزود (Provider)
     # نستخدم دالة get_provider الموجودة في config.py الخاص بك
