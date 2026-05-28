@@ -127,7 +127,7 @@ PanelWindow {
         // --- ADDED POWER OPTION HERE ---
         ListElement {
             icon: ""           // Standard Power Icon
-            activeIcon: ""     // Active state (can be red or filled if font supports it)
+            activeIcon: ""
             name: "Power"
             notificationCount: 0
         }
@@ -280,7 +280,7 @@ PanelWindow {
         layer.effect: MultiEffect {
             source: topButtonGroup
             shadowEnabled: true
-            shadowColor: "#40000000"
+            shadowColor: palette.shadow.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
@@ -312,7 +312,7 @@ PanelWindow {
         layer.effect: MultiEffect {
             source: middleButtonGroup
             shadowEnabled: true
-            shadowColor: "#40000000"
+            shadowColor: palette.shadow.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
@@ -340,7 +340,7 @@ PanelWindow {
         layer.effect: MultiEffect {
             source: bottomButtonGroup
             shadowEnabled: true
-            shadowColor: "#40000000"
+            shadowColor: palette.shadow.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2

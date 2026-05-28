@@ -70,7 +70,7 @@ Rectangle {
         }
 
         layer.effect: Shadow {
-            color: palette.shadow.alpha(0.2)
+            color: Qt.darker(ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(0.2)
             radius: 8
         }
     }

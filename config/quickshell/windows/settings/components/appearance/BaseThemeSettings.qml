@@ -16,6 +16,7 @@ M3GroupBox {
     property string lastThemeName: ""
 
     property bool showApplyButton: false
+    property bool showUndoRedoButtons: false
 
     readonly property var theme: ThemeManager.selectedTheme
 
@@ -123,6 +124,28 @@ M3GroupBox {
             visible: root.hasOwnProperty("clearUnusedCache")
             Layout.preferredWidth: 120
             onClicked: root.clearUnusedCache()
+        }
+
+        MButton {
+            text: "󰄪"
+            visible: root.showUndoRedoButtons
+            enabled: root.hasOwnProperty("canUndo") ? root.canUndo : false
+            Layout.preferredWidth: 40
+            onClicked: {
+                if (root.hasOwnProperty("undo"))
+                    root.undo();
+            }
+        }
+
+        MButton {
+            text: "󰄫"
+            visible: root.showUndoRedoButtons
+            enabled: root.hasOwnProperty("canRedo") ? root.canRedo : false
+            Layout.preferredWidth: 40
+            onClicked: {
+                if (root.hasOwnProperty("redo"))
+                    root.redo();
+            }
         }
 
         Item {

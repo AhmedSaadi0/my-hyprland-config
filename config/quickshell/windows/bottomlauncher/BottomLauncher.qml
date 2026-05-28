@@ -113,7 +113,7 @@ PanelWindow {
             z: -1
             radius: parent.radius + 2
             color: "transparent"
-            border.color: Qt.rgba(0, 0, 0, 0.3)
+            border.color: Qt.darker(ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(0.3)
             border.width: 4
             visible: false
         }

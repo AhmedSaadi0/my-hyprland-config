@@ -2,7 +2,7 @@
 
 import QtQuick
 import Quickshell.Io
-import org.kde.kirigami as Kirigami
+import "root:/themes"
 
 SimpleTable {
     id: root
@@ -25,13 +25,13 @@ SimpleTable {
     showHorizontalGridLines: false
 
     // Header Styling
-    headerBackgroundColor: palette.mid
-    headerTextColor: Kirigami.Theme.textColor
+    headerBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    headerTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
 
     // Cell Styling
-    cellBackgroundColor: Kirigami.Theme.backgroundColor.lighter(1.5)
-    alternatingCellBackgroundColor: Kirigami.Theme.backgroundColor
-    cellTextColor: Kirigami.Theme.textColor
+    cellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+    alternatingCellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    cellTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
 
     // Spacing Control
     headerCellSpacing: 0

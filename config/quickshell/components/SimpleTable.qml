@@ -15,14 +15,14 @@ Rectangle {
     property var model: null
 
     // --- Properties for Table Container ---
-    property color tableBackgroundColor: Kirigami.Theme.backgroundColor
-    property color tableBorderColor: Kirigami.Theme.positiveBackgroundColor
+    property color tableBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+    property color tableBorderColor: ThemeManager.selectedTheme.colors.primary.alpha(0.25)
     property int tableBorderWidth: 2
     property real tableRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     // --- Properties for Header ---
-    property color headerBackgroundColor: Kirigami.Theme.backgroundColor
-    property color headerTextColor: Kirigami.Theme.textColor
+    property color headerBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    property color headerTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
     property font headerFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.heading4Size,
         bold: true
@@ -33,7 +33,7 @@ Rectangle {
     property int headerCellSpacing: 0
 
     // --- DEFAULT Properties for Cells/Rows Text ---
-    property color cellTextColor: Kirigami.Theme.textColor
+    property color cellTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
     property font cellFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.medium
     })
@@ -41,15 +41,15 @@ Rectangle {
     property var cellWrapMode: Text.NoWrap
 
     // --- Properties for Sub-Value Text ---
-    property color subCellTextColor: Kirigami.Theme.positiveTextColor
+    property color subCellTextColor: ThemeManager.selectedTheme.colors.success
     property font subCellFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.small - 3
     })
 
     // --- General Cell Properties ---
-    property color cellBackgroundColor: Kirigami.Theme.backgroundColor
-    property color alternatingCellBackgroundColor: Kirigami.Theme.alternateBackgroundColor
-    property color cellBorderColor: Kirigami.Theme.positiveBackgroundColor
+    property color cellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+    property color alternatingCellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    property color cellBorderColor: ThemeManager.selectedTheme.colors.primary.alpha(0.18)
     property int cellBorderWidth: 1
     property int rowHeight: Kirigami.Units.gridUnit * 3
     property int cellColumnSpacing: 0

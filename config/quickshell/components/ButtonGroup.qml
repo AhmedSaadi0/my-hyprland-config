@@ -1,6 +1,6 @@
 import QtQuick
 
-import "root:/utils/helpers.js" as Helper
+import "root:/themes"
 
 Item {
     id: root
@@ -11,7 +11,7 @@ Item {
     property int buttonHeight: 30
     property bool useHand: false
 
-    property var theme
+    property var theme: ThemeManager.selectedTheme
 
     implicitWidth: 50
     implicitHeight: buttonContainer.implicitHeight
@@ -23,8 +23,8 @@ Item {
         height: root.buttonHeight
         y: root.currentIndex * (root.buttonHeight + root.itemSpacing)
 
-        radius: root.theme ? root.theme.dimensions.elementRadius : 8
-        color: root.theme ? root.theme.colors.primary : "blue"
+        radius: root.theme.dimensions.elementRadius
+        color: root.theme.colors.primary
         opacity: root.currentIndex !== -1 ? 1.0 : 0.0
 
         Behavior on y {
@@ -62,12 +62,12 @@ Item {
                     hoverEnabled: true
 
                     // استخدام مباشر لقيم السمة مع قيم افتراضية
-                    font.family: root.theme ? root.theme.typography.iconFont : "sans-serif"
+                    font.family: root.theme.typography.iconFont
                     font.pixelSize: 15
 
                     normalBackground: "transparent"
                     activeBackground: "transparent"
-                    hoveredBackground: isActive ? "transparent" : (root.theme ? root.theme.colors.primary : "blue")
+                    hoveredBackground: isActive ? "transparent" : root.theme.colors.primary
 
                     cursorShape: root.useHand ? Qt.PointingHandCursor : Qt.ArrowCursor
 
@@ -83,8 +83,8 @@ Item {
                     height: 15
 
                     // استخدام مباشر لقيم السمة مع قيم افتراضية
-                    radius: root.theme ? root.theme.dimensions.elementRadius : 8
-                    color: root.theme ? root.theme.colors.primary : "blue"
+                    radius: root.theme.dimensions.elementRadius
+                    color: root.theme.colors.primary
                     visible: model.notificationCount && model.notificationCount > 0
                     opacity: 0.0
                     scale: 0.7
@@ -117,7 +117,7 @@ Item {
 
                         text: model.notificationCount
                         // استخدام مباشر لقيم السمة مع قيم افتراضية
-                        color: root.theme ? Helper.getAccurteTextColor(root.theme.colors.primary) : "white"
+                        color: root.theme.colors.onPrimary
                         font.bold: true
                         font.pixelSize: 8
 

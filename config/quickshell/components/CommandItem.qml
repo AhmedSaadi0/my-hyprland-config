@@ -8,6 +8,7 @@ Item {
 
     property var commandData
     property bool isHighlighted: false
+    readonly property var theme: ThemeManager.selectedTheme
 
     signal clicked
 
@@ -16,20 +17,20 @@ Item {
     Rectangle {
         id: hoverBg
         anchors.fill: parent
-        radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
+        radius: root.theme.dimensions.elementRadius
         opacity: commandData?.enabled === false ? 0.5 : 1
 
         color: {
             if (root.isHighlighted) {
-                return ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333";
+                return root.theme.colors.primary.alpha(0.2);
             }
             if (mouseArea.containsMouse) {
-                return ThemeManager.selectedTheme?.colors?.primary.alpha(0.1) || "#222";
+                return root.theme.colors.primary.alpha(0.1);
             }
             return "transparent";
         }
 
-        border.color: root.isHighlighted ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
+        border.color: root.isHighlighted ? root.theme.colors.primary : "transparent"
         border.width: root.isHighlighted ? 1 : 0
 
         Behavior on color {
@@ -54,16 +55,16 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         width: 40
         height: 40
-        radius: (ThemeManager.selectedTheme?.dimensions?.elementRadius || 8) * 0.8
-        color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#1a1a2e"
+        radius: root.theme.dimensions.elementRadius * 0.8
+        color: root.theme.colors.leftMenuBgColorV2
         opacity: commandData?.enabled === false ? 0.5 : 1
 
         Text {
             anchors.centerIn: parent
             text: commandData?.icon || ""
             font.pixelSize: 20
-            font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-            color: ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
+            font.family: root.theme.typography.iconFont
+            color: root.theme.colors.primary
         }
     }
 
@@ -81,13 +82,13 @@ Item {
             text: commandData?.name || ""
             font.pixelSize: 13
             font.weight: Font.Medium
-            color: ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+            color: root.theme.colors.leftMenuFgColorV1
         }
 
         Text {
             text: commandData?.description || ""
             font.pixelSize: 11
-            color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+            color: root.theme.colors.subtleText
         }
     }
 
@@ -99,7 +100,7 @@ Item {
         width: 24
         height: 24
         radius: 4
-        color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#1a1a2e"
+        color: root.theme.colors.leftMenuBgColorV2
         visible: (mouseArea.containsMouse || root.isHighlighted) && commandData?.enabled !== false
         opacity: 0.8
 
@@ -107,7 +108,7 @@ Item {
             anchors.centerIn: parent
             text: "↵"
             font.pixelSize: 12
-            color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+            color: root.theme.colors.subtleText
         }
     }
 

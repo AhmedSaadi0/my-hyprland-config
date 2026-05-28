@@ -110,7 +110,7 @@ BaseThemeSettings {
     // ========================================================================
     component DescriptionLabel: Controls.Label {
         font.pixelSize: root.typ("small", 12)
-        color: root.theme ? root.theme.colors.subtleText : "#888"
+        color: root.theme.colors.subtleText
         wrapMode: Text.WordWrap
         Layout.fillWidth: true
         Layout.leftMargin: 20 // Indentation for better hierarchy
@@ -336,7 +336,7 @@ BaseThemeSettings {
                 Controls.Label {
                     text: "Current Index: " + root.localWallpaperIndex
                     Layout.fillWidth: true
-                    color: root.theme ? root.theme.colors.subtleText : "#888"
+                    color: root.theme.colors.subtleText
                 }
                 MButton {
                     text: "Back"

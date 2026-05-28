@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import QtQuick.Effects
 import "root:/config"
+import "root:/themes"
 
 Item {
     id: root
@@ -14,8 +15,8 @@ Item {
 
     property bool enableAnimation: false
     property bool shadowEnabled: false
-    property color shadowColor: "#40000000"
-    property color clockColor: "white"
+    property color shadowColor: ThemeManager.selectedTheme.colors.shadowColor
+    property color clockColor: ThemeManager.selectedTheme.colors.primary
     property string clockFont: "sans-serif"
     property string clockFormat: "hh:mm"
     property string clockLocale: "en_US"
@@ -25,6 +26,12 @@ Item {
     property string _displayedFont: root.clockFont
     property string _displayedFormat: root.clockFormat
     property bool _isReady: false
+    property var shadowEffectItem: null
+
+    QtObject {
+        id: shadowAnimationFallback
+        property real blur: 0
+    }
 
     signal requestNewGeometry(point newPosition, size newSize)
     signal themeChanged
@@ -112,7 +119,7 @@ Item {
                 duration: 180
             }
             NumberAnimation {
-                target: timeText.shadowEffect
+                target: root.shadowEffectItem || shadowAnimationFallback
                 property: "blur"
                 to: 2.5
                 duration: 180
@@ -141,7 +148,7 @@ Item {
                 duration: 500
             }
             NumberAnimation {
-                target: timeText.shadowEffect
+                target: root.shadowEffectItem || shadowAnimationFallback
                 property: "blur"
                 to: 0.0
                 duration: 500
@@ -232,6 +239,8 @@ Item {
             layer.effect: MultiEffect {
                 id: shadowEffect
 
+                Component.onCompleted: root.shadowEffectItem = shadowEffect
+
                 blurEnabled: true
                 blurMax: 8 // تمكين التمويه للأنميشن
                 blur: 0
@@ -273,11 +282,11 @@ Item {
         visible: root.editMode
         anchors.fill: parent
         color: "transparent"
-        border.color: "white"
+        border.color: ThemeManager.selectedTheme.colors.primary
         border.width: 2
         Rectangle {
             anchors.fill: parent
-            color: "black"
+            color: ThemeManager.selectedTheme.colors.topbarColor
             opacity: 0.2
         }
     }
@@ -313,7 +322,7 @@ Item {
         visible: root.editMode
         width: 20
         height: 20
-        color: "white"
+        color: ThemeManager.selectedTheme.colors.primary
         radius: 10
         opacity: root.editMode ? 1 : 0
         Behavior on opacity {

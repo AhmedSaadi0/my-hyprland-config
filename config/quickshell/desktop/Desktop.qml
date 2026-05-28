@@ -80,7 +80,8 @@ PanelWindow {
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                shadowColor: Qt.rgba(0, 0, 0, 0.5)
+                // shadowColor: Qt.darker(Theme.ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(0.5)
+                shadowColor: palette.shadow
                 shadowBlur: 1.0
                 shadowVerticalOffset: -1
                 shadowHorizontalOffset: -1
@@ -119,7 +120,7 @@ PanelWindow {
             Rectangle {
                 anchors.fill: parent
                 radius: desktopRoot.cornerRadius
-                color: "black"
+                color: Theme.ThemeManager.selectedTheme.colors.topbarColor
             }
         }
     }

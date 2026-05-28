@@ -1,9 +1,10 @@
 // components/eye_shapes/SleepingEye.qml
 import QtQuick
+import "root:/themes"
 
 Item {
     id: root
-    property color color: "white"
+    property color color: ThemeManager.selectedTheme.colors.topbarFgColor
     property int eyeW: 10
     property int eyeH: 2
     property bool active: false

@@ -5,9 +5,21 @@ import Quickshell
 import Quickshell.Wayland
 import org.kde.kirigami as Kirigami
 import "root:/config"
+import "root:/themes"
 
 PanelWindow {
     id: root
+
+    readonly property var theme: ThemeManager.selectedTheme
+    readonly property bool hasTheme: theme !== null
+    property real contentOpacity: hasTheme ? 1 : 0
+
+    readonly property color backgroundColor: hasTheme ? theme.colors.topbarColor : "transparent"
+    readonly property color foregroundColor: hasTheme ? theme.colors.topbarFgColor : "transparent"
+    readonly property color subtleColor: hasTheme ? theme.colors.subtleText : "transparent"
+    readonly property color primaryColor: hasTheme ? theme.colors.primary : "transparent"
+    readonly property color progressBackgroundColor: hasTheme ? theme.colors.topbarBgColorV2 : "transparent"
+    readonly property string bodyFont: hasTheme ? theme.typography.bodyFont : ""
 
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.namespace: "NibrasShell:splash"
@@ -24,7 +36,8 @@ PanelWindow {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: Kirigami.Theme.backgroundColor
+        color: root.backgroundColor
+        opacity: root.contentOpacity
 
         Rectangle {
             anchors.fill: parent
@@ -35,7 +48,7 @@ PanelWindow {
                 }
                 GradientStop {
                     position: 1.0
-                    color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.05)
+                    color: root.foregroundColor.alpha(0.05)
                 }
             }
         }
@@ -47,8 +60,8 @@ PanelWindow {
         height: width
         anchors.centerIn: parent
         radius: width / 2
-        color: Kirigami.Theme.highlightColor
-        opacity: 0.1
+        color: root.primaryColor
+        opacity: root.contentOpacity * 0.1
 
         SequentialAnimation on scale {
             loops: Animation.Infinite
@@ -69,6 +82,7 @@ PanelWindow {
     ColumnLayout {
         anchors.centerIn: parent
         spacing: 30
+        opacity: root.contentOpacity
 
         // الأيقونة
         Item {
@@ -79,7 +93,7 @@ PanelWindow {
             Kirigami.Icon {
                 anchors.fill: parent
                 source: App.assets.logo
-                color: Kirigami.Theme.textColor
+                color: root.foregroundColor
             }
 
             SequentialAnimation on scale {
@@ -105,20 +119,20 @@ PanelWindow {
             Text {
                 text: "NIBRAS SHELL"
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: Kirigami.Theme.textColor
+                color: root.foregroundColor
                 font.pixelSize: 36
                 font.bold: true
                 font.letterSpacing: 4
-                font.family: Kirigami.Theme.defaultFont.family
+                font.family: root.bodyFont
             }
 
             Text {
                 text: "Initializing Environment..."
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: Kirigami.Theme.disabledTextColor
+                color: root.subtleColor
                 font.pixelSize: 14
                 font.letterSpacing: 1
-                font.family: Kirigami.Theme.defaultFont.family
+                font.family: root.bodyFont
             }
         }
 
@@ -131,7 +145,7 @@ PanelWindow {
 
             Rectangle {
                 anchors.fill: parent
-                color: Kirigami.Theme.alternateBackgroundColor
+                color: root.progressBackgroundColor
                 radius: 2
             }
 
@@ -145,11 +159,11 @@ PanelWindow {
                     orientation: Gradient.Horizontal
                     GradientStop {
                         position: 0.0
-                        color: Kirigami.Theme.highlightColor
+                        color: root.primaryColor
                     }
                     GradientStop {
                         position: 1.0
-                        color: Qt.lighter(Kirigami.Theme.highlightColor, 1.4)
+                        color: Qt.lighter(root.primaryColor, 1.4)
                     }
                 }
 
@@ -163,14 +177,10 @@ PanelWindow {
         }
     }
 
-    // أنيميشن الظهور
-    Component.onCompleted: introAnim.start()
-    NumberAnimation {
-        id: introAnim
-        target: root
-        property: "opacity"
-        to: 1
-        duration: 800
-        easing.type: Easing.OutQuad
+    Behavior on contentOpacity {
+        NumberAnimation {
+            duration: 800
+            easing.type: Easing.OutQuad
+        }
     }
 }

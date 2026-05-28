@@ -4,7 +4,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
 import "root:/themes"
-import "root:/utils/helpers.js" as Helper
 import "root:/config/EventNames.js" as Events
 import "root:/config"
 import "root:/components"
@@ -107,6 +106,24 @@ PanelWindow {
         }
     }
 
+    function getModmaskTextColor(modmask) {
+        var theme = ThemeManager.selectedTheme;
+        switch (modmask) {
+        case 0:
+            return theme.colors.leftMenuFgColorV1;
+        case 64:
+        case 65:
+        case 68:
+            return theme.colors.onPrimary;
+        case 72:
+            return theme.colors.topbarFgColorV2;
+        case 9:
+            return theme.colors.topbarFgColorV3;
+        default:
+            return theme.colors.onSecondary;
+        }
+    }
+
     // تجميع البيانات مسبقاً لتجنب الحسابات المتكررة
     property var categorizedShortcuts: {
         var categories = {};
@@ -152,7 +169,7 @@ PanelWindow {
             text: "󰅖"
             cursorShape: Qt.PointingHandCursor
             normalBackground: "transparent"
-            hoveredBackground: Qt.rgba(1, 0, 0, 0.5)
+            hoveredBackground: ThemeManager.selectedTheme.colors.error.alpha(0.5)
             onClicked: root.visible = false
             z: 100 // ليكون فوق كل شيء
             font: ThemeManager.selectedTheme.typography.iconFont
@@ -267,7 +284,7 @@ PanelWindow {
                                     font.pixelSize: ThemeManager.selectedTheme.typography.heading3Size
                                     font.family: ThemeManager.selectedTheme.typography.bodyFont
                                     font.bold: true
-                                    color: Helper.getAccurteTextColor(modelData.color)
+                                    color: getModmaskTextColor(modelData.modmask)
                                     anchors.centerIn: parent
                                 }
 
@@ -275,8 +292,7 @@ PanelWindow {
                                     text: modelData.shortcuts.length + " shortcuts"
                                     font.pixelSize: ThemeManager.selectedTheme.typography.small
                                     font.family: ThemeManager.selectedTheme.typography.bodyFont
-                                    // color: ThemeManager.selectedTheme.colors.onPrimary
-                                    color: Helper.getAccurteTextColor(modelData.color)
+                                    color: getModmaskTextColor(modelData.modmask)
                                     anchors {
                                         right: parent.right
                                         rightMargin: 15

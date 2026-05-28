@@ -5,6 +5,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import "root:/themes"
 
 Item {
     id: root
@@ -32,6 +33,7 @@ Item {
         Label {
             id: labelText
             text: root.label
+            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignVCenter
             // جعل النص يأخذ لوناً باهتاً قليلاً إذا كان السويتش مغلقاً (لمسة جمالية اختيارية)

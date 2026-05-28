@@ -29,6 +29,7 @@ RowLayout {
     Controls.Label {
         id: titleLabel
         font.bold: true
+        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
         Layout.fillWidth: true
         elide: Text.ElideRight
     }

@@ -8,7 +8,6 @@ import "root:/services"
 import "root:/config"
 import "root:/themes"
 import "root:/config/ConstValues.js" as C
-import "root:/utils/helpers.js" as Helper
 
 Singleton {
     id: root
@@ -336,7 +335,7 @@ Singleton {
         const profileKey = profile === PowerProfile.Performance ? "power_performance" : profile === PowerProfile.PowerSaver ? "power_powersaver" : "power_balanced";
         const label = root.getPowerProfileLabel(profile);
         const color = root.getPowerProfileColor(profile);
-        const fg = Helper.getAccurteTextColor(color);
+        const fg = root.getPowerProfileForeground(profile);
         const fallbackEmotion = root.getPowerProfileEmotion(profile);
         const fallbackText = qsTr("Power profile: %1").arg(label);
 
@@ -879,9 +878,9 @@ Singleton {
                 icon: "󰉔",
                 text: "Generating Depth Effect...",
                 timeout: 100000,
-                bgColor1: "#4527A0",
-                bgColor2: "#7B1FA2",
-                fgColor: "#FFFFFF"
+                bgColor1: ThemeManager.selectedTheme.colors.primary,
+                bgColor2: ThemeManager.selectedTheme.colors.secondary,
+                fgColor: ThemeManager.selectedTheme.colors.onPrimary
             });
         } else {
             root.updateEyes("happy", 3000);
@@ -891,9 +890,9 @@ Singleton {
                 icon: "󰉓",
                 text: "Depth Effect Ready!",
                 timeout: 3000,
-                bgColor1: "#2E7D32",
-                bgColor2: "#43A047",
-                fgColor: "#FFFFFF"
+                bgColor1: ThemeManager.selectedTheme.colors.success,
+                bgColor2: ThemeManager.selectedTheme.colors.primary,
+                fgColor: ThemeManager.selectedTheme.colors.onSuccess
             });
         }
     }
@@ -941,39 +940,39 @@ Singleton {
         switch (state) {
         case "critical":
             return {
-                bg1: "#B00020",
-                bg2: "#D32F2F",
-                fg: "#FFFFFF"
+                bg1: ThemeManager.selectedTheme.colors.error,
+                bg2: ThemeManager.selectedTheme.colors.error.alpha(0.78),
+                fg: ThemeManager.selectedTheme.colors.onError
             };
         case "warning":
             return {
-                bg1: "#FF9800",
-                bg2: "#FFC107",
-                fg: "#000000"
+                bg1: ThemeManager.selectedTheme.colors.warning,
+                bg2: ThemeManager.selectedTheme.colors.warning.alpha(0.78),
+                fg: ThemeManager.selectedTheme.colors.onWarning
             };
         case "success":
             return {
-                bg1: "#00695C",
-                bg2: "#2E7D32",
-                fg: "#FFFFFF"
+                bg1: ThemeManager.selectedTheme.colors.success,
+                bg2: ThemeManager.selectedTheme.colors.success.alpha(0.78),
+                fg: ThemeManager.selectedTheme.colors.onSuccess
             };
         case "info":
             return {
-                bg1: "#0277BD",
-                bg2: "#0091EA",
-                fg: "#FFFFFF"
+                bg1: ThemeManager.selectedTheme.colors.primary,
+                bg2: ThemeManager.selectedTheme.colors.secondary,
+                fg: ThemeManager.selectedTheme.colors.onPrimary
             };
         case "ai":
             return {
-                bg1: "#6200EA",
-                bg2: "#7C4DFF",
-                fg: "#FFFFFF"
+                bg1: ThemeManager.selectedTheme.colors.tertiary,
+                bg2: ThemeManager.selectedTheme.colors.primary,
+                fg: ThemeManager.selectedTheme.colors.onTertiary
             };
         case "music":
             return {
-                bg1: "#880E4F",
-                bg2: "#1A237E",
-                fg: "#FFFFFF"
+                bg1: ThemeManager.selectedTheme.colors.secondary,
+                bg2: ThemeManager.selectedTheme.colors.primary,
+                fg: ThemeManager.selectedTheme.colors.onSecondary
             };
         case "theme_applied":
             return {
@@ -1031,13 +1030,21 @@ Singleton {
         return ThemeManager.selectedTheme.colors.primary;
     }
 
+    function getPowerProfileForeground(profile) {
+        if (profile === PowerProfile.Performance)
+            return ThemeManager.selectedTheme.colors.onWarning;
+        if (profile === PowerProfile.PowerSaver)
+            return ThemeManager.selectedTheme.colors.onSuccess;
+        return ThemeManager.selectedTheme.colors.onPrimary;
+    }
+
     function getBootColors() {
         const raw = (SystemService.bootStatusColor || "").toString().toLowerCase();
         if (raw.startsWith("#")) {
             return {
                 bg1: raw,
                 bg2: raw,
-                fg: "#FFFFFF"
+                fg: ThemeManager.selectedTheme.colors.onPrimary
             };
         }
         if (raw === "red")

@@ -25,9 +25,9 @@ Rectangle {
     default property alias content: sectionContent.data
 
     Layout.fillWidth: true
-    color: theme ? theme.colors.leftMenuBgColorV1.alpha(0.72) : "#282828"
-    radius: theme ? theme.dimensions.baseRadius : 12
-    border.color: theme ? theme.colors.primary.alpha(0.12) : "#303030"
+    color: theme.colors.leftMenuBgColorV1.alpha(0.72)
+    radius: theme.dimensions.baseRadius
+    border.color: theme.colors.primary.alpha(0.12)
     border.width: 1
 
     implicitHeight: sectionColumn.implicitHeight + 28
@@ -46,7 +46,7 @@ Rectangle {
                 text: card.title
                 font.pixelSize: card.typ("heading4Size", 16)
                 font.bold: true
-                color: card.theme ? card.theme.colors.primary : "#ffffff"
+                color: card.theme.colors.primary
             }
 
             SettingsHelperText {

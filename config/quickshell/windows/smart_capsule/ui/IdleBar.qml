@@ -11,20 +11,19 @@ import "root:/services"
 import "root:/windows/smart_capsule/ui/components"
 import "root:/windows/smart_capsule/logic"
 import "root:/config/ConstValues.js" as C
-import "root:/utils/helpers.js" as Helper
 
 Item {
     id: root
 
-    readonly property color p1_start: "#4facfe"
-    readonly property color p1_mid: "#00f2fe"
-    readonly property color p1_end: "#a18cd1"
-    readonly property color p2_start: "#fa709a"
-    readonly property color p2_mid: "#fee140"
-    readonly property color p2_end: "#ff0844"
-    readonly property color p3_start: "#30cfd0"
-    readonly property color p3_mid: "#B9429F"
-    readonly property color p3_end: "#5b86e5"
+    readonly property color p1_start: ThemeManager.selectedTheme.colors.primary
+    readonly property color p1_mid: ThemeManager.selectedTheme.colors.secondary
+    readonly property color p1_end: ThemeManager.selectedTheme.colors.tertiary
+    readonly property color p2_start: ThemeManager.selectedTheme.colors.error
+    readonly property color p2_mid: ThemeManager.selectedTheme.colors.warning
+    readonly property color p2_end: ThemeManager.selectedTheme.colors.primary
+    readonly property color p3_start: ThemeManager.selectedTheme.colors.success
+    readonly property color p3_mid: ThemeManager.selectedTheme.colors.tertiary
+    readonly property color p3_end: ThemeManager.selectedTheme.colors.secondary
     readonly property int colorCycleDuration: 2000
 
     signal requestExpand(string mode)
@@ -33,7 +32,7 @@ Item {
     readonly property bool showInfo: CapsuleManager.currentPriority > C.IDLE
 
     readonly property color themeColor: CapsuleManager.fgColor
-    readonly property color contentColor: isMusicPlaying ? "#000000" : themeColor
+    readonly property color contentColor: isMusicPlaying ? ThemeManager.selectedTheme.colors.onPrimary : themeColor
 
     property bool isEyesHovered: false
     property bool hoverActive: false
@@ -244,7 +243,7 @@ Item {
         id: progressBar
         height: parent.height
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        color: "white"
+        color: ThemeManager.selectedTheme.colors.topbarFgColor
         opacity: 0.4
         anchors.left: parent.left
         visible: CapsuleManager.showProgress && root.showInfo
@@ -613,14 +612,29 @@ Item {
                             radius: height / 2
 
                             opacity: mouseArea.pressed ? 0.7 : 0.9
-                            property var colors: ["#FF6F61", "#6B5B95", "#4facfe", "#88B04B", "#00f2fe", "#fa709a", "#fee140", "#ffaaff", "#30cfd0", "#B9429F", "#5b86e5"]
+                            property var colors: [
+                                ThemeManager.selectedTheme.colors.primary,
+                                ThemeManager.selectedTheme.colors.secondary,
+                                ThemeManager.selectedTheme.colors.tertiary,
+                                ThemeManager.selectedTheme.colors.success,
+                                ThemeManager.selectedTheme.colors.warning,
+                                ThemeManager.selectedTheme.colors.error
+                            ]
+                            property var textColors: [
+                                ThemeManager.selectedTheme.colors.onPrimary,
+                                ThemeManager.selectedTheme.colors.onSecondary,
+                                ThemeManager.selectedTheme.colors.onTertiary,
+                                ThemeManager.selectedTheme.colors.onSuccess,
+                                ThemeManager.selectedTheme.colors.onWarning,
+                                ThemeManager.selectedTheme.colors.onError
+                            ]
                             color: colors[index % colors.length]
 
                             Text {
                                 id: tagText
                                 text: modelData
                                 anchors.centerIn: parent
-                                color: Helper.getAccurteTextColor(tagsRectangle.color)
+                                color: tagsRectangle.textColors[index % tagsRectangle.textColors.length]
                                 font.pixelSize: 10
                                 font.bold: true
                                 // font.family: ThemeManager.selectedTheme.typography.mainFont

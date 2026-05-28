@@ -121,7 +121,7 @@ MenuCard {
             text: qsTr("Single Themes")
             font.pointSize: 10
             font.bold: true
-            color: Kirigami.Theme.textColor
+            color: ThemeManager.selectedTheme.colors.topbarFgColor
             opacity: 0.8
             Layout.topMargin: 5
             // Layout.horizontalCenter: parent.horizontalCenter
@@ -197,7 +197,7 @@ MenuCard {
                 Label {
                     text: "Advanced Customization"
                     font.bold: true
-                    color: Kirigami.Theme.textColor
+                    color: ThemeManager.selectedTheme.colors.topbarFgColor
                 }
                 Item {
                     Layout.fillWidth: true
@@ -207,7 +207,7 @@ MenuCard {
                     text: ""
                     font.family: "FantasqueSansM Nerd Font Propo"
                     font.pixelSize: 16
-                    color: Kirigami.Theme.textColor
+                    color: ThemeManager.selectedTheme.colors.topbarFgColor
                     rotation: root.settingsExpanded ? 180 : 0
                     Behavior on rotation {
                         NumberAnimation {

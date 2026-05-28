@@ -3,7 +3,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import org.kde.kirigami as Kirigami
 
 import "root:/themes"
 import "root:/config/ConstValues.js" as Consts
@@ -46,16 +45,16 @@ Button {
     property string activeText: ""
 
     // الألوان
-    property var disabledBackground: Kirigami.Theme.negativeBackgroundColor
+    property var disabledBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV2.alpha(0.45)
     // جعل لون الضغط أغمق قليلاً من لون التحويم
     property var downBackground: Qt.darker(root.hoveredBackground, 1.2)
-    property var hoveredBackground: Kirigami.Theme.hoverColor
-    property var normalBackground: Kirigami.Theme.activeBackgroundColor
+    property var hoveredBackground: ThemeManager.selectedTheme.colors.secondary.alpha(0.22)
+    property var normalBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
     property var activeBackground: ThemeManager.selectedTheme.colors.primary
 
-    property var disabledForeground: Kirigami.Theme.highlightColor.darker(0.5)
-    property var downForeground: Kirigami.Theme.highlightColor.lighter(1.8)
-    property var normalForeground: Kirigami.Theme.textColor
+    property var disabledForeground: ThemeManager.selectedTheme.colors.subtleText.alpha(0.5)
+    property var downForeground: ThemeManager.selectedTheme.colors.topbarFgColor
+    property var normalForeground: ThemeManager.selectedTheme.colors.topbarFgColor
     property var activeForeground: ThemeManager.selectedTheme.colors.onPrimary
 
     property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / Consts.M3_BUTTON_RADIUS_DIVISOR
@@ -139,9 +138,9 @@ Button {
                     // حساب التباين للون الخط
                     if (bg && typeof bg.r !== 'undefined') {
                         let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-                        return luminance > 0.5 ? "black" : "white";
+                        return luminance > 0.5 ? ThemeManager.selectedTheme.colors.topbarFgColor : ThemeManager.selectedTheme.colors.topbarColor;
                     }
-                    return "white"; // Fallback
+                    return root.normalForeground;
                 } else {
                     return root.normalForeground;
                 }

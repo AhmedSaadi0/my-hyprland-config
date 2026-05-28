@@ -62,6 +62,6 @@ PanelWindow {
     //
     //     position: "top-right"
     //     cornerRadius: root.cornerRadius
-    //     shapeColor: palette.window
+    //     shapeColor: ThemeManager.selectedTheme.colors.topbarColor
     // }
 }

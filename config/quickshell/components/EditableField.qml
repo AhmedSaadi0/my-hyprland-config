@@ -1,7 +1,7 @@
 // components/EditableField.qml
 import QtQuick
 import QtQuick.Controls
-import org.kde.kirigami as Kirigami
+import "root:/themes"
 
 TextField {
     id: root
@@ -12,19 +12,19 @@ TextField {
     leftPadding: 12
     rightPadding: 12
 
-    property var selectedTheme
+    property var selectedTheme: ThemeManager.selectedTheme
 
-    property color normalBackground: selectedTheme ? selectedTheme.colors.topbarBgColorV2 : Kirigami.Theme.backgroundColor
-    property color normalForeground: selectedTheme ? selectedTheme.colors.topbarFgColorV2 : Kirigami.Theme.textColor
-    property color borderColor: selectedTheme ? selectedTheme.colors.secondary.alpha(0.4) : Kirigami.Theme.disabledTextColor
+    property color normalBackground: selectedTheme.colors.topbarBgColorV2
+    property color normalForeground: selectedTheme.colors.topbarFgColorV2
+    property color borderColor: selectedTheme.colors.secondary.alpha(0.4)
     property int borderSize: 1
 
-    property color focusedBorderColor: selectedTheme ? selectedTheme.colors.secondary : Kirigami.Theme.highlightColor
+    property color focusedBorderColor: selectedTheme.colors.secondary
 
-    property int topLeftRadius: selectedTheme ? selectedTheme.dimensions.elementRadius : 4
-    property int topRightRadius: selectedTheme ? selectedTheme.dimensions.elementRadius : 4
-    property int bottomLeftRadius: selectedTheme ? selectedTheme.dimensions.elementRadius : 4
-    property int bottomRightRadius: selectedTheme ? selectedTheme.dimensions.elementRadius : 4
+    property int topLeftRadius: selectedTheme.dimensions.elementRadius
+    property int topRightRadius: selectedTheme.dimensions.elementRadius
+    property int bottomLeftRadius: selectedTheme.dimensions.elementRadius
+    property int bottomRightRadius: selectedTheme.dimensions.elementRadius
 
     color: root.normalForeground
 

@@ -12,15 +12,15 @@ Item {
     // =========================================================================
     //  Public Properties
     // =========================================================================
-    property var theme
+    property var theme: ThemeManager.selectedTheme
     property string title: "AI System Analysis"
     property string statusText: "AI AGENT ACTIVE"
     property string statusIcon: "󱚣"
     property bool isDetailsOpen: false
 
-    property color statusColor: _colors?.success ?? "#22c55e"
-    property color statusTextColor: _colors?.leftMenuFgColorV3 ?? "#FFFFFF"
-    property color statusBgColor: _colors?.leftMenuBgColorV2 ?? "#222"
+    property color statusColor: _colors.success
+    property color statusTextColor: _colors.leftMenuFgColorV3
+    property color statusBgColor: _colors.leftMenuBgColorV2
 
     // =========================================================================
     //  Internal Helpers (Clean Code & Performance)
@@ -33,10 +33,10 @@ Item {
     readonly property bool isDarkMode: theme?.systemSettings?.themeMode === "dark"
 
     // ثوابت التصميم المحسوبة مسبقاً
-    readonly property color aiColorStart: isDarkMode ? "#8E2DE2" : "#6A11CB"
-    readonly property color aiColorEnd: isDarkMode ? "#4A00E0" : "#2575FC"
-    readonly property real mainRadius: _dims?.elementRadius ?? 0
-    readonly property real hSpacing: (_dims?.spacingLarge ?? 10) * 1.5
+    readonly property color aiColorStart: _colors.primary
+    readonly property color aiColorEnd: _colors.secondary
+    readonly property real mainRadius: _dims.elementRadius
+    readonly property real hSpacing: _dims.spacingLarge * 1.5
 
     // =========================================================================
     //  Signals
@@ -52,7 +52,7 @@ Item {
     // 1. Background
     Rectangle {
         anchors.fill: parent
-        color: _colors?.leftMenuBgColorV3 ?? "#333"
+        color: _colors.leftMenuBgColorV3
         opacity: isDarkMode ? 0.8 : 0.9
 
         // التعامل مع الحواف: دائرية من الأعلى ومربعة من الأسفل
@@ -74,7 +74,7 @@ Item {
         anchors.fill: parent
         anchors.leftMargin: hSpacing
         anchors.rightMargin: hSpacing
-        spacing: _dims?.spacingMedium ?? 8
+        spacing: _dims.spacingMedium
 
         // --- AI Icon Section ---
         Rectangle {
@@ -96,7 +96,7 @@ Item {
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                shadowColor: headerRoot.aiColorStart
+                shadowColor: palette.shadow
                 shadowBlur: 0.6
                 shadowOpacity: isDarkMode ? 0.5 : 0.3
             }
@@ -104,9 +104,9 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: headerRoot.statusIcon
-                font.family: _typo?.iconFont ?? ""
+                font.family: _typo.iconFont
                 font.pixelSize: 22
-                color: "#FFFFFF"
+                color: _colors.onPrimary
             }
         }
 
@@ -116,7 +116,7 @@ Item {
 
             Text {
                 text: headerRoot.title
-                color: _colors?.leftMenuFgColorV3 ?? "#FFF"
+                color: _colors.leftMenuFgColorV3
                 font.pixelSize: 16
                 font.weight: Font.Bold
             }

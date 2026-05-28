@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell.Io
 import QtQuick.Controls
 import Qt5Compat.GraphicalEffects
+import "root:/themes"
 
 CircularProgress {
     id: root
@@ -16,8 +17,8 @@ CircularProgress {
     inverted: true
     rounded: true
 
-    backgroundColor: palette.accent.alpha(0.4)
-    foregroundColor: palette.accent
+    backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
+    foregroundColor: ThemeManager.selectedTheme.colors.primary
 
     // توحيد التحكم: نستخدم activeProcess فقط للتحكم في التشغيل
     property bool activeProcess: true
@@ -25,7 +26,7 @@ CircularProgress {
     property string icon: ""
     property string iconFontFamily: "FantasqueSansM Nerd Font Propo"
     property int iconFontSize: 11
-    property color iconColor: palette.accent
+    property color iconColor: ThemeManager.selectedTheme.colors.primary
     property var command: []
     property int updateInterval: 1000
 
@@ -65,7 +66,7 @@ CircularProgress {
         //     radius: 5          // تصغير الحجم ليتناسب مع الأيقونة الصغيرة
         //     samples: 10        // دقة التنعيم
         //     spread: 0.1        // قيمة قليلة تجعل التوهج ينتشر بنعومة (ليس حاداً)
-        //     color: "yellow"    // يمكنك تغييره لـ palette.accent ليتناسق مع الثيم
+        //     color: root.iconColor
         //     transparentBorder: true
         //
         //     visible: root.glowIcon
@@ -109,8 +110,8 @@ CircularProgress {
         //         font.pixelSize: 12
         //     }
         //     background: Rectangle {
-        //         color: palette.window
-        //         border.color: palette.mid
+        //         color: ThemeManager.selectedTheme.colors.topbarColor
+        //         border.color: ThemeManager.selectedTheme.colors.primary
         //         radius: 4
         //     }
         // }

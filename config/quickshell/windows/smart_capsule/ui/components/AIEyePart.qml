@@ -1,6 +1,7 @@
 // windows/smart_capsule/ui/components/AIEyePart.qml
 
 import QtQuick
+import "root:/themes"
 import QtQuick.Shapes // ضروري للرسم
 
 import "root:/components/eye_shapes"
@@ -9,7 +10,7 @@ Item {
     id: root
 
     // --- الخصائص العامة ---
-    property color color: "white"
+    property color color: ThemeManager.selectedTheme.colors.topbarFgColor
     property int animDur: 300
 
     // خصائص العين (الأبعاد)

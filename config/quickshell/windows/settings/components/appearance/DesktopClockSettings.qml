@@ -5,7 +5,6 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
-import org.kde.kirigami as Kirigami
 import Qt.labs.platform
 
 import "root:/components"
@@ -27,9 +26,9 @@ BaseThemeSettings {
     property string localLocale: ""
 
     property bool localUseThemeColor: true
-    property color localColor: "#000000"
+    property color localColor: ThemeManager.selectedTheme.colors.primary
     property bool localShadowEnabled: false
-    property color localShadowColor: "#000000"
+    property color localShadowColor: ThemeManager.selectedTheme.colors.topbarColor.alpha(0.55)
 
     property bool localDepthEnabled: false
     property string localDepthModel: "u2net"
@@ -56,9 +55,9 @@ BaseThemeSettings {
 
         // Appearance
         localUseThemeColor = theme._desktopClockUseThemeColor;
-        localColor = theme._desktopClockColor !== undefined ? theme._desktopClockColor : "#000000";
+        localColor = theme._desktopClockColor !== undefined ? theme._desktopClockColor : theme.colors.primary;
         localShadowEnabled = theme._desktopClockSahdowEnabled;
-        localShadowColor = theme._desktopClockSahdowColor !== undefined ? theme._desktopClockSahdowColor : "#000000";
+        localShadowColor = theme._desktopClockSahdowColor !== undefined ? theme._desktopClockSahdowColor : theme.colors.topbarColor.alpha(0.55);
 
         // Depth
         localDepthEnabled = theme._desktopClockDepthEffectEnabled;
@@ -158,7 +157,7 @@ BaseThemeSettings {
         Controls.Label {
             text: qsTr("Display a customizable clock on the desktop.")
             font.pixelSize: root.typ("small", 12)
-            color: root.theme ? root.theme.colors.subtleText : "#888"
+            color: root.theme.colors.subtleText
             wrapMode: Text.WordWrap
             Layout.preferredWidth: 500
         }
@@ -295,7 +294,7 @@ BaseThemeSettings {
                                 Layout.preferredWidth: 35
                                 Layout.preferredHeight: 30
                                 color: root.localColor
-                                border.color: "gray"
+                                border.color: root.theme.colors.subtleText
                                 border.width: 1
                                 radius: 4
                             }
@@ -356,7 +355,7 @@ BaseThemeSettings {
                                 Layout.preferredWidth: 35
                                 Layout.preferredHeight: 30
                                 color: root.localShadowColor
-                                border.color: "gray"
+                                border.color: root.theme.colors.subtleText
                                 border.width: 1
                                 radius: 4
                             }

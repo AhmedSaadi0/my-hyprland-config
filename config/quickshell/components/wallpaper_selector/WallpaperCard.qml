@@ -19,6 +19,7 @@ Item {
     property bool isHovered: hoverHandler.hovered
     property bool isDownloading: false
     property string currentWallpaper: ""
+    readonly property var theme: ThemeManager.selectedTheme
 
     // -- 3. Calculated Properties (Read-only) --
     property string thumbUrl: {
@@ -54,9 +55,9 @@ Item {
         anchors.margins: 4
 
         // Styling
-        radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
-        color: mainMouseArea.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.15) || "#333" : "transparent"
-        border.color: root.currentWallpaper === root.wallpaperPath ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : mainMouseArea.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.5) || "#555" : "transparent"
+        radius: root.theme.dimensions.elementRadius
+        color: mainMouseArea.containsMouse ? root.theme.colors.primary.alpha(0.15) : "transparent"
+        border.color: root.currentWallpaper === root.wallpaperPath ? root.theme.colors.primary : mainMouseArea.containsMouse ? root.theme.colors.primary.alpha(0.5) : "transparent"
         border.width: root.currentWallpaper === root.wallpaperPath ? 2 : 1
         z: 1
 
@@ -83,8 +84,8 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                radius: (ThemeManager.selectedTheme?.dimensions?.elementRadius || 8) - 2
-                color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV1 || "#111"
+                radius: root.theme.dimensions.elementRadius - 2
+                color: root.theme.colors.leftMenuBgColorV1
                 clip: true
 
                 Image {
@@ -106,15 +107,15 @@ Item {
                     width: 24
                     height: 24
                     radius: 12
-                    color: ThemeManager.selectedTheme?.colors?.primary.alpha(0.3) || "#333"
+                    color: root.theme.colors.primary.alpha(0.3)
                     visible: thumbnailImage.status === Image.Loading
 
                     Text {
                         anchors.centerIn: parent
                         text: "󰑐"
                         font.pixelSize: 14
-                        font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-                        color: ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
+                        font.family: root.theme.typography.iconFont
+                        color: root.theme.colors.primary
 
                         RotationAnimation on rotation {
                             running: thumbnailImage.status === Image.Loading
@@ -135,7 +136,7 @@ Item {
                     height: 16
                     width: favCountText.width + 8
                     radius: 4
-                    color: "#000000aa"
+                    color: root.theme.colors.topbarColor.alpha(0.72)
                     visible: root.isWallhaven && root.modelData && (root.modelData.favorites || 0) > 0
 
                     Text {
@@ -143,7 +144,7 @@ Item {
                         anchors.centerIn: parent
                         text: "♥ " + (root.modelData && root.modelData.favorites ? root.modelData.favorites : 0)
                         font.pixelSize: 9
-                        color: "#ff6b6b"
+                        color: root.theme.colors.error
                     }
                 }
             }
@@ -154,7 +155,7 @@ Item {
                 Layout.fillWidth: true
                 text: root.displayName
                 font.pixelSize: 10
-                color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+                color: root.theme.colors.subtleText
                 elide: Text.ElideMiddle
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -165,7 +166,7 @@ Item {
             id: downloadingOverlay
             anchors.fill: parent
             z: 999
-            color: ThemeManager.selectedTheme.colors.primary.alpha(0.4)
+            color: root.theme.colors.primary.alpha(0.4)
             visible: root.isDownloading
             radius: parent.radius
 
@@ -181,7 +182,7 @@ Item {
                 }
                 Text {
                     text: "Downloading..."
-                    color: "white"
+                    color: root.theme.colors.onPrimary
                     font.pixelSize: 10
                     font.bold: true
                 }
@@ -247,9 +248,9 @@ Item {
             height: width
             radius: width / 2
 
-            color: btnMouseArea.containsMouse ? (ThemeManager.selectedTheme?.colors?.primary || "#6366f1") : "#99000000"
+            color: btnMouseArea.containsMouse ? root.theme.colors.primary : root.theme.colors.topbarColor.alpha(0.6)
             border.width: 1
-            border.color: btnMouseArea.containsMouse ? (ThemeManager.selectedTheme?.colors?.onPrimary || "#ffffff") : (ThemeManager.selectedTheme?.colors?.primary.alpha(0.3) || "#55ffffff")
+            border.color: btnMouseArea.containsMouse ? root.theme.colors.onPrimary : root.theme.colors.primary.alpha(0.3)
 
             // Animations
             Behavior on width {
@@ -273,7 +274,7 @@ Item {
                 id: btnIcon
                 anchors.fill: parent
                 text: btnRoot.iconSymbol
-                font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
+                font.family: root.theme.typography.iconFont
 
                 // Slight scale on hover
                 font.pixelSize: btnMouseArea.containsMouse ? 16 : 14
@@ -287,7 +288,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 renderType: Text.NativeRendering
 
-                color: btnMouseArea.containsMouse ? (ThemeManager.selectedTheme?.colors?.onPrimary || "#ffffff") : (ThemeManager.selectedTheme?.colors?.primary || "#ffffff")
+                color: btnMouseArea.containsMouse ? root.theme.colors.onPrimary : root.theme.colors.primary
             }
         }
 

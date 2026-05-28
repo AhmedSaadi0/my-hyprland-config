@@ -1,8 +1,9 @@
 import QtQuick
+import "root:/themes"
 
 Item {
     id: root
-    property color color: "white"
+    property color color: ThemeManager.selectedTheme.colors.topbarFgColor
     property int eyeW: 8 // الحجم الكلي
     property bool active: false
 

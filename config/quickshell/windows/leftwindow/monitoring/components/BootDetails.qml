@@ -131,7 +131,7 @@ Item {
                                 return Qt.rgba(c.r, c.g, c.b, bootRoot.theme.systemSettings.themeMode == "dark" ? 0.15 : 0.08);
                             }
                             return logHover.containsMouse
-                                ? Qt.rgba(1, 1, 1, 0.04)
+                                ? bootRoot.theme.colors.leftMenuFgColorV1.alpha(0.04)
                                 : "transparent";
                         }
                         border.color: isExpanded ? Qt.rgba(bootRoot.themeStatusColor.r, bootRoot.themeStatusColor.g, bootRoot.themeStatusColor.b, 0.25) : "transparent"
@@ -204,7 +204,7 @@ Item {
                                 width: 26
                                 height: 26
                                 radius: 13
-                                color: copyMouse.containsMouse ? Qt.rgba(1, 1, 1, 0.1) : "transparent"
+                                color: copyMouse.containsMouse ? bootRoot.theme.colors.leftMenuFgColorV1.alpha(0.1) : "transparent"
                                 Layout.alignment: Qt.AlignTop
 
                                 Text {
@@ -250,9 +250,7 @@ Item {
                             radius: 4
                             visible: logDelegate.isExpanded
                             opacity: logDelegate.isExpanded ? 1 : 0
-                            color: bootRoot.theme.systemSettings.themeMode == "dark"
-                                ? Qt.rgba(0, 0, 0, 0.35)
-                                : Qt.rgba(0, 0, 0, 0.06)
+                            color: bootRoot.theme.colors.topbarColor.alpha(bootRoot.theme.systemSettings.themeMode == "dark" ? 0.35 : 0.06)
 
                             Behavior on opacity {
                                 NumberAnimation { duration: 200 }
@@ -270,7 +268,7 @@ Item {
                                 selectByMouse: true
                                 readOnly: true
                                 selectionColor: bootRoot.themeStatusColor
-                                selectedTextColor: "#ffffff"
+                                selectedTextColor: bootRoot.theme.colors.onPrimary
                             }
                         }
                     }

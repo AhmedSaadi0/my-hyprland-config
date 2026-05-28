@@ -1,6 +1,7 @@
 // windows/smart_capsule/ui/components /AIEyes.qml
 
 import QtQuick
+import "root:/themes"
 import "root:/config"
 import "../../logic"
 
@@ -15,7 +16,7 @@ Item {
 
     // الحالات المتاحة: "idle", "happy", "suspicious", "shocked", "sleeping", "thinking", "music"
     property string emotion: EyeController.currentEmotion
-    property color eyeColor: "white"
+    property color eyeColor: ThemeManager.selectedTheme.colors.topbarFgColor
     property int animDur: 200
     property bool enableMouseInteraction: true
 

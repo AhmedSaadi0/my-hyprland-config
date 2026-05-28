@@ -53,7 +53,6 @@ Rectangle {
         id: profileDetail
         width: backgroundImage.width
         height: 130
-        // color: palette.accent.alpha(0.7)
         color: ThemeManager.selectedTheme.colors.topbarBgColorV2.alpha(0.7)
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
         smooth: true
@@ -84,7 +83,7 @@ Rectangle {
         //
         //             // 1. Draw an opaque rectangle covering the entire canvas area.
         //             //    This makes the mask opaque by default, so the content is visible.
-        //             ctx.fillStyle = "white"; // Color doesn't matter for OpacityMask, only alpha
+        //             ctx.fillStyle = ThemeManager.selectedTheme.colors.topbarFgColor;
         //             ctx.fillRect(0, 0, width, height);
         //
         //             // 2. Set the composite operation to make subsequent drawing
@@ -109,7 +108,7 @@ Rectangle {
         //             ctx.beginPath();
         //             // arc(centerX, centerY, radius, startAngle, endAngle)
         //             ctx.arc(circleCenterX, circleCenterY, circleRadius, 0, 2 * Math.PI);
-        //             ctx.fillStyle = "black"; // Color doesn't matter for destination-out
+        //             ctx.fillStyle = ThemeManager.selectedTheme.colors.topbarColor;
         //             ctx.fill();
         //
         //             // Reset composite operation if needed later (good practice, though not needed here)
@@ -142,7 +141,6 @@ Rectangle {
         text: App.username
         font.pixelSize: 35
         font.family: "VIP Rawy Regular"
-        // color: palette.base
         color: ThemeManager.selectedTheme.colors.topbarFgColorV2
         anchors {
             top: profileImage.bottom
@@ -158,7 +156,6 @@ Rectangle {
 
     Text {
         text: App.subtitle
-        // color: palette.base
         color: ThemeManager.selectedTheme.colors.topbarFgColorV2
         anchors {
             top: titleText.bottom

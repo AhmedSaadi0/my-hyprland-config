@@ -535,7 +535,7 @@ BaseThemeSettings {
                 }
                 Controls.Label {
                     text: root.iconThemesError
-                    color: root.theme?.colors?.error || "#ff4444"
+                    color: root.theme.colors.error
                     font.pixelSize: root.typ("small", 12)
                     visible: root.iconThemesError !== ""
                 }
@@ -578,7 +578,7 @@ BaseThemeSettings {
                     }
                     Controls.Label {
                         text: root.cursorThemesError
-                        color: root.theme?.colors?.error || "#ff4444"
+                        color: root.theme.colors.error
                         font.pixelSize: root.typ("small", 12)
                         visible: root.cursorThemesError !== ""
                     }
@@ -662,7 +662,7 @@ BaseThemeSettings {
                 }
                 Controls.Label {
                     text: root.plasmaSchemesError
-                    color: root.theme?.colors?.error || "#ff4444"
+                    color: root.theme.colors.error
                     font.pixelSize: root.typ("small", 12)
                     visible: root.plasmaSchemesError !== ""
                 }
@@ -700,7 +700,7 @@ BaseThemeSettings {
                 }
                 Controls.Label {
                     text: root.qtStylesError
-                    color: root.theme?.colors?.error || "#ff4444"
+                    color: root.theme.colors.error
                     font.pixelSize: root.typ("small", 12)
                     visible: root.qtStylesError !== ""
                 }
@@ -743,7 +743,7 @@ BaseThemeSettings {
                     }
                     Controls.Label {
                         text: root.kvantumThemesError
-                        color: root.theme?.colors?.error || "#ff4444"
+                        color: root.theme.colors.error
                         font.pixelSize: root.typ("small", 12)
                         visible: root.kvantumThemesError !== ""
                     }
@@ -782,7 +782,7 @@ BaseThemeSettings {
                     }
                     Controls.Label {
                         text: root.konsoleProfilesError
-                        color: root.theme?.colors?.error || "#ff4444"
+                        color: root.theme.colors.error
                         font.pixelSize: root.typ("small", 12)
                         visible: root.konsoleProfilesError !== ""
                     }
@@ -826,7 +826,7 @@ BaseThemeSettings {
                 }
                 Controls.Label {
                     text: root.gtkThemesError
-                    color: root.theme?.colors?.error || "#ff4444"
+                    color: root.theme.colors.error
                     font.pixelSize: root.typ("small", 12)
                     visible: root.gtkThemesError !== ""
                 }

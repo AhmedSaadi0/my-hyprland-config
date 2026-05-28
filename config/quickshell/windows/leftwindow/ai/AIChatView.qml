@@ -13,6 +13,7 @@ ColumnLayout {
     anchors.fill: parent
     anchors.margins: 10
     spacing: 10
+    readonly property var theme: ThemeManager.selectedTheme
 
     // --- Configuration ---
     // مسار بايثون الافتراضي (عدله حسب مسارك الحقيقي)
@@ -35,7 +36,7 @@ ColumnLayout {
             text: "AI Assistant"
             font.pixelSize: 18
             font.bold: true
-            color: ThemeManager.selectedTheme.colors.textColor
+            color: root.theme.colors.leftMenuFgColorV1
         }
 
         Item {
@@ -89,7 +90,7 @@ ColumnLayout {
     Text {
         id: errorText
         visible: errorText.text !== ""
-        color: "#FF5555"
+        color: root.theme.colors.error
         font.pixelSize: 12
         Layout.alignment: Qt.AlignHCenter
     }

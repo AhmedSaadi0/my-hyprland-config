@@ -1,7 +1,6 @@
 // components/tab/TabBar.qml
 
 import QtQuick
-import org.kde.kirigami as Kirigami
 import "root:/themes"
 
 Rectangle {
@@ -10,7 +9,7 @@ Rectangle {
     //-----------------------
     // Appearance Properties
     //-----------------------
-    color: Kirigami.Theme.backgroundColor.lighter(1.7)
+    color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     //-----------------------
@@ -31,10 +30,11 @@ Rectangle {
     //-----------------------
     // Color Scheme
     //-----------------------
-    property color textHighlightColor: Kirigami.Theme.highlightedTextColor
-    property color textColor: Kirigami.Theme.textColor
-    property color hoverColor: Kirigami.Theme.activeTextColor.lighter(1.2)
-    property color highlightColor: palette.accent
+    property color textHighlightColor: ThemeManager.selectedTheme.colors.onPrimary
+    property color textColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+    property color textHoverColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV3
+    property color hoverColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV3
+    property color highlightColor: ThemeManager.selectedTheme.colors.primary
     property int animationDuration: 300
 
     //-----------------------

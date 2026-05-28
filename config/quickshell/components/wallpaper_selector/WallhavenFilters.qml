@@ -18,6 +18,7 @@ Flow {
     property string category: "110"
     property string color: ""
     property string resolution: ""
+    readonly property var theme: ThemeManager.selectedTheme
 
     // --- Signals ---
     signal sortingSelected(string value)
@@ -266,9 +267,9 @@ Flow {
         }
 
         background: Rectangle {
-            color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV1 || "#1a1a2e"
+            color: root.theme.colors.leftMenuBgColorV1
             radius: 8
-            border.color: ThemeManager.selectedTheme?.colors?.primary.alpha(0.3) || "#444"
+            border.color: root.theme.colors.primary.alpha(0.3)
             border.width: 1
 
             layer.enabled: true
@@ -306,7 +307,7 @@ Flow {
         width: sortingText.width + 16
         height: 28
         radius: 6
-        color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
+        color: root.theme.colors.leftMenuBgColorV2
 
         Text {
             id: sortingText
@@ -329,7 +330,7 @@ Flow {
                 return label;
             }
             font.pixelSize: 11
-            color: ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+            color: root.theme.colors.leftMenuFgColorV1
             renderType: Text.QtRendering
         }
 
@@ -382,14 +383,14 @@ Flow {
                             width: 52
                             height: 26
                             radius: 4
-                            color: root.sorting === sortOptionRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.3) || "#333" : ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
-                            border.color: root.sorting === sortOptionRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
+                            color: root.sorting === sortOptionRect.modelData.value ? root.theme.colors.primary.alpha(0.3) : root.theme.colors.leftMenuBgColorV2
+                            border.color: root.sorting === sortOptionRect.modelData.value ? root.theme.colors.primary : "transparent"
                             border.width: 1
                             Text {
                                 anchors.centerIn: parent
                                 text: sortOptionRect.modelData.name
                                 font.pixelSize: 10
-                                color: root.sorting === sortOptionRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+                                color: root.sorting === sortOptionRect.modelData.value ? root.theme.colors.primary : root.theme.colors.leftMenuFgColorV1
                                 renderType: Text.QtRendering
                             }
                             MouseArea {
@@ -420,14 +421,14 @@ Flow {
                             width: 80
                             height: 26
                             radius: 4
-                            color: root.order === orderRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.3) || "#333" : ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
-                            border.color: root.order === orderRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
+                            color: root.order === orderRect.modelData.value ? root.theme.colors.primary.alpha(0.3) : root.theme.colors.leftMenuBgColorV2
+                            border.color: root.order === orderRect.modelData.value ? root.theme.colors.primary : "transparent"
                             border.width: 1
                             Text {
                                 anchors.centerIn: parent
                                 text: orderRect.modelData.name
                                 font.pixelSize: 10
-                                color: root.order === orderRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+                                color: root.order === orderRect.modelData.value ? root.theme.colors.primary : root.theme.colors.leftMenuFgColorV1
                                 renderType: Text.QtRendering
                             }
                             MouseArea {
@@ -445,12 +446,12 @@ Flow {
                     Rectangle {
                         width: 164
                         height: 1
-                        color: ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333"
+                        color: root.theme.colors.primary.alpha(0.2)
                     }
                     Text {
                         text: "Time Range"
                         font.pixelSize: 9
-                        color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+                        color: root.theme.colors.subtleText
                         renderType: Text.QtRendering
                     }
                     Grid {
@@ -464,14 +465,14 @@ Flow {
                                 width: 78
                                 height: 24
                                 radius: 4
-                                color: root.topRange === rangeRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.3) || "#333" : ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
-                                border.color: root.topRange === rangeRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
+                                color: root.topRange === rangeRect.modelData.value ? root.theme.colors.primary.alpha(0.3) : root.theme.colors.leftMenuBgColorV2
+                                border.color: root.topRange === rangeRect.modelData.value ? root.theme.colors.primary : "transparent"
                                 border.width: 1
                                 Text {
                                     anchors.centerIn: parent
                                     text: rangeRect.modelData.name
                                     font.pixelSize: 10
-                                    color: root.topRange === rangeRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+                                    color: root.topRange === rangeRect.modelData.value ? root.theme.colors.primary : root.theme.colors.leftMenuFgColorV1
                                     renderType: Text.QtRendering
                                 }
                                 MouseArea {
@@ -493,14 +494,14 @@ Flow {
         width: catBtnText.width + 16
         height: 28
         radius: 6
-        color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
+        color: root.theme.colors.leftMenuBgColorV2
 
         Text {
             id: catBtnText
             anchors.centerIn: parent
             text: "Categories"
             font.pixelSize: 11
-            color: ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+            color: root.theme.colors.leftMenuFgColorV1
             renderType: Text.QtRendering
         }
 
@@ -537,8 +538,8 @@ Flow {
                         width: 100
                         height: 28
                         radius: 4
-                        color: catPopupRect.isOn ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.3) || "#333" : ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
-                        border.color: catPopupRect.isOn ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
+                        color: catPopupRect.isOn ? root.theme.colors.primary.alpha(0.3) : root.theme.colors.leftMenuBgColorV2
+                        border.color: catPopupRect.isOn ? root.theme.colors.primary : "transparent"
                         border.width: 1
                         Row {
                             anchors.centerIn: parent
@@ -548,14 +549,14 @@ Flow {
                                 height: 14
                                 radius: 3
                                 anchors.verticalCenter: parent.verticalCenter
-                                color: catPopupRect.isOn ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
-                                border.color: ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
+                                color: catPopupRect.isOn ? root.theme.colors.primary : "transparent"
+                                border.color: root.theme.colors.primary
                                 border.width: 1
                                 Text {
                                     anchors.centerIn: parent
                                     text: catPopupRect.isOn ? "✓" : ""
                                     font.pixelSize: 10
-                                    color: "#fff"
+                                    color: root.theme.colors.onPrimary
                                     renderType: Text.QtRendering
                                 }
                             }
@@ -563,7 +564,7 @@ Flow {
                                 text: catPopupRect.modelData.label
                                 font.pixelSize: 11
                                 anchors.verticalCenter: parent.verticalCenter
-                                color: catPopupRect.isOn ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+                                color: catPopupRect.isOn ? root.theme.colors.primary : root.theme.colors.leftMenuFgColorV1
                                 renderType: Text.QtRendering
                             }
                         }
@@ -589,8 +590,8 @@ Flow {
         height: 28
         width: colorFilterRow.width + 12
         radius: 6
-        color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
-        border.color: root.color !== "" ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
+        color: root.theme.colors.leftMenuBgColorV2
+        border.color: root.color !== "" ? root.theme.colors.primary : "transparent"
         border.width: 1
 
         Row {
@@ -603,13 +604,13 @@ Flow {
                 radius: 7
                 anchors.verticalCenter: parent.verticalCenter
                 color: root.color !== "" ? ("#" + root.color) : "transparent"
-                border.color: root.color === "" ? ThemeManager.selectedTheme?.colors?.subtleText || "#666" : "transparent"
+                border.color: root.color === "" ? root.theme.colors.subtleText : "transparent"
                 border.width: 1
                 Text {
                     anchors.centerIn: parent
                     text: root.color === "" ? "?" : ""
                     font.pixelSize: 9
-                    color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+                    color: root.theme.colors.subtleText
                     renderType: Text.QtRendering
                 }
             }
@@ -617,7 +618,7 @@ Flow {
                 text: root.color === "" ? "Color" : root.colorPresets.find(c => c.hex === root.color)?.name || "Custom"
                 font.pixelSize: 11
                 anchors.verticalCenter: parent.verticalCenter
-                color: root.color !== "" ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+                color: root.color !== "" ? root.theme.colors.primary : root.theme.colors.subtleText
                 renderType: Text.QtRendering
             }
         }
@@ -643,15 +644,15 @@ Flow {
                         width: 32
                         height: 24
                         radius: 4
-                        color: colorPresetRect.modelData.hex === "" ? ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#333" : ("#" + colorPresetRect.modelData.hex)
-                        border.color: root.color === colorPresetRect.modelData.hex ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : (colorPresetRect.modelData.hex === "ffffff" || colorPresetRect.modelData.hex === "cccccc" ? "#999" : "transparent")
+                        color: colorPresetRect.modelData.hex === "" ? root.theme.colors.leftMenuBgColorV2 : ("#" + colorPresetRect.modelData.hex)
+                        border.color: root.color === colorPresetRect.modelData.hex ? root.theme.colors.primary : (colorPresetRect.modelData.hex === "ffffff" || colorPresetRect.modelData.hex === "cccccc" ? root.theme.colors.subtleText : "transparent")
                         border.width: root.color === colorPresetRect.modelData.hex ? 2 : 1
 
                         Text {
                             anchors.centerIn: parent
                             text: colorPresetRect.modelData.hex === "" ? "✕" : ""
                             font.pixelSize: 12
-                            color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+                            color: root.theme.colors.subtleText
                             renderType: Text.QtRendering
                         }
 
@@ -681,8 +682,8 @@ Flow {
         height: 28
         width: resFilterText.width + 12
         radius: 6
-        color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
-        border.color: root.resolution !== "" ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
+        color: root.theme.colors.leftMenuBgColorV2
+        border.color: root.resolution !== "" ? root.theme.colors.primary : "transparent"
         border.width: 1
 
         Text {
@@ -690,7 +691,7 @@ Flow {
             anchors.centerIn: parent
             text: root.resolution === "" ? "Resolution" : root.resolutionPresets.find(r => r.value === root.resolution)?.name || root.resolution
             font.pixelSize: 11
-            color: root.resolution !== "" ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+            color: root.resolution !== "" ? root.theme.colors.primary : root.theme.colors.subtleText
             renderType: Text.QtRendering
         }
 
@@ -714,14 +715,14 @@ Flow {
                         width: 104
                         height: 28
                         radius: 6
-                        color: root.resolution === resPresetRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333" : resPresetMouse.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.1) || "#222" : "transparent"
-                        border.color: root.resolution === resPresetRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : "transparent"
+                        color: root.resolution === resPresetRect.modelData.value ? root.theme.colors.primary.alpha(0.2) : resPresetMouse.containsMouse ? root.theme.colors.primary.alpha(0.1) : "transparent"
+                        border.color: root.resolution === resPresetRect.modelData.value ? root.theme.colors.primary : "transparent"
                         border.width: 1
                         Text {
                             anchors.centerIn: parent
                             text: resPresetRect.modelData.name + (resPresetRect.modelData.value !== "" ? "+" : "")
                             font.pixelSize: 11
-                            color: root.resolution === resPresetRect.modelData.value ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1" : ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+                            color: root.resolution === resPresetRect.modelData.value ? root.theme.colors.primary : root.theme.colors.leftMenuFgColorV1
                             renderType: Text.QtRendering
                         }
                         MouseArea {
