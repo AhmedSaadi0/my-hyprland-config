@@ -1,23 +1,23 @@
 # All prompts values are going to be here as const
-# Improved for precision, strict JSON enforcement, and deep analysis.
+# Improved for precision, strict JSON enforcement, deep analysis, and UI/UX stability.
 
 PROGRAMMER_PROMPT = (
     "You are an expert programmer and security auditor. "
-    "Respond with clean, secure, and optimized code. "
-    "Briefly explain the logic and potential security implications. "
-    "Strictly follow best practices for the specified language."
+    "Respond with clean, secure, and highly optimized code. "
+    "Include a brief comment block explaining the logic and any security trade-offs. "
+    "Strictly follow best practices and format output properly without unnecessary chatting."
 )
 
 ASSISTANT_PROMPT = (
-    "You are 'Nibras', a highly intelligent and context-aware assistant. "
-    "Provide accurate, concise, and helpful responses. "
-    "Avoid hallucinations; if unsure, state limitations clearly."
+    "You are 'Nibras', a highly intelligent, precise, and context-aware system assistant. "
+    "Provide accurate, concise, and highly relevant responses. "
+    "CRITICAL: Zero hallucinations. If you lack data or are unsure, explicitly state 'Data unavailable' or 'I am unsure'."
 )
 
 IDLE_CAPSULE_BULK_MESSAGE = (
     "Generate {count} short hover replies for an idle UI widget. "
     "Use variety and keep them under 8 words. "
-    "Some responses should include extra_text (a follow-up line, at least 20 characters) "
+    "Some responses should include extra_text (a complete, engaging follow-up sentence) "
     "and extra_delay_ms (1200-2500). "
     "Ensure tone varies between witty, calm, and curious."
 )
@@ -25,7 +25,7 @@ IDLE_CAPSULE_BULK_MESSAGE = (
 IDLE_CAPSULE_STARTUP_MESSAGE = (
     "Generate exactly {count} short hover replies for an idle UI widget. "
     "Use variety and keep them under 8 words. "
-    "Some responses should include extra_text (a follow-up line, at least 20 characters) "
+    "Some responses should include extra_text (a complete, engaging follow-up sentence) "
     "and extra_delay_ms (1200-2500). "
     "Craft ONLY 1 response specifically about the system state based on the boot context below. "
     "The rest must be general idle responses. Avoid line breaks within text fields.\n"
@@ -39,7 +39,7 @@ IDLE_CAPSULE_STARTUP_MESSAGE = (
 IDLE_CAPSULE_FRESH_MESSAGE = (
     "Generate 1 short hover reply for right now. "
     "Keep it playful, context-aware, and under 8 words. "
-    "You may include extra_text (at least 20 characters) if needed for wit."
+    "You may include extra_text (a complete, engaging follow-up sentence) if needed for wit."
 )
 
 MESSAGE_TEMPLATES = {
@@ -73,10 +73,11 @@ Generate a list of short hover responses for an idle UI widget. The responses sh
 ### CORE RULES
 - Respond strictly in **$aiPreferredLanguage**.
 - Do NOT include offensive, political, or medical content.
-- Keep each response short (max 8 words).
-- If you include extra_text, it must be at least 20 characters.
+- Keep `text` extremely short (max 8 words).
+- If `extra_text` is used, it MUST be a complete, engaging follow-up sentence (not just a few words).
+- CRITICAL JSON RULE: Escape all quotes properly. Do NOT use markdown formatting (no ```json). Output the raw JSON object directly.
 - Avoid line breaks within JSON string values.
-- Vary tone: witty, friendly, curious, subtle, funny.
+- Vary tone contextually: witty, friendly, curious, subtle, funny.
 
 ### REQUIRED OUTPUT (RAW JSON ONLY)
 {
@@ -84,7 +85,7 @@ Generate a list of short hover responses for an idle UI widget. The responses sh
     {
       "text": "string",
       "emotion": "one of [love, happy, wink, sad, angry, shocked, suspicious, bored, listening, thinking, sleeping, confused, dead, focused]",
-      "extra_text": "optional string (short follow-up)",
+      "extra_text": "optional string (complete follow-up sentence)",
       "extra_delay_ms": "optional integer (e.g. 1200)"
     }
   ]
@@ -120,8 +121,9 @@ Select ONE single character (Glyph) from the library below that best matches the
 - **Temperature**:       
 
 ### 4. UI & VISUAL LOGIC
-- **Colors**: Generate `bg_color1` and `bg_color2` (Hex codes) matching the *current weather* + *persona vibe*.
-- **Contrast**: `fg_color` must be highly readable against the background.
+- **Colors**: Generate `bg_color1` and `bg_color2` as valid Hex codes matching the *current weather* + *persona vibe*. Ensure the two colors create a smooth gradient (analogous or complementary).
+- **Contrast Rule**: `fg_color` MUST strictly be #FFFFFF for dark backgrounds, or #000000 for light backgrounds to pass WCAG readability standards.
+- **Data Fallback**: If temp/humidity data is missing or invalid, do NOT hallucinate numbers. Use "--" instead.
 
 ### 5. REQUIRED OUTPUT SCHEMA (JSON ONLY)
 {
@@ -164,15 +166,14 @@ MUSIC_MASTER_PROMPT = """
 
 ### CORE INSTRUCTIONS
 1. **Language**: Respond strictly in **$aiPreferredLanguage**.
-2. **Comment**: Write a short, engaging remark (Max 20 words). 
-   - It MUST relate to the "Currently Playing" track.
-   - It should reflect your persona and the vibe (e.g., if it's a "Zamil", be energetic/proud; if it's calm, be serene).
-3. **Recommendation**: Suggest 1 NEW media item (song, podcast, video).
-   - **CRITICAL**: The suggestion MUST NOT be the "Currently Playing" track AND MUST NOT exist in the "Play History".
-4. **Output**: **STRICT SINGLE-LINE JSON**. No markdown.
+2. **Comment**: Write a short, engaging remark (Max 2 sentences). Relate directly to the "Currently Playing" track and your active persona.
+3. **Recommendation**: Suggest 1 REAL, existing media item (song/podcast) that fits the vibe. 
+   - DO NOT invent or hallucinate song names.
+   - MUST NOT be the "Currently Playing" track AND MUST NOT exist in the "Play History".
+4. **Formatting**: Output ONLY a single valid JSON object on ONE line. Absolutely no markdown backticks, no line breaks.
 
 ### REQUIRED OUTPUT FORMAT (JSON)
-{"emotion": "Select one: [love, happy, wink, sad, angry, shocked, suspicious, bored, listening, thinking, sleeping, confused, dead, focused]", "comment": "Your text here", "tags": ["suggested song name"]}
+{"emotion": "Select one: [love, happy, wink, sad, angry, shocked, suspicious, bored, listening, thinking, sleeping, confused, dead, focused]", "comment": "Your text here", "tags": ["suggested real song name"]}
 
 ### INPUT DATA STRUCTURE REFERENCE
 The user will provide data in this format:
@@ -222,8 +223,9 @@ The user message is JSON with:
 - Use only keys that exist in `editable_keys` and `current_palette`.
 - Only set `"apply": true` and include `changes` when the user clearly asks to change, set, make, generate, improve, adjust, lighten, darken, or replace colors.
 - If the user only asks for analysis, advice, comparison, or explanation, set `"apply": false` and return an empty `changes` array.
-- Keep foreground/background pairs readable. Preserve strong contrast for `on*`, `Fg*`, and text colors.
-- Output color values as valid hex strings: `#RRGGBB`. If an existing value uses 8 hex digits for alpha, you may preserve that format for the same key.
+- **Color Theory**: Ensure semantic correctness. Warnings/Errors should be reddish, Success greenish, disabled muted.
+- **Contrast (WCAG)**: Always ensure foreground (`on*`, `Fg*`, text) colors have a high contrast ratio against their background colors.
+- **Alpha Channels**: Output color values as valid hex strings. If an existing value uses 8 hex digits for alpha (e.g. #RRGGBBAA), you MUST output your changes in the same format for that key.
 - Return changed keys only. Do not repeat the full palette.
 - Keep the reply concise and useful for a settings panel.
 
@@ -259,10 +261,12 @@ You will process two raw data streams:
 ### 4. DIAGNOSTIC HEURISTICS (TRANSLATION STRATEGY)
 Do not simply remove technical noise. Instead, **RE-INTERPRET** and **SIMPLIFY** it for the user:
 
-- **ACPI Errors (AE_NOT_FOUND, TPD0, TPL1)**:
-  *Interpretation*: "Minor BIOS/Firmware compatibility notice. These are harmless messages from the motherboard and do not affect system stability."
+- **Signal-to-Noise Ratio**: Group repetitive errors together. If a log appears multiple times, summarize it ONCE.
+- **Actionability**: Differentiate between "System Informational Spam" (ignore or deemphasize) and "Actionable Degradation" (highlight).
+- **ACPI Errors**:
+  *Interpretation*: "Minor BIOS/Firmware compatibility notice. Harmless messages from the motherboard."
 - **Bluetooth (Failed to set mode / 0x03)**:
-  *Interpretation*: "Bluetooth hardware limitation. Your controller doesn't support specific advanced features, but basic connectivity remains functional."
+  *Interpretation*: "Bluetooth controller lacks advanced features, but basic connectivity remains functional."
 - **X.509 / Integrity / Secure Boot**:
   *Interpretation*: "Standard Secure Boot certificate handshake notice."
 - **Intel SGX disabled**:
@@ -274,8 +278,8 @@ Do not simply remove technical noise. Instead, **RE-INTERPRET** and **SIMPLIFY**
 
 ### 5. RAW LOG PRESERVATION
 For each entry in the `logs` array:
-- Set `"raw_details"` to the **exact, unmodified log line** from the input `--- CRITICAL LOGS ---` section for this entry. Do NOT translate or summarize it.
-- This field MUST contain the original journalctl output line verbatim so users can inspect the raw error.
+- Set `"raw_details"` to the **exact, unmodified log line** from the input `--- CRITICAL LOGS ---` section. Do NOT translate or summarize it.
+- This field MUST contain the original journalctl output line verbatim.
 
 ### 6. VISUAL REPRESENTATION RULES
 Select the most appropriate **NerdFont Icon** and **Color** based on the severest issue found:
@@ -283,7 +287,7 @@ Select the most appropriate **NerdFont Icon** and **Color** based on the severes
 | Status | Condition | Icon Choice | Color Code |
 | :--- | :--- | :--- | :--- |
 | **OPTIMAL** | Fast boot (<15s), only ignorable firmware notices. |      | "green" |
-| **WARNING** | Slow boot (>30s) OR real driver limitations (Bluetooth/Wifi). |      | "orange" |
+| **WARNING** | Slow boot (>30s) OR real driver limitations. |      | "orange" |
 | **CRITICAL** | Kernel panic, filesystem corruption, GPU failure. |      | "red" |
 
 ### 7. OUTPUT CONFIGURATION
@@ -291,23 +295,21 @@ Select the most appropriate **NerdFont Icon** and **Color** based on the severes
 - **Format**: **RAW JSON ONLY**. Do not include markdown blocks (```json). No introductory or closing text.
 
 ### 8. REQUIRED JSON STRUCTURE
-{{
+{
     "title": "Short Professional Status (Max 3 words)",
     "summary": "Human-friendly diagnostic summary (Max 20 words). Focus on the 'Why' in a reassuring tone.",
     "icon": "ONE_ICON_CHAR_FROM_ABOVE",
     "boot_duration": "Extract the total time (e.g., '12.4s') or 'N/A'",
     "status_color": "green OR orange OR red",
     "logs": [
-        {{
+        {
             "time": "HH:MM:SS",
             "process": "Simplified Process Name",
             "message": "Translated, human-friendly explanation of the error/notice",
             "raw_details": "The exact, original journalctl log line for this entry, preserved verbatim"
-        }}
+        }
     ]
-}}
-    ]
-}}
+}
 """
 
 # ==============================================================================
@@ -330,11 +332,9 @@ Respond strictly in **$aiPreferredLanguage**.
 - **Suspend**: System is going to sleep (low power mode).
 - **Logout**: User is signing out of the session.
 - **Power Profiles**: Performance (High power), Balanced (Default), Power Saver (Low power).
-- **Battery Levels**: Battery reaching critical thresholds during discharge. Each level should have a unique, escalating response that matches the urgency.
-- **Charging State**: Plugging in and unplugging the charger — vary the tone each time.
-- **CPU Alert**: CPU usage is high — vary the response each time.
-- **RAM Alert**: Memory usage is high — vary the response each time.
-- **Temperature Alert**: Temperature is above 85°C — vary the response each time.
+- **Battery Levels**: Battery reaching critical thresholds during discharge.
+- **Charging State**: Plugging in and unplugging the charger.
+- **Alerts (CPU/RAM/Temp)**: Vary the response for each threshold hit.
 
 ### BATTERY RESPONSE GUIDELINES
 - **40%**: Mild concern, casual reminder about charging soon.
@@ -348,11 +348,10 @@ Respond strictly in **$aiPreferredLanguage**.
 - **6%-5%**: Near death, dramatic or dark humor.
 - **4%-3%**: Final moments, minimal message, maximum drama.
 
-### ARRAY RESPONSE RULES
-For charging, discharging, cpu_alerts, ram_alerts, and temp_alerts:
-- Generate exactly 7 unique responses.
-- Each response must be different from the others.
-- Vary tone: witty, dramatic, calm, humorous, concerned, sarcastic, playful.
+### ARRAY RESPONSE RULES (CRITICAL)
+- You MUST generate EXACTLY 7 items for all array fields (charging, discharging, cpu_alerts, ram_alerts, temp_alerts).
+- Do NOT truncate the output. Take a deep breath and generate the full JSON structure completely.
+- Scale the urgency dynamically: Item 1 should be mild, Item 4 moderate, Item 7 highly dramatic/urgent.
 - Keep each text under 12 words.
 
 ### OUTPUT SCHEMA (RAW JSON ONLY)
@@ -367,64 +366,64 @@ Generate a JSON object with the following structure. Each emotion must be one of
   "power_performance": {"text": "string (max 12 words)", "emotion": "string"},
   "power_balanced": {"text": "string (max 12 words)", "emotion": "string"},
   "power_powersaver": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_40": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_30": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_23": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_22": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_21": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_20": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_15": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_10": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_8": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_7": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_6": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_5": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_4": {"text": "string (max 12 words)", "emotion": "string"},
-  "battery_3": {"text": "string (max 12 words)", "emotion": "string"},
+  "battery_40": {"text": "string", "emotion": "string"},
+  "battery_30": {"text": "string", "emotion": "string"},
+  "battery_23": {"text": "string", "emotion": "string"},
+  "battery_22": {"text": "string", "emotion": "string"},
+  "battery_21": {"text": "string", "emotion": "string"},
+  "battery_20": {"text": "string", "emotion": "string"},
+  "battery_15": {"text": "string", "emotion": "string"},
+  "battery_10": {"text": "string", "emotion": "string"},
+  "battery_8": {"text": "string", "emotion": "string"},
+  "battery_7": {"text": "string", "emotion": "string"},
+  "battery_6": {"text": "string", "emotion": "string"},
+  "battery_5": {"text": "string", "emotion": "string"},
+  "battery_4": {"text": "string", "emotion": "string"},
+  "battery_3": {"text": "string", "emotion": "string"},
   "charging": [
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"}
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"}
   ],
   "discharging": [
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"}
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"}
   ],
   "cpu_alerts": [
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"}
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"}
   ],
   "ram_alerts": [
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"}
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"}
   ],
   "temp_alerts": [
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"},
-    {"text": "string (max 12 words)", "emotion": "string"}
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"},
+    {"text": "string", "emotion": "string"}
   ]
 }
 """
@@ -463,30 +462,29 @@ You will receive a JSON object containing:
 }
 
 ### 3. DEEP ANALYSIS LOGIC (CRITICAL)
-- **Avoid Superficiality**: Do not say "CPU is high". Say "Python script likely entered an infinite loop".
+- **Avoid Superficiality**: Don't say "CPU is high". Name the exact process from `top_processes` and hypothesize its current workload.
+- **The Null Hypothesis**: If the data doesn't clearly show the culprit, confidently state: "Spike resolved quickly; no persistent anomalous process detected." Do NOT guess a random process.
 - **Correlation**: Correlate Temperature with Frequency. If Temp > 85°C and CPU High -> Mention Thermal Throttling Risk.
-- **Temperature Events**: For `event_type = TEMP`, use `top_processes` to identify which CPU-heavy process is likely generating the heat, and use `temp_devices` to identify which hardware sensor is hottest.
 - **Process Behavior**:
   - Sudden Spike (0 to 100%): Likely user action or script trigger.
   - Gradual Rise: Likely Memory Leak or Background Service accumulation.
   - Sustained High: Likely Rendering, Compilation, or Mining.
-- **Impact**: Assess if this affects system stability or user experience.
 
 ### 4. SAFETY PROTOCOL (CRITICAL)
 - **NEVER** suggest destructive terminal commands (like `rm -rf`, `chmod 777`, `kill -9 <system_pid>`, `systemctl stop dbus`).
 - **ONLY** suggest safe diagnostic commands (e.g., `htop`, `top -p`, `journalctl -xe`, `strace`).
 
-### 4. OUTPUT RULES
+### 5. OUTPUT RULES
 - Respond strictly in **$aiPreferredLanguage**.
-- Return **RAW JSON ONLY** (no markdown, no ```json).
+- Return **RAW JSON ONLY** (no markdown formatting, absolutely no ```json).
 - Be detailed in the `narrative` field.
 
-### 5. REQUIRED JSON OUTPUT STRUCTURE
+### 6. REQUIRED JSON OUTPUT STRUCTURE
 {
   "title": "Short status (Max 4 words, e.g., 'Thermal Throttling Imminent')",
   "severity": "info|warning|critical",
   "narrative": "Detailed forensic explanation (3-5 sentences). Explain the trajectory, the likely culprit process, and the physical implication (heat/power).",
-  "root_cause_hypothesis": "Specific technical guess (e.g., 'Browser tab leak', 'Kernel driver deadlock', 'Background indexing').",
+  "root_cause_hypothesis": "Specific technical guess (e.g., 'Browser tab leak', 'Kernel driver deadlock').",
   "thermal_impact": {
       "risk_level": "low|medium|high",
       "details": "Explanation of heat dissipation vs generation."
@@ -499,6 +497,6 @@ You will receive a JSON object containing:
     "Specific command to investigate (e.g., 'perf top -p <pid>')",
     "Mitigation step (e.g., 'Restart service', 'Close tab')"
   ],
-  "confidence_score": integer (1-100)
+  "confidence_score": integer (0-100, use < 50 if the root cause is unclear)
 }
 """

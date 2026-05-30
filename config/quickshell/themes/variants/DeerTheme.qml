@@ -22,10 +22,10 @@ BaseTheme {
     _desktopClockUseThemeColor: false
     _desktopClockColor: Qt.rgba(0.05, 0.08, 0.13, 0.8)
 
-    _primary: "#DCB5F3"
-    _secondary: "#F7B28A"
+    _primary: "#B38BFF"
+    _secondary: "#E68A5C"
 
-    _tertiary: "#A2E8FF"
+    _tertiary: "#8DE8FF"
     _onTertiary: "#0A1D27"
 
     // Error: أحمر ناعم (Salmon Pink)
@@ -40,7 +40,31 @@ BaseTheme {
     _warning: "#fceab6"
     _onWarning: "#0A1D27"
 
+    _onPrimary: "#120A2A"
+    _onSecondary: "#1A0F0A"
+
     _topbarColor: "#0A1D27"
+    _topbarFgColor: "#FFFFFF"
+    _topbarBgColorV1: "#1E2D5A"
+    _topbarBgColorV2: "#273C76"
+    _topbarBgColorV3: "#273C76"
+    _topbarFgColorV1: "#FFFFFF"
+    _topbarFgColorV2: "#FFFFFF"
+    _topbarFgColorV3: "#FFFFFF"
+
+    // Left Menu
+    _leftMenuBgColorV1: "#141E3C"
+    _leftMenuBgColorV2: "#1E2D5A"
+    _leftMenuBgColorV3: "#EBA58099"
+    _leftMenuFgColorV1: "#FFFFFF"
+    _leftMenuFgColorV2: "#FFFFFF"
+    _leftMenuFgColorV3: "#18255E"
+
+    // Subtle Text + OSD
+    _subtleTextColor: "#B0B0FFB0"
+    _volOsdBgColor: "#1E2D5A"
+    _volOsdFgColor: "#FFFFFF"
+
     _plasmaColorScheme: "BlueDeer"
     _konsoleProfile: "game.profile"
 
