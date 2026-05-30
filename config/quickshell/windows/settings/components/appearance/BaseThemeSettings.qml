@@ -127,7 +127,7 @@ M3GroupBox {
         }
 
         MButton {
-            text: "󰄪"
+            text: "󰕍"
             visible: root.showUndoRedoButtons
             enabled: root.hasOwnProperty("canUndo") ? root.canUndo : false
             Layout.preferredWidth: 40
@@ -138,7 +138,7 @@ M3GroupBox {
         }
 
         MButton {
-            text: "󰄫"
+            text: "󰑏"
             visible: root.showUndoRedoButtons
             enabled: root.hasOwnProperty("canRedo") ? root.canRedo : false
             Layout.preferredWidth: 40
