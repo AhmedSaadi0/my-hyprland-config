@@ -67,7 +67,7 @@ Item {
 
                     normalBackground: "transparent"
                     activeBackground: "transparent"
-                    hoveredBackground: isActive ? "transparent" : root.theme.colors.primary
+                    // hoveredBackground: isActive ? "transparent" : root.theme.colors.primary
 
                     cursorShape: root.useHand ? Qt.PointingHandCursor : Qt.ArrowCursor
 
