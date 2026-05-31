@@ -27,6 +27,10 @@ PersistentProperties {
     property color _tertiary: "#bd93f9"
     property color _onTertiary: "#ffffff"
 
+    function _colorToHyprRgba(color) {
+        return 'rgba(' + Qt.rgba(color.r, color.g, color.b, 1).toString().slice(1) + 'ff)';
+    }
+
     property color _error: Kirigami.Theme.negativeTextColor
     property color _onError: "#ffffff"
 
@@ -132,7 +136,7 @@ PersistentProperties {
     // ===================================
     // Decoration
     property int _hyprBorderWidth: 2
-    property string _hyprActiveBorder: 'rgba(FDEAB0ff) rgba(fd77e0ff) 45deg'
+    property string _hyprActiveBorder: `${_colorToHyprRgba(_primary)} ${_colorToHyprRgba(_secondary)} ${_colorToHyprRgba(_tertiary)} 45deg`
     property string _hyprInactiveBorder: 'rgba(50505088)'
     property int _hyprRounding: 16
     property string _hyprDropShadow: 'no' // إعداداتك معطلة، لذا 'no' هو الافتراضي

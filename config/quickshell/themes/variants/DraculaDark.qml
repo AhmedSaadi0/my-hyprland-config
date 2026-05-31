@@ -40,8 +40,6 @@ BaseTheme {
 
     // Hyprland
     _hyprBorderWidth: 2
-    _hyprActiveBorder: "rgba(ff79c6ff) rgba(50FA7Bff) rgba(8be9fdff) 0deg"
-    _hyprInactiveBorder: "rgba(50505088)"
     _hyprRounding: 0
     _hyprDropShadow: "no"
     _hyprGapsIn: 5

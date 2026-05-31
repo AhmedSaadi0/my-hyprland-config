@@ -221,13 +221,21 @@ The user message is JSON with:
 - Respond strictly in **$aiPreferredLanguage**.
 - Return RAW JSON only. No markdown, no surrounding text.
 - Use only keys that exist in `editable_keys` and `current_palette`.
-- Only set `"apply": true` and include `changes` when the user clearly asks to change, set, make, generate, improve, adjust, lighten, darken, or replace colors.
-- If the user only asks for analysis, advice, comparison, or explanation, set `"apply": false` and return an empty `changes` array.
-- **Color Theory**: Ensure semantic correctness. Warnings/Errors should be reddish, Success greenish, disabled muted.
-- **Contrast (WCAG)**: Always ensure foreground (`on*`, `Fg*`, text) colors have a high contrast ratio against their background colors.
-- **Alpha Channels**: Output color values as valid hex strings. If an existing value uses 8 hex digits for alpha (e.g. #RRGGBBAA), you MUST output your changes in the same format for that key.
+- Only set `"apply": true` and include `changes` when the user asks to change colors.
+- If the user only asks for analysis, set `"apply": false` and return an empty `changes` array.
 - Return changed keys only. Do not repeat the full palette.
-- Keep the reply concise and useful for a settings panel.
+
+### 🎨 CORE ACCENT & THEME COLORS (Primary, Secondary, Tertiary, States)
+- **THEMATIC DIVERSITY:** If a specific theme is mentioned (e.g., "Dracula", "Nord", "Catppuccin"), you MUST apply its iconic, vibrant accent colors. For example, a Dracula theme must include its distinct purple, pink, green, and orange.
+- **HUE VARIATION (NO GRADIENTS HERE):** `_primary`, `_secondary`, and `_tertiary` MUST NOT be just lighter/darker shades of the same color. They must be distinctly different hues (e.g., Primary: Cyan, Secondary: Purple, Tertiary: Pink) that visually pop and complement the overall background.
+- **SEMANTIC STATES:** `_error` (Red/Pinkish), `_success` (Greenish), `_warning` (Orange/Yellowish).
+- **TEXT ON ACCENTS (`_on*` colors):** `_onPrimary`, `_onSecondary`, `_onTertiary`, etc., MUST be high-contrast solids (usually purely `#ffffff` for dark vibrant accents, or a very dark `#11111b` / `#000000` for light accents). Do not use soft colors here.
+
+### 📐 STRICT UI BACKGROUND STEPPING (Topbar, Left Menu, V1-V3)
+- **ZERO DUPLICATION ACROSS COMPONENTS:** `_topbarBg` colors MUST NEVER equal `_leftMenuBg` colors. Give the Topbar and Left Menu mathematically distinct starting points (e.g., slight difference in Hue or Lightness).
+- **PRONOUNCED, MATHEMATICAL STEPPING (V1 -> V2 -> V3):** You MUST NOT repeat a color within V1, V2, and V3. You must apply a clear 20% to 45% brightness/lightness gap between each step.
+  * FATAL ERROR: Outputting an identical hex code for V1 and V2, or for Topbar and Left Menu.
+- **FOREGROUND SEPARATION:** Fg V1, V2, and V3 should also shift slightly to match the contrast needs of their respective Backgrounds.
 
 ### REQUIRED OUTPUT SCHEMA
 {

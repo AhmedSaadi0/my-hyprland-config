@@ -62,6 +62,4 @@ BaseTheme {
     _themeIcons: "Zafiro-Dracula"
     _kvantumTheme: "Tellgo"
     _gtkTheme: "Tokyonight-Dark-BL"
-
-    _hyprActiveBorder: "rgba(ff79c6ff) rgba(8be9fdff) 0deg"
 }

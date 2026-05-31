@@ -42,6 +42,12 @@ StackView {
     readonly property int _collapseStart: 6
     readonly property int _collapseRelease: 2
 
+    NibrasShellShortcut {
+        id: recreateAllMenusShortcut
+        name: "recreateAllMenus"
+        onPressed: stackView.recreateAllMenus()
+    }
+
     Component {
         id: dashboardComponent
         Dashboard.Dashboard {}
@@ -166,6 +172,54 @@ StackView {
 
         console.warn("Error: requested page index not found or failed to create:", index);
         return null;
+    }
+
+    function recreateAllMenus() {
+        let savedIndex = currentIndex;
+
+        for (let idx in _instantiatedPages) {
+            let obj = _instantiatedPages[idx];
+            if (obj) {
+                EventBus.clearOwner(obj);
+                obj.visible = false;
+                obj.destroy();
+            }
+        }
+        _instantiatedPages = ({});
+
+        // Re-init eager pages (same as Component.onCompleted)
+        let eagerMap = {
+            0: dashboardComponent,
+            1: notiListComponent,
+            3: monitorComponent,
+            4: networkComponent
+        };
+
+        for (let idx in eagerMap) {
+            let comp = eagerMap[idx];
+            if (comp && comp.status === Component.Ready) {
+                let page = comp.createObject(stackView, {
+                    "visible": false
+                });
+                if (page) {
+                    _instantiatedPages[idx] = page;
+                    page.opacity = 1.0;
+                    page.scale = 1.0;
+                    page.y = 0;
+                    page.enabled = true;
+                    page.z = 1;
+                }
+            }
+        }
+
+        // Restore the saved page
+        let savedPage = getPage(savedIndex);
+        if (savedPage) {
+            currentIndex = savedIndex;
+            savedPage.visible = true;
+            stackView.replace(savedPage);
+            Qt.callLater(_attachToCurrentScrollable);
+        }
     }
 
     function _isScrollable(item) {

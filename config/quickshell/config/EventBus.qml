@@ -80,4 +80,29 @@ QtObject {
             delete signals[eventName];
         }
     }
+
+    function clearOwner(owner) {
+        _clearOwnerFromSignals(owner);
+
+        if (owner && Qt.isQtObject(owner) && owner.children) {
+            for (var i = 0; i < owner.children.length; i++) {
+                clearOwner(owner.children[i]);
+            }
+        }
+    }
+
+    function _clearOwnerFromSignals(owner) {
+        for (let eventName in signals) {
+            const list = signals[eventName];
+            for (var i = list.length - 1; i >= 0; i--) {
+                const entry = list[i];
+                if (entry && typeof entry === "object" && entry.owner === owner) {
+                    list.splice(i, 1);
+                }
+            }
+            if (list.length === 0) {
+                delete signals[eventName];
+            }
+        }
+    }
 }

@@ -71,8 +71,6 @@ BaseTheme {
     _volOsdBgColor: "#3B4252"                  // nord1 (خلفية بوب أب)
     _volOsdFgColor: "#ECEFF4"                  // nord6 (نص بوب أب)
 
-    _hyprActiveBorder: "rgba(5E81ACff) rgba(88C0D0ff) 0deg"
-
     _plasmaColorScheme: "NibrasNordLight"
     _konsoleProfile: "NordLight.profile"
 

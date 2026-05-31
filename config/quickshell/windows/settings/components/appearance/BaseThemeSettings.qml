@@ -91,6 +91,11 @@ M3GroupBox {
 
     function resetToDefault() {
         let data = serializeData();
+        console.info(`\n========== RESET [${root.title}] ==========`);
+        console.info(`[Reset] Serializing ${Object.keys(data).length} keys from component...`);
+        for (const key in data) {
+            console.info(`[Reset]   ${key} = ${data[key]}`);
+        }
         ThemeManager.loadDefaultValues(data);
         root.resetToDefaultClicked();
     }

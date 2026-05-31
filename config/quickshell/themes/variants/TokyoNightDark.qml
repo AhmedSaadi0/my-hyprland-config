@@ -52,8 +52,6 @@ BaseTheme {
     _volOsdBgColor: "#24283b"      // darker
     _volOsdFgColor: "#c0caf5"      // text
 
-    _hyprActiveBorder: "rgba(7aa2f7ff) rgba(bb9af7ff) 0deg"
-
     _plasmaColorScheme: "NibrasTokyoNightDark"
     _konsoleProfile: "NibrasTokyoNightDark.profile"
 
