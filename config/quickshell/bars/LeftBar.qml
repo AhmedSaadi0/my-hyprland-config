@@ -21,6 +21,8 @@ PanelWindow {
     // color: ThemeManager.selectedTheme.colors.topbarColor
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
+    WlrLayershell.layer: WlrLayer.Bottom
+    WlrLayershell.namespace: "NibrasShell:leftbar"
 
     anchors {
         top: true

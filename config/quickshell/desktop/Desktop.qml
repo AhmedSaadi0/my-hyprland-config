@@ -5,7 +5,6 @@ import Quickshell
 import Quickshell.Wayland
 import QtQuick.Effects
 import Qt5Compat.GraphicalEffects
-import Quickshell.Hyprland
 
 import "root:/components"
 import "root:/config"

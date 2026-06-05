@@ -1,5 +1,6 @@
 import Quickshell
 import QtQuick
+import Quickshell.Wayland
 import "root:/themes"
 import "root:/config"
 import "root:/config/ConstValues.js" as C
@@ -20,6 +21,7 @@ PanelWindow {
     implicitHeight: Math.max(400, islandRect.height + islandRect.anchors.topMargin + 20)
 
     exclusionMode: ExclusionMode.Ignore
+
     mask: Region {
         item: islandRect
     }
@@ -28,6 +30,9 @@ PanelWindow {
     property string activeTab: "media"
     property var _coordinator: CapsuleCoordinator
     property var _coordinatorTester: CapsuleTester
+
+    // WlrLayershell.layer: stateMode === C.STATE_IDLE ? WlrLayer.Bottom : WlrLayer.Top
+    // WlrLayershell.namespace: "NibrasShell:SmartCapsule"
 
     // Margins
     property int barFullHeight: ThemeManager.selectedTheme.dimensions.barHeight
