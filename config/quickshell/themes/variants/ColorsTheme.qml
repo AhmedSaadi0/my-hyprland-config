@@ -40,6 +40,32 @@ BaseTheme {
     _warning: "#FF9100"
     _onWarning: "#19002e"
 
+    _onPrimary: "#1F1635"
+    _onSecondary: "#EFF0F1"
+
+    // Topbar
+    _topbarColor: "#3A2961"
+    _topbarFgColor: "#EFF0F1"
+    _topbarBgColorV1: "#4F3784"
+    _topbarBgColorV2: "#7150A1"
+    _topbarBgColorV3: "#3F3F7D"
+    _topbarFgColorV1: "#EFF0F1"
+    _topbarFgColorV2: "#EFF0F1"
+    _topbarFgColorV3: "#EFF0F1"
+
+    // Left Menu
+    _leftMenuBgColorV1: "#3E2C68"
+    _leftMenuBgColorV2: "#4F3988"
+    _leftMenuBgColorV3: "#1ECEF699"
+    _leftMenuFgColorV1: "#EFF0F1"
+    _leftMenuFgColorV2: "#EFF0F1"
+    _leftMenuFgColorV3: "#1F1635"
+
+    // Subtle Text + OSD
+    _subtleTextColor: "#EFF0F199"
+    _volOsdBgColor: "#4F3784"
+    _volOsdFgColor: "#EFF0F1"
+
     _plasmaColorScheme: "AColors"
     _themeIcons: "Vivid-Dark-Icons"
     _kvantumTheme: "Shades-of-purple"
@@ -49,8 +75,6 @@ BaseTheme {
     _baseRadius: 12
 
     _hyprBorderWidth: 3
-    _hyprActiveBorder: "rgba(EB08FBff) rgba(16D7BAff) 0deg"
-    _hyprInactiveBorder: "rgba(59595900) 0deg"
     _hyprRounding: _baseRadius
     _hyprDropShadow: "no"
 }

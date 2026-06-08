@@ -65,8 +65,3 @@ function formatNetworkName(name) {
   }
   return name;
 }
-
-function getAccurteTextColor(bg) {
-  let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-  return luminance > 0.5 ? "black" : "white";
-}

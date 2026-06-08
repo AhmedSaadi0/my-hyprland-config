@@ -12,6 +12,7 @@ Rectangle {
     required property string messageText
     required property string role // "user" or "model"
     property bool isUser: role === "user"
+    readonly property var theme: ThemeManager.selectedTheme
 
     width: Math.min(parent.width * 0.85, messageLayout.implicitWidth + 30)
     height: messageLayout.implicitHeight + 20
@@ -23,7 +24,7 @@ Rectangle {
     radius: 12
 
     // الألوان حسب الثيم والمرسل
-    color: isUser ? ThemeManager.selectedTheme.colors.accentColor : ThemeManager.selectedTheme.colors.surfaceColor
+    color: isUser ? root.theme.colors.primary : root.theme.colors.leftMenuBgColorV2
 
     opacity: 0.9
 
@@ -38,15 +39,14 @@ Rectangle {
             text: root.isUser ? "You" : "Gemini"
             font.pixelSize: 10
             font.bold: true
-            color: root.isUser ? Qt.darker(ThemeManager.selectedTheme.colors.textColor, 1.5) : ThemeManager.selectedTheme.colors.iconColor
+            color: root.isUser ? root.theme.colors.onPrimary : root.theme.colors.secondary
             Layout.alignment: Qt.AlignLeft
         }
 
         // نص الرسالة
         Text {
             text: root.messageText
-            color: root.isUser ? "#FFFFFF" // نص أبيض دائماً لرسائل المستخدم لتكون مقروءة على لون الـ Accent
-             : ThemeManager.selectedTheme.colors.textColor
+            color: root.isUser ? root.theme.colors.onPrimary : root.theme.colors.leftMenuFgColorV1
 
             font.pixelSize: 13
             wrapMode: Text.Wrap

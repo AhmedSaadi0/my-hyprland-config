@@ -104,6 +104,12 @@ const translations = {
     rd_cap_li3: "ساعة تقريبية (Fuzzy Clock) متصلة بالذكاء",
     rd_cap_li4: "ملخص الحافظة الذكي (Clipboard AI)",
 
+    rd_ai_ui_control: "الجزء 3: التحكم بالواجهة",
+    rd_ai_ui_li1: "التحكم بالالوان وتغييرها",
+    rd_ai_ui_li2: "اضافة ثيمات جديدة مخصصة",
+    rd_ai_ui_li3: "التحكم بثيمات بلازما",
+    rd_ai_ui_li4: "التحكم بثيمات GTK",
+
     rd_desktop_bars: "الأشرطة والدك (Bars & Dock)",
     rd_desk_li1: "تغيير مواقع الأشرطة (علوي، سفلي، جانبي)",
     rd_desk_li2: "الإخفاء التلقائي للأشرطة",
@@ -357,6 +363,12 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     rd_cap_li2: "Capsule Colors: Independent color settings",
     rd_cap_li3: "Fuzzy Clock: AI-connected rough time logic",
     rd_cap_li4: "Clipboard AI: Summarizer for copied text",
+
+    rd_ai_ui_control: "Part 3: UI Control",
+    rd_ai_ui_li1: "Color Control & Change",
+    rd_ai_ui_li2: "Add Custom Themes",
+    rd_ai_ui_li3: "Plasma Theme Control",
+    rd_ai_ui_li4: "GTK Theme Control",
 
     rd_desktop_bars: "Bars & Dock",
     rd_desk_li1: "Positioning: Move default bars (Top, Bottom, Side)",

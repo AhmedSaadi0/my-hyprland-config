@@ -29,10 +29,10 @@ MenuCard {
         let bg = activeStateBackgroundColor;
 
         let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-        return luminance > 0.5 ? "black" : "white";
+        return luminance > 0.5 ? ThemeManager.selectedTheme.colors.topbarFgColor : ThemeManager.selectedTheme.colors.topbarColor;
     }
-    property color activeStateBackgroundColor: Kirigami.Theme.activeTextColor     // For active button background (original highlightColor)
-    property color defaultStateBackgroundColor: Kirigami.Theme.activeBackgroundColor // For inactive button background
+    property color activeStateBackgroundColor: ThemeManager.selectedTheme.colors.primary
+    property color defaultStateBackgroundColor: ThemeManager.selectedTheme.colors.topbarBgColorV2
 
     property string highPerformanceButtonLabel: qsTr("High")
     property string balancedButtonLabel: qsTr("Balanced")

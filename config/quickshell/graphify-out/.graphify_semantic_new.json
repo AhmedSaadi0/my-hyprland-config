@@ -1,0 +1,539 @@
+{
+  "nodes": [
+    {
+      "id": "todo",
+      "label": "Development Roadmap",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_3_13",
+      "label": "Python Dependencies 3.13",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_smart_capsule",
+      "label": "Smart Capsule",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_dynamic_island",
+      "label": "Dynamic Island",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_ai_weather_analysts",
+      "label": "AI Weather Analysts",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_ai_audiophile",
+      "label": "AI Audiophile",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_animated_robot_eye",
+      "label": "Animated Robot Eye",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_clipboard_manager",
+      "label": "Clipboard Manager",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_todo_list",
+      "label": "Todo List",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_theme_manager",
+      "label": "ThemeManager",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_fuzzy_clock",
+      "label": "Fuzzy Clock",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "todo_clipboard_ai",
+      "label": "Clipboard AI",
+      "file_type": "document",
+      "source_file": "todo.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_pyqt6",
+      "label": "PyQt6",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_ollama",
+      "label": "ollama",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_google_generativeai",
+      "label": "google-generativeai",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_openai",
+      "label": "openai",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_pillow",
+      "label": "pillow",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_psutil",
+      "label": "psutil",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_rembg",
+      "label": "rembg",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_kde_material_you_colors",
+      "label": "kde-material-you-colors",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "requirements_json_repair",
+      "label": "json-repair",
+      "file_type": "code",
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "todo",
+      "target": "todo_smart_capsule",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_dynamic_island",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_ai_weather_analysts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_ai_audiophile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_animated_robot_eye",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_clipboard_manager",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_todo_list",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_theme_manager",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_fuzzy_clock",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo",
+      "target": "todo_clipboard_ai",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_pyqt6",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_ollama",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_google_generativeai",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_openai",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_pillow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_psutil",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_rembg",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_kde_material_you_colors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "requirements_3_13",
+      "target": "requirements_json_repair",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/python/requirements-3.13.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_smart_capsule",
+      "target": "todo_fuzzy_clock",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_smart_capsule",
+      "target": "todo_clipboard_ai",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_fuzzy_clock",
+      "target": "requirements_ollama",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_fuzzy_clock",
+      "target": "requirements_google_generativeai",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_clipboard_ai",
+      "target": "requirements_google_generativeai",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_clipboard_ai",
+      "target": "requirements_openai",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_ai_weather_analysts",
+      "target": "requirements_google_generativeai",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_ai_audiophile",
+      "target": "requirements_google_generativeai",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_theme_manager",
+      "target": "requirements_kde_material_you_colors",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_clipboard_manager",
+      "target": "requirements_psutil",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "todo_todo_list",
+      "target": "requirements_pyqt6",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "todo.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

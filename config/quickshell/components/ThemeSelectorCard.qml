@@ -3,7 +3,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import org.kde.kirigami as Kirigami
 
 import "root:/themes"
 import "root:/config/EventNames.js" as Events
@@ -49,7 +48,8 @@ Rectangle {
         Label {
             text: card.themeTitle
             font.bold: true
-            font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
+            font.pixelSize: ThemeManager.selectedTheme.typography.medium * 1.2
+            color: ThemeManager.selectedTheme.colors.topbarFgColorV2
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             Layout.bottomMargin: 4

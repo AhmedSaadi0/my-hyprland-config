@@ -10,6 +10,7 @@ RowLayout {
 
     property int currentSource: 0
     property var sourceNames: ["Local", "Downloaded", "Wallhaven"]
+    readonly property var theme: ThemeManager.selectedTheme
 
     signal sourceSelected(int index)
 
@@ -25,14 +26,14 @@ RowLayout {
             
             Layout.fillWidth: true
             height: 32
-            radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
+            radius: root.theme.dimensions.elementRadius
             color: root.currentSource === tabRect.index
-                ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333"
+                ? root.theme.colors.primary.alpha(0.2)
                 : tabMouseArea.containsMouse
-                    ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.1) || "#222"
+                    ? root.theme.colors.primary.alpha(0.1)
                     : "transparent"
             border.color: root.currentSource === tabRect.index
-                ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
+                ? root.theme.colors.primary
                 : "transparent"
             border.width: 1
 
@@ -42,8 +43,8 @@ RowLayout {
                 font.pixelSize: 12
                 font.weight: root.currentSource === tabRect.index ? Font.Bold : Font.Normal
                 color: root.currentSource === tabRect.index
-                    ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
-                    : ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+                    ? root.theme.colors.primary
+                    : root.theme.colors.leftMenuFgColorV1
             }
 
             MouseArea {

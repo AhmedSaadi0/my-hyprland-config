@@ -6,7 +6,6 @@ import QtQuick.Layouts
 import Quickshell.Io
 
 import "root:/windows/smart_capsule/logic"
-import "root:/utils/helpers.js" as Helpers
 import "root:/config/ConstValues.js" as C
 import "root:/components"
 import "root:/themes"
@@ -22,6 +21,7 @@ Item {
     property string pendingActionMessage: ""
     property string confirmActionText: ""
     property color currentAccentColor: theme.colors.primary
+    property color currentAccentForeground: theme.colors.onPrimary
 
     signal close
 
@@ -127,6 +127,7 @@ Item {
                     accentColor: theme.colors.error
                     onClicked: {
                         root.currentAccentColor = accentColor;
+                        root.currentAccentForeground = theme.colors.onError;
                         root.pendingActionCommand = ["systemctl", "poweroff"];
                         root.pendingActionMessage = qsTr("Shut Down System?");
                         root.confirmActionText = qsTr("Shut Down");
@@ -140,6 +141,7 @@ Item {
                     accentColor: theme.colors.warning
                     onClicked: {
                         root.currentAccentColor = accentColor;
+                        root.currentAccentForeground = theme.colors.onWarning;
                         root.pendingActionCommand = ["systemctl", "reboot"];
                         root.pendingActionMessage = qsTr("Restart System?");
                         root.confirmActionText = qsTr("Restart");
@@ -153,6 +155,7 @@ Item {
                     accentColor: theme.colors.tertiary
                     onClicked: {
                         root.currentAccentColor = accentColor;
+                        root.currentAccentForeground = theme.colors.onTertiary;
                         root.pendingActionCommand = ["systemctl", "suspend"];
                         root.pendingActionMessage = qsTr("Suspend System?");
                         root.confirmActionText = qsTr("Suspend");
@@ -166,6 +169,7 @@ Item {
                     accentColor: theme.colors.primary
                     onClicked: {
                         root.currentAccentColor = accentColor;
+                        root.currentAccentForeground = theme.colors.onPrimary;
                         root.pendingActionCommand = ["hyprctl", "dispatch", "exit"];
                         root.pendingActionMessage = qsTr("Exit Session?");
                         root.confirmActionText = qsTr("Log Out");
@@ -205,7 +209,7 @@ Item {
                     Layout.preferredHeight: 55
                     // شفافية بلون الأكشن المختار
                     normalBackground: Qt.rgba(root.currentAccentColor.r, root.currentAccentColor.g, root.currentAccentColor.b, 0.6)
-                    normalForeground: "#ffffff"
+                    normalForeground: root.currentAccentForeground
                     focus: true
                     Keys.onReturnPressed: clicked()
                     onClicked: {
@@ -232,7 +236,7 @@ Item {
         radius: theme.dimensions.elementRadius
         color: mouseArea.hovered ? Qt.rgba(accentColor.r, accentColor.g, accentColor.b, 0.15) : Qt.rgba(theme.colors.topbarBgColorV1.r, theme.colors.topbarBgColorV1.g, theme.colors.topbarBgColorV1.b, 0.3)
 
-        border.color: mouseArea.hovered ? accentColor : Qt.rgba(1, 1, 1, 0.1)
+        border.color: mouseArea.hovered ? accentColor : theme.colors.topbarFgColor.alpha(0.1)
         border.width: 1
 
         ColumnLayout {

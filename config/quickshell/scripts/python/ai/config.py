@@ -58,6 +58,11 @@ PRESETS = {
         "json_mode": True,
         "temperature": 0.7,
     },
+    "color_palette": {
+        "system_instruction": prompt.COLOR_PALETTE_PROMPT,
+        "json_mode": True,
+        "temperature": 0.45,
+    },
 }
 
 

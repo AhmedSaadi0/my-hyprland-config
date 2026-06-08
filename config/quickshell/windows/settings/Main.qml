@@ -3,7 +3,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
-import org.kde.kirigami as Kirigami
 import QtQuick.Dialogs
 import Qt.labs.platform
 
@@ -19,7 +18,17 @@ import "./audio"
 Controls.ApplicationWindow {
     id: root
     visible: false
-    color: Kirigami.Theme.backgroundColor
+    color: ThemeManager.selectedTheme.colors.topbarColor
+
+    palette.window: ThemeManager.selectedTheme.colors.topbarColor
+    palette.windowText: ThemeManager.selectedTheme.colors.topbarFgColor
+    palette.base: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+    palette.alternateBase: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    palette.text: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+    palette.button: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    palette.buttonText: ThemeManager.selectedTheme.colors.leftMenuFgColorV2
+    palette.highlight: ThemeManager.selectedTheme.colors.primary
+    palette.highlightedText: ThemeManager.selectedTheme.colors.onPrimary
 
     flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
     title: "NibrasShellSettings"

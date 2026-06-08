@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import "root:/config/ConstValues.js" as C
 import "root:/config"
+import "root:/themes"
 
 Singleton {
     id: root
@@ -28,22 +29,22 @@ Singleton {
                     text: "السماء صافية، درجة الحرارة 24°C. يوم مثالي للمشي.",
                     icon: "",
                     emotion: "happy",
-                    bg1: "#2980b9",
-                    bg2: "#6dd5fa"
+                    bg1: ThemeManager.selectedTheme.colors.primary,
+                    bg2: ThemeManager.selectedTheme.colors.secondary
                 },
                 {
                     text: "غائم جزئياً، 19°C. احتمالية خفيفة للأمطار.",
                     icon: "",
                     emotion: "thinking",
-                    bg1: "#606c88",
-                    bg2: "#3f4c6b"
+                    bg1: ThemeManager.selectedTheme.colors.topbarBgColorV2,
+                    bg2: ThemeManager.selectedTheme.colors.topbarBgColorV3
                 },
                 {
                     text: "أمطار خفيفة، 15°C. لا تنس مظلتك.",
                     icon: "",
                     emotion: "wink",
-                    bg1: "#373B44",
-                    bg2: "#4286f4"
+                    bg1: ThemeManager.selectedTheme.colors.leftMenuBgColorV2,
+                    bg2: ThemeManager.selectedTheme.colors.primary
                 }
             ];
 
@@ -53,22 +54,22 @@ Singleton {
                     text: "تحذير: عاصفة رعدية قوية تقترب خلال 10 دقائق!",
                     icon: "",
                     emotion: "shocked",
-                    bg1: "#232526",
-                    bg2: "#414345"
+                    bg1: ThemeManager.selectedTheme.colors.warning,
+                    bg2: ThemeManager.selectedTheme.colors.topbarBgColorV3
                 },
                 {
                     text: "تنبيه حرارة: درجة الحرارة تجاوزت 45°C، تجنب الشمس.",
                     icon: "",
                     emotion: "dead",
-                    bg1: "#ff512f",
-                    bg2: "#dd2476"
+                    bg1: ThemeManager.selectedTheme.colors.error,
+                    bg2: ThemeManager.selectedTheme.colors.warning
                 },
                 {
                     text: "عاجل: رياح قوية جداً (80 كم/س). ابق في الداخل.",
                     icon: "",
                     emotion: "suspicious",
-                    bg1: "#1f4037",
-                    bg2: "#99f2c8"
+                    bg1: ThemeManager.selectedTheme.colors.success,
+                    bg2: ThemeManager.selectedTheme.colors.secondary
                 }
             ];
 
@@ -87,7 +88,7 @@ Singleton {
                     icon: data.icon,
                     bg_color1: data.bg1,
                     bg_color2: data.bg2,
-                    fg_color: "#ffffff"
+                    fg_color: ThemeManager.selectedTheme.colors.onPrimary
                 }
             });
         }

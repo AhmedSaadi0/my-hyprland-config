@@ -3,8 +3,7 @@
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Effects
-import Quickshell.Hyprland
+import Quickshell.Wayland
 
 import "../themes"
 import "./widgets"
@@ -20,6 +19,9 @@ PanelWindow {
     implicitHeight: theme.dimensions.barHeight
     color: "transparent"
     exclusionMode: ExclusionMode.Auto
+
+    WlrLayershell.layer: WlrLayer.Bottom
+    WlrLayershell.namespace: "NibrasShell:topbar"
 
     anchors {
         top: true

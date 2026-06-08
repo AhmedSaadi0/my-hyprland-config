@@ -166,14 +166,14 @@ Rectangle {
                 Text {
                     text: model.modelData.name
                     font.bold: true
-                    color: Kirigami.Theme.textColor
+                    color: ThemeManager.selectedTheme.colors.topbarFgColor
                     opacity: 0.7
                 }
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignVCenter
                     height: 1
-                    color: Kirigami.Theme.textColor
+                    color: ThemeManager.selectedTheme.colors.topbarFgColor
                     opacity: 0.3
                 }
                 spacing: 10

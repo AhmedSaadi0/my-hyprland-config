@@ -16,17 +16,6 @@ ProcessTable {
     model: dataModel // Assign the ListModel as the table's model
     columns: tableColumns // Assign the column definitions
 
-    // --- Property Values ---
-    // tableBackgroundColor: "#F0FFF4" // Very light mint-cream
-    // tableBorderColor: "#2F4F4F" // Dark slate gray/green
-    // headerBackgroundColor: "#2E8B57" // Sea green
-    // headerTextColor: "white"
-    // headerBorderColor: "#2E8B57"
-    // cellTextColor: "#2F4F4F"
-    // cellBackgroundColor: "white"
-    // alternatingCellBackgroundColor: "#F0FFF0" // CSS color name for a pale green
-    // cellBorderColor: "#98FB98" // Pale green grid lines
-
     ListModel {
         id: dataModel
         ListElement {

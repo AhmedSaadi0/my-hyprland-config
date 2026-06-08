@@ -1,5 +1,6 @@
 // BarCorners.qml
 import QtQuick
+import "root:/themes"
 
 Item {
     id: root
@@ -7,7 +8,7 @@ Item {
     property string position: "top-left"
     // لون الشكل
 
-    property color shapeColor: palette.window
+    property color shapeColor: ThemeManager.selectedTheme.colors.topbarColor
     property real cornerRadius: 30
 
     width: cornerRadius

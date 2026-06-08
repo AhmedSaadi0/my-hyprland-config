@@ -65,7 +65,7 @@ Item {
             size: widgetsRoot.currentClockSize
             editMode: false
 
-            clockColor: widgetsRoot.clockSettings?.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary.alpha(0.7) : (widgetsRoot.clockSettings?.color || "white")
+            clockColor: widgetsRoot.clockSettings?.useThemeColor ? Theme.ThemeManager.selectedTheme.colors.primary.alpha(0.7) : (widgetsRoot.clockSettings?.color || Theme.ThemeManager.selectedTheme.colors.primary)
 
             clockFont: widgetsRoot.clockSettings?.font || "Arial"
             clockFormat: widgetsRoot.clockSettings?.format || "hh:mm:ss"
@@ -74,7 +74,7 @@ Item {
             enableAnimation: widgetsRoot.clockSettings?.enableAnimation || false
 
             shadowEnabled: widgetsRoot.clockSettings?.shadowEnabled || false
-            shadowColor: widgetsRoot.clockSettings?.shadowColor || "black"
+            shadowColor: widgetsRoot.clockSettings?.shadowColor || Theme.ThemeManager.selectedTheme.colors.topbarColor.alpha(0.55)
 
             // منطق التحديث (عندما يقوم المستخدم بتحريك الساعة)
             onRequestNewGeometry: (newPosition, newSize) => {

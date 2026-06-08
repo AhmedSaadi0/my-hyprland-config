@@ -10,6 +10,7 @@ RowLayout {
 
     property bool isLoading: false
     property int sourceMode: 0
+    readonly property var theme: ThemeManager.selectedTheme
 
     signal refreshClicked
     signal closeClicked
@@ -19,8 +20,8 @@ RowLayout {
     Text {
         text: "󰸉"
         font.pixelSize: 24
-        font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-        color: ThemeManager.selectedTheme?.colors?.primary || "#fff"
+        font.family: root.theme.typography.iconFont
+        color: root.theme.colors.primary
 
         renderType: Text.QtRendering
         font.hintingPreference: Font.PreferNoHinting
@@ -34,13 +35,13 @@ RowLayout {
             text: qsTr("Wallpaper Selector")
             font.pixelSize: 16
             font.bold: true
-            color: ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
+            color: root.theme.colors.leftMenuFgColorV1
         }
 
         Text {
             text: root.sourceMode === 2 ? qsTr("Browse wallpapers from Wallhaven.cc") : qsTr("Select a wallpaper to apply")
             font.pixelSize: 11
-            color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+            color: root.theme.colors.subtleText
         }
     }
 
@@ -49,14 +50,14 @@ RowLayout {
         width: 28
         height: 28
         radius: 6
-        color: refreshMouseArea.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333" : "transparent"
+        color: refreshMouseArea.containsMouse ? root.theme.colors.primary.alpha(0.2) : "transparent"
 
         Text {
             anchors.centerIn: parent
             text: root.isLoading ? "󰦖" : "󰑐"
             font.pixelSize: 16
-            font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-            color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+            font.family: root.theme.typography.iconFont
+            color: root.theme.colors.subtleText
 
             renderType: Text.QtRendering
             font.hintingPreference: Font.PreferNoHinting
@@ -84,14 +85,14 @@ RowLayout {
         width: 28
         height: 28
         radius: 6
-        color: closeMouseArea.containsMouse ? ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333" : "transparent"
+        color: closeMouseArea.containsMouse ? root.theme.colors.primary.alpha(0.2) : "transparent"
 
         Text {
             anchors.centerIn: parent
             text: "󰅖"
             font.pixelSize: 16
-            font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-            color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+            font.family: root.theme.typography.iconFont
+            color: root.theme.colors.subtleText
 
             renderType: Text.QtRendering
             font.hintingPreference: Font.PreferNoHinting

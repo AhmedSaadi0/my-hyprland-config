@@ -66,6 +66,4 @@ BaseTheme {
     _themeIcons: "Vivid-Dark-Icons"
     // _kvantumTheme: "Tellgo"
     _gtkTheme: "Catppuccin-Mocha-Standard-Blue-Dark"
-
-    _hyprActiveBorder: "rgba(89b4faff) rgba(f5c2e7ff) 0deg"
 }

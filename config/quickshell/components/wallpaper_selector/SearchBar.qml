@@ -11,6 +11,7 @@ RowLayout {
 
     property int sourceMode: 0
     property alias text: searchField.text
+    readonly property var theme: ThemeManager.selectedTheme
 
     signal searchRequested
     signal filterTextChanged(string text)
@@ -28,16 +29,16 @@ RowLayout {
         font.pixelSize: 13
         horizontalAlignment: Text.AlignLeft
 
-        normalBackground: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#222"
-        normalForeground: ThemeManager.selectedTheme?.colors?.leftMenuFgColorV1 || "#fff"
-        focusedBorderColor: ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
-        borderColor: ThemeManager.selectedTheme?.colors?.primary.alpha(0.3) || "#444"
+        normalBackground: root.theme.colors.leftMenuBgColorV2
+        normalForeground: root.theme.colors.leftMenuFgColorV1
+        focusedBorderColor: root.theme.colors.primary
+        borderColor: root.theme.colors.primary.alpha(0.3)
         borderSize: 1
 
-        topLeftRadius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
-        topRightRadius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
-        bottomLeftRadius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
-        bottomRightRadius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
+        topLeftRadius: root.theme.dimensions.elementRadius
+        topRightRadius: root.theme.dimensions.elementRadius
+        bottomLeftRadius: root.theme.dimensions.elementRadius
+        bottomRightRadius: root.theme.dimensions.elementRadius
 
         onTextChanged: root.filterTextChanged(text)
         onAccepted: {
@@ -51,18 +52,16 @@ RowLayout {
     Rectangle {
         Layout.preferredWidth: 36
         Layout.preferredHeight: 36
-        radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
+        radius: root.theme.dimensions.elementRadius
         visible: root.sourceMode === 2
-        color: searchBtnMouse.containsMouse
-            ? ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
-            : ThemeManager.selectedTheme?.colors?.primary.alpha(0.8) || "#5558e8"
+        color: searchBtnMouse.containsMouse ? root.theme.colors.primary : root.theme.colors.primary.alpha(0.8)
 
         Text {
             anchors.centerIn: parent
             text: "󰍉"
             font.pixelSize: 16
-            font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-            color: "#fff"
+            font.family: root.theme.typography.iconFont
+            color: root.theme.colors.onPrimary
         }
 
         MouseArea {

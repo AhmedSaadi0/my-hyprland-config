@@ -58,6 +58,4 @@ BaseTheme {
     _themeIcons: "Tela-dark"
     _kvantumTheme: "Tellgo"
     _gtkTheme: "Breeze-Dark"
-
-    _hyprActiveBorder: "rgba(678382ff) rgba(9d6c73ff) 0deg"
 }

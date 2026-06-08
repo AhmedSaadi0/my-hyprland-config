@@ -174,7 +174,7 @@ PanelWindow {
 
             Rectangle {
                 anchors.fill: parent
-                color: "#dd000000"
+                color: ThemeManager.selectedTheme.colors.topbarColor.alpha(0.86)
                 opacity: panelProgress
             }
 
@@ -273,7 +273,7 @@ PanelWindow {
                     anchors.margins: 16
                     visible: OverlayService.imageTitle !== ""
                     radius: 6
-                    color: "#7a000000"
+                    color: ThemeManager.selectedTheme.colors.topbarColor.alpha(0.7)
                     border.width: 1
                     border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.24)
                     width: Math.min(titleText.implicitWidth + 20, parent.width * 0.45)
@@ -285,7 +285,7 @@ PanelWindow {
                         anchors.fill: parent
                         anchors.margins: 10
                         text: OverlayService.imageTitle
-                        color: ThemeManager.selectedTheme.colors.topbarFgColor || "white"
+                        color: ThemeManager.selectedTheme.colors.topbarFgColor
                         elide: Text.ElideRight
                         font.family: ThemeManager.selectedTheme.typography.bodyFont
                         font.pixelSize: ThemeManager.selectedTheme.typography.baseFontSize
@@ -305,14 +305,14 @@ PanelWindow {
                         height: 44
                         radius: 22
                         visible: OverlayService.mode === OverlayService.modeImagePreview
-                        color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary : "#55ffffff"
+                        color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.topbarFgColor.alpha(0.28)
 
                         Text {
                             anchors.centerIn: parent
                             text: "󰄬"
                             font.family: ThemeManager.selectedTheme.typography.iconFont
                             font.pixelSize: 20
-                            color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.onPrimary : "white"
+                            color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.topbarFgColor
                         }
 
                         MouseArea {
@@ -328,12 +328,12 @@ PanelWindow {
                         width: 44
                         height: 44
                         radius: 22
-                        color: closeMouse.containsMouse ? "#ff4444" : "#55ffffff"
+                        color: closeMouse.containsMouse ? ThemeManager.selectedTheme.colors.error : ThemeManager.selectedTheme.colors.topbarFgColor.alpha(0.28)
 
                         Text {
                             anchors.centerIn: parent
                             text: "✕"
-                            color: "white"
+                            color: closeMouse.containsMouse ? ThemeManager.selectedTheme.colors.onError : ThemeManager.selectedTheme.colors.topbarFgColor
                             font.pixelSize: 18
                         }
 

@@ -2,12 +2,13 @@
 
 import QtQuick
 import QtQuick.Effects
+import "root:/themes"
 
 import Qt5Compat.GraphicalEffects
 
 // MultiEffect {
 //
-//     property var color: "#55000000"
+//     property var color: ThemeManager.selectedTheme.colors.topbarColor.alpha(0.35)
 //     property var radius: 0
 //     property var alpha: 0
 //
@@ -30,7 +31,7 @@ DropShadow {
     horizontalOffset: 2
     verticalOffset: 2
     cached: true
-    // color: palette.shadow.alpha(alpha)
+    // color: Qt.darker(ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(alpha)
     // radius: 9
     // spread: 0
     // samples: 15

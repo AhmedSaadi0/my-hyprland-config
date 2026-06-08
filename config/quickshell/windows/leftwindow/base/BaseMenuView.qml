@@ -64,7 +64,7 @@ Item {
         gradient: Gradient {
             GradientStop {
                 position: 0.0
-                color: Qt.rgba(0, 0, 0, Math.min(scrollArea.contentY / 30.0, 1.0) * 0.05)
+                color: ThemeManager.selectedTheme.colors.topbarColor.alpha(Math.min(scrollArea.contentY / 30.0, 1.0) * 0.05)
             }
             GradientStop {
                 position: 0.4

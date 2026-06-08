@@ -83,7 +83,7 @@ Item {
         layer.enabled: isCritical
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: stateColor
+            shadowColor: palette.shadow
             shadowBlur: 0.5
             shadowOpacity: 0.6
         }

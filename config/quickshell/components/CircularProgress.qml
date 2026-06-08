@@ -1,4 +1,5 @@
 import QtQuick
+import "root:/themes"
 
 Item {
     id: root
@@ -12,8 +13,8 @@ Item {
     property bool rounded: true
     property bool showText: false
 
-    property color backgroundColor: palette.accent.alpha(0.3)
-    property color foregroundColor: palette.accent
+    property color backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
+    property color foregroundColor: ThemeManager.selectedTheme.colors.primary
 
     implicitWidth: 20
     implicitHeight: 20

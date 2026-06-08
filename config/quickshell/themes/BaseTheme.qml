@@ -27,6 +27,10 @@ PersistentProperties {
     property color _tertiary: "#bd93f9"
     property color _onTertiary: "#ffffff"
 
+    function _colorToHyprRgba(color) {
+        return 'rgba(' + Qt.rgba(color.r, color.g, color.b, 1).toString().slice(1) + 'ff)';
+    }
+
     property color _error: Kirigami.Theme.negativeTextColor
     property color _onError: "#ffffff"
 
@@ -42,16 +46,17 @@ PersistentProperties {
     property color _topbarFgColor: Kirigami.Theme.textColor
 
     property color _topbarBgColorV1: Kirigami.Theme.backgroundColor.lighter(1.5)
-    property color _topbarBgColorV2: Kirigami.Theme.negativeBackgroundColor
-    property color _topbarBgColorV3: Kirigami.Theme.neutralBackgroundColor
+    property color _topbarBgColorV2: Kirigami.Theme.alternateBackgroundColor
+    property color _topbarBgColorV3: Kirigami.ColorUtils.tintWithAlpha(Kirigami.Theme.backgroundColor, Kirigami.Theme.highlightColor, 0.08)
+
     property color _topbarFgColorV1: Kirigami.Theme.textColor
     property color _topbarFgColorV2: Kirigami.Theme.textColor
     property color _topbarFgColorV3: Kirigami.Theme.textColor
 
     // Left Menu
     property color _leftMenuBgColorV1: Kirigami.Theme.backgroundColor
-    property color _leftMenuBgColorV2: _themeMode === "dark" ? Kirigami.Theme.backgroundColor.lighter(1.5) : Kirigami.Theme.backgroundColor.darker(1.1)
-    property color _leftMenuBgColorV3: Kirigami.Theme.highlightColor.alpha(0.6)
+    property color _leftMenuBgColorV2: _themeMode === "dark" ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.5) : Qt.darker(Kirigami.Theme.backgroundColor, 1.1)
+    property color _leftMenuBgColorV3: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.6)
     property color _leftMenuFgColorV1: Kirigami.Theme.textColor
     property color _leftMenuFgColorV2: Kirigami.Theme.textColor
     property color _leftMenuFgColorV3: Kirigami.Theme.highlightedTextColor
@@ -131,7 +136,7 @@ PersistentProperties {
     // ===================================
     // Decoration
     property int _hyprBorderWidth: 2
-    property string _hyprActiveBorder: 'rgba(FDEAB0ff) rgba(fd77e0ff) 45deg'
+    property string _hyprActiveBorder: `${_colorToHyprRgba(_primary)} ${_colorToHyprRgba(_secondary)} ${_colorToHyprRgba(_tertiary)} 45deg`
     property string _hyprInactiveBorder: 'rgba(50505088)'
     property int _hyprRounding: 16
     property string _hyprDropShadow: 'no' // إعداداتك معطلة، لذا 'no' هو الافتراضي

@@ -2,7 +2,6 @@
 
 import QtQuick
 import "root:/themes"
-import "root:/utils/helpers.js" as Helper
 
 Item {
     id: root
@@ -18,9 +17,9 @@ Item {
         text: iconText
         color: {
             if (root.isCurrent) {
-                return Helper.getAccurteTextColor(highlightColor);
+                return textHighlightColor;
             } else if (root.isActive) {
-                return Helper.getAccurteTextColor(hoverColor);
+                return textHoverColor;
             }
             return textColor;
         }

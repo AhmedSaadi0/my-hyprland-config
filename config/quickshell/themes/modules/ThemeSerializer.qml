@@ -9,7 +9,7 @@ Item {
     readonly property var _colorKeys: ["themeName", "_primary", "_secondary", "_onPrimary", "_onSecondary", "_tertiary", "_onTertiary", "_error", "_onError", "_success", "_onSuccess", "_warning", "_onWarning", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor"]
     readonly property var _dimKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
     readonly property var _typeKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading1Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
-    readonly property var _hyprKeys: ["_hyprBorderWidth", "_hyprActiveBorder", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow", "_hyprGapsIn", "_hyprGapsOut", "_hyprLayout", "_hyprAnimationsEnabled", "_hyprBezier", "_hyprAnimWindows", "_hyprAnimWindowsMove", "_hyprAnimWindowsOut", "_hyprAnimBorder", "_hyprAnimBorderAngle", "_hyprAnimFadeIn", "_hyprAnimFadeOut", "_hyprAnimWorkspaces", "_hyprBlurEnabled", "_hyprBlurSize", "_hyprBlurPasses", "_hyprDimInactive", "_hyprDimStrength", "_hyprShadowRange", "_hyprShadowOffset", "_hyprShadowColor"]
+    readonly property var _hyprKeys: ["_hyprBorderWidth", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow", "_hyprGapsIn", "_hyprGapsOut", "_hyprLayout", "_hyprAnimationsEnabled", "_hyprBezier", "_hyprAnimWindows", "_hyprAnimWindowsMove", "_hyprAnimWindowsOut", "_hyprAnimBorder", "_hyprAnimBorderAngle", "_hyprAnimFadeIn", "_hyprAnimFadeOut", "_hyprAnimWorkspaces", "_hyprBlurEnabled", "_hyprBlurSize", "_hyprBlurPasses", "_hyprDimInactive", "_hyprDimStrength", "_hyprShadowRange", "_hyprShadowOffset", "_hyprShadowColor"]
     readonly property var _wallKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper", "_dynamicColoringSchemeVariant", "_dynamicColoringChromaMult", "_dynamicColoringToneMult", "_enableWallpaperBlur"]
     readonly property var _sysKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_enableAccentColoring", "_gtkTheme", "_themeIcons", "_themeMode", "_cursorTheme", "_cursorSize"]
     readonly property var _clockKeys: ["_desktopClockLocal", "_desktopClockFont", "_desktopClockEnabled", "_desktopClockColor", "_desktopClockFormat", "_desktopClockPosition", "_desktopClockDepthEffectEnabled", "_desktopClockDepthModel", "_desktopClockDepthOverlayPath", "_desktopClockSize", "_desktopClockSahdowColor", "_desktopClockSahdowEnabled", "_desktopClockUseThemeColor", "_desktopClockUseAnimation"]
@@ -85,61 +85,59 @@ Item {
         console.info(`[ThemeSerializer] Finished. Total properties updated: ${appliedCount}`);
     }
 
-    function removeKeysFromCache(themeName, keysToRemove) {
-        // 1. التحقق من البيانات المرسلة (Debugging & Validation)
+    function removeKeysFromCache(themeName, keysToRemove, currentCacheContent) {
         if (!keysToRemove || !Array.isArray(keysToRemove)) {
-            console.error("[ThemeSerializer] Error: keysToRemove is invalid or not an array:", keysToRemove);
+            console.error("[Reset] Error: keysToRemove is invalid or not an array:", keysToRemove);
             return;
         }
 
-        console.info(`[ThemeSerializer] Processing removal of ${keysToRemove.length} keys for theme: ${themeName}`);
-        console.debug(`[ThemeSerializer] Keys to remove: ${JSON.stringify(keysToRemove)}`);
-
-        // 2. تحديد مسار الملف
-        const filePath = App.themeCacheFolderPath + `/${themeName}.json`;
-        cacheFile.path = filePath;
-
-        let currentContent = "";
-        try {
-            currentContent = cacheFile.text();
-        } catch (e) {
-            console.warn("[ThemeSerializer] Could not read file text:", e);
-            currentContent = "";
-        }
+        console.info(`[Reset] Removing ${keysToRemove.length} keys from cache for theme: ${themeName}`);
 
         let json = {};
 
-        // محاولة جلب البيانات الموجودة
-        if (currentContent && currentContent.trim() !== "") {
+        if (currentCacheContent && currentCacheContent.trim() !== "") {
             try {
-                json = JSON.parse(currentContent);
+                json = JSON.parse(currentCacheContent);
             } catch (e) {
-                console.warn("[ThemeSerializer] Cache file corrupted, treating as empty.");
+                console.warn("[Reset] Cache content corrupted, treating as empty.");
                 json = {};
             }
         }
 
-        // 4. حذف المفاتيح
         let removedCount = 0;
+        let removedKeys = [];
         for (const key of keysToRemove) {
             if (json.hasOwnProperty(key)) {
+                removedKeys.push(`${key} = ${json[key]}`);
                 delete json[key];
                 removedCount++;
             }
         }
 
-        // 5. حفظ الملف
         if (removedCount > 0) {
+            console.info(`[Reset] Keys removed from cache (${removedCount}):`);
+            for (const entry of removedKeys) {
+                console.info(`[Reset]   ${entry} → deleted (will revert to default)`);
+            }
+            console.info(`[Reset] Remaining keys in cache: ${Object.keys(json).length}`);
+            for (const key of Object.keys(json)) {
+                console.info(`[Reset]   ${key} = ${json[key]} (preserved)`);
+            }
+
             try {
+                const filePath = App.themeCacheFolderPath + `/${themeName}.json`;
+                cacheFile.path = filePath;
                 cacheFile.signalToCall = "removeCache";
                 cacheFile.setText(JSON.stringify(json, null, 2));
-                console.info(`[ThemeSerializer] Success: Removed ${removedCount} keys and updated cache.`);
+                console.info(`[Reset] Cache file updated successfully.`);
             } catch (e) {
-                console.error("[ThemeSerializer] Failed to write to cache file:", e);
+                console.error("[Reset] Failed to write to cache file:", e);
             }
         } else {
-            console.info("[ThemeSerializer] No matching keys found in cache to remove (Already defaults?).");
+            console.info("[Reset] No matching keys found in cache to remove (Already defaults?).");
         }
+
+        console.info(`========== RESET END ==========\n`);
     }
 
     FileView {
@@ -151,8 +149,10 @@ Item {
         onDataChanged: {
             switch (signalToCall) {
             case "apply":
+                cacheFile.signalToCall = "";
                 return root.cacheFileUpdated();
             case "removeCache":
+                cacheFile.signalToCall = "";
                 return root.keysRemoved();
             }
 

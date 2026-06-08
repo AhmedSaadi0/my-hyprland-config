@@ -299,6 +299,7 @@ Singleton {
             readonly property var callIdleCapsuleHoverFreshAi: [...callIdleCapsuleAi, "--message_key", "idle_capsule_fresh"]
             readonly property var callTodoAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "todo", "--json_mode", "--user_persona", root.todoPersona, "--model", root.systemAiModel]
             readonly property var callSystemActionAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "system_action", "--json_mode", "--user_persona", root.systemPersona, "--model", root.systemAiModel]
+            readonly property var callColorPaletteAi: [...initialAiCommand, "--api_key", (root.systemAiApiKey !== "" ? root.systemAiApiKey : root.aiApiKey), "--preset", "color_palette", "--json_mode", "--user_persona", root.systemPersona, "--model", root.systemAiModel]
         }
 
         readonly property QtObject bash: QtObject {

@@ -1,12 +1,13 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
+import "root:/themes"
 
 Slider {
     id: control
 
-    property color activeColor: "white"
-    property color inactiveColor: "#555555"
+    property color activeColor: ThemeManager.selectedTheme.colors.primary
+    property color inactiveColor: ThemeManager.selectedTheme.colors.subtleText.alpha(0.35)
     property real lineWidth: 4
     property real scrollStep: 0.05
     property bool enableChangeOnWheel: true

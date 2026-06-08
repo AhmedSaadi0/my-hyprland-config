@@ -99,86 +99,189 @@ Item {
             }
         }
 
-        // --- Logs List ---
+        // --- Expandable Log Cards ---
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 10
+            spacing: 6
 
             Repeater {
                 model: SystemService.bootLogsModel
-                delegate: Rectangle {
+                delegate: Item {
+                    id: logDelegate
+                    property bool isExpanded: false
+
                     Layout.fillWidth: true
-                    implicitHeight: logRow.implicitHeight + 10
-                    color: logMouse.containsMouse ? Qt.rgba(1, 1, 1, 0.03) : "transparent"
-                    radius: 4
+                    implicitHeight: collapsedRow.implicitHeight + (isExpanded ? expandedBox.implicitHeight + 12 : 0) + 12
+                    clip: true
 
-                    RowLayout {
-                        id: logRow
+                    Behavior on implicitHeight {
+                        NumberAnimation {
+                            duration: 300
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
+
+                    // Card background
+                    Rectangle {
                         anchors.fill: parent
-                        anchors.leftMargin: 5
-                        anchors.rightMargin: 5
-                        spacing: 8
-
-                        Text {
-                            Layout.alignment: Qt.AlignTop
-                            Layout.topMargin: 2
-                            text: ""
-                            font.family: bootRoot.theme.typography.iconFont
-                            color: bootRoot.statusMutedColor
-                        }
-
-                        Text {
-                            id: logContent
-                            Layout.fillWidth: true
-                            text: `<b>${modelData.process}:</b> ${modelData.message}`
-                            color: bootRoot.theme.colors.leftMenuFgColorV2
-                            font.family: "Monospace"
-                            font.pixelSize: bootRoot.theme.typography.small - 2
-                            wrapMode: Text.WordWrap
-                        }
-
-                        // زر النسخ
-                        Rectangle {
-                            width: 26
-                            height: 26
-                            radius: 13
-                            color: copyMouse.containsMouse ? Qt.rgba(1, 1, 1, 0.1) : "transparent"
-                            Layout.alignment: Qt.AlignTop
-
-                            Text {
-                                id: copyIcon
-                                anchors.centerIn: parent
-                                text: ""
-                                font.family: bootRoot.theme.typography.iconFont
-                                color: bootRoot.statusMutedColor
-                                font.pixelSize: 14
+                        radius: 6
+                        color: {
+                            if (isExpanded && bootRoot.themeStatusColor) {
+                                var c = bootRoot.themeStatusColor;
+                                return Qt.rgba(c.r, c.g, c.b, bootRoot.theme.systemSettings.themeMode == "dark" ? 0.15 : 0.08);
                             }
+                            return logHover.containsMouse
+                                ? bootRoot.theme.colors.leftMenuFgColorV1.alpha(0.04)
+                                : "transparent";
+                        }
+                        border.color: isExpanded ? Qt.rgba(bootRoot.themeStatusColor.r, bootRoot.themeStatusColor.g, bootRoot.themeStatusColor.b, 0.25) : "transparent"
+                        border.width: isExpanded ? 1 : 0
 
-                            MouseArea {
-                                id: copyMouse
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: {
-                                    var txt = modelData.process + ": " + modelData.message;
-                                    console.info("txt -> " + txt);
-                                    App.dispatchCommand("Copy Log", ["wl-copy", `'${txt}'`]);
-                                    copyIcon.text = "";
-                                    resetTimer.start();
+                        Behavior on color {
+                            ColorAnimation { duration: 250 }
+                        }
+                    }
+
+                    ColumnLayout {
+                        id: logCardLayout
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.margins: 6
+                        spacing: 6
+
+                        // --- Collapsed Row (always visible) ---
+                        RowLayout {
+                            id: collapsedRow
+                            Layout.fillWidth: true
+                            spacing: 8
+
+                            // Expand/collapse arrow icon
+                            Text {
+                                Layout.alignment: Qt.AlignTop
+                                Layout.topMargin: 2
+                                text: logDelegate.isExpanded ? "" : ""
+                                font.family: bootRoot.theme.typography.iconFont
+                                font.pixelSize: 12
+                                color: bootRoot.statusMutedColor
+
+                                Behavior on text {
+                                    SequentialAnimation {
+                                        PropertyAction {} // force initial
+                                    }
                                 }
                             }
-                            Timer {
-                                id: resetTimer
-                                interval: 1500
-                                onTriggered: copyIcon.text = ""
+
+                            // Summary text
+                            ColumnLayout {
+                                Layout.fillWidth: true
+                                spacing: 1
+                                Text {
+                                    id: processName
+                                    Layout.fillWidth: true
+                                    text: `<b>${modelData.process}</b>`
+                                    color: bootRoot.theme.colors.leftMenuFgColorV2
+                                    font.family: "Monospace"
+                                    font.pixelSize: bootRoot.theme.typography.small - 2
+                                    elide: Text.ElideRight
+                                }
+                                Text {
+                                    id: shortMessage
+                                    Layout.fillWidth: true
+                                    text: modelData.message || ""
+                                    color: bootRoot.theme.colors.leftMenuFgColorV2
+                                    font.pixelSize: bootRoot.theme.typography.small - 3
+                                    font.family: "Monospace"
+                                    wrapMode: Text.WordWrap
+                                    maximumLineCount: logDelegate.isExpanded ? 100 : 2
+                                    elide: Text.ElideRight
+                                    opacity: logDelegate.isExpanded ? 0.6 : 1.0
+                                }
+                            }
+
+                            // Smart copy button
+                            Rectangle {
+                                width: 26
+                                height: 26
+                                radius: 13
+                                color: copyMouse.containsMouse ? bootRoot.theme.colors.leftMenuFgColorV1.alpha(0.1) : "transparent"
+                                Layout.alignment: Qt.AlignTop
+
+                                Text {
+                                    id: copyIcon
+                                    anchors.centerIn: parent
+                                    text: ""
+                                    font.family: bootRoot.theme.typography.iconFont
+                                    color: bootRoot.statusMutedColor
+                                    font.pixelSize: 14
+                                }
+
+                                MouseArea {
+                                    id: copyMouse
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: {
+                                        var txt;
+                                        if (logDelegate.isExpanded && modelData.raw_details) {
+                                            txt = modelData.raw_details;
+                                        } else {
+                                            txt = modelData.process + ": " + (modelData.message || "");
+                                        }
+                                        App.dispatchCommand("Copy Log", ["wl-copy", `'${txt}'`]);
+                                        copyIcon.text = "";
+                                        copyResetTimer.start();
+                                    }
+                                }
+                                Timer {
+                                    id: copyResetTimer
+                                    interval: 1500
+                                    onTriggered: copyIcon.text = ""
+                                }
+                            }
+                        }
+
+                        // --- Expanded Raw Details Box (animated) ---
+                        Rectangle {
+                            id: expandedBox
+                            Layout.fillWidth: true
+                            Layout.leftMargin: 20
+                            implicitHeight: rawLogText.implicitHeight + 14
+                            radius: 4
+                            visible: logDelegate.isExpanded
+                            opacity: logDelegate.isExpanded ? 1 : 0
+                            color: bootRoot.theme.colors.topbarColor.alpha(bootRoot.theme.systemSettings.themeMode == "dark" ? 0.35 : 0.06)
+
+                            Behavior on opacity {
+                                NumberAnimation { duration: 200 }
+                            }
+
+                            TextEdit {
+                                id: rawLogText
+                                anchors.fill: parent
+                                anchors.margins: 7
+                                text: modelData.raw_details || modelData.time + " " + modelData.process + ": " + (modelData.message || "")
+                                color: bootRoot.theme.colors.leftMenuFgColorV2
+                                font.family: "Monospace"
+                                font.pixelSize: bootRoot.theme.typography.small - 2
+                                wrapMode: TextEdit.Wrap
+                                selectByMouse: true
+                                readOnly: true
+                                selectionColor: bootRoot.themeStatusColor
+                                selectedTextColor: bootRoot.theme.colors.onPrimary
                             }
                         }
                     }
+
+                    // Click to expand/collapse
                     MouseArea {
-                        id: logMouse
+                        id: logHover
+                        z: -1
                         anchors.fill: parent
                         hoverEnabled: true
-                        acceptedButtons: Qt.NoButton
+                        cursorShape: Qt.PointingHandCursor
+                        acceptedButtons: Qt.LeftButton
+                        onClicked: logDelegate.isExpanded = !logDelegate.isExpanded
                     }
                 }
             }

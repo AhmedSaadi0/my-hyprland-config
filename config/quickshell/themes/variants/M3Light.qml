@@ -56,6 +56,4 @@ BaseTheme {
     _themeIcons: "Tela-light"
     _kvantumTheme: "Tellgo"
     _gtkTheme: "Breeze-Light"
-
-    _hyprActiveBorder: "rgba(678382ff) rgba(9d6c73ff) 0deg"
 }

@@ -1,7 +1,6 @@
 // ../../../components/monitors/MonitorWidget.qml
 import QtQuick
 import QtQuick.Layouts
-import org.kde.kirigami as Kirigami
 
 import "../../themes"
 
@@ -34,7 +33,7 @@ ColumnLayout {
         text: monitorUnitRoot.title
         font.bold: true
         font.pixelSize: ThemeManager.selectedTheme.typography.heading3Size
-        color: Kirigami.Theme.textColor
+        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
         Layout.alignment: Qt.AlignHCenter // Center text horizontally
         elide: Text.ElideRight
         horizontalAlignment: Text.AlignHCenter
@@ -45,7 +44,7 @@ ColumnLayout {
         id: valueLabel
         text: monitorUnitRoot.valueText
         font.pixelSize: ThemeManager.selectedTheme.typography.medium
-        color: Kirigami.Theme.textColor
+        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
         Layout.alignment: Qt.AlignHCenter // Center text horizontally
         horizontalAlignment: Text.AlignHCenter
         width: parent.width // Ensure text can use full width for centering

@@ -1,4 +1,5 @@
 import QtQuick
+import "root:/themes"
 
 Rectangle {
     id: root
@@ -8,7 +9,7 @@ Rectangle {
 
     anchors.fill: parent
     radius: eyeR
-    color: "white"
+    color: ThemeManager.selectedTheme.colors.topbarFgColor
 
     opacity: active ? 1 : 0
     visible: opacity > 0

@@ -50,16 +50,16 @@ Item {
     readonly property var dim: theme.dimensions
     readonly property bool isDark: theme.systemSettings.themeMode === "dark"
 
-    readonly property color aiBgTop:        isDark ? "#1E1028" : "#FDF8FF"
-    readonly property color aiBgBottom:     isDark ? "#130A1E" : "#F5EEFF"
-    readonly property color aiBorderColor:  isDark ? "#7C3AED" : "#C084FC"
-    readonly property color aiAccentColor:  isDark ? "#D946EF" : "#9333EA"
-    readonly property color aiTextColor:    isDark ? "#FDF4FF" : "#1A0533"
-    readonly property color aiSubTextColor: isDark ? "#E879F9" : "#7E22CE"
-    readonly property color aiHeaderBg:     isDark ? "#2E1065" : "#F3E8FF"
-    readonly property color aiButtonBg:     isDark ? "#2E1065" : "#FAF5FF"
-    readonly property color aiButtonHover:  isDark ? "#4C1D95" : "#E9D5FF"
-    readonly property color aiDivider:      isDark ? "#6B21A8" : "#D8B4FE"
+    readonly property color aiBgTop: theme.colors.leftMenuBgColorV2
+    readonly property color aiBgBottom: theme.colors.leftMenuBgColorV1
+    readonly property color aiBorderColor: theme.colors.primary
+    readonly property color aiAccentColor: theme.colors.secondary
+    readonly property color aiTextColor: theme.colors.leftMenuFgColorV1
+    readonly property color aiSubTextColor: theme.colors.subtleText
+    readonly property color aiHeaderBg: theme.colors.primary.alpha(0.16)
+    readonly property color aiButtonBg: theme.colors.leftMenuBgColorV2
+    readonly property color aiButtonHover: theme.colors.primary.alpha(0.22)
+    readonly property color aiDivider: theme.colors.primary.alpha(0.5)
 
     Rectangle {
         id: mainCard

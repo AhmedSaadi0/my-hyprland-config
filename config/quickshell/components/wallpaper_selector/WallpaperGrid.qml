@@ -17,14 +17,15 @@ Rectangle {
     property string emptyText: qsTr("No wallpapers found")
 
     property var downloadingList: []
+    readonly property var theme: ThemeManager.selectedTheme
 
     signal wallpaperDownloadAndApply(var wallpaperData)
     signal wallpaperPreview(var wallpaperData)
     signal wallpaperDownloadOnly(var wallpaperData)
     signal loadMore
 
-    radius: ThemeManager.selectedTheme?.dimensions?.elementRadius || 8
-    color: ThemeManager.selectedTheme?.colors?.leftMenuBgColorV2 || "#1a1a2e"
+    radius: root.theme.dimensions.elementRadius
+    color: root.theme.colors.leftMenuBgColorV2
     clip: true
     ScrollView {
         id: scrollView
@@ -88,7 +89,7 @@ Rectangle {
         visible: wallpaperGrid.count === 0 && !root.loading
         text: root.emptyText
         font.pixelSize: 14
-        color: ThemeManager.selectedTheme?.colors?.subtleText || "#888"
+        color: root.theme.colors.subtleText
         horizontalAlignment: Text.AlignHCenter
     }
 
@@ -97,15 +98,15 @@ Rectangle {
         width: 48
         height: 48
         radius: 24
-        color: ThemeManager.selectedTheme?.colors?.primary.alpha(0.2) || "#333"
+        color: root.theme.colors.primary.alpha(0.2)
         visible: root.loading && wallpaperGrid.count === 0
 
         Text {
             anchors.centerIn: parent
             text: "󰑐"
             font.pixelSize: 24
-            font.family: ThemeManager.selectedTheme?.typography?.iconFont || "Material Design Icons"
-            color: ThemeManager.selectedTheme?.colors?.primary || "#6366f1"
+            font.family: root.theme.typography.iconFont
+            color: root.theme.colors.primary
 
             RotationAnimation on rotation {
                 running: root.loading && wallpaperGrid.count === 0
@@ -124,7 +125,7 @@ Rectangle {
         width: 120
         height: 32
         radius: 16
-        color: ThemeManager.selectedTheme?.colors?.primary.alpha(0.9) || "#6366f1"
+        color: root.theme.colors.primary.alpha(0.9)
 
         visible: root.isWallhaven && root.loading && wallpaperGrid.count > 0
 
@@ -143,7 +144,7 @@ Rectangle {
                         radius: 10
                         color: "transparent"
                         border.width: 2
-                        border.color: "white"
+                        border.color: root.theme.colors.onPrimary
                         visible: true
                     }
                 }
@@ -153,7 +154,7 @@ Rectangle {
                 text: "Loading..."
                 font.pixelSize: 12
                 font.bold: true
-                color: "#fff"
+                color: root.theme.colors.onPrimary
             }
         }
     }

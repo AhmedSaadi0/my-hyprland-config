@@ -352,13 +352,13 @@ ListView {
                             Text {
                                 text: urgentBtnItem.checked ? "🔥" : "🏳️"
                                 font.pixelSize: 12
-                                color: urgentBtnItem.checked ? "white" : colors.subtleText
+                                color: urgentBtnItem.checked ? colors.onError : colors.subtleText
                             }
                             Text {
                                 text: urgentBtnItem.checked ? "URGENT" : "Normal"
                                 font.pixelSize: 10
                                 font.bold: true
-                                color: urgentBtnItem.checked ? "white" : colors.subtleText
+                                color: urgentBtnItem.checked ? colors.onError : colors.subtleText
                             }
                         }
                     }

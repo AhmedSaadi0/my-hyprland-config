@@ -234,11 +234,19 @@ Singleton {
         if (!selectedTheme || !serializedData)
             return;
 
-        console.info("[ThemeManager] Requesting partial reset to defaults...");
         const keysToReset = Object.keys(serializedData);
 
+        console.info(`[Reset] ${keysToReset.length} keys requested for reset.`);
+        console.info(`[Reset] Current theme values that will revert to defaults:`);
+        for (const key of keysToReset) {
+            if (selectedTheme.hasOwnProperty(key)) {
+                console.info(`[Reset]   ${key} = ${selectedTheme[key]} → default`);
+            }
+        }
+
         if (keysToReset.length > 0) {
-            themeSerializer.removeKeysFromCache(themeLoader.currentThemeName, keysToReset);
+            const currentContent = fileThemeCache.text();
+            themeSerializer.removeKeysFromCache(themeLoader.currentThemeName, keysToReset, currentContent);
         }
     }
 

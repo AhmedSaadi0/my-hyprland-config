@@ -156,7 +156,7 @@ HeaderCard {
                     Text {
                         text: urgentBtn.checked ? "🔥" : "🏳️"
                         font.pixelSize: 14
-                        color: urgentBtn.checked ? "white" : colors.subtleText
+                        color: urgentBtn.checked ? colors.onError : colors.subtleText
                         Layout.leftMargin: 10
 
                         rotation: urgentBtn.checked ? 0 : -15
@@ -174,7 +174,7 @@ HeaderCard {
                         font.pixelSize: 12
                         font.bold: true
                         font.capitalization: Font.AllUppercase
-                        color: urgentBtn.checked ? "white" : colors.subtleText
+                        color: urgentBtn.checked ? colors.onError : colors.subtleText
                         Layout.rightMargin: 5
                     }
                 }

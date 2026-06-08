@@ -51,8 +51,6 @@ BaseTheme {
     _volOsdBgColor: "#504945"     // bg2
     _volOsdFgColor: "#fbf1c7"     // fg0
 
-    _hyprActiveBorder: "rgba(8CC37Bff) rgba(fabd2fff) 0deg"
-
     _plasmaColorScheme: "NibrasGruvboxDark"
     _konsoleProfile: "GruvboxDark.profile"
 
