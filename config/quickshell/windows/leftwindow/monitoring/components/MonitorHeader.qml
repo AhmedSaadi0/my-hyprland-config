@@ -96,7 +96,8 @@ Item {
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                shadowColor: palette.shadow
+                // shadowColor: palette.shadow
+                shadowColor: theme.colors.baseShadowColor.alpha(0.6)
                 shadowBlur: 0.6
                 shadowOpacity: isDarkMode ? 0.5 : 0.3
             }

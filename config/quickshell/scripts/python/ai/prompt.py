@@ -356,10 +356,11 @@ Respond strictly in **$aiPreferredLanguage**.
 - **6%-5%**: Near death, dramatic or dark humor.
 - **4%-3%**: Final moments, minimal message, maximum drama.
 
-### ARRAY RESPONSE RULES (CRITICAL)
-- You MUST generate EXACTLY 7 items for all array fields (charging, discharging, cpu_alerts, ram_alerts, temp_alerts).
-- Do NOT truncate the output. Take a deep breath and generate the full JSON structure completely.
-- Scale the urgency dynamically: Item 1 should be mild, Item 4 moderate, Item 7 highly dramatic/urgent.
+### ARRAY RESPONSE RULES
+For charging, discharging, cpu_alerts, ram_alerts, and temp_alerts:
+- Generate exactly 7 unique responses.
+- Each response must be different from the others.
+- Vary tone: witty, dramatic, calm, humorous, concerned, sarcastic, playful.
 - Keep each text under 12 words.
 
 ### OUTPUT SCHEMA (RAW JSON ONLY)

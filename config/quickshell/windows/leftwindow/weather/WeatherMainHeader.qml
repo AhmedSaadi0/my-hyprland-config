@@ -124,7 +124,8 @@ HeaderCard {
                 layer.enabled: true
                 layer.effect: MultiEffect {
                     shadowEnabled: true
-                    shadowColor: palette.shadow
+                    // shadowColor: palette.shadow
+                    shadowColor: theme.colors.baseShadowColor.alpha(0.6)
                     shadowBlur: 1.0
                     shadowOpacity: 0.4
                     shadowVerticalOffset: 5

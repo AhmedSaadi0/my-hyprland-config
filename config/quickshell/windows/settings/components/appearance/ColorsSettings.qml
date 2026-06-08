@@ -18,7 +18,7 @@ BaseThemeSettings {
     id: root
 
     title: qsTr("Color Settings")
-    icon: ""
+    icon: ""
     showUndoRedoButtons: true
 
     // --- Local Variables ---
@@ -56,7 +56,16 @@ BaseThemeSettings {
     property color localVolOsdBg: ThemeManager.selectedTheme.colors.volOsdBgColor
     property color localVolOsdFg: ThemeManager.selectedTheme.colors.volOsdFgColor
 
+    // --- Undo/Redo State ---
+    property bool _isRestoring: false
+    property string _historyThemeName: ""
+    property var _colorHistory: []
+    property int _historyIndex: -1
+    readonly property bool canUndo: _historyIndex > 0
+    readonly property bool canRedo: _historyIndex < _colorHistory.length - 1
+
     Component.onCompleted: {
+        ThemeManager.aiThemeAssistant.chatModel = aiChatModel;
         Qt.callLater(() => {
             Qt.callLater(() => {
                 recordHistory();
@@ -64,164 +73,9 @@ BaseThemeSettings {
         });
     }
 
-    property bool aiBusy: false
-    property bool _isAiApplying: false
-    property bool _isRestoring: false
-    property string _historyThemeName: ""
-    property var _colorHistory: []
-    property int _historyIndex: -1
-    readonly property bool canUndo: _historyIndex > 0
-    readonly property bool canRedo: _historyIndex < _colorHistory.length - 1
-    property string aiError: ""
-    property var pendingAiChanges: []
-    readonly property bool hasPendingAiChanges: pendingAiChanges.length > 0
-    readonly property var editableColorKeys: [
-        {
-            "key": "_primary",
-            "label": "Primary",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_onPrimary",
-            "label": "On Primary",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_secondary",
-            "label": "Secondary",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_onSecondary",
-            "label": "On Secondary",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_tertiary",
-            "label": "Tertiary",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_onTertiary",
-            "label": "On Tertiary",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_error",
-            "label": "Error",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_onError",
-            "label": "On Error",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_success",
-            "label": "Success",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_onSuccess",
-            "label": "On Success",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_warning",
-            "label": "Warning",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_onWarning",
-            "label": "On Warning",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_subtleTextColor",
-            "label": "Subtle Text",
-            "group": "Core Palette"
-        },
-        {
-            "key": "_topbarColor",
-            "label": "Topbar Background",
-            "group": "Topbar"
-        },
-        {
-            "key": "_topbarFgColor",
-            "label": "Topbar Foreground",
-            "group": "Topbar"
-        },
-        {
-            "key": "_topbarBgColorV1",
-            "label": "Topbar BG V1",
-            "group": "Topbar"
-        },
-        {
-            "key": "_topbarFgColorV1",
-            "label": "Topbar FG V1",
-            "group": "Topbar"
-        },
-        {
-            "key": "_topbarBgColorV2",
-            "label": "Topbar BG V2",
-            "group": "Topbar"
-        },
-        {
-            "key": "_topbarFgColorV2",
-            "label": "Topbar FG V2",
-            "group": "Topbar"
-        },
-        {
-            "key": "_topbarBgColorV3",
-            "label": "Topbar BG V3",
-            "group": "Topbar"
-        },
-        {
-            "key": "_topbarFgColorV3",
-            "label": "Topbar FG V3",
-            "group": "Topbar"
-        },
-        {
-            "key": "_leftMenuBgColorV1",
-            "label": "Left Menu BG V1",
-            "group": "Left Menu"
-        },
-        {
-            "key": "_leftMenuFgColorV1",
-            "label": "Left Menu FG V1",
-            "group": "Left Menu"
-        },
-        {
-            "key": "_leftMenuBgColorV2",
-            "label": "Left Menu BG V2",
-            "group": "Left Menu"
-        },
-        {
-            "key": "_leftMenuFgColorV2",
-            "label": "Left Menu FG V2",
-            "group": "Left Menu"
-        },
-        {
-            "key": "_leftMenuBgColorV3",
-            "label": "Left Menu BG V3",
-            "group": "Left Menu"
-        },
-        {
-            "key": "_leftMenuFgColorV3",
-            "label": "Left Menu FG V3",
-            "group": "Left Menu"
-        },
-        {
-            "key": "_volOsdBgColor",
-            "label": "Volume OSD BG",
-            "group": "Misc"
-        },
-        {
-            "key": "_volOsdFgColor",
-            "label": "Volume OSD FG",
-            "group": "Misc"
-        }
-    ]
+    Component.onDestruction: {
+        ThemeManager.aiThemeAssistant.chatModel = null;
+    }
 
     function syncFromTheme() {
         const getCol = val => val !== undefined ? val : theme.colors.topbarColor;
@@ -362,92 +216,6 @@ BaseThemeSettings {
         };
     }
 
-    function editableColorMetadata() {
-        let data = [];
-        for (let i = 0; i < editableColorKeys.length; i++) {
-            data.push({
-                "key": editableColorKeys[i].key,
-                "label": editableColorKeys[i].label,
-                "group": editableColorKeys[i].group
-            });
-        }
-        return data;
-    }
-
-    function chatHistoryForAi() {
-        let history = [];
-        const start = Math.max(0, aiChatModel.count - 8);
-        for (let i = start; i < aiChatModel.count; i++) {
-            const item = aiChatModel.get(i);
-            history.push({
-                "role": item.role,
-                "content": item.message,
-                "changes": item.changesSummary || ""
-            });
-        }
-        return history;
-    }
-
-    function colorKeyExists(key) {
-        for (let i = 0; i < editableColorKeys.length; i++) {
-            if (editableColorKeys[i].key === key)
-                return true;
-        }
-        return false;
-    }
-
-    function colorKeyLabel(key) {
-        for (let i = 0; i < editableColorKeys.length; i++) {
-            if (editableColorKeys[i].key === key)
-                return editableColorKeys[i].label;
-        }
-        return key;
-    }
-
-    function normalizeAiColor(value) {
-        if (value === undefined || value === null)
-            return "";
-
-        const text = value.toString().trim();
-        const match = text.match(/^#?([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/);
-        return match ? "#" + match[1].toUpperCase() : "";
-    }
-
-    function normalizeAiChanges(changes) {
-        let normalized = [];
-
-        if (!Array.isArray(changes))
-            return normalized;
-
-        for (let i = 0; i < changes.length; i++) {
-            const change = changes[i] || {};
-            const key = change.key ? change.key.toString() : "";
-            const value = normalizeAiColor(change.value);
-
-            if (!colorKeyExists(key) || value === "")
-                continue;
-
-            normalized.push({
-                "key": key,
-                "value": value,
-                "reason": change.reason ? change.reason.toString() : ""
-            });
-        }
-
-        return normalized;
-    }
-
-    function summarizeChanges(changes) {
-        if (!changes || changes.length === 0)
-            return "";
-
-        let parts = [];
-        for (let i = 0; i < changes.length; i++) {
-            parts.push(colorKeyLabel(changes[i].key) + " -> " + changes[i].value);
-        }
-        return parts.join(" | ");
-    }
-
     function setLocalColor(key, value) {
         switch (key) {
         case "_primary":
@@ -541,81 +309,20 @@ BaseThemeSettings {
         return false;
     }
 
-    function applyAiChanges(changes) {
-        if (!changes || changes.length === 0 || !theme)
-            return;
-
-        let data = {};
-        for (let i = 0; i < changes.length; i++) {
-            const change = changes[i];
-            if (setLocalColor(change.key, change.value))
-                data[change.key] = change.value;
-        }
-
-        if (Object.keys(data).length > 0) {
-            _isAiApplying = true;
-            ThemeManager.updateAndApplyTheme(data, false);
-            _isAiApplying = false;
-            recordHistory();
-        }
-
-        pendingAiChanges = [];
-    }
-
-    function addAiMessage(role, message, changesSummary) {
-        aiChatModel.append({
-            "role": role,
-            "message": message,
-            "changesSummary": changesSummary || ""
-        });
-    }
+    // --- AI Assistant Wrappers ---
 
     function sendColorAiMessage() {
         const message = aiInput.text.trim();
-        if (message === "" || aiBusy)
+        if (!message || ThemeManager.aiThemeAssistant.aiBusy)
             return;
 
         aiInput.text = "";
-        aiError = "";
-        pendingAiChanges = [];
-        addAiMessage("user", message, "");
+        ThemeManager.aiThemeAssistant.sendMessage(message, root.theme, serializeData());
+    }
 
-        const payload = {
-            "user_message": message,
-            "theme_name": theme ? theme.themeName : "",
-            "current_palette": serializeData(),
-            "editable_keys": editableColorMetadata(),
-            "conversation": chatHistoryForAi()
-        };
-
-        console.info(JSON.stringify(payload));
-
-        aiBusy = true;
-
-        AiService.sendRequest(App.scripts.python.callColorPaletteAi, ["--message", JSON.stringify(payload)], function (data) {
-            aiBusy = false;
-
-            const reply = data && data.reply ? data.reply.toString().trim() : qsTr("No response.");
-            const changes = normalizeAiChanges(data ? data.changes : []);
-            let summary = summarizeChanges(changes);
-
-            if (data && data.apply === true && changes.length > 0) {
-                applyAiChanges(changes);
-                if (summary !== "")
-                    summary = qsTr("Applied: ") + summary;
-            } else {
-                pendingAiChanges = changes;
-            }
-
-            addAiMessage("assistant", reply, summary);
-
-            if (data && Array.isArray(data.warnings) && data.warnings.length > 0)
-                aiError = data.warnings.join(" ");
-        }, function (errorMessage) {
-            aiBusy = false;
-            aiError = errorMessage;
-            addAiMessage("assistant", qsTr("AI request failed."), "");
-        }, "default", 2);
+    function applyPendingAiChanges() {
+        ThemeManager.aiThemeAssistant.applyChanges(ThemeManager.aiThemeAssistant.pendingAiChanges, root.theme);
+        recordHistory();
     }
 
     // --- Helpers ---
@@ -624,20 +331,9 @@ BaseThemeSettings {
     }
 
     Connections {
-        target: ThemeManager
-        function onSelectedThemeUpdated() {
-            if (root._isRestoring || root._isAiApplying || root.isLoading)
-                return;
-
-            aiChatModel.clear();
-            root.aiError = "";
-            root.pendingAiChanges = [];
-        }
-    }
-
-    Connections {
         target: root
         function onSaveChanges() {
+            assistant.clearChat();
             clearHistory();
         }
         function onCancelChanges() {
@@ -751,6 +447,9 @@ BaseThemeSettings {
         }
     }
 
+    // --- AI Assistant References ---
+    readonly property var assistant: ThemeManager.aiThemeAssistant
+
     // --- UI Content ---
     ColumnLayout {
         spacing: 15
@@ -789,9 +488,9 @@ BaseThemeSettings {
                                 required property int index
                                 readonly property var chatItem: aiChatModel.get(index)
 
-                                role: chatItem.role || ""
-                                message: chatItem.message || ""
-                                changesSummary: chatItem.changesSummary || ""
+                                role: chatItem ? (chatItem.role || "") : ""
+                                message: chatItem ? (chatItem.message || "") : ""
+                                changesSummary: chatItem ? (chatItem.changesSummary || "") : ""
                             }
                         }
                     }
@@ -807,15 +506,15 @@ BaseThemeSettings {
                         Layout.preferredHeight: 34
                         selectedTheme: root.theme
                         horizontalAlignment: Text.AlignLeft
-                        enabled: !root.aiBusy
+                        enabled: !root.assistant.aiBusy
                         placeholderText: qsTr("Ask Nibras about these colors...")
                         onAccepted: root.sendColorAiMessage()
                     }
 
                     MButton {
-                        text: root.aiBusy ? qsTr("...") : qsTr("Send")
+                        text: root.assistant.aiBusy ? qsTr("...") : qsTr("Send")
                         highlighted: true
-                        enabled: !root.aiBusy && aiInput.text.trim() !== ""
+                        enabled: !root.assistant.aiBusy && aiInput.text.trim() !== ""
                         Layout.preferredWidth: 82
                         Layout.preferredHeight: 34
                         onClicked: root.sendColorAiMessage()
@@ -824,7 +523,7 @@ BaseThemeSettings {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    visible: root.aiBusy || root.hasPendingAiChanges || root.aiError !== "" || aiChatModel.count > 0
+                    visible: root.assistant.aiBusy || root.assistant.hasPendingAiChanges || root.assistant.aiError !== "" || aiChatModel.count > 0
                     spacing: 8
 
                     RowLayout {
@@ -832,7 +531,7 @@ BaseThemeSettings {
                         spacing: 6
 
                         Controls.BusyIndicator {
-                            running: root.aiBusy
+                            running: root.assistant.aiBusy
                             visible: running
                             implicitWidth: 18
                             implicitHeight: 18
@@ -840,8 +539,8 @@ BaseThemeSettings {
 
                         Controls.Label {
                             Layout.fillWidth: true
-                            text: root.aiBusy ? qsTr("Thinking...") : (root.aiError !== "" ? root.aiError : root.summarizeChanges(root.pendingAiChanges))
-                            color: root.aiError !== "" ? root.theme.colors.error : root.theme.colors.subtleText
+                            text: root.assistant.aiBusy ? qsTr("Thinking...") : (root.assistant.aiError !== "" ? root.assistant.aiError : root.assistant.summarizeChanges(root.assistant.pendingAiChanges))
+                            color: root.assistant.aiError !== "" ? root.theme.colors.error : root.theme.colors.subtleText
                             elide: Text.ElideRight
                             font.pixelSize: root.typ("small", 12)
                         }
@@ -849,10 +548,10 @@ BaseThemeSettings {
 
                     MButton {
                         text: qsTr("Apply AI Changes")
-                        visible: root.hasPendingAiChanges
+                        visible: root.assistant.hasPendingAiChanges
                         Layout.preferredWidth: 145
                         Layout.preferredHeight: 30
-                        onClicked: root.applyAiChanges(root.pendingAiChanges)
+                        onClicked: root.applyPendingAiChanges()
                     }
 
                     MButton {
@@ -860,11 +559,7 @@ BaseThemeSettings {
                         visible: aiChatModel.count > 0
                         Layout.preferredWidth: 70
                         Layout.preferredHeight: 30
-                        onClicked: {
-                            aiChatModel.clear();
-                            root.aiError = "";
-                            root.pendingAiChanges = [];
-                        }
+                        onClicked: root.assistant.clearChat()
                     }
                 }
             }

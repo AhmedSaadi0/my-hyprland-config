@@ -19,6 +19,8 @@ Singleton {
     // Read-only Aliases (Exposing internal state safely)
     readonly property alias selectedTheme: themeLoader.activeThemeInstance
     readonly property alias isInitialThemeReady: root._initialReady
+    readonly property alias aiThemeAssistant: aiThemeAssistant
+    readonly property alias bridgeSystem: bridgeSystem
 
     // Wallpaper Data Aliases
     readonly property alias currentWallpaper: wallpaperController.currentWallpaperPath
@@ -118,6 +120,9 @@ Singleton {
             root._pendingCacheData = null;
             root._pendingThemeName = "";
 
+            // Clear AI assistant chat on theme change
+            aiThemeAssistant.clearChat();
+
             // Notify UI
             root.selectedThemeUpdated();
 
@@ -172,6 +177,10 @@ Singleton {
             }, true);
             root.creatingOverlayImageFinished(newImagePath);
         }
+    }
+
+    AiThemeAssistant {
+        id: aiThemeAssistant
     }
 
     // =========================================================
@@ -259,6 +268,21 @@ Singleton {
         _applyToSystem(selectedTheme);
 
         // Apply to disk
+        if (saveToDisk) {
+            themeSerializer.saveToCache(selectedTheme, themeLoader.currentThemeName, true);
+        } else {
+            root.selectedThemeUpdated();
+        }
+    }
+
+    function updateThemeColorsOnly(data, saveToDisk) {
+        if (!selectedTheme)
+            return;
+
+        themeSerializer.applyData(selectedTheme, data);
+
+        bridgeHyprland.applyConfig(selectedTheme.hyprlandConfiguration);
+
         if (saveToDisk) {
             themeSerializer.saveToCache(selectedTheme, themeLoader.currentThemeName, true);
         } else {

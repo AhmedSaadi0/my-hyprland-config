@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell.Io
 import "root:/config"
 import "root:/utils" as Utils
 
@@ -93,6 +94,35 @@ Item {
 
         console.info("[SystemBridge] Applying M3 on:", wallpaperPath);
         _dispatch("Apply M3", Utils.Helper.applyM3PlasmaColor(data));
+    }
+
+    // Custom AI-generated Plasma color scheme writer
+    FileView {
+        id: customPlasmaColorWriter
+        watchChanges: false
+        onSaved: console.info("[SystemBridge] Custom Plasma color scheme written successfully.")
+        onSaveFailed: error => console.error("[SystemBridge] Failed to write custom Plasma color scheme:", error)
+    }
+
+    /**
+     * @function applyCustomColorScheme
+     * @description Generates a KDE Plasma .colors file from theme colors, writes it to disk, and applies it.
+     * @param {var} colors - The theme object containing color properties (_primary, _secondary, etc.).
+     * @param {string} schemeName - The name for the new color scheme.
+     */
+    function applyCustomColorScheme(colors, schemeName) {
+        if (!colors || !schemeName)
+            return;
+
+        const content = Utils.Helper.generateAiPlasmaColorFile(colors, schemeName);
+        const folderPath = App.homePath + ".local/share/color-schemes/";
+        const filePath = folderPath + schemeName + ".colors";
+
+        console.info("[SystemBridge] Writing custom Plasma color scheme to:", filePath);
+        customPlasmaColorWriter.path = filePath;
+        customPlasmaColorWriter.setText(content);
+
+        _dispatch("Plasma AI Color Scheme", Utils.Helper.changePlasmaColor(schemeName));
     }
 
     function _dispatch(desc, cmd) {

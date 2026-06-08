@@ -80,7 +80,8 @@ PanelWindow {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 // shadowColor: Qt.darker(Theme.ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(0.5)
-                shadowColor: palette.shadow
+                // shadowColor: palette.shadow
+                shadowColor: Theme.ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.8)
                 shadowBlur: 1.0
                 shadowVerticalOffset: -1
                 shadowHorizontalOffset: -1

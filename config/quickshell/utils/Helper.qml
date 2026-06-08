@@ -48,6 +48,168 @@ Singleton {
         return ['plasma-apply-colorscheme', '-a', `"${accentColor}"`];
     }
 
+    /**
+     * @function hexToKdeRgb
+     * @description Converts a QML Hex color string (#RRGGBB or #AARRGGBB) to KDE Plasma RGB format (R,G,B).
+     * @param {string} colorValue - The hex color string.
+     * @returns {string} The RGB comma-separated string (e.g., "35,33,54").
+     */
+    function hexToKdeRgb(colorValue) {
+        if (!colorValue)
+            return "255,255,255";
+
+        let hex = colorValue.toString().trim();
+        if (hex.indexOf("#") === 0)
+            hex = hex.substring(1);
+
+        // Handle Qt ARGB format (8 chars) - strip the alpha prefix
+        if (hex.length === 8)
+            hex = hex.substring(2);
+
+        if (hex.length === 6) {
+            let r = parseInt(hex.substring(0, 2), 16);
+            let g = parseInt(hex.substring(2, 4), 16);
+            let b = parseInt(hex.substring(4, 6), 16);
+            if (!isNaN(r) && !isNaN(g) && !isNaN(b))
+                return `${r},${g},${b}`;
+        }
+        return "255,255,255";
+    }
+
+    /**
+     * @function generateAiPlasmaColorFile
+     * @description Generates a complete KDE Plasma .colors file content from a theme color map.
+     * @param {var} colors - The theme object containing color properties.
+     * @param {string} schemeName - The name for the color scheme.
+     * @returns {string} The full INI content for the .colors file.
+     */
+    function generateAiPlasmaColorFile(colors, schemeName) {
+        const primary = hexToKdeRgb(colors._primary || "#22C1EB");
+        const secondary = hexToKdeRgb(colors._secondary || "#FD02FF");
+        const bgNormal = hexToKdeRgb(colors._leftMenuBgColorV1 || colors._topbarColor || "#1f1635");
+        const bgAlternate = hexToKdeRgb(colors._leftMenuBgColorV2 || "#2a1e4a");
+        const fgNormal = hexToKdeRgb(colors._leftMenuFgColorV1 || "#EFF0F1");
+        const fgInactive = hexToKdeRgb(colors._subtleTextColor || "#999999");
+        const errorColor = hexToKdeRgb(colors._error || "#ff3333");
+        const successColor = hexToKdeRgb(colors._success || "#00E676");
+        const warningColor = hexToKdeRgb(colors._warning || "#FF9100");
+
+        return `[General]
+Name=${schemeName}
+ColorScheme=${schemeName}
+shadeSortColumn=true
+
+[KDE]
+contrast=4
+
+[ColorEffects:Disabled]
+Color=${bgNormal}
+ColorAmount=0
+ColorEffect=0
+ContrastAmount=0.65
+ContrastEffect=1
+IntensityAmount=0.1
+IntensityEffect=2
+
+[ColorEffects:Inactive]
+Enable=false
+
+[Colors:Window]
+BackgroundAlternate=${bgAlternate}
+BackgroundNormal=${bgNormal}
+DecorationFocus=${primary}
+DecorationHover=${secondary}
+ForegroundActive=${primary}
+ForegroundInactive=${fgInactive}
+ForegroundLink=${primary}
+ForegroundNegative=${errorColor}
+ForegroundNeutral=${warningColor}
+ForegroundNormal=${fgNormal}
+ForegroundPositive=${successColor}
+ForegroundVisited=${secondary}
+
+[Colors:View]
+BackgroundAlternate=${bgNormal}
+BackgroundNormal=${bgAlternate}
+DecorationFocus=${primary}
+DecorationHover=${secondary}
+ForegroundActive=${primary}
+ForegroundInactive=${fgInactive}
+ForegroundLink=${primary}
+ForegroundNegative=${errorColor}
+ForegroundNeutral=${warningColor}
+ForegroundNormal=${fgNormal}
+ForegroundPositive=${successColor}
+ForegroundVisited=${secondary}
+
+[Colors:Button]
+BackgroundAlternate=${bgAlternate}
+BackgroundNormal=${bgNormal}
+DecorationFocus=${primary}
+DecorationHover=${secondary}
+ForegroundActive=${primary}
+ForegroundInactive=${fgInactive}
+ForegroundLink=${primary}
+ForegroundNegative=${errorColor}
+ForegroundNeutral=${warningColor}
+ForegroundNormal=${fgNormal}
+ForegroundPositive=${successColor}
+ForegroundVisited=${secondary}
+
+[Colors:Selection]
+BackgroundAlternate=${primary}
+BackgroundNormal=${secondary}
+DecorationFocus=${primary}
+DecorationHover=${secondary}
+ForegroundActive=${primary}
+ForegroundInactive=${fgNormal}
+ForegroundLink=${primary}
+ForegroundNegative=${errorColor}
+ForegroundNeutral=${warningColor}
+ForegroundNormal=${fgNormal}
+ForegroundPositive=${successColor}
+ForegroundVisited=${secondary}
+
+[Colors:Tooltip]
+BackgroundAlternate=${bgNormal}
+BackgroundNormal=${bgAlternate}
+DecorationFocus=${primary}
+DecorationHover=${secondary}
+ForegroundActive=${primary}
+ForegroundInactive=${fgInactive}
+ForegroundLink=${primary}
+ForegroundNegative=${errorColor}
+ForegroundNeutral=${warningColor}
+ForegroundNormal=${fgNormal}
+ForegroundPositive=${successColor}
+ForegroundVisited=${secondary}
+
+[Colors:Complementary]
+BackgroundNormal=${bgNormal}
+ForegroundNormal=${fgNormal}
+
+[Colors:Header]
+BackgroundAlternate=${bgAlternate}
+BackgroundNormal=${bgNormal}
+DecorationFocus=${primary}
+DecorationHover=${secondary}
+ForegroundActive=${primary}
+ForegroundInactive=${fgInactive}
+ForegroundLink=${primary}
+ForegroundNegative=${errorColor}
+ForegroundNeutral=${warningColor}
+ForegroundNormal=${fgNormal}
+ForegroundPositive=${successColor}
+ForegroundVisited=${secondary}
+
+[WM]
+activeBackground=${primary}
+activeForeground=${bgNormal}
+inactiveBackground=${bgNormal}
+inactiveForeground=${fgInactive}
+`;
+    }
+
     function getWallpapersList(path) {
         const scriptFile = Config.App.scripts.bash.getWallpapers;
         return [scriptFile, `${path}`];
