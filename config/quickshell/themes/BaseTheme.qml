@@ -40,12 +40,14 @@ PersistentProperties {
     property color _warning: "#ffb86c"
     property color _onWarning: "#ffffff"
 
+    property color _baseShadowColor: "#1a1a1a"
+
     // topbar
     // TODO: -> these colors must be changed to a better way, maybe follow m3 naming
     property color _topbarColor: Kirigami.Theme.backgroundColor
     property color _topbarFgColor: Kirigami.Theme.textColor
 
-    property color _topbarBgColorV1: Kirigami.Theme.backgroundColor.lighter(1.5)
+    property color _topbarBgColorV1: _themeMode === "dark" ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.5) : Qt.darker(Kirigami.Theme.backgroundColor, 1.1)
     property color _topbarBgColorV2: Kirigami.Theme.alternateBackgroundColor
     property color _topbarBgColorV3: Kirigami.ColorUtils.tintWithAlpha(Kirigami.Theme.backgroundColor, Kirigami.Theme.highlightColor, 0.08)
 
@@ -224,6 +226,8 @@ PersistentProperties {
 
         property color warning: Qt.rgba(root._warning.r, root._warning.g, root._warning.b, root._alpha)
         property alias onWarning: root._onWarning
+
+        property alias baseShadowColor: root._baseShadowColor
 
         // Top Bar
         property color topbarColor: Qt.rgba(root._topbarColor.r, root._topbarColor.g, root._topbarColor.b, root._alpha)

@@ -24,7 +24,8 @@ DropShadow {
 
     property var alpha: 0.25
 
-    color: palette.shadow.alpha(alpha)
+    // color: palette.shadow.alpha(alpha)
+    color: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(alpha)
     radius: 5
     spread: 0
     samples: 47

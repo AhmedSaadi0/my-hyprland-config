@@ -282,7 +282,7 @@ PanelWindow {
         layer.effect: MultiEffect {
             source: topButtonGroup
             shadowEnabled: true
-            shadowColor: palette.shadow.alpha(0.6)
+            shadowColor: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
@@ -314,7 +314,8 @@ PanelWindow {
         layer.effect: MultiEffect {
             source: middleButtonGroup
             shadowEnabled: true
-            shadowColor: palette.shadow.alpha(0.6)
+            // shadowColor: palette.shadow.alpha(0.6)
+            shadowColor: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
@@ -342,7 +343,8 @@ PanelWindow {
         layer.effect: MultiEffect {
             source: bottomButtonGroup
             shadowEnabled: true
-            shadowColor: palette.shadow.alpha(0.6)
+            // shadowColor: palette.shadow.alpha(0.6)
+            shadowColor: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
