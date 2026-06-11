@@ -17,8 +17,8 @@ Rectangle {
     readonly property var theme: ThemeManager.selectedTheme
 
     radius: theme.dimensions.elementRadius
-    color: Qt.rgba(theme.colors.leftMenuBgColorV2.r, theme.colors.leftMenuBgColorV2.g, theme.colors.leftMenuBgColorV2.b, 0.75)
-    border.color: Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.22)
+    color: Qt.rgba(theme.colors.surfaceContainerHigh.r, theme.colors.surfaceContainerHigh.g, theme.colors.surfaceContainerHigh.b, 0.75)
+    border.color: Qt.rgba(theme.colors.onSurfaceVariant.r, theme.colors.onSurfaceVariant.g, theme.colors.onSurfaceVariant.b, 0.22)
     border.width: 1
     clip: true
 
@@ -28,8 +28,8 @@ Rectangle {
         if (thermalRisk === "high")
             return theme.colors.error;
         if (thermalRisk === "medium")
-            return theme.colors.warning;
-        return theme.colors.success;
+            return theme.colors.secondary;
+        return theme.colors.tertiary;
     }
 
     ColumnLayout {
@@ -47,7 +47,7 @@ Rectangle {
                 width: 3
                 Layout.fillHeight: true
                 radius: 2
-                color: theme.colors.warning
+                color: theme.colors.secondary
             }
 
             ColumnLayout {
@@ -61,7 +61,7 @@ Rectangle {
                         text: ""
                         font.family: theme.typography.iconFont
                         font.pixelSize: 14
-                        color: theme.colors.warning
+                        color: theme.colors.secondary
                     }
                     Text {
                         Layout.fillWidth: true
@@ -79,7 +79,7 @@ Rectangle {
                     wrapMode: Text.WordWrap
                     font.family: theme.typography.bodyFont
                     font.pixelSize: theme.typography.small + 1
-                    color: theme.colors.subtleText
+                    color: theme.colors.onSurfaceVariant
                     lineHeight: 1.25
                     textFormat: Text.PlainText
                 }
@@ -89,7 +89,7 @@ Rectangle {
         Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: 1
-            color: Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.12)
+            color: Qt.rgba(theme.colors.onSurfaceVariant.r, theme.colors.onSurfaceVariant.g, theme.colors.onSurfaceVariant.b, 0.12)
         }
 
         // Process
@@ -134,7 +134,7 @@ Rectangle {
                     font.family: theme.typography.bodyFont
                     font.pixelSize: theme.typography.small + 1
                     font.bold: true
-                    color: theme.colors.subtleText
+                    color: theme.colors.onSurfaceVariant
                     textFormat: Text.PlainText
                 }
 
@@ -145,7 +145,7 @@ Rectangle {
                     wrapMode: Text.WordWrap
                     font.family: theme.typography.bodyFont
                     font.pixelSize: theme.typography.small
-                    color: theme.colors.subtleText
+                    color: theme.colors.onSurfaceVariant
                     opacity: 0.85
                     lineHeight: 1.2
                     textFormat: Text.PlainText
@@ -157,7 +157,7 @@ Rectangle {
             visible: thermalRisk !== ""
             Layout.fillWidth: true
             Layout.preferredHeight: 1
-            color: Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.12)
+            color: Qt.rgba(theme.colors.onSurfaceVariant.r, theme.colors.onSurfaceVariant.g, theme.colors.onSurfaceVariant.b, 0.12)
         }
 
         // Thermal Impact
@@ -219,7 +219,7 @@ Rectangle {
                     wrapMode: Text.WordWrap
                     font.family: theme.typography.bodyFont
                     font.pixelSize: theme.typography.small + 1
-                    color: theme.colors.subtleText
+                    color: theme.colors.onSurfaceVariant
                     lineHeight: 1.25
                     textFormat: Text.PlainText
                 }

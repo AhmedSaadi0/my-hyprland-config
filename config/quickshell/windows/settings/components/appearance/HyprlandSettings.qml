@@ -246,7 +246,7 @@ BaseThemeSettings {
 
     component FieldLabel: Controls.Label {
         font.bold: true
-        color: root.theme.colors.leftMenuFgColorV1
+        color: root.theme.colors.onSurface
     }
 
     component CompactField: EditableField {
@@ -273,7 +273,7 @@ BaseThemeSettings {
             selectByMouse: true
             font.family: root.theme.typography.bodyFont
             font.pixelSize: root.theme.typography.small
-            color: root.theme.colors.leftMenuFgColorV1
+            color: root.theme.colors.onSurface
             selectedTextColor: root.theme.colors.onPrimary
             selectionColor: root.theme.colors.primary
 
@@ -290,9 +290,9 @@ BaseThemeSettings {
             }
 
             background: Rectangle {
-                color: root.theme.colors.leftMenuBgColorV1
+                color: root.theme.colors.surfaceContainer
                 radius: root.theme.dimensions.baseRadius / 2
-                border.color: textArea.activeFocus ? root.theme.colors.primary : root.theme.colors.subtleText
+                border.color: textArea.activeFocus ? root.theme.colors.primary : root.theme.colors.onSurfaceVariant
                 border.width: textArea.activeFocus ? 2 : 1
                 opacity: 0.9
             }

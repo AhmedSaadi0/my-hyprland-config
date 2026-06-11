@@ -56,7 +56,7 @@ Item {
 
             Text {
                 text: viewStack.depth > 1 ? root.pendingActionMessage : qsTr("System Control")
-                color: theme.colors.topbarFgColor
+                color: theme.colors.onSurface
                 font.family: theme.typography.bodyFont
                 font.pixelSize: theme.typography.heading1Size
                 font.bold: true
@@ -65,7 +65,7 @@ Item {
 
             Text {
                 text: viewStack.depth > 1 ? qsTr("This action cannot be undone") : qsTr("Choose an action to perform")
-                color: theme.colors.subtleText
+                color: theme.colors.onSurfaceVariant
                 font.family: theme.typography.bodyFont
                 font.pixelSize: theme.typography.medium
                 Layout.alignment: Qt.AlignHCenter
@@ -138,10 +138,10 @@ Item {
                 PowerTile {
                     icon: "\uf01e"
                     label: qsTr("Restart")
-                    accentColor: theme.colors.warning
+                    accentColor: theme.colors.secondary
                     onClicked: {
                         root.currentAccentColor = accentColor;
-                        root.currentAccentForeground = theme.colors.onWarning;
+                        root.currentAccentForeground = theme.colors.onSecondary;
                         root.pendingActionCommand = ["systemctl", "reboot"];
                         root.pendingActionMessage = qsTr("Restart System?");
                         root.confirmActionText = qsTr("Restart");
@@ -198,7 +198,7 @@ Item {
                     Layout.preferredWidth: 160
                     Layout.preferredHeight: 55
                     // شفافية متناسقة
-                    normalBackground: Qt.rgba(theme.colors.topbarBgColorV1.r, theme.colors.topbarBgColorV1.g, theme.colors.topbarBgColorV1.b, 0.4)
+                    normalBackground: Qt.rgba(theme.colors.surfaceContainer.r, theme.colors.surfaceContainer.g, theme.colors.surfaceContainer.b, 0.4)
                     onClicked: viewStack.pop()
                 }
 
@@ -234,9 +234,9 @@ Item {
         height: 150
 
         radius: theme.dimensions.elementRadius
-        color: mouseArea.hovered ? Qt.rgba(accentColor.r, accentColor.g, accentColor.b, 0.15) : Qt.rgba(theme.colors.topbarBgColorV1.r, theme.colors.topbarBgColorV1.g, theme.colors.topbarBgColorV1.b, 0.3)
+        color: mouseArea.hovered ? Qt.rgba(accentColor.r, accentColor.g, accentColor.b, 0.15) : Qt.rgba(theme.colors.surfaceContainer.r, theme.colors.surfaceContainer.g, theme.colors.surfaceContainer.b, 0.3)
 
-        border.color: mouseArea.hovered ? accentColor : theme.colors.topbarFgColor.alpha(0.1)
+        border.color: mouseArea.hovered ? accentColor : theme.colors.onSurface.alpha(0.1)
         border.width: 1
 
         ColumnLayout {
@@ -247,7 +247,7 @@ Item {
                 text: icon
                 font.family: theme.typography.iconFont
                 font.pixelSize: 40
-                color: mouseArea.hovered ? accentColor : theme.colors.topbarFgColor
+                color: mouseArea.hovered ? accentColor : theme.colors.onSurface
                 Layout.alignment: Qt.AlignHCenter
                 Behavior on color {
                     ColorAnimation {
@@ -260,7 +260,7 @@ Item {
                 text: label
                 font.family: theme.typography.bodyFont
                 font.pixelSize: theme.typography.medium
-                color: theme.colors.topbarFgColor
+                color: theme.colors.onSurface
                 Layout.alignment: Qt.AlignHCenter
                 opacity: mouseArea.hovered ? 1.0 : 0.6
             }
@@ -312,7 +312,7 @@ Item {
             fallbackEmotion = "happy";
             fallbackText = "System is restarting...";
             capsuleIcon = "\uf01e";
-            capsuleColor = theme.colors.warning;
+            capsuleColor = theme.colors.secondary;
         } else if (actionType === qsTr("Suspend")) {
             actionKey = "suspend";
             fallbackEmotion = "sleeping";

@@ -8,7 +8,7 @@ Item {
     property string position: "top-left"
     // لون الشكل
 
-    property color shapeColor: ThemeManager.selectedTheme.colors.topbarColor
+    property color shapeColor: ThemeManager.selectedTheme.colors.surface
     property real cornerRadius: 30
 
     width: cornerRadius

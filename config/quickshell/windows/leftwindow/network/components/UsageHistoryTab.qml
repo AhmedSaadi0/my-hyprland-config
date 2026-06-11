@@ -68,7 +68,7 @@ ColumnLayout {
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 1
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.15)
+        color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.15)
     }
 
     ColumnLayout {
@@ -86,8 +86,8 @@ ColumnLayout {
                 Layout.fillWidth: true
                 implicitHeight: 44
                 radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2.alpha(0.35)
-                border.color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.1)
+                color: ThemeManager.selectedTheme.colors.surfaceContainerHigh.alpha(0.35)
+                border.color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.1)
                 border.width: 1
 
                 RowLayout {
@@ -125,7 +125,7 @@ ColumnLayout {
                     Rectangle {
                         Layout.preferredWidth: 84
                         Layout.preferredHeight: 30
-                        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV3.alpha(0.45)
+                        color: ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.45)
 
                         topRightRadius: root.groupRadius
                         bottomRightRadius: root.groupRadius
@@ -147,7 +147,7 @@ ColumnLayout {
         visible: !root.historyUsageModel || root.historyUsageModel.count === 0
         text: root.historyUsageLoading ? qsTr("Reading usage history...") : qsTr("No history found yet.")
         horizontalAlignment: Text.AlignHCenter
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.75)
+        color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.75)
         wrapMode: Text.Wrap
     }
 }

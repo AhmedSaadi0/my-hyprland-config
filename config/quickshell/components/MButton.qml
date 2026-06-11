@@ -45,16 +45,16 @@ Button {
     property string activeText: ""
 
     // الألوان
-    property var disabledBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV2.alpha(0.45)
+    property var disabledBackground: ThemeManager.selectedTheme.colors.surfaceContainerHigh.alpha(0.45)
     // جعل لون الضغط أغمق قليلاً من لون التحويم
     property var downBackground: Qt.darker(root.hoveredBackground, 1.2)
     property var hoveredBackground: ThemeManager.selectedTheme.colors.secondary.alpha(0.22)
-    property var normalBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+    property var normalBackground: ThemeManager.selectedTheme.colors.surfaceContainer
     property var activeBackground: ThemeManager.selectedTheme.colors.primary
 
-    property var disabledForeground: ThemeManager.selectedTheme.colors.subtleText.alpha(0.5)
-    property var downForeground: ThemeManager.selectedTheme.colors.topbarFgColor
-    property var normalForeground: ThemeManager.selectedTheme.colors.topbarFgColor
+    property var disabledForeground: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.5)
+    property var downForeground: ThemeManager.selectedTheme.colors.onSurface
+    property var normalForeground: ThemeManager.selectedTheme.colors.onSurface
     property var activeForeground: ThemeManager.selectedTheme.colors.onPrimary
 
     property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / Consts.M3_BUTTON_RADIUS_DIVISOR
@@ -138,7 +138,7 @@ Button {
                     // حساب التباين للون الخط
                     if (bg && typeof bg.r !== 'undefined') {
                         let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-                        return luminance > 0.5 ? ThemeManager.selectedTheme.colors.topbarFgColor : ThemeManager.selectedTheme.colors.topbarColor;
+                        return luminance > 0.5 ? ThemeManager.selectedTheme.colors.onSurface : ThemeManager.selectedTheme.colors.surface;
                     }
                     return root.normalForeground;
                 } else {

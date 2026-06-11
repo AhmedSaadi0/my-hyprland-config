@@ -30,7 +30,7 @@ Rectangle {
     width: 610
     implicitHeight: 75
     radius: selectedTheme.dimensions.elementRadius
-    color: selectedTheme.colors.leftMenuBgColorV1
+    color: selectedTheme.colors.surfaceContainer
 
     Behavior on border.width {
         NumberAnimation {
@@ -89,7 +89,7 @@ Rectangle {
             Layout.alignment: Qt.AlignVCenter
             text: "🔊"
             font.pixelSize: 24
-            color: selectedTheme.colors.leftMenuFgColorV1
+            color: selectedTheme.colors.onSurface
             font.family: selectedTheme.typography.iconFont
         }
 
@@ -100,7 +100,7 @@ Rectangle {
 
             Text {
                 text: root.deviceTitle
-                color: selectedTheme.colors.leftMenuFgColorV1
+                color: selectedTheme.colors.onSurface
                 font.bold: true
                 font.pixelSize: 16
                 Layout.fillWidth: true
@@ -108,7 +108,7 @@ Rectangle {
             }
             Text {
                 text: root.deviceDescription
-                color: selectedTheme.colors.leftMenuFgColorV1
+                color: selectedTheme.colors.onSurface
                 font.pixelSize: 11
                 Layout.fillWidth: true
                 elide: Text.ElideRight
@@ -156,7 +156,7 @@ Rectangle {
                 }
                 Text {
                     text: qsTr("Default Device")
-                    color: selectedTheme.colors.leftMenuFgColorV1
+                    color: selectedTheme.colors.onSurface
                     font.pixelSize: 14
                 }
             }

@@ -890,9 +890,9 @@ Singleton {
                 icon: "󰉓",
                 text: "Depth Effect Ready!",
                 timeout: 3000,
-                bgColor1: ThemeManager.selectedTheme.colors.success,
+                bgColor1: ThemeManager.selectedTheme.colors.tertiary,
                 bgColor2: ThemeManager.selectedTheme.colors.primary,
-                fgColor: ThemeManager.selectedTheme.colors.onSuccess
+                fgColor: ThemeManager.selectedTheme.colors.onTertiary
             });
         }
     }
@@ -946,15 +946,15 @@ Singleton {
             };
         case "warning":
             return {
-                bg1: ThemeManager.selectedTheme.colors.warning,
-                bg2: ThemeManager.selectedTheme.colors.warning.alpha(0.78),
-                fg: ThemeManager.selectedTheme.colors.onWarning
+                bg1: ThemeManager.selectedTheme.colors.secondary,
+                bg2: ThemeManager.selectedTheme.colors.secondary.alpha(0.78),
+                fg: ThemeManager.selectedTheme.colors.onSecondary
             };
         case "success":
             return {
-                bg1: ThemeManager.selectedTheme.colors.success,
-                bg2: ThemeManager.selectedTheme.colors.success.alpha(0.78),
-                fg: ThemeManager.selectedTheme.colors.onSuccess
+                bg1: ThemeManager.selectedTheme.colors.tertiary,
+                bg2: ThemeManager.selectedTheme.colors.tertiary.alpha(0.78),
+                fg: ThemeManager.selectedTheme.colors.onTertiary
             };
         case "info":
             return {
@@ -1022,19 +1022,19 @@ Singleton {
 
     function getPowerProfileColor(profile) {
         if (profile === PowerProfile.Performance)
-            return ThemeManager.selectedTheme.colors.warning;
+            return ThemeManager.selectedTheme.colors.secondary;
         if (profile === PowerProfile.Balanced)
             return ThemeManager.selectedTheme.colors.primary;
         if (profile === PowerProfile.PowerSaver)
-            return ThemeManager.selectedTheme.colors.success;
+            return ThemeManager.selectedTheme.colors.tertiary;
         return ThemeManager.selectedTheme.colors.primary;
     }
 
     function getPowerProfileForeground(profile) {
         if (profile === PowerProfile.Performance)
-            return ThemeManager.selectedTheme.colors.onWarning;
+            return ThemeManager.selectedTheme.colors.onSecondary;
         if (profile === PowerProfile.PowerSaver)
-            return ThemeManager.selectedTheme.colors.onSuccess;
+            return ThemeManager.selectedTheme.colors.onTertiary;
         return ThemeManager.selectedTheme.colors.onPrimary;
     }
 

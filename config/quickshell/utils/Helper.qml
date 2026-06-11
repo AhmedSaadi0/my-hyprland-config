@@ -86,13 +86,13 @@ Singleton {
     function generateAiPlasmaColorFile(colors, schemeName) {
         const primary = hexToKdeRgb(colors._primary || "#22C1EB");
         const secondary = hexToKdeRgb(colors._secondary || "#FD02FF");
-        const bgNormal = hexToKdeRgb(colors._leftMenuBgColorV1 || colors._topbarColor || "#1f1635");
-        const bgAlternate = hexToKdeRgb(colors._leftMenuBgColorV2 || "#2a1e4a");
-        const fgNormal = hexToKdeRgb(colors._leftMenuFgColorV1 || "#EFF0F1");
-        const fgInactive = hexToKdeRgb(colors._subtleTextColor || "#999999");
+        const bgNormal = hexToKdeRgb(colors._surfaceContainer || colors._surface || "#1f1635");
+        const bgAlternate = hexToKdeRgb(colors._surfaceContainerHigh || "#2a1e4a");
+        const fgNormal = hexToKdeRgb(colors._onSurface || "#EFF0F1");
+        const fgInactive = hexToKdeRgb(colors._onSurfaceVariant || "#999999");
         const errorColor = hexToKdeRgb(colors._error || "#ff3333");
-        const successColor = hexToKdeRgb(colors._success || "#00E676");
-        const warningColor = hexToKdeRgb(colors._warning || "#FF9100");
+        const successColor = hexToKdeRgb(colors._tertiary || "#00E676");
+        const warningColor = hexToKdeRgb(colors._secondary || "#FF9100");
 
         return `[General]
 Name=${schemeName}

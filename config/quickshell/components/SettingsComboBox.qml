@@ -8,7 +8,7 @@ import "root:/themes"
 ComboBox {
     id: root
 
-    property color componentColor: ThemeManager.selectedTheme.colors.topbarBgColorV2
+    property color componentColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
     property color componentBorderColor: ThemeManager.selectedTheme.colors.secondary.alpha(0.4)
 
     property color componentActiveBorderColor: ThemeManager.selectedTheme.colors.primary
@@ -33,7 +33,7 @@ ComboBox {
     contentItem: Text {
         text: root.displayText
         font: root.font
-        color: ThemeManager.selectedTheme.colors.topbarFgColorV2
+        color: ThemeManager.selectedTheme.colors.onSurfaceVariant
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         elide: Text.ElideRight
@@ -48,7 +48,7 @@ ComboBox {
     indicator: Text {
         id: indicatorIcon
         text: root.indicatorIcon
-        color: ThemeManager.selectedTheme.colors.topbarFgColorV2.alpha(0.7)
+        color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.7)
 
         font {
             family: root.indicatorFontFamily

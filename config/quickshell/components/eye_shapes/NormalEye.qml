@@ -9,7 +9,7 @@ Rectangle {
 
     anchors.fill: parent
     radius: eyeR
-    color: ThemeManager.selectedTheme.colors.topbarFgColor
+    color: ThemeManager.selectedTheme.colors.onSurface
 
     opacity: active ? 1 : 0
     visible: opacity > 0

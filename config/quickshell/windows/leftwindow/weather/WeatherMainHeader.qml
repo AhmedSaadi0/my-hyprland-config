@@ -50,7 +50,7 @@ HeaderCard {
                 font.family: typo.bodyFont
                 font.pixelSize: 24
                 font.weight: Font.Bold
-                color: colors.leftMenuFgColorV1
+                color: colors.onSurface
                 elide: Text.ElideRight
                 Layout.fillWidth: true
             }
@@ -61,7 +61,7 @@ HeaderCard {
                     text: Weather.countryName
                     font.family: typo.bodyFont
                     font.pixelSize: 13
-                    color: colors.subtleText
+                    color: colors.onSurfaceVariant
                 }
 
                 // نقطة فاصلة
@@ -69,14 +69,14 @@ HeaderCard {
                     width: 4
                     height: 4
                     radius: 2
-                    color: colors.subtleText.alpha(0.5)
+                    color: colors.onSurfaceVariant.alpha(0.5)
                 }
 
                 Text {
                     text: Weather.lastUpdated
                     font.family: typo.bodyFont
                     font.pixelSize: 12
-                    color: colors.subtleText.alpha(0.8)
+                    color: colors.onSurfaceVariant.alpha(0.8)
                 }
             }
         }
@@ -125,7 +125,7 @@ HeaderCard {
                 layer.effect: MultiEffect {
                     shadowEnabled: true
                     // shadowColor: palette.shadow
-                    shadowColor: theme.colors.baseShadowColor.alpha(0.6)
+                    shadowColor: theme.colors.shadow.alpha(0.6)
                     shadowBlur: 1.0
                     shadowOpacity: 0.4
                     shadowVerticalOffset: 5
@@ -142,14 +142,14 @@ HeaderCard {
                     font.family: typo.bodyFont
                     font.pixelSize: 58
                     font.weight: Font.DemiBold
-                    color: colors.leftMenuFgColorV1
+                    color: colors.onSurface
                 }
 
                 Text {
                     text: Weather.weatherDescription
                     font.family: typo.bodyFont
                     font.pixelSize: 16
-                    color: colors.leftMenuFgColorV2
+                    color: colors.onSurfaceVariant
                     Layout.fillWidth: true
                     elide: Text.ElideRight
                 }
@@ -159,7 +159,7 @@ HeaderCard {
                     text: qsTr("Feels like ") + Weather.feelsLike + "°"
                     font.family: typo.bodyFont
                     font.pixelSize: 13
-                    color: colors.subtleText
+                    color: colors.onSurfaceVariant
                 }
             }
         }
@@ -187,19 +187,19 @@ HeaderCard {
                 icon: ""
                 value: Weather.windSpeed + " km"
                 label: qsTr("Wind")
-                iconColor: colors.subtleText
+                iconColor: colors.onSurfaceVariant
             }
             StatBox {
                 icon: ""
                 value: String(Weather.uvIndex)
                 label: qsTr("UV Index")
-                iconColor: colors.warning
+                iconColor: colors.secondary
             }
             StatBox {
                 icon: ""
                 value: Weather.sunrise
                 label: qsTr("Sunrise")
-                iconColor: colors.warning
+                iconColor: colors.secondary
             }
         }
 
@@ -211,7 +211,7 @@ HeaderCard {
         Rectangle {
             Layout.fillWidth: true
             height: 1
-            color: colors.leftMenuFgColorV1.alpha(0.08)
+            color: colors.onSurface.alpha(0.08)
         }
 
         // --- د: العظمى والصغرى (Max/Min) ---
@@ -285,7 +285,7 @@ HeaderCard {
         property string icon
         property string value
         property string label
-        property color iconColor: colors.subtleText // افتراضي
+        property color iconColor: colors.onSurfaceVariant // افتراضي
 
         spacing: 4
 
@@ -295,7 +295,7 @@ HeaderCard {
             height: 40
             radius: ThemeManager.selectedTheme.dimensions.elementRadius
             // خلفية شفافة جداً بلون الثيم
-            color: colors.leftMenuFgColorV1.alpha(0.05)
+            color: colors.onSurface.alpha(0.05)
 
             Text {
                 anchors.centerIn: parent
@@ -312,7 +312,7 @@ HeaderCard {
             font.family: typo.bodyFont
             font.pixelSize: 13
             font.bold: true
-            color: colors.leftMenuFgColorV1
+            color: colors.onSurface
         }
 
         Text {
@@ -320,7 +320,7 @@ HeaderCard {
             text: label
             font.family: typo.bodyFont
             font.pixelSize: 11
-            color: colors.subtleText
+            color: colors.onSurfaceVariant
         }
     }
 }

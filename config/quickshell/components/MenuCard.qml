@@ -23,8 +23,8 @@ Pane {
 
     default property alias content: contentColumn.data
 
-    property color cardColor: ThemeManager.selectedTheme.colors.topbarBgColorV1
-    property color textColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
+    property color cardColor: ThemeManager.selectedTheme.colors.surfaceContainer
+    property color textColor: ThemeManager.selectedTheme.colors.onSurface
     property int cardRadius: ThemeManager.selectedTheme.dimensions.elementRadius
     property int headerSpacing: 10
     property int contentSpacing: 10 // مسافة بين عناصر المحتوى المضافة

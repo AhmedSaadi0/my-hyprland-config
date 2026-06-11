@@ -34,40 +34,45 @@ PersistentProperties {
     property color _error: Kirigami.Theme.negativeTextColor
     property color _onError: "#ffffff"
 
-    property color _success: Kirigami.Theme.positiveTextColor
-    property color _onSuccess: "#ffffff"
+    // --- M3 Surface ---
+    property color _surface: Kirigami.Theme.backgroundColor
+    property color _onSurface: Kirigami.Theme.textColor
+    property color _surfaceDim: Qt.darker(root._surface, 1.1)
+    property color _surfaceBright: Qt.lighter(root._surface, 1.1)
 
-    property color _warning: "#ffb86c"
-    property color _onWarning: "#ffffff"
+    // --- M3 Surface Containers ---
+    property color _surfaceContainerLowest: Qt.darker(root._surface, 1.15)
+    property color _surfaceContainerLow: Qt.darker(root._surface, 1.05)
+    property color _surfaceContainer: Kirigami.Theme.alternateBackgroundColor
+    property color _surfaceContainerHigh: Qt.lighter(Kirigami.Theme.alternateBackgroundColor, 1.1)
+    property color _surfaceContainerHighest: Qt.lighter(Kirigami.Theme.alternateBackgroundColor, 1.2)
 
-    property color _baseShadowColor: "#1a1a1a"
+    // --- M3 Surface Variant ---
+    property color _surfaceVariant: Kirigami.Theme.alternateBackgroundColor
+    property color _onSurfaceVariant: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.7)
 
-    // topbar
-    // TODO: -> these colors must be changed to a better way, maybe follow m3 naming
-    property color _topbarColor: Kirigami.Theme.backgroundColor
-    property color _topbarFgColor: Kirigami.Theme.textColor
+    // --- M3 Container Colors ---
+    property color _primaryContainer: root._primary
+    property color _onPrimaryContainer: root._onPrimary
+    property color _secondaryContainer: root._secondary
+    property color _onSecondaryContainer: root._onSecondary
+    property color _tertiaryContainer: root._tertiary
+    property color _onTertiaryContainer: root._onTertiary
+    property color _errorContainer: root._error
+    property color _onErrorContainer: root._onError
 
-    property color _topbarBgColorV1: _themeMode === "dark" ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.5) : Qt.darker(Kirigami.Theme.backgroundColor, 1.1)
-    property color _topbarBgColorV2: Kirigami.Theme.alternateBackgroundColor
-    property color _topbarBgColorV3: Kirigami.ColorUtils.tintWithAlpha(Kirigami.Theme.backgroundColor, Kirigami.Theme.highlightColor, 0.08)
+    // --- M3 Outline ---
+    property color _outline: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.3)
+    property color _outlineVariant: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
 
-    property color _topbarFgColorV1: Kirigami.Theme.textColor
-    property color _topbarFgColorV2: Kirigami.Theme.textColor
-    property color _topbarFgColorV3: Kirigami.Theme.textColor
+    // --- M3 Inverse ---
+    property color _inverseSurface: root._onSurface
+    property color _onInverseSurface: root._surface
+    property color _inversePrimary: root._primary
 
-    // Left Menu
-    property color _leftMenuBgColorV1: Kirigami.Theme.backgroundColor
-    property color _leftMenuBgColorV2: _themeMode === "dark" ? Qt.lighter(Kirigami.Theme.backgroundColor, 1.5) : Qt.darker(Kirigami.Theme.backgroundColor, 1.1)
-    property color _leftMenuBgColorV3: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.6)
-    property color _leftMenuFgColorV1: Kirigami.Theme.textColor
-    property color _leftMenuFgColorV2: Kirigami.Theme.textColor
-    property color _leftMenuFgColorV3: Kirigami.Theme.highlightedTextColor
-
-    property color _subtleTextColor: Kirigami.Theme.textColor.alpha(0.6)
-
-    // OSDs
-    property color _volOsdBgColor: Kirigami.Theme.backgroundColor.lighter(1.5)
-    property color _volOsdFgColor: Kirigami.Theme.textColor
+    // --- M3 Shadow & Scrim ---
+    property color _shadow: "#000000"
+    property color _scrim: "#000000"
 
     // --------------------
     // ---- Dimensions ----
@@ -141,7 +146,7 @@ PersistentProperties {
     property string _hyprActiveBorder: `${_colorToHyprRgba(_primary)} ${_colorToHyprRgba(_secondary)} ${_colorToHyprRgba(_tertiary)} 45deg`
     property string _hyprInactiveBorder: 'rgba(50505088)'
     property int _hyprRounding: 16
-    property string _hyprDropShadow: 'no' // إعداداتك معطلة، لذا 'no' هو الافتراضي
+    property string _hyprDropShadow: 'no'
 
     // Gaps & Layout
     property int _hyprGapsIn: 5
@@ -171,15 +176,15 @@ PersistentProperties {
 
     // Shadow Enhancements
     property int _hyprShadowRange: 30
-    property point _hyprShadowOffset: Qt.point(0, 0) // لا يوجد إزاحة في إعداداتك
+    property point _hyprShadowOffset: Qt.point(0, 0)
     property color _hyprShadowColor: "#00000044"
 
     // ----------------------------
     // --- Desktop Clock Widget ---
     // ----------------------------
     property bool _desktopClockEnabled: true
-    property bool _desktopClockSahdowEnabled: false
-    property color _desktopClockSahdowColor: "#40000000"
+    property bool _desktopClockShadowEnabled: false
+    property color _desktopClockShadowColor: "#40000000"
     property color _desktopClockColor: _primary
     property bool _desktopClockUseThemeColor: true
     property bool _desktopClockUseAnimation: false
@@ -190,7 +195,7 @@ PersistentProperties {
 
     // Depth Effect Settings
     property bool _desktopClockDepthEffectEnabled: false
-    property string _desktopClockDepthModel: "u2net" // isnet-general-use
+    property string _desktopClockDepthModel: "u2net"
     property string _desktopClockDepthOverlayPath
     property size _desktopClockSize: Qt.size(701, 501)
 
@@ -206,13 +211,7 @@ PersistentProperties {
         // General
         property color primary: Qt.rgba(root._primary.r, root._primary.g, root._primary.b, root._alpha)
         property color secondary: Qt.rgba(root._secondary.r, root._secondary.g, root._secondary.b, root._alpha)
-        // property color onPrimary: Qt.rgba(root._onPrimary.r, root._onPrimary.g, root._onPrimary.b, root._alpha)
         property alias onPrimary: root._onPrimary
-        // property color onPrimary: {
-        //     color = Helper.getAccurteTextColor(root._primary);
-        //     console.info(color);
-        //     return color;
-        // }
         property alias onSecondary: root._onSecondary
 
         property color tertiary: Qt.rgba(root._tertiary.r, root._tertiary.g, root._tertiary.b, root._alpha)
@@ -221,39 +220,45 @@ PersistentProperties {
         property color error: Qt.rgba(root._error.r, root._error.g, root._error.b, root._alpha)
         property alias onError: root._onError
 
-        property color success: Qt.rgba(root._success.r, root._success.g, root._success.b, root._alpha)
-        property alias onSuccess: root._onSuccess
+        // --- M3 Surface ---
+        property color surface: Qt.rgba(root._surface.r, root._surface.g, root._surface.b, root._alpha)
+        property alias onSurface: root._onSurface
+        property color surfaceDim: Qt.rgba(root._surfaceDim.r, root._surfaceDim.g, root._surfaceDim.b, root._alpha)
+        property color surfaceBright: Qt.rgba(root._surfaceBright.r, root._surfaceBright.g, root._surfaceBright.b, root._alpha)
 
-        property color warning: Qt.rgba(root._warning.r, root._warning.g, root._warning.b, root._alpha)
-        property alias onWarning: root._onWarning
+        // --- M3 Surface Containers ---
+        property color surfaceContainerLowest: Qt.rgba(root._surfaceContainerLowest.r, root._surfaceContainerLowest.g, root._surfaceContainerLowest.b, root._alpha)
+        property color surfaceContainerLow: Qt.rgba(root._surfaceContainerLow.r, root._surfaceContainerLow.g, root._surfaceContainerLow.b, root._alpha)
+        property color surfaceContainer: Qt.rgba(root._surfaceContainer.r, root._surfaceContainer.g, root._surfaceContainer.b, root._alpha)
+        property color surfaceContainerHigh: Qt.rgba(root._surfaceContainerHigh.r, root._surfaceContainerHigh.g, root._surfaceContainerHigh.b, root._alpha)
+        property color surfaceContainerHighest: Qt.rgba(root._surfaceContainerHighest.r, root._surfaceContainerHighest.g, root._surfaceContainerHighest.b, root._alpha)
 
-        property alias baseShadowColor: root._baseShadowColor
+        // --- M3 Surface Variant ---
+        property color surfaceVariant: Qt.rgba(root._surfaceVariant.r, root._surfaceVariant.g, root._surfaceVariant.b, root._alpha)
+        property alias onSurfaceVariant: root._onSurfaceVariant
 
-        // Top Bar
-        property color topbarColor: Qt.rgba(root._topbarColor.r, root._topbarColor.g, root._topbarColor.b, root._alpha)
-        property color topbarFgColor: Qt.rgba(root._topbarFgColor.r, root._topbarFgColor.g, root._topbarFgColor.b, root._alpha)
+        // --- M3 Container Colors ---
+        property color primaryContainer: Qt.rgba(root._primaryContainer.r, root._primaryContainer.g, root._primaryContainer.b, root._alpha)
+        property alias onPrimaryContainer: root._onPrimaryContainer
+        property color secondaryContainer: Qt.rgba(root._secondaryContainer.r, root._secondaryContainer.g, root._secondaryContainer.b, root._alpha)
+        property alias onSecondaryContainer: root._onSecondaryContainer
+        property color tertiaryContainer: Qt.rgba(root._tertiaryContainer.r, root._tertiaryContainer.g, root._tertiaryContainer.b, root._alpha)
+        property alias onTertiaryContainer: root._onTertiaryContainer
+        property color errorContainer: Qt.rgba(root._errorContainer.r, root._errorContainer.g, root._errorContainer.b, root._alpha)
+        property alias onErrorContainer: root._onErrorContainer
 
-        property color topbarBgColorV1: Qt.rgba(root._topbarBgColorV1.r, root._topbarBgColorV1.g, root._topbarBgColorV1.b, root._alpha)
-        property color topbarBgColorV2: Qt.rgba(root._topbarBgColorV2.r, root._topbarBgColorV2.g, root._topbarBgColorV2.b, root._alpha)
-        property color topbarBgColorV3: Qt.rgba(root._topbarBgColorV3.r, root._topbarBgColorV3.g, root._topbarBgColorV3.b, root._alpha)
+        // --- M3 Outline ---
+        property color outline: Qt.rgba(root._outline.r, root._outline.g, root._outline.b, root._alpha)
+        property color outlineVariant: Qt.rgba(root._outlineVariant.r, root._outlineVariant.g, root._outlineVariant.b, root._alpha)
 
-        property color topbarFgColorV1: Qt.rgba(root._topbarFgColorV1.r, root._topbarFgColorV1.g, root._topbarFgColorV1.b, 1)
-        property color topbarFgColorV2: Qt.rgba(root._topbarFgColorV2.r, root._topbarFgColorV2.g, root._topbarFgColorV2.b, 1)
-        property color topbarFgColorV3: Qt.rgba(root._topbarFgColorV3.r, root._topbarFgColorV3.g, root._topbarFgColorV3.b, 1)
+        // --- M3 Inverse ---
+        property color inverseSurface: Qt.rgba(root._inverseSurface.r, root._inverseSurface.g, root._inverseSurface.b, root._alpha)
+        property alias onInverseSurface: root._onInverseSurface
+        property color inversePrimary: Qt.rgba(root._inversePrimary.r, root._inversePrimary.g, root._inversePrimary.b, root._alpha)
 
-        // Left Menu
-        property color leftMenuBgColorV1: Qt.rgba(root._leftMenuBgColorV1.r, root._leftMenuBgColorV1.g, root._leftMenuBgColorV1.b, root._alpha)
-        property color leftMenuBgColorV2: Qt.rgba(root._leftMenuBgColorV2.r, root._leftMenuBgColorV2.g, root._leftMenuBgColorV2.b, root._alpha)
-        property color leftMenuBgColorV3: Qt.rgba(root._leftMenuBgColorV3.r, root._leftMenuBgColorV3.g, root._leftMenuBgColorV3.b, root._alpha)
-
-        property color leftMenuFgColorV1: Qt.rgba(root._leftMenuFgColorV1.r, root._leftMenuFgColorV1.g, root._leftMenuFgColorV1.b, 1)
-        property color leftMenuFgColorV2: Qt.rgba(root._leftMenuFgColorV2.r, root._leftMenuFgColorV2.g, root._leftMenuFgColorV2.b, 1)
-        property color leftMenuFgColorV3: Qt.rgba(root._leftMenuFgColorV3.r, root._leftMenuFgColorV3.g, root._leftMenuFgColorV3.b, 1)
-
-        property color volOsdBgColor: Qt.rgba(root._volOsdBgColor.r, root._volOsdBgColor.g, root._volOsdBgColor.b, root._alpha)
-        property color volOsdFgColor: Qt.rgba(root._volOsdFgColor.r, root._volOsdFgColor.g, root._volOsdFgColor.b, 1)
-
-        property color subtleText: Qt.rgba(root._subtleTextColor.r, root._subtleTextColor.g, root._subtleTextColor.b, root._alpha)
+        // --- M3 Shadow & Scrim ---
+        property alias shadow: root._shadow
+        property alias scrim: root._scrim
     }
 
     // --- Dimensions and Spacing ---
@@ -364,8 +369,8 @@ PersistentProperties {
     // --- Desktop Clock Widget Configuration ---
     readonly property var desktopClock: QtObject {
         property alias enabled: root._desktopClockEnabled
-        property alias shadowEnabled: root._desktopClockSahdowEnabled
-        property alias shadowColor: root._desktopClockSahdowColor
+        property alias shadowEnabled: root._desktopClockShadowEnabled
+        property alias shadowColor: root._desktopClockShadowColor
         property alias color: root._desktopClockColor
         property alias useThemeColor: root._desktopClockUseThemeColor
         property alias enableAnimation: root._desktopClockUseAnimation

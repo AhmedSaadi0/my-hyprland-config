@@ -195,7 +195,7 @@ BaseGeneralSettings {
                     Text {
                         text: page.localNetworkInterval + " ms"
                         font.family: theme.typography.bodyFont
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                         Layout.preferredWidth: 60
                         horizontalAlignment: Text.AlignRight
                     }
@@ -233,7 +233,7 @@ BaseGeneralSettings {
                         text: "Sound"
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.small
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                         visible: page.localEnableHighCpuAlert
                     }
                     SettingSwitch {
@@ -264,7 +264,7 @@ BaseGeneralSettings {
                     Text {
                         text: page.localCpuThreshold + "%"
                         font.family: theme.typography.bodyFont
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                         Layout.preferredWidth: 40
                         horizontalAlignment: Text.AlignRight
                     }
@@ -288,7 +288,7 @@ BaseGeneralSettings {
                         text: "Sound"
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.small
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                         visible: page.localEnableHighRamAlert
                     }
                     SettingSwitch {
@@ -319,7 +319,7 @@ BaseGeneralSettings {
                     Text {
                         text: page.localRamThreshold + "%"
                         font.family: theme.typography.bodyFont
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                         Layout.preferredWidth: 40
                         horizontalAlignment: Text.AlignRight
                     }
@@ -343,7 +343,7 @@ BaseGeneralSettings {
                         text: "Sound"
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.small
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                         visible: page.localEnableHighTempAlert
                     }
                     SettingSwitch {
@@ -374,7 +374,7 @@ BaseGeneralSettings {
                     Text {
                         text: page.localTempThreshold + "°C"
                         font.family: theme.typography.bodyFont
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                         Layout.preferredWidth: 50
                         horizontalAlignment: Text.AlignRight
                     }
@@ -400,7 +400,7 @@ BaseGeneralSettings {
                     Text {
                         text: page.localResourceAlertCooldownMinutes + " min"
                         font.family: theme.typography.bodyFont
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                         Layout.preferredWidth: 55
                         horizontalAlignment: Text.AlignRight
                     }

@@ -120,10 +120,10 @@ ListView {
             // 2. Original Color Logic
             color: {
                 if (model.completed)
-                    return Qt.rgba(colors.leftMenuBgColorV3.r, colors.leftMenuBgColorV3.g, colors.leftMenuBgColorV3.b, 0.5);
+                    return Qt.rgba(colors.primaryContainer.r, colors.primaryContainer.g, colors.primaryContainer.b, 0.5);
                 if (itemRoot.containsMouse || isEditing)
-                    return Qt.lighter(colors.leftMenuBgColorV2, 1.2);
-                return colors.leftMenuBgColorV1;
+                    return Qt.lighter(colors.surfaceContainerHigh, 1.2);
+                return colors.surfaceContainer;
             }
 
             Behavior on color {
@@ -143,7 +143,7 @@ ListView {
                 radius: 2
                 color: {
                     if (model.completed)
-                        return colors.subtleText;
+                        return colors.onSurfaceVariant;
                     if (model.isUrgent)
                         return colors.error;
                     return colors.primary;
@@ -190,9 +190,9 @@ ListView {
                             implicitWidth: 24
                             implicitHeight: 24
                             radius: 8
-                            color: completionCheck.checked ? colors.success : "transparent"
+                            color: completionCheck.checked ? colors.tertiary : "transparent"
                             border.width: 1.5
-                            border.color: completionCheck.checked ? colors.success : colors.subtleText
+                            border.color: completionCheck.checked ? colors.tertiary : colors.onSurfaceVariant
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 200
@@ -202,7 +202,7 @@ ListView {
                             Text {
                                 anchors.centerIn: parent
                                 text: "✓"
-                                color: colors.onSuccess
+                                color: colors.onTertiary
                                 font.pixelSize: 14
                                 font.bold: true
                                 visible: completionCheck.checked
@@ -228,7 +228,7 @@ ListView {
                         Layout.fillWidth: true
                         wrapMode: Text.Wrap
                         opacity: model.completed ? 0.6 : 1
-                        color: model.completed ? colors.subtleText : colors.leftMenuFgColorV1
+                        color: model.completed ? colors.onSurfaceVariant : colors.onSurface
                         Behavior on color {
                             ColorAnimation {
                                 duration: 200
@@ -246,7 +246,7 @@ ListView {
                         font.pixelSize: typo.medium
                         font.bold: true
                         wrapMode: Text.Wrap
-                        color: colors.leftMenuFgColorV1
+                        color: colors.onSurface
                         // Original Edit Background
                         background: Rectangle {
                             color: Qt.rgba(colors.primary.r, colors.primary.g, colors.primary.b, 0.05)
@@ -276,7 +276,7 @@ ListView {
                         text: model.date
                         font.family: typo.bodyFont
                         font.pixelSize: typo.small - 1
-                        color: colors.subtleText
+                        color: colors.onSurfaceVariant
                         opacity: 0.8
                     }
 
@@ -311,14 +311,14 @@ ListView {
 
                         background: Rectangle {
                             radius: dims.elementRadius
-                            color: dateBtnItem.hovered ? Qt.rgba(colors.leftMenuFgColorV1.r, colors.leftMenuFgColorV1.g, colors.leftMenuFgColorV1.b, 0.08) : Qt.rgba(colors.leftMenuFgColorV1.r, colors.leftMenuFgColorV1.g, colors.leftMenuFgColorV1.b, 0.04)
+                            color: dateBtnItem.hovered ? Qt.rgba(colors.onSurface.r, colors.onSurface.g, colors.onSurface.b, 0.08) : Qt.rgba(colors.onSurface.r, colors.onSurface.g, colors.onSurface.b, 0.04)
                         }
                         contentItem: Text {
                             text: parent.text
                             font.family: typo.bodyFont
                             font.pixelSize: 12
                             font.weight: Font.Medium
-                            color: colors.leftMenuFgColorV1
+                            color: colors.onSurface
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             opacity: 0.8
@@ -339,7 +339,7 @@ ListView {
                             radius: 15
                             color: urgentBtnItem.checked ? colors.error : "transparent"
                             border.width: urgentBtnItem.checked ? 0 : 1.5
-                            border.color: urgentBtnItem.checked ? colors.error : colors.subtleText
+                            border.color: urgentBtnItem.checked ? colors.error : colors.onSurfaceVariant
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 200
@@ -352,13 +352,13 @@ ListView {
                             Text {
                                 text: urgentBtnItem.checked ? "🔥" : "🏳️"
                                 font.pixelSize: 12
-                                color: urgentBtnItem.checked ? colors.onError : colors.subtleText
+                                color: urgentBtnItem.checked ? colors.onError : colors.onSurfaceVariant
                             }
                             Text {
                                 text: urgentBtnItem.checked ? "URGENT" : "Normal"
                                 font.pixelSize: 10
                                 font.bold: true
-                                color: urgentBtnItem.checked ? colors.onError : colors.subtleText
+                                color: urgentBtnItem.checked ? colors.onError : colors.onSurfaceVariant
                             }
                         }
                     }
@@ -407,7 +407,7 @@ ListView {
 
                         contentItem: Text {
                             text: isEditing ? "✓" : "✎"
-                            color: editBtn.hovered ? colors.primary : colors.subtleText
+                            color: editBtn.hovered ? colors.primary : colors.onSurfaceVariant
                             font.pixelSize: 16
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
@@ -444,7 +444,7 @@ ListView {
 
                         contentItem: Text {
                             text: "✕"
-                            color: deleteBtn.hovered ? colors.error : colors.subtleText
+                            color: deleteBtn.hovered ? colors.error : colors.onSurfaceVariant
                             font.pixelSize: 16
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter

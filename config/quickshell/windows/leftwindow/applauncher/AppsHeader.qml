@@ -39,8 +39,8 @@ HeaderCard {
         placeholderText: qsTr("Search apps... or use > for commands")
         font.pixelSize: 16
 
-        normalBackground: colors.leftMenuBgColorV1
-        normalForeground: colors.leftMenuFgColorV1
+        normalBackground: colors.surfaceContainer
+        normalForeground: colors.onSurface
         focusedBorderColor: colors.primary
         borderColor: colors.primary
         borderSize: 1

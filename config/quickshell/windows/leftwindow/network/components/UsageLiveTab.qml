@@ -37,7 +37,7 @@ ColumnLayout {
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 1
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.15)
+        color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.15)
     }
 
     ColumnLayout {
@@ -55,8 +55,8 @@ ColumnLayout {
                 Layout.fillWidth: true
                 implicitHeight: 48
                 radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2.alpha(0.35)
-                border.color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.1)
+                color: ThemeManager.selectedTheme.colors.surfaceContainerHigh.alpha(0.35)
+                border.color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.1)
                 border.width: 1
 
                 RowLayout {
@@ -79,7 +79,7 @@ ColumnLayout {
                             Layout.fillWidth: true
                             text: `RX ${rowData.rx_text} | TX ${rowData.tx_text}`
                             font.pixelSize: ThemeManager.selectedTheme.typography.small
-                            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.75)
+                            color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.75)
                             elide: Text.ElideRight
                         }
                     }
@@ -107,7 +107,7 @@ ColumnLayout {
                     Rectangle {
                         Layout.preferredWidth: 38
                         Layout.preferredHeight: 30
-                        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV3.alpha(0.45)
+                        color: ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.45)
 
                         topRightRadius: root.groupRadius
                         bottomRightRadius: root.groupRadius
@@ -130,7 +130,7 @@ ColumnLayout {
         visible: !root.liveUsageModel || root.liveUsageModel.count === 0
         text: root.liveUsageLoading ? qsTr("Reading live app usage...") : qsTr("No active app usage found.")
         horizontalAlignment: Text.AlignHCenter
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.75)
+        color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.75)
         wrapMode: Text.Wrap
     }
 }

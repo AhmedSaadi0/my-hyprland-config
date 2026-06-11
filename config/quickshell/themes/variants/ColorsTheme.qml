@@ -1,5 +1,4 @@
 pragma Singleton
-
 import QtQuick
 
 import "root:/config"
@@ -18,53 +17,51 @@ BaseTheme {
     _desktopClockPosition: Qt.point(7, 11)
     _desktopClockDepthEffectEnabled: true
     _desktopClockSize: Qt.size(1860, 600)
-    _desktopClockSahdowEnabled: false
+    _desktopClockShadowEnabled: false
     _desktopClockUseThemeColor: false
     _desktopClockColor: "#22c1eb"
 
     _primary: "#22C1EB"
+    _onPrimary: "#1E1240"
+
     _secondary: "#FD02FF"
+    _onSecondary: "#EFF0F1"
 
     _tertiary: "#FAD000"
     _onTertiary: "#19002e"
 
-    // Error: أحمر ساطع
     _error: "#ff3333"
-    _onError: "#ffffff" // الأبيض هنا أفضل لأن الأحمر عادة أغمق قليلاً من الأصفر
+    _onError: "#ffffff"
 
-    // Success: أخضر نيون (Electric Green)
-    _success: "#00E676"
-    _onSuccess: "#19002e"
+    _surface: "#3A2961"
+    _onSurface: "#EFF0F1"
+    _surfaceDim: "#2D1F4D"
+    _surfaceBright: "#4F3784"
+    _surfaceContainerLowest: "#1E1240"
+    _surfaceContainerLow: "#2D1F4D"
+    _surfaceContainer: "#3E2D68"
+    _surfaceContainerHigh: "#4F3784"
+    _surfaceContainerHighest: "#7150A1"
+    _surfaceVariant: "#4F3784"
+    _onSurfaceVariant: "#D0C5E8"
 
-    // Warning: برتقالي ساطع
-    _warning: "#FF9100"
-    _onWarning: "#19002e"
+    // حاويات الألوان تم جعلها بظلال نيون غامقة تندمج بشكل مثالي مع خلفية Shades of Purple الداكنة
+    _primaryContainer: "#143d4f"             // Dark Neon Blue
+    _onPrimaryContainer: "#22C1EB"
+    _secondaryContainer: "#4d154d"           // Dark Neon Magenta
+    _onSecondaryContainer: "#FD02FF"
+    _tertiaryContainer: "#3d3300"            // Dark Neon Gold
+    _onTertiaryContainer: "#FAD000"
+    _errorContainer: "#471414"
+    _onErrorContainer: "#ff3333"
 
-    _onPrimary: "#1F1635"
-    _onSecondary: "#EFF0F1"
-
-    // Topbar
-    _topbarColor: "#3A2961"
-    _topbarFgColor: "#EFF0F1"
-    _topbarBgColorV1: "#4F3784"
-    _topbarBgColorV2: "#7150A1"
-    _topbarBgColorV3: "#3F3F7D"
-    _topbarFgColorV1: "#EFF0F1"
-    _topbarFgColorV2: "#EFF0F1"
-    _topbarFgColorV3: "#EFF0F1"
-
-    // Left Menu
-    _leftMenuBgColorV1: "#3E2C68"
-    _leftMenuBgColorV2: "#4F3988"
-    _leftMenuBgColorV3: "#1ECEF699"
-    _leftMenuFgColorV1: "#EFF0F1"
-    _leftMenuFgColorV2: "#EFF0F1"
-    _leftMenuFgColorV3: "#1F1635"
-
-    // Subtle Text + OSD
-    _subtleTextColor: "#EFF0F199"
-    _volOsdBgColor: "#4F3784"
-    _volOsdFgColor: "#EFF0F1"
+    _outline: "#8A6FBF"
+    _outlineVariant: "#4F3784"
+    _inverseSurface: "#EFF0F1"
+    _onInverseSurface: "#3A2961"
+    _inversePrimary: "#22C1EB"
+    _shadow: "#000000"
+    _scrim: "#000000"
 
     _plasmaColorScheme: "AColors"
     _themeIcons: "Vivid-Dark-Icons"

@@ -6,13 +6,34 @@ Item {
     id: root
 
     // القوائم التي نود حفظها (منقولة من ThemeManager القديم)
-    readonly property var _colorKeys: ["themeName", "_primary", "_secondary", "_onPrimary", "_onSecondary", "_tertiary", "_onTertiary", "_error", "_onError", "_success", "_onSuccess", "_warning", "_onWarning", "_topbarColor", "_topbarFgColor", "_topbarBgColorV1", "_topbarBgColorV2", "_topbarBgColorV3", "_topbarFgColorV1", "_topbarFgColorV2", "_topbarFgColorV3", "_leftMenuBgColorV1", "_leftMenuBgColorV2", "_leftMenuBgColorV3", "_leftMenuFgColorV1", "_leftMenuFgColorV2", "_leftMenuFgColorV3", "_subtleTextColor", "_volOsdBgColor", "_volOsdFgColor"]
+    readonly property var _colorKeys: [
+        "themeName",
+        // M3 Core
+        "_primary", "_onPrimary", "_secondary", "_onSecondary",
+        "_tertiary", "_onTertiary", "_error", "_onError",
+        // M3 Surface
+        "_surface", "_onSurface", "_surfaceDim", "_surfaceBright",
+        "_surfaceContainerLowest", "_surfaceContainerLow", "_surfaceContainer",
+        "_surfaceContainerHigh", "_surfaceContainerHighest",
+        "_surfaceVariant", "_onSurfaceVariant",
+        // M3 Container
+        "_primaryContainer", "_onPrimaryContainer",
+        "_secondaryContainer", "_onSecondaryContainer",
+        "_tertiaryContainer", "_onTertiaryContainer",
+        "_errorContainer", "_onErrorContainer",
+        // M3 Outline
+        "_outline", "_outlineVariant",
+        // M3 Inverse
+        "_inverseSurface", "_onInverseSurface", "_inversePrimary",
+        // M3 Shadow/Scrim
+        "_shadow", "_scrim"
+    ]
     readonly property var _dimKeys: ["_baseRadius", "_barHeight", "_barBottomMargin", "_barWidgetsHeight", "_menuHeight", "_menuWidth", "_menuWidgetsMargin", "_elementRadius", "_spacingSmall", "_spacingMedium", "_spacingLarge"]
     readonly property var _typeKeys: ["_iconFont", "_bodyFont", "_baseFontSize", "_heading1Size", "_heading2Size", "_heading3Size", "_heading4Size", "_mediumFontSize", "_smallFontSize"]
     readonly property var _hyprKeys: ["_hyprBorderWidth", "_hyprInactiveBorder", "_hyprRounding", "_hyprDropShadow", "_hyprGapsIn", "_hyprGapsOut", "_hyprLayout", "_hyprAnimationsEnabled", "_hyprBezier", "_hyprAnimWindows", "_hyprAnimWindowsMove", "_hyprAnimWindowsOut", "_hyprAnimBorder", "_hyprAnimBorderAngle", "_hyprAnimFadeIn", "_hyprAnimFadeOut", "_hyprAnimWorkspaces", "_hyprBlurEnabled", "_hyprBlurSize", "_hyprBlurPasses", "_hyprDimInactive", "_hyprDimStrength", "_hyprShadowRange", "_hyprShadowOffset", "_hyprShadowColor"]
     readonly property var _wallKeys: ["_enableDynamicColoring", "_enableDynamicWallpapers", "_dynamicWallpapersInterval", "_dynamicWallpapersPath", "_selectedWallpaperIndex", "_wallpaper", "_dynamicColoringSchemeVariant", "_dynamicColoringChromaMult", "_dynamicColoringToneMult", "_enableWallpaperBlur"]
     readonly property var _sysKeys: ["_qtThemeStyle", "_kvantumTheme", "_plasmaColorScheme", "_konsoleProfile", "_enableAccentColoring", "_gtkTheme", "_themeIcons", "_themeMode", "_cursorTheme", "_cursorSize"]
-    readonly property var _clockKeys: ["_desktopClockLocal", "_desktopClockFont", "_desktopClockEnabled", "_desktopClockColor", "_desktopClockFormat", "_desktopClockPosition", "_desktopClockDepthEffectEnabled", "_desktopClockDepthModel", "_desktopClockDepthOverlayPath", "_desktopClockSize", "_desktopClockSahdowColor", "_desktopClockSahdowEnabled", "_desktopClockUseThemeColor", "_desktopClockUseAnimation"]
+    readonly property var _clockKeys: ["_desktopClockLocal", "_desktopClockFont", "_desktopClockEnabled", "_desktopClockColor", "_desktopClockFormat", "_desktopClockPosition", "_desktopClockDepthEffectEnabled", "_desktopClockDepthModel", "_desktopClockDepthOverlayPath", "_desktopClockSize", "_desktopClockShadowColor", "_desktopClockShadowEnabled", "_desktopClockUseThemeColor", "_desktopClockUseAnimation"]
 
     // تجميع الكل
     readonly property var allKeys: _colorKeys.concat(_dimKeys).concat(_typeKeys).concat(_hyprKeys).concat(_wallKeys).concat(_sysKeys).concat(_clockKeys)

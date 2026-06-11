@@ -7,7 +7,7 @@ Slider {
     id: control
 
     property color activeColor: ThemeManager.selectedTheme.colors.primary
-    property color inactiveColor: ThemeManager.selectedTheme.colors.subtleText.alpha(0.35)
+    property color inactiveColor: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.35)
     property real lineWidth: 4
     property real scrollStep: 0.05
     property bool enableChangeOnWheel: true

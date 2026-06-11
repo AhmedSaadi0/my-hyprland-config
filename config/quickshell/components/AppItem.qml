@@ -69,7 +69,7 @@ Item {
             Layout.preferredHeight: 44
             Layout.alignment: Qt.AlignVCenter
             radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.8
-            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+            color: ThemeManager.selectedTheme.colors.surfaceContainer
 
             IconImage {
                 id: appIcon
@@ -97,7 +97,7 @@ Item {
                 text: appData ? appData.name : "Unknown"
                 font.pixelSize: 16
                 font.weight: Font.Medium
-                color: root.isHighlighted ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                color: root.isHighlighted ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurface
                 elide: Text.ElideRight
 
                 Behavior on color {
@@ -111,7 +111,7 @@ Item {
                 Layout.fillWidth: true
                 text: appData ? (appData.genericName || appData.comment || "") : ""
                 font.pixelSize: 14
-                color: ThemeManager.selectedTheme.colors.subtleText
+                color: ThemeManager.selectedTheme.colors.onSurfaceVariant
                 elide: Text.ElideRight
                 visible: text !== ""
             }
@@ -143,7 +143,7 @@ Item {
                 width: 24
                 height: 24
                 radius: 6
-                color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+                color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
                 visible: mouseArea.containsMouse || root.isHighlighted || root.isSelected
                 opacity: 0.85
 
@@ -151,7 +151,7 @@ Item {
                     anchors.centerIn: parent
                     text: "↵"
                     font.pixelSize: 12
-                    color: ThemeManager.selectedTheme.colors.subtleText
+                    color: ThemeManager.selectedTheme.colors.onSurfaceVariant
                 }
             }
         }
@@ -187,7 +187,7 @@ Item {
 
         background: Rectangle {
             radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+            color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
             border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
             border.width: 1
         }
@@ -243,7 +243,7 @@ Item {
                     anchors.centerIn: parent
                     text: "فتح"
                     font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                    color: ThemeManager.selectedTheme.colors.onSurface
                 }
 
                 MouseArea {
@@ -279,13 +279,13 @@ Item {
                         text: "󰦢"
                         font.family: ThemeManager.selectedTheme.typography.iconFont
                         font.pixelSize: 14
-                        color: root.isFavorite ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.subtleText
+                        color: root.isFavorite ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurfaceVariant
                     }
 
                     Text {
                         text: root.isFavorite ? "إزالة من المفضلة" : "إضافة للمفضلة"
                         font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                        color: ThemeManager.selectedTheme.colors.onSurface
                     }
                 }
 

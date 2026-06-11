@@ -168,7 +168,7 @@ Item {
                     visible: baseLauncher.filteredAppsModel.values.length === 0
                     text: "No applications found"
                     font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.subtleText
+                    color: ThemeManager.selectedTheme.colors.onSurfaceVariant
                 }
             }
         }
@@ -196,7 +196,7 @@ Item {
                     visible: baseLauncher.filteredCommands.length === 0
                     text: "No commands found"
                     font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.subtleText
+                    color: ThemeManager.selectedTheme.colors.onSurfaceVariant
                 }
             }
         }

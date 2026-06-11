@@ -10,7 +10,7 @@ Rectangle {
     readonly property var theme: ThemeManager.selectedTheme
     readonly property Repeater items: trayRepeater
 
-    color: theme.colors.topbarBgColorV2
+    color: theme.colors.surfaceContainerHigh
     radius: theme.dimensions.elementRadius
 
     clip: true

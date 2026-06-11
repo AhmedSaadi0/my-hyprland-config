@@ -44,7 +44,7 @@ RowLayout {
                 font.weight: root.currentSource === tabRect.index ? Font.Bold : Font.Normal
                 color: root.currentSource === tabRect.index
                     ? root.theme.colors.primary
-                    : root.theme.colors.leftMenuFgColorV1
+                    : root.theme.colors.onSurface
             }
 
             MouseArea {

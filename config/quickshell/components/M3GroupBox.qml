@@ -26,8 +26,8 @@ Item {
     property int collapsedHeight: 60
 
     property int cornerRadius: ThemeManager.selectedTheme.dimensions.elementRadius
-    property color backgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    property color textColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV2
+    property color backgroundColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+    property color textColor: ThemeManager.selectedTheme.colors.onSurfaceVariant
     property color dividerColor: Qt.rgba(textColor.r, textColor.g, textColor.b, 0.1)
 
     // --- منطق الطي ---

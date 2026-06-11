@@ -18,6 +18,8 @@ MenuCard {
 
     title: qsTr("Themes & Customization")
     icon: ""
+    cardColor: ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.7)
+    textColor: ThemeManager.selectedTheme.colors.onPrimaryContainer
 
     property bool settingsExpanded: false
     property int innerRadiusDiv: 4
@@ -121,7 +123,7 @@ MenuCard {
             text: qsTr("Single Themes")
             font.pointSize: 10
             font.bold: true
-            color: ThemeManager.selectedTheme.colors.topbarFgColor
+            color: ThemeManager.selectedTheme.colors.onPrimaryContainer
             opacity: 0.8
             Layout.topMargin: 5
             // Layout.horizontalCenter: parent.horizontalCenter
@@ -144,6 +146,12 @@ MenuCard {
                 Layout.fillWidth: true
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "ColorsTheme"
+                normalBackground: {
+                    let base = ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.6);
+                    return ThemeManager.selectedTheme._themeMode === "dark"
+                        ? Qt.lighter(base, 1.15)
+                        : Qt.darker(base, 1.12);
+                }
 
                 topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
                 bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
@@ -157,6 +165,12 @@ MenuCard {
                 Layout.fillWidth: true
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "DeerTheme"
+                normalBackground: {
+                    let base = ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.6);
+                    return ThemeManager.selectedTheme._themeMode === "dark"
+                        ? Qt.lighter(base, 1.15)
+                        : Qt.darker(base, 1.12);
+                }
 
                 bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
                 topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
@@ -169,7 +183,7 @@ MenuCard {
             Layout.topMargin: 5
             Layout.bottomMargin: 5
             height: 1
-            color: ThemeManager.selectedTheme.colors.topbarFgColorV1.alpha(0.2)
+            color: ThemeManager.selectedTheme.colors.onPrimaryContainer.alpha(0.2)
         }
 
         Rectangle {
@@ -197,7 +211,7 @@ MenuCard {
                 Label {
                     text: "Advanced Customization"
                     font.bold: true
-                    color: ThemeManager.selectedTheme.colors.topbarFgColor
+                    color: ThemeManager.selectedTheme.colors.onPrimaryContainer
                 }
                 Item {
                     Layout.fillWidth: true
@@ -207,7 +221,7 @@ MenuCard {
                     text: ""
                     font.family: "FantasqueSansM Nerd Font Propo"
                     font.pixelSize: 16
-                    color: ThemeManager.selectedTheme.colors.topbarFgColor
+                    color: ThemeManager.selectedTheme.colors.onPrimaryContainer
                     rotation: root.settingsExpanded ? 180 : 0
                     Behavior on rotation {
                         NumberAnimation {

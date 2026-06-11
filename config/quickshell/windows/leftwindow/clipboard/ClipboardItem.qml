@@ -158,7 +158,7 @@ Item {
                 case 2:
                     return ThemeManager.selectedTheme.colors.tertiary;
                 case 4:
-                    return ThemeManager.selectedTheme.colors.warning;
+                    return ThemeManager.selectedTheme.colors.secondary;
                 default:
                     return ThemeManager.selectedTheme.colors.primary;
                 }
@@ -170,7 +170,7 @@ Item {
                 height: 1
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.05)
+                color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.05)
             }
 
             RowLayout {
@@ -197,7 +197,7 @@ Item {
 
                     text: model.text
                     font.family: ThemeManager.selectedTheme.typography.bodyFont
-                    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                    color: ThemeManager.selectedTheme.colors.onSurface
 
                     elide: Text.ElideRight
                     wrapMode: Text.Wrap

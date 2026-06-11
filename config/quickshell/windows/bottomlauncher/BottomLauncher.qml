@@ -99,7 +99,7 @@ PanelWindow {
         anchors.horizontalCenter: parent.horizontalCenter
 
         radius: ThemeManager.selectedTheme.dimensions.elementRadius * 1.5
-        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+        color: ThemeManager.selectedTheme.colors.surfaceContainer
         border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
         border.width: 1
 
@@ -113,7 +113,7 @@ PanelWindow {
             z: -1
             radius: parent.radius + 2
             color: "transparent"
-            border.color: Qt.darker(ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(0.3)
+            border.color: Qt.darker(ThemeManager.selectedTheme.colors.surface, 1.4).alpha(0.3)
             border.width: 4
             visible: false
         }

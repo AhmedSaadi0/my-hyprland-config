@@ -22,7 +22,7 @@ PanelWindow {
         right: true
     }
 
-    color: Theme.ThemeManager.selectedTheme.colors.topbarColor
+    color: Theme.ThemeManager.selectedTheme.colors.surface
 
     aboveWindows: false
     focusable: true
@@ -74,14 +74,14 @@ PanelWindow {
             id: shadowRect
             anchors.fill: parent
             radius: desktopRoot.cornerRadius
-            color: Theme.ThemeManager.selectedTheme.colors.topbarColor
+            color: Theme.ThemeManager.selectedTheme.colors.surface
 
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                // shadowColor: Qt.darker(Theme.ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(0.5)
+                // shadowColor: Qt.darker(Theme.ThemeManager.selectedTheme.colors.surface, 1.4).alpha(0.5)
                 // shadowColor: palette.shadow
-                shadowColor: Theme.ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.8)
+                shadowColor: Theme.ThemeManager.selectedTheme.colors.shadow.alpha(0.8)
                 shadowBlur: 1.0
                 shadowVerticalOffset: -1
                 shadowHorizontalOffset: -1
@@ -120,7 +120,7 @@ PanelWindow {
             Rectangle {
                 anchors.fill: parent
                 radius: desktopRoot.cornerRadius
-                color: Theme.ThemeManager.selectedTheme.colors.topbarColor
+                color: Theme.ThemeManager.selectedTheme.colors.surface
             }
         }
     }

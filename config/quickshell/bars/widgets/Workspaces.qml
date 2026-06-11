@@ -205,7 +205,7 @@ Item {
                 topLeftRadius: defaultRadius / 4
                 bottomLeftRadius: defaultRadius / 4
 
-                color: isWsActive ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.topbarBgColorV1
+                color: isWsActive ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.surfaceContainer
 
                 Component.onCompleted: ready = true
 
@@ -354,7 +354,7 @@ Item {
                             text: isWsActive ? activeIcons[wsId - 1] || "" : inActiveIcons[wsId - 1] || ""
                             font.family: ThemeManager.selectedTheme.typography.iconFont
                             font.pixelSize: 14
-                            color: isWsActive ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.topbarFgColorV1
+                            color: isWsActive ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.onSurface
                         }
                     }
                 }

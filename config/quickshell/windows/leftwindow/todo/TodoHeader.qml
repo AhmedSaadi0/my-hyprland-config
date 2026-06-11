@@ -56,8 +56,8 @@ HeaderCard {
             Layout.bottomMargin: 10
 
             placeholderText: "Add a new task..."
-            placeholderTextColor: colors.subtleText
-            color: colors.leftMenuFgColorV1
+            placeholderTextColor: colors.onSurfaceVariant
+            color: colors.onSurface
             font.family: typo.bodyFont
             font.pixelSize: 15
             wrapMode: Text.Wrap
@@ -90,7 +90,7 @@ HeaderCard {
 
                 background: Rectangle {
                     radius: dims.elementRadius
-                    color: dateBtn.hovered ? Qt.rgba(colors.leftMenuFgColorV1.r, colors.leftMenuFgColorV1.g, colors.leftMenuFgColorV1.b, 0.08) : Qt.rgba(colors.leftMenuFgColorV1.r, colors.leftMenuFgColorV1.g, colors.leftMenuFgColorV1.b, 0.04)
+                    color: dateBtn.hovered ? Qt.rgba(colors.onSurface.r, colors.onSurface.g, colors.onSurface.b, 0.08) : Qt.rgba(colors.onSurface.r, colors.onSurface.g, colors.onSurface.b, 0.04)
                     Behavior on color {
                         ColorAnimation {
                             duration: 150
@@ -103,7 +103,7 @@ HeaderCard {
                     font.family: typo.bodyFont
                     font.pixelSize: 12
                     font.weight: Font.Medium
-                    color: colors.leftMenuFgColorV1
+                    color: colors.onSurface
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     opacity: 0.8
@@ -135,7 +135,7 @@ HeaderCard {
                     radius: dims.elementRadius
                     color: urgentBtn.checked ? colors.error : "transparent"
                     border.width: urgentBtn.checked ? 0 : 1.5
-                    border.color: urgentBtn.checked ? colors.error : colors.subtleText
+                    border.color: urgentBtn.checked ? colors.error : colors.onSurfaceVariant
 
                     Behavior on color {
                         ColorAnimation {
@@ -156,7 +156,7 @@ HeaderCard {
                     Text {
                         text: urgentBtn.checked ? "🔥" : "🏳️"
                         font.pixelSize: 14
-                        color: urgentBtn.checked ? colors.onError : colors.subtleText
+                        color: urgentBtn.checked ? colors.onError : colors.onSurfaceVariant
                         Layout.leftMargin: 10
 
                         rotation: urgentBtn.checked ? 0 : -15
@@ -174,7 +174,7 @@ HeaderCard {
                         font.pixelSize: 12
                         font.bold: true
                         font.capitalization: Font.AllUppercase
-                        color: urgentBtn.checked ? colors.onError : colors.subtleText
+                        color: urgentBtn.checked ? colors.onError : colors.onSurfaceVariant
                         Layout.rightMargin: 5
                     }
                 }

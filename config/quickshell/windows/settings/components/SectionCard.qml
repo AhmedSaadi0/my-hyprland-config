@@ -25,7 +25,7 @@ Rectangle {
     default property alias content: sectionContent.data
 
     Layout.fillWidth: true
-    color: theme.colors.leftMenuBgColorV1.alpha(0.72)
+    color: theme.colors.surfaceContainer.alpha(0.72)
     radius: theme.dimensions.baseRadius
     border.color: theme.colors.primary.alpha(0.12)
     border.width: 1

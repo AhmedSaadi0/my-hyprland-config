@@ -53,8 +53,8 @@ Item {
         if (eventSeverity === "CRITICAL")
             return theme.colors.error;
         if (eventSeverity === "WARNING")
-            return theme.colors.warning;
-        return theme.colors.success;
+            return theme.colors.secondary;
+        return theme.colors.tertiary;
     }
 
     // --- Timeline Line ---
@@ -64,7 +64,7 @@ Item {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         x: 28
-        color: Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.2)
+        color: Qt.rgba(theme.colors.onSurfaceVariant.r, theme.colors.onSurfaceVariant.g, theme.colors.onSurfaceVariant.b, 0.2)
         z: 1
     }
 
@@ -77,14 +77,14 @@ Item {
         x: 22
         y: 22
         z: 5
-        color: theme.colors.leftMenuBgColorV2
+        color: theme.colors.surfaceContainerHigh
         border.width: 2
         border.color: stateColor
         layer.enabled: isCritical
         layer.effect: MultiEffect {
             shadowEnabled: true
             // shadowColor: palette.shadow
-            shadowColor: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.6)
+            shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.6)
             shadowBlur: 0.5
             shadowOpacity: 0.6
         }
@@ -109,9 +109,9 @@ Item {
             }
         }
 
-        color: isExpanded ? theme.colors.leftMenuBgColorV1 : Qt.rgba(theme.colors.leftMenuBgColorV1.r, theme.colors.leftMenuBgColorV1.g, theme.colors.leftMenuBgColorV1.b, 0.35)
+        color: isExpanded ? theme.colors.surfaceContainer : Qt.rgba(theme.colors.surfaceContainer.r, theme.colors.surfaceContainer.g, theme.colors.surfaceContainer.b, 0.35)
         radius: theme.dimensions.elementRadius
-        border.color: isExpanded ? theme.colors.primary : Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.2)
+        border.color: isExpanded ? theme.colors.primary : Qt.rgba(theme.colors.onSurfaceVariant.r, theme.colors.onSurfaceVariant.g, theme.colors.onSurfaceVariant.b, 0.2)
         border.width: 1
         clip: true
 

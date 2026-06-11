@@ -97,7 +97,7 @@ BaseGeneralSettings {
             Layout.preferredHeight: 150
             Layout.alignment: Qt.AlignHCenter
             radius: theme.dimensions.baseRadius
-            color: theme.colors.leftMenuBgColorV3
+            color: theme.colors.primaryContainer
 
             RowLayout {
                 anchors.fill: parent
@@ -112,7 +112,7 @@ BaseGeneralSettings {
                     Rectangle {
                         anchors.fill: parent
                         radius: width / 2
-                        color: theme.colors.leftMenuBgColorV1
+                        color: theme.colors.surfaceContainer
                         clip: true
 
                         Image {
@@ -128,7 +128,7 @@ BaseGeneralSettings {
                             visible: page.localAvatar === ""
                             font.family: theme.typography.iconFont
                             font.pixelSize: 45
-                            color: theme.colors.subtleText
+                            color: theme.colors.onSurfaceVariant
                         }
                     }
                     MButton {
@@ -138,9 +138,9 @@ BaseGeneralSettings {
                         height: 32
                         background: Rectangle {
                             radius: width / 2
-                            color: theme.colors.success
+                            color: theme.colors.tertiary
                             border.width: 2
-                            border.color: theme.colors.onSuccess
+                            border.color: theme.colors.onTertiary
                         }
                         text: ""
                         font.family: theme.typography.iconFont
@@ -161,13 +161,13 @@ BaseGeneralSettings {
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.heading1Size
                         font.bold: true
-                        color: theme.colors.leftMenuFgColorV3
+                        color: theme.colors.onPrimaryContainer
                     }
                     Text {
                         text: page.localSubtitle || "Your subtitle or bio will appear here."
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.medium
-                        color: theme.colors.leftMenuFgColorV3
+                        color: theme.colors.onPrimaryContainer
                         opacity: 0.8
                         elide: Text.ElideRight
                         Layout.fillWidth: true
@@ -179,14 +179,14 @@ BaseGeneralSettings {
                         Text {
                             text: ""
                             font.family: theme.typography.iconFont
-                            color: theme.colors.leftMenuFgColorV3
+                            color: theme.colors.onPrimaryContainer
                             font.pixelSize: theme.typography.medium
                         }
                         Text {
                             text: (page.localCity ? page.localCity + ", " : "") + page.localCountry
                             font.family: theme.typography.bodyFont
                             font.pixelSize: theme.typography.small
-                            color: theme.colors.leftMenuFgColorV3
+                            color: theme.colors.onPrimaryContainer
                             opacity: 0.7
                         }
                     }
@@ -200,7 +200,7 @@ BaseGeneralSettings {
             Layout.preferredWidth: 600
             Layout.alignment: Qt.AlignHCenter
             height: 1
-            color: theme.colors.subtleText
+            color: theme.colors.onSurfaceVariant
             opacity: 0.2
             Layout.topMargin: 10
             Layout.bottomMargin: 10
@@ -316,7 +316,7 @@ BaseGeneralSettings {
                         text: "Specific location for weather service (City,Code)"
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.small
-                        color: theme.colors.subtleText
+                        color: theme.colors.onSurfaceVariant
                     }
                 }
 

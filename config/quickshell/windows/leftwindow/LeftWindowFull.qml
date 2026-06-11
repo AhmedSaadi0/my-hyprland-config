@@ -85,7 +85,7 @@ PanelWindow {
         radius: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.dimensions.elementRadius * 1.3 : 0
         border.color: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.colors.primary : "transparent"
         border.width: root.menuStyle === C.FLOATING ? 2 : 0
-        boxColor: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.colors.topbarColor : "transparent"
+        boxColor: root.menuStyle === C.FLOATING ? ThemeManager.selectedTheme.colors.surface : "transparent"
 
         Item {
             id: layoutRoot

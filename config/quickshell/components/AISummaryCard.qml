@@ -50,14 +50,14 @@ Item {
     readonly property var dim: theme.dimensions
     readonly property bool isDark: theme.systemSettings.themeMode === "dark"
 
-    readonly property color aiBgTop: theme.colors.leftMenuBgColorV2
-    readonly property color aiBgBottom: theme.colors.leftMenuBgColorV1
+    readonly property color aiBgTop: theme.colors.surfaceContainerHigh
+    readonly property color aiBgBottom: theme.colors.surfaceContainer
     readonly property color aiBorderColor: theme.colors.primary
     readonly property color aiAccentColor: theme.colors.secondary
-    readonly property color aiTextColor: theme.colors.leftMenuFgColorV1
-    readonly property color aiSubTextColor: theme.colors.subtleText
+    readonly property color aiTextColor: theme.colors.onSurface
+    readonly property color aiSubTextColor: theme.colors.onSurfaceVariant
     readonly property color aiHeaderBg: theme.colors.primary.alpha(0.16)
-    readonly property color aiButtonBg: theme.colors.leftMenuBgColorV2
+    readonly property color aiButtonBg: theme.colors.surfaceContainerHigh
     readonly property color aiButtonHover: theme.colors.primary.alpha(0.22)
     readonly property color aiDivider: theme.colors.primary.alpha(0.5)
 

@@ -123,7 +123,7 @@ BaseMenuView {
                             text: title
                             font.family: root.typo.bodyFont
                             font.pixelSize: root.typo.small
-                            color: root.colors.leftMenuFgColorV1
+                            color: root.colors.onSurface
                             Layout.fillWidth: true
                             elide: Text.ElideRight
                         }

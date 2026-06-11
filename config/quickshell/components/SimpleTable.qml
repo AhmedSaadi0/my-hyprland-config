@@ -15,14 +15,14 @@ Rectangle {
     property var model: null
 
     // --- Properties for Table Container ---
-    property color tableBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+    property color tableBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainer
     property color tableBorderColor: ThemeManager.selectedTheme.colors.primary.alpha(0.25)
     property int tableBorderWidth: 2
     property real tableRadius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     // --- Properties for Header ---
-    property color headerBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    property color headerTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+    property color headerBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+    property color headerTextColor: ThemeManager.selectedTheme.colors.onSurface
     property font headerFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.heading4Size,
         bold: true
@@ -33,7 +33,7 @@ Rectangle {
     property int headerCellSpacing: 0
 
     // --- DEFAULT Properties for Cells/Rows Text ---
-    property color cellTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+    property color cellTextColor: ThemeManager.selectedTheme.colors.onSurface
     property font cellFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.medium
     })
@@ -41,14 +41,14 @@ Rectangle {
     property var cellWrapMode: Text.NoWrap
 
     // --- Properties for Sub-Value Text ---
-    property color subCellTextColor: ThemeManager.selectedTheme.colors.success
+    property color subCellTextColor: ThemeManager.selectedTheme.colors.tertiary
     property font subCellFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.small - 3
     })
 
     // --- General Cell Properties ---
-    property color cellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
-    property color alternatingCellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    property color cellBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainer
+    property color alternatingCellBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
     property color cellBorderColor: ThemeManager.selectedTheme.colors.primary.alpha(0.18)
     property int cellBorderWidth: 1
     property int rowHeight: Kirigami.Units.gridUnit * 3

@@ -18,7 +18,7 @@ PanelWindow {
     id: root
 
     implicitWidth: ThemeManager.selectedTheme.dimensions.leftBarWidth
-    // color: ThemeManager.selectedTheme.colors.topbarColor
+    // color: ThemeManager.selectedTheme.colors.surface
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Bottom
@@ -282,7 +282,7 @@ PanelWindow {
         layer.effect: MultiEffect {
             source: topButtonGroup
             shadowEnabled: true
-            shadowColor: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.6)
+            shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
@@ -315,7 +315,7 @@ PanelWindow {
             source: middleButtonGroup
             shadowEnabled: true
             // shadowColor: palette.shadow.alpha(0.6)
-            shadowColor: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.6)
+            shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2
@@ -344,7 +344,7 @@ PanelWindow {
             source: bottomButtonGroup
             shadowEnabled: true
             // shadowColor: palette.shadow.alpha(0.6)
-            shadowColor: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(0.6)
+            shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.6)
             shadowBlur: 0.6
             shadowVerticalOffset: 2
             shadowHorizontalOffset: 2

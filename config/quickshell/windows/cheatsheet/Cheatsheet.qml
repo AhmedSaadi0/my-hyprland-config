@@ -90,7 +90,7 @@ PanelWindow {
         var theme = ThemeManager.selectedTheme;
         switch (modmask) {
         case 0:
-            return theme.colors.subtleText;
+            return theme.colors.onSurfaceVariant;
         case 64:
             return theme.colors.primary;
         case 65:
@@ -98,9 +98,9 @@ PanelWindow {
         case 68:
             return Qt.darker(theme.colors.primary, 1.1);
         case 72:
-            return theme.colors.topbarBgColorV2;
+            return theme.colors.surfaceContainerHigh;
         case 9:
-            return theme.colors.topbarBgColorV3;
+            return theme.colors.primaryContainer;
         default:
             return theme.colors.secondary;
         }
@@ -110,15 +110,15 @@ PanelWindow {
         var theme = ThemeManager.selectedTheme;
         switch (modmask) {
         case 0:
-            return theme.colors.leftMenuFgColorV1;
+            return theme.colors.onSurface;
         case 64:
         case 65:
         case 68:
             return theme.colors.onPrimary;
         case 72:
-            return theme.colors.topbarFgColorV2;
+            return theme.colors.onSurfaceVariant;
         case 9:
-            return theme.colors.topbarFgColorV3;
+            return theme.colors.onPrimaryContainer;
         default:
             return theme.colors.onSecondary;
         }
@@ -154,7 +154,7 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
-        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+        color: ThemeManager.selectedTheme.colors.surfaceContainer
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
         MButton {
@@ -212,7 +212,7 @@ PanelWindow {
             text: "📊 " + hyprBinds.filter(bind => bind.has_description).length + " shortcuts available • " + categorizedShortcuts.length + " modifier groups"
             font.pixelSize: ThemeManager.selectedTheme.typography.small
             font.family: ThemeManager.selectedTheme.typography.bodyFont
-            color: ThemeManager.selectedTheme.colors.subtleText
+            color: ThemeManager.selectedTheme.colors.onSurfaceVariant
             anchors {
                 top: title.bottom
                 topMargin: ThemeManager.selectedTheme.dimensions.spacingMedium
@@ -249,7 +249,7 @@ PanelWindow {
                         id: categoryCard
                         width: Math.min(flow.width, 430)
                         height: 500
-                        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+                        color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
                         radius: ThemeManager.selectedTheme.dimensions.baseRadius
                         border.width: 1
                         border.color: Qt.rgba(ThemeManager.selectedTheme.colors.primary.r, ThemeManager.selectedTheme.colors.primary.g, ThemeManager.selectedTheme.colors.primary.b, 0.1)
@@ -313,7 +313,7 @@ PanelWindow {
                                 delegate: Rectangle {
                                     width: shortcutsListView.width
                                     height: Math.max(75, shortcutColumn.height + 20)
-                                    color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+                                    color: ThemeManager.selectedTheme.colors.surfaceContainer
                                     radius: ThemeManager.selectedTheme.dimensions.elementRadius
                                     border.width: 1
                                     border.color: Qt.rgba(ThemeManager.selectedTheme.colors.primary.r, ThemeManager.selectedTheme.colors.primary.g, ThemeManager.selectedTheme.colors.primary.b, 0.05)
@@ -338,7 +338,7 @@ PanelWindow {
                                             text: modelData.description
                                             font.pixelSize: ThemeManager.selectedTheme.typography.baseFontSize
                                             font.family: ThemeManager.selectedTheme.typography.bodyFont
-                                            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                                            color: ThemeManager.selectedTheme.colors.onSurface
                                             width: parent.width
                                             wrapMode: Text.Wrap
                                             lineHeight: 1.2
@@ -370,7 +370,7 @@ PanelWindow {
                                                 text: modelData.arg ? "📁 " + (modelData.arg.length > 50 ? modelData.arg.substring(0, 50) + "..." : modelData.arg) : ""
                                                 font.pixelSize: ThemeManager.selectedTheme.typography.small
                                                 font.family: ThemeManager.selectedTheme.typography.bodyFont
-                                                color: ThemeManager.selectedTheme.colors.subtleText
+                                                color: ThemeManager.selectedTheme.colors.onSurfaceVariant
                                                 elide: Text.ElideRight
                                             }
                                         }
@@ -386,7 +386,7 @@ PanelWindow {
                                         radius: 3
                                     }
                                     contentItem: Rectangle {
-                                        color: ThemeManager.selectedTheme.colors.subtleText
+                                        color: ThemeManager.selectedTheme.colors.onSurfaceVariant
                                         radius: 3
                                     }
                                 }

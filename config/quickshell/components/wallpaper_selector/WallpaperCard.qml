@@ -85,7 +85,7 @@ Item {
                 Layout.fillHeight: true
 
                 radius: root.theme.dimensions.elementRadius - 2
-                color: root.theme.colors.leftMenuBgColorV1
+                color: root.theme.colors.surfaceContainer
                 clip: true
 
                 Image {
@@ -136,7 +136,7 @@ Item {
                     height: 16
                     width: favCountText.width + 8
                     radius: 4
-                    color: root.theme.colors.topbarColor.alpha(0.72)
+                    color: root.theme.colors.surface.alpha(0.72)
                     visible: root.isWallhaven && root.modelData && (root.modelData.favorites || 0) > 0
 
                     Text {
@@ -155,7 +155,7 @@ Item {
                 Layout.fillWidth: true
                 text: root.displayName
                 font.pixelSize: 10
-                color: root.theme.colors.subtleText
+                color: root.theme.colors.onSurfaceVariant
                 elide: Text.ElideMiddle
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -248,7 +248,7 @@ Item {
             height: width
             radius: width / 2
 
-            color: btnMouseArea.containsMouse ? root.theme.colors.primary : root.theme.colors.topbarColor.alpha(0.6)
+            color: btnMouseArea.containsMouse ? root.theme.colors.primary : root.theme.colors.surface.alpha(0.6)
             border.width: 1
             border.color: btnMouseArea.containsMouse ? root.theme.colors.onPrimary : root.theme.colors.primary.alpha(0.3)
 

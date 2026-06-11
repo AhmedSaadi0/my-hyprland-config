@@ -19,9 +19,9 @@ Item {
     readonly property color p1_mid: ThemeManager.selectedTheme.colors.secondary
     readonly property color p1_end: ThemeManager.selectedTheme.colors.tertiary
     readonly property color p2_start: ThemeManager.selectedTheme.colors.error
-    readonly property color p2_mid: ThemeManager.selectedTheme.colors.warning
+    readonly property color p2_mid: ThemeManager.selectedTheme.colors.secondary
     readonly property color p2_end: ThemeManager.selectedTheme.colors.primary
-    readonly property color p3_start: ThemeManager.selectedTheme.colors.success
+    readonly property color p3_start: ThemeManager.selectedTheme.colors.tertiary
     readonly property color p3_mid: ThemeManager.selectedTheme.colors.tertiary
     readonly property color p3_end: ThemeManager.selectedTheme.colors.secondary
     readonly property int colorCycleDuration: 2000
@@ -243,7 +243,7 @@ Item {
         id: progressBar
         height: parent.height
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        color: ThemeManager.selectedTheme.colors.topbarFgColor
+        color: ThemeManager.selectedTheme.colors.onSurface
         opacity: 0.4
         anchors.left: parent.left
         visible: CapsuleManager.showProgress && root.showInfo
@@ -616,16 +616,16 @@ Item {
                                 ThemeManager.selectedTheme.colors.primary,
                                 ThemeManager.selectedTheme.colors.secondary,
                                 ThemeManager.selectedTheme.colors.tertiary,
-                                ThemeManager.selectedTheme.colors.success,
-                                ThemeManager.selectedTheme.colors.warning,
+                                ThemeManager.selectedTheme.colors.tertiary,
+                                ThemeManager.selectedTheme.colors.secondary,
                                 ThemeManager.selectedTheme.colors.error
                             ]
                             property var textColors: [
                                 ThemeManager.selectedTheme.colors.onPrimary,
                                 ThemeManager.selectedTheme.colors.onSecondary,
                                 ThemeManager.selectedTheme.colors.onTertiary,
-                                ThemeManager.selectedTheme.colors.onSuccess,
-                                ThemeManager.selectedTheme.colors.onWarning,
+                                ThemeManager.selectedTheme.colors.onTertiary,
+                                ThemeManager.selectedTheme.colors.onSecondary,
                                 ThemeManager.selectedTheme.colors.onError
                             ]
                             color: colors[index % colors.length]

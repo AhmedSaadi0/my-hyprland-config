@@ -104,7 +104,7 @@ BaseThemeSettings {
         property alias previewFont: previewLabel.font
 
         Layout.fillWidth: true
-        color: root.theme.colors.leftMenuBgColorV2.alpha(0.65)
+        color: root.theme.colors.surfaceContainerHigh.alpha(0.65)
         radius: root.theme.dimensions.baseRadius / 1.5
         border.color: root.theme.colors.primary.alpha(0.14)
         border.width: 1
@@ -114,7 +114,7 @@ BaseThemeSettings {
             id: previewLabel
             anchors.fill: parent
             anchors.margins: 11
-            color: root.theme.colors.leftMenuFgColorV1
+            color: root.theme.colors.onSurface
             wrapMode: Text.WordWrap
         }
     }
@@ -132,7 +132,7 @@ BaseThemeSettings {
         Controls.Label {
             text: label
             font.bold: true
-            color: root.theme.colors.leftMenuFgColorV1
+            color: root.theme.colors.onSurface
         }
 
         RowLayout {

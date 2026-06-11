@@ -286,7 +286,7 @@ Item {
         border.width: 2
         Rectangle {
             anchors.fill: parent
-            color: ThemeManager.selectedTheme.colors.topbarColor
+            color: ThemeManager.selectedTheme.colors.surface
             opacity: 0.2
         }
     }

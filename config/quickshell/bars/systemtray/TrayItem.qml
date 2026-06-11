@@ -150,10 +150,10 @@ MouseArea {
         anchors.fill: parent
         anchors.margins: 2
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        color: needsAttention ? ThemeManager.selectedTheme.colors.warning : ThemeManager.selectedTheme.colors.primary
+        color: needsAttention ? ThemeManager.selectedTheme.colors.secondary : ThemeManager.selectedTheme.colors.primary
         opacity: root.containsPress ? 0.30 : (root.containsMouse ? 0.14 : (needsAttention ? 0.12 : 0))
         border.width: needsAttention ? 1 : 0
-        border.color: needsAttention ? ThemeManager.selectedTheme.colors.warning : "transparent"
+        border.color: needsAttention ? ThemeManager.selectedTheme.colors.secondary : "transparent"
 
         Behavior on opacity {
             NumberAnimation {
@@ -182,9 +182,9 @@ MouseArea {
         width: parent.implicitHeight - 2
         height: parent.implicitHeight - 2
         radius: ThemeManager.selectedTheme.dimensions.elementRadius / 1.6
-        color: root.containsPress ? ThemeManager.selectedTheme.colors.topbarBgColorV2 : "transparent"
+        color: root.containsPress ? ThemeManager.selectedTheme.colors.surfaceContainerHigh : "transparent"
         border.width: root.containsMouse ? 1 : 0
-        border.color: ThemeManager.selectedTheme.colors.topbarFgColorV2.alpha(0.22)
+        border.color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.22)
 
         IconImage {
             id: trayIcon
@@ -210,7 +210,7 @@ MouseArea {
         height: tooltipText.height + ThemeManager.selectedTheme.dimensions.spacingSmall
         z: 100
 
-        color: ThemeManager.selectedTheme.colors.topbarColor
+        color: ThemeManager.selectedTheme.colors.surface
         border.color: ThemeManager.selectedTheme.colors.primary
         border.width: 1
         radius: ThemeManager.selectedTheme.dimensions.elementRadius / 4
@@ -219,7 +219,7 @@ MouseArea {
             id: tooltipText
             anchors.centerIn: parent
             text: (modelData.tooltipTitle || modelData.title || modelData.tooltipDescription || "")
-            color: ThemeManager.selectedTheme.colors.topbarFgColor
+            color: ThemeManager.selectedTheme.colors.onSurface
             font.family: ThemeManager.selectedTheme.typography.bodyFont
             font.pixelSize: ThemeManager.selectedTheme.typography.small
         }

@@ -14,11 +14,11 @@ PanelWindow {
     readonly property bool hasTheme: theme !== null
     property real contentOpacity: hasTheme ? 1 : 0
 
-    readonly property color backgroundColor: hasTheme ? theme.colors.topbarColor : "transparent"
-    readonly property color foregroundColor: hasTheme ? theme.colors.topbarFgColor : "transparent"
-    readonly property color subtleColor: hasTheme ? theme.colors.subtleText : "transparent"
+    readonly property color backgroundColor: hasTheme ? theme.colors.surface : "transparent"
+    readonly property color foregroundColor: hasTheme ? theme.colors.onSurface : "transparent"
+    readonly property color subtleColor: hasTheme ? theme.colors.onSurfaceVariant : "transparent"
     readonly property color primaryColor: hasTheme ? theme.colors.primary : "transparent"
-    readonly property color progressBackgroundColor: hasTheme ? theme.colors.topbarBgColorV2 : "transparent"
+    readonly property color progressBackgroundColor: hasTheme ? theme.colors.surfaceContainerHigh : "transparent"
     readonly property string bodyFont: hasTheme ? theme.typography.bodyFont : ""
 
     exclusionMode: ExclusionMode.Ignore

@@ -16,23 +16,14 @@ MenuCard {
     // --- Texts & Content ---
     title: qsTr("Power Profiles") // "وضع الاداء"
     icon: ""
+    cardColor: ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.7)
+    textColor: ThemeManager.selectedTheme.colors.onSecondaryContainer
 
     property int defaultButtonWidth: 100
     property int defaultButtonHeight: 30
 
     property int buttonsRowSpacing: 7
     property int innerRadiusDiv: 3
-
-    // --- Colors (Aliasing Theme colors for clarity and central access) ---
-    property color baseTextColor: ThemeManager.selectedTheme.colors.topbarFgColorV1
-    property color highlightedStateTextColor: {
-        let bg = activeStateBackgroundColor;
-
-        let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-        return luminance > 0.5 ? ThemeManager.selectedTheme.colors.topbarFgColor : ThemeManager.selectedTheme.colors.topbarColor;
-    }
-    property color activeStateBackgroundColor: ThemeManager.selectedTheme.colors.primary
-    property color defaultStateBackgroundColor: ThemeManager.selectedTheme.colors.topbarBgColorV2
 
     property string highPerformanceButtonLabel: qsTr("High")
     property string balancedButtonLabel: qsTr("Balanced")
@@ -133,6 +124,12 @@ MenuCard {
                 }
                 enabled: PowerProfiles.hasPerformanceProfile
                 isActive: root.selectedProfile === root.profileIndexPerformance
+                normalBackground: {
+                    let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
+                    return ThemeManager.selectedTheme._themeMode === "dark"
+                        ? Qt.lighter(base, 1.15)
+                        : Qt.darker(base, 1.12);
+                }
                 // normalBackground: (root.selectedProfile === root.profileIndexPerformance) ? root.activeStateBackgroundColor : root.defaultStateBackgroundColor
                 // normalForeground: (root.selectedProfile === root.profileIndexPerformance) ? root.highlightedStateTextColor : root.baseTextColor
 
@@ -145,6 +142,12 @@ MenuCard {
                 Layout.fillWidth: true // <--- ADDED
                 height: root.defaultButtonHeight
                 text: root.balancedButtonLabel
+                normalBackground: {
+                    let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
+                    return ThemeManager.selectedTheme._themeMode === "dark"
+                        ? Qt.lighter(base, 1.15)
+                        : Qt.darker(base, 1.12);
+                }
                 onClicked: {
                     _requestProfileChange(PowerProfile.Balanced);
                 }
@@ -164,6 +167,12 @@ MenuCard {
                 Layout.fillWidth: true // <--- ADDED
                 height: root.defaultButtonHeight
                 text: root.lowButtonLabel
+                normalBackground: {
+                    let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
+                    return ThemeManager.selectedTheme._themeMode === "dark"
+                        ? Qt.lighter(base, 1.15)
+                        : Qt.darker(base, 1.12);
+                }
                 onClicked: {
                     _requestProfileChange(PowerProfile.PowerSaver);
                 }
@@ -185,14 +194,14 @@ MenuCard {
                 text: ""
                 font.family: ThemeManager.selectedTheme.typography.iconFont
                 font.pixelSize: 12
-                color: ThemeManager.selectedTheme.colors.warning
+                color: ThemeManager.selectedTheme.colors.onSecondaryContainer
             }
             Text {
                 Layout.fillWidth: true
                 text: qsTr("High performance profile is not available on this device.")
                 font.family: ThemeManager.selectedTheme.typography.bodyFont
                 font.pixelSize: 11
-                color: ThemeManager.selectedTheme.colors.warning
+                color: ThemeManager.selectedTheme.colors.onSecondaryContainer
                 wrapMode: Text.Wrap
             }
         }

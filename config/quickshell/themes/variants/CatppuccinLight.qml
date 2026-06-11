@@ -1,5 +1,4 @@
 pragma Singleton
-
 import QtQuick
 
 import "root:/config"
@@ -11,22 +10,19 @@ BaseTheme {
     themeName: "CatppuccinLight"
     _themeMode: "light"
 
-    // wallpaper
     _wallpaper: App.assets.getWallpaperPath("catppuccin_light.jpeg")
 
-    // desktopClock
     _desktopClockEnabled: true
     _desktopClockFont: "Overhead BRK"
     _desktopClockColor: "#281F34"
     _desktopClockFormat: "hh:mm AP - MM/dd"
     _desktopClockSize: Qt.size(638.23, 225.73)
     _desktopClockPosition: Qt.point(638.09, 552.60)
-    _desktopClockSahdowEnabled: false
-    _desktopClockSahdowColor: "#00000044"
+    _desktopClockShadowEnabled: false
+    _desktopClockShadowColor: "#00000044"
     _desktopClockUseThemeColor: false
     _desktopClockUseAnimation: true
 
-    // Clock Depth Effect
     _desktopClockDepthEffectEnabled: true
     _desktopClockDepthModel: "u2net"
     _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("catppuccin_light_depth.png")
@@ -38,7 +34,6 @@ BaseTheme {
 
     _themeIcons: "Colloid-Purple-Dracula-Dark"
 
-    // Hyprland
     _hyprBorderWidth: 2
     _hyprRounding: 12
     _hyprDropShadow: "yes"
@@ -57,52 +52,46 @@ BaseTheme {
     _hyprShadowRange: 28
     _hyprShadowColor: "#ffffff"
 
-    // --- الألوان الأساسية ---
-    _primary: "#209fb5" // Blue
-    _onPrimary: "#eff1f5"
+    _primary: "#209fb5"           // Teal
+    _onPrimary: "#EFF1F5"         // Base
+    _secondary: "#ea76cb"         // Pink
+    _onSecondary: "#EFF1F5"
+    _tertiary: "#40a02b"          // Green (تم تغييرها لـ Latte Green الحقيقية لزيادة التناسق)
+    _onTertiary: "#EFF1F5"
+    _error: "#d20f39"             // Red
+    _onError: "#EFF1F5"
 
-    _secondary: "#ea76cb" // Pink
-    _onSecondary: "#eff1f5"
+    _surface: "#EFF1F5"                      // Base
+    _onSurface: "#4C4F69"                    // Text
+    _surfaceDim: "#DCE0E8"                   // Crust
+    _surfaceBright: "#EFF1F5"                // Base
+    _surfaceContainerLowest: "#FFFFFF"
+    _surfaceContainerLow: "#F2F3F7"          // Mantle
+    _surfaceContainer: "#EFF1F5"             // Base
+    _surfaceContainerHigh: "#E6E9EF"         // Mantle
+    _surfaceContainerHighest: "#CCD0DA"      // Surface0
+    _surfaceVariant: "#E6E9EF"
+    _onSurfaceVariant: "#6C7086"             // Subtext0
 
-    _tertiary: "#739d6f" // Mauve
-    _onTertiary: "#eff1f5"
+    _primaryContainer: "#d2f1f5"             // Light Teal Container
+    _onPrimaryContainer: "#1e6c7a"
+    _secondaryContainer: "#fddfe9"           // Light Pink Container
+    _onSecondaryContainer: "#9e3d82"
+    _tertiaryContainer: "#e2efdf"            // Light Green Container
+    _onTertiaryContainer: "#2d701e"
+    _errorContainer: "#f8d7da"               // Light Red Container
+    _onErrorContainer: "#d20f39"
 
-    _error: "#f38ba8"
-    _onError: "#eff1f5"
-
-    _success: "#739d6f"
-    _onSuccess: "#eff1f5"
-
-    _warning: "#c5b28a"
-    _onWarning: "#eff1f5"
-
-    _topbarColor: "#e6e9ef" // Mantle
-    _topbarFgColor: "#4c4f69" // Text
-
-    _topbarBgColorV1: "#ccd0da" // Surface0
-    _topbarBgColorV2: "#bcc0cc" // Surface1
-    _topbarBgColorV3: "#acb0be" // Surface2
-
-    _topbarFgColorV1: "#4c4f69" // Text
-    _topbarFgColorV2: "#4c4f69" // Text
-    _topbarFgColorV3: "#4c4f69" // Text
-
-    _leftMenuBgColorV1: "#eff1f5" // Base
-    _leftMenuBgColorV2: "#e6e9ef" // Mantle
-    // خلفية العنصر النشط أغمق قليلاً من البقية للتمييز
-    _leftMenuBgColorV3: "#bcc0cc" // Surface1
-
-    _leftMenuFgColorV1: "#7287fd" // Lavender (لون النص للعنصر النشط)
-    _leftMenuFgColorV2: "#4c4f69" // Text
-    _leftMenuFgColorV3: "#eff1f5" // Base (لون النص فوق الخلفية النشطة)
-
-    _subtleTextColor: "#6c6f85cc"
-    _volOsdBgColor: "#ccd0da" // Surface0
-    _volOsdFgColor: "#4c4f69" // Text
+    _outline: "#9CA0B0"                      // Surface2
+    _outlineVariant: "#CCD0DA"               // Surface0
+    _inverseSurface: "#4C4F69"
+    _onInverseSurface: "#EFF1F5"
+    _inversePrimary: "#209FB5"
+    _shadow: "#000000"
+    _scrim: "#000000"
 
     _plasmaColorScheme: "NibrasCatppuccinLight"
     _konsoleProfile: "CatppuccinLight.profile"
 
-    // _kvantumTheme: "Tellgo"
     _gtkTheme: "Catppuccin-Latte-Standard-Blue-Light"
 }
