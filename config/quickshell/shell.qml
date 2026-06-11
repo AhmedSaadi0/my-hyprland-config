@@ -21,7 +21,6 @@ import "root:/utils"
 import "root:/config"
 import "root:/desktop"
 import "root:/themes"
-// import "root:/shadows"
 import "root:/services"
 import "root:/windows/smart_capsule/logic"
 import "root:/config/ConstValues.js" as Consts
@@ -43,15 +42,6 @@ ShellRoot {
         NetworkService.syncTimers();
     }
 
-    // // --- Initialization Logic ---
-    // Component.onCompleted: {
-    //     if (ThemeManager.isInitialThemeReady) {
-    //         activateMainUI();
-    //     } else {
-    //         console.log("Waiting for ThemeManager...");
-    //     }
-    // }
-
     Connections {
         target: ThemeManager
         function onInitialThemeReady() {
@@ -69,6 +59,7 @@ ShellRoot {
         }
     }
 
+    // مؤقت الإقلاع المبدئي لبدء تحميل مكونات الواجهة
     Timer {
         id: startComp
         interval: 1000
@@ -84,43 +75,51 @@ ShellRoot {
 
         mainUiLoader.active = true;
         initializeGlobalWindows();
-        splashTimer.start();
     }
 
     function initializeGlobalWindows() {
-        // دالة مساعدة لإنشاء النوافذ العامة مرة واحدة
-        const createGlobalWindow = (component, name) => {
-            const instance = component.createObject(shellRoot);
-            if (!instance)
-                console.error(`CRITICAL: Failed to create ${name}!`);
-            return instance;
+        const createGlobalWindowAsync = (component, name, callback) => {
+            const incubator = component.incubateObject(shellRoot);
+
+            if (incubator.status === Component.Ready) {
+                callback(incubator.object);
+            } else {
+                incubator.onStatusChanged = function (status) {
+                    if (status === Component.Ready) {
+                        callback(incubator.object);
+                    } else if (status === Component.Error) {
+                        console.error(`CRITICAL: Failed to asynchronously create ${name}!`);
+                    }
+                };
+            }
         };
 
         if (!settingsWindowInstance) {
-            settingsWindowInstance = createGlobalWindow(settingsWindowComponent, "Settings Window");
+            createGlobalWindowAsync(settingsWindowComponent, "Settings Window", instance => {
+                settingsWindowInstance = instance;
+            });
         }
 
         if (!notificationsInstance) {
-            notificationsInstance = createGlobalWindow(notificationsComponent, "Notifications");
-        }
-    }
-
-    // --- Splash Screen ---
-    Timer {
-        id: splashTimer
-        interval: 1000
-        repeat: false
-        onTriggered: {
-            splashScreen.visible = false;
+            createGlobalWindowAsync(notificationsComponent, "Notifications", instance => {
+                notificationsInstance = instance;
+            });
         }
     }
 
     SplashScreen {
         id: splashScreen
-        Behavior on visible {
-            NumberAnimation {
-                duration: 500
-            }
+        active: true // تبدأ نشطة وتظهر المحتوى
+    }
+
+    // مؤقت ذكي يعطي مهلة قصيرة (300 مللي ثانية) لكرت الشاشة ليرسم الواجهة الخلفية قبل إخفاء الـ Splash
+    Timer {
+        id: hideSplashDelay
+        interval: 300
+        repeat: false
+        onTriggered: {
+            mainUiLoader.opacity = 1.0;
+            splashScreen.active = false; // تفعيل تلاشي المحتوى داخلياً بنعومة تمهيداً للإغلاق
         }
     }
 
@@ -129,19 +128,20 @@ ShellRoot {
         id: mainUiLoader
         anchors.fill: parent
         active: false
+        asynchronous: true // تحميل خلفي ذكي خفيف على المعالج
         opacity: 0.0
         sourceComponent: mainUiComponent
 
         Behavior on opacity {
             NumberAnimation {
-                duration: 500
+                duration: 400
             }
         }
 
         onStatusChanged: {
             if (status === Loader.Ready) {
-                console.log("Main UI Loaded.");
-                mainUiLoader.opacity = 1.0;
+                console.log("Main UI Loaded and Ready in memory.");
+                hideSplashDelay.start(); // الواجهة جاهزة بالكامل، لنبدأ الآن عملية الانتقال السلس
             } else if (status === Loader.Error) {
                 console.error("CRITICAL: Failed to load Main UI!");
             }
@@ -182,23 +182,6 @@ ShellRoot {
                 }
             }
 
-            // 2. Shadows Layers
-            // Variants {
-            //     model: Quickshell.screens
-            //     LeftbarShadowsLayer {
-            //         required property ShellScreen modelData
-            //         screen: modelData
-            //     }
-            // }
-
-            // Variants {
-            //     model: Quickshell.screens
-            //     TopbarShadowsLayer {
-            //         required property ShellScreen modelData
-            //         screen: modelData
-            //     }
-            // }
-
             // 3. Bars & Corners
             Variants {
                 model: Quickshell.screens
@@ -208,33 +191,6 @@ ShellRoot {
                     screen: modelData
                 }
             }
-
-            // Variants {
-            //     model: Quickshell.screens
-            //     TopRightCorner {
-            //         id: topRightCorners
-            //         required property ShellScreen modelData
-            //         screen: modelData
-            //     }
-            // }
-            //
-            // Variants {
-            //     model: Quickshell.screens
-            //     TopLeftCorner {
-            //         id: topLeftCorners
-            //         required property ShellScreen modelData
-            //         screen: modelData
-            //     }
-            // }
-            //
-            // Variants {
-            //     model: Quickshell.screens
-            //     BottomLeftCorner {
-            //         id: bottomLeftCorner
-            //         required property ShellScreen modelData
-            //         screen: modelData
-            //     }
-            // }
 
             Variants {
                 model: Quickshell.screens
@@ -265,7 +221,6 @@ ShellRoot {
             }
             PowerMenuWindow {
                 id: powerMenuWindow
-                // visible is handled via the connection below
             }
 
             // Event listener for bottom launcher toggle from LeftBar
@@ -278,7 +233,7 @@ ShellRoot {
                 }
             }
 
-            // 5. IPC Handler (Refactored Logic)
+            // 5. IPC Handler
             IpcHandler {
                 id: handler
                 target: "LeftBar"
