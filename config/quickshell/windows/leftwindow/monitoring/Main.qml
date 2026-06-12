@@ -6,6 +6,7 @@ import QtQuick.Controls
 import "root:/components"
 import "root:/themes"
 import "root:/config/EventNames.js" as Events
+import "root:/config/ConstValues.js" as C
 import "root:/config"
 import "../base"
 
@@ -26,45 +27,65 @@ BaseMenuView {
     ColumnLayout {
         Layout.fillWidth: true
         Layout.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
-        spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        spacing: 7
+
+        property int groupRadius: ThemeManager.selectedTheme.dimensions.elementRadius / C.M3_BUTTON_RADIUS_DIVISOR
+        property int innerRadiusDiv: 3
 
         RowLayout {
             Layout.fillWidth: true
-            spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+            spacing: 7
 
             ProcessTable {
                 id: cpuTable
                 Layout.fillWidth: true
                 title: "Cpu Usage"
                 command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "cpu"]
+                topLeftTableRadius: parent.parent.groupRadius
+                topRightTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                bottomLeftTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                bottomRightTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
             }
             ProcessTable {
                 id: ramTable
                 Layout.fillWidth: true
                 title: "Mem Usage"
                 command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "ram"]
+                topLeftTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                topRightTableRadius: parent.parent.groupRadius
+                bottomLeftTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                bottomRightTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
             }
         }
 
         RowLayout {
             Layout.fillWidth: true
-            spacing: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+            spacing: 7
 
             TempTable {
                 id: tempTable
                 Layout.fillWidth: true
                 Layout.preferredHeight: 120
+                topLeftTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                topRightTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                bottomLeftTableRadius: parent.parent.groupRadius
+                bottomRightTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
             }
             BatteryTable {
                 id: batteryTable
                 Layout.fillWidth: true
                 Layout.preferredHeight: 120
+                topLeftTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                topRightTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                bottomLeftTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
+                bottomRightTableRadius: parent.parent.groupRadius
             }
         }
 
         SystemMonitor {
             id: systemMonitor
             Layout.fillWidth: true
+            Layout.topMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2
             Layout.bottomMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin / 2
         }
     }

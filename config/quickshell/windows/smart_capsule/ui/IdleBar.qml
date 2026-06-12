@@ -595,7 +595,7 @@ Item {
 
                 Flow {
                     id: tagsFlow
-                    spacing: 5
+                    spacing: 3
                     width: parent.width
                     anchors.horizontalCenter: parent.horizontalCenter
                     flow: Flow.LeftToRight
@@ -609,25 +609,16 @@ Item {
                             id: tagsRectangle
                             height: 18
                             width: Math.min(tagText.implicitWidth + 16, tagsFlow.width)
-                            radius: height / 2
+                            property int groupRadius: ThemeManager.selectedTheme.dimensions.elementRadius / C.M3_BUTTON_RADIUS_DIVISOR
+                            property int innerRadiusDiv: 4
+                            topLeftRadius: index === 0 ? groupRadius : groupRadius / innerRadiusDiv
+                            bottomLeftRadius: index === 0 ? groupRadius : groupRadius / innerRadiusDiv
+                            topRightRadius: index === tagsRepeater.count - 1 ? groupRadius : groupRadius / innerRadiusDiv
+                            bottomRightRadius: index === tagsRepeater.count - 1 ? groupRadius : groupRadius / innerRadiusDiv
 
                             opacity: mouseArea.pressed ? 0.7 : 0.9
-                            property var colors: [
-                                ThemeManager.selectedTheme.colors.primary,
-                                ThemeManager.selectedTheme.colors.secondary,
-                                ThemeManager.selectedTheme.colors.tertiary,
-                                ThemeManager.selectedTheme.colors.tertiary,
-                                ThemeManager.selectedTheme.colors.secondary,
-                                ThemeManager.selectedTheme.colors.error
-                            ]
-                            property var textColors: [
-                                ThemeManager.selectedTheme.colors.onPrimary,
-                                ThemeManager.selectedTheme.colors.onSecondary,
-                                ThemeManager.selectedTheme.colors.onTertiary,
-                                ThemeManager.selectedTheme.colors.onTertiary,
-                                ThemeManager.selectedTheme.colors.onSecondary,
-                                ThemeManager.selectedTheme.colors.onError
-                            ]
+                            property var colors: [ThemeManager.selectedTheme.colors.primary, ThemeManager.selectedTheme.colors.secondary, ThemeManager.selectedTheme.colors.tertiary, ThemeManager.selectedTheme.colors.tertiary, ThemeManager.selectedTheme.colors.secondary, ThemeManager.selectedTheme.colors.error]
+                            property var textColors: [ThemeManager.selectedTheme.colors.onPrimary, ThemeManager.selectedTheme.colors.onSecondary, ThemeManager.selectedTheme.colors.onTertiary, ThemeManager.selectedTheme.colors.onTertiary, ThemeManager.selectedTheme.colors.onSecondary, ThemeManager.selectedTheme.colors.onError]
                             color: colors[index % colors.length]
 
                             Text {

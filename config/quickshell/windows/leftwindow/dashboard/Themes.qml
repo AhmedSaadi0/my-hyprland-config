@@ -134,7 +134,7 @@ MenuCard {
             id: grid
             columns: 3
             Layout.fillWidth: true
-            columnSpacing: 7
+            columnSpacing: 5
             rowSpacing: 7
 
             MButton {
@@ -148,9 +148,7 @@ MenuCard {
                 isActive: ThemeManager.selectedTheme.themeName === "ColorsTheme"
                 normalBackground: {
                     let base = ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.6);
-                    return ThemeManager.selectedTheme._themeMode === "dark"
-                        ? Qt.lighter(base, 1.15)
-                        : Qt.darker(base, 1.12);
+                    return ThemeManager.selectedTheme._themeMode === "dark" ? Qt.lighter(base, 1.15) : Qt.darker(base, 1.12);
                 }
 
                 topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
@@ -167,9 +165,7 @@ MenuCard {
                 isActive: ThemeManager.selectedTheme.themeName === "DeerTheme"
                 normalBackground: {
                     let base = ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.6);
-                    return ThemeManager.selectedTheme._themeMode === "dark"
-                        ? Qt.lighter(base, 1.15)
-                        : Qt.darker(base, 1.12);
+                    return ThemeManager.selectedTheme._themeMode === "dark" ? Qt.lighter(base, 1.15) : Qt.darker(base, 1.12);
                 }
 
                 bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)

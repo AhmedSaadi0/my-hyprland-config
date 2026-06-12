@@ -19,6 +19,10 @@ Rectangle {
     property color tableBorderColor: ThemeManager.selectedTheme.colors.primary.alpha(0.25)
     property int tableBorderWidth: 2
     property real tableRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property real topLeftTableRadius: tableRadius
+    property real topRightTableRadius: tableRadius
+    property real bottomLeftTableRadius: tableRadius
+    property real bottomRightTableRadius: tableRadius
 
     // --- Properties for Header ---
     property color headerBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
@@ -65,7 +69,10 @@ Rectangle {
     color: tableBackgroundColor
     border.color: tableBorderColor
     border.width: tableBorderWidth > 0 ? tableBorderWidth : 0
-    radius: tableRadius
+    topLeftRadius: topLeftTableRadius
+    topRightRadius: topRightTableRadius
+    bottomLeftRadius: bottomLeftTableRadius
+    bottomRightRadius: bottomRightTableRadius
 
     ColumnLayout {
         id: tableContentLayout
@@ -95,8 +102,8 @@ Rectangle {
                     border.color: tableRoot.headerBorderColor
                     border.width: tableRoot.headerBorderWidth > 0 && (tableRoot.showVerticalGridLines || tableRoot.showHorizontalGridLines) ? tableRoot.headerBorderWidth : 0
                     clip: true
-                    topLeftRadius: isFirstCellInRow ? tableRadius : 0
-                    topRightRadius: isLastCellInRow ? tableRadius : 0
+                    topLeftRadius: isFirstCellInRow ? tableRoot.topLeftTableRadius : 0
+                    topRightRadius: isLastCellInRow ? tableRoot.topRightTableRadius : 0
                     Text {
                         text: columnDef.title
                         font: columnDef.headerFont !== undefined ? columnDef.headerFont : tableRoot.headerFont
@@ -143,8 +150,8 @@ Rectangle {
                     border.color: tableRoot.cellBorderColor
                     border.width: (tableRoot.cellBorderWidth > 0 && (tableRoot.showVerticalGridLines || tableRoot.showHorizontalGridLines)) ? tableRoot.cellBorderWidth : 0
                     clip: true
-                    bottomLeftRadius: (isFirstCellInCol && isLastRow) ? tableRoot.tableRadius : 0
-                    bottomRightRadius: (isLastCellInCol && isLastRow) ? tableRoot.tableRadius : 0
+                    bottomLeftRadius: (isFirstCellInCol && isLastRow) ? tableRoot.bottomLeftTableRadius : 0
+                    bottomRightRadius: (isLastCellInCol && isLastRow) ? tableRoot.bottomRightTableRadius : 0
 
                     ColumnLayout {
                         anchors.verticalCenter: parent.verticalCenter

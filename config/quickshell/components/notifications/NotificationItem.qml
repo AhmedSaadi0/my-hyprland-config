@@ -24,7 +24,7 @@ Rectangle {
     signal actionInvoked(int index)
 
     implicitHeight: contentLayout.implicitHeight + (root.theme.dimensions.spacingLarge * 2)
-    color: root.theme.colors.surfaceContainer
+    color: root.theme.colors.surfaceContainerHigh
     radius: root.theme.dimensions.elementRadius
 
     ColumnLayout {

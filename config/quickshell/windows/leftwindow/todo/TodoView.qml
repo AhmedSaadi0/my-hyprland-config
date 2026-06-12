@@ -6,6 +6,7 @@ import QtQuick.Controls
 import "root:/themes"
 import "root:/components"
 import "root:/services"
+import "root:/config/ConstValues.js" as C
 import "../base"
 
 BaseMenuView {
@@ -60,16 +61,22 @@ BaseMenuView {
 
             bottomContent: Flow {
                 Layout.fillWidth: true
-                spacing: 6
+                spacing: 3
                 visible: TodoService.aiSummaryTags && TodoService.aiSummaryTags.length > 0
 
                 Repeater {
+                    id: tagsRepeater
                     model: TodoService.aiSummaryTags
                     delegate: Rectangle {
                         height: 24
                         width: tagText.contentWidth + 16
                         color: smartTodoCard.aiBorderColor.alpha(0.1)
-                        radius: 6
+                        property int groupRadius: ThemeManager.selectedTheme.dimensions.elementRadius / C.M3_BUTTON_RADIUS_DIVISOR
+                        property int innerRadiusDiv: 4
+                        topLeftRadius: index === 0 ? groupRadius : groupRadius / innerRadiusDiv
+                        bottomLeftRadius: index === 0 ? groupRadius : groupRadius / innerRadiusDiv
+                        topRightRadius: index === tagsRepeater.count - 1 ? groupRadius : groupRadius / innerRadiusDiv
+                        bottomRightRadius: index === tagsRepeater.count - 1 ? groupRadius : groupRadius / innerRadiusDiv
                         border.color: smartTodoCard.aiBorderColor.alpha(0.2)
                         Text {
                             id: tagText
