@@ -21,40 +21,48 @@ BaseThemeSettings {
     icon: ""
     showUndoRedoButtons: true
 
-    // --- Local Variables ---
+    // --- Local Variables (M3 Tokens) ---
     property color localPrimary: ThemeManager.selectedTheme.colors.primary
     property color localSecondary: ThemeManager.selectedTheme.colors.secondary
     property color localOnPrimary: ThemeManager.selectedTheme.colors.onPrimary
     property color localOnSecondary: ThemeManager.selectedTheme.colors.onSecondary
-    property color localSubtleText: ThemeManager.selectedTheme.colors.subtleText
-
     property color localTertiary: ThemeManager.selectedTheme.colors.tertiary
     property color localOnTertiary: ThemeManager.selectedTheme.colors.onTertiary
     property color localError: ThemeManager.selectedTheme.colors.error
     property color localOnError: ThemeManager.selectedTheme.colors.onError
-    property color localSuccess: ThemeManager.selectedTheme.colors.success
-    property color localOnSuccess: ThemeManager.selectedTheme.colors.onSuccess
-    property color localWarning: ThemeManager.selectedTheme.colors.warning
-    property color localOnWarning: ThemeManager.selectedTheme.colors.onWarning
 
-    property color localTopbarColor: ThemeManager.selectedTheme.colors.topbarColor
-    property color localTopbarFgColor: ThemeManager.selectedTheme.colors.topbarFgColor
-    property color localTopbarBgV1: ThemeManager.selectedTheme.colors.topbarBgColorV1
-    property color localTopbarFgV1: ThemeManager.selectedTheme.colors.topbarFgColorV1
-    property color localTopbarBgV2: ThemeManager.selectedTheme.colors.topbarBgColorV2
-    property color localTopbarFgV2: ThemeManager.selectedTheme.colors.topbarFgColorV2
-    property color localTopbarBgV3: ThemeManager.selectedTheme.colors.topbarBgColorV3
-    property color localTopbarFgV3: ThemeManager.selectedTheme.colors.topbarFgColorV3
+    property color localSurface: ThemeManager.selectedTheme.colors.surface
+    property color localOnSurface: ThemeManager.selectedTheme.colors.onSurface
+    property color localSurfaceDim: ThemeManager.selectedTheme.colors.surfaceDim
+    property color localSurfaceBright: ThemeManager.selectedTheme.colors.surfaceBright
 
-    property color localMenuBgV1: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
-    property color localMenuFgV1: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-    property color localMenuBgV2: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    property color localMenuFgV2: ThemeManager.selectedTheme.colors.leftMenuFgColorV2
-    property color localMenuBgV3: ThemeManager.selectedTheme.colors.leftMenuBgColorV3
-    property color localMenuFgV3: ThemeManager.selectedTheme.colors.leftMenuFgColorV3
+    property color localSurfaceContainerLowest: ThemeManager.selectedTheme.colors.surfaceContainerLowest
+    property color localSurfaceContainerLow: ThemeManager.selectedTheme.colors.surfaceContainerLow
+    property color localSurfaceContainer: ThemeManager.selectedTheme.colors.surfaceContainer
+    property color localSurfaceContainerHigh: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+    property color localSurfaceContainerHighest: ThemeManager.selectedTheme.colors.surfaceContainerHighest
 
-    property color localVolOsdBg: ThemeManager.selectedTheme.colors.volOsdBgColor
-    property color localVolOsdFg: ThemeManager.selectedTheme.colors.volOsdFgColor
+    property color localSurfaceVariant: ThemeManager.selectedTheme.colors.surfaceVariant
+    property color localOnSurfaceVariant: ThemeManager.selectedTheme.colors.onSurfaceVariant
+
+    property color localPrimaryContainer: ThemeManager.selectedTheme.colors.primaryContainer
+    property color localOnPrimaryContainer: ThemeManager.selectedTheme.colors.onPrimaryContainer
+    property color localSecondaryContainer: ThemeManager.selectedTheme.colors.secondaryContainer
+    property color localOnSecondaryContainer: ThemeManager.selectedTheme.colors.onSecondaryContainer
+    property color localTertiaryContainer: ThemeManager.selectedTheme.colors.tertiaryContainer
+    property color localOnTertiaryContainer: ThemeManager.selectedTheme.colors.onTertiaryContainer
+    property color localErrorContainer: ThemeManager.selectedTheme.colors.errorContainer
+    property color localOnErrorContainer: ThemeManager.selectedTheme.colors.onErrorContainer
+
+    property color localOutline: ThemeManager.selectedTheme.colors.outline
+    property color localOutlineVariant: ThemeManager.selectedTheme.colors.outlineVariant
+
+    property color localInverseSurface: ThemeManager.selectedTheme.colors.inverseSurface
+    property color localOnInverseSurface: ThemeManager.selectedTheme.colors.onInverseSurface
+    property color localInversePrimary: ThemeManager.selectedTheme.colors.inversePrimary
+
+    property color localShadow: ThemeManager.selectedTheme.colors.shadow
+    property color localScrim: ThemeManager.selectedTheme.colors.scrim
 
     // --- Undo/Redo State ---
     property bool _isRestoring: false
@@ -78,41 +86,49 @@ BaseThemeSettings {
     }
 
     function syncFromTheme() {
-        const getCol = val => val !== undefined ? val : theme.colors.topbarColor;
+        const getCol = val => val !== undefined ? val : theme.colors.surface;
 
         localPrimary = getCol(theme._primary);
         localSecondary = getCol(theme._secondary);
         localOnPrimary = getCol(theme._onPrimary);
         localOnSecondary = getCol(theme._onSecondary);
-        localSubtleText = getCol(theme._subtleTextColor);
-
         localTertiary = getCol(theme._tertiary);
         localOnTertiary = getCol(theme._onTertiary);
         localError = getCol(theme._error);
         localOnError = getCol(theme._onError);
-        localSuccess = getCol(theme._success);
-        localOnSuccess = getCol(theme._onSuccess);
-        localWarning = getCol(theme._warning);
-        localOnWarning = getCol(theme._onWarning);
 
-        localTopbarColor = getCol(theme._topbarColor);
-        localTopbarFgColor = getCol(theme._topbarFgColor);
-        localTopbarBgV1 = getCol(theme._topbarBgColorV1);
-        localTopbarFgV1 = getCol(theme._topbarFgColorV1);
-        localTopbarBgV2 = getCol(theme._topbarBgColorV2);
-        localTopbarFgV2 = getCol(theme._topbarFgColorV2);
-        localTopbarBgV3 = getCol(theme._topbarBgColorV3);
-        localTopbarFgV3 = getCol(theme._topbarFgColorV3);
+        localSurface = getCol(theme._surface);
+        localOnSurface = getCol(theme._onSurface);
+        localSurfaceDim = getCol(theme._surfaceDim);
+        localSurfaceBright = getCol(theme._surfaceBright);
 
-        localMenuBgV1 = getCol(theme._leftMenuBgColorV1);
-        localMenuFgV1 = getCol(theme._leftMenuFgColorV1);
-        localMenuBgV2 = getCol(theme._leftMenuBgColorV2);
-        localMenuFgV2 = getCol(theme._leftMenuFgColorV2);
-        localMenuBgV3 = getCol(theme._leftMenuBgColorV3);
-        localMenuFgV3 = getCol(theme._leftMenuFgColorV3);
+        localSurfaceContainerLowest = getCol(theme._surfaceContainerLowest);
+        localSurfaceContainerLow = getCol(theme._surfaceContainerLow);
+        localSurfaceContainer = getCol(theme._surfaceContainer);
+        localSurfaceContainerHigh = getCol(theme._surfaceContainerHigh);
+        localSurfaceContainerHighest = getCol(theme._surfaceContainerHighest);
 
-        localVolOsdBg = getCol(theme._volOsdBgColor);
-        localVolOsdFg = getCol(theme._volOsdFgColor);
+        localSurfaceVariant = getCol(theme._surfaceVariant);
+        localOnSurfaceVariant = getCol(theme._onSurfaceVariant);
+
+        localPrimaryContainer = getCol(theme._primaryContainer);
+        localOnPrimaryContainer = getCol(theme._onPrimaryContainer);
+        localSecondaryContainer = getCol(theme._secondaryContainer);
+        localOnSecondaryContainer = getCol(theme._onSecondaryContainer);
+        localTertiaryContainer = getCol(theme._tertiaryContainer);
+        localOnTertiaryContainer = getCol(theme._onTertiaryContainer);
+        localErrorContainer = getCol(theme._errorContainer);
+        localOnErrorContainer = getCol(theme._onErrorContainer);
+
+        localOutline = getCol(theme._outline);
+        localOutlineVariant = getCol(theme._outlineVariant);
+
+        localInverseSurface = getCol(theme._inverseSurface);
+        localOnInverseSurface = getCol(theme._onInverseSurface);
+        localInversePrimary = getCol(theme._inversePrimary);
+
+        localShadow = getCol(theme._shadow);
+        localScrim = getCol(theme._scrim);
     }
 
     // --- Undo/Redo ---
@@ -188,31 +204,36 @@ BaseThemeSettings {
             "_secondary": localSecondary.toString(),
             "_onPrimary": localOnPrimary.toString(),
             "_onSecondary": localOnSecondary.toString(),
-            "_subtleTextColor": localSubtleText.toString(),
             "_tertiary": localTertiary.toString(),
             "_onTertiary": localOnTertiary.toString(),
             "_error": localError.toString(),
             "_onError": localOnError.toString(),
-            "_success": localSuccess.toString(),
-            "_onSuccess": localOnSuccess.toString(),
-            "_warning": localWarning.toString(),
-            "_onWarning": localOnWarning.toString(),
-            "_topbarColor": localTopbarColor.toString(),
-            "_topbarFgColor": localTopbarFgColor.toString(),
-            "_topbarBgColorV1": localTopbarBgV1.toString(),
-            "_topbarFgColorV1": localTopbarFgV1.toString(),
-            "_topbarBgColorV2": localTopbarBgV2.toString(),
-            "_topbarFgColorV2": localTopbarFgV2.toString(),
-            "_topbarBgColorV3": localTopbarBgV3.toString(),
-            "_topbarFgColorV3": localTopbarFgV3.toString(),
-            "_leftMenuBgColorV1": localMenuBgV1.toString(),
-            "_leftMenuFgColorV1": localMenuFgV1.toString(),
-            "_leftMenuBgColorV2": localMenuBgV2.toString(),
-            "_leftMenuFgColorV2": localMenuFgV2.toString(),
-            "_leftMenuBgColorV3": localMenuBgV3.toString(),
-            "_leftMenuFgColorV3": localMenuFgV3.toString(),
-            "_volOsdBgColor": localVolOsdBg.toString(),
-            "_volOsdFgColor": localVolOsdFg.toString()
+            "_surface": localSurface.toString(),
+            "_onSurface": localOnSurface.toString(),
+            "_surfaceDim": localSurfaceDim.toString(),
+            "_surfaceBright": localSurfaceBright.toString(),
+            "_surfaceContainerLowest": localSurfaceContainerLowest.toString(),
+            "_surfaceContainerLow": localSurfaceContainerLow.toString(),
+            "_surfaceContainer": localSurfaceContainer.toString(),
+            "_surfaceContainerHigh": localSurfaceContainerHigh.toString(),
+            "_surfaceContainerHighest": localSurfaceContainerHighest.toString(),
+            "_surfaceVariant": localSurfaceVariant.toString(),
+            "_onSurfaceVariant": localOnSurfaceVariant.toString(),
+            "_primaryContainer": localPrimaryContainer.toString(),
+            "_onPrimaryContainer": localOnPrimaryContainer.toString(),
+            "_secondaryContainer": localSecondaryContainer.toString(),
+            "_onSecondaryContainer": localOnSecondaryContainer.toString(),
+            "_tertiaryContainer": localTertiaryContainer.toString(),
+            "_onTertiaryContainer": localOnTertiaryContainer.toString(),
+            "_errorContainer": localErrorContainer.toString(),
+            "_onErrorContainer": localOnErrorContainer.toString(),
+            "_outline": localOutline.toString(),
+            "_outlineVariant": localOutlineVariant.toString(),
+            "_inverseSurface": localInverseSurface.toString(),
+            "_onInverseSurface": localOnInverseSurface.toString(),
+            "_inversePrimary": localInversePrimary.toString(),
+            "_shadow": localShadow.toString(),
+            "_scrim": localScrim.toString()
         };
     }
 
@@ -230,9 +251,6 @@ BaseThemeSettings {
         case "_onSecondary":
             localOnSecondary = value;
             return true;
-        case "_subtleTextColor":
-            localSubtleText = value;
-            return true;
         case "_tertiary":
             localTertiary = value;
             return true;
@@ -245,65 +263,83 @@ BaseThemeSettings {
         case "_onError":
             localOnError = value;
             return true;
-        case "_success":
-            localSuccess = value;
+        case "_surface":
+            localSurface = value;
             return true;
-        case "_onSuccess":
-            localOnSuccess = value;
+        case "_onSurface":
+            localOnSurface = value;
             return true;
-        case "_warning":
-            localWarning = value;
+        case "_surfaceDim":
+            localSurfaceDim = value;
             return true;
-        case "_onWarning":
-            localOnWarning = value;
+        case "_surfaceBright":
+            localSurfaceBright = value;
             return true;
-        case "_topbarColor":
-            localTopbarColor = value;
+        case "_surfaceContainerLowest":
+            localSurfaceContainerLowest = value;
             return true;
-        case "_topbarFgColor":
-            localTopbarFgColor = value;
+        case "_surfaceContainerLow":
+            localSurfaceContainerLow = value;
             return true;
-        case "_topbarBgColorV1":
-            localTopbarBgV1 = value;
+        case "_surfaceContainer":
+            localSurfaceContainer = value;
             return true;
-        case "_topbarFgColorV1":
-            localTopbarFgV1 = value;
+        case "_surfaceContainerHigh":
+            localSurfaceContainerHigh = value;
             return true;
-        case "_topbarBgColorV2":
-            localTopbarBgV2 = value;
+        case "_surfaceContainerHighest":
+            localSurfaceContainerHighest = value;
             return true;
-        case "_topbarFgColorV2":
-            localTopbarFgV2 = value;
+        case "_surfaceVariant":
+            localSurfaceVariant = value;
             return true;
-        case "_topbarBgColorV3":
-            localTopbarBgV3 = value;
+        case "_onSurfaceVariant":
+            localOnSurfaceVariant = value;
             return true;
-        case "_topbarFgColorV3":
-            localTopbarFgV3 = value;
+        case "_primaryContainer":
+            localPrimaryContainer = value;
             return true;
-        case "_leftMenuBgColorV1":
-            localMenuBgV1 = value;
+        case "_onPrimaryContainer":
+            localOnPrimaryContainer = value;
             return true;
-        case "_leftMenuFgColorV1":
-            localMenuFgV1 = value;
+        case "_secondaryContainer":
+            localSecondaryContainer = value;
             return true;
-        case "_leftMenuBgColorV2":
-            localMenuBgV2 = value;
+        case "_onSecondaryContainer":
+            localOnSecondaryContainer = value;
             return true;
-        case "_leftMenuFgColorV2":
-            localMenuFgV2 = value;
+        case "_tertiaryContainer":
+            localTertiaryContainer = value;
             return true;
-        case "_leftMenuBgColorV3":
-            localMenuBgV3 = value;
+        case "_onTertiaryContainer":
+            localOnTertiaryContainer = value;
             return true;
-        case "_leftMenuFgColorV3":
-            localMenuFgV3 = value;
+        case "_errorContainer":
+            localErrorContainer = value;
             return true;
-        case "_volOsdBgColor":
-            localVolOsdBg = value;
+        case "_onErrorContainer":
+            localOnErrorContainer = value;
             return true;
-        case "_volOsdFgColor":
-            localVolOsdFg = value;
+        case "_outline":
+            localOutline = value;
+            return true;
+        case "_outlineVariant":
+            localOutlineVariant = value;
+            return true;
+        case "_inverseSurface":
+            localInverseSurface = value;
+            return true;
+        case "_onInverseSurface":
+            localOnInverseSurface = value;
+            return true;
+        case "_inversePrimary":
+            localInversePrimary = value;
+            return true;
+        case "_shadow":
+            localShadow = value;
+            return true;
+        case "_scrim":
+            localScrim = value;
             return true;
         }
         return false;
@@ -358,7 +394,7 @@ BaseThemeSettings {
 
         Layout.fillWidth: true
         radius: root.dim("baseRadius", 8) / 2
-        color: chatMessage.isUser ? root.theme.colors.primary.alpha(0.16) : root.theme.colors.leftMenuBgColorV2.alpha(0.86)
+        color: chatMessage.isUser ? root.theme.colors.primary.alpha(0.16) : root.theme.colors.surfaceContainerHigh.alpha(0.86)
         border.color: chatMessage.isUser ? root.theme.colors.primary.alpha(0.35) : root.theme.colors.secondary.alpha(0.22)
         border.width: 1
         implicitHeight: chatMessageColumn.implicitHeight + 16
@@ -386,7 +422,7 @@ BaseThemeSettings {
                 Layout.fillWidth: true
                 text: chatMessage.message
                 wrapMode: Text.WordWrap
-                color: root.theme.colors.leftMenuFgColorV1
+                color: root.theme.colors.onSurface
                 font.pixelSize: root.typ("small", 12)
             }
 
@@ -395,7 +431,7 @@ BaseThemeSettings {
                 visible: chatMessage.changesSummary !== ""
                 text: chatMessage.changesSummary
                 wrapMode: Text.WordWrap
-                color: root.theme.colors.subtleText
+                color: root.theme.colors.onSurfaceVariant
                 font.pixelSize: root.typ("small", 12)
             }
         }
@@ -405,7 +441,7 @@ BaseThemeSettings {
         Layout.fillWidth: true
         spacing: 4
         property string label
-        property color value: root.theme.colors.topbarColor
+        property color value: root.theme.colors.surface
         property var targetedProp: ""
         signal userChanged(string newValue)
 
@@ -421,7 +457,7 @@ BaseThemeSettings {
                 width: 28
                 height: 28
                 radius: 4
-                border.color: root.theme.colors.topbarFgColor.alpha(0.4)
+                border.color: root.theme.colors.onSurface.alpha(0.4)
                 border.width: 1
                 color: value
             }
@@ -471,7 +507,7 @@ BaseThemeSettings {
                     clip: true
 
                     background: Rectangle {
-                        color: root.theme.colors.leftMenuBgColorV2.alpha(0.55)
+                        color: root.theme.colors.surfaceContainerHigh.alpha(0.55)
                         radius: root.dim("baseRadius", 8) / 2
                         border.color: root.theme.colors.primary.alpha(0.12)
                         border.width: 1
@@ -540,7 +576,7 @@ BaseThemeSettings {
                         Controls.Label {
                             Layout.fillWidth: true
                             text: root.assistant.aiBusy ? qsTr("Thinking...") : (root.assistant.aiError !== "" ? root.assistant.aiError : root.assistant.summarizeChanges(root.assistant.pendingAiChanges))
-                            color: root.assistant.aiError !== "" ? root.theme.colors.error : root.theme.colors.subtleText
+                            color: root.assistant.aiError !== "" ? root.theme.colors.error : root.theme.colors.onSurfaceVariant
                             elide: Text.ElideRight
                             font.pixelSize: root.typ("small", 12)
                         }
@@ -648,57 +684,12 @@ BaseThemeSettings {
                         root.recordHistory();
                     }
                 }
-                ColorRow {
-                    label: qsTr("Success")
-                    value: root.localSuccess
-                    onUserChanged: v => {
-                        root.localSuccess = v;
-                        root.applySingleProperty("_success", v);
-                        root.recordHistory();
-                    }
-                }
-                ColorRow {
-                    label: qsTr("On Success")
-                    value: root.localOnSuccess
-                    onUserChanged: v => {
-                        root.localOnSuccess = v;
-                        root.applySingleProperty("_onSuccess", v);
-                        root.recordHistory();
-                    }
-                }
-                ColorRow {
-                    label: qsTr("Warning")
-                    value: root.localWarning
-                    onUserChanged: v => {
-                        root.localWarning = v;
-                        root.applySingleProperty("_warning", v);
-                        root.recordHistory();
-                    }
-                }
-                ColorRow {
-                    label: qsTr("On Warning")
-                    value: root.localOnWarning
-                    onUserChanged: v => {
-                        root.localOnWarning = v;
-                        root.applySingleProperty("_onWarning", v);
-                        root.recordHistory();
-                    }
-                }
-                ColorRow {
-                    label: qsTr("Subtle Text")
-                    value: root.localSubtleText
-                    onUserChanged: v => {
-                        root.localSubtleText = v;
-                        root.applySingleProperty("_subtleTextColor", v);
-                        root.recordHistory();
-                    }
-                }
             }
         }
 
-        // --- Topbar ---
+        // --- Surface ---
         SectionCard {
-            title: qsTr("Topbar")
+            title: qsTr("Surface")
             Layout.fillWidth: true
 
             GridLayout {
@@ -708,83 +699,65 @@ BaseThemeSettings {
                 rowSpacing: 10
 
                 ColorRow {
-                    label: "Background"
-                    value: root.localTopbarColor
+                    label: "Surface"
+                    value: root.localSurface
                     onUserChanged: v => {
-                        root.localTopbarColor = v;
-                        root.applySingleProperty("_topbarColor", v);
+                        root.localSurface = v;
+                        root.applySingleProperty("_surface", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "Foreground"
-                    value: root.localTopbarFgColor
+                    label: "On Surface"
+                    value: root.localOnSurface
                     onUserChanged: v => {
-                        root.localTopbarFgColor = v;
-                        root.applySingleProperty("_topbarFgColor", v);
+                        root.localOnSurface = v;
+                        root.applySingleProperty("_onSurface", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "BG V1"
-                    value: root.localTopbarBgV1
+                    label: "Surface Dim"
+                    value: root.localSurfaceDim
                     onUserChanged: v => {
-                        root.localTopbarBgV1 = v;
-                        root.applySingleProperty("_topbarBgColorV1", v);
+                        root.localSurfaceDim = v;
+                        root.applySingleProperty("_surfaceDim", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "FG V1"
-                    value: root.localTopbarFgV1
+                    label: "Surface Bright"
+                    value: root.localSurfaceBright
                     onUserChanged: v => {
-                        root.localTopbarFgV1 = v;
-                        root.applySingleProperty("_topbarFgColorV1", v);
+                        root.localSurfaceBright = v;
+                        root.applySingleProperty("_surfaceBright", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "BG V2"
-                    value: root.localTopbarBgV2
+                    label: "Surface Variant"
+                    value: root.localSurfaceVariant
                     onUserChanged: v => {
-                        root.localTopbarBgV2 = v;
-                        root.applySingleProperty("_topbarBgColorV2", v);
+                        root.localSurfaceVariant = v;
+                        root.applySingleProperty("_surfaceVariant", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "FG V2"
-                    value: root.localTopbarFgV2
+                    label: "On Surface Variant"
+                    value: root.localOnSurfaceVariant
                     onUserChanged: v => {
-                        root.localTopbarFgV2 = v;
-                        root.applySingleProperty("_topbarFgColorV2", v);
-                        root.recordHistory();
-                    }
-                }
-                ColorRow {
-                    label: "BG V3"
-                    value: root.localTopbarBgV3
-                    onUserChanged: v => {
-                        root.localTopbarBgV3 = v;
-                        root.applySingleProperty("_topbarBgColorV3", v);
-                        root.recordHistory();
-                    }
-                }
-                ColorRow {
-                    label: "FG V3"
-                    value: root.localTopbarFgV3
-                    onUserChanged: v => {
-                        root.localTopbarFgV3 = v;
-                        root.applySingleProperty("_topbarFgColorV3", v);
+                        root.localOnSurfaceVariant = v;
+                        root.applySingleProperty("_onSurfaceVariant", v);
                         root.recordHistory();
                     }
                 }
             }
         }
 
-        // --- Left Menu ---
+        // --- Surface Containers ---
         SectionCard {
-            title: qsTr("Left Menu")
+            title: qsTr("Surface Containers")
             Layout.fillWidth: true
 
             GridLayout {
@@ -794,65 +767,56 @@ BaseThemeSettings {
                 rowSpacing: 10
 
                 ColorRow {
-                    label: "BG V1"
-                    value: root.localMenuBgV1
+                    label: "Container Lowest"
+                    value: root.localSurfaceContainerLowest
                     onUserChanged: v => {
-                        root.localMenuBgV1 = v;
-                        root.applySingleProperty("_leftMenuBgColorV1", v);
+                        root.localSurfaceContainerLowest = v;
+                        root.applySingleProperty("_surfaceContainerLowest", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "FG V1"
-                    value: root.localMenuFgV1
+                    label: "Container Low"
+                    value: root.localSurfaceContainerLow
                     onUserChanged: v => {
-                        root.localMenuFgV1 = v;
-                        root.applySingleProperty("_leftMenuFgColorV1", v);
+                        root.localSurfaceContainerLow = v;
+                        root.applySingleProperty("_surfaceContainerLow", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "BG V2"
-                    value: root.localMenuBgV2
+                    label: "Container"
+                    value: root.localSurfaceContainer
                     onUserChanged: v => {
-                        root.localMenuBgV2 = v;
-                        root.applySingleProperty("_leftMenuBgColorV2", v);
+                        root.localSurfaceContainer = v;
+                        root.applySingleProperty("_surfaceContainer", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "FG V2"
-                    value: root.localMenuFgV2
+                    label: "Container High"
+                    value: root.localSurfaceContainerHigh
                     onUserChanged: v => {
-                        root.localMenuFgV2 = v;
-                        root.applySingleProperty("_leftMenuFgColorV2", v);
+                        root.localSurfaceContainerHigh = v;
+                        root.applySingleProperty("_surfaceContainerHigh", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "BG V3"
-                    value: root.localMenuBgV3
+                    label: "Container Highest"
+                    value: root.localSurfaceContainerHighest
                     onUserChanged: v => {
-                        root.localMenuBgV3 = v;
-                        root.applySingleProperty("_leftMenuBgColorV3", v);
-                        root.recordHistory();
-                    }
-                }
-                ColorRow {
-                    label: "FG V3"
-                    value: root.localMenuFgV3
-                    onUserChanged: v => {
-                        root.localMenuFgV3 = v;
-                        root.applySingleProperty("_leftMenuFgColorV3", v);
+                        root.localSurfaceContainerHighest = v;
+                        root.applySingleProperty("_surfaceContainerHighest", v);
                         root.recordHistory();
                     }
                 }
             }
         }
 
-        // --- Misc ---
+        // --- Container Colors ---
         SectionCard {
-            title: qsTr("Misc")
+            title: qsTr("Container Colors")
             Layout.fillWidth: true
 
             GridLayout {
@@ -862,20 +826,151 @@ BaseThemeSettings {
                 rowSpacing: 10
 
                 ColorRow {
-                    label: "Vol OSD BG"
-                    value: root.localVolOsdBg
+                    label: "Primary Container"
+                    value: root.localPrimaryContainer
                     onUserChanged: v => {
-                        root.localVolOsdBg = v;
-                        root.applySingleProperty("_volOsdBgColor", v);
+                        root.localPrimaryContainer = v;
+                        root.applySingleProperty("_primaryContainer", v);
                         root.recordHistory();
                     }
                 }
                 ColorRow {
-                    label: "Vol OSD FG"
-                    value: root.localVolOsdFg
+                    label: "On Primary Container"
+                    value: root.localOnPrimaryContainer
                     onUserChanged: v => {
-                        root.localVolOsdFg = v;
-                        root.applySingleProperty("_volOsdFgColor", v);
+                        root.localOnPrimaryContainer = v;
+                        root.applySingleProperty("_onPrimaryContainer", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "Secondary Container"
+                    value: root.localSecondaryContainer
+                    onUserChanged: v => {
+                        root.localSecondaryContainer = v;
+                        root.applySingleProperty("_secondaryContainer", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "On Secondary Container"
+                    value: root.localOnSecondaryContainer
+                    onUserChanged: v => {
+                        root.localOnSecondaryContainer = v;
+                        root.applySingleProperty("_onSecondaryContainer", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "Tertiary Container"
+                    value: root.localTertiaryContainer
+                    onUserChanged: v => {
+                        root.localTertiaryContainer = v;
+                        root.applySingleProperty("_tertiaryContainer", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "On Tertiary Container"
+                    value: root.localOnTertiaryContainer
+                    onUserChanged: v => {
+                        root.localOnTertiaryContainer = v;
+                        root.applySingleProperty("_onTertiaryContainer", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "Error Container"
+                    value: root.localErrorContainer
+                    onUserChanged: v => {
+                        root.localErrorContainer = v;
+                        root.applySingleProperty("_errorContainer", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "On Error Container"
+                    value: root.localOnErrorContainer
+                    onUserChanged: v => {
+                        root.localOnErrorContainer = v;
+                        root.applySingleProperty("_onErrorContainer", v);
+                        root.recordHistory();
+                    }
+                }
+            }
+        }
+
+        // --- Outline & Inverse ---
+        SectionCard {
+            title: qsTr("Outline & Inverse")
+            Layout.fillWidth: true
+
+            GridLayout {
+                columns: 2
+                Layout.fillWidth: true
+                columnSpacing: 15
+                rowSpacing: 10
+
+                ColorRow {
+                    label: "Outline"
+                    value: root.localOutline
+                    onUserChanged: v => {
+                        root.localOutline = v;
+                        root.applySingleProperty("_outline", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "Outline Variant"
+                    value: root.localOutlineVariant
+                    onUserChanged: v => {
+                        root.localOutlineVariant = v;
+                        root.applySingleProperty("_outlineVariant", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "Inverse Surface"
+                    value: root.localInverseSurface
+                    onUserChanged: v => {
+                        root.localInverseSurface = v;
+                        root.applySingleProperty("_inverseSurface", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "On Inverse Surface"
+                    value: root.localOnInverseSurface
+                    onUserChanged: v => {
+                        root.localOnInverseSurface = v;
+                        root.applySingleProperty("_onInverseSurface", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "Inverse Primary"
+                    value: root.localInversePrimary
+                    onUserChanged: v => {
+                        root.localInversePrimary = v;
+                        root.applySingleProperty("_inversePrimary", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "Shadow"
+                    value: root.localShadow
+                    onUserChanged: v => {
+                        root.localShadow = v;
+                        root.applySingleProperty("_shadow", v);
+                        root.recordHistory();
+                    }
+                }
+                ColorRow {
+                    label: "Scrim"
+                    value: root.localScrim
+                    onUserChanged: v => {
+                        root.localScrim = v;
+                        root.applySingleProperty("_scrim", v);
                         root.recordHistory();
                     }
                 }

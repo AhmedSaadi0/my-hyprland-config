@@ -11,46 +11,48 @@ BaseTheme {
 
     _wallpaper: App.assets.getWallpaperPath("tokyonight-dark.png")
 
-    _primary: "#7aa2f7"
-    _secondary: "#bb9af7"
+    // الألوان الرئيسية والثانوية الرسمية لـ Tokyo Night
+    _primary: "#7aa2f7"            // Blue (الأزرق الرئيسي)
+    _onPrimary: "#16161e"          // bg_dark (الخلفية الداكنة)
+    _secondary: "#bb9af7"          // Magenta (الأرجواني)
+    _onSecondary: "#16161e"
+    _tertiary: "#7dcfff"           // Cyan (السماوي)
+    _onTertiary: "#16161e"
+    _error: "#f7768e"              // Red (الأحمر)
+    _onError: "#16161e"
 
-    _onPrimary: "#1a1b26"
-    _onSecondary: "#1a1b26"
+    // تدرجات الأسطح والخلفيات (Surfaces & Containers) لبناء تسلسل طبقات مريح للعين
+    _surface: "#1a1b26"                      // bg (الخلفية الأساسية للسمة)
+    _onSurface: "#c0caf5"                    // fg (النص الأساسي البارز)
+    _surfaceDim: "#16161e"                   // bg_dark (الخلفية الأكثر دكنة للتحكم الجانبي والـ Sidebars)
+    _surfaceBright: "#292e42"                // bg_highlight (الخلفية المضيئة للتحديد والأسطر النشطة)
+    _surfaceContainerLowest: "#13141c"       // درجة داكنة جداً للطبقات العميقة السفلى
+    _surfaceContainerLow: "#16161e"          // bg_dark (الطبقة السفلى)
+    _surfaceContainer: "#1a1b26"             // bg (الطبقة المتوسطة)
+    _surfaceContainerHigh: "#1f2335"         // درجة انتقالية بين الخلفية والتحديد
+    _surfaceContainerHighest: "#292e42"      // bg_highlight (الطبقة الأعلى)
+    _surfaceVariant: "#292e42"
+    _onSurfaceVariant: "#a9b1d6"             // fg_dark (النصوص الثانوية الأقل بروزاً)
 
-    _tertiary: "#7dcfff"
-    _onTertiary: "#1a1b26"
+    // ألوان الحاويات وخلفيات التحديد النشطة
+    _primaryContainer: "#283457"             // bg_visual (خلفية التحديد البصري الأزرق)
+    _onPrimaryContainer: "#7aa2f7"           // الأزرق الرئيسي للتحديدات
+    _secondaryContainer: "#443a5e"           // درجة تحديد أرجوانية داكنة متناسقة
+    _onSecondaryContainer: "#bb9af7"         // الأرجواني الرئيسي
+    _tertiaryContainer: "#1f3547"            // درجة تحديد سماوية داكنة
+    _onTertiaryContainer: "#7dcfff"          // السماوي الرئيسي
+    _errorContainer: "#4c242c"               // درجة أحمر داكنة لخلفية الأخطاء
+    _onErrorContainer: "#f7768e"             // الأحمر الرئيسي للأخطاء
 
-    // Error: أحمر (Red)
-    _error: "#f7768e"
-    _onError: "#1a1b26"
+    // الحدود والفواصل (Outlines) لتقليل التشتت البصري
+    _outline: "#3b4261"                      // fg_gutter (اللون المستخدم للحدود والفواصل الافتراضية)
+    _outlineVariant: "#414868"               // terminal_black (درجة حدود بديلة أكثر وضوحاً عند الحاجة)
 
-    // Success: أخضر (Green)
-    _success: "#9ece6a"
-    _onSuccess: "#1a1b26"
-
-    // Warning: برتقالي (Orange)
-    _warning: "#e0af68"
-    _onWarning: "#1a1b26"
-
-    _topbarColor: "#1a1b26"        // base
-    _topbarFgColor: "#c0caf5"      // text
-    _topbarBgColorV1: "#24283b"    // darker
-    _topbarBgColorV2: "#414868"    // grayish
-    _topbarBgColorV3: "#f7768e"    // red-accent
-    _topbarFgColorV1: "#c0caf5"    // text
-    _topbarFgColorV2: "#c0caf5"    // text
-    _topbarFgColorV3: "#1a1b26"    // base
-
-    _leftMenuBgColorV1: "#1a1b26"  // base
-    _leftMenuBgColorV2: "#24283b"  // darker
-    _leftMenuBgColorV3: "#7dcfff"  // cyan
-    _leftMenuFgColorV1: "#c0caf5"  // text
-    _leftMenuFgColorV2: "#c0caf5"  // text
-    _leftMenuFgColorV3: "#1a1b26"  // base
-
-    _subtleTextColor: "#9aa5cecc"  // subtle
-    _volOsdBgColor: "#24283b"      // darker
-    _volOsdFgColor: "#c0caf5"      // text
+    _inverseSurface: "#c0caf5"
+    _onInverseSurface: "#1a1b26"
+    _inversePrimary: "#7aa2f7"
+    _shadow: "#000000"
+    _scrim: "#000000"
 
     _plasmaColorScheme: "NibrasTokyoNightDark"
     _konsoleProfile: "NibrasTokyoNightDark.profile"

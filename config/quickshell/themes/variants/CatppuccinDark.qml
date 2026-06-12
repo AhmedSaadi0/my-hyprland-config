@@ -1,5 +1,4 @@
 pragma Singleton
-
 import QtQuick
 
 import "root:/config"
@@ -13,57 +12,48 @@ BaseTheme {
 
     _wallpaper: App.assets.getWallpaperPath("CatppuccinDark.png")
 
-    _primary: "#89B4FA" // Blue
-    _secondary: "#F38BA8" // Pink
+    _primary: "#89B4FA"           // Blue
+    _onPrimary: "#11111B"         // Crust
+    _secondary: "#F38BA8"         // Pink
+    _onSecondary: "#11111B"
+    _tertiary: "#cba6f7"          // Mauve
+    _onTertiary: "#11111B"
+    _error: "#f38ba8"             // Red
+    _onError: "#11111B"
 
-    _onPrimary: "#1e1e2e"
-    _onSecondary: "#1e1e2e"
+    _surface: "#1E1E2E"                      // Base
+    _onSurface: "#CDD6F4"                    // Text
+    _surfaceDim: "#181825"                   // Mantle
+    _surfaceBright: "#313244"                // Surface0
+    _surfaceContainerLowest: "#11111B"       // Crust
+    _surfaceContainerLow: "#151522"          // Mantle-Base Intermediate
+    _surfaceContainer: "#1E1E2E"             // Base
+    _surfaceContainerHigh: "#252538"         // Base-Surface0 Intermediate
+    _surfaceContainerHighest: "#313244"      // Surface0
+    _surfaceVariant: "#313244"
+    _onSurfaceVariant: "#BAC2DE"             // Subtext1
 
-    _tertiary: "#cba6f7"
-    _onTertiary: "#1e1e2e"
+    // ضبط حاويات التحديد وخلفيات الأزرار بتدرج ناعم ومتناسق
+    _primaryContainer: "#25304B"             // Dark Sapphire/Blue container
+    _onPrimaryContainer: "#89B4FA"
+    _secondaryContainer: "#452435"           // Dark Pink container
+    _onSecondaryContainer: "#F38BA8"
+    _tertiaryContainer: "#3a254e"            // Dark Mauve container
+    _onTertiaryContainer: "#cba6f7"
+    _errorContainer: "#45242c"               // Dark Red container
+    _onErrorContainer: "#f38ba8"
 
-    // Red: لون الخطأ القياسي في الثيم
-    _error: "#f38ba8"
-    _onError: "#1e1e2e"
-
-    // Green: لون النجاح
-    _success: "#a6e3a1"
-    _onSuccess: "#1e1e2e"
-
-    // Yellow: لون التحذير
-    _warning: "#f9e2af"
-    _onWarning: "#1e1e2e"
-
-    _topbarColor: "#1E1E2E" // Mantle
-    _topbarFgColor: "#cdd6f4" // Text
-
-    // خلفيات متدرجة وداكنة ولكنها مختلفة
-    _topbarBgColorV1: "#181825" // Surface0
-    _topbarBgColorV2: "#323F57" // Surface1
-    _topbarBgColorV3: "#5c4b73" // Surface2
-
-    _topbarFgColorV1: "#cdd6f4" // Text
-    _topbarFgColorV2: "#cdd6f4" // Text
-    _topbarFgColorV3: "#cdd6f4" // Text
-
-    _leftMenuBgColorV1: "#1e1e2e" // Base
-    _leftMenuBgColorV2: "#2b2b42" // Mantle
-    // خلفية العنصر النشط أغمق قليلاً من البقية للتمييز
-    _leftMenuBgColorV3: "#45475a" // Surface1
-
-    _leftMenuFgColorV1: "#b4befe" // Lavender (لون النص للعنصر النشط)
-    _leftMenuFgColorV2: "#cdd6f4" // Text
-    _leftMenuFgColorV3: "#1e1e2e" // Base (لون النص فوق الخلفية النشطة)
-
-    _subtleTextColor: "#a6adc8cc"
-    _volOsdBgColor: "#313244" // Surface0
-    _volOsdFgColor: "#cdd6f4" // Text
+    _outline: "#585B70"                      // Surface2 (الحدود الافتراضية للسمة)
+    _outlineVariant: "#45475A"               // Surface1 (حدود فرعية أقل وضوحاً)
+    _inverseSurface: "#CDD6F4"
+    _onInverseSurface: "#1E1E2E"
+    _inversePrimary: "#89B4FA"
+    _shadow: "#000000"
+    _scrim: "#000000"
 
     _plasmaColorScheme: "NibrasCatppuccinDark"
     _konsoleProfile: "CatppuccinDark.profile"
 
-    // _themeIcons: "Catppuccin-Latte"
     _themeIcons: "Vivid-Dark-Icons"
-    // _kvantumTheme: "Tellgo"
     _gtkTheme: "Catppuccin-Mocha-Standard-Blue-Dark"
 }

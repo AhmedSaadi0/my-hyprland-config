@@ -24,7 +24,7 @@ Rectangle {
     signal actionInvoked(int index)
 
     implicitHeight: contentLayout.implicitHeight + (root.theme.dimensions.spacingLarge * 2)
-    color: root.theme.colors.topbarBgColorV1
+    color: root.theme.colors.surfaceContainerHigh
     radius: root.theme.dimensions.elementRadius
 
     ColumnLayout {
@@ -81,7 +81,7 @@ Rectangle {
             Text {
                 text: notification ? notification.appName : ""
                 font.pixelSize: root.theme.typography.heading4Size
-                color: root.theme.colors.topbarFgColorV1
+                color: root.theme.colors.onSurface
                 elide: Text.ElideRight
                 Layout.fillWidth: true
             }
@@ -89,7 +89,7 @@ Rectangle {
             Text {
                 text: notification ? notification.timeStr : ""
                 font.pixelSize: root.theme.typography.small
-                color: root.theme.colors.subtleText
+                color: root.theme.colors.onSurfaceVariant
                 Layout.alignment: Qt.AlignTop
             }
         }
@@ -138,7 +138,7 @@ Rectangle {
                 text: notification ? notification.summary : ""
                 font.pixelSize: root.theme.typography.heading4Size
                 font.bold: true
-                color: root.theme.colors.topbarFgColorV1
+                color: root.theme.colors.onSurface
                 elide: Text.ElideRight
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
@@ -153,7 +153,7 @@ Rectangle {
             maximumLineCount: 3
             elide: Text.ElideRight
             font.pixelSize: root.theme.typography.medium
-            color: root.theme.colors.leftMenuFgColorV1
+            color: root.theme.colors.onSurface
             Layout.fillWidth: true
         }
 

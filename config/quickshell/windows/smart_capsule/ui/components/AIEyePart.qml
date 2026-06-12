@@ -10,7 +10,7 @@ Item {
     id: root
 
     // --- الخصائص العامة ---
-    property color color: ThemeManager.selectedTheme.colors.topbarFgColor
+    property color color: ThemeManager.selectedTheme.colors.onSurface
     property int animDur: 300
 
     // خصائص العين (الأبعاد)

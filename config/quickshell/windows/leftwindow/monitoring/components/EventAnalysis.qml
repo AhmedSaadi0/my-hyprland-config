@@ -40,7 +40,7 @@ ColumnLayout {
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 1
-        color: Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.12)
+        color: Qt.rgba(theme.colors.onSurfaceVariant.r, theme.colors.onSurfaceVariant.g, theme.colors.onSurfaceVariant.b, 0.12)
     }
 
     Item {
@@ -108,7 +108,7 @@ ColumnLayout {
             text: qsTr("Forensic Analysis")
             font.pixelSize: theme.typography.small - 1
             font.bold: true
-            color: theme.colors.subtleText
+            color: theme.colors.onSurfaceVariant
             opacity: 0.7
         }
 
@@ -118,7 +118,7 @@ ColumnLayout {
             wrapMode: Text.WordWrap
             font.family: theme.typography.bodyFont
             font.pixelSize: theme.typography.small + 1
-            color: Qt.lighter(theme.colors.subtleText, 1.4)
+            color: Qt.lighter(theme.colors.onSurfaceVariant, 1.4)
             lineHeight: 1.3
             textFormat: Text.PlainText
         }
@@ -152,7 +152,7 @@ ColumnLayout {
             text: qsTr("Recommended Actions")
             font.pixelSize: theme.typography.small - 1
             font.bold: true
-            color: theme.colors.success
+            color: theme.colors.tertiary
         }
 
         Repeater {
@@ -166,14 +166,14 @@ ColumnLayout {
                     width: 18
                     height: 18
                     radius: 9
-                    color: Qt.rgba(theme.colors.success.r, theme.colors.success.g, theme.colors.success.b, 0.18)
-                    border.color: theme.colors.success
+                    color: Qt.rgba(theme.colors.tertiary.r, theme.colors.tertiary.g, theme.colors.tertiary.b, 0.18)
+                    border.color: theme.colors.tertiary
                     border.width: 1
                     Text {
                         anchors.centerIn: parent
                         text: "›"
                         font.pixelSize: 11
-                        color: theme.colors.success
+                        color: theme.colors.tertiary
                         font.bold: true
                     }
                 }
@@ -183,7 +183,7 @@ ColumnLayout {
                     text: modelData
                     wrapMode: Text.WordWrap
                     font.pixelSize: theme.typography.small + 1
-                    color: Qt.lighter(theme.colors.subtleText, 1.3)
+                    color: Qt.lighter(theme.colors.onSurfaceVariant, 1.3)
                     textFormat: Text.PlainText
                 }
             }
@@ -193,7 +193,7 @@ ColumnLayout {
             visible: isLoading || actionsModel.length === 0
             text: isLoading ? qsTr("Generating recommendations...") : qsTr("No specific actions required.")
             font.pixelSize: theme.typography.small
-            color: theme.colors.subtleText
+            color: theme.colors.onSurfaceVariant
             opacity: 0.7
         }
     }

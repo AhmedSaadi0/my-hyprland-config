@@ -33,7 +33,7 @@ Item {
         Label {
             id: labelText
             text: root.label
-            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+            color: ThemeManager.selectedTheme.colors.onSurface
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignVCenter
             // جعل النص يأخذ لوناً باهتاً قليلاً إذا كان السويتش مغلقاً (لمسة جمالية اختيارية)

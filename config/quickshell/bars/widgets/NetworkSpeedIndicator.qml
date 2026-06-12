@@ -17,7 +17,7 @@ Rectangle {
 
     implicitWidth: 190 + children[0].width
     implicitHeight: ThemeManager.selectedTheme.dimensions.barWidgetsHeight
-    color: ThemeManager.selectedTheme.colors.topbarBgColorV3
+    color: ThemeManager.selectedTheme.colors.primaryContainer
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     // -------------------------
@@ -29,7 +29,7 @@ Rectangle {
         width: children[0].children[1].width + 45
         height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight - 4
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-        color: ThemeManager.selectedTheme.colors.topbarColor
+        color: ThemeManager.selectedTheme.colors.surface
         layer.enabled: true
 
         topLeftRadius: netspeedToolbarWidget.topLeftRadius
@@ -55,7 +55,7 @@ Rectangle {
 
                 text: "󰤮"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
+                color: ThemeManager.selectedTheme.colors.onSurface
                 font.pixelSize: 13
                 horizontalAlignment: Text.AlignHCenter
                 font.bold: true
@@ -65,12 +65,12 @@ Rectangle {
                 id: networkName
                 text: "-"
                 font.bold: true
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV1
+                color: ThemeManager.selectedTheme.colors.onSurface
             }
         }
 
         layer.effect: Shadow {
-            color: Qt.darker(ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(0.2)
+            color: Qt.darker(ThemeManager.selectedTheme.colors.surface, 1.4).alpha(0.2)
             radius: 8
         }
     }
@@ -99,12 +99,12 @@ Rectangle {
                 id: uploadSpeedText
 
                 text: "0b/s"
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV3
+                color: ThemeManager.selectedTheme.colors.onPrimaryContainer
             }
 
             Label {
                 text: "↑"
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV3
+                color: ThemeManager.selectedTheme.colors.onPrimaryContainer
                 font.family: ThemeManager.selectedTheme.typography.iconFont
             }
         }
@@ -120,13 +120,13 @@ Rectangle {
                 id: downloadSpeedText
 
                 text: "0b/s"
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV3
+                color: ThemeManager.selectedTheme.colors.onPrimaryContainer
             }
 
             Label {
                 text: "↓"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
-                color: ThemeManager.selectedTheme.colors.topbarFgColorV3
+                color: ThemeManager.selectedTheme.colors.onPrimaryContainer
             }
         }
     }

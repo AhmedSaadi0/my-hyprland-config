@@ -629,12 +629,12 @@ M3GroupBox {
                         wrapMode: TextEdit.Wrap
                         text: tempConfig.weatherPersona
                         onEditingFinished: tempConfig.weatherPersona = text
-                        color: selectedTheme.colors.leftMenuFgColorV1
+                        color: selectedTheme.colors.onSurface
                         selectedTextColor: selectedTheme.colors.onPrimary
                         selectionColor: selectedTheme.colors.primary
                         font.pixelSize: selectedTheme.typography.small
                         background: Rectangle {
-                            color: selectedTheme.colors.leftMenuBgColorV1
+                            color: selectedTheme.colors.surfaceContainer
                             radius: selectedTheme.dimensions.baseRadius / 2
                             border.width: parent.activeFocus ? 1 : 0
                             border.color: selectedTheme.colors.primary
@@ -672,12 +672,12 @@ M3GroupBox {
                         wrapMode: TextEdit.Wrap
                         text: tempConfig.musicPersona
                         onEditingFinished: tempConfig.musicPersona = text
-                        color: selectedTheme.colors.leftMenuFgColorV1
+                        color: selectedTheme.colors.onSurface
                         selectedTextColor: selectedTheme.colors.onPrimary
                         selectionColor: selectedTheme.colors.primary
                         font.pixelSize: selectedTheme.typography.small
                         background: Rectangle {
-                            color: selectedTheme.colors.leftMenuBgColorV1
+                            color: selectedTheme.colors.surfaceContainer
                             radius: selectedTheme.dimensions.baseRadius / 2
                             border.width: parent.activeFocus ? 1 : 0
                             border.color: selectedTheme.colors.primary

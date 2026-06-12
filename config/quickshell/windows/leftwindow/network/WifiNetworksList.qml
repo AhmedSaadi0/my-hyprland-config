@@ -69,7 +69,7 @@ Item {
             bottomPadding: ThemeManager.selectedTheme.dimensions.spacingMedium
             visible: root.model && root.model.count === 0
             text: qsTr("Searching for networks ...")
-            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.7)
+            color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.7)
         }
     }
 }

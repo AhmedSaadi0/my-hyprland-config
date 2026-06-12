@@ -272,7 +272,7 @@ Item {
                     Flow {
                         Layout.fillWidth: true
                         Layout.preferredWidth: parent.width
-                        spacing: 5
+                        spacing: 3
 
                         property var currentTags: {
                             if (root.currentTab === "weather")
@@ -282,13 +282,19 @@ Item {
                         }
 
                         Repeater {
+                            id: tagsRepeater
                             model: parent.currentTags
 
                             delegate: Rectangle {
                                 id: tagRect
                                 height: 20
                                 width: tagTxt.implicitWidth + 16
-                                radius: 10
+                                property int groupRadius: ThemeManager.selectedTheme.dimensions.elementRadius / C.M3_BUTTON_RADIUS_DIVISOR
+                                property int innerRadiusDiv: 4
+                                topLeftRadius: index === 0 ? groupRadius : groupRadius / innerRadiusDiv
+                                bottomLeftRadius: index === 0 ? groupRadius : groupRadius / innerRadiusDiv
+                                topRightRadius: index === tagsRepeater.count - 1 ? groupRadius : groupRadius / innerRadiusDiv
+                                bottomRightRadius: index === tagsRepeater.count - 1 ? groupRadius : groupRadius / innerRadiusDiv
 
                                 readonly property bool isClickable: root.currentTab === "media"
 

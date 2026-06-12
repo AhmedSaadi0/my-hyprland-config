@@ -16,7 +16,7 @@ Item {
 
     // الحالات المتاحة: "idle", "happy", "suspicious", "shocked", "sleeping", "thinking", "music"
     property string emotion: EyeController.currentEmotion
-    property color eyeColor: ThemeManager.selectedTheme.colors.topbarFgColor
+    property color eyeColor: ThemeManager.selectedTheme.colors.onSurface
     property int animDur: 200
     property bool enableMouseInteraction: true
 

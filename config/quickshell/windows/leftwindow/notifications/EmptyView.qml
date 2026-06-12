@@ -21,13 +21,13 @@ ColumnLayout {
     Text {
         text: "󰂚"
         font: ThemeManager.selectedTheme.typography.iconFont
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        color: ThemeManager.selectedTheme.colors.onSurface
         Layout.alignment: Qt.AlignHCenter
     }
     Text {
         text: qsTr("No Notifications")
         font.pixelSize: 14
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        color: ThemeManager.selectedTheme.colors.onSurface
         Layout.alignment: Qt.AlignHCenter
     }
 }

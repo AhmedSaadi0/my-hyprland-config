@@ -21,9 +21,9 @@ ColumnLayout {
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 150
-        color: colors.topbarBgColorV1.alpha(0.5)
+        color: colors.surfaceContainer.alpha(0.5)
         radius: root.cardRadius
-        border.color: colors.leftMenuFgColorV1.alpha(0.05)
+        border.color: colors.onSurface.alpha(0.05)
         border.width: 1
 
         ColumnLayout {
@@ -43,7 +43,7 @@ ColumnLayout {
                     text: qsTr("Upcoming Forecast")
                     font.family: typo.bodyFont
                     font.pixelSize: typo.small
-                    color: colors.subtleText
+                    color: colors.onSurfaceVariant
                 }
             }
 
@@ -66,7 +66,7 @@ ColumnLayout {
                         text: modelData.time
                         font.family: typo.bodyFont
                         font.pixelSize: 12
-                        color: colors.subtleText
+                        color: colors.onSurfaceVariant
                         Layout.alignment: Qt.AlignHCenter
                     }
                     Text {
@@ -81,7 +81,7 @@ ColumnLayout {
                         font.family: typo.bodyFont
                         font.pixelSize: 16
                         font.bold: true
-                        color: colors.leftMenuFgColorV1
+                        color: colors.onSurface
                         Layout.alignment: Qt.AlignHCenter
                     }
                 }
@@ -95,9 +95,9 @@ ColumnLayout {
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: dailyLayout.implicitHeight + 32 // +32 للهوامش (16 فوق و 16 تحت)
-        color: colors.topbarBgColorV1.alpha(0.5)
+        color: colors.surfaceContainer.alpha(0.5)
         radius: root.cardRadius
-        border.color: colors.leftMenuFgColorV1.alpha(0.05)
+        border.color: colors.onSurface.alpha(0.05)
         border.width: 1
 
         ColumnLayout {
@@ -118,7 +118,7 @@ ColumnLayout {
                     text: qsTr("Upcoming Days")
                     font.family: typo.bodyFont
                     font.pixelSize: typo.small
-                    color: colors.subtleText
+                    color: colors.onSurfaceVariant
                 }
             }
 
@@ -133,7 +133,7 @@ ColumnLayout {
                         text: modelData.dayName
                         font.family: typo.bodyFont
                         font.pixelSize: 14
-                        color: colors.leftMenuFgColorV1
+                        color: colors.onSurface
                         Layout.preferredWidth: 90
                     }
 
@@ -155,7 +155,7 @@ ColumnLayout {
                         text: modelData.minTemp + "°"
                         font.family: typo.bodyFont
                         font.pixelSize: 14
-                        color: colors.subtleText
+                        color: colors.onSurfaceVariant
                     }
 
                     // البار المرئي
@@ -179,7 +179,7 @@ ColumnLayout {
                         font.family: typo.bodyFont
                         font.pixelSize: 14
                         font.bold: true
-                        color: colors.leftMenuFgColorV1
+                        color: colors.onSurface
                     }
                 }
             }
@@ -218,19 +218,19 @@ ColumnLayout {
             title: qsTr("UV Index")
             value: Weather.uvIndex
             icon: "󱟾"
-            iconColor: colors.warning
+            iconColor: colors.secondary
         }
         DetailCard {
             title: qsTr("Visibility")
             value: Weather.visibility + " km"
             icon: "󰈈"
-            iconColor: colors.subtleText
+            iconColor: colors.onSurfaceVariant
         }
         DetailCard {
             title: qsTr("Pressure")
             value: Weather.pressure + " hPa"
             icon: ""
-            iconColor: colors.success
+            iconColor: colors.tertiary
         }
     }
 
@@ -242,7 +242,7 @@ ColumnLayout {
         Layout.preferredHeight: 110
         color: colors.secondary.alpha(0.1)
         radius: root.cardRadius
-        border.color: colors.leftMenuFgColorV1.alpha(0.05)
+        border.color: colors.onSurface.alpha(0.05)
         border.width: 1
 
         RowLayout {
@@ -255,14 +255,14 @@ ColumnLayout {
                 title: qsTr("Sunrise")
                 time: Weather.sunrise
                 icon: "󰖜"
-                iconColor: colors.warning
+                iconColor: colors.secondary
             }
 
             // فاصل عمودي
             Rectangle {
                 Layout.preferredWidth: 1
                 Layout.fillHeight: true
-                color: colors.leftMenuFgColorV1.alpha(0.1)
+                color: colors.onSurface.alpha(0.1)
                 Layout.margins: 10
             }
 
@@ -278,7 +278,7 @@ ColumnLayout {
             Rectangle {
                 Layout.preferredWidth: 1
                 Layout.fillHeight: true
-                color: colors.leftMenuFgColorV1.alpha(0.1)
+                color: colors.onSurface.alpha(0.1)
                 Layout.margins: 10
             }
 
@@ -305,9 +305,9 @@ ColumnLayout {
         property color iconColor: colors.primary
         Layout.fillWidth: true
         implicitHeight: 110
-        color: colors.topbarBgColorV1.alpha(0.5)
+        color: colors.surfaceContainer.alpha(0.5)
         radius: root.cardRadius
-        border.color: colors.leftMenuFgColorV1.alpha(0.05)
+        border.color: colors.onSurface.alpha(0.05)
         border.width: 1
         clip: true
 
@@ -323,7 +323,7 @@ ColumnLayout {
                 Text {
                     text: title
                     font.pixelSize: 12
-                    color: colors.subtleText
+                    color: colors.onSurfaceVariant
                     Layout.fillWidth: true
                     elide: Text.ElideRight
                 }
@@ -341,7 +341,7 @@ ColumnLayout {
                 text: value
                 font.pixelSize: 22
                 font.bold: true
-                color: colors.leftMenuFgColorV1
+                color: colors.onSurface
                 Layout.fillWidth: true
                 elide: Text.ElideRight
             }
@@ -362,7 +362,7 @@ ColumnLayout {
                 Text {
                     text: subtitle
                     font.pixelSize: 10
-                    color: colors.subtleText
+                    color: colors.onSurfaceVariant
                     opacity: 0.8
                     Layout.fillWidth: true
                     elide: Text.ElideRight
@@ -395,13 +395,13 @@ ColumnLayout {
             text: time
             font.pixelSize: 16
             font.bold: true
-            color: colors.leftMenuFgColorV1
+            color: colors.onSurface
             Layout.alignment: Qt.AlignHCenter
         }
         Text {
             text: title
             font.pixelSize: 12
-            color: colors.subtleText
+            color: colors.onSurfaceVariant
             Layout.alignment: Qt.AlignHCenter
         }
     }

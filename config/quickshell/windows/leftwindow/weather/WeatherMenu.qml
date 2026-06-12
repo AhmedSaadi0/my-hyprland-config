@@ -8,6 +8,7 @@ import "root:/themes"
 import "root:/services"
 import "root:/components"
 import "root:/utils"
+import "root:/config/ConstValues.js" as C
 import "../base"
 
 BaseMenuView {
@@ -81,17 +82,23 @@ BaseMenuView {
 
             bottomContent: Flow {
                 width: smartWeatherCard.width - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2)
-                spacing: 6
+                spacing: 3
                 topPadding: 4
                 visible: Weather.aiTags && Weather.aiTags.length > 0
 
                 Repeater {
+                    id: tagsRepeater
                     model: Weather.aiTags
                     delegate: Rectangle {
                         height: 24
                         width: tagText.contentWidth + 16
                         color: smartWeatherCard.aiBorderColor.alpha(0.3)
-                        radius: ThemeManager.selectedTheme.dimensions.elementRadius
+                        property int groupRadius: ThemeManager.selectedTheme.dimensions.elementRadius / C.M3_BUTTON_RADIUS_DIVISOR
+                        property int innerRadiusDiv: 4
+                        topLeftRadius: index === 0 ? groupRadius : groupRadius / innerRadiusDiv
+                        bottomLeftRadius: index === 0 ? groupRadius : groupRadius / innerRadiusDiv
+                        topRightRadius: index === tagsRepeater.count - 1 ? groupRadius : groupRadius / innerRadiusDiv
+                        bottomRightRadius: index === tagsRepeater.count - 1 ? groupRadius : groupRadius / innerRadiusDiv
                         border.color: smartWeatherCard.aiBorderColor.alpha(0.5)
                         border.width: 1
 

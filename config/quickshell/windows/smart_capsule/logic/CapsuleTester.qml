@@ -36,14 +36,14 @@ Singleton {
                     text: "غائم جزئياً، 19°C. احتمالية خفيفة للأمطار.",
                     icon: "",
                     emotion: "thinking",
-                    bg1: ThemeManager.selectedTheme.colors.topbarBgColorV2,
-                    bg2: ThemeManager.selectedTheme.colors.topbarBgColorV3
+                    bg1: ThemeManager.selectedTheme.colors.surfaceContainerHigh,
+                    bg2: ThemeManager.selectedTheme.colors.primaryContainer
                 },
                 {
                     text: "أمطار خفيفة، 15°C. لا تنس مظلتك.",
                     icon: "",
                     emotion: "wink",
-                    bg1: ThemeManager.selectedTheme.colors.leftMenuBgColorV2,
+                    bg1: ThemeManager.selectedTheme.colors.surfaceContainerHigh,
                     bg2: ThemeManager.selectedTheme.colors.primary
                 }
             ];
@@ -54,21 +54,21 @@ Singleton {
                     text: "تحذير: عاصفة رعدية قوية تقترب خلال 10 دقائق!",
                     icon: "",
                     emotion: "shocked",
-                    bg1: ThemeManager.selectedTheme.colors.warning,
-                    bg2: ThemeManager.selectedTheme.colors.topbarBgColorV3
+                    bg1: ThemeManager.selectedTheme.colors.secondary,
+                    bg2: ThemeManager.selectedTheme.colors.primaryContainer
                 },
                 {
                     text: "تنبيه حرارة: درجة الحرارة تجاوزت 45°C، تجنب الشمس.",
                     icon: "",
                     emotion: "dead",
                     bg1: ThemeManager.selectedTheme.colors.error,
-                    bg2: ThemeManager.selectedTheme.colors.warning
+                    bg2: ThemeManager.selectedTheme.colors.secondary
                 },
                 {
                     text: "عاجل: رياح قوية جداً (80 كم/س). ابق في الداخل.",
                     icon: "",
                     emotion: "suspicious",
-                    bg1: ThemeManager.selectedTheme.colors.success,
+                    bg1: ThemeManager.selectedTheme.colors.tertiary,
                     bg2: ThemeManager.selectedTheme.colors.secondary
                 }
             ];

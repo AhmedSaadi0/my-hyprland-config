@@ -53,7 +53,7 @@ Rectangle {
         id: profileDetail
         width: backgroundImage.width
         height: 130
-        color: ThemeManager.selectedTheme.colors.topbarBgColorV2.alpha(0.7)
+        color: ThemeManager.selectedTheme.colors.surfaceContainerHighest.alpha(0.7)
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
         smooth: true
         anchors {
@@ -83,7 +83,7 @@ Rectangle {
         //
         //             // 1. Draw an opaque rectangle covering the entire canvas area.
         //             //    This makes the mask opaque by default, so the content is visible.
-        //             ctx.fillStyle = ThemeManager.selectedTheme.colors.topbarFgColor;
+        //             ctx.fillStyle = ThemeManager.selectedTheme.colors.onSurface;
         //             ctx.fillRect(0, 0, width, height);
         //
         //             // 2. Set the composite operation to make subsequent drawing
@@ -108,7 +108,7 @@ Rectangle {
         //             ctx.beginPath();
         //             // arc(centerX, centerY, radius, startAngle, endAngle)
         //             ctx.arc(circleCenterX, circleCenterY, circleRadius, 0, 2 * Math.PI);
-        //             ctx.fillStyle = ThemeManager.selectedTheme.colors.topbarColor;
+        //             ctx.fillStyle = ThemeManager.selectedTheme.colors.surface;
         //             ctx.fill();
         //
         //             // Reset composite operation if needed later (good practice, though not needed here)
@@ -141,7 +141,7 @@ Rectangle {
         text: App.username
         font.pixelSize: 35
         font.family: "VIP Rawy Regular"
-        color: ThemeManager.selectedTheme.colors.topbarFgColorV2
+        color: ThemeManager.selectedTheme.colors.onSurfaceVariant
         anchors {
             top: profileImage.bottom
             horizontalCenter: profileImage.horizontalCenter
@@ -156,7 +156,7 @@ Rectangle {
 
     Text {
         text: App.subtitle
-        color: ThemeManager.selectedTheme.colors.topbarFgColorV2
+        color: ThemeManager.selectedTheme.colors.onSurfaceVariant
         anchors {
             top: titleText.bottom
             horizontalCenter: profileImage.horizontalCenter

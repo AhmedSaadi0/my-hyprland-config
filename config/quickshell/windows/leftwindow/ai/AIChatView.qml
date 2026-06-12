@@ -36,7 +36,7 @@ ColumnLayout {
             text: "AI Assistant"
             font.pixelSize: 18
             font.bold: true
-            color: root.theme.colors.leftMenuFgColorV1
+            color: root.theme.colors.onSurface
         }
 
         Item {

@@ -25,7 +25,7 @@ Rectangle {
     signal loadMore
 
     radius: root.theme.dimensions.elementRadius
-    color: root.theme.colors.leftMenuBgColorV2
+    color: root.theme.colors.surfaceContainerHigh
     clip: true
     ScrollView {
         id: scrollView
@@ -89,7 +89,7 @@ Rectangle {
         visible: wallpaperGrid.count === 0 && !root.loading
         text: root.emptyText
         font.pixelSize: 14
-        color: root.theme.colors.subtleText
+        color: root.theme.colors.onSurfaceVariant
         horizontalAlignment: Text.AlignHCenter
     }
 

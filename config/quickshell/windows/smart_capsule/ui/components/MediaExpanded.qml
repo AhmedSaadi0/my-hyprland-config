@@ -148,7 +148,7 @@ Item {
     // --- زر التشغيل المتحول (Morphing Play Button) ---
     component MorphPlayButton: MouseArea {
         property bool playing: false
-        property color iconColor: ThemeManager.selectedTheme.colors.topbarFgColor
+        property color iconColor: ThemeManager.selectedTheme.colors.onSurface
 
         implicitWidth: 50
         implicitHeight: 40

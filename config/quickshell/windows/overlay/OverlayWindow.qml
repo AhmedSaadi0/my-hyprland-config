@@ -174,7 +174,7 @@ PanelWindow {
 
             Rectangle {
                 anchors.fill: parent
-                color: ThemeManager.selectedTheme.colors.topbarColor.alpha(0.86)
+                color: ThemeManager.selectedTheme.colors.surface.alpha(0.86)
                 opacity: panelProgress
             }
 
@@ -198,7 +198,7 @@ PanelWindow {
                 Rectangle {
                     anchors.fill: parent
                     radius: 8
-                    color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1.alpha(0.55)
+                    color: ThemeManager.selectedTheme.colors.surfaceContainer.alpha(0.55)
                     border.width: 1
                     border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.22)
                 }
@@ -273,7 +273,7 @@ PanelWindow {
                     anchors.margins: 16
                     visible: OverlayService.imageTitle !== ""
                     radius: 6
-                    color: ThemeManager.selectedTheme.colors.topbarColor.alpha(0.7)
+                    color: ThemeManager.selectedTheme.colors.surface.alpha(0.7)
                     border.width: 1
                     border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.24)
                     width: Math.min(titleText.implicitWidth + 20, parent.width * 0.45)
@@ -285,7 +285,7 @@ PanelWindow {
                         anchors.fill: parent
                         anchors.margins: 10
                         text: OverlayService.imageTitle
-                        color: ThemeManager.selectedTheme.colors.topbarFgColor
+                        color: ThemeManager.selectedTheme.colors.onSurface
                         elide: Text.ElideRight
                         font.family: ThemeManager.selectedTheme.typography.bodyFont
                         font.pixelSize: ThemeManager.selectedTheme.typography.baseFontSize
@@ -305,14 +305,14 @@ PanelWindow {
                         height: 44
                         radius: 22
                         visible: OverlayService.mode === OverlayService.modeImagePreview
-                        color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.topbarFgColor.alpha(0.28)
+                        color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurface.alpha(0.28)
 
                         Text {
                             anchors.centerIn: parent
                             text: "󰄬"
                             font.family: ThemeManager.selectedTheme.typography.iconFont
                             font.pixelSize: 20
-                            color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.topbarFgColor
+                            color: applyMouse.containsMouse ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.onSurface
                         }
 
                         MouseArea {
@@ -328,12 +328,12 @@ PanelWindow {
                         width: 44
                         height: 44
                         radius: 22
-                        color: closeMouse.containsMouse ? ThemeManager.selectedTheme.colors.error : ThemeManager.selectedTheme.colors.topbarFgColor.alpha(0.28)
+                        color: closeMouse.containsMouse ? ThemeManager.selectedTheme.colors.error : ThemeManager.selectedTheme.colors.onSurface.alpha(0.28)
 
                         Text {
                             anchors.centerIn: parent
                             text: "✕"
-                            color: closeMouse.containsMouse ? ThemeManager.selectedTheme.colors.onError : ThemeManager.selectedTheme.colors.topbarFgColor
+                            color: closeMouse.containsMouse ? ThemeManager.selectedTheme.colors.onError : ThemeManager.selectedTheme.colors.onSurface
                             font.pixelSize: 18
                         }
 

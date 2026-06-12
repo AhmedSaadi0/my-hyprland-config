@@ -14,8 +14,8 @@ TextField {
 
     property var selectedTheme: ThemeManager.selectedTheme
 
-    property color normalBackground: selectedTheme.colors.topbarBgColorV2
-    property color normalForeground: selectedTheme.colors.topbarFgColorV2
+    property color normalBackground: selectedTheme.colors.surfaceContainerHigh
+    property color normalForeground: selectedTheme.colors.onSurfaceVariant
     property color borderColor: selectedTheme.colors.secondary.alpha(0.4)
     property int borderSize: 1
 

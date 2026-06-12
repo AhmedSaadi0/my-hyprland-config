@@ -28,12 +28,12 @@ Item {
         if (s === "red")
             return root.theme.colors.error;
         if (s === "orange" || s === "yellow")
-            return root.theme.colors.warning;
+            return root.theme.colors.secondary;
         if (s === "green")
-            return root.theme.colors.success;
+            return root.theme.colors.tertiary;
         if (SystemService.bootAnalysisStatus === "LOADING")
             return root.theme.colors.primary;
-        return root.theme.colors.subtleText;
+        return root.theme.colors.onSurfaceVariant;
     }
 
     readonly property string bootStatusText: {
@@ -68,8 +68,8 @@ Item {
         return "󱚣";
     }
 
-    readonly property color bootStatusTextColor: root.theme.colors.leftMenuFgColorV3
-    readonly property color bootStatusBgColor: root.theme.colors.leftMenuBgColorV3
+    readonly property color bootStatusTextColor: root.theme.colors.onPrimaryContainer
+    readonly property color bootStatusBgColor: root.theme.colors.primaryContainer
 
     // --- Data Model ---
     readonly property var eventModel: AiAnalysisService.eventsModel
@@ -80,7 +80,7 @@ Item {
         width: parent.width
         height: root.implicitHeight
 
-        color: root.theme.colors.leftMenuBgColorV2
+        color: root.theme.colors.surfaceContainerHigh
         radius: root.theme.dimensions.elementRadius
         clip: true
 

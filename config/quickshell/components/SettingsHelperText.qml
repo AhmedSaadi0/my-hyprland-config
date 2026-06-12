@@ -13,7 +13,7 @@ Controls.Label {
 
     // text: qsTr("Automatically cycle through a collection of wallpapers from a selected folder.")
     font.pixelSize: ThemeManager.selectedTheme.typography.small
-    color: ThemeManager.selectedTheme.colors.subtleText
+    color: ThemeManager.selectedTheme.colors.onSurfaceVariant
     wrapMode: Text.WordWrap
     Layout.preferredWidth: 500
 }

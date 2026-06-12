@@ -18,15 +18,15 @@ import "./audio"
 Controls.ApplicationWindow {
     id: root
     visible: false
-    color: ThemeManager.selectedTheme.colors.topbarColor
+    color: ThemeManager.selectedTheme.colors.surface
 
-    palette.window: ThemeManager.selectedTheme.colors.topbarColor
-    palette.windowText: ThemeManager.selectedTheme.colors.topbarFgColor
-    palette.base: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
-    palette.alternateBase: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    palette.text: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-    palette.button: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    palette.buttonText: ThemeManager.selectedTheme.colors.leftMenuFgColorV2
+    palette.window: ThemeManager.selectedTheme.colors.surface
+    palette.windowText: ThemeManager.selectedTheme.colors.onSurface
+    palette.base: ThemeManager.selectedTheme.colors.surfaceContainer
+    palette.alternateBase: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+    palette.text: ThemeManager.selectedTheme.colors.onSurface
+    palette.button: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+    palette.buttonText: ThemeManager.selectedTheme.colors.onSurfaceVariant
     palette.highlight: ThemeManager.selectedTheme.colors.primary
     palette.highlightedText: ThemeManager.selectedTheme.colors.onPrimary
 

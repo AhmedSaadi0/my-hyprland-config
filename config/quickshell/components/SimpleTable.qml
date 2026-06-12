@@ -15,14 +15,18 @@ Rectangle {
     property var model: null
 
     // --- Properties for Table Container ---
-    property color tableBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+    property color tableBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainer
     property color tableBorderColor: ThemeManager.selectedTheme.colors.primary.alpha(0.25)
     property int tableBorderWidth: 2
     property real tableRadius: ThemeManager.selectedTheme.dimensions.elementRadius
+    property real topLeftTableRadius: tableRadius
+    property real topRightTableRadius: tableRadius
+    property real bottomLeftTableRadius: tableRadius
+    property real bottomRightTableRadius: tableRadius
 
     // --- Properties for Header ---
-    property color headerBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    property color headerTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+    property color headerBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+    property color headerTextColor: ThemeManager.selectedTheme.colors.onSurface
     property font headerFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.heading4Size,
         bold: true
@@ -33,7 +37,7 @@ Rectangle {
     property int headerCellSpacing: 0
 
     // --- DEFAULT Properties for Cells/Rows Text ---
-    property color cellTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+    property color cellTextColor: ThemeManager.selectedTheme.colors.onSurface
     property font cellFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.medium
     })
@@ -41,14 +45,14 @@ Rectangle {
     property var cellWrapMode: Text.NoWrap
 
     // --- Properties for Sub-Value Text ---
-    property color subCellTextColor: ThemeManager.selectedTheme.colors.success
+    property color subCellTextColor: ThemeManager.selectedTheme.colors.tertiary
     property font subCellFont: Qt.font({
         pixelSize: ThemeManager.selectedTheme.typography.small - 3
     })
 
     // --- General Cell Properties ---
-    property color cellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
-    property color alternatingCellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    property color cellBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainer
+    property color alternatingCellBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
     property color cellBorderColor: ThemeManager.selectedTheme.colors.primary.alpha(0.18)
     property int cellBorderWidth: 1
     property int rowHeight: Kirigami.Units.gridUnit * 3
@@ -65,7 +69,10 @@ Rectangle {
     color: tableBackgroundColor
     border.color: tableBorderColor
     border.width: tableBorderWidth > 0 ? tableBorderWidth : 0
-    radius: tableRadius
+    topLeftRadius: topLeftTableRadius
+    topRightRadius: topRightTableRadius
+    bottomLeftRadius: bottomLeftTableRadius
+    bottomRightRadius: bottomRightTableRadius
 
     ColumnLayout {
         id: tableContentLayout
@@ -95,8 +102,8 @@ Rectangle {
                     border.color: tableRoot.headerBorderColor
                     border.width: tableRoot.headerBorderWidth > 0 && (tableRoot.showVerticalGridLines || tableRoot.showHorizontalGridLines) ? tableRoot.headerBorderWidth : 0
                     clip: true
-                    topLeftRadius: isFirstCellInRow ? tableRadius : 0
-                    topRightRadius: isLastCellInRow ? tableRadius : 0
+                    topLeftRadius: isFirstCellInRow ? tableRoot.topLeftTableRadius : 0
+                    topRightRadius: isLastCellInRow ? tableRoot.topRightTableRadius : 0
                     Text {
                         text: columnDef.title
                         font: columnDef.headerFont !== undefined ? columnDef.headerFont : tableRoot.headerFont
@@ -143,8 +150,8 @@ Rectangle {
                     border.color: tableRoot.cellBorderColor
                     border.width: (tableRoot.cellBorderWidth > 0 && (tableRoot.showVerticalGridLines || tableRoot.showHorizontalGridLines)) ? tableRoot.cellBorderWidth : 0
                     clip: true
-                    bottomLeftRadius: (isFirstCellInCol && isLastRow) ? tableRoot.tableRadius : 0
-                    bottomRightRadius: (isLastCellInCol && isLastRow) ? tableRoot.tableRadius : 0
+                    bottomLeftRadius: (isFirstCellInCol && isLastRow) ? tableRoot.bottomLeftTableRadius : 0
+                    bottomRightRadius: (isLastCellInCol && isLastRow) ? tableRoot.bottomRightTableRadius : 0
 
                     ColumnLayout {
                         anchors.verticalCenter: parent.verticalCenter

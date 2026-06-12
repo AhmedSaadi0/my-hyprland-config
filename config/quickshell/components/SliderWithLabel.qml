@@ -29,7 +29,7 @@ RowLayout {
     Controls.Label {
         id: titleLabel
         font.bold: true
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        color: ThemeManager.selectedTheme.colors.onSurface
         Layout.fillWidth: true
         elide: Text.ElideRight
     }
@@ -94,7 +94,7 @@ RowLayout {
 
         // خلفية خفيفة لتمييز الرقم (اختياري، لجمالية أكثر)
         background: Rectangle {
-            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
+            color: ThemeManager.selectedTheme.colors.surfaceContainer
             radius: 4
             opacity: 0.5
         }

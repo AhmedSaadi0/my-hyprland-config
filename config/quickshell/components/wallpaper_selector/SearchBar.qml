@@ -29,8 +29,8 @@ RowLayout {
         font.pixelSize: 13
         horizontalAlignment: Text.AlignLeft
 
-        normalBackground: root.theme.colors.leftMenuBgColorV2
-        normalForeground: root.theme.colors.leftMenuFgColorV1
+        normalBackground: root.theme.colors.surfaceContainerHigh
+        normalForeground: root.theme.colors.onSurface
         focusedBorderColor: root.theme.colors.primary
         borderColor: root.theme.colors.primary.alpha(0.3)
         borderSize: 1

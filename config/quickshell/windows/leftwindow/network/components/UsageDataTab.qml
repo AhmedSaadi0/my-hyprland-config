@@ -47,8 +47,8 @@ ColumnLayout {
             Layout.fillWidth: true
             implicitHeight: 90
             radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2.alpha(0.35)
-            border.color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.12)
+            color: ThemeManager.selectedTheme.colors.surfaceContainerHigh.alpha(0.35)
+            border.color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.12)
             border.width: 1
 
             ColumnLayout {
@@ -80,8 +80,8 @@ ColumnLayout {
                     Rectangle {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 42
-                        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV3.alpha(0.45)
-                        border.color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.15)
+                        color: ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.45)
+                        border.color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.15)
                         border.width: 1
 
                         topLeftRadius: root.groupRadius
@@ -97,7 +97,7 @@ ColumnLayout {
                             Label {
                                 text: qsTr("Today")
                                 font.pixelSize: ThemeManager.selectedTheme.typography.small - 1
-                                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.75)
+                                color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.75)
                             }
                             Item {
                                 Layout.fillWidth: true
@@ -130,7 +130,7 @@ ColumnLayout {
                             Label {
                                 text: qsTr("This Month")
                                 font.pixelSize: ThemeManager.selectedTheme.typography.small - 1
-                                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV2.alpha(0.75)
+                                color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.75)
                             }
                             Item {
                                 Layout.fillWidth: true

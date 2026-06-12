@@ -32,12 +32,7 @@ Item {
 
     Process {
         id: powerActionProcess
-        // command: ["ls"];
         command: root.pendingActionCommand
-        // onExited: exitCode => {
-        //     if (exitCode === 0)
-        //         root.parent.parent.visible = false;
-        // }
         function start() {
             powerActionProcess.running = true;
         }
@@ -56,7 +51,7 @@ Item {
 
             Text {
                 text: viewStack.depth > 1 ? root.pendingActionMessage : qsTr("System Control")
-                color: theme.colors.topbarFgColor
+                color: theme.colors.onSurface
                 font.family: theme.typography.bodyFont
                 font.pixelSize: theme.typography.heading1Size
                 font.bold: true
@@ -65,7 +60,7 @@ Item {
 
             Text {
                 text: viewStack.depth > 1 ? qsTr("This action cannot be undone") : qsTr("Choose an action to perform")
-                color: theme.colors.subtleText
+                color: theme.colors.onSurfaceVariant
                 font.family: theme.typography.bodyFont
                 font.pixelSize: theme.typography.medium
                 Layout.alignment: Qt.AlignHCenter
@@ -77,7 +72,7 @@ Item {
         StackView {
             id: viewStack
             Layout.alignment: Qt.AlignHCenter
-            Layout.preferredWidth: 800 // عرض كافٍ للأزرار
+            Layout.preferredWidth: 800
             Layout.preferredHeight: 180
             clip: false
 
@@ -109,19 +104,78 @@ Item {
         }
     }
 
-    // --- واجهة الأزرار الرئيسية ---
+    // --- واجهة الأزرار الرئيسية مع المحدد المنزلق الذكي والمؤجل ---
     Component {
         id: mainActions
         Item {
-            // حاوية تملأ الـ StackView
+            id: mainContainer
             width: viewStack.width
             height: viewStack.height
 
+            // رصد حالة التحويم الحالية على الأزرار
+            property var activeTile: {
+                if (tileShutDown.hovered)
+                    return tileShutDown;
+                if (tileRestart.hovered)
+                    return tileRestart;
+                if (tileSuspend.hovered)
+                    return tileSuspend;
+                if (tileLogOut.hovered)
+                    return tileLogOut;
+                return null;
+            }
+
+            // تحديد إحداثيات الهدف للمحدد المنزلق
+            property real targetX: lastX
+            property real targetY: lastY
+            property real targetWidth: lastWidth
+            property real targetHeight: lastHeight
+
+            // ذاكرة الحركة واللون الأخير
+            property real lastX: 0
+            property real lastY: 0
+            property real lastWidth: 150
+            property real lastHeight: 150
+            property color lastAccentColor: theme.colors.primary
+
+            // حالة التحكم بظهور المحدد (تظل true أثناء عبور الفراغات بفضل المؤقت)
+            property bool showHighlight: false
+
+            onActiveTileChanged: {
+                if (activeTile) {
+                    // إيقاف مؤقت التلاشي فوراً لأن الماوس فوق زر نشط
+                    fadeDelayTimer.stop();
+                    showHighlight = true;
+
+                    // احتساب الموقع المطلق بدقة متناهية
+                    var absolutePos = activeTile.mapToItem(mainContainer, 0, 0);
+                    targetX = absolutePos.x;
+                    targetY = absolutePos.y;
+                    targetWidth = activeTile.width;
+                    targetHeight = activeTile.height;
+                    lastAccentColor = activeTile.accentColor;
+                } else {
+                    // الماوس في الفراغ البيني أو غادر المجموعة، نبدأ مؤقت المهلة قبل التلاشي
+                    fadeDelayTimer.start();
+                }
+            }
+
+            // مؤقت سد الفجوات: يمنح 180ms كافية جداً لعبور الفراغات دون تلاشي المحدد
+            Timer {
+                id: fadeDelayTimer
+                interval: 180
+                repeat: false
+                onTriggered: mainContainer.showHighlight = false
+            }
+
+            // 1. حاوية الأزرار الأساسية (الطبقة السفلية)
             RowLayout {
-                anchors.centerIn: parent // توسيط حقيقي داخل الحاوية
+                id: mainLayout
+                anchors.centerIn: parent
                 spacing: theme.dimensions.spacingLarge
 
                 PowerTile {
+                    id: tileShutDown
                     icon: "\uf011"
                     label: qsTr("Shut Down")
                     accentColor: theme.colors.error
@@ -136,12 +190,13 @@ Item {
                 }
 
                 PowerTile {
+                    id: tileRestart
                     icon: "\uf01e"
                     label: qsTr("Restart")
-                    accentColor: theme.colors.warning
+                    accentColor: theme.colors.secondary
                     onClicked: {
                         root.currentAccentColor = accentColor;
-                        root.currentAccentForeground = theme.colors.onWarning;
+                        root.currentAccentForeground = theme.colors.onSecondary;
                         root.pendingActionCommand = ["systemctl", "reboot"];
                         root.pendingActionMessage = qsTr("Restart System?");
                         root.confirmActionText = qsTr("Restart");
@@ -150,6 +205,7 @@ Item {
                 }
 
                 PowerTile {
+                    id: tileSuspend
                     icon: "\uf186"
                     label: qsTr("Suspend")
                     accentColor: theme.colors.tertiary
@@ -164,6 +220,7 @@ Item {
                 }
 
                 PowerTile {
+                    id: tileLogOut
                     icon: "\uf08b"
                     label: qsTr("Log Out")
                     accentColor: theme.colors.primary
@@ -177,13 +234,86 @@ Item {
                     }
                 }
             }
+
+            // 2. المحدد المنزلق الذكي والسينمائي (الطبقة العلوية الطافية)
+            Rectangle {
+                id: slidingHighlight
+                x: mainContainer.targetX
+                y: mainContainer.targetY
+                width: mainContainer.targetWidth
+                height: mainContainer.targetHeight
+                radius: theme.dimensions.elementRadius
+
+                color: Qt.rgba(mainContainer.lastAccentColor.r, mainContainer.lastAccentColor.g, mainContainer.lastAccentColor.b, 0.15)
+                border.color: mainContainer.lastAccentColor
+                border.width: 1.5
+
+                enabled: false // لا يعترض نقرات الماوس لتمر للأزرار بالأسفل
+
+                // نتحكم بالشفافية بناءً على المؤقت الذكي لسد الفجوات
+                opacity: mainContainer.showHighlight ? 1.0 : 0.0
+
+                // مزامنة دقيقة لنسبة الانكماش والاتساع التفاعلي مع الزر النشط
+                scale: mainContainer.activeTile ? mainContainer.activeTile.scale : 1.0
+
+                // انميشن الحركة الأفقية المتباطئة والأنيقة جداً لمظهر سينمائي
+                // تم ربط تفعيل الانميشن (enabled) بحالة الظهور لتجنب قفزة السحب عند أول تحويم
+                Behavior on x {
+                    enabled: mainContainer.showHighlight
+                    NumberAnimation {
+                        duration: 320
+                        easing.type: Easing.OutQuint
+                    }
+                }
+                Behavior on y {
+                    enabled: mainContainer.showHighlight
+                    NumberAnimation {
+                        duration: 320
+                        easing.type: Easing.OutQuint
+                    }
+                }
+                Behavior on width {
+                    enabled: mainContainer.showHighlight
+                    NumberAnimation {
+                        duration: 320
+                        easing.type: Easing.OutQuint
+                    }
+                }
+                Behavior on height {
+                    enabled: mainContainer.showHighlight
+                    NumberAnimation {
+                        duration: 320
+                        easing.type: Easing.OutQuint
+                    }
+                }
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 150
+                        easing.type: Easing.OutCubic
+                    }
+                }
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 250
+                    }
+                }
+                Behavior on border.color {
+                    ColorAnimation {
+                        duration: 250
+                    }
+                }
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 180
+                    }
+                }
+            }
         }
     }
 
     Component {
         id: confirmActions
         Item {
-            // حاوية تملأ الـ StackView لضمان مرجع التوسيط
             width: viewStack.width
             height: viewStack.height
 
@@ -197,8 +327,7 @@ Item {
                     iconFirst: true
                     Layout.preferredWidth: 160
                     Layout.preferredHeight: 55
-                    // شفافية متناسقة
-                    normalBackground: Qt.rgba(theme.colors.topbarBgColorV1.r, theme.colors.topbarBgColorV1.g, theme.colors.topbarBgColorV1.b, 0.4)
+                    normalBackground: Qt.rgba(theme.colors.surfaceContainer.r, theme.colors.surfaceContainer.g, theme.colors.surfaceContainer.b, 0.4)
                     onClicked: viewStack.pop()
                 }
 
@@ -207,15 +336,12 @@ Item {
                     iconText: "\uf00c"
                     Layout.preferredWidth: 200
                     Layout.preferredHeight: 55
-                    // شفافية بلون الأكشن المختار
                     normalBackground: Qt.rgba(root.currentAccentColor.r, root.currentAccentColor.g, root.currentAccentColor.b, 0.6)
                     normalForeground: root.currentAccentForeground
                     focus: true
                     Keys.onReturnPressed: clicked()
                     onClicked: {
-                        // نمنع الضغط المتكرر
                         enabled = false;
-                        // استدعاء دالة الوداع
                         root.prepareGoodbye(root.confirmActionText);
                     }
                 }
@@ -234,9 +360,12 @@ Item {
         height: 150
 
         radius: theme.dimensions.elementRadius
-        color: mouseArea.hovered ? Qt.rgba(accentColor.r, accentColor.g, accentColor.b, 0.15) : Qt.rgba(theme.colors.topbarBgColorV1.r, theme.colors.topbarBgColorV1.g, theme.colors.topbarBgColorV1.b, 0.3)
 
-        border.color: mouseArea.hovered ? accentColor : theme.colors.topbarFgColor.alpha(0.1)
+        readonly property bool hovered: mouseArea.containsMouse
+
+        // خلفية ثابتة للأزرار تعمل كـ مسار (Track) ينساب المحدد المنزلق فوقه بنعومة
+        color: Qt.rgba(theme.colors.surfaceContainer.r, theme.colors.surfaceContainer.g, theme.colors.surfaceContainer.b, 0.3)
+        border.color: theme.colors.onSurface.alpha(0.1)
         border.width: 1
 
         ColumnLayout {
@@ -247,7 +376,7 @@ Item {
                 text: icon
                 font.family: theme.typography.iconFont
                 font.pixelSize: 40
-                color: mouseArea.hovered ? accentColor : theme.colors.topbarFgColor
+                color: mouseArea.hovered ? accentColor : theme.colors.onSurface
                 Layout.alignment: Qt.AlignHCenter
                 Behavior on color {
                     ColorAnimation {
@@ -260,9 +389,15 @@ Item {
                 text: label
                 font.family: theme.typography.bodyFont
                 font.pixelSize: theme.typography.medium
-                color: theme.colors.topbarFgColor
+                color: theme.colors.onSurface
                 Layout.alignment: Qt.AlignHCenter
                 opacity: mouseArea.hovered ? 1.0 : 0.6
+
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 150
+                    }
+                }
             }
         }
 
@@ -290,11 +425,9 @@ Item {
         onTriggered: powerActionProcess.start()
     }
 
-    // دالة لتجهيز الوداع
     function prepareGoodbye(actionType) {
         root.close();
 
-        // تحديد المفتاح والقيم الاحتياطية
         let actionKey = "";
         let fallbackEmotion = "wink";
         let fallbackText = "";
@@ -312,7 +445,7 @@ Item {
             fallbackEmotion = "happy";
             fallbackText = "System is restarting...";
             capsuleIcon = "\uf01e";
-            capsuleColor = theme.colors.warning;
+            capsuleColor = theme.colors.secondary;
         } else if (actionType === qsTr("Suspend")) {
             actionKey = "suspend";
             fallbackEmotion = "sleeping";
@@ -326,7 +459,6 @@ Item {
             capsuleIcon = "\uf08b";
         }
 
-        // محاولة جلب الرد من الذكاء الاصطناعي
         const responses = SystemService.systemActionResponses;
         let finalEmotion = fallbackEmotion;
         let finalText = fallbackText;
@@ -347,7 +479,6 @@ Item {
             timeout: 5000
         });
 
-        // بدء العد التنازلي للتنفيذ
         executionDelayTimer.start();
     }
 }

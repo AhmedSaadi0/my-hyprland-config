@@ -19,8 +19,8 @@ ColumnLayout {
         id: hiddenToggleBtn
         Layout.fillWidth: true
         text: qsTr("Connect to Hidden Network") + "  󰤨"
-        normalBackground: hiddenNetworkContainer.isOpen ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-        normalForeground: hiddenNetworkContainer.isOpen ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+        normalBackground: hiddenNetworkContainer.isOpen ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.surfaceContainerHigh
+        normalForeground: hiddenNetworkContainer.isOpen ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.onSurface
         onClicked: hiddenNetworkContainer.isOpen = !hiddenNetworkContainer.isOpen
     }
 
@@ -55,7 +55,7 @@ ColumnLayout {
             id: contentRect
             width: parent.width
             implicitHeight: hiddenFormLayout.implicitHeight + 24
-            color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2.alpha(0.5)
+            color: ThemeManager.selectedTheme.colors.surfaceContainerHigh.alpha(0.5)
             radius: ThemeManager.selectedTheme.dimensions.elementRadius
             border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
             border.width: 1
@@ -75,12 +75,12 @@ ColumnLayout {
                     Layout.fillWidth: true
                     placeholderText: qsTr("Network Name (SSID)")
                     font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-                    placeholderTextColor: ThemeManager.selectedTheme.colors.subtleText
+                    color: ThemeManager.selectedTheme.colors.onSurface
+                    placeholderTextColor: ThemeManager.selectedTheme.colors.onSurfaceVariant
                     background: Rectangle {
-                        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV3.alpha(0.5)
+                        color: ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.5)
                         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                        border.color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.1)
+                        border.color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.1)
                         border.width: 1
                     }
                 }
@@ -91,12 +91,12 @@ ColumnLayout {
                     placeholderText: qsTr("Password (Optional)")
                     echoMode: TextInput.Password
                     font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-                    placeholderTextColor: ThemeManager.selectedTheme.colors.subtleText
+                    color: ThemeManager.selectedTheme.colors.onSurface
+                    placeholderTextColor: ThemeManager.selectedTheme.colors.onSurfaceVariant
                     background: Rectangle {
-                        color: ThemeManager.selectedTheme.colors.leftMenuBgColorV3.alpha(0.5)
+                        color: ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.5)
                         radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                        border.color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.1)
+                        border.color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.1)
                         border.width: 1
                     }
                 }

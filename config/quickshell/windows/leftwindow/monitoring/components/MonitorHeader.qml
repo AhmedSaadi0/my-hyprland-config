@@ -18,9 +18,9 @@ Item {
     property string statusIcon: "󱚣"
     property bool isDetailsOpen: false
 
-    property color statusColor: _colors.success
-    property color statusTextColor: _colors.leftMenuFgColorV3
-    property color statusBgColor: _colors.leftMenuBgColorV2
+    property color statusColor: _colors.tertiary
+    property color statusTextColor: _colors.onPrimaryContainer
+    property color statusBgColor: _colors.surfaceContainerHigh
 
     // =========================================================================
     //  Internal Helpers (Clean Code & Performance)
@@ -52,7 +52,7 @@ Item {
     // 1. Background
     Rectangle {
         anchors.fill: parent
-        color: _colors.leftMenuBgColorV3
+        color: _colors.primaryContainer
         opacity: isDarkMode ? 0.8 : 0.9
 
         // التعامل مع الحواف: دائرية من الأعلى ومربعة من الأسفل
@@ -97,7 +97,7 @@ Item {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 // shadowColor: palette.shadow
-                shadowColor: theme.colors.baseShadowColor.alpha(0.6)
+                shadowColor: theme.colors.shadow.alpha(0.6)
                 shadowBlur: 0.6
                 shadowOpacity: isDarkMode ? 0.5 : 0.3
             }
@@ -117,7 +117,7 @@ Item {
 
             Text {
                 text: headerRoot.title
-                color: _colors.leftMenuFgColorV3
+                color: _colors.onPrimaryContainer
                 font.pixelSize: 16
                 font.weight: Font.Bold
             }

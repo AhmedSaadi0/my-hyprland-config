@@ -119,9 +119,9 @@ HeaderCard {
                     Layout.fillWidth: true
                     text: modelData.title
                     isActive: root.activeTab === modelData.idx
-                    normalBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+                    normalBackground: ThemeManager.selectedTheme.colors.surfaceContainerHigh
                     activeBackground: ThemeManager.selectedTheme.colors.primary
-                    normalForeground: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                    normalForeground: ThemeManager.selectedTheme.colors.onSurface
                     activeForeground: ThemeManager.selectedTheme.colors.onPrimary
                     onClicked: root.activeTab = modelData.idx
 
@@ -138,8 +138,8 @@ HeaderCard {
                 text: root.expanded ? "󰅂" : "󰅀"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
                 textHorizontalAlignment: Text.AlignHCenter
-                normalBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-                normalForeground: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                normalBackground: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+                normalForeground: ThemeManager.selectedTheme.colors.onSurface
                 onClicked: root.expanded = !root.expanded
 
                 topLeftRadius: root.groupRadius / root.innerRadiusDiv

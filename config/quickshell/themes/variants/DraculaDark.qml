@@ -1,5 +1,4 @@
 pragma Singleton
-
 import QtQuick
 
 import "root:/config"
@@ -11,22 +10,19 @@ BaseTheme {
     themeName: "DraculaDark"
     _themeMode: "dark"
 
-    // wallpaper
     _wallpaper: App.assets.getWallpaperPath("dracula_dark.png")
 
-    // desktopClock
     _desktopClockEnabled: true
     _desktopClockFont: "abeatbyKai"
     _desktopClockColor: "#ffffffc8"
     _desktopClockFormat: "hh:mm AP"
     _desktopClockSize: Qt.size(547.51, 120.33)
     _desktopClockPosition: Qt.point(1328.48, 40.24)
-    _desktopClockSahdowEnabled: true
-    _desktopClockSahdowColor: "#d1d1d1"
+    _desktopClockShadowEnabled: true
+    _desktopClockShadowColor: "#d1d1d1"
     _desktopClockUseThemeColor: false
     _desktopClockUseAnimation: true
 
-    // Clock Depth Effect
     _desktopClockDepthEffectEnabled: true
     _desktopClockDepthModel: "u2net"
     _desktopClockDepthOverlayPath: App.assets.getWallpaperPath("dracula_dark_depth.png")
@@ -38,7 +34,6 @@ BaseTheme {
 
     _themeIcons: "Papirus"
 
-    // Hyprland
     _hyprBorderWidth: 2
     _hyprRounding: 0
     _hyprDropShadow: "no"
@@ -57,56 +52,48 @@ BaseTheme {
     _hyprShadowRange: 30
     _hyprShadowColor: "#00000000"
 
-    _primary: "#bd93f9"       // بنفسجي
-    _secondary: "#8be9fd"     // أزرق سماوي
+    _primary: "#bd93f9"           // Purple
+    _secondary: "#8be9fd"         // Cyan
+    _onPrimary: "#191a21"         // Standard Dracula dark bg
+    _onSecondary: "#191a21"
+    _tertiary: "#50fa7b"          // Green
+    _onTertiary: "#191a21"
+    _error: "#ff5555"             // Red
+    _onError: "#191a21"
 
-    _onPrimary: "#282a36"     // خلفية داكنة (نص فوق اللون الأساسي)
-    _onSecondary: "#282a36"   // خلفية داكنة
+    _surface: "#282A36"                      // Background
+    _onSurface: "#F8F8F2"                    // Foreground
+    _surfaceDim: "#21222C"                   // Darker bg
+    _surfaceBright: "#343746"                // Selection / Current Line
+    _surfaceContainerLowest: "#191A21"
+    _surfaceContainerLow: "#21222C"
+    _surfaceContainer: "#282A36"
+    _surfaceContainerHigh: "#343746"
+    _surfaceContainerHighest: "#44475A"
+    _surfaceVariant: "#343746"
+    _onSurfaceVariant: "#BFBFBF"
 
-    _tertiary: "#50fa7b"       // أخضر
-    _onTertiary: "#282a36"
+    // مواءمة الألوان وفق تدرجات دراكولا الحقيقية (بأبعاد متباينة بدلاً من اللون الموحد 44475A)
+    _primaryContainer: "#35294a"             // Dark Purple selection-like
+    _onPrimaryContainer: "#bd93f9"
+    _secondaryContainer: "#1e353b"           // Dark Cyan selection-like
+    _onSecondaryContainer: "#8be9fd"
+    _tertiaryContainer: "#1c3b24"            // Dark Green selection-like
+    _onTertiaryContainer: "#50fa7b"
+    _errorContainer: "#3d1c1c"               // Dark Red selection-like
+    _onErrorContainer: "#ff5555"
 
-    // Error: الأحمر (Dracula Red)
-    _error: "#ff5555"
-    _onError: "#282a36"
-
-    // Success: الأخضر (Dracula Green)
-    _success: "#50fa7b"
-    _onSuccess: "#282a36"
-
-    // Warning: البرتقالي (Dracula Orange)
-    _warning: "#ffb86c"
-    _onWarning: "#282a36"
-
-    // topbar
-    // _topbarColor: "#282a36"
-    // _topbarFgColor: "#f8f8f2"
-    //
-    // _topbarBgColorV1: "#44475a"
-    _topbarBgColorV2: "#531353"
-    _topbarBgColorV3: "#632f4e"
-    // _topbarFgColorV1: "#f8f8f2"
-    _topbarFgColorV2: "#f8f8f2"
-    _topbarFgColorV3: "#f8f8f2"
-    //
-    // // Left Menu
-    // _leftMenuBgColorV1: "#282a36"
-    _leftMenuBgColorV2: "#292c38" // 3f1e32
-    // _leftMenuBgColorV3: "#ff79c6"
-    // _leftMenuFgColorV1: "#f8f8f2"
-    // _leftMenuFgColorV2: "#bd93f9"
-    // _leftMenuFgColorV3: "#282a36"
-    //
-    // _subtleTextColor: "#f8f8f2cc"  // alpha 0.8
-
-    // OSDs
-    _volOsdBgColor: "#44475a"
-    _volOsdFgColor: "#f8f8f2"
+    _outline: "#6272A4"                      // Dracula Comment Color (ممتازة للحدود الافتراضية)
+    _outlineVariant: "#44475A"               // Dracula Selection Color
+    _inverseSurface: "#F8F8F2"
+    _onInverseSurface: "#282A36"
+    _inversePrimary: "#BD93F9"
+    _shadow: "#000000"
+    _scrim: "#000000"
 
     _plasmaColorScheme: "Dracula"
     _konsoleProfile: "DraculaDark.profile"
 
-    // _themeIcons: "Zafiro-Dracula"
     _kvantumTheme: "Tellgo"
     _gtkTheme: "Dracula"
 }

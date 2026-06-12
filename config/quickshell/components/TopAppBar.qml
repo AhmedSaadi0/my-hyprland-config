@@ -37,7 +37,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.04)
+        color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.04)
         radius: 0
     }
 
@@ -59,7 +59,7 @@ Item {
                 width: 40
                 height: 40
                 radius: 20
-                color: leadingArea.containsPress ? ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.12) : leadingArea.containsMouse ? ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.08) : "transparent"
+                color: leadingArea.containsPress ? ThemeManager.selectedTheme.colors.onSurface.alpha(0.12) : leadingArea.containsMouse ? ThemeManager.selectedTheme.colors.onSurface.alpha(0.08) : "transparent"
                 Behavior on color {
                     ColorAnimation {
                         duration: 100
@@ -71,7 +71,7 @@ Item {
                     text: root.icon
                     font.family: ThemeManager.selectedTheme.typography.iconFont
                     font.pixelSize: 24
-                    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                    color: ThemeManager.selectedTheme.colors.onSurface
                 }
             }
             MouseArea {
@@ -95,7 +95,7 @@ Item {
                 font.pixelSize: ThemeManager.selectedTheme.typography.heading3Size
                 font.family: ThemeManager.selectedTheme.typography.bodyFont
                 font.weight: Font.Medium
-                color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                color: ThemeManager.selectedTheme.colors.onSurface
             }
         }
 
@@ -115,7 +115,7 @@ Item {
                         width: 40
                         height: 40
                         radius: 20
-                        color: actionArea.containsPress ? ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.12) : actionArea.containsMouse ? ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.08) : "transparent"
+                        color: actionArea.containsPress ? ThemeManager.selectedTheme.colors.onSurface.alpha(0.12) : actionArea.containsMouse ? ThemeManager.selectedTheme.colors.onSurface.alpha(0.08) : "transparent"
                         Behavior on color {
                             ColorAnimation {
                                 duration: 100
@@ -127,7 +127,7 @@ Item {
                             text: modelData.icon || ""
                             font.family: ThemeManager.selectedTheme.typography.iconFont
                             font.pixelSize: 24
-                            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+                            color: ThemeManager.selectedTheme.colors.onSurface
                         }
                     }
                     MouseArea {
@@ -194,6 +194,6 @@ Item {
                 duration: 200
             }
         }
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.12)
+        color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.12)
     }
 }

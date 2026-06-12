@@ -44,37 +44,43 @@ Button {
     property string originalText: text
     property string activeText: ""
 
-    // الألوان
-    property var disabledBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV2.alpha(0.45)
-    // جعل لون الضغط أغمق قليلاً من لون التحويم
-    property var downBackground: Qt.darker(root.hoveredBackground, 1.2)
-    property var hoveredBackground: ThemeManager.selectedTheme.colors.secondary.alpha(0.22)
-    property var normalBackground: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
-    property var activeBackground: ThemeManager.selectedTheme.colors.primary
+    // -----------------------------------------------------------------
+    // ألوان وتأثيرات متوافقة مع معايير Material Design 3 (M3)
+    // -----------------------------------------------------------------
+    property var disabledBackground: ThemeManager.selectedTheme.colors.onSurface.alpha(0.12)
+    property var disabledForeground: ThemeManager.selectedTheme.colors.onSurface.alpha(0.38)
 
-    property var disabledForeground: ThemeManager.selectedTheme.colors.subtleText.alpha(0.5)
-    property var downForeground: ThemeManager.selectedTheme.colors.topbarFgColor
-    property var normalForeground: ThemeManager.selectedTheme.colors.topbarFgColor
+    property var normalBackground: ThemeManager.selectedTheme.colors.surfaceContainer
+    property var normalForeground: ThemeManager.selectedTheme.colors.onSurface
+
+    property var activeBackground: ThemeManager.selectedTheme.colors.primary
     property var activeForeground: ThemeManager.selectedTheme.colors.onPrimary
+
+    property var hoveredBackground: root.isActive ? root.activeBackground : root.normalBackground
+    property var downBackground: root.isActive ? root.activeBackground : root.normalBackground
+    property var hoveredForeground: root.isActive ? root.activeForeground : root.normalForeground
+    property var downForeground: root.isActive ? root.activeForeground : root.normalForeground
 
     property int topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / Consts.M3_BUTTON_RADIUS_DIVISOR
     property int topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / Consts.M3_BUTTON_RADIUS_DIVISOR
     property int bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / Consts.M3_BUTTON_RADIUS_DIVISOR
     property int bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / Consts.M3_BUTTON_RADIUS_DIVISOR
 
-    // ---------------------------------------------------------
-    // 1. إضافة تأثير الانكماش (Scale Animation)
-    // ---------------------------------------------------------
-    // ينكمش الزر إلى 92% من حجمه عند الضغط
-    scale: root.down ? 0.92 : 1.0
+    // -----------------------------------------------------------------
+    // تأثير الانكماش غير المتماثل (Asymmetric Scale Spring Animation)
+    // -----------------------------------------------------------------
+    scale: root.down ? 0.95 : 1.0
 
     Behavior on scale {
-        NumberAnimation {
-            duration: 150
-            easing.type: Easing.OutQuad
+        SpringAnimation {
+            // صلابة عالية وخمود كامل عند الضغط (استجابة صلبة وفورية)
+            // ليونة واهتزاز ناعم عند الإفلات (ارتداد مرن ممتع بصرياً)
+            spring: root.down ? 5.0 : 3.2
+            damping: root.down ? 1.0 : 0.5
+            epsilon: 0.005
         }
     }
-    // ---------------------------------------------------------
+    // -----------------------------------------------------------------
 
     ToolTip.text: root.text
     ToolTip.visible: root.hovered && root.showTooltip
@@ -103,14 +109,16 @@ Button {
 
             Behavior on color {
                 ColorAnimation {
-                    duration: 200
+                    duration: 150
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.2, 0, 0, 1, 1, 1]
                 }
             }
         }
 
         Text {
             id: buttonMainText
-            text: root.text
+            text: (root.isActive && root.activeText) ? root.activeText : root.originalText
             font: root.font
             elide: root.textElide
             horizontalAlignment: root.textHorizontalAlignment
@@ -122,58 +130,37 @@ Button {
             Layout.rightMargin: root.textRightMargin
 
             color: {
-                buttonMainText.text = root.originalText;
                 if (!root.enabled) {
                     return root.disabledForeground;
                 } else if (root.isActive) {
-                    if (root.activeText) {
-                        buttonMainText.text = root.activeText;
-                    }
                     return root.activeForeground;
-                    // إضافة تغيير لون النص عند الضغط
-                } else if (root.down) {
-                    return root.downForeground;
-                } else if (root.hovered) {
-                    let bg = root.hoveredBackground;
-                    // حساب التباين للون الخط
-                    if (bg && typeof bg.r !== 'undefined') {
-                        let luminance = 0.299 * bg.r + 0.587 * bg.g + 0.114 * bg.b;
-                        return luminance > 0.5 ? ThemeManager.selectedTheme.colors.topbarFgColor : ThemeManager.selectedTheme.colors.topbarColor;
-                    }
-                    return root.normalForeground;
                 } else {
                     return root.normalForeground;
                 }
             }
 
-            // إضافة انميشن لتغيير اللون
             Behavior on color {
                 ColorAnimation {
-                    duration: 200
+                    duration: 150
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.2, 0, 0, 1, 1, 1]
                 }
             }
         }
     }
 
     background: Rectangle {
+        id: bgContainer
         topLeftRadius: root.topLeftRadius
         topRightRadius: root.topRightRadius
         bottomLeftRadius: root.bottomLeftRadius
         bottomRightRadius: root.bottomRightRadius
 
-        // ---------------------------------------------------------
-        // 2. تصحيح منطق الألوان لتفعيل لون الضغط
-        // ---------------------------------------------------------
         color: {
             if (!root.enabled) {
                 return root.disabledBackground;
-            } else if (root.down) {
-                // تفعيل لون الخلفية عند الضغط
-                return root.downBackground;
             } else if (root.isActive) {
                 return root.activeBackground;
-            } else if (root.hovered) {
-                return root.hoveredBackground;
             } else {
                 return root.normalBackground;
             }
@@ -181,14 +168,47 @@ Button {
 
         Behavior on color {
             ColorAnimation {
-                duration: 200
-                easing.type: Easing.OutQuad
+                duration: 150
+                easing.type: Easing.Bezier
+                easing.bezierCurve: [0.2, 0, 0, 1, 1, 1]
             }
         }
 
-        // إضافة حدود ناعمة عند التركيز (اختياري)
-        // border.width: root.activeFocus ? 2 : 0
-        // border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.5)
+        // طبقة التفاعل الشفافة (State Layer)
+        Rectangle {
+            id: stateLayer
+            anchors.fill: parent
+            topLeftRadius: bgContainer.topLeftRadius
+            topRightRadius: bgContainer.topRightRadius
+            bottomLeftRadius: bgContainer.bottomLeftRadius
+            bottomRightRadius: bgContainer.bottomRightRadius
+
+            color: root.isActive ? root.activeForeground : root.normalForeground
+
+            opacity: {
+                if (!root.enabled) {
+                    return 0.0;
+                } else if (root.down) {
+                    return 0.12;
+                } else if (root.hovered) {
+                    return 0.08;
+                }
+                return 0.0;
+            }
+
+            // -------------------------------------------------------------
+            // سرعات انتقال غير متماثلة (Asymmetric Fade Transitions)
+            // -------------------------------------------------------------
+            Behavior on opacity {
+                NumberAnimation {
+                    // دخول سريع جداً عند النقر أو التحويم (85ms) لضمان الفورية والاستجابة
+                    // خروج ناعم وتلاشٍ أبطأ عند ترك الزر (200ms) لإعطاء مظهر انسيابي طبيعي
+                    duration: (root.hovered || root.down) ? 85 : 200
+                    easing.type: Easing.Bezier
+                    easing.bezierCurve: [0.2, 0, 0, 1, 1, 1]
+                }
+            }
+        }
     }
 
     MouseArea {

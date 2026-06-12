@@ -56,7 +56,7 @@ HeaderCard {
             font.family: typo.bodyFont
             font.pixelSize: 18
             font.bold: true
-            color: colors.leftMenuFgColorV1
+            color: colors.onSurface
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignVCenter
         }
@@ -76,8 +76,8 @@ HeaderCard {
             font.family: typo.bodyFont
 
             // تخصيص الألوان بناءً على خصائص EditableField الخاصة بك
-            normalBackground: colors.leftMenuFgColorV1.alpha(0.05)
-            normalForeground: colors.leftMenuFgColorV1
+            normalBackground: colors.onSurface.alpha(0.05)
+            normalForeground: colors.onSurface
             borderColor: "transparent"
             focusedBorderColor: colors.primary
             borderSize: 1
@@ -128,7 +128,7 @@ HeaderCard {
 
             // الألوان
             normalBackground: "transparent"
-            normalForeground: colors.subtleText
+            normalForeground: colors.onSurfaceVariant
             hoveredBackground: colors.primary.alpha(0.15)
             downBackground: colors.primary.alpha(0.3)
             downForeground: colors.primary
@@ -152,7 +152,7 @@ HeaderCard {
 
             // الألوان (استخدام لون الخطأ error)
             normalBackground: "transparent"
-            normalForeground: colors.subtleText
+            normalForeground: colors.onSurfaceVariant
             hoveredBackground: colors.error.alpha(0.15)
             downBackground: colors.error.alpha(0.3)
             downForeground: colors.error

@@ -9,12 +9,6 @@ BaseTheme {
     themeName: "NordLight"
     _themeMode: "light"
 
-    // Nord Palette
-    // Polar Night (Foregrounds): #2E3440, #3B4252, #434C5E, #4C566A
-    // Snow Storm (Backgrounds): #D8DEE9, #E5E9F0, #ECEFF4
-    // Frost (Accents): #8FBCBB, #88C0D0, #81A1C1, #5E81AC
-    // Aurora (Syntax/Status): #BF616A (Red), #A3BE8C (Green), #EBCB8B (Yellow)
-
     _wallpaper: App.assets.getWallpaperPath("nord-light.gif")
 
     _desktopClockFont: "Daydream"
@@ -22,59 +16,52 @@ BaseTheme {
     _desktopClockPosition: Qt.point(675, 435)
     _desktopClockDepthEffectEnabled: false
     _desktopClockSize: Qt.size(470, 188)
-    _desktopClockSahdowEnabled: false
+    _desktopClockShadowEnabled: false
     _desktopClockUseThemeColor: false
     _desktopClockColor: Qt.rgba(0.36, 0.37, 0.50, 0.6)
 
-    // الألوان الأساسية (طبقًا لوحة Frost)
-    _primary: "#5E81AC"      // nord10 (أزرق عميق - للتأكيدات الأساسية)
-    _secondary: "#88C0D0"    // nord8  (فيروزي - للتأكيدات الثانوية)
+    _primary: "#5E81AC"           // Nord10 (أزرق نورد الغامق والواضح)
+    _onPrimary: "#ECEFF4"         // Nord6
+    _secondary: "#88C0D0"         // Nord8 (Frost Ice Blue)
+    _onSecondary: "#2E3440"       // Nord0
+    _tertiary: "#A3BE8C"          // Nord14
+    _onTertiary: "#2E3440"
+    _error: "#BF616A"             // Nord11
+    _onError: "#ECEFF4"
 
-    _onPrimary: "#ECEFF4"    // nord6  (نص على العناصر الأساسية)
-    _onSecondary: "#2E3440"  // nord0  (نص على العناصر الثانوية)
+    _surface: "#ECEFF4"                      // Nord6
+    _onSurface: "#2E3440"                    // Nord0
+    _surfaceDim: "#D8DEE9"                   // Nord4
+    _surfaceBright: "#ECEFF4"
+    _surfaceContainerLowest: "#FFFFFF"
+    _surfaceContainerLow: "#E8ECF2"
+    _surfaceContainer: "#E1E5EB"
+    _surfaceContainerHigh: "#D8DEE9"
+    _surfaceContainerHighest: "#C8CED8"
+    _surfaceVariant: "#D8DEE9"
+    _onSurfaceVariant: "#4C566A"             // Nord3
 
-    _tertiary: "#A3BE8C"
-    _onTertiary: "#2E3440"   // نص داكن للتباين
+    // تحسين الحاويات لتنسجم مع بياض خلفيات نورد الناصعة بظلال خفيفة
+    _primaryContainer: "#e5edf5"             // Light Frost Blue
+    _onPrimaryContainer: "#5E81AC"
+    _secondaryContainer: "#eaf4f7"           // Light Ice Blue
+    _onSecondaryContainer: "#88C0D0"
+    _tertiaryContainer: "#eef5e9"            // Light Green Tint
+    _onTertiaryContainer: "#A3BE8C"
+    _errorContainer: "#f5e9ea"               // Light Red Tint
+    _onErrorContainer: "#BF616A"
 
-    // Error: أحمر (nord11)
-    _error: "#BF616A"
-    _onError: "#ECEFF4"      // نص فاتح
-
-    // Success: أخضر (nord14)
-    _success: "#A3BE8C"
-    _onSuccess: "#2E3440"    // نص داكن
-
-    // Warning: أصفر (nord13)
-    _warning: "#EBCB8B"
-    _onWarning: "#2E3440"    // نص داكن لأن الأصفر فاتح
-
-    // شريط الأدوات العلوي (طبقًا لوحة Snow Storm)
-    _topbarColor: "#FFFFFF"  // أبيض نقي (مقتبس من nord6 لتحسين التباين)
-    _topbarFgColor: "#3B4252" // nord1 (نص داكن لوضوح أعلى)
-    _topbarBgColorV1: "#EAEFF9" // nord6 (خلفية بطاقات)
-    _topbarBgColorV2: "#cae6ff" // nord5 (تدرج متوسط)
-    _topbarBgColorV3: "#fdd7d7" // nord4 (تدرج داكن)
-    _topbarFgColorV1: "#2E3440" // nord0 (نص عالي التباين)
-    _topbarFgColorV2: "#434C5E" // nord2
-    _topbarFgColorV3: "#4C566A" // nord3
-
-    // القائمة الجانبية (دمج Polar Night + Snow Storm)
-    _leftMenuBgColorV1: "#FFFFFF"              // خلفية رئيسية (تباين عالي)
-    _leftMenuBgColorV2: "#F8FAFC"              // تدرج فاتح (غير موجود في نورد - لسلاسة التدرج)
-    _leftMenuBgColorV3: "#5E81AC"              // nord10 (عنصر نشط)
-    _leftMenuFgColorV1: "#3B4252"              // nord1 (نص قياسي)
-    _leftMenuFgColorV2: "#4C566A"              // nord3 (نص ثانوي)
-    _leftMenuFgColorV3: "#FFFFFF"              // نص على عنصر نشط
-
-    // عناصر واجهة إضافية
-    _subtleTextColor: "#4C566A"                // nord3 (نص خافت)
-    _volOsdBgColor: "#3B4252"                  // nord1 (خلفية بوب أب)
-    _volOsdFgColor: "#ECEFF4"                  // nord6 (نص بوب أب)
+    _outline: "#7B88A1"
+    _outlineVariant: "#D8DEE9"
+    _inverseSurface: "#2E3440"
+    _onInverseSurface: "#ECEFF4"
+    _inversePrimary: "#5E81AC"
+    _shadow: "#000000"
+    _scrim: "#000000"
 
     _plasmaColorScheme: "NibrasNordLight"
     _konsoleProfile: "NordLight.profile"
 
     _themeIcons: "Zafiro-Nord-Light-Blue"
-
     _gtkTheme: "Nordic-lighter"
 }

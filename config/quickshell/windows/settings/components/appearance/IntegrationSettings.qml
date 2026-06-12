@@ -61,7 +61,7 @@ BaseThemeSettings {
 
     component FieldLabel: Controls.Label {
         font.bold: true
-        color: root.theme.colors.leftMenuFgColorV1
+        color: root.theme.colors.onSurface
     }
 
     // --- Helper Functions ---

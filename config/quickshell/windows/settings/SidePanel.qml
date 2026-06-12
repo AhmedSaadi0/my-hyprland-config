@@ -25,7 +25,7 @@ Rectangle {
         text: qsTr("Settings")
         font.bold: true
         font.pixelSize: 24
-        color: ThemeManager.selectedTheme.colors.topbarFgColor
+        color: ThemeManager.selectedTheme.colors.onSurface
         anchors {
             top: parent.top
         }
@@ -166,14 +166,14 @@ Rectangle {
                 Text {
                     text: model.modelData.name
                     font.bold: true
-                    color: ThemeManager.selectedTheme.colors.topbarFgColor
+                    color: ThemeManager.selectedTheme.colors.onSurface
                     opacity: 0.7
                 }
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignVCenter
                     height: 1
-                    color: ThemeManager.selectedTheme.colors.topbarFgColor
+                    color: ThemeManager.selectedTheme.colors.onSurface
                     opacity: 0.3
                 }
                 spacing: 10
@@ -202,7 +202,7 @@ Rectangle {
                     Layout.leftMargin: 14
                     Layout.rightMargin: 8
 
-                    color: isSelected ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.topbarFgColor
+                    color: isSelected ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.onSurface
 
                     Behavior on color {
                         ColorAnimation {
@@ -218,7 +218,7 @@ Rectangle {
                     text: model.modelData.name
                     elide: Text.ElideLeft
 
-                    color: isSelected ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.topbarFgColor
+                    color: isSelected ? ThemeManager.selectedTheme.colors.onPrimary : ThemeManager.selectedTheme.colors.onSurface
                     font.bold: isSelected
                     Layout.fillWidth: true
 

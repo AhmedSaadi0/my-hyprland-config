@@ -58,9 +58,9 @@ Popup {
     }
 
     background: Rectangle {
-        color: root.colors.leftMenuBgColorV2
+        color: root.colors.surfaceContainerHigh
         radius: root.dims.elementRadius
-        border.color: Qt.rgba(root.colors.leftMenuFgColorV1.r, root.colors.leftMenuFgColorV1.g, root.colors.leftMenuFgColorV1.b, 0.1)
+        border.color: Qt.rgba(root.colors.onSurface.r, root.colors.onSurface.g, root.colors.onSurface.b, 0.1)
         border.width: 1
 
         // TODO: ظل قوي للنافذة المنبثقة
@@ -86,12 +86,12 @@ Popup {
                 onClicked: changeMonth(-1)
 
                 background: Rectangle {
-                    color: parent.hovered ? Qt.rgba(root.colors.leftMenuFgColorV1.r, root.colors.leftMenuFgColorV1.g, root.colors.leftMenuFgColorV1.b, 0.08) : "transparent"
+                    color: parent.hovered ? Qt.rgba(root.colors.onSurface.r, root.colors.onSurface.g, root.colors.onSurface.b, 0.08) : "transparent"
                     radius: root.dims.elementRadius
                 }
                 contentItem: Text {
                     text: "‹"
-                    color: root.colors.leftMenuFgColorV1
+                    color: root.colors.onSurface
                     font.pixelSize: 24
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -103,7 +103,7 @@ Popup {
             Text {
                 Layout.fillWidth: true
                 text: root.viewDate.toLocaleDateString(Qt.locale(), "MMMM yyyy")
-                color: root.colors.leftMenuFgColorV1
+                color: root.colors.onSurface
                 font.family: root.typo.bodyFont
                 font.pixelSize: root.typo.heading4Size
                 font.bold: true
@@ -119,12 +119,12 @@ Popup {
                 onClicked: changeMonth(1)
 
                 background: Rectangle {
-                    color: parent.hovered ? Qt.rgba(root.colors.leftMenuFgColorV1.r, root.colors.leftMenuFgColorV1.g, root.colors.leftMenuFgColorV1.b, 0.08) : "transparent"
+                    color: parent.hovered ? Qt.rgba(root.colors.onSurface.r, root.colors.onSurface.g, root.colors.onSurface.b, 0.08) : "transparent"
                     radius: root.dims.elementRadius
                 }
                 contentItem: Text {
                     text: "›"
-                    color: root.colors.leftMenuFgColorV1
+                    color: root.colors.onSurface
                     font.pixelSize: 24
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -239,7 +239,7 @@ Popup {
                                     return root.colors.onPrimary;
                                 // هنا نستخدم لون النص العادي لأننا تحكمنا في الشفافية (Opacity) في العنصر الأب
                                 // لكن يمكنك ابقاؤه subtleText لزيادة التأثير
-                                return root.colors.leftMenuFgColorV1;
+                                return root.colors.onSurface;
                             }
                         }
 

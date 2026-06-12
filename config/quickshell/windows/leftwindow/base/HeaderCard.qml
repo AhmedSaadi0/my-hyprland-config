@@ -18,7 +18,7 @@ Rectangle {
     Layout.fillWidth: true
     implicitHeight: contentLayout.implicitHeight + ThemeManager.selectedTheme.dimensions.spacingMedium * 2
 
-    color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.04)
+    color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.04)
     radius: 0
 
     ColumnLayout {
@@ -65,6 +65,6 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         height: 1
-        color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1.alpha(0.12)
+        color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.12)
     }
 }

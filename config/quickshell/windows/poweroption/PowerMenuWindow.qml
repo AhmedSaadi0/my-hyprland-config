@@ -26,7 +26,7 @@ PanelWindow {
 
     WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
-    color: ThemeManager.selectedTheme.colors.topbarColor.alpha(0.7)
+    color: ThemeManager.selectedTheme.colors.surface.alpha(0.7)
     visible: false
 
     Item {

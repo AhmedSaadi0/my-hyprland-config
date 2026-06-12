@@ -25,13 +25,13 @@ SimpleTable {
     showHorizontalGridLines: false
 
     // Header Styling
-    headerBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    headerTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+    headerBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+    headerTextColor: ThemeManager.selectedTheme.colors.onSurface
 
     // Cell Styling
-    cellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV1
-    alternatingCellBackgroundColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
-    cellTextColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+    cellBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainer
+    alternatingCellBackgroundColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+    cellTextColor: ThemeManager.selectedTheme.colors.onSurface
 
     // Spacing Control
     headerCellSpacing: 0

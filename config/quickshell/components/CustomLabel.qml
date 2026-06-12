@@ -8,7 +8,7 @@ Text {
     // --- الخصائص الافتراضية ---
     // هنا تضع الستايل الموحد لكل النصوص في تطبيقك
     font.pixelSize: 14
-    color: ThemeManager.selectedTheme.colors.subtleText
+    color: ThemeManager.selectedTheme.colors.onSurfaceVariant
     wrapMode: Text.WordWrap // خاصية مهمة للنصوص الطويلة
 
     // --- الأسماء المستعارة (Aliases) ---

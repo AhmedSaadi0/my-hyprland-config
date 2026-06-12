@@ -166,7 +166,7 @@ BaseGeneralSettings {
                     text: qsTr("Control the width of the active window title displayed in the top bar.")
                     font.family: theme.typography.bodyFont
                     font.pixelSize: theme.typography.small
-                    color: theme.colors.subtleText
+                    color: theme.colors.onSurfaceVariant
                     wrapMode: Text.WordWrap
                 }
             }
@@ -192,7 +192,7 @@ BaseGeneralSettings {
                     text: "soon"
                     font.family: theme.typography.bodyFont
                     font.pixelSize: theme.typography.small
-                    color: theme.colors.subtleText
+                    color: theme.colors.onSurfaceVariant
                     wrapMode: Text.WordWrap
                 }
             }
@@ -218,7 +218,7 @@ BaseGeneralSettings {
                     text: qsTr("Comma separated icons.")
                     font.family: theme.typography.bodyFont
                     font.pixelSize: theme.typography.small
-                    color: theme.colors.subtleText
+                    color: theme.colors.onSurfaceVariant
                 }
             }
             Controls.Label {
@@ -243,7 +243,7 @@ BaseGeneralSettings {
                     text: qsTr("Comma separated icons.")
                     font.family: theme.typography.bodyFont
                     font.pixelSize: theme.typography.small
-                    color: theme.colors.subtleText
+                    color: theme.colors.onSurfaceVariant
                 }
             }
         }

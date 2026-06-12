@@ -9,7 +9,7 @@ Rectangle {
     //-----------------------
     // Appearance Properties
     //-----------------------
-    color: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+    color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
     radius: ThemeManager.selectedTheme.dimensions.elementRadius
 
     //-----------------------
@@ -31,9 +31,9 @@ Rectangle {
     // Color Scheme
     //-----------------------
     property color textHighlightColor: ThemeManager.selectedTheme.colors.onPrimary
-    property color textColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-    property color textHoverColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV3
-    property color hoverColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV3
+    property color textColor: ThemeManager.selectedTheme.colors.onSurface
+    property color textHoverColor: ThemeManager.selectedTheme.colors.onPrimaryContainer
+    property color hoverColor: ThemeManager.selectedTheme.colors.primaryContainer
     property color highlightColor: ThemeManager.selectedTheme.colors.primary
     property int animationDuration: 300
 

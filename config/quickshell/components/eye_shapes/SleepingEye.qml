@@ -4,7 +4,7 @@ import "root:/themes"
 
 Item {
     id: root
-    property color color: ThemeManager.selectedTheme.colors.topbarFgColor
+    property color color: ThemeManager.selectedTheme.colors.onSurface
     property int eyeW: 10
     property int eyeH: 2
     property bool active: false

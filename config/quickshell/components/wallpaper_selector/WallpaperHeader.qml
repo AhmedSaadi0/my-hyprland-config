@@ -35,13 +35,13 @@ RowLayout {
             text: qsTr("Wallpaper Selector")
             font.pixelSize: 16
             font.bold: true
-            color: root.theme.colors.leftMenuFgColorV1
+            color: root.theme.colors.onSurface
         }
 
         Text {
             text: root.sourceMode === 2 ? qsTr("Browse wallpapers from Wallhaven.cc") : qsTr("Select a wallpaper to apply")
             font.pixelSize: 11
-            color: root.theme.colors.subtleText
+            color: root.theme.colors.onSurfaceVariant
         }
     }
 
@@ -57,7 +57,7 @@ RowLayout {
             text: root.isLoading ? "󰦖" : "󰑐"
             font.pixelSize: 16
             font.family: root.theme.typography.iconFont
-            color: root.theme.colors.subtleText
+            color: root.theme.colors.onSurfaceVariant
 
             renderType: Text.QtRendering
             font.hintingPreference: Font.PreferNoHinting
@@ -92,7 +92,7 @@ RowLayout {
             text: "󰅖"
             font.pixelSize: 16
             font.family: root.theme.typography.iconFont
-            color: root.theme.colors.subtleText
+            color: root.theme.colors.onSurfaceVariant
 
             renderType: Text.QtRendering
             font.hintingPreference: Font.PreferNoHinting

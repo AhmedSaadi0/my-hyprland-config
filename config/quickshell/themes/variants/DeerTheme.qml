@@ -1,5 +1,4 @@
 pragma Singleton
-
 import QtQuick
 
 import "root:/config"
@@ -18,52 +17,48 @@ BaseTheme {
     _desktopClockPosition: Qt.point(8.015625, 8.015625)
     _desktopClockDepthEffectEnabled: true
     _desktopClockSize: Qt.size(1848.86328125, 612.8984375)
-    _desktopClockSahdowEnabled: false
+    _desktopClockShadowEnabled: false
     _desktopClockUseThemeColor: false
     _desktopClockColor: Qt.rgba(0.05, 0.08, 0.13, 0.8)
 
     _primary: "#B38BFF"
+    _onPrimary: "#120A2A"
     _secondary: "#E68A5C"
-
+    _onSecondary: "#1A0F0A"
     _tertiary: "#8DE8FF"
     _onTertiary: "#0A1D27"
-
-    // Error: أحمر ناعم (Salmon Pink)
     _error: "#ff8f9e"
     _onError: "#0A1D27"
 
-    // Success: أخضر مائي ناعم (Mint Green)
-    _success: "#a7e4a5"
-    _onSuccess: "#0A1D27"
+    _surface: "#0A1D27"
+    _onSurface: "#FFFFFF"
+    _surfaceDim: "#061520"
+    _surfaceBright: "#142A3C"
+    _surfaceContainerLowest: "#050F17"
+    _surfaceContainerLow: "#0C2030"
+    _surfaceContainer: "#0E2435"
+    _surfaceContainerHigh: "#142A3C"
+    _surfaceContainerHighest: "#1E3A5A"
+    _surfaceVariant: "#142A3C"
+    _onSurfaceVariant: "#B0C4DE"
 
-    // Warning: أصفر كريمي (Vanilla)
-    _warning: "#fceab6"
-    _onWarning: "#0A1D27"
+    // تدرجات الألوان للحاويات من أجل إبراز المظهر الداكن الغني باللون الكحلي/البنفسجي
+    _primaryContainer: "#2e1b4d"             // Subtle Dark Purple container
+    _onPrimaryContainer: "#B38BFF"
+    _secondaryContainer: "#3d1a0a"           // Subtle Dark Orange container
+    _onSecondaryContainer: "#E68A5C"
+    _tertiaryContainer: "#0e2a36"            // Subtle Dark Cyan container
+    _onTertiaryContainer: "#8DE8FF"
+    _errorContainer: "#3a151b"
+    _onErrorContainer: "#ff8f9e"
 
-    _onPrimary: "#120A2A"
-    _onSecondary: "#1A0F0A"
-
-    _topbarColor: "#0A1D27"
-    _topbarFgColor: "#FFFFFF"
-    _topbarBgColorV1: "#1E2D5A"
-    _topbarBgColorV2: "#273C76"
-    _topbarBgColorV3: "#273C76"
-    _topbarFgColorV1: "#FFFFFF"
-    _topbarFgColorV2: "#FFFFFF"
-    _topbarFgColorV3: "#FFFFFF"
-
-    // Left Menu
-    _leftMenuBgColorV1: "#141E3C"
-    _leftMenuBgColorV2: "#1E2D5A"
-    _leftMenuBgColorV3: "#EBA58099"
-    _leftMenuFgColorV1: "#FFFFFF"
-    _leftMenuFgColorV2: "#FFFFFF"
-    _leftMenuFgColorV3: "#18255E"
-
-    // Subtle Text + OSD
-    _subtleTextColor: "#B0B0FFB0"
-    _volOsdBgColor: "#1E2D5A"
-    _volOsdFgColor: "#FFFFFF"
+    _outline: "#3A5A7A"
+    _outlineVariant: "#1E3A5A"
+    _inverseSurface: "#FFFFFF"
+    _onInverseSurface: "#0A1D27"
+    _inversePrimary: "#B38BFF"
+    _shadow: "#000000"
+    _scrim: "#000000"
 
     _plasmaColorScheme: "BlueDeer"
     _konsoleProfile: "game.profile"

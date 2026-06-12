@@ -96,7 +96,7 @@ PanelWindow {
                 Layout.preferredHeight: theme.dimensions.barWidgetsHeight
 
                 radius: theme.dimensions.elementRadius
-                color: theme.colors.topbarBgColorV1
+                color: theme.colors.surfaceContainer
                 clip: true
 
                 topRightRadius: theme.dimensions.elementRadius / innerRadiusDiv

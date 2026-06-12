@@ -24,7 +24,7 @@ Rectangle {
     radius: 12
 
     // الألوان حسب الثيم والمرسل
-    color: isUser ? root.theme.colors.primary : root.theme.colors.leftMenuBgColorV2
+    color: isUser ? root.theme.colors.primary : root.theme.colors.surfaceContainerHigh
 
     opacity: 0.9
 
@@ -46,7 +46,7 @@ Rectangle {
         // نص الرسالة
         Text {
             text: root.messageText
-            color: root.isUser ? root.theme.colors.onPrimary : root.theme.colors.leftMenuFgColorV1
+            color: root.isUser ? root.theme.colors.onPrimary : root.theme.colors.onSurface
 
             font.pixelSize: 13
             wrapMode: Text.Wrap

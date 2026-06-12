@@ -78,7 +78,7 @@ StackView {
             Layout.fillHeight: true
             Layout.fillWidth: true
             text: "soon ..."
-            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+            color: ThemeManager.selectedTheme.colors.onSurface
         }
     }
     Component {
@@ -94,7 +94,7 @@ StackView {
             Layout.fillHeight: true
             Layout.fillWidth: true
             text: "soon ..."
-            color: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
+            color: ThemeManager.selectedTheme.colors.onSurface
         }
     }
     Component {

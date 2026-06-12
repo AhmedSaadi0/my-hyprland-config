@@ -8,7 +8,7 @@ import Qt5Compat.GraphicalEffects
 
 // MultiEffect {
 //
-//     property var color: ThemeManager.selectedTheme.colors.topbarColor.alpha(0.35)
+//     property var color: ThemeManager.selectedTheme.colors.surface.alpha(0.35)
 //     property var radius: 0
 //     property var alpha: 0
 //
@@ -25,14 +25,14 @@ DropShadow {
     property var alpha: 0.25
 
     // color: palette.shadow.alpha(alpha)
-    color: ThemeManager.selectedTheme.colors.baseShadowColor.alpha(alpha)
+    color: ThemeManager.selectedTheme.colors.shadow.alpha(alpha)
     radius: 5
     spread: 0
     samples: 47
     horizontalOffset: 2
     verticalOffset: 2
     cached: true
-    // color: Qt.darker(ThemeManager.selectedTheme.colors.topbarColor, 1.4).alpha(alpha)
+    // color: Qt.darker(ThemeManager.selectedTheme.colors.surface, 1.4).alpha(alpha)
     // radius: 9
     // spread: 0
     // samples: 15

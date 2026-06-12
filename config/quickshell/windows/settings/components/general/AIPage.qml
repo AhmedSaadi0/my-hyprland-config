@@ -112,14 +112,14 @@ BaseGeneralSettings {
             wrapMode: TextEdit.Wrap
             font.family: theme.typography.bodyFont
             font.pixelSize: theme.typography.small
-            color: theme.colors.leftMenuFgColorV2
+            color: theme.colors.onSurfaceVariant
             selectedTextColor: theme.colors.onPrimary
             selectionColor: theme.colors.primary
 
             background: Rectangle {
-                color: theme.colors.leftMenuBgColorV2
+                color: theme.colors.surfaceContainerHigh
                 radius: theme.dimensions.baseRadius / 2
-                border.color: parent.activeFocus ? theme.colors.primary : theme.colors.subtleText
+                border.color: parent.activeFocus ? theme.colors.primary : theme.colors.onSurfaceVariant
                 border.width: 1
                 opacity: 0.8
             }

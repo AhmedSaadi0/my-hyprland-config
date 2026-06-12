@@ -30,9 +30,9 @@ Item {
             Layout.preferredWidth: 40
             Layout.preferredHeight: 40
             radius: theme.dimensions.elementRadius
-            color: theme.colors.leftMenuBgColorV2
+            color: theme.colors.surfaceContainerHigh
             border.width: 1
-            border.color: Qt.rgba(theme.colors.subtleText.r, theme.colors.subtleText.g, theme.colors.subtleText.b, 0.12)
+            border.color: Qt.rgba(theme.colors.onSurfaceVariant.r, theme.colors.onSurfaceVariant.g, theme.colors.onSurfaceVariant.b, 0.12)
             Text {
                 anchors.centerIn: parent
                 text: (eventType === "CPU") ? "" : (eventType === "RAM") ? "" : (eventType === "TEMP") ? "" : ""
@@ -81,7 +81,7 @@ Item {
 
             Text {
                 text: qsTr("Value") + ": " + eventValue
-                color: theme.colors.subtleText
+                color: theme.colors.onSurfaceVariant
                 font.family: theme.typography.bodyFont
                 font.pixelSize: theme.typography.small + 1
                 wrapMode: Text.WordWrap
@@ -96,7 +96,7 @@ Item {
             Text {
                 Layout.alignment: Qt.AlignRight
                 text: eventTime
-                color: theme.colors.subtleText
+                color: theme.colors.onSurfaceVariant
                 font.family: "Monospace"
                 font.pixelSize: theme.typography.small
             }
@@ -105,7 +105,7 @@ Item {
                 text: ""
                 font.family: theme.typography.iconFont
                 font.pixelSize: 16
-                color: isExpanded ? theme.colors.primary : theme.colors.subtleText
+                color: isExpanded ? theme.colors.primary : theme.colors.onSurfaceVariant
                 rotation: isExpanded ? 180 : 0
                 Behavior on rotation {
                     NumberAnimation {

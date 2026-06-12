@@ -25,7 +25,7 @@ Rectangle {
     anchors.centerIn: parent
     // layer.enabled: true
     // layer.effect: Shadow {
-    //     color: ThemeManager.selectedTheme.colors.topbarColor
+    //     color: ThemeManager.selectedTheme.colors.surface
     // }
 
     SystemClock {

@@ -110,7 +110,7 @@ CircularProgress {
         //         font.pixelSize: 12
         //     }
         //     background: Rectangle {
-        //         color: ThemeManager.selectedTheme.colors.topbarColor
+        //         color: ThemeManager.selectedTheme.colors.surface
         //         border.color: ThemeManager.selectedTheme.colors.primary
         //         radius: 4
         //     }

@@ -26,27 +26,27 @@ Item {
     readonly property color themeStatusColor: {
         var s = SystemService.bootStatusColor; // سيتحسس QML أي تغيير هنا
         if (!s || s === "")
-            return bootRoot.theme.colors.success;
+            return bootRoot.theme.colors.tertiary;
         if (s.startsWith("#"))
             return s;
         if (s === "red")
             return bootRoot.theme.colors.error;
         if (s === "orange" || s === "yellow")
-            return bootRoot.theme.colors.warning;
+            return bootRoot.theme.colors.secondary;
         if (s === "green")
-            return bootRoot.theme.colors.success;
+            return bootRoot.theme.colors.tertiary;
         return bootRoot.theme.colors.info || bootRoot.theme.colors.primary;
     }
 
     readonly property color statusBgColor: Qt.rgba(themeStatusColor.r, themeStatusColor.g, themeStatusColor.b, bootRoot.theme.systemSettings.themeMode == "dark" ? 0.18 : 0.12)
     readonly property color statusBorderColor: Qt.rgba(themeStatusColor.r, themeStatusColor.g, themeStatusColor.b, bootRoot.theme.systemSettings.themeMode == "dark" ? 0.35 : 0.25)
     readonly property color statusTitleColor: bootRoot.theme.systemSettings.themeMode == "dark" ? themeStatusColor.lighter(1.25) : themeStatusColor.darker(1.6)
-    readonly property color statusTextColor: bootRoot.theme.colors.leftMenuFgColorV1
+    readonly property color statusTextColor: bootRoot.theme.colors.onSurface
     readonly property color statusMutedColor: Qt.rgba(statusTitleColor.r, statusTitleColor.g, statusTitleColor.b, 0.85)
 
     Rectangle {
         anchors.fill: parent
-        color: bootRoot.theme.systemSettings.themeMode == "dark" ? bootRoot.theme.colors.leftMenuBgColorV2.lighter(1.3) : bootRoot.theme.colors.leftMenuBgColorV2.darker(1.1)
+        color: bootRoot.theme.systemSettings.themeMode == "dark" ? bootRoot.theme.colors.surfaceContainerHigh.lighter(1.3) : bootRoot.theme.colors.surfaceContainerHigh.darker(1.1)
     }
 
     ColumnLayout {
@@ -131,7 +131,7 @@ Item {
                                 return Qt.rgba(c.r, c.g, c.b, bootRoot.theme.systemSettings.themeMode == "dark" ? 0.15 : 0.08);
                             }
                             return logHover.containsMouse
-                                ? bootRoot.theme.colors.leftMenuFgColorV1.alpha(0.04)
+                                ? bootRoot.theme.colors.onSurface.alpha(0.04)
                                 : "transparent";
                         }
                         border.color: isExpanded ? Qt.rgba(bootRoot.themeStatusColor.r, bootRoot.themeStatusColor.g, bootRoot.themeStatusColor.b, 0.25) : "transparent"
@@ -180,7 +180,7 @@ Item {
                                     id: processName
                                     Layout.fillWidth: true
                                     text: `<b>${modelData.process}</b>`
-                                    color: bootRoot.theme.colors.leftMenuFgColorV2
+                                    color: bootRoot.theme.colors.onSurfaceVariant
                                     font.family: "Monospace"
                                     font.pixelSize: bootRoot.theme.typography.small - 2
                                     elide: Text.ElideRight
@@ -189,7 +189,7 @@ Item {
                                     id: shortMessage
                                     Layout.fillWidth: true
                                     text: modelData.message || ""
-                                    color: bootRoot.theme.colors.leftMenuFgColorV2
+                                    color: bootRoot.theme.colors.onSurfaceVariant
                                     font.pixelSize: bootRoot.theme.typography.small - 3
                                     font.family: "Monospace"
                                     wrapMode: Text.WordWrap
@@ -204,7 +204,7 @@ Item {
                                 width: 26
                                 height: 26
                                 radius: 13
-                                color: copyMouse.containsMouse ? bootRoot.theme.colors.leftMenuFgColorV1.alpha(0.1) : "transparent"
+                                color: copyMouse.containsMouse ? bootRoot.theme.colors.onSurface.alpha(0.1) : "transparent"
                                 Layout.alignment: Qt.AlignTop
 
                                 Text {
@@ -250,7 +250,7 @@ Item {
                             radius: 4
                             visible: logDelegate.isExpanded
                             opacity: logDelegate.isExpanded ? 1 : 0
-                            color: bootRoot.theme.colors.topbarColor.alpha(bootRoot.theme.systemSettings.themeMode == "dark" ? 0.35 : 0.06)
+                            color: bootRoot.theme.colors.surface.alpha(bootRoot.theme.systemSettings.themeMode == "dark" ? 0.35 : 0.06)
 
                             Behavior on opacity {
                                 NumberAnimation { duration: 200 }
@@ -261,7 +261,7 @@ Item {
                                 anchors.fill: parent
                                 anchors.margins: 7
                                 text: modelData.raw_details || modelData.time + " " + modelData.process + ": " + (modelData.message || "")
-                                color: bootRoot.theme.colors.leftMenuFgColorV2
+                                color: bootRoot.theme.colors.onSurfaceVariant
                                 font.family: "Monospace"
                                 font.pixelSize: bootRoot.theme.typography.small - 2
                                 wrapMode: TextEdit.Wrap

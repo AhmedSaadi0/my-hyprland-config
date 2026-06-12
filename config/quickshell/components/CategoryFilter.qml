@@ -82,8 +82,8 @@ Item {
 
         highlightColor: ThemeManager.selectedTheme.colors.primary
         textHighlightColor: ThemeManager.selectedTheme.colors.onPrimary
-        textColor: ThemeManager.selectedTheme.colors.leftMenuFgColorV1
-        hoverColor: ThemeManager.selectedTheme.colors.leftMenuBgColorV2
+        textColor: ThemeManager.selectedTheme.colors.onSurface
+        hoverColor: ThemeManager.selectedTheme.colors.surfaceContainerHigh
 
         model: root.categories.map(item => ({
                     text: item.label,

@@ -56,7 +56,7 @@ Item {
         width: 40
         height: 40
         radius: root.theme.dimensions.elementRadius * 0.8
-        color: root.theme.colors.leftMenuBgColorV2
+        color: root.theme.colors.surfaceContainerHigh
         opacity: commandData?.enabled === false ? 0.5 : 1
 
         Text {
@@ -82,13 +82,13 @@ Item {
             text: commandData?.name || ""
             font.pixelSize: 13
             font.weight: Font.Medium
-            color: root.theme.colors.leftMenuFgColorV1
+            color: root.theme.colors.onSurface
         }
 
         Text {
             text: commandData?.description || ""
             font.pixelSize: 11
-            color: root.theme.colors.subtleText
+            color: root.theme.colors.onSurfaceVariant
         }
     }
 
@@ -100,7 +100,7 @@ Item {
         width: 24
         height: 24
         radius: 4
-        color: root.theme.colors.leftMenuBgColorV2
+        color: root.theme.colors.surfaceContainerHigh
         visible: (mouseArea.containsMouse || root.isHighlighted) && commandData?.enabled !== false
         opacity: 0.8
 
@@ -108,7 +108,7 @@ Item {
             anchors.centerIn: parent
             text: "↵"
             font.pixelSize: 12
-            color: root.theme.colors.subtleText
+            color: root.theme.colors.onSurfaceVariant
         }
     }
 

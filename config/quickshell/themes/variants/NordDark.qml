@@ -15,59 +15,52 @@ BaseTheme {
     _desktopClockPosition: Qt.point(346, 121)
     _desktopClockDepthEffectEnabled: false
     _desktopClockSize: Qt.size(818, 266)
-    _desktopClockSahdowEnabled: false
+    _desktopClockShadowEnabled: false
     _desktopClockUseThemeColor: false
     _desktopClockColor: Qt.rgba(0.22, 0.18, 0.47, 0.6)
 
-    // الألوان الأساسية (باستخدام Frost + Aurora)
-    _primary: "#799ddc"      // nord8  (فيروزي - كأساس لتحسين الوضوح)
-    _secondary: "#A3BE8C"    // nord14 (أخضر - للتأكيدات المهمة)
+    _primary: "#81A1C1"           // Nord9 (أزرق نورد القياسي)
+    _onPrimary: "#2E3440"         // Nord0
+    _secondary: "#A3BE8C"         // Nord14 (الأخضر النوردي)
+    _onSecondary: "#2E3440"
+    _tertiary: "#B48EAD"          // Nord15 (الأرجواني النوردي)
+    _onTertiary: "#2E3440"
+    _error: "#BF616A"             // Nord11 (الأحمر النوردي)
+    _onError: "#ECEFF4"           // Nord6
 
-    _onPrimary: "#2E3440"    // nord0  (نص داكن على عناصر فاتحة)
-    _onSecondary: "#ECEFF4"  // nord6  (نص فاتح على عناصر داكنة)
+    _surface: "#2E3440"                      // Nord0
+    _onSurface: "#ECEFF4"                    // Nord6
+    _surfaceDim: "#242933"                   // درجة مخصصة أغمق قليلاً من Nord0
+    _surfaceBright: "#3B4252"                // Nord1
+    _surfaceContainerLowest: "#20242c"
+    _surfaceContainerLow: "#2E3440"
+    _surfaceContainer: "#343A47"             // Nord0_medium
+    _surfaceContainerHigh: "#3B4252"         // Nord1
+    _surfaceContainerHighest: "#434C5E"      // Nord2
+    _surfaceVariant: "#3B4252"
+    _onSurfaceVariant: "#D8DEE9"             // Nord4
 
-    _tertiary: "#B48EAD"
-    _onTertiary: "#2E3440"   // نص داكن
+    // استبدال اللون الموحد 434C5E لزيادة التباين البصري الداكن والعمق
+    _primaryContainer: "#3b495e"             // Dark Frost Blue
+    _onPrimaryContainer: "#88C0D0"
+    _secondaryContainer: "#3d4c3f"           // Dark Aurora Green
+    _onSecondaryContainer: "#A3BE8C"
+    _tertiaryContainer: "#463d4c"            // Dark Aurora Purple
+    _onTertiaryContainer: "#B48EAD"
+    _errorContainer: "#4c3b3d"               // Dark Aurora Red
+    _onErrorContainer: "#BF616A"
 
-    // Error: أحمر (nord11)
-    _error: "#BF616A"
-    _onError: "#ECEFF4"      // نص فاتح
-
-    // Success: أخضر (nord14)
-    _success: "#A3BE8C"
-    _onSuccess: "#2E3440"    // نص داكن
-
-    // Warning: أصفر (nord13)
-    _warning: "#EBCB8B"
-    _onWarning: "#2E3440"    // نص داكن
-
-    // شريط الأدوات العلوي (طبقًا لوحة Polar Night)
-    _topbarColor: "#2E3440"  // nord0 (خلفية داكنة)
-    _topbarFgColor: "#E5E9F0" // nord5 (نص فاتح)
-    _topbarBgColorV1: "#3B4252" // nord1 (بطاقات - طبقة 1)
-    _topbarBgColorV2: "#434C5E" // nord2 (طبقة 2)
-    _topbarBgColorV3: "#4C566A" // nord3 (طبقة 3)
-    _topbarFgColorV1: "#ECEFF4" // nord6 (نص عالي التباين)
-    _topbarFgColorV2: "#D8DEE9" // nord4
-    _topbarFgColorV3: "#8FBCBB" // nord7 (للملاحظات)
-
-    // القائمة الجانبية (Polar Night مع تعزيز)
-    _leftMenuBgColorV1: "#252934"              // أغمق من nord0 (تحسين التباين)
-    _leftMenuBgColorV2: "#2E3440"              // nord0
-    _leftMenuBgColorV3: "#88C0D0"              // nord8 (عنصر نشط)
-    _leftMenuFgColorV1: "#D8DEE9"              // nord4 (نص قياسي)
-    _leftMenuFgColorV2: "#81A1C1"              // nord9 (نص ثانوي)
-    _leftMenuFgColorV3: "#2E3440"              // نص داكن على عنصر نشط
-
-    // عناصر واجهة إضافية
-    _subtleTextColor: "#81A1C1"                // nord9 (لون خافت)
-    _volOsdBgColor: "#434C5E"                  // nord2 (خلفية بوب أب)
-    _volOsdFgColor: "#EBCB8B"                  // nord13 (نص تحذيري)
+    _outline: "#4C566A"                      // Nord3 (الحدود الافتراضية للسمة)
+    _outlineVariant: "#434C5E"               // Nord2
+    _inverseSurface: "#ECEFF4"
+    _onInverseSurface: "#2E3440"
+    _inversePrimary: "#88C0D0"
+    _shadow: "#000000"
+    _scrim: "#000000"
 
     _plasmaColorScheme: "NibrasNordDark"
     _konsoleProfile: "NordDark.profile"
 
     _themeIcons: "Zafiro-Nord-Black-Blue"
-
     _gtkTheme: "Nordic-darker-standard-buttons"
 }
