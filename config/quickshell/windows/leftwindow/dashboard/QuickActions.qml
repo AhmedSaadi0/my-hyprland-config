@@ -13,8 +13,7 @@ MenuCard {
     id: root
 
     title: qsTr("Quick Actions")
-    icon: "󰒓"
-    subtitle: qsTr("System radios and focus tools")
+    icon: "⚙"
 
     property bool wifiAvailable: false
     property bool wifiEnabled: false

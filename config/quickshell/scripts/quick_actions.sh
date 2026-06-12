@@ -38,33 +38,11 @@ bluetooth_enabled() {
 }
 
 gamemode_available() {
-    if ! has_cmd systemctl; then
-        return 1
-    fi
-
-    if systemctl --user cat gamemoded.service >/dev/null 2>&1; then
-        return 0
-    fi
-
-    if systemctl cat gamemoded.service >/dev/null 2>&1; then
-        return 0
-    fi
-
-    return 1
+    has_cmd gammastep
 }
 
 gamemode_enabled() {
-    if has_cmd systemctl; then
-        if systemctl --user is-active --quiet gamemoded.service >/dev/null 2>&1; then
-            return 0
-        fi
-
-        if systemctl is-active --quiet gamemoded.service >/dev/null 2>&1; then
-            return 0
-        fi
-    fi
-
-    return 1
+    pgrep gammastep >/dev/null 2>&1
 }
 
 airplane_available() {
@@ -198,32 +176,12 @@ toggle_gamemode() {
     fi
 
     if gamemode_enabled; then
-        if has_cmd systemctl && systemctl --user is-active --quiet gamemoded.service >/dev/null 2>&1; then
-            systemctl --user stop gamemoded.service >/dev/null 2>&1
-            return $?
-        fi
-
-        if has_cmd systemctl && systemctl is-active --quiet gamemoded.service >/dev/null 2>&1; then
-            systemctl stop gamemoded.service >/dev/null 2>&1
-            return $?
-        fi
-
-        echo "GameMode is not running." >&2
-        return 1
-    fi
-
-    if has_cmd systemctl && systemctl --user cat gamemoded.service >/dev/null 2>&1; then
-        systemctl --user start gamemoded.service >/dev/null 2>&1
+        pkill gammastep >/dev/null 2>&1
         return $?
     fi
 
-    if has_cmd systemctl && systemctl cat gamemoded.service >/dev/null 2>&1; then
-        systemctl start gamemoded.service >/dev/null 2>&1
-        return $?
-    fi
-
-    echo "gamemoded.service was not found." >&2
-    return 1
+    gammastep -c ~/.config/hypr/config/gammastep.conf >/dev/null 2>&1 &
+    return $?
 }
 
 toggle_action() {
