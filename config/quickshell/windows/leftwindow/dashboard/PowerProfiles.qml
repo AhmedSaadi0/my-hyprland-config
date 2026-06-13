@@ -83,6 +83,15 @@ MenuCard {
     Component.onCompleted: {
         _readyForNotifications = true;
         _lastNotifiedProfile = selectedProfile;
+
+        // تهيئة إحداثيات البداية فوراً لتجنب أي انزلاق عشوائي عند إقلاع البرنامج لأول مرة
+        if (segmentedContainer.activeButton) {
+            segmentedContainer.lastLeft = segmentedContainer.activeButton.x;
+            segmentedContainer.previousLeft = segmentedContainer.activeButton.x;
+            segmentedContainer.lastWidth = segmentedContainer.activeButton.width;
+            segmentedContainer.lastHeight = segmentedContainer.activeButton.height;
+            segmentedContainer.lastY = segmentedContainer.activeButton.y;
+        }
     }
 
     Timer {
@@ -121,40 +130,48 @@ MenuCard {
                 return null;
             }
 
-            // إحداثيات ومقاييس الهدف للمحدد المنزلق
-            property real targetX: activeButton ? activeButton.x : lastX
+            // إحداثيات الهدف للطرف الأيسر والطرف الأيمن للمحدد
+            property real targetLeft: activeButton ? activeButton.x : lastLeft
+            property real targetRight: activeButton ? (activeButton.x + activeButton.width) : (lastLeft + lastWidth)
             property real targetY: activeButton ? activeButton.y : lastY
-            property real targetWidth: activeButton ? activeButton.width : lastWidth
             property real targetHeight: activeButton ? activeButton.height : lastHeight
 
-            // تخزين الذاكرة الحركية لتجنب قفزات الإحداثيات الصفرية عند التغييرات
-            property real lastX: 0
-            property real lastY: 0
+            // متغيرات الذاكرة وتخزين الموقع السابق لتحديد اتجاه الحركة بدقة
+            property real lastLeft: 0
             property real lastWidth: 100
             property real lastHeight: 30
+            property real lastY: 0
+            property real previousLeft: 0
             property bool showHighlight: activeButton !== null
 
             onActiveButtonChanged: {
                 if (activeButton) {
-                    lastX = activeButton.x;
-                    lastY = activeButton.y;
+                    previousLeft = lastLeft; // تذكر آخر موقع لمعرفة اتجاه السحب (يمين أم يسار)
+
+                    lastLeft = activeButton.x;
                     lastWidth = activeButton.width;
                     lastHeight = activeButton.height;
+                    lastY = activeButton.y;
                 }
             }
 
             // -----------------------------------------------------------------
-            // 1. خلفية التحديد المنزلق الذكي (Sliding Selection Highlight)
+            // 1. خلفية التحديد الهلامي المرن (Jelly Selection Highlight)
             // -----------------------------------------------------------------
-            // يوضع كأول عنصر داخل الحاوية ليتم رسمه في الخلفية خلف نصوص الأزرار تماماً
             Rectangle {
                 id: selectionHighlight
-                x: segmentedContainer.targetX
+
+                // [حل المشكلة]: تعريف الخصائص محلياً هنا لتصبح تابعة للـ Rectangle مباشرة
+                property real animLeft: segmentedContainer.targetLeft
+                property real animRight: segmentedContainer.targetRight
+
+                x: animLeft
                 y: segmentedContainer.targetY
-                width: segmentedContainer.targetWidth
+
+                // العرض هو ناتج الفرق الديناميكي بين حركة الطرف الأيمن والأيسر
+                width: Math.max(10, animRight - animLeft)
                 height: segmentedContainer.targetHeight
 
-                // لون التحديد النشط القياسي في M3
                 color: ThemeManager.selectedTheme.colors.primary
 
                 // ربط الزوايا ديناميكياً لتتشكل وتتأقلم بسلاسة مع زوايا الزر النشط حالياً
@@ -165,38 +182,32 @@ MenuCard {
 
                 opacity: segmentedContainer.showHighlight ? 1.0 : 0.0
 
-                // مزامنة انكماش الحركة والتفاعل مع الزر النشط
+                // مزامنة انكماش الحركة والتفاعل مع الزر النشط عند النقرة الفورية
                 scale: segmentedContainer.activeButton ? segmentedContainer.activeButton.scale : 1.0
 
-                // انميشن انزلاق وتحجيم مرن وفخم (باستخدام Easing.OutQuint)
-                Behavior on x {
+                // -----------------------------------------------------------------
+                // ذكاء التحكم بتمدد وتقلص الأطراف (Elastic Behavior Engine)
+                // -----------------------------------------------------------------
+                Behavior on animLeft {
                     enabled: segmentedContainer.showHighlight
                     NumberAnimation {
-                        duration: 300
+                        // إذا كنا نتحرك يساراً، فالطرف الأيسر هو القائد (يتحرك بسرعة 240ms)
+                        // إذا كنا نتحرك يميناً، فالطرف الأيسر هو الذيل المتأخر (يتحرك ببطء 360ms)
+                        duration: (segmentedContainer.targetLeft < segmentedContainer.previousLeft) ? 240 : 360
                         easing.type: Easing.OutQuint
                     }
                 }
-                Behavior on y {
+                Behavior on animRight {
                     enabled: segmentedContainer.showHighlight
                     NumberAnimation {
-                        duration: 300
+                        // إذا كنا نتحرك يميناً، فالطرف الأيمن هو القائد (يتحرك بسرعة 240ms)
+                        // إذا كنا نتحرك يساراً، فالطرف الأيمن هو الذيل المتأخر (يتحرك ببطء 360ms)
+                        duration: (segmentedContainer.targetLeft > segmentedContainer.previousLeft) ? 240 : 360
                         easing.type: Easing.OutQuint
                     }
                 }
-                Behavior on width {
-                    enabled: segmentedContainer.showHighlight
-                    NumberAnimation {
-                        duration: 300
-                        easing.type: Easing.OutQuint
-                    }
-                }
-                Behavior on height {
-                    enabled: segmentedContainer.showHighlight
-                    NumberAnimation {
-                        duration: 300
-                        easing.type: Easing.OutQuint
-                    }
-                }
+                // -----------------------------------------------------------------
+
                 Behavior on scale {
                     NumberAnimation {
                         duration: 150
@@ -204,7 +215,7 @@ MenuCard {
                     }
                 }
 
-                // انميشن تشكل وتحول زوايا المحدد أثناء التنقل
+                // انميشن تشكل وتحول زوايا المحدد بنعومة هندسية أثناء الانتقال
                 Behavior on topLeftRadius {
                     NumberAnimation {
                         duration: 250
@@ -237,7 +248,7 @@ MenuCard {
                 }
             }
 
-            // 2. توزيع الأزرار (الطبقة الأمامية)
+            // 2. توزيع الأزرار الأصلي (الطبقة الأمامية)
             RowLayout {
                 id: widgetsRow
                 anchors.fill: parent
@@ -254,8 +265,7 @@ MenuCard {
                     enabled: PowerProfiles.hasPerformanceProfile
                     isActive: root.selectedProfile === root.profileIndexPerformance
 
-                    // تحييد لون الخلفية النشط الأصلي للزر ليظهر المحدد المنزلق المشترك من الخلف
-                    activeBackground: "transparent"
+                    activeBackground: "transparent" // لتمرير خلفية المحدد المطاطي من خلفه
 
                     normalBackground: {
                         let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
@@ -276,8 +286,7 @@ MenuCard {
                     }
                     isActive: root.selectedProfile === root.profileIndexBalanced
 
-                    // تحييد لون الخلفية النشط الأصلي للزر ليظهر المحدد المنزلق المشترك من الخلف
-                    activeBackground: "transparent"
+                    activeBackground: "transparent" // لتمرير خلفية المحدد المطاطي من خلفه
 
                     normalBackground: {
                         let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
@@ -300,8 +309,7 @@ MenuCard {
                     }
                     isActive: root.selectedProfile === root.profileIndexPowerSaver
 
-                    // تحييد لون الخلفية النشط الأصلي للزر ليظهر المحدد المنزلق المشترك من الخلف
-                    activeBackground: "transparent"
+                    activeBackground: "transparent" // لتمرير خلفية المحدد المطاطي من خلفه
 
                     normalBackground: {
                         let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
