@@ -28,6 +28,13 @@ ColumnLayout {
         Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
     }
 
+    QuickActions {
+        id: quickActions
+        Layout.fillWidth: true
+        Layout.leftMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+        Layout.rightMargin: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
+    }
+
     PowerProfiles {
         id: powerProfiles
         Layout.fillWidth: true

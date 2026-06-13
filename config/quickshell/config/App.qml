@@ -306,6 +306,7 @@ Singleton {
             // Files
             readonly property string internet: root.bashScriptsPath + "/internet.sh"
             readonly property string deviceTempreture: root.bashScriptsPath + "/temp.sh"
+            readonly property string quickActions: root.bashScriptsPath + "/quick_actions.sh"
             readonly property string playerctl: root.homePath + "/.config/hypr/scripts/playerctl.sh"
             readonly property string getWallpapers: root.bashScriptsPath + "/get_wallpapers.sh"
 
