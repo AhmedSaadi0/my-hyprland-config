@@ -1,191 +1,118 @@
-// windows/leftwindow/dashboard/QuickActions.qml
-
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Bluetooth
+import Quickshell.Networking
 import Quickshell.Io
 
 import "root:/components"
-import "root:/config"
 import "root:/themes"
-import "root:/config/ConstValues.js" as Consts
 
 MenuCard {
     id: root
 
     title: qsTr("Quick Actions")
-    icon: "⚙"
+    icon: ""
+    cardColor: ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.7)
+    textColor: ThemeManager.selectedTheme.colors.onSecondaryContainer
 
-    property bool wifiAvailable: false
-    property bool wifiEnabled: false
-
-    property bool bluetoothAvailable: false
-    property bool bluetoothEnabled: false
-
-    property bool airplaneAvailable: false
-    property bool airplaneEnabled: false
-
-    property bool gameModeAvailable: false
-    property bool gameModeEnabled: false
-
-    property string pendingAction: ""
-    property string errorMessage: ""
-    property int innerRadiusDiv: 3
-
-    function refreshStates() {
-        if (statusProcess.running)
-            return;
-
-        statusProcess.command = ["sh", App.scripts.bash.quickActions, "status"];
-        statusProcess.running = true;
+    function _findWifiDevice() {
+        return Networking.devices.values.find(d => d.type === DeviceType.Wifi) || null;
     }
+
+    property var wifiDevice: null
+    property bool wifiAvailable: wifiDevice !== null
+    property bool wifiEnabled: Networking.wifiEnabled
+
+    property bool bluetoothAvailable: Bluetooth.defaultAdapter !== null
+    property bool bluetoothEnabled: Bluetooth.defaultAdapter ? Bluetooth.defaultAdapter.enabled : false
+
+    property bool airplaneAvailable: wifiAvailable || bluetoothAvailable
+    property bool airplaneEnabled: airplaneAvailable && (!wifiAvailable || !wifiEnabled) && (!bluetoothAvailable || !bluetoothEnabled)
 
     function toggleAction(actionName) {
-        if (actionProcess.running)
-            return;
-
-        root.pendingAction = actionName;
-        root.errorMessage = "";
-        actionProcess.command = ["sh", App.scripts.bash.quickActions, "toggle", actionName];
-        actionProcess.running = true;
+        switch (actionName) {
+        case "wifi":
+            Networking.wifiEnabled = !Networking.wifiEnabled;
+            break;
+        case "bluetooth":
+            if (Bluetooth.defaultAdapter)
+                Bluetooth.defaultAdapter.enabled = !Bluetooth.defaultAdapter.enabled;
+            break;
+        case "airplane":
+            if (root.airplaneEnabled) {
+                if (root.wifiAvailable)
+                    Networking.wifiEnabled = true;
+                if (root.bluetoothAvailable && Bluetooth.defaultAdapter)
+                    Bluetooth.defaultAdapter.enabled = true;
+            } else {
+                if (root.wifiAvailable)
+                    Networking.wifiEnabled = false;
+                if (root.bluetoothAvailable && Bluetooth.defaultAdapter)
+                    Bluetooth.defaultAdapter.enabled = false;
+            }
+            break;
+        }
     }
 
-    function updateStates(payload) {
-        const wifi = payload.wifi || {};
-        const bluetooth = payload.bluetooth || {};
-        const airplane = payload.airplane || {};
-        const gameMode = payload.gameMode || {};
-
-        root.wifiAvailable = !!wifi.available;
-        root.wifiEnabled = !!wifi.enabled;
-
-        root.bluetoothAvailable = !!bluetooth.available;
-        root.bluetoothEnabled = !!bluetooth.enabled;
-
-        root.airplaneAvailable = !!airplane.available;
-        root.airplaneEnabled = !!airplane.enabled;
-
-        root.gameModeAvailable = !!gameMode.available;
-        root.gameModeEnabled = !!gameMode.enabled;
-    }
-
-    ColumnLayout {
+    RowLayout {
         spacing: 7
+        Layout.fillWidth: true
 
-        GridLayout {
+        MButton {
             Layout.fillWidth: true
-            columns: 2
-            columnSpacing: 7
-            rowSpacing: 7
+            text: "Wi-Fi"
+            iconText: root.wifiEnabled ? "" : "󰖪"
+            iconFirst: true
+            iconSize: 16
+            enabled: root.wifiAvailable
+            isActive: root.wifiEnabled && !root.airplaneEnabled
+            onClicked: root.toggleAction("wifi")
 
-            MButton {
-                Layout.fillWidth: true
-                text: qsTr("Wi-Fi")
-                iconText: ""
-                iconFirst: true
-                enabled: root.wifiAvailable && !actionProcess.running && root.pendingAction !== "airplane"
-                isActive: root.wifiEnabled && !root.airplaneEnabled
-                activeText: qsTr("Wi-Fi On")
-                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : root.innerRadiusDiv)
-                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : root.innerRadiusDiv)
-                onClicked: root.toggleAction("wifi")
-            }
-
-            MButton {
-                Layout.fillWidth: true
-                text: qsTr("Bluetooth")
-                iconText: ""
-                iconFirst: true
-                enabled: root.bluetoothAvailable && !actionProcess.running && root.pendingAction !== "airplane"
-                isActive: root.bluetoothEnabled && !root.airplaneEnabled
-                activeText: qsTr("Bluetooth On")
-                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : root.innerRadiusDiv)
-                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : root.innerRadiusDiv)
-                onClicked: root.toggleAction("bluetooth")
-            }
-
-            MButton {
-                Layout.fillWidth: true
-                text: qsTr("Airplane")
-                iconText: ""
-                iconFirst: true
-                enabled: root.airplaneAvailable && !actionProcess.running
-                isActive: root.airplaneEnabled
-                activeText: qsTr("Airplane On")
-                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : root.innerRadiusDiv)
-                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : root.innerRadiusDiv)
-                onClicked: root.toggleAction("airplane")
-            }
-
-            MButton {
-                Layout.fillWidth: true
-                text: qsTr("Game Mode")
-                iconText: ""
-                iconFirst: true
-                enabled: root.gameModeAvailable && !actionProcess.running
-                isActive: root.gameModeEnabled
-                activeText: qsTr("Game Mode On")
-                bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : root.innerRadiusDiv)
-                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : root.innerRadiusDiv)
-                onClicked: root.toggleAction("gameMode")
-            }
+            normalBackground: root.textColor.alpha(0.1)
+            normalForeground: root.textColor
+            hoveredBackground: root.cardColor.alpha(0.2)
+            downForeground: root.textColor
         }
 
-        Text {
+        MButton {
             Layout.fillWidth: true
-            visible: root.errorMessage.length > 0
-            text: root.errorMessage
-            wrapMode: Text.Wrap
-            color: ThemeManager.selectedTheme.colors.warning
-            font.family: ThemeManager.selectedTheme.typography.bodyFont
-            font.pixelSize: 11
+            text: "Bluetooth"
+            iconText: root.bluetoothEnabled ? "󰂯" : "󰂲"
+            iconFirst: true
+            iconSize: 16
+            enabled: root.bluetoothAvailable
+            isActive: root.bluetoothEnabled && !root.airplaneEnabled
+            onClicked: root.toggleAction("bluetooth")
+            normalBackground: root.textColor.alpha(0.1)
+            normalForeground: root.textColor
+            hoveredBackground: root.cardColor.alpha(0.2)
+            downForeground: root.textColor
+        }
+
+        MButton {
+            Layout.fillWidth: true
+            text: "Airplane"
+            iconText: "󰀝"
+            iconSize: 16
+            iconFirst: true
+            enabled: root.airplaneAvailable
+            isActive: root.airplaneEnabled
+            onClicked: root.toggleAction("airplane")
+            normalBackground: root.textColor.alpha(0.1)
+            normalForeground: root.textColor
+            hoveredBackground: root.cardColor.alpha(0.2)
+            downForeground: root.textColor
         }
     }
 
-    Component.onCompleted: refreshStates()
-
-    Timer {
-        interval: 12000
-        repeat: true
-        running: true
-        onTriggered: root.refreshStates()
-    }
-
-    Process {
-        id: statusProcess
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                try {
-                    root.updateStates(JSON.parse(this.text));
-                    root.errorMessage = "";
-                } catch (error) {
-                    root.errorMessage = qsTr("Unable to read quick action states.");
-                    console.error("[QuickActions] Failed to parse status:", error);
-                }
-            }
-        }
-
-        stderr: SplitParser {
-            onRead: data => {
-                root.errorMessage = data.trim();
-                console.error("[QuickActions] Status stderr:", data);
-            }
+    Connections {
+        target: Networking.devices
+        function onValuesChanged() {
+            root.wifiDevice = root._findWifiDevice();
         }
     }
 
-    Process {
-        id: actionProcess
-
-        onExited: {
-            root.pendingAction = "";
-            root.refreshStates();
-        }
-
-        stderr: SplitParser {
-            onRead: data => {
-                root.errorMessage = data.trim();
-                console.error("[QuickActions] Action stderr:", data);
-            }
-        }
+    Component.onCompleted: {
+        root.wifiDevice = root._findWifiDevice();
     }
 }

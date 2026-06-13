@@ -16,6 +16,7 @@ Button {
     property bool showIcon: iconText !== ""
     property bool iconFirst: false
     property alias iconItem: iconTextItem
+    property int iconSize: 0
 
     property alias textItem: buttonMainText
     property var textHorizontalAlignment: {
@@ -45,6 +46,85 @@ Button {
     property string activeText: ""
 
     // -----------------------------------------------------------------
+    // ذكاء التفاعل: هل هذا الزر يعمل كمفتاح تشغيل/إيقاف؟
+    // -----------------------------------------------------------------
+    property bool enableToggleAnimation: true // تفعيل تأثير التمدد الهلامي عند تغير الحالة
+    property bool _isReady: false             // لمنع تشغيل الانميشن عند بدء تحميل البرنامج
+
+    Component.onCompleted: _isReady = true
+
+    // تشغيل الانميشن الاحترافي (Squash & Stretch) عند كل تغيير في الحالة (تشغيل أو إيقاف)
+    onIsActiveChanged: {
+        if (_isReady && enableToggleAnimation) {
+            toggleMorphAnim.restart();
+        }
+    }
+
+    // خصائص التمدد والانكماش الذكية (تُعزل عن الـ Scale الأساسي للضغط)
+    property real stretchX: 1.0
+    property real stretchY: 1.0
+    property real radiusMultiplier: 1.3
+
+    // تطبيق التمدد من مركز الزر
+    transform: Scale {
+        origin.x: root.width / 2
+        origin.y: root.height / 2
+        xScale: root.stretchX
+        yScale: root.stretchY
+    }
+
+    // انميشن التمدد الهلامي (Material 3 Toggle Morphing)
+    SequentialAnimation {
+        id: toggleMorphAnim
+        ParallelAnimation {
+            NumberAnimation {
+                target: root
+                property: "stretchX"
+                to: 1.06
+                duration: 120
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: root
+                property: "stretchY"
+                to: 0.94
+                duration: 120
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: root
+                property: "radiusMultiplier"
+                to: 0.3
+                duration: 120
+                easing.type: Easing.OutQuad
+            }
+        }
+        ParallelAnimation {
+            NumberAnimation {
+                target: root
+                property: "stretchX"
+                to: 1.0
+                duration: 300
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: root
+                property: "stretchY"
+                to: 1.0
+                duration: 300
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: root
+                property: "radiusMultiplier"
+                to: 1.0
+                duration: 300
+                easing.type: Easing.OutBack
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------
     // ألوان وتأثيرات متوافقة مع معايير Material Design 3 (M3)
     // -----------------------------------------------------------------
     property var disabledBackground: ThemeManager.selectedTheme.colors.onSurface.alpha(0.12)
@@ -69,18 +149,16 @@ Button {
     // -----------------------------------------------------------------
     // تأثير الانكماش غير المتماثل (Asymmetric Scale Spring Animation)
     // -----------------------------------------------------------------
+    // هذا التأثير سيعمل بتناغم تام مع الـ transform الهلامي في الأعلى
     scale: root.down ? 0.95 : 1.0
 
     Behavior on scale {
         SpringAnimation {
-            // صلابة عالية وخمود كامل عند الضغط (استجابة صلبة وفورية)
-            // ليونة واهتزاز ناعم عند الإفلات (ارتداد مرن ممتع بصرياً)
             spring: root.down ? 5.0 : 3.2
             damping: root.down ? 1.0 : 0.5
             epsilon: 0.005
         }
     }
-    // -----------------------------------------------------------------
 
     ToolTip.text: root.text
     ToolTip.visible: root.hovered && root.showTooltip
@@ -98,7 +176,8 @@ Button {
             visible: root.showIcon
             text: root.iconText
             font.family: ThemeManager.selectedTheme.typography.iconFont
-            font.pixelSize: buttonMainText.font.pixelSize
+            // font.pixelSize: buttonMainText.font.pixelSize
+            font.pixelSize: root.iconSize > 0 ? root.iconSize : buttonMainText.font.pixelSize
             horizontalAlignment: root.iconHorizontalAlignment
             verticalAlignment: root.iconVerticalAlignment
             color: buttonMainText.color
@@ -151,10 +230,12 @@ Button {
 
     background: Rectangle {
         id: bgContainer
-        topLeftRadius: root.topLeftRadius
-        topRightRadius: root.topRightRadius
-        bottomLeftRadius: root.bottomLeftRadius
-        bottomRightRadius: root.bottomRightRadius
+
+        // ربط الزوايا الذكي: يضرب الزاوية الأصلية في معامل التمدد
+        topLeftRadius: root.topLeftRadius * root.radiusMultiplier
+        topRightRadius: root.topRightRadius * root.radiusMultiplier
+        bottomLeftRadius: root.bottomLeftRadius * root.radiusMultiplier
+        bottomRightRadius: root.bottomRightRadius * root.radiusMultiplier
 
         color: {
             if (!root.enabled) {
@@ -174,10 +255,10 @@ Button {
             }
         }
 
-        // طبقة التفاعل الشفافة (State Layer)
         Rectangle {
             id: stateLayer
             anchors.fill: parent
+
             topLeftRadius: bgContainer.topLeftRadius
             topRightRadius: bgContainer.topRightRadius
             bottomLeftRadius: bgContainer.bottomLeftRadius
@@ -196,13 +277,8 @@ Button {
                 return 0.0;
             }
 
-            // -------------------------------------------------------------
-            // سرعات انتقال غير متماثلة (Asymmetric Fade Transitions)
-            // -------------------------------------------------------------
             Behavior on opacity {
                 NumberAnimation {
-                    // دخول سريع جداً عند النقر أو التحويم (85ms) لضمان الفورية والاستجابة
-                    // خروج ناعم وتلاشٍ أبطأ عند ترك الزر (200ms) لإعطاء مظهر انسيابي طبيعي
                     duration: (root.hovered || root.down) ? 85 : 200
                     easing.type: Easing.Bezier
                     easing.bezierCurve: [0.2, 0, 0, 1, 1, 1]

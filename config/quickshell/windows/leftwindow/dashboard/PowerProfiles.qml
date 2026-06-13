@@ -15,9 +15,9 @@ MenuCard {
 
     // --- Texts & Content ---
     title: qsTr("Power Profiles") // "وضع الاداء"
-    icon: ""
-    cardColor: ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.7)
-    textColor: ThemeManager.selectedTheme.colors.onSecondaryContainer
+    icon: ""
+    cardColor: ThemeManager.selectedTheme.colors.tertiaryContainer.alpha(0.7)
+    textColor: ThemeManager.selectedTheme.colors.onTertiaryContainer
 
     property int defaultButtonWidth: 100
     property int defaultButtonHeight: 30
@@ -259,18 +259,19 @@ MenuCard {
                     Layout.fillWidth: true
                     height: root.defaultButtonHeight
                     text: root.highPerformanceButtonLabel
+                    iconFirst: true
+                    iconText: "󰓅"
+                    iconSize: 16
                     onClicked: {
                         _requestProfileChange(PowerProfile.Performance);
                     }
                     enabled: PowerProfiles.hasPerformanceProfile
                     isActive: root.selectedProfile === root.profileIndexPerformance
 
-                    activeBackground: "transparent" // لتمرير خلفية المحدد المطاطي من خلفه
-
-                    normalBackground: {
-                        let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
-                        return ThemeManager.selectedTheme._themeMode === "dark" ? Qt.lighter(base, 1.15) : Qt.darker(base, 1.12);
-                    }
+                    normalBackground: root.textColor.alpha(0.1)
+                    normalForeground: root.textColor
+                    hoveredBackground: root.cardColor.alpha(0.2)
+                    downForeground: root.textColor
 
                     topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
                     bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
@@ -281,17 +282,18 @@ MenuCard {
                     Layout.fillWidth: true
                     height: root.defaultButtonHeight
                     text: root.balancedButtonLabel
+                    iconFirst: true
+                    iconText: "󰾅"
+                    iconSize: 16
                     onClicked: {
                         _requestProfileChange(PowerProfile.Balanced);
                     }
                     isActive: root.selectedProfile === root.profileIndexBalanced
 
-                    activeBackground: "transparent" // لتمرير خلفية المحدد المطاطي من خلفه
-
-                    normalBackground: {
-                        let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
-                        return ThemeManager.selectedTheme._themeMode === "dark" ? Qt.lighter(base, 1.15) : Qt.darker(base, 1.12);
-                    }
+                    normalBackground: root.textColor.alpha(0.1)
+                    normalForeground: root.textColor
+                    hoveredBackground: root.cardColor.alpha(0.2)
+                    downForeground: root.textColor
 
                     topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
                     topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
@@ -304,17 +306,18 @@ MenuCard {
                     Layout.fillWidth: true
                     height: root.defaultButtonHeight
                     text: root.lowButtonLabel
+                    iconFirst: true
+                    iconText: "󰾆"
+                    iconSize: 16
                     onClicked: {
                         _requestProfileChange(PowerProfile.PowerSaver);
                     }
                     isActive: root.selectedProfile === root.profileIndexPowerSaver
 
-                    activeBackground: "transparent" // لتمرير خلفية المحدد المطاطي من خلفه
-
-                    normalBackground: {
-                        let base = ThemeManager.selectedTheme.colors.secondaryContainer.alpha(0.6);
-                        return ThemeManager.selectedTheme._themeMode === "dark" ? Qt.lighter(base, 1.15) : Qt.darker(base, 1.12);
-                    }
+                    normalBackground: root.textColor.alpha(0.1)
+                    normalForeground: root.textColor
+                    hoveredBackground: root.cardColor.alpha(0.2)
+                    downForeground: root.textColor
 
                     bottomLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
                     topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isActive ? Consts.M3_BUTTON_RADIUS_DIVISOR : innerRadiusDiv)
