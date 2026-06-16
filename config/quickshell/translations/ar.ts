@@ -1142,4 +1142,62 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>DockItem</name>
+    <message>
+        <source>Open</source>
+        <translation>فتح</translation>
+    </message>
+    <message>
+        <source>Focus</source>
+        <translation>التركيز على التطبيق</translation>
+    </message>
+    <message>
+        <source>New Window</source>
+        <translation>فتح نافذة جديدة</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>إغلاق التطبيق</translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation>إضافة للمفضلة</translation>
+    </message>
+    <message>
+        <source>Remove from favorites</source>
+        <translation>إزالة من المفضلة</translation>
+    </message>
+    <message>
+        <source>Pin to Dock</source>
+        <translation>تثبيت في الدوك</translation>
+    </message>
+    <message>
+        <source>Unpin from Dock</source>
+        <translation>إلغاء تثبيت من الدوك</translation>
+    </message>
+</context>
+<context>
+    <name>AppItem</name>
+    <message>
+        <source>Open</source>
+        <translation>فتح</translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation>إضافة للمفضلة</translation>
+    </message>
+    <message>
+        <source>Remove from favorites</source>
+        <translation>إزالة من المفضلة</translation>
+    </message>
+    <message>
+        <source>Pin to Dock</source>
+        <translation>تثبيت في الدوك</translation>
+    </message>
+    <message>
+        <source>Unpin from Dock</source>
+        <translation>إلغاء تثبيت من الدوك</translation>
+    </message>
+</context>
 </TS>

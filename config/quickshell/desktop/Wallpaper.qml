@@ -15,6 +15,14 @@ Item {
     property bool isMenuOpen: false
     property real blurValue: 0.9
     property string graphicsQuality: "High"
+    property real bottomMargin: 0
+
+    Behavior on bottomMargin {
+        NumberAnimation {
+            duration: 350
+            easing.type: Easing.OutCubic
+        }
+    }
 
     default property alias content: widgetsContainer.data
 
@@ -178,6 +186,7 @@ Item {
         id: widgetsContainer
         z: 1
         anchors.fill: parent
+        anchors.bottomMargin: root.bottomMargin
     }
 
     // --- Layer 3: Depth Foreground ---

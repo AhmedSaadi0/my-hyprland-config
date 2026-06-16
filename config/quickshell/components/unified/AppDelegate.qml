@@ -15,8 +15,10 @@ Item {
     property bool isSelected: false
     property bool isHighlighted: false
     property bool isFavorite: false
+    property bool isPinnedToDock: false
     signal itemClicked
     signal favoriteToggled
+    signal pinToggled
     signal hovered
 
     width: ListView.view ? ListView.view.width : (parent ? parent.width : 0)
@@ -83,9 +85,11 @@ Item {
         isSelected: root.isSelected
         isHighlighted: root.isHighlighted
         isFavorite: root.isFavorite
+        isPinnedToDock: root.isPinnedToDock
 
         onClicked: root.itemClicked()
         onFavoriteToggled: root.favoriteToggled()
+        onPinToggled: root.pinToggled()
         onHovered: root.hovered()
     }
 }

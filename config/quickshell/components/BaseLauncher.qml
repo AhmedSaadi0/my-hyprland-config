@@ -74,6 +74,27 @@ Item {
         return false;
     }
 
+    function togglePinToDock(appData) {
+        if (typeof App !== 'undefined' && appData && appData.name) {
+            const appId = appData.name;
+            const index = App.dockApps.indexOf(appId);
+            if (index === -1) {
+                App.dockApps.push(appId);
+            } else {
+                App.dockApps.splice(index, 1);
+            }
+            App.updateConfig("dockApps", App.dockApps);
+        }
+    }
+
+    function isPinnedToDock(appData) {
+        if (typeof App !== 'undefined' && appData && appData.name) {
+            const appId = appData.name;
+            return App.dockApps.indexOf(appId) !== -1;
+        }
+        return false;
+    }
+
     // --- Command Execution ---
     function executeCommand(cmd) {
         if (cmd && cmd.enabled !== false) {

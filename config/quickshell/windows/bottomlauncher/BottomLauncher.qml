@@ -13,6 +13,8 @@ PanelWindow {
     id: root
 
     property bool isShown: false
+    property real dockWidth: App.bottomLauncherWidth
+    readonly property int dockHeight: App.dockIconSize + 32
 
     color: "transparent"
     visible: false
@@ -26,14 +28,14 @@ PanelWindow {
         right: true
     }
 
-    implicitHeight: 600
+    implicitHeight: 600 + dockHeight
 
     mask: Region {
         item: contentContainer
     }
 
     margins {
-        bottom: 20
+        bottom: (App.hasWindowsOnWorkspace ? 0 : 12) + 12 + dockHeight
     }
 
     NibrasShellShortcut {
@@ -56,20 +58,28 @@ PanelWindow {
 
     onIsShownChanged: {
         if (isShown) {
+            EventBus.emit(Events.BOTTOM_LAUNCHER_OPENED);
             if (root.visible && contentContainer.opacity > 0) {
                 contentContainer.state = "visible";
                 return;
             }
 
-            contentContainer.y = 50;
+            contentContainer.y = root.height;
             contentContainer.opacity = 0;
 
             root.visible = true;
             startOpenAnimTimer.restart();
         } else {
+            EventBus.emit(Events.BOTTOM_LAUNCHER_CLOSED);
             startOpenAnimTimer.stop();
             contentContainer.state = "hidden";
         }
+    }
+
+    Component.onCompleted: {
+        EventBus.on(Events.DOCK_WIDTH_CHANGED, w => {
+            root.dockWidth = w;
+        }, root);
     }
 
     Timer {
@@ -93,7 +103,7 @@ PanelWindow {
     Rectangle {
         id: contentContainer
 
-        width: App.bottomLauncherWidth
+        width: Math.max(root.dockWidth, App.bottomLauncherWidth)
         height: parent.height - 10
 
         anchors.horizontalCenter: parent.horizontalCenter
@@ -123,7 +133,7 @@ PanelWindow {
             anchors.fill: parent
             anchors.margins: ThemeManager.selectedTheme.dimensions.menuWidgetsMargin
 
-            onAppLaunchedCallback: function() {
+            onAppLaunchedCallback: function () {
                 root.hide();
             }
         }
@@ -141,7 +151,7 @@ PanelWindow {
                 name: "hidden"
                 PropertyChanges {
                     target: contentContainer
-                    y: 150
+                    y: root.height
                     opacity: 0.0
                 }
             }
@@ -152,14 +162,18 @@ PanelWindow {
                 from: "hidden"
                 to: "visible"
                 ParallelAnimation {
-                    NumberAnimation {
+                    // حركة فيزيائية مرنة لصعود حاوية التطبيقات بشكل ناعم وهلامي
+                    SpringAnimation {
+                        target: contentContainer
                         properties: "y"
-                        duration: 350
-                        easing.type: Easing.OutExpo
+                        spring: 3.8
+                        damping: 0.65
+                        mass: 0.8
                     }
                     NumberAnimation {
+                        target: contentContainer
                         properties: "opacity"
-                        duration: 200
+                        duration: 250
                         easing.type: Easing.OutQuad
                     }
                 }
@@ -171,12 +185,12 @@ PanelWindow {
                     ParallelAnimation {
                         NumberAnimation {
                             properties: "y"
-                            duration: 300
+                            duration: 250
                             easing.type: Easing.InQuad
                         }
                         NumberAnimation {
                             properties: "opacity"
-                            duration: 250
+                            duration: 200
                             easing.type: Easing.InQuad
                         }
                     }

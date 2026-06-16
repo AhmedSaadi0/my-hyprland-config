@@ -148,7 +148,7 @@ Rectangle {
 
         delegate: Controls.ItemDelegate {
             id: delegateItem
-            width: parent.width
+            width: menuListView.width
             height: model.modelData.type === "header" ? Kirigami.Units.gridUnit * 1.8 : Kirigami.Units.gridUnit * 2.5
 
             padding: 0

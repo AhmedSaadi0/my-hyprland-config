@@ -90,6 +90,25 @@ Singleton {
     property alias menuStyle: root.config.menuStyle
 
     property alias favoriteApps: root.config.favoriteApps
+    property alias dockApps: root.config.dockApps
+
+    // Dock configs
+    property alias showDock: root.config.showDock
+    property alias dockIconSize: root.config.dockIconSize
+
+    readonly property bool hasWindowsOnWorkspace: {
+        if (!Hyprland.focusedWorkspace)
+            return false;
+        let wsId = Hyprland.focusedWorkspace.id;
+        let toplevels = Hyprland.toplevels.values;
+        for (let i = 0; i < toplevels.length; i++) {
+            let win = toplevels[i];
+            if (win.workspace && win.workspace.id === wsId) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     property alias topBarActiveWindowMinWidth: root.config.topBarActiveWindowMinWidth
     property alias topBarActiveWindowMaxWidth: root.config.topBarActiveWindowMaxWidth

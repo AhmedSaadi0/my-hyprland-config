@@ -18,3 +18,9 @@ var CPU_THRESHOLD_EXCEEDED = "cpuThresholdExceeded";
 var MEMORY_THRESHOLD_EXCEEDED = "memoryThresholdExceeded";
 
 var TOGGLE_BOTTOM_LAUNCHER = "toggleBottomLauncher";
+var BOTTOM_LAUNCHER_OPENED = "bottomLauncherOpened";
+var BOTTOM_LAUNCHER_CLOSED = "bottomLauncherClosed";
+var TOGGLE_DOCK = "toggleDock";
+var DOCK_WIDTH_CHANGED = "dockWidthChanged";
+
+var APP_MENU_CLOSE_ALL = "appMenuCloseAll";

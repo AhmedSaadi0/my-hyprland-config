@@ -44,20 +44,24 @@ Item {
         id: baseLauncher
         selectedCategory: appsHeader.selectedCategory
 
-        onAppLaunchedCallback: function() {
-            if (root.onAppLaunchedCallback) root.onAppLaunchedCallback();
+        onAppLaunchedCallback: function () {
+            if (root.onAppLaunchedCallback)
+                root.onAppLaunchedCallback();
         }
-        onCommandExecutedCallback: function(cmd) {
-            if (root.onCommandExecutedCallback) root.onCommandExecutedCallback(cmd);
+        onCommandExecutedCallback: function (cmd) {
+            if (root.onCommandExecutedCallback)
+                root.onCommandExecutedCallback(cmd);
         }
-        onResetStateCallback: function() {
+        onResetStateCallback: function () {
             appsHeader.searchText = "";
             appsHeader.selectedCategory = "";
-            if (root.onResetStateCallback) root.onResetStateCallback();
+            if (root.onResetStateCallback)
+                root.onResetStateCallback();
         }
-        onRequestFocusCallback: function() {
+        onRequestFocusCallback: function () {
             appsHeader.forceSearchFocus();
-            if (root.onRequestFocusCallback) root.onRequestFocusCallback();
+            if (root.onRequestFocusCallback)
+                root.onRequestFocusCallback();
         }
     }
 
@@ -93,10 +97,10 @@ Item {
     }
 
     // ==========================================================================
-    // Content Stack (SwipeView)
+    // Content Stack (Custom Animated Container replacing SwipeView)
     // ==========================================================================
 
-    SwipeView {
+    Item {
         id: contentStack
         anchors.top: appsHeader.bottom
         anchors.left: parent.left
@@ -106,13 +110,50 @@ Item {
         anchors.leftMargin: root.contentPadding
         anchors.rightMargin: root.contentPadding
         anchors.bottomMargin: root.contentPadding
-        currentIndex: baseLauncher.currentViewIndex
-        interactive: false
         clip: true
-        orientation: Qt.Horizontal
+
+        readonly property int currentIndex: baseLauncher.currentViewIndex
+
+        // إعدادات النابض الخاصة بالحركة الهلامية (Jelly Physics)
+        readonly property real springStrength: 3.5  // قوة ارتداد النابض
+        readonly property real springDamping: 0.63   // مرونة النابض (كلما قلت زاد الاهتزاز الهلامي)
+        readonly property real springMass: 0.85      // كتلة العناصر أثناء الحركة
 
         // Page 0: Apps List
         Item {
+            id: page0
+            anchors.fill: parent
+            visible: opacity > 0.01
+
+            readonly property bool isActive: contentStack.currentIndex === 0
+
+            // ربط الخصائص للحركة الانتقالية
+            x: isActive ? 0 : (contentStack.currentIndex < 0 ? parent.width : -parent.width * 0.4)
+            opacity: isActive ? 1.0 : 0.0
+            scale: isActive ? 1.0 : 0.9
+
+            // سلوك الانميشن الهلامي
+            Behavior on x {
+                SpringAnimation {
+                    spring: contentStack.springStrength
+                    damping: contentStack.springDamping
+                    mass: contentStack.springMass
+                }
+            }
+            Behavior on scale {
+                SpringAnimation {
+                    spring: contentStack.springStrength
+                    damping: contentStack.springDamping
+                    mass: contentStack.springMass
+                }
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+            }
+
             ListView {
                 id: appListView
                 anchors.fill: parent
@@ -123,8 +164,48 @@ Item {
                 bottomMargin: root.contentPadding
                 boundsBehavior: Flickable.StopAtBounds
 
+                // حركة تباعد العناصر الهلامية عند الفلترة أو إعادة الترتيب
                 displaced: Transition {
-                    NumberAnimation { properties: "x,y"; duration: 200; easing.type: Easing.OutQuad }
+                    SpringAnimation {
+                        properties: "x,y"
+                        spring: 3.2
+                        damping: 0.65
+                        mass: 0.8
+                    }
+                }
+
+                // حركة ظهور العناصر عند التصفية
+                add: Transition {
+                    ParallelAnimation {
+                        NumberAnimation {
+                            property: "opacity"
+                            from: 0.0
+                            to: 1.0
+                            duration: 200
+                        }
+                        SpringAnimation {
+                            property: "scale"
+                            from: 0.8
+                            to: 1.0
+                            spring: 3.0
+                            damping: 0.6
+                        }
+                    }
+                }
+
+                remove: Transition {
+                    ParallelAnimation {
+                        NumberAnimation {
+                            property: "opacity"
+                            to: 0.0
+                            duration: 150
+                        }
+                        NumberAnimation {
+                            property: "scale"
+                            to: 0.8
+                            duration: 150
+                        }
+                    }
                 }
 
                 displayMarginBeginning: 40
@@ -135,15 +216,28 @@ Item {
                     isSelected: baseLauncher.selectedAppIndex === index
                     isHighlighted: baseLauncher.selectedAppIndex >= 0 ? index === baseLauncher.selectedAppIndex : index === baseLauncher.getFirstActualAppIndex()
                     isFavorite: modelData && modelData.appData ? baseLauncher.isFavorite(modelData.appData) : false
+                    isPinnedToDock: modelData && modelData.appData ? baseLauncher.isPinnedToDock(modelData.appData) : false
 
                     onItemClicked: {
                         if (modelData && modelData.appData) {
-                            baseLauncher.launchApp(modelData.appData.command, modelData.appData.workingDirectory);
+                            if (typeof modelData.appData.execute === "function") {
+                                modelData.appData.execute();
+                            } else {
+                                baseLauncher.launchApp(modelData.appData.command, modelData.appData.workingDirectory);
+                            }
+                            if (root.onAppLaunchedCallback) {
+                                root.onAppLaunchedCallback();
+                            }
                         }
                     }
                     onFavoriteToggled: {
                         if (modelData && modelData.appData) {
                             baseLauncher.toggleFavorite(modelData.appData);
+                        }
+                    }
+                    onPinToggled: {
+                        if (modelData && modelData.appData) {
+                            baseLauncher.togglePinToDock(modelData.appData);
                         }
                     }
                     onHovered: {
@@ -175,6 +269,37 @@ Item {
 
         // Page 1: Commands List
         Item {
+            id: page1
+            anchors.fill: parent
+            visible: opacity > 0.01
+
+            readonly property bool isActive: contentStack.currentIndex === 1
+
+            x: isActive ? 0 : (contentStack.currentIndex < 1 ? parent.width : -parent.width * 0.4)
+            opacity: isActive ? 1.0 : 0.0
+            scale: isActive ? 1.0 : 0.9
+
+            Behavior on x {
+                SpringAnimation {
+                    spring: contentStack.springStrength
+                    damping: contentStack.springDamping
+                    mass: contentStack.springMass
+                }
+            }
+            Behavior on scale {
+                SpringAnimation {
+                    spring: contentStack.springStrength
+                    damping: contentStack.springDamping
+                    mass: contentStack.springMass
+                }
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+            }
+
             ListView {
                 id: commandListView
                 anchors.fill: parent
@@ -183,6 +308,33 @@ Item {
                 spacing: 4
                 topMargin: 2
                 bottomMargin: root.contentPadding
+
+                displaced: Transition {
+                    SpringAnimation {
+                        properties: "x,y"
+                        spring: 3.2
+                        damping: 0.65
+                        mass: 0.8
+                    }
+                }
+
+                add: Transition {
+                    ParallelAnimation {
+                        NumberAnimation {
+                            property: "opacity"
+                            from: 0.0
+                            to: 1.0
+                            duration: 200
+                        }
+                        SpringAnimation {
+                            property: "scale"
+                            from: 0.8
+                            to: 1.0
+                            spring: 3.0
+                            damping: 0.6
+                        }
+                    }
+                }
 
                 delegate: CommandItem {
                     width: commandListView.width
@@ -203,6 +355,37 @@ Item {
 
         // Page 2: Wallpaper Selector
         Item {
+            id: page2
+            anchors.fill: parent
+            visible: opacity > 0.01
+
+            readonly property bool isActive: contentStack.currentIndex === 2
+
+            x: isActive ? 0 : (contentStack.currentIndex < 2 ? parent.width : -parent.width * 0.4)
+            opacity: isActive ? 1.0 : 0.0
+            scale: isActive ? 1.0 : 0.9
+
+            Behavior on x {
+                SpringAnimation {
+                    spring: contentStack.springStrength
+                    damping: contentStack.springDamping
+                    mass: contentStack.springMass
+                }
+            }
+            Behavior on scale {
+                SpringAnimation {
+                    spring: contentStack.springStrength
+                    damping: contentStack.springDamping
+                    mass: contentStack.springMass
+                }
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+            }
+
             WallpaperSelector {
                 anchors.fill: parent
                 onWallpaperSelected: path => {
@@ -210,7 +393,8 @@ Item {
                     appsHeader.searchText = "";
                     baseLauncher.searchText = "";
                     appsHeader.forceSearchFocus();
-                    if (root.onAppLaunchedCallback) root.onAppLaunchedCallback();
+                    if (root.onAppLaunchedCallback)
+                        root.onAppLaunchedCallback();
                 }
                 onCloseRequested: {
                     baseLauncher.activeCommandView = "";
@@ -228,6 +412,7 @@ Item {
 
     Keys.onPressed: event => {
         if (event.key === Qt.Key_Escape) {
+            EventBus.emit(Events.APP_MENU_CLOSE_ALL, {});
             if (baseLauncher.activeCommandView !== "") {
                 baseLauncher.activeCommandView = "";
                 appsHeader.searchText = "";
@@ -236,7 +421,8 @@ Item {
                 event.accepted = true;
                 return;
             }
-            if (root.onAppLaunchedCallback) root.onAppLaunchedCallback();
+            if (root.onAppLaunchedCallback)
+                root.onAppLaunchedCallback();
             event.accepted = true;
             return;
         }

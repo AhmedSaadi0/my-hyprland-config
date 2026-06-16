@@ -7,6 +7,7 @@ import Quickshell.Widgets
 
 import "root:/themes"
 import "root:/config"
+import "root:/config/EventNames.js" as Events
 import "root:/utils"
 
 Item {
@@ -15,13 +16,23 @@ Item {
     signal clicked
     signal hovered
     signal favoriteToggled
+    signal pinToggled
 
     property var appData
     property bool isSelected: false
     property bool isHighlighted: false
     property bool isFavorite: false
+    property bool isPinnedToDock: false
 
     height: 64
+
+    Component.onCompleted: {
+        EventBus.on(Events.APP_MENU_CLOSE_ALL, function (data) {
+            if (menuLoader && menuLoader.active && menuLoader.item && data.except !== menuLoader.item && menuLoader.item.opened) {
+                menuLoader.item.close();
+            }
+        }, root);
+    }
 
     Rectangle {
         id: hoverBg
@@ -46,14 +57,15 @@ Item {
 
         Behavior on color {
             ColorAnimation {
-                duration: 150
-                easing.type: Easing.OutQuad
+                duration: 120
+                easing.type: Easing.OutCubic
             }
         }
 
         Behavior on border.color {
             ColorAnimation {
-                duration: 150
+                duration: 120
+                easing.type: Easing.OutCubic
             }
         }
     }
@@ -78,10 +90,23 @@ Item {
                 height: 38
                 source: Quickshell.iconPath(appData ? appData.icon : "application-x-executable", "application-x-executable")
                 transformOrigin: Item.Center
+
+                scale: (root.isHighlighted || mouseArea.containsMouse) ? 1.12 : 1.0
+                rotation: (root.isHighlighted || mouseArea.containsMouse) ? 4 : 0
+
                 Behavior on scale {
-                    NumberAnimation {
-                        duration: 150
-                        easing.type: Easing.OutQuad
+                    SpringAnimation {
+                        spring: 7.0
+                        damping: 0.55
+                        mass: 0.6
+                    }
+                }
+
+                Behavior on rotation {
+                    SpringAnimation {
+                        spring: 6.0
+                        damping: 0.50
+                        mass: 0.7
                     }
                 }
             }
@@ -102,7 +127,7 @@ Item {
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: 150
+                        duration: 120
                     }
                 }
             }
@@ -143,6 +168,23 @@ Item {
                 width: 24
                 height: 24
                 radius: 6
+                color: ThemeManager.selectedTheme.colors.primary.alpha(0.12)
+                visible: root.isPinnedToDock
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "󰋜"
+                    font.family: ThemeManager.selectedTheme.typography.iconFont
+                    font.pixelSize: 13
+                    color: ThemeManager.selectedTheme.colors.primary
+                }
+            }
+
+            Rectangle {
+                Layout.alignment: Qt.AlignRight
+                width: 24
+                height: 24
+                radius: 6
                 color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
                 visible: mouseArea.containsMouse || root.isHighlighted || root.isSelected
                 opacity: 0.85
@@ -169,134 +211,185 @@ Item {
                 bounceAnim.restart();
                 root.clicked();
             } else if (mouse.button === Qt.RightButton) {
-                contextMenu.x = mouse.x;
-                contextMenu.y = mouse.y;
-                contextMenu.open();
+                // تفعيل قائمة السياق (بناء الـ Popup في الذاكرة فقط عند الحاجة)
+                menuLoader.active = true;
+                menuLoader.item.x = mouse.x;
+                menuLoader.item.y = mouse.y;
+
+                if (menuLoader.item.opened) {
+                    menuLoader.item.close();
+                } else {
+                    EventBus.emit(Events.APP_MENU_CLOSE_ALL, {
+                        except: menuLoader.item
+                    });
+                    menuLoader.item.open();
+                }
             }
         }
-
         onEntered: root.hovered()
     }
 
-    Popup {
-        id: contextMenu
-        width: 160
-        padding: 6
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-        transformOrigin: Item.TopLeft
+    // هنا السر: استخدام Loader لمنع بناء عشرات القوائم في الذاكرة عند التشغيل
+    Loader {
+        id: menuLoader
+        active: false
+        sourceComponent: Component {
+            Popup {
+                width: 200
+                padding: 6
+                closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+                focus: true
+                transformOrigin: Item.TopLeft
 
-        background: Rectangle {
-            radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
-            border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
-            border.width: 1
-        }
+                // تدمير العنصر من الذاكرة عند إغلاقه لتوفير الموارد
+                onClosed: menuLoader.active = false
 
-        enter: Transition {
-            ParallelAnimation {
-                NumberAnimation {
-                    property: "opacity"
-                    from: 0.0
-                    to: 1.0
-                    duration: 200
-                    easing.type: Easing.OutQuad
-                }
-                NumberAnimation {
-                    property: "scale"
-                    from: 0.8
-                    to: 1.0
-                    duration: 250
-                    easing.type: Easing.OutBack
-                }
-            }
-        }
-
-        exit: Transition {
-            ParallelAnimation {
-                NumberAnimation {
-                    property: "opacity"
-                    from: 1.0
-                    to: 0.0
-                    duration: 150
-                    easing.type: Easing.InQuad
-                }
-                NumberAnimation {
-                    property: "scale"
-                    from: 1.0
-                    to: 0.9
-                    duration: 150
-                    easing.type: Easing.InQuad
-                }
-            }
-        }
-
-        contentItem: ColumnLayout {
-            spacing: 4
-
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 36
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                color: openMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "فتح"
-                    font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.onSurface
+                background: Rectangle {
+                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
+                    color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+                    border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
+                    border.width: 1
                 }
 
-                MouseArea {
-                    id: openMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        contextMenu.close();
-                        bounceAnim.restart();
-                        root.clicked();
-                    }
-                }
-            }
-
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 1
-                color: ThemeManager.selectedTheme.colors.primary.alpha(0.1)
-            }
-
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 36
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                color: favMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 8
-
-                    Text {
-                        text: "󰦢"
-                        font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 14
-                        color: root.isFavorite ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurfaceVariant
-                    }
-
-                    Text {
-                        text: root.isFavorite ? "إزالة من المفضلة" : "إضافة للمفضلة"
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.onSurface
+                enter: Transition {
+                    ParallelAnimation {
+                        NumberAnimation {
+                            property: "opacity"
+                            from: 0.0
+                            to: 1.0
+                            duration: 150
+                            easing.type: Easing.OutQuad
+                        }
+                        NumberAnimation {
+                            property: "scale"
+                            from: 0.8
+                            to: 1.0
+                            duration: 200
+                            easing.type: Easing.OutBack
+                        }
                     }
                 }
 
-                MouseArea {
-                    id: favMouseArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        contextMenu.close();
-                        root.favoriteToggled();
+                exit: Transition {
+                    ParallelAnimation {
+                        NumberAnimation {
+                            property: "opacity"
+                            from: 1.0
+                            to: 0.0
+                            duration: 120
+                            easing.type: Easing.InQuad
+                        }
+                        NumberAnimation {
+                            property: "scale"
+                            from: 1.0
+                            to: 0.9
+                            duration: 120
+                            easing.type: Easing.InQuad
+                        }
+                    }
+                }
+
+                contentItem: ColumnLayout {
+                    spacing: 4
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 36
+                        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
+                        color: openMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: qsTr("Open")
+                            font.pixelSize: 14
+                            color: ThemeManager.selectedTheme.colors.onSurface
+                        }
+
+                        MouseArea {
+                            id: openMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                menuLoader.item.close();
+                                bounceAnim.restart();
+                                root.clicked();
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 1
+                        color: ThemeManager.selectedTheme.colors.primary.alpha(0.1)
+                    }
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 36
+                        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
+                        color: favMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
+
+                        RowLayout {
+                            anchors.centerIn: parent
+                            spacing: 8
+                            Text {
+                                text: "󰦢"
+                                font.family: ThemeManager.selectedTheme.typography.iconFont
+                                font.pixelSize: 14
+                                color: root.isFavorite ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurfaceVariant
+                            }
+                            Text {
+                                text: root.isFavorite ? qsTr("Remove from favorites") : qsTr("Add to favorites")
+                                font.pixelSize: 14
+                                color: ThemeManager.selectedTheme.colors.onSurface
+                            }
+                        }
+
+                        MouseArea {
+                            id: favMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                menuLoader.item.close();
+                                root.favoriteToggled();
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 36
+                        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
+                        color: pinMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
+
+                        RowLayout {
+                            anchors.centerIn: parent
+                            spacing: 8
+                            Text {
+                                text: "󰋜"
+                                font.family: ThemeManager.selectedTheme.typography.iconFont
+                                font.pixelSize: 14
+                                color: root.isPinnedToDock ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurfaceVariant
+                            }
+                            Text {
+                                text: root.isPinnedToDock ? qsTr("Unpin from Dock") : qsTr("Pin to Dock")
+                                font.pixelSize: 14
+                                color: ThemeManager.selectedTheme.colors.onSurface
+                            }
+                        }
+
+                        MouseArea {
+                            id: pinMouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                menuLoader.item.close();
+                                root.pinToggled();
+                            }
+                        }
                     }
                 }
             }
@@ -306,7 +399,6 @@ Item {
     SequentialAnimation {
         id: bounceAnim
         running: false
-
         PropertyAnimation {
             target: appIcon
             property: "scale"

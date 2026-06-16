@@ -40,6 +40,24 @@ PanelWindow {
     property int cornerRadius: elementRadius <= 1 ? 0 : elementRadius + 6
 
     // ---------------------------------------------------------
+    // خصائص القطع الديناميكي السفلي (Dynamic Notch) - نصف دائرة
+    // ---------------------------------------------------------
+    readonly property bool notchVisible: App.showDock && !App.hasWindowsOnWorkspace
+    readonly property real notchTargetHeight: App.dockIconSize + 48
+    property real dockActualWidth: 200
+    readonly property real notchWidth: dockActualWidth
+
+    property real notchHeight: notchVisible ? notchTargetHeight : 0
+
+    Behavior on notchHeight {
+        SpringAnimation {
+            spring: 2.8
+            damping: 0.6
+            epsilon: 0.1
+        }
+    }
+
+    // ---------------------------------------------------------
     // حاوية الورقة العائمة (تجمع الظل والمحتوى)
     // ---------------------------------------------------------
     Item {
@@ -55,7 +73,6 @@ PanelWindow {
         // -----------------------------------------------------
         // الإضافة الجديدة: تحريك الحاوية بالكامل لليمين
         // -----------------------------------------------------
-        // داخل Desktop.qml - جزء الـ transform
         transform: Translate {
             x: App.menuStyle !== C.FLOATING && desktopRoot.isMenuOpened ? Theme.ThemeManager.selectedTheme.dimensions.menuWidth + 5 : 0
 
@@ -63,24 +80,22 @@ PanelWindow {
                 NumberAnimation {
                     duration: AnimationConfig.animDuration
                     easing.type: Easing.Bezier
-                    // نستخدم نفس منحنى التسارع في الفتح والإغلاق
                     easing.bezierCurve: AnimationConfig.bezierAccelerate
                 }
             }
         }
 
-        // 1. طبقة الظل الخلفية
-        Rectangle {
+        // 1. طبقة الظل الخلفية (Shape مقطوع بنصف دائرة)
+        NotchShape {
             id: shadowRect
             anchors.fill: parent
-            radius: desktopRoot.cornerRadius
-            color: Theme.ThemeManager.selectedTheme.colors.surface
+            notchHeight: desktopRoot.notchHeight
+            notchWidth: desktopRoot.notchWidth
+            cornerRadius: desktopRoot.cornerRadius
 
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                // shadowColor: Qt.darker(Theme.ThemeManager.selectedTheme.colors.surface, 1.4).alpha(0.5)
-                // shadowColor: palette.shadow
                 shadowColor: Theme.ThemeManager.selectedTheme.colors.shadow.alpha(0.8)
                 shadowBlur: 1.0
                 shadowVerticalOffset: -1
@@ -100,8 +115,11 @@ PanelWindow {
             blurEnabled: desktopRoot.blurEnabled
             blurValue: Theme.ThemeManager.selectedTheme.systemSettings.wallpaperBlurStrength
 
+            // حجز المساحة التفاعلية للودجت لترتفع للأعلى بسلاسة مع صعود الدوك
             content: Widgets {
                 id: myWidgets
+                anchors.fill: parent
+                anchors.bottomMargin: desktopRoot.notchHeight // حجز المساحة ومنع التداخل
                 dimWidgets: desktopRoot.isMenuOpened
             }
 
@@ -111,16 +129,18 @@ PanelWindow {
             }
         }
 
-        // 3. عنصر القناع
+        // 3. عنصر القناع (Shape مقطوع ديناميكياً)
         Item {
             id: maskItem
             anchors.fill: parent
             visible: false
 
-            Rectangle {
+            NotchShape {
+                id: maskShape
                 anchors.fill: parent
-                radius: desktopRoot.cornerRadius
-                color: Theme.ThemeManager.selectedTheme.colors.surface
+                notchHeight: desktopRoot.notchHeight
+                notchWidth: desktopRoot.notchWidth
+                cornerRadius: desktopRoot.cornerRadius
             }
         }
     }
@@ -158,6 +178,10 @@ PanelWindow {
         EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => {
             changeIsMenuOpen.newValue = false;
             changeIsMenuOpen.start();
+        }, desktopRoot);
+
+        EventBus.on(Events.DOCK_WIDTH_CHANGED, w => {
+            desktopRoot.dockActualWidth = w + 5;
         }, desktopRoot);
 
         desktopRoot.updateThemeData();

@@ -13,6 +13,7 @@ import "root:/windows/smart_capsule"
 import "root:/windows/settings"
 import "root:/windows/cheatsheet"
 import "root:/windows/bottomlauncher"
+import "root:/windows/dock"
 import "root:/windows/poweroption"
 import "root:/windows/overlay"
 import "root:/bars"
@@ -219,6 +220,9 @@ ShellRoot {
             BottomLauncher {
                 id: bottomLauncherPanel
             }
+            Dock {
+                id: dockPanel
+            }
             PowerMenuWindow {
                 id: powerMenuWindow
             }
@@ -229,6 +233,10 @@ ShellRoot {
                 Component.onCompleted: {
                     EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
                         bottomLauncherPanel.toggle();
+                    }, shellRoot);
+
+                    EventBus.on(Events.TOGGLE_DOCK, () => {
+                        App.showDock = !App.showDock;
                     }, shellRoot);
                 }
             }
@@ -285,6 +293,9 @@ ShellRoot {
                 }
                 function togglePowerMenu() {
                     EventBus.emit(Events.TOGGLE_POWER_MENU);
+                }
+                function toggleDock() {
+                    EventBus.emit(Events.TOGGLE_DOCK);
                 }
             }
         }

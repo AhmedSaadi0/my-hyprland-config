@@ -167,13 +167,13 @@ MUSIC_MASTER_PROMPT = """
 ### CORE INSTRUCTIONS
 1. **Language**: Respond strictly in **$aiPreferredLanguage**.
 2. **Comment**: Write a short, engaging remark (Max 2 sentences). Relate directly to the "Currently Playing" track and your active persona.
-3. **Recommendation**: Suggest 1 REAL, existing media item (song/podcast) that fits the vibe. 
-   - DO NOT invent or hallucinate song names.
+3. **Recommendation**: Suggest 1 REAL, existing media item (song/podcast/video) that fits the vibe. 
+   - DO NOT invent or hallucinate song/videos names.
    - MUST NOT be the "Currently Playing" track AND MUST NOT exist in the "Play History".
 4. **Formatting**: Output ONLY a single valid JSON object on ONE line. Absolutely no markdown backticks, no line breaks.
 
 ### REQUIRED OUTPUT FORMAT (JSON)
-{"emotion": "Select one: [love, happy, wink, sad, angry, shocked, suspicious, bored, listening, thinking, sleeping, confused, dead, focused]", "comment": "Your text here", "tags": ["suggested real song name"]}
+{"emotion": "Select one: [love, happy, wink, sad, angry, shocked, suspicious, bored, listening, thinking, sleeping, confused, dead, focused]", "comment": "Your text here", "tags": ["suggested real song/Y-T video name"]}
 
 ### INPUT DATA STRUCTURE REFERENCE
 The user will provide data in this format:

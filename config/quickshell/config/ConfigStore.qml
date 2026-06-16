@@ -68,6 +68,11 @@ QtObject {
     property string menuStyle: C.DOCKED_MOVING_BAR
 
     property var favoriteApps: []
+    property var dockApps: []
+
+    // Dock settings
+    property bool showDock: true
+    property int dockIconSize: 32
 
     property var _fileView: FileView {
         id: fileWatcher
@@ -121,6 +126,16 @@ QtObject {
             store.bottomLauncherWidth = data.bottomLauncherWidth;
         if (data.favoriteApps !== undefined)
             store.favoriteApps = data.favoriteApps;
+        if (data.dockApps !== undefined)
+            store.dockApps = data.dockApps;
+
+        // -------------------------------------------------------
+        // Dock
+        // -------------------------------------------------------
+        if (data.showDock !== undefined)
+            store.showDock = data.showDock;
+        if (data.dockIconSize !== undefined)
+            store.dockIconSize = data.dockIconSize;
 
         // -------------------------------------------------------
         // الموقع والطقس
