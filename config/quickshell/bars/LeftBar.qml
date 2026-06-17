@@ -120,12 +120,6 @@ PanelWindow {
         //     name: "Favorites"
         //     notificationCount: 0
         // }
-        ListElement {
-            icon: "󰀻"
-            activeIcon: "󰵆"
-            name: "All Apps"
-            notificationCount: 0
-        }
         // --- ADDED POWER OPTION HERE ---
         ListElement {
             icon: ""           // Standard Power Icon
@@ -219,15 +213,8 @@ PanelWindow {
 
             const globalIndex = offset + localIndex;
 
-            // 1. All Apps Logic (Index 0)
-            if (groupName === "bottom" && localIndex === 0 && App.useBottomLauncher) {
-                bottomButtonGroup.currentIndex = -1;
-                EventBus.emit(Events.TOGGLE_BOTTOM_LAUNCHER);
-                return;
-            }
-
-            // 2. [NEW] Power Button Logic (Index 1)
-            if (groupName === "bottom" && localIndex === 1) {
+            // Power Button Logic (Index 0)
+            if (groupName === "bottom" && localIndex === 0) {
                 // Deselect visually
                 bottomButtonGroup.currentIndex = -1;
 

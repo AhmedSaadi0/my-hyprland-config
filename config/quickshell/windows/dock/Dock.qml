@@ -10,12 +10,13 @@ import "root:/themes"
 import "root:/components"
 import "root:/config"
 import "root:/config/EventNames.js" as Events
+import "root:/config/ConstValues.js" as C        // <-- 1. إضافة استيراد الثوابت
 import "root:/utils"
 
 PanelWindow {
     id: root
 
-    visible: App.showDock
+    visible: App.showDock && modelData.name === Hyprland.focusedMonitor.name
     color: "transparent"
     focusable: root.anyMenuOpen
     exclusionMode: ExclusionMode.Ignore
@@ -43,6 +44,7 @@ PanelWindow {
     property bool anyMenuOpen: false
     property var currentOpenPopup: null
     property bool isBottomLauncherOpen: false
+    property bool isLeftMenuOpen: false         // <-- 2. متغير حالة لمراقبة فتح القائمة اليسرى
 
     readonly property bool shouldDockBeRevealed: !hasAppsOnWorkspace || root.mouseHovered || root.anyMenuOpen || root.isBottomLauncherOpen
 
@@ -89,6 +91,14 @@ PanelWindow {
         }, root);
         EventBus.on(Events.BOTTOM_LAUNCHER_CLOSED, () => {
             root.isBottomLauncherOpen = false;
+        }, root);
+
+        // <-- 3. الاستماع لأحداث القائمة لتعديل حالة المتغير
+        EventBus.on(Events.LEFT_MENU_IS_OPENED, () => {
+            root.isLeftMenuOpen = true;
+        }, root);
+        EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => {
+            root.isLeftMenuOpen = false;
         }, root);
     }
 
@@ -143,7 +153,6 @@ PanelWindow {
     // =========================================================
     // 2. المحرك المراقِب الديكتاتوري والمحيد لكل التجاذبات الداخلية (The Omni-Observer)
     // =========================================================
-    // يُقرأ التفاعل الآن في المحيط العام لكافة النافذة المقنّنة بالخارج، مستحيل أن يسرق "DockItem" هذه المهمة أو يتجاهله!
     HoverHandler {
         id: globalWindowTracker
         onHoveredChanged: {
@@ -229,6 +238,10 @@ PanelWindow {
         let running = runningApps;
         let seen = {};
 
+        items.push({
+            isLauncher: true
+        });
+
         for (let i = 0; i < favs.length; i++) {
             let favId = favs[i];
             let runningInfo = running.find(r => r.appId === favId);
@@ -291,6 +304,18 @@ PanelWindow {
         id: dockContainer
         anchors.horizontalCenter: parent.horizontalCenter
 
+        // 4. تطبيق الإزاحة الأفقية المتناسبة مع حالة القائمة اليسرى ليتطابق التحرك مع سطح المكتب والنوتش
+        anchors.horizontalCenterOffset: App.menuStyle !== C.FLOATING && root.isLeftMenuOpen ? ThemeManager.selectedTheme.dimensions.menuWidth + 5 : 0
+
+        // تطبيق الأنيميشن بنفس معايير منحنى التسارع ومعدل الوقت لسطح المكتب
+        Behavior on anchors.horizontalCenterOffset {
+            NumberAnimation {
+                duration: AnimationConfig.animDuration
+                easing.type: Easing.Bezier
+                easing.bezierCurve: AnimationConfig.bezierAccelerate
+            }
+        }
+
         // الانزياح الحركي المحصور للأنيميشن داخل النطاق الخاص المتروك عبر Implicit Height دون التأثير المفرط!
         y: shouldDockBeRevealed ? (root.height - height - 12) : (root.height + 20)
 
@@ -298,7 +323,7 @@ PanelWindow {
         onWidthChanged: EventBus.emit(Events.DOCK_WIDTH_CHANGED, width)
         height: App.dockIconSize + 32
         radius: effectiveHasApps ? ThemeManager.selectedTheme.dimensions.elementRadius * 1.5 : 24
-        visible: dockItems.length > 0
+        visible: true
 
         color: effectiveHasApps ? ThemeManager.selectedTheme.colors.surface : "transparent"
         border.color: effectiveHasApps ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
@@ -359,7 +384,7 @@ PanelWindow {
                 delegate: Loader {
                     active: true
                     readonly property var itemData: modelData
-                    sourceComponent: itemData.isSeparator ? separatorComponent : dockItemComponent
+                    sourceComponent: itemData.isSeparator ? separatorComponent : itemData.isLauncher ? launcherComponent : dockItemComponent
 
                     Component {
                         id: separatorComponent
@@ -368,6 +393,39 @@ PanelWindow {
                             height: App.dockIconSize + 8
                             anchors.verticalCenter: parent.verticalCenter
                             color: ThemeManager.selectedTheme.colors.outlineVariant
+                        }
+                    }
+
+                    Component {
+                        id: launcherComponent
+                        Rectangle {
+                            width: App.dockIconSize + 16
+                            height: App.dockIconSize + 16
+                            radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.8
+                            color: launcherMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.12) : "transparent"
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 150
+                                }
+                            }
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "󰀻"
+                                font.family: ThemeManager.selectedTheme.typography.iconFont
+                                font.pixelSize: App.dockIconSize * 0.65
+                                color: ThemeManager.selectedTheme.colors.onSurface
+                            }
+
+                            MouseArea {
+                                id: launcherMouse
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onClicked: {
+                                    EventBus.emit(Events.TOGGLE_BOTTOM_LAUNCHER);
+                                }
+                            }
                         }
                     }
 

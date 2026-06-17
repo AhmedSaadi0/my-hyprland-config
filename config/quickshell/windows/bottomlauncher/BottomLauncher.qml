@@ -162,18 +162,19 @@ PanelWindow {
                 from: "hidden"
                 to: "visible"
                 ParallelAnimation {
-                    // حركة فيزيائية مرنة لصعود حاوية التطبيقات بشكل ناعم وهلامي
+                    // حركة فيزيائية مرنة وسريعة لصعود حاوية التطبيقات
                     SpringAnimation {
                         target: contentContainer
                         properties: "y"
-                        spring: 3.8
-                        damping: 0.65
-                        mass: 0.8
+                        spring: 4.5        // زيادة صلابة وقوة النابض لتسريع السحب (السابق: 3.0)
+                        damping: 0.62      // امتصاص متوازن يضمن ارتداداً هلامياً خفيفاً وسريع الاستقرار
+                        mass: 0.4          // تقليل الكتلة لجعل الجسم خفيفاً ويتسارع فوراً (السابق: 0.8)
+                        epsilon: 0.1       // إنهاء الأنيميشن مبكراً فور الاقتراب لتجنب التباطؤ الدقيق في النهاية
                     }
                     NumberAnimation {
                         target: contentContainer
                         properties: "opacity"
-                        duration: 250
+                        duration: 180      // تقليص المدة لتتزامن مع سرعة الصعود الفيزيائي الجديدة (السابق: 250)
                         easing.type: Easing.OutQuad
                     }
                 }
@@ -185,12 +186,12 @@ PanelWindow {
                     ParallelAnimation {
                         NumberAnimation {
                             properties: "y"
-                            duration: 250
+                            duration: 180  // تسريع حركة النزول عند الإغلاق (السابق: 250)
                             easing.type: Easing.InQuad
                         }
                         NumberAnimation {
                             properties: "opacity"
-                            duration: 200
+                            duration: 150  // تسريع اختفاء الشفافية لتبدو الاستجابة فورية (السابق: 200)
                             easing.type: Easing.InQuad
                         }
                     }

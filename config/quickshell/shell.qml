@@ -214,15 +214,24 @@ ShellRoot {
             LeftWindowFull {
                 id: leftPanelFull
             }
+
             Cheatsheet {
                 id: cheatsheetPanel
             }
+
             BottomLauncher {
                 id: bottomLauncherPanel
             }
-            Dock {
-                id: dockPanel
+
+            Variants {
+                model: Quickshell.screens
+                Dock {
+                    id: dockPanel
+                    required property ShellScreen modelData
+                    screen: modelData
+                }
             }
+
             PowerMenuWindow {
                 id: powerMenuWindow
             }
