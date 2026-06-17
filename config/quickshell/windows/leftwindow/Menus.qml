@@ -8,7 +8,6 @@ import "./todo" as Todo
 import "./dashboard" as Dashboard
 import "./monitoring" as Monitoring
 import "./weather"
-import "./applauncher"
 import "./notifications"
 import "./network"
 import "./clipboard"
@@ -29,7 +28,6 @@ StackView {
     smooth: true
 
     property int currentIndex: 0
-    readonly property int appLauncherIndex: 9
 
     property var _instantiatedPages: ({})
     property var _scrollable: null
@@ -97,10 +95,6 @@ StackView {
             color: ThemeManager.selectedTheme.colors.onSurface
         }
     }
-    Component {
-        id: appLauncherComponent
-        SidebarLauncher {}
-    }
 
     // ---------------------------------------------------------
     // Lazy Loading Logic
@@ -141,8 +135,7 @@ StackView {
             5: clipboardComponent,
             6: todoChatComponent,
             7: translationChatComponent,
-            8: aiChatComponent,
-            9: appLauncherComponent
+            8: aiChatComponent
         };
 
         let selectedComponent = componentMap[index];
@@ -344,10 +337,6 @@ StackView {
 
                 stackView.replace(targetPage);
                 Qt.callLater(_attachToCurrentScrollable);
-
-                if (newIndex === stackView.appLauncherIndex && typeof targetPage.gainFocus === "function") {
-                    targetPage.gainFocus();
-                }
             }
         }, stackView);
     }

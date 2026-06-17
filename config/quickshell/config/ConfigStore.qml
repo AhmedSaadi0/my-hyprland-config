@@ -61,7 +61,6 @@ QtObject {
 
     property int firstDayOfWeek: 6 // Saturday
 
-    property bool useBottomLauncher: true  // false = side launcher, true = bottom launcher
     property int bottomLauncherWidth: 550
 
     // Default menu style changed to floating per user request
@@ -120,8 +119,6 @@ QtObject {
         // -------------------------------------------------------
         if (data.menuStyle !== undefined)
             store.menuStyle = data.menuStyle;
-        if (data.useBottomLauncher !== undefined)
-            store.useBottomLauncher = data.useBottomLauncher;
         if (data.bottomLauncherWidth !== undefined)
             store.bottomLauncherWidth = data.bottomLauncherWidth;
         if (data.favoriteApps !== undefined)

@@ -84,7 +84,6 @@ Singleton {
     property alias resourceAlertCooldownMs: root.config.resourceAlertCooldownMs
 
     // Shell layout configs
-    property alias useBottomLauncher: root.config.useBottomLauncher
     property alias bottomLauncherWidth: root.config.bottomLauncherWidth
     property alias firstDayOfWeek: root.config.firstDayOfWeek
     property alias menuStyle: root.config.menuStyle

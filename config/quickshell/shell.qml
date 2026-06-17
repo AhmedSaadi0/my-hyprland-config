@@ -294,11 +294,7 @@ ShellRoot {
                     toggleMenu(Consts.AI_BOT_MENU_INDEX);
                 }
                 function toggleApplauncherMenu() {
-                    if (App.useBottomLauncher) {
-                        bottomLauncherPanel.toggle();
-                    } else {
-                        toggleMenu(Consts.APPLICATIONS_MENU_INDEX);
-                    }
+                    bottomLauncherPanel.toggle();
                 }
                 function togglePowerMenu() {
                     EventBus.emit(Events.TOGGLE_POWER_MENU);

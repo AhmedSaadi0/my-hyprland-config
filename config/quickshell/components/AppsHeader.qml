@@ -1,4 +1,4 @@
-// windows/leftwindow/applauncher/AppsHeader.qml
+// components/AppsHeader.qml
 
 import QtQuick
 import QtQuick.Layouts

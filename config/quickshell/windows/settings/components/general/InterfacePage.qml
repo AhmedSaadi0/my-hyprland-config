@@ -14,7 +14,6 @@ BaseGeneralSettings {
     icon: ""
     property var theme: page.selectedTheme
     property string localMenuStyle: C.FLOATING
-    property bool localUseBottomLauncher: false
     property int localBottomLauncherWidth: 800
     property int localTopBarActiveWindowMaxWidth: 350
     property int localTopBarActiveWindowMinWidth: 150
@@ -26,7 +25,6 @@ BaseGeneralSettings {
     readonly property var menuStyleOptions: [qsTr("Floating (Overlay)"), qsTr("Docked - Icons Fixed Left"), qsTr("Docked - Push Content Right")]
     function syncFromConfig() {
         localMenuStyle = App.menuStyle || C.FLOATING;
-        localUseBottomLauncher = App.useBottomLauncher;
         localBottomLauncherWidth = App.bottomLauncherWidth || 800;
         localTopBarActiveWindowMaxWidth = App.topBarActiveWindowMaxWidth || 350;
         localTopBarActiveWindowMinWidth = App.topBarActiveWindowMinWidth || 150;
@@ -41,7 +39,6 @@ BaseGeneralSettings {
         var inactiveArr = localInactiveIconsString.split(",").map(s => s.trim()).filter(s => s !== "");
         return {
             "menuStyle": localMenuStyle,
-            "useBottomLauncher": localUseBottomLauncher,
             "bottomLauncherWidth": localBottomLauncherWidth,
             "topBarActiveWindowMaxWidth": localTopBarActiveWindowMaxWidth,
             "topBarActiveWindowMinWidth": localTopBarActiveWindowMinWidth,
@@ -86,38 +83,22 @@ BaseGeneralSettings {
         }
         SectionCard {
             Layout.preferredWidth: 600
-            title: qsTr("Launcher Layout")
-            Controls.Label {
-                text: qsTr("Bottom Bar Mode")
-                font.bold: true
-                font.family: theme.typography.bodyFont
-                font.pixelSize: theme.typography.medium
-            }
-            SettingSwitch {
-                isChecked: page.localUseBottomLauncher
-                onIsCheckedChanged: page.localUseBottomLauncher = isChecked
-            }
+            title: qsTr("Launcher Width")
             Controls.Label {
                 text: qsTr("Bar Width")
                 font.bold: true
                 font.family: theme.typography.bodyFont
                 font.pixelSize: theme.typography.medium
-                visible: page.localUseBottomLauncher
-                Layout.topMargin: 8
             }
-            ColumnLayout {
+            SliderWithLabel {
                 Layout.fillWidth: true
-                visible: page.localUseBottomLauncher
-                SliderWithLabel {
-                    Layout.fillWidth: true
-                    label: qsTr("Px")
-                    from: 550
-                    to: 2000
-                    stepSize: 10
-                    decimals: 0
-                    value: page.localBottomLauncherWidth
-                    onEditingFinished: val => page.localBottomLauncherWidth = val
-                }
+                label: qsTr("Px")
+                from: 550
+                to: 2000
+                stepSize: 10
+                decimals: 0
+                value: page.localBottomLauncherWidth
+                onEditingFinished: val => page.localBottomLauncherWidth = val
             }
         }
         SectionCard {

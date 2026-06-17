@@ -84,6 +84,7 @@ Item {
                 App.dockApps.splice(index, 1);
             }
             App.updateConfig("dockApps", App.dockApps);
+            EventBus.emit(Events.DOCK_APPS_CHANGED);
         }
     }
 

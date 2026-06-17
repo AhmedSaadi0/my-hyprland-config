@@ -67,7 +67,6 @@ M3GroupBox {
         property int ramHighLoadThreshold: 90
 
         // Launcher Layout
-        property bool useBottomLauncher: false
         property int bottomLauncherWidth: 800
         property string menuStyle: "floating"
     }
@@ -153,7 +152,6 @@ M3GroupBox {
         tempConfig.playRamAlarmSound = App.playRamAlarmSound;
         tempConfig.ramHighLoadThreshold = App.ramHighLoadThreshold;
 
-        tempConfig.useBottomLauncher = App.useBottomLauncher;
         tempConfig.bottomLauncherWidth = App.bottomLauncherWidth;
         tempConfig.menuStyle = App.menuStyle || modeFloating;
 
@@ -193,7 +191,6 @@ M3GroupBox {
             "enableHighRamAlert": tempConfig.enableHighRamAlert,
             "playRamAlarmSound": tempConfig.playRamAlarmSound,
             "ramHighLoadThreshold": tempConfig.ramHighLoadThreshold,
-            "useBottomLauncher": tempConfig.useBottomLauncher,
             "bottomLauncherWidth": tempConfig.bottomLauncherWidth,
             "menuStyle": tempConfig.menuStyle
         };
@@ -372,19 +369,10 @@ M3GroupBox {
                 Layout.margins: 5
             }
 
-            // --- جزء اللانشر السفلي (الموجود سابقاً) ---
-            SettingSwitch {
-                label: qsTr("Use Bottom Launcher")
-                tooltip: qsTr("Toggle between side launcher (left panel) and bottom launcher.")
-                isChecked: tempConfig.useBottomLauncher
-                onIsCheckedChanged: tempConfig.useBottomLauncher = isChecked
-            }
-
-            // ... بقية كود اللانشر السفلي (Slider وتفاصيله) ...
+            // --- جزء اللانشر السفلي ---
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 5
-                visible: tempConfig.useBottomLauncher
 
                 Controls.Label {
                     text: qsTr("Launcher Width: %1px").arg(tempConfig.bottomLauncherWidth)

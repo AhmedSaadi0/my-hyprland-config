@@ -52,7 +52,7 @@ PanelWindow {
 
     Timer {
         id: colorTransitionTimer
-        interval: 500
+        interval: 300
         onTriggered: {
             root.effectiveHasApps = true;
         }
@@ -99,6 +99,10 @@ PanelWindow {
         }, root);
         EventBus.on(Events.LEFT_MENU_IS_CLOSED, () => {
             root.isLeftMenuOpen = false;
+        }, root);
+
+        EventBus.on(Events.DOCK_APPS_CHANGED, () => {
+            root.updateTrigger++;
         }, root);
     }
 
