@@ -54,8 +54,8 @@ Item {
 
     // --- Favorites Management ---
     function toggleFavorite(appData) {
-        if (typeof App !== 'undefined' && appData && appData.name) {
-            const appId = appData.name;
+        if (typeof App !== 'undefined' && appData && appData.id) {
+            const appId = appData.id;
             const index = App.favoriteApps.indexOf(appId);
             if (index === -1) {
                 App.favoriteApps.push(appId);
@@ -67,16 +67,16 @@ Item {
     }
 
     function isFavorite(appData) {
-        if (typeof App !== 'undefined' && appData && appData.name) {
-            const appId = appData.name;
+        if (typeof App !== 'undefined' && appData && appData.id) {
+            const appId = appData.id;
             return App.favoriteApps.indexOf(appId) !== -1;
         }
         return false;
     }
 
     function togglePinToDock(appData) {
-        if (typeof App !== 'undefined' && appData && appData.name) {
-            const appId = appData.name;
+        if (typeof App !== 'undefined' && appData && appData.id) {
+            const appId = appData.id;
             const index = App.dockApps.indexOf(appId);
             if (index === -1) {
                 App.dockApps.push(appId);
@@ -88,8 +88,8 @@ Item {
     }
 
     function isPinnedToDock(appData) {
-        if (typeof App !== 'undefined' && appData && appData.name) {
-            const appId = appData.name;
+        if (typeof App !== 'undefined' && appData && appData.id) {
+            const appId = appData.id;
             return App.dockApps.indexOf(appId) !== -1;
         }
         return false;
@@ -445,8 +445,8 @@ Item {
             });
             
             const sorted = filtered.sort((a, b) => {
-                const aIsFavorite = favoriteApps.includes(a.name);
-                const bIsFavorite = favoriteApps.includes(b.name);
+                const aIsFavorite = favoriteApps.includes(a.id);
+                const bIsFavorite = favoriteApps.includes(b.id);
                 if (aIsFavorite && !bIsFavorite)
                     return -1;
                 if (!aIsFavorite && bIsFavorite)
@@ -457,7 +457,7 @@ Item {
             const structured = [];
 
             if (search === "") {
-                const favorites = sorted.filter(app => favoriteApps.includes(app.name));
+                const favorites = sorted.filter(app => favoriteApps.includes(app.id));
                 if (favorites.length > 0) {
                     structured.push({ isHeader: true, letter: "Favorites", isFavoritesHeader: true });
                     favorites.forEach(app => {
@@ -468,7 +468,7 @@ Item {
 
             let currentLetter = "";
             for (const app of sorted) {
-                if (search === "" && favoriteApps.includes(app.name)) continue;
+                if (search === "" && favoriteApps.includes(app.id)) continue;
 
                 const firstLetter = app.name.charAt(0).toUpperCase();
                 if (firstLetter !== currentLetter) {

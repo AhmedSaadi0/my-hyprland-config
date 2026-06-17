@@ -182,21 +182,22 @@ PanelWindow {
     function resolveAppData(appId) {
         if (!DesktopEntries || !appId)
             return null;
-        if (typeof DesktopEntries.heuristicLookup === "function") {
-            let heuristicEntry = DesktopEntries.heuristicLookup(appId);
-            if (heuristicEntry)
-                return heuristicEntry;
-        }
 
-        let entry = DesktopEntries.byId(appId) || (appId.endsWith(".desktop") ? DesktopEntries.byId(appId + ".desktop") : null);
+        let entry = DesktopEntries.byId(appId);
         if (entry)
             return entry;
+
+        if (!appId.endsWith(".desktop")) {
+            entry = DesktopEntries.byId(appId + ".desktop");
+            if (entry)
+                return entry;
+        }
 
         let lowerId = appId.toLowerCase();
         let apps = DesktopEntries.applications.values;
         for (let i = 0; i < apps.length; i++) {
             let app = apps[i];
-            if (app && ((app.id && app.id.toLowerCase() === lowerId) || (app.name && app.name.toLowerCase() === lowerId) || (app.startupClass && app.startupClass.toLowerCase() === lowerId))) {
+            if (app && app.id && app.id.toLowerCase() === lowerId) {
                 return app;
             }
         }

@@ -102,7 +102,12 @@ PanelWindow {
             notchWidth: desktopRoot.notchWidth
             cornerRadius: desktopRoot.cornerRadius
 
+            // جعل اللون يطابق تماماً خلفية سطح المكتب لمنع تسرب اللون الأبيض عند الحواف
+            fillColor: Theme.ThemeManager.selectedTheme.colors.surface
+
             layer.enabled: true
+            layer.smooth: true     // تفعيل التنعيم لنسيج الطبقة (Texture)
+            layer.samples: 4       // تنعيم حواف عالي الدقة (MSAA) يمنع التشوهات المنحنية
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: Theme.ThemeManager.selectedTheme.colors.shadow.alpha(0.8)
@@ -124,15 +129,16 @@ PanelWindow {
             blurEnabled: desktopRoot.blurEnabled
             blurValue: Theme.ThemeManager.selectedTheme.systemSettings.wallpaperBlurStrength
 
-            // حجز المساحة التفاعلية للودجت لترتفع للأعلى بسلاسة مع صعود الدوك
             content: Widgets {
                 id: myWidgets
                 anchors.fill: parent
-                anchors.bottomMargin: desktopRoot.notchHeight // حجز المساحة ومنع التداخل
+                anchors.bottomMargin: desktopRoot.notchHeight
                 dimWidgets: desktopRoot.isMenuOpened
             }
 
             layer.enabled: true
+            layer.smooth: true     // لضمان نعومة حواف الـ Wallpaper المعالجة بالقناع
+            layer.samples: 4       // منع بكسلة أطراف القناع الدائري
             layer.effect: OpacityMask {
                 maskSource: maskItem
             }
@@ -150,6 +156,7 @@ PanelWindow {
                 notchHeight: desktopRoot.notchHeight
                 notchWidth: desktopRoot.notchWidth
                 cornerRadius: desktopRoot.cornerRadius
+                fillColor: "white" // يترك أبيض ليعمل كقناع شفافية صحيح للـ OpacityMask
             }
         }
     }
