@@ -251,11 +251,11 @@ ShellRoot {
             }
 
             // 5. IPC Handler
+            property int openedMenu: LeftMenuStatus.selectedIndex
+
             IpcHandler {
                 id: handler
                 target: "LeftBar"
-
-                property int openedMenu: LeftMenuStatus.selectedIndex
 
                 function toggleMenu(targetIndex: int) {
                     let index = Number(targetIndex);

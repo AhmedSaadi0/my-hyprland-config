@@ -120,6 +120,15 @@ Item {
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
+        onContainsMouseChanged: {
+            if (containsMouse) {
+                tooltipDelay.restart();
+            } else {
+                tooltipDelay.stop();
+                tooltip.opacity = 0;
+            }
+        }
+
         onClicked: mouse => {
             if (mouse.button === Qt.LeftButton) {
                 bounceAnim.restart();
@@ -127,6 +136,12 @@ Item {
             } else if (mouse.button === Qt.RightButton) {
                 if (contextMenu.opened) {
                     contextMenu.close();
+                    if (panelWindow) {
+                        panelWindow.anyMenuOpen = false;
+                        if (panelWindow.currentOpenPopup === contextMenu) {
+                            panelWindow.currentOpenPopup = null;
+                        }
+                    }
                 } else {
                     if (panelWindow.currentOpenPopup && panelWindow.currentOpenPopup !== contextMenu) {
                         panelWindow.currentOpenPopup.close();
@@ -134,6 +149,45 @@ Item {
                     contextMenu.open();
                 }
             }
+        }
+    }
+
+    Timer {
+        id: tooltipDelay
+        interval: 250
+        onTriggered: {
+            if (mouseArea.containsMouse && !contextMenu.opened) {
+                tooltip.opacity = 1;
+            }
+        }
+    }
+
+    Rectangle {
+        id: tooltip
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: -height - 10
+        width: tooltipLabel.implicitWidth + 16
+        height: tooltipLabel.implicitHeight + 10
+        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
+        color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+        border.color: ThemeManager.selectedTheme.colors.outlineVariant
+        border.width: 1
+        opacity: 0
+        visible: opacity > 0
+        z: 100
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 150
+            }
+        }
+
+        Text {
+            id: tooltipLabel
+            anchors.centerIn: parent
+            text: appData ? appData.name : appId
+            font.pixelSize: 11
+            color: ThemeManager.selectedTheme.colors.onSurface
         }
     }
 
@@ -148,6 +202,8 @@ Item {
         x: (parent.width / 2) - (width / 2)
 
         onOpened: {
+            tooltip.opacity = 0;
+            tooltipDelay.stop();
             if (panelWindow) {
                 panelWindow.anyMenuOpen = true;
                 panelWindow.currentOpenPopup = contextMenu;
@@ -203,6 +259,12 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         contextMenu.close();
+                        if (panelWindow) {
+                            panelWindow.anyMenuOpen = false;
+                            if (panelWindow.currentOpenPopup === contextMenu) {
+                                panelWindow.currentOpenPopup = null;
+                            }
+                        }
                         itemRoot.launchOrFocus();
                     }
                 }
@@ -237,6 +299,12 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         contextMenu.close();
+                        if (panelWindow) {
+                            panelWindow.anyMenuOpen = false;
+                            if (panelWindow.currentOpenPopup === contextMenu) {
+                                panelWindow.currentOpenPopup = null;
+                            }
+                        }
                         bounceAnim.restart();
                         if (appData && typeof appData.execute === "function") {
                             appData.execute();
@@ -274,6 +342,12 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         contextMenu.close();
+                        if (panelWindow) {
+                            panelWindow.anyMenuOpen = false;
+                            if (panelWindow.currentOpenPopup === contextMenu) {
+                                panelWindow.currentOpenPopup = null;
+                            }
+                        }
                         if (windowAddress) {
                             Hyprland.dispatch("closewindow address:" + windowAddress);
                         }
@@ -315,6 +389,12 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         contextMenu.close();
+                        if (panelWindow) {
+                            panelWindow.anyMenuOpen = false;
+                            if (panelWindow.currentOpenPopup === contextMenu) {
+                                panelWindow.currentOpenPopup = null;
+                            }
+                        }
                         let favs = [...App.favoriteApps];
                         let idx = favs.indexOf(appId);
                         if (idx >= 0) {
@@ -356,6 +436,12 @@ Item {
                     hoverEnabled: true
                     onClicked: {
                         contextMenu.close();
+                        if (panelWindow) {
+                            panelWindow.anyMenuOpen = false;
+                            if (panelWindow.currentOpenPopup === contextMenu) {
+                                panelWindow.currentOpenPopup = null;
+                            }
+                        }
                         let dockApps = [...App.dockApps];
                         let idx = dockApps.indexOf(appId);
                         if (idx >= 0) {

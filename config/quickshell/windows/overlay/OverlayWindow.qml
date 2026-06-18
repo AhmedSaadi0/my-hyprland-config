@@ -81,12 +81,12 @@ PanelWindow {
         closeCommitTimer.restart();
     }
 
-    Keys.onPressed: event => {
-        if (event.key === Qt.Key_Escape) {
-            root.closeOverlay();
-            event.accepted = true;
-        }
-    }
+    // Keys.onPressed: event => {
+    //     if (event.key === Qt.Key_Escape) {
+    //         root.closeOverlay();
+    //         event.accepted = true;
+    //     }
+    // }
 
     Connections {
         target: OverlayService
