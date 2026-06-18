@@ -134,17 +134,15 @@ Item {
 
             // سلوك الانميشن الهلامي
             Behavior on x {
-                SpringAnimation {
-                    spring: contentStack.springStrength
-                    damping: contentStack.springDamping
-                    mass: contentStack.springMass
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
             }
             Behavior on scale {
-                SpringAnimation {
-                    spring: contentStack.springStrength
-                    damping: contentStack.springDamping
-                    mass: contentStack.springMass
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
             }
             Behavior on opacity {
@@ -166,11 +164,10 @@ Item {
 
                 // حركة تباعد العناصر الهلامية عند الفلترة أو إعادة الترتيب
                 displaced: Transition {
-                    SpringAnimation {
+                    NumberAnimation {
                         properties: "x,y"
-                        spring: 3.2
-                        damping: 0.65
-                        mass: 0.8
+                        duration: 200
+                        easing.type: Easing.OutCubic
                     }
                 }
 
@@ -183,12 +180,12 @@ Item {
                             to: 1.0
                             duration: 200
                         }
-                        SpringAnimation {
+                        NumberAnimation {
                             property: "scale"
                             from: 0.8
                             to: 1.0
-                            spring: 3.0
-                            damping: 0.6
+                            duration: 200
+                            easing.type: Easing.OutCubic
                         }
                     }
                 }
@@ -280,17 +277,15 @@ Item {
             scale: isActive ? 1.0 : 0.9
 
             Behavior on x {
-                SpringAnimation {
-                    spring: contentStack.springStrength
-                    damping: contentStack.springDamping
-                    mass: contentStack.springMass
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
             }
             Behavior on scale {
-                SpringAnimation {
-                    spring: contentStack.springStrength
-                    damping: contentStack.springDamping
-                    mass: contentStack.springMass
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
             }
             Behavior on opacity {
@@ -310,11 +305,10 @@ Item {
                 bottomMargin: root.contentPadding
 
                 displaced: Transition {
-                    SpringAnimation {
+                    NumberAnimation {
                         properties: "x,y"
-                        spring: 3.2
-                        damping: 0.65
-                        mass: 0.8
+                        duration: 200
+                        easing.type: Easing.OutCubic
                     }
                 }
 
@@ -326,12 +320,12 @@ Item {
                             to: 1.0
                             duration: 200
                         }
-                        SpringAnimation {
+                        NumberAnimation {
                             property: "scale"
                             from: 0.8
                             to: 1.0
-                            spring: 3.0
-                            damping: 0.6
+                            duration: 200
+                            easing.type: Easing.OutCubic
                         }
                     }
                 }
@@ -366,17 +360,15 @@ Item {
             scale: isActive ? 1.0 : 0.9
 
             Behavior on x {
-                SpringAnimation {
-                    spring: contentStack.springStrength
-                    damping: contentStack.springDamping
-                    mass: contentStack.springMass
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
             }
             Behavior on scale {
-                SpringAnimation {
-                    spring: contentStack.springStrength
-                    damping: contentStack.springDamping
-                    mass: contentStack.springMass
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.OutCubic
                 }
             }
             Behavior on opacity {

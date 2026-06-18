@@ -272,8 +272,6 @@ Flow {
             border.color: root.theme.colors.primary.alpha(0.3)
             border.width: 1
 
-            layer.enabled: true
-            layer.effect: ShaderEffect {}
         }
 
         onAboutToShow: {

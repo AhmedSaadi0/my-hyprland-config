@@ -44,7 +44,7 @@ Item {
 
     x: _currentX
     y: _currentY
-    width: _currentW
+    width: _currentW + 20
     height: _currentH
 
     // ================= مؤقتات الاستجابة (Debounce) =================
@@ -234,7 +234,7 @@ Item {
             renderType: Text.QtRendering
             font.hintingPreference: Font.PreferFullHinting
 
-            layer.enabled: true
+            layer.enabled: root.shadowEnabled || root.editMode || root.pressed
             layer.smooth: true
             layer.effect: MultiEffect {
                 id: shadowEffect

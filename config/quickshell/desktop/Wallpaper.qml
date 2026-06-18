@@ -60,7 +60,7 @@ Item {
             }
         }
 
-        layer.enabled: root.blurEnabled
+        layer.enabled: root.blurEnabled && root.isMenuOpen
         layer.effect: MultiEffect {
             blurEnabled: root.blurEnabled
             blurMax: 32
@@ -265,7 +265,7 @@ Item {
 
     Timer {
         id: readinessChecker
-        interval: 100
+        interval: 300
         repeat: true
         running: false
         onTriggered: {

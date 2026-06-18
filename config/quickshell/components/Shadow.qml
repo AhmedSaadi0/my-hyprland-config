@@ -28,7 +28,7 @@ DropShadow {
     color: ThemeManager.selectedTheme.colors.shadow.alpha(alpha)
     radius: 5
     spread: 0
-    samples: 47
+    samples: 9
     horizontalOffset: 2
     verticalOffset: 2
     cached: true

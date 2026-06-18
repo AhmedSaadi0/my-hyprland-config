@@ -48,7 +48,7 @@ PanelWindow {
             SystemTray {
                 id: systemTray
                 height: theme.dimensions.barWidgetsHeight
-                layer.enabled: true
+                layer.enabled: systemTray.visible
                 layer.effect: Shadow {}
 
                 topRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
@@ -67,7 +67,7 @@ PanelWindow {
             ActiveWindow {
                 id: activeWindow
                 height: theme.dimensions.barWidgetsHeight
-                layer.enabled: true
+                layer.enabled: activeWindow.hasWindow
                 layer.effect: Shadow {}
 
                 bottomLeftRadius: theme.dimensions.elementRadius / innerRadiusDiv

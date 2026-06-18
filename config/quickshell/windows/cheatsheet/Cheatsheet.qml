@@ -44,6 +44,7 @@ PanelWindow {
     }
 
     Component.onCompleted: {
+        root.rebuildCategories();
         getBindings.startAction();
         EventBus.on(Events.OPEN_CHEATSHEET, function () {
             root.visible = !root.visible;
@@ -124,11 +125,12 @@ PanelWindow {
         }
     }
 
-    // تجميع البيانات مسبقاً لتجنب الحسابات المتكررة
-    property var categorizedShortcuts: {
+    // تجميع البيانات (يُحسب مرة واحدة عند تغيير binds)
+    property var categorizedShortcuts: []
+
+    function rebuildCategories() {
         var categories = {};
-        // Show all bindings
-        var filtered = hyprBinds; //.filter(bind => bind.has_description);
+        var filtered = hyprBinds;
 
         filtered.forEach(function (bind) {
             if (!categories[bind.modmask]) {
@@ -137,7 +139,6 @@ PanelWindow {
             categories[bind.modmask].push(bind);
         });
 
-        // تحويل إلى مصفوفة للاستخدام في Repeater
         var result = [];
         for (var modmask in categories) {
             if (categories.hasOwnProperty(modmask)) {
@@ -149,8 +150,10 @@ PanelWindow {
                 });
             }
         }
-        return result;
+        root.categorizedShortcuts = result;
     }
+
+    onHyprBindsChanged: rebuildCategories()
 
     Rectangle {
         anchors.fill: parent
