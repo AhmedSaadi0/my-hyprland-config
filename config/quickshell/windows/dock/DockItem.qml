@@ -21,6 +21,7 @@ Item {
     required property bool isPinnedToDock
     required property string tooltipText
     required property int iconSize
+    required property var windows
 
     required property var panelWindow
 
@@ -110,7 +111,7 @@ Item {
             text: instanceCount
             font.pixelSize: 10
             font.bold: true
-            color: "white"
+            color: ThemeManager.selectedTheme.colors.onError
         }
     }
 
@@ -125,7 +126,9 @@ Item {
                 tooltipDelay.restart();
             } else {
                 tooltipDelay.stop();
-                tooltip.opacity = 0;
+                if (!tooltipHoverHandler.hovered) {
+                    hideTooltipTimer.restart();
+                }
             }
         }
 
@@ -158,6 +161,20 @@ Item {
         onTriggered: {
             if (mouseArea.containsMouse && !contextMenu.opened) {
                 tooltip.opacity = 1;
+                if (panelWindow)
+                    panelWindow.anyDockTooltipVisible = true;
+            }
+        }
+    }
+
+    Timer {
+        id: hideTooltipTimer
+        interval: 100
+        onTriggered: {
+            if (!mouseArea.containsMouse && !tooltipHoverHandler.hovered) {
+                tooltip.opacity = 0;
+                if (panelWindow)
+                    panelWindow.anyDockTooltipVisible = false;
             }
         }
     }
@@ -166,8 +183,8 @@ Item {
         id: tooltip
         anchors.horizontalCenter: parent.horizontalCenter
         y: -height - 10
-        width: tooltipLabel.implicitWidth + 16
-        height: tooltipLabel.implicitHeight + 10
+        width: instanceCount > 1 ? instanceListRow.width + 16 : tooltipLabel.implicitWidth + 16
+        height: instanceCount > 1 ? instanceListRow.height + 12 : tooltipLabel.implicitHeight + 10
         radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
         color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
         border.color: ThemeManager.selectedTheme.colors.outlineVariant
@@ -182,12 +199,83 @@ Item {
             }
         }
 
+        HoverHandler {
+            id: tooltipHoverHandler
+            onHoveredChanged: {
+                if (!hovered && !mouseArea.containsMouse) {
+                    hideTooltipTimer.restart();
+                }
+            }
+        }
+
+        // الحالة البسيطة: اسم التطبيق فقط (عند اinuxtance واحد)
         Text {
             id: tooltipLabel
             anchors.centerIn: parent
+            visible: instanceCount <= 1
             text: appData ? appData.name : appId
             font.pixelSize: 11
             color: ThemeManager.selectedTheme.colors.onSurface
+        }
+
+        // الحالة المركبة: قائمة الانستانسات مع رقم المساحة
+        Row {
+            id: instanceListRow
+            visible: instanceCount > 1
+            anchors.centerIn: parent
+            spacing: 4
+
+            Repeater {
+                model: instanceCount > 1 ? windows : []
+                delegate: Item {
+                    width: 32
+                    height: 32
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.5
+                        color: instanceMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : ThemeManager.selectedTheme.colors.surfaceContainerHigh
+                    }
+
+                    IconImage {
+                        anchors.centerIn: parent
+                        width: 16
+                        height: 16
+                        source: Quickshell.iconPath(appData ? appData.icon : "application-x-executable", "application-x-executable")
+                    }
+
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 1
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: 14
+                        height: 11
+                        radius: 3
+                        color: ThemeManager.selectedTheme.colors.primary
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: (modelData && modelData.workspaceId >= 0) ? modelData.workspaceId : "?"
+                            font.pixelSize: 8
+                            font.bold: true
+                            color: ThemeManager.selectedTheme.colors.onPrimary
+                        }
+                    }
+
+                    MouseArea {
+                        id: instanceMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: {
+                            if (modelData && modelData.address) {
+                                Hyprland.dispatch("focuswindow address:" + modelData.address);
+                            }
+                            tooltip.opacity = 0;
+                            tooltipDelay.stop();
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -204,7 +292,9 @@ Item {
         onOpened: {
             tooltip.opacity = 0;
             tooltipDelay.stop();
+            hideTooltipTimer.stop();
             if (panelWindow) {
+                panelWindow.anyDockTooltipVisible = false;
                 panelWindow.anyMenuOpen = true;
                 panelWindow.currentOpenPopup = contextMenu;
             }

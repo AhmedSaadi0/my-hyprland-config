@@ -152,114 +152,123 @@ Item {
                 }
             }
 
-            ListView {
-                id: appListView
+            ScrollView {
                 anchors.fill: parent
+                implicitHeight: 0
                 clip: true
-                model: baseLauncher.filteredAppsModel.values
-                spacing: 4
-                topMargin: 2
-                bottomMargin: root.contentPadding
-                boundsBehavior: Flickable.StopAtBounds
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                rightPadding: ScrollBar.vertical.visible ? ScrollBar.vertical.width : 0
 
-                // حركة تباعد العناصر الهلامية عند الفلترة أو إعادة الترتيب
-                displaced: Transition {
-                    NumberAnimation {
-                        properties: "x,y"
-                        duration: 200
-                        easing.type: Easing.OutCubic
-                    }
-                }
+                ListView {
+                    id: appListView
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.rightMargin: ScrollBar.vertical.visible ? ScrollBar.vertical.width : 0
+                    clip: true
+                    model: baseLauncher.filteredAppsModel.values
+                    spacing: 4
+                    topMargin: 2
+                    bottomMargin: root.contentPadding
+                    highlightMoveDuration: 120
+                    cacheBuffer: 400
 
-                // حركة ظهور العناصر عند التصفية
-                add: Transition {
-                    ParallelAnimation {
+                    displaced: Transition {
                         NumberAnimation {
-                            property: "opacity"
-                            from: 0.0
-                            to: 1.0
-                            duration: 200
-                        }
-                        NumberAnimation {
-                            property: "scale"
-                            from: 0.8
-                            to: 1.0
+                            properties: "x,y"
                             duration: 200
                             easing.type: Easing.OutCubic
                         }
                     }
-                }
 
-                remove: Transition {
-                    ParallelAnimation {
-                        NumberAnimation {
-                            property: "opacity"
-                            to: 0.0
-                            duration: 150
-                        }
-                        NumberAnimation {
-                            property: "scale"
-                            to: 0.8
-                            duration: 150
-                        }
-                    }
-                }
-
-                displayMarginBeginning: 40
-                displayMarginEnd: 40
-
-                delegate: AppDelegate {
-                    entryData: modelData
-                    isSelected: baseLauncher.selectedAppIndex === index
-                    isHighlighted: baseLauncher.selectedAppIndex >= 0 ? index === baseLauncher.selectedAppIndex : index === baseLauncher.getFirstActualAppIndex()
-                    isFavorite: modelData && modelData.appData ? baseLauncher.isFavorite(modelData.appData) : false
-                    isPinnedToDock: modelData && modelData.appData ? baseLauncher.isPinnedToDock(modelData.appData) : false
-
-                    onItemClicked: {
-                        if (modelData && modelData.appData) {
-                            if (typeof modelData.appData.execute === "function") {
-                                modelData.appData.execute();
-                            } else {
-                                baseLauncher.launchApp(modelData.appData.command, modelData.appData.workingDirectory);
+                    add: Transition {
+                        ParallelAnimation {
+                            NumberAnimation {
+                                property: "opacity"
+                                from: 0.0
+                                to: 1.0
+                                duration: 200
                             }
-                            if (root.onAppLaunchedCallback) {
-                                root.onAppLaunchedCallback();
+                            NumberAnimation {
+                                property: "scale"
+                                from: 0.8
+                                to: 1.0
+                                duration: 200
+                                easing.type: Easing.OutCubic
                             }
                         }
                     }
-                    onFavoriteToggled: {
-                        if (modelData && modelData.appData) {
-                            baseLauncher.toggleFavorite(modelData.appData);
-                        }
-                    }
-                    onPinToggled: {
-                        if (modelData && modelData.appData) {
-                            baseLauncher.togglePinToDock(modelData.appData);
-                        }
-                    }
-                    onHovered: {
-                        if (modelData && !modelData.isHeader) {
-                            baseLauncher.selectedAppIndex = index;
-                        }
-                    }
-                }
 
-                Connections {
-                    target: baseLauncher
-                    function onSelectedAppIndexChanged() {
-                        if (baseLauncher.selectedAppIndex >= 0) {
-                            appListView.currentIndex = baseLauncher.selectedAppIndex;
-                            appListView.positionViewAtIndex(baseLauncher.selectedAppIndex, ListView.Contain);
+                    remove: Transition {
+                        ParallelAnimation {
+                            NumberAnimation {
+                                property: "opacity"
+                                to: 0.0
+                                duration: 150
+                            }
+                            NumberAnimation {
+                                property: "scale"
+                                to: 0.8
+                                duration: 150
+                            }
                         }
                     }
-                }
 
-                Text {
-                    anchors.centerIn: parent
-                    visible: baseLauncher.filteredAppsModel.values.length === 0
-                    text: "No applications found"
-                    font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.onSurfaceVariant
+                    delegate: AppDelegate {
+                        entryData: modelData
+                        isSelected: baseLauncher.selectedAppIndex === index
+                        isHighlighted: baseLauncher.selectedAppIndex >= 0 ? index === baseLauncher.selectedAppIndex : index === baseLauncher.getFirstActualAppIndex()
+                        isFavorite: modelData && modelData.appData ? baseLauncher.isFavorite(modelData.appData) : false
+                        isPinnedToDock: modelData && modelData.appData ? baseLauncher.isPinnedToDock(modelData.appData) : false
+
+                        onItemClicked: {
+                            if (modelData && modelData.appData) {
+                                if (typeof modelData.appData.execute === "function") {
+                                    modelData.appData.execute();
+                                } else {
+                                    baseLauncher.launchApp(modelData.appData.command, modelData.appData.workingDirectory);
+                                }
+                                if (root.onAppLaunchedCallback) {
+                                    root.onAppLaunchedCallback();
+                                }
+                            }
+                        }
+                        onFavoriteToggled: {
+                            if (modelData && modelData.appData) {
+                                baseLauncher.toggleFavorite(modelData.appData);
+                            }
+                        }
+                        onPinToggled: {
+                            if (modelData && modelData.appData) {
+                                baseLauncher.togglePinToDock(modelData.appData);
+                            }
+                        }
+                        onHovered: {
+                            if (modelData && !modelData.isHeader) {
+                                baseLauncher.selectedAppIndex = index;
+                            }
+                        }
+                    }
+
+                    Connections {
+                        target: baseLauncher
+                        function onSelectedAppIndexChanged() {
+                            if (baseLauncher.selectedAppIndex >= 0) {
+                                appListView.currentIndex = baseLauncher.selectedAppIndex;
+                                appListView.positionViewAtIndex(baseLauncher.selectedAppIndex, ListView.Contain);
+                            }
+                        }
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        visible: baseLauncher.filteredAppsModel.values.length === 0
+                        text: "No applications found"
+                        font.pixelSize: 14
+                        color: ThemeManager.selectedTheme.colors.onSurfaceVariant
+                    }
                 }
             }
         }
@@ -295,54 +304,68 @@ Item {
                 }
             }
 
-            ListView {
-                id: commandListView
+            ScrollView {
                 anchors.fill: parent
-                model: baseLauncher.filteredCommands
+                implicitHeight: 0
                 clip: true
-                spacing: 4
-                topMargin: 2
-                bottomMargin: root.contentPadding
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                rightPadding: ScrollBar.vertical.visible ? ScrollBar.vertical.width : 0
 
-                displaced: Transition {
-                    NumberAnimation {
-                        properties: "x,y"
-                        duration: 200
-                        easing.type: Easing.OutCubic
-                    }
-                }
+                ListView {
+                    id: commandListView
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.rightMargin: ScrollBar.vertical.visible ? ScrollBar.vertical.width : 0
+                    model: baseLauncher.filteredCommands
+                    spacing: 4
+                    topMargin: 2
+                    bottomMargin: root.contentPadding
+                    highlightMoveDuration: 120
+                    cacheBuffer: 400
 
-                add: Transition {
-                    ParallelAnimation {
+                    displaced: Transition {
                         NumberAnimation {
-                            property: "opacity"
-                            from: 0.0
-                            to: 1.0
-                            duration: 200
-                        }
-                        NumberAnimation {
-                            property: "scale"
-                            from: 0.8
-                            to: 1.0
+                            properties: "x,y"
                             duration: 200
                             easing.type: Easing.OutCubic
                         }
                     }
-                }
 
-                delegate: CommandItem {
-                    width: commandListView.width
-                    commandData: modelData
-                    isHighlighted: index === (baseLauncher.selectedCommandIndex >= 0 ? baseLauncher.selectedCommandIndex : 0)
-                    onClicked: baseLauncher.executeCommand(commandData)
-                }
+                    add: Transition {
+                        ParallelAnimation {
+                            NumberAnimation {
+                                property: "opacity"
+                                from: 0.0
+                                to: 1.0
+                                duration: 200
+                            }
+                            NumberAnimation {
+                                property: "scale"
+                                from: 0.8
+                                to: 1.0
+                                duration: 200
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+                    }
 
-                Text {
-                    anchors.centerIn: parent
-                    visible: baseLauncher.filteredCommands.length === 0
-                    text: "No commands found"
-                    font.pixelSize: 14
-                    color: ThemeManager.selectedTheme.colors.onSurfaceVariant
+                    delegate: CommandItem {
+                        width: commandListView.width
+                        commandData: modelData
+                        isHighlighted: index === (baseLauncher.selectedCommandIndex >= 0 ? baseLauncher.selectedCommandIndex : 0)
+                        onClicked: baseLauncher.executeCommand(commandData)
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        visible: baseLauncher.filteredCommands.length === 0
+                        text: "No commands found"
+                        font.pixelSize: 14
+                        color: ThemeManager.selectedTheme.colors.onSurfaceVariant
+                    }
                 }
             }
         }

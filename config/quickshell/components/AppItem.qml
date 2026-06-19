@@ -142,9 +142,9 @@ Item {
             }
         }
 
-        ColumnLayout {
+        RowLayout {
             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-            spacing: 6
+            spacing: 4
 
             Rectangle {
                 Layout.alignment: Qt.AlignRight
@@ -186,8 +186,7 @@ Item {
                 height: 24
                 radius: 6
                 color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
-                visible: mouseArea.containsMouse || root.isHighlighted || root.isSelected
-                opacity: 0.85
+                opacity: (mouseArea.containsMouse || root.isHighlighted || root.isSelected) ? 0.85 : 0
 
                 Text {
                     anchors.centerIn: parent

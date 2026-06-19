@@ -241,7 +241,7 @@ ShellRoot {
                 target: null
                 Component.onCompleted: {
                     EventBus.on(Events.TOGGLE_BOTTOM_LAUNCHER, () => {
-                        bottomLauncherPanel.toggle();
+                        bottomLauncherPanel.toggle(true);
                     }, shellRoot);
 
                     EventBus.on(Events.TOGGLE_DOCK, () => {

@@ -42,6 +42,7 @@ PanelWindow {
     property bool mouseHovered: false
     property bool hasAppsOnWorkspace: App.hasWindowsOnWorkspace
     property bool anyMenuOpen: false
+    property bool anyDockTooltipVisible: false
     property var currentOpenPopup: null
     property bool isBottomLauncherOpen: false
     property bool isLeftMenuOpen: false         // <-- 2. متغير حالة لمراقبة فتح القائمة اليسرى
@@ -109,7 +110,7 @@ PanelWindow {
     // =========================================================
     // 1. نظام القناع المركزي المرتبط بسير النوافذ (The Unified Shape)
     // =========================================================
-    mask: anyMenuOpen ? null : dockMaskRegion
+    mask: (anyMenuOpen || anyDockTooltipVisible) ? null : dockMaskRegion
 
     Region {
         id: dockMaskRegion
@@ -139,7 +140,7 @@ PanelWindow {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            height: 2
+            height: 4
             color: "transparent"
         }
 
@@ -223,15 +224,26 @@ PanelWindow {
             if (!rawAddr)
                 continue;
             let addr = rawAddr.startsWith("0x") ? rawAddr : "0x" + rawAddr;
+            let wsId = (win.workspace && win.workspace.id !== undefined) ? win.workspace.id : -1;
 
             if (!apps[appId])
                 apps[appId] = {
                     appId: appId,
                     count: 1,
-                    address: addr
+                    windows: [
+                        {
+                            address: addr,
+                            workspaceId: wsId - 1
+                        }
+                    ]
                 };
-            else
+            else {
                 apps[appId].count++;
+                apps[appId].windows.push({
+                    address: addr,
+                    workspaceId: wsId
+                });
+            }
         }
         return Object.values(apps);
     }
@@ -255,8 +267,9 @@ PanelWindow {
                 appData: resolveAppData(favId),
                 isPinnedToDock: true,
                 isRunning: runningInfo !== undefined,
-                windowAddress: runningInfo ? runningInfo.address : "",
-                instanceCount: runningInfo ? runningInfo.count : 0
+                windowAddress: runningInfo ? runningInfo.windows[0].address : "",
+                instanceCount: runningInfo ? runningInfo.count : 0,
+                windows: runningInfo ? runningInfo.windows : []
             });
             seen[favId] = true;
         }
@@ -276,8 +289,9 @@ PanelWindow {
                     appData: resolveAppData(r.appId),
                     isPinnedToDock: false,
                     isRunning: true,
-                    windowAddress: r.address,
-                    instanceCount: r.count
+                    windowAddress: r.windows[0].address,
+                    instanceCount: r.count,
+                    windows: r.windows
                 });
                 seen[r.appId] = true;
             }
@@ -305,7 +319,7 @@ PanelWindow {
     // =========================================================
     // 3. مسرح العرض (الكبسولة والنزول الداخلي المُفصّل بانسيابية)
     // =========================================================
-    Rectangle {
+    Item { // تم التغيير إلى Item لتفادي مشكلة قص الأبناء (Clipping) عند تفعيل الـ layer
         id: dockContainer
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -327,37 +341,13 @@ PanelWindow {
         width: dockRow.childrenRect.width + 24
         onWidthChanged: EventBus.emit(Events.DOCK_WIDTH_CHANGED, width)
         height: App.dockIconSize + 32
-        radius: effectiveHasApps ? ThemeManager.selectedTheme.dimensions.elementRadius * 1.5 : 24
         visible: true
-
-        color: effectiveHasApps ? ThemeManager.selectedTheme.colors.surface : "transparent"
-        border.color: effectiveHasApps ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-        border.width: effectiveHasApps ? 1 : 0
 
         Behavior on y {
             SpringAnimation {
                 spring: 2.8
                 damping: 0.6
                 epsilon: 0.1
-            }
-        }
-        Behavior on color {
-            ColorAnimation {
-                duration: 300
-                easing.type: Easing.OutCubic
-            }
-        }
-        Behavior on border.color {
-            ColorAnimation {
-                duration: 300
-                easing.type: Easing.OutCubic
-            }
-        }
-        Behavior on radius {
-            NumberAnimation {
-                duration: 500
-                easing.type: Easing.OutBack
-                easing.overshoot: 1.2
             }
         }
         Behavior on width {
@@ -368,14 +358,45 @@ PanelWindow {
             }
         }
 
-        layer.enabled: hasAppsOnWorkspace
-        layer.effect: MultiEffect {
-            shadowEnabled: true
-            shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.5)
-            shadowBlur: 0.8
-            shadowVerticalOffset: 4
-            shadowHorizontalOffset: 0
-            shadowScale: 1.0
+        // --- مستطيل الخلفية المستقل للتحكم بالرسم والتأثيرات البصرية دون قص الأزرار والتولتيب ---
+        Rectangle {
+            id: dockBackground
+            anchors.fill: parent
+            radius: effectiveHasApps ? ThemeManager.selectedTheme.dimensions.elementRadius * 1.5 : 24
+            color: effectiveHasApps ? ThemeManager.selectedTheme.colors.surface : "transparent"
+            border.color: effectiveHasApps ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
+            border.width: effectiveHasApps ? 1 : 0
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: 300
+                    easing.type: Easing.OutCubic
+                }
+            }
+            Behavior on border.color {
+                ColorAnimation {
+                    duration: 300
+                    easing.type: Easing.OutCubic
+                }
+            }
+            Behavior on radius {
+                NumberAnimation {
+                    duration: 500
+                    easing.type: Easing.OutBack
+                    easing.overshoot: 1.2
+                }
+            }
+
+            // تفعيل الطبقة الرسومية والظل هنا فقط؛ لكي لا تتقيد النوافذ المنبثقة والتولتيب بحدود الحاوية
+            layer.enabled: hasAppsOnWorkspace
+            layer.effect: MultiEffect {
+                shadowEnabled: true
+                shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.5)
+                shadowBlur: 0.8
+                shadowVerticalOffset: 4
+                shadowHorizontalOffset: 0
+                shadowScale: 1.0
+            }
         }
 
         Row {
@@ -446,6 +467,7 @@ PanelWindow {
                             tooltipText: itemData.appId || ""
                             iconSize: App.dockIconSize
                             panelWindow: root
+                            windows: itemData.windows || []
                         }
                     }
                 }

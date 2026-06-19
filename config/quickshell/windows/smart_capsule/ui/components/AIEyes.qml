@@ -283,14 +283,16 @@ Item {
         }
 
         Repeater {
+            id: musicBars
             model: 4
             Rectangle {
-                id: bar
                 width: 4
-                height: 4
+                height: barTarget
                 radius: 2
                 color: root.eyeColor
                 anchors.verticalCenter: parent.verticalCenter
+
+                property real barTarget: 4
 
                 Behavior on height {
                     NumberAnimation {
@@ -298,18 +300,29 @@ Item {
                         easing.type: Easing.InOutQuad
                     }
                 }
+            }
+        }
 
-                Timer {
-                    running: root.emotion === "music"
-                    repeat: true
-                    interval: 100 + Math.random() * 200
-                    triggeredOnStart: true
-                    onTriggered: {
-                        bar.height = 4 + Math.random() * 16;
-                        interval = 100 + Math.random() * 150;
+        Timer {
+            id: musicTimer
+            running: root.emotion === "music"
+            repeat: true
+            interval: 150
+            triggeredOnStart: true
+            onTriggered: {
+                for (var i = 0; i < musicBars.count; i++) {
+                    var item = musicBars.itemAt(i);
+                    if (item)
+                        item.barTarget = 4 + Math.random() * 16;
+                }
+            }
+            onRunningChanged: {
+                if (!running) {
+                    for (var i = 0; i < musicBars.count; i++) {
+                        var item = musicBars.itemAt(i);
+                        if (item)
+                            item.barTarget = 4;
                     }
-                    onRunningChanged: if (!running)
-                        bar.height = 4
                 }
             }
         }
