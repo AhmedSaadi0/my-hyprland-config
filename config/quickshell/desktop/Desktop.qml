@@ -59,10 +59,9 @@ PanelWindow {
     property real notchHeight: notchVisible ? notchTargetHeight + launcherExtraHeight : 0
 
     Behavior on notchHeight {
-        SpringAnimation {
-            spring: 2.8
-            damping: 0.6
-            epsilon: 0.1
+        NumberAnimation {
+            duration: 280
+            easing.type: Easing.OutCubic
         }
     }
 

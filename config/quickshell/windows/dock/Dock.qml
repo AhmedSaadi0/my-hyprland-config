@@ -344,10 +344,9 @@ PanelWindow {
         visible: true
 
         Behavior on y {
-            SpringAnimation {
-                spring: 2.8
-                damping: 0.6
-                epsilon: 0.1
+            NumberAnimation {
+                duration: 280
+                easing.type: Easing.OutCubic
             }
         }
         Behavior on width {

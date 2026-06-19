@@ -126,15 +126,13 @@ PanelWindow {
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "x"
-                        duration: AnimationConfig.animDuration
-                        easing.type: Easing.Bezier
-                        easing.bezierCurve: AnimationConfig.bezierAccelerate
+                        duration: 280
+                        easing.type: Easing.OutCubic
                     }
                     NumberAnimation {
                         properties: "opacity"
-                        duration: AnimationConfig.fadeDuration
-                        easing.type: Easing.Bezier
-                        easing.bezierCurve: AnimationConfig.bezierAccelerate // شفافية متسارعة
+                        duration: 200
+                        easing.type: Easing.OutQuad
                     }
                 }
             },
@@ -147,17 +145,15 @@ PanelWindow {
                             target: contentContainer
                             property: "x"
                             to: -root.width
-                            duration: AnimationConfig.animDuration
-                            easing.type: Easing.Bezier
-                            easing.bezierCurve: AnimationConfig.bezierAccelerate
+                            duration: 200
+                            easing.type: Easing.InCubic
                         }
                         NumberAnimation {
                             target: contentContainer
                             property: "opacity"
                             to: 0
-                            duration: AnimationConfig.animDuration
-                            easing.type: Easing.Bezier
-                            easing.bezierCurve: AnimationConfig.bezierAccelerate
+                            duration: 160
+                            easing.type: Easing.InQuad
                         }
                     }
                     PropertyAction {

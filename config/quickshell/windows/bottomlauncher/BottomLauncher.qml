@@ -84,7 +84,7 @@ PanelWindow {
 
     Timer {
         id: startOpenAnimTimer
-        interval: 30
+        interval: 0
         repeat: false
         onTriggered: {
             if (root.isShown) {
@@ -109,8 +109,8 @@ PanelWindow {
         anchors.horizontalCenter: parent.horizontalCenter
 
         radius: ThemeManager.selectedTheme.dimensions.elementRadius * 1.5
-        color: ThemeManager.selectedTheme.colors.surfaceContainer
-        border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
+        color: ThemeManager.selectedTheme.colors.surface
+        border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
         border.width: 1
 
         layer.enabled: root.visible && opacity < 1
@@ -162,19 +162,16 @@ PanelWindow {
                 from: "hidden"
                 to: "visible"
                 ParallelAnimation {
-                    // حركة فيزيائية مرنة وسريعة لصعود حاوية التطبيقات
-                    SpringAnimation {
+                    NumberAnimation {
                         target: contentContainer
-                        properties: "y"
-                        spring: 4.5        // زيادة صلابة وقوة النابض لتسريع السحب (السابق: 3.0)
-                        damping: 0.62      // امتصاص متوازن يضمن ارتداداً هلامياً خفيفاً وسريع الاستقرار
-                        mass: 0.4          // تقليل الكتلة لجعل الجسم خفيفاً ويتسارع فوراً (السابق: 0.8)
-                        epsilon: 0.1       // إنهاء الأنيميشن مبكراً فور الاقتراب لتجنب التباطؤ الدقيق في النهاية
+                        property: "y"
+                        duration: 280
+                        easing.type: Easing.OutCubic
                     }
                     NumberAnimation {
                         target: contentContainer
-                        properties: "opacity"
-                        duration: 180      // تقليص المدة لتتزامن مع سرعة الصعود الفيزيائي الجديدة (السابق: 250)
+                        property: "opacity"
+                        duration: 200
                         easing.type: Easing.OutQuad
                     }
                 }
@@ -185,13 +182,13 @@ PanelWindow {
                 SequentialAnimation {
                     ParallelAnimation {
                         NumberAnimation {
-                            properties: "y"
-                            duration: 180  // تسريع حركة النزول عند الإغلاق (السابق: 250)
-                            easing.type: Easing.InQuad
+                            property: "y"
+                            duration: 200
+                            easing.type: Easing.InCubic
                         }
                         NumberAnimation {
-                            properties: "opacity"
-                            duration: 150  // تسريع اختفاء الشفافية لتبدو الاستجابة فورية (السابق: 200)
+                            property: "opacity"
+                            duration: 160
                             easing.type: Easing.InQuad
                         }
                     }
