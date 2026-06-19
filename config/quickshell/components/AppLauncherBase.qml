@@ -166,7 +166,7 @@ Item {
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.rightMargin: ScrollBar.vertical.visible ? ScrollBar.vertical.width : 0
+                    anchors.rightMargin: 22
                     clip: true
                     model: baseLauncher.filteredAppsModel.values
                     spacing: 4
@@ -318,7 +318,7 @@ Item {
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.rightMargin: ScrollBar.vertical.visible ? ScrollBar.vertical.width : 0
+                    anchors.rightMargin: 22
                     model: baseLauncher.filteredCommands
                     spacing: 4
                     topMargin: 2

@@ -233,7 +233,7 @@ PanelWindow {
                     windows: [
                         {
                             address: addr,
-                            workspaceId: wsId - 1
+                            workspaceId: wsId
                         }
                     ]
                 };
