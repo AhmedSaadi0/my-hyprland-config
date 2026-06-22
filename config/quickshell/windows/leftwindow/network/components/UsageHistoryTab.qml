@@ -42,9 +42,6 @@ ColumnLayout {
             Label {
                 text: `${qsTr("Peak")}: ${root.historyUsagePeak}`
             }
-            Label {
-                text: `${qsTr("Samples")}: ${root.historyUsageSamples}`
-            }
         }
     }
 
@@ -106,8 +103,8 @@ ColumnLayout {
                     Rectangle {
                         Layout.preferredWidth: 96
                         Layout.preferredHeight: 30
-                        color: ThemeManager.selectedTheme.colors.primary.alpha(0.12)
-                        border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.28)
+                        color: ThemeManager.selectedTheme.colors.surfaceContainerHigh.alpha(0.5)
+                        border.color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.12)
                         border.width: 1
 
                         topLeftRadius: root.groupRadius
@@ -117,15 +114,17 @@ ColumnLayout {
 
                         Label {
                             anchors.centerIn: parent
-                            text: rowData.total_text
-                            color: ThemeManager.selectedTheme.colors.primary
+                            text: rowData.is_estimated ? `≈ ${rowData.total_text}` : rowData.total_text
+                            color: ThemeManager.selectedTheme.colors.onSurface
                         }
                     }
 
                     Rectangle {
                         Layout.preferredWidth: 84
                         Layout.preferredHeight: 30
-                        color: ThemeManager.selectedTheme.colors.primaryContainer.alpha(0.45)
+                        color: ThemeManager.selectedTheme.colors.surfaceContainerHigh.alpha(0.5)
+                        border.color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.12)
+                        border.width: 1
 
                         topRightRadius: root.groupRadius
                         bottomRightRadius: root.groupRadius
@@ -135,6 +134,7 @@ ColumnLayout {
                         Label {
                             anchors.centerIn: parent
                             text: rowData.peak_text
+                            color: ThemeManager.selectedTheme.colors.onSurfaceVariant
                         }
                     }
                 }

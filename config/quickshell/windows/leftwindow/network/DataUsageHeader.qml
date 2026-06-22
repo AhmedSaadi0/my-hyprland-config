@@ -44,6 +44,7 @@ HeaderCard {
     signal refreshRequested
     signal liveUsageRefreshRequested
     signal historyUsageRefreshRequested
+    signal dateRangeChanged(int hours, string startDate, string endDate)
 
     function currentSubtitle() {
         if (root.activeTab === 1)
@@ -133,9 +134,10 @@ HeaderCard {
             }
 
             MButton {
+                id: expandBtn
                 Layout.preferredWidth: 36
                 Layout.preferredHeight: 25
-                text: root.expanded ? "󰅂" : "󰅀"
+                text: "󰅀"
                 font.family: ThemeManager.selectedTheme.typography.iconFont
                 textHorizontalAlignment: Text.AlignHCenter
                 normalBackground: ThemeManager.selectedTheme.colors.surfaceContainerHigh
@@ -144,6 +146,15 @@ HeaderCard {
 
                 topLeftRadius: root.groupRadius / root.innerRadiusDiv
                 bottomLeftRadius: root.groupRadius / root.innerRadiusDiv
+
+                textItem.rotation: root.expanded ? 180 : 0
+
+                Behavior on textItem.rotation {
+                    NumberAnimation {
+                        duration: 300
+                        easing.type: Easing.InOutCubic
+                    }
+                }
             }
         }
 
@@ -217,6 +228,14 @@ HeaderCard {
                         liveUsageModel: root.liveUsageModel
                         liveUsageLoading: root.liveUsageLoading
                         maxVisibleRows: root.maxVisibleLiveRows
+                    }
+
+                    DateRangeSelector {
+                        Layout.fillWidth: true
+                        Layout.leftMargin: 4
+                        Layout.rightMargin: 4
+                        visible: root.activeTab === 2
+                        onRangeChanged: (hours, startDate, endDate) => root.dateRangeChanged(hours, startDate, endDate)
                     }
 
                     UsageHistoryTab {

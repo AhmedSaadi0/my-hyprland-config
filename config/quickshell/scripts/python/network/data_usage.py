@@ -1,8 +1,10 @@
 import argparse
 import json
+import os
 import subprocess
 import sys
-from datetime import date, datetime
+import time
+from datetime import date, datetime, timedelta
 
 
 def get_data_usage(interface, start_date_str, end_date_str):
@@ -86,6 +88,67 @@ def get_data_usage(interface, start_date_str, end_date_str):
         sys.exit(1)
 
 
+def get_app_breakdown(interface, start_date_str, end_date_str, db_path, top=15):
+    """
+    per-app breakdown للشهر باستخدام vnstat + nethogs ratios.
+    """
+    result = {}
+
+    try:
+        from live_usage import (
+            get_vnstat_daily,
+            calculate_app_ratios_from_db,
+            estimate_per_app_from_vnstat,
+        )
+
+        vnstat_totals = get_vnstat_daily(interface, start_date_str, end_date_str)
+
+        if vnstat_totals is None:
+            result = {
+                "status": "error",
+                "message": f"لم يتم العثور على بيانات vnstat للواجهة '{interface}'.",
+            }
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+            sys.exit(1)
+            return
+
+        start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+        end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
+        start_ts = int(start_date.strftime("%s"))
+        end_ts = int(end_date.strftime("%s")) + 86400
+
+        app_ratios = calculate_app_ratios_from_db(
+            db_path, start_ts, end_ts, interface
+        )
+
+        per_app = estimate_per_app_from_vnstat(vnstat_totals, app_ratios, top)
+
+        result = {
+            "status": "success",
+            "interface": interface,
+            "period": {"start": start_date_str, "end": end_date_str},
+            "totals": {
+                "received": vnstat_totals["rx_bytes"],
+                "sent": vnstat_totals["tx_bytes"],
+                "total": vnstat_totals["total_bytes"],
+            },
+            "apps": per_app,
+            "source": "vnstat+nethogs",
+        }
+
+    except ImportError:
+        result = {
+            "status": "error",
+            "message": "live_usage.py not found or missing functions.",
+        }
+    except Exception as e:
+        result = {"status": "error", "message": f"حدث خطأ غير متوقع: {str(e)}"}
+
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+    if result.get("status") == "error":
+        sys.exit(1)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="عرض استهلاك البيانات بصيغة JSON."
@@ -95,6 +158,13 @@ if __name__ == "__main__":
     start_of_month = today.replace(day=1).strftime("%Y-%m-%d")
     today_str = today.strftime("%Y-%m-%d")
 
+    parser.add_argument(
+        "-m",
+        "--mode",
+        choices=["total", "app-breakdown"],
+        default="total",
+        help="total: monthly totals only, app-breakdown: per-app vnstat+nethogs",
+    )
     parser.add_argument(
         "-i",
         "--interface",
@@ -113,7 +183,27 @@ if __name__ == "__main__":
         default=today_str,
         help="تاريخ الانتهاء (YYYY-MM-DD).",
     )
+    parser.add_argument(
+        "--top",
+        type=int,
+        default=15,
+        help="Top N apps in app-breakdown mode.",
+    )
+    parser.add_argument(
+        "--db-path",
+        type=str,
+        default="",
+        help="SQLite db path for app-breakdown mode.",
+    )
 
     args = parser.parse_args()
 
-    get_data_usage(args.interface, args.start_date, args.end_date)
+    if args.mode == "app-breakdown":
+        db_path = args.db_path or os.path.expanduser(
+            "~/.cache/nibrasshell/network_usage/live_usage.sqlite"
+        )
+        get_app_breakdown(
+            args.interface, args.start_date, args.end_date, db_path, args.top
+        )
+    else:
+        get_data_usage(args.interface, args.start_date, args.end_date)

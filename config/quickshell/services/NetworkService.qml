@@ -17,7 +17,10 @@ Singleton {
 
     property int liveLimit: 8
     property int historyTop: 8
-    property int historyHours: 24
+    property int historyHours: 168
+    property string historyStartDate: ""
+    property string historyEndDate: ""
+    property bool useHistoryDateRange: false
 
     property var wifiNetworks: []
 
@@ -191,16 +194,37 @@ Singleton {
 
     Component.onCompleted: root.syncTimers()
 
+    function setHistoryDateRange(hours, startDate, endDate) {
+        root.historyStartDate = startDate;
+        root.historyEndDate = endDate;
+        root.useHistoryDateRange = startDate !== "";
+        if (!root.useHistoryDateRange)
+            root.historyHours = hours;
+        root.refreshHistoryUsage();
+    }
+
     function refreshHistoryUsage() {
         if (historyUsageProcess.running)
             return;
 
         root.historyUsageLoading = true;
-        historyUsageProcess.command = Utils.Helper.wifiLiveUsageSummaryCommand({
-            hours: root.historyHours,
-            top: root.historyTop,
-            wifiInterface: root.wifiInterface
-        });
+
+        if (root.useHistoryDateRange && root.historyStartDate && root.historyEndDate) {
+            historyUsageProcess.command = Utils.Helper.vnstatAppBreakdownCommand({
+                hours: root.historyHours,
+                top: root.historyTop,
+                wifiInterface: root.wifiInterface,
+                startDate: root.historyStartDate,
+                endDate: root.historyEndDate
+            });
+        } else {
+            historyUsageProcess.command = Utils.Helper.vnstatAppBreakdownCommand({
+                hours: root.historyHours,
+                top: root.historyTop,
+                wifiInterface: root.wifiInterface
+            });
+        }
+
         historyUsageProcess.running = true;
     }
 
@@ -268,28 +292,31 @@ Singleton {
     function updateHistoryUsageModel(summaryResponse) {
         const rows = Array.isArray(summaryResponse.data) ? summaryResponse.data : [];
         const totals = summaryResponse.totals || {};
+        const source = summaryResponse.source || "nethogs";
         historyUsageListModel.clear();
 
         for (let i = 0; i < rows.length; i++) {
             const row = rows[i];
             const name = root.sanitizeProcessName(row.name);
-            const totalBytes = Number(row.total_bytes) || 0;
+            const totalBytes = Number(row.estimated_total || row.total_bytes) || 0;
             const peakRate = Number(row.peak_rate_bps) || 0;
 
             historyUsageListModel.append({
                 display_name: name,
                 total_text: root.formatBytes(totalBytes),
-                peak_text: root.formatRate(peakRate)
+                peak_text: root.formatRate(peakRate),
+                is_estimated: source === "vnstat+nethogs"
             });
         }
 
-        root.historyUsageTotal = root.formatBytes(Number(totals.total_bytes) || 0);
+        root.historyUsageTotal = root.formatBytes(Number(totals.total_bytes || totals.total) || 0);
         root.historyUsagePeak = root.formatRate(Number(totals.peak_rate_bps) || 0);
         root.historyUsageSamples = `${Number(totals.samples_count) || 0}`;
 
         const updatedAt = Qt.formatTime(new Date(), "hh:mm:ss");
         const rangeHours = Number(summaryResponse.range_hours) || root.historyHours;
-        root.historyUsageSubtitle = qsTr("Last %1h • Updated %2").arg(rangeHours).arg(updatedAt);
+        const sourceLabel = source === "vnstat+nethogs" ? "vnstat" : "nethogs";
+        root.historyUsageSubtitle = qsTr("Last %1h • Updated %2 • %3").arg(rangeHours).arg(updatedAt).arg(sourceLabel);
     }
 
     Process {

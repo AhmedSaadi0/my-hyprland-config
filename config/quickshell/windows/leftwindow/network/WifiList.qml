@@ -50,6 +50,7 @@ BaseMenuView {
         onHistoryUsageRefreshRequested: NetworkService.refreshCurrentUsageTab()
         onActiveTabChanged: NetworkService.setUsageState(dataUsage.expanded, dataUsage.activeTab)
         onExpandedChanged: NetworkService.setUsageState(dataUsage.expanded, dataUsage.activeTab)
+        onDateRangeChanged: (hours, startDate, endDate) => NetworkService.setHistoryDateRange(hours, startDate, endDate)
     }
 
     ColumnLayout {

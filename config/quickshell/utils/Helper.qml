@@ -522,6 +522,22 @@ inactiveForeground=${fgInactive}
         return [...pythonCommand, "--mode", "summary", "--hours", `${hours}`, "--top", `${top}`, "--interface", `${wifiInterface}`];
     }
 
+    function vnstatAppBreakdownCommand({
+        hours = 168,
+        top = 15,
+        wifiInterface = Config.App.networkMonitor,
+        startDate = null,
+        endDate = null
+    }) {
+        const pythonCommand = Config.App.scripts.python.liveUsageCommand;
+        let fullCommand = [...pythonCommand, "--mode", "summary", "--hours", `${hours}`, "--top", `${top}`, "--interface", `${wifiInterface}`, "--use-vnstat"];
+        if (startDate !== null && endDate !== null) {
+            fullCommand.push("--start-date", startDate);
+            fullCommand.push("--end-date", endDate);
+        }
+        return fullCommand;
+    }
+
     // ==========================================================
     // ==                 ICON UTILITIES                       ==
     // ==========================================================
