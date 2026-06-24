@@ -200,6 +200,8 @@ Item {
 
     function applyWallpaper(path) {
         ThemeManager.updateAndApplyTheme({
+            "_desktopClockDepthEffectEnabled": false,
+            "_desktopClockDepthOverlayPath": "",
             "_wallpaper": path,
             "_enableDynamicWallpapers": false
         }, true);
@@ -463,5 +465,4 @@ Item {
             }
         }
     }
-
 }

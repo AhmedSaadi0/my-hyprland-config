@@ -6,6 +6,7 @@ import QtQuick.Controls
 import Quickshell.Io
 import "root:/themes"
 import "root:/config"
+import "root:/config/EventNames.js" as Events
 import "root:/components"
 
 ApplicationWindow {
@@ -32,6 +33,7 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        EventBus.emit(Events.CLOSE_LEFTBAR);
         x = (Screen.width - width) / 2;
         y = (Screen.height - height) / 2;
         card.scale = theme.dimensions.dialogInitialScale;
@@ -151,7 +153,10 @@ ApplicationWindow {
         }
     }
 
-    Keys.onEscapePressed: root.close()
+    Shortcut {
+        sequence: "Escape"
+        onActivated: root.close()
+    }
 
     ParallelAnimation {
         id: openAnim

@@ -102,6 +102,7 @@ BaseThemeSettings {
             var path = file.toString().replace("file://", "");
             root.localStaticWallpaper = path;
             root.applySingleProperty("_wallpaper", path);
+            root.applySingleProperty("_desktopClockDepthEffectEnabled", false);
         }
     }
 

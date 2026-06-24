@@ -270,9 +270,9 @@ Singleton {
         // Apply to disk
         if (saveToDisk) {
             themeSerializer.saveToCache(selectedTheme, themeLoader.currentThemeName, true);
-        } else {
-            root.selectedThemeUpdated();
         }
+
+        root.selectedThemeUpdated();
     }
 
     function updateThemeColorsOnly(data, saveToDisk) {
@@ -280,7 +280,6 @@ Singleton {
             return;
 
         themeSerializer.applyData(selectedTheme, data);
-
         bridgeHyprland.applyConfig(selectedTheme.hyprlandConfiguration);
 
         if (saveToDisk) {

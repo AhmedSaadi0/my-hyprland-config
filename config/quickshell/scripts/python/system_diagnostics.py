@@ -104,18 +104,14 @@ def get_top_cpu(limit=20):
 
 def get_top_ram(limit=20):
     processes = []
-    for p in psutil.process_iter(
-        ["pid", "name", "memory_percent", "memory_info"]
-    ):
+    for p in psutil.process_iter(["pid", "name", "memory_percent", "memory_info"]):
         try:
             mem_pct = p.info.get("memory_percent", 0.0)
             if mem_pct is None:
                 mem_pct = 0.0
 
             mem_info = p.info.get("memory_info")
-            mem_mb = (
-                round(mem_info.rss / (1024 * 1024), 2) if mem_info else 0.0
-            )
+            mem_mb = round(mem_info.rss / (1024 * 1024), 2) if mem_info else 0.0
 
             processes.append(
                 {
@@ -135,6 +131,9 @@ def get_top_ram(limit=20):
 def get_process_detail(pid):
     try:
         proc = psutil.Process(pid)
+        # cpu_percent returns 0.0 on first call (no previous delta),
+        # so measure with interval to get a real value immediately.
+        cpu_percent = proc.cpu_percent(interval=0.1)
         proc_info = proc.as_dict(
             attrs=[
                 "pid",
@@ -142,7 +141,6 @@ def get_process_detail(pid):
                 "status",
                 "username",
                 "create_time",
-                "cpu_percent",
                 "memory_percent",
                 "memory_info",
                 "exe",
@@ -152,6 +150,7 @@ def get_process_detail(pid):
                 "ppid",
             ]
         )
+        proc_info["cpu_percent"] = cpu_percent
     except psutil.NoSuchProcess:
         return {"error": f"Process with PID {pid} not found"}
     except psutil.AccessDenied:
@@ -163,9 +162,7 @@ def get_process_detail(pid):
 
     create_time = proc_info.get("create_time")
     if create_time:
-        create_time = time.strftime(
-            "%Y-%m-%d %H:%M:%S", time.localtime(create_time)
-        )
+        create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(create_time))
     else:
         create_time = "Unknown"
 
@@ -271,7 +268,7 @@ def get_cpu_temps_psutil():
                     ):
                         add_temp_reading(
                             "cpu",
-                            f"معالج (psutil) {i+1}",
+                            f"معالج (psutil) {i + 1}",
                             entry.current,
                             source="psutil",
                         )
@@ -286,9 +283,7 @@ def get_gpu_temps():
     if system == "Linux":
         # محاولة قراءة NVIDIA
         try:
-            subprocess.run(
-                ["which", "nvidia-smi"], check=True, capture_output=True
-            )
+            subprocess.run(["which", "nvidia-smi"], check=True, capture_output=True)
             result = subprocess.run(
                 [
                     "nvidia-smi",
@@ -311,9 +306,7 @@ def get_gpu_temps():
         except FileNotFoundError:
             pass
         except Exception as e:
-            all_temperatures_data["warnings"].append(
-                f"Linux: خطأ في قراءة NVIDIA: {e}"
-            )
+            all_temperatures_data["warnings"].append(f"Linux: خطأ في قراءة NVIDIA: {e}")
 
         # محاولة قراءة AMD/Intel عبر sensors
         try:
@@ -341,9 +334,7 @@ def get_gpu_temps():
                                     source="lm_sensors",
                                 )
         except Exception as e:
-            all_temperatures_data["warnings"].append(
-                f"Linux: خطأ sensors: {e}"
-            )
+            all_temperatures_data["warnings"].append(f"Linux: خطأ sensors: {e}")
 
 
 def get_storage_temps():
@@ -354,8 +345,7 @@ def get_storage_temps():
         for sensor_name, sensor_list in temps.items():
             for i, entry in enumerate(sensor_list):
                 if entry.current is not None and (
-                    "nvme" in sensor_name.lower()
-                    or "disk" in sensor_name.lower()
+                    "nvme" in sensor_name.lower() or "disk" in sensor_name.lower()
                 ):
                     add_temp_reading(
                         "storage",
@@ -425,9 +415,7 @@ def get_storage_temps():
                         )
                     processed_dev_names.add(disk_name)
         except Exception as e:
-            all_temperatures_data["warnings"].append(
-                f"Linux: خطأ عام في الأقراص: {e}"
-            )
+            all_temperatures_data["warnings"].append(f"Linux: خطأ عام في الأقراص: {e}")
 
 
 def get_detailed_temps():
@@ -443,9 +431,7 @@ def get_detailed_temps():
 # ==========================================
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="System Diagnostics On-Demand"
-    )
+    parser = argparse.ArgumentParser(description="System Diagnostics On-Demand")
     parser.add_argument(
         "--action",
         choices=["cpu", "ram", "temps", "process_detail", "all"],

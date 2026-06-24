@@ -13,11 +13,26 @@ ColumnLayout {
     property string customEndDate: ""
 
     readonly property var presets: [
-        { label: qsTr("Today"), hours: 24 },
-        { label: qsTr("This Week"), hours: 168 },
-        { label: qsTr("This Month"), hours: 720 },
-        { label: qsTr("This Year"), hours: 8760 },
-        { label: qsTr("Custom"), hours: 0 }
+        {
+            label: qsTr("Last 24 hours"),
+            hours: 24
+        },
+        {
+            label: qsTr("Last 7 days"),
+            hours: 168
+        },
+        {
+            label: qsTr("Last 30 days"),
+            hours: 720
+        },
+        {
+            label: qsTr("Last 12 months"),
+            hours: 8760
+        },
+        {
+            label: qsTr("Custom"),
+            hours: 0
+        }
     ]
 
     signal rangeChanged(int hours, string startDate, string endDate)
@@ -63,7 +78,9 @@ ColumnLayout {
                     font.pixelSize: ThemeManager.selectedTheme.typography.small
                     color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.7)
                 }
-                Item { Layout.fillWidth: true }
+                Item {
+                    Layout.fillWidth: true
+                }
                 Label {
                     text: root.customStartDate || qsTr("Pick date")
                     font.pixelSize: ThemeManager.selectedTheme.typography.small
@@ -112,7 +129,9 @@ ColumnLayout {
                     font.pixelSize: ThemeManager.selectedTheme.typography.small
                     color: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.7)
                 }
-                Item { Layout.fillWidth: true }
+                Item {
+                    Layout.fillWidth: true
+                }
                 Label {
                     text: root.customEndDate || qsTr("Pick date")
                     font.pixelSize: ThemeManager.selectedTheme.typography.small

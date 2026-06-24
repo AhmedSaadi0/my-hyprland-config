@@ -162,6 +162,158 @@ BaseThemeSettings {
             Layout.preferredWidth: 500
         }
 
+        // --- Depth Effect Section ---
+        SectionCard {
+            id: depthEffectUi
+            title: qsTr("Depth Effect")
+            Layout.fillWidth: true
+            enabled: root.localEnabled
+
+            SettingSwitch {
+                label: qsTr("Enable depth effect")
+                isChecked: root.localDepthEnabled
+                font.bold: true
+                onIsCheckedChanged: {
+                    if (root.isLoading)
+                        return;
+                    root.localDepthEnabled = isChecked;
+                    root.applySingleProperty("_desktopClockDepthEffectEnabled", isChecked);
+                }
+            }
+
+            ColumnLayout {
+                enabled: root.localDepthEnabled
+                Layout.fillWidth: true
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 15
+
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        Controls.Label {
+                            text: qsTr("Model")
+                            font.bold: true
+                        }
+                        SettingsComboBox {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 30
+                            model: ["u2net", "isnet-general-use"]
+                            Component.onCompleted: currentIndex = find(root.localDepthModel)
+                            onCurrentTextChanged: {
+                                if (root.isLoading)
+                                    return;
+                                root.localDepthModel = currentText;
+                                root.applySingleProperty("_desktopClockDepthModel", currentText);
+                            }
+                        }
+                    }
+
+                    MButton {
+                        Layout.preferredHeight: 30
+                        Layout.preferredWidth: 180
+                        Layout.alignment: Qt.AlignBottom
+                        text: "Create Overlay Image"
+                        iconText: "󰙴"
+                        enabled: !root.isCreatingOverlayImage
+                        highlighted: true
+                        textPreferredWidth: 4
+                        iconPreferredWidth: 1
+                        onClicked: {
+                            const wallpaper = ThemeManager.currentWallpaper;
+
+                            const data = {
+                                wallpaper: wallpaper,
+                                model: root.localDepthModel,
+                                alphaMatting: root.alphaMatting,
+                                foregroundThreshold: root.foregroundThreshold,
+                                backgroundThreshold: root.backgroundThreshold,
+                                erodeSize: root.erodeSize
+                            };
+                            root.createOverlayImageButtonClicked(data);
+                            ThemeManager.requestCreateOverlayImage(data);
+                        }
+                    }
+                }
+
+                SettingSwitch {
+                    id: _alphaMattingSwitch
+                    label: "Alpha Matting"
+                    isChecked: root.alphaMatting
+                    Layout.topMargin: 10
+                    onIsCheckedChanged: root.alphaMatting = isChecked
+                }
+
+                ColumnLayout {
+                    enabled: _alphaMattingSwitch.isChecked
+                    Layout.fillWidth: true
+                    Layout.leftMargin: 10
+                    Layout.rightMargin: 10
+                    spacing: 10
+
+                    SliderWithLabel {
+                        label: qsTr("Background Threshold")
+                        from: 0
+                        to: 255
+                        stepSize: 1
+                        decimals: 0
+                        value: root.backgroundThreshold
+                        onEditingFinished: val => root.backgroundThreshold = parseInt(val)
+                    }
+
+                    SliderWithLabel {
+                        label: qsTr("Foreground Threshold")
+                        from: 0
+                        to: 255
+                        stepSize: 1
+                        decimals: 0
+                        value: root.foregroundThreshold
+                        onEditingFinished: val => root.foregroundThreshold = parseInt(val)
+                    }
+
+                    SliderWithLabel {
+                        label: qsTr("Erode Size")
+                        from: 0
+                        to: 50
+                        stepSize: 1
+                        decimals: 0
+                        value: root.erodeSize
+                        onEditingFinished: val => root.erodeSize = parseInt(val)
+                    }
+                }
+
+                // Overlay Path
+                Controls.Label {
+                    text: qsTr("Overlay image path")
+                    font.bold: true
+                    Layout.topMargin: 10
+                }
+                RowLayout {
+                    Layout.fillWidth: true
+                    EditableField {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 30
+                        Layout.minimumWidth: 50
+                        text: root.localOverlayPath
+                        selectedTheme: root.theme
+                        onEditingFinished: {
+                            if (root.isLoading)
+                                return;
+                            root.localOverlayPath = text;
+                            root.applySingleProperty("_desktopClockDepthOverlayPath", text);
+                        }
+                    }
+                    MButton {
+                        text: ""
+                        Layout.preferredHeight: 30
+                        Layout.preferredWidth: 40
+                        font.family: root.theme ? root.theme.typography.iconFont : ""
+                        onClicked: fileDialog.open()
+                    }
+                }
+            }
+        }
+
         // --- General Section ---
         SectionCard {
             title: qsTr("General")
@@ -370,158 +522,6 @@ BaseThemeSettings {
                                 }
                             }
                         }
-                    }
-                }
-            }
-        }
-
-        // --- Depth Effect Section ---
-        SectionCard {
-            id: depthEffectUi
-            title: qsTr("Depth Effect")
-            Layout.fillWidth: true
-            enabled: root.localEnabled
-
-            SettingSwitch {
-                label: qsTr("Enable depth effect")
-                isChecked: root.localDepthEnabled
-                font.bold: true
-                onIsCheckedChanged: {
-                    if (root.isLoading)
-                        return;
-                    root.localDepthEnabled = isChecked;
-                    root.applySingleProperty("_desktopClockDepthEffectEnabled", isChecked);
-                }
-            }
-
-            ColumnLayout {
-                enabled: root.localDepthEnabled
-                Layout.fillWidth: true
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 15
-
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        Controls.Label {
-                            text: qsTr("Model")
-                            font.bold: true
-                        }
-                        SettingsComboBox {
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 30
-                            model: ["u2net", "isnet-general-use"]
-                            Component.onCompleted: currentIndex = find(root.localDepthModel)
-                            onCurrentTextChanged: {
-                                if (root.isLoading)
-                                    return;
-                                root.localDepthModel = currentText;
-                                root.applySingleProperty("_desktopClockDepthModel", currentText);
-                            }
-                        }
-                    }
-
-                    MButton {
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: 180
-                        Layout.alignment: Qt.AlignBottom
-                        text: "Create Overlay Image"
-                        iconText: "󰙴"
-                        enabled: !root.isCreatingOverlayImage
-                        highlighted: true
-                        textPreferredWidth: 4
-                        iconPreferredWidth: 1
-                        onClicked: {
-                            const wallpaper = ThemeManager.currentWallpaper;
-
-                            const data = {
-                                wallpaper: wallpaper,
-                                model: root.localDepthModel,
-                                alphaMatting: root.alphaMatting,
-                                foregroundThreshold: root.foregroundThreshold,
-                                backgroundThreshold: root.backgroundThreshold,
-                                erodeSize: root.erodeSize
-                            };
-                            root.createOverlayImageButtonClicked(data);
-                            ThemeManager.requestCreateOverlayImage(data);
-                        }
-                    }
-                }
-
-                SettingSwitch {
-                    id: _alphaMattingSwitch
-                    label: "Alpha Matting"
-                    isChecked: root.alphaMatting
-                    Layout.topMargin: 10
-                    onIsCheckedChanged: root.alphaMatting = isChecked
-                }
-
-                ColumnLayout {
-                    enabled: _alphaMattingSwitch.isChecked
-                    Layout.fillWidth: true
-                    Layout.leftMargin: 10
-                    Layout.rightMargin: 10
-                    spacing: 10
-
-                    SliderWithLabel {
-                        label: qsTr("Background Threshold")
-                        from: 0
-                        to: 255
-                        stepSize: 1
-                        decimals: 0
-                        value: root.backgroundThreshold
-                        onEditingFinished: val => root.backgroundThreshold = parseInt(val)
-                    }
-
-                    SliderWithLabel {
-                        label: qsTr("Foreground Threshold")
-                        from: 0
-                        to: 255
-                        stepSize: 1
-                        decimals: 0
-                        value: root.foregroundThreshold
-                        onEditingFinished: val => root.foregroundThreshold = parseInt(val)
-                    }
-
-                    SliderWithLabel {
-                        label: qsTr("Erode Size")
-                        from: 0
-                        to: 50
-                        stepSize: 1
-                        decimals: 0
-                        value: root.erodeSize
-                        onEditingFinished: val => root.erodeSize = parseInt(val)
-                    }
-                }
-
-                // Overlay Path
-                Controls.Label {
-                    text: qsTr("Overlay image path")
-                    font.bold: true
-                    Layout.topMargin: 10
-                }
-                RowLayout {
-                    Layout.fillWidth: true
-                    EditableField {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 30
-                        Layout.minimumWidth: 50
-                        text: root.localOverlayPath
-                        selectedTheme: root.theme
-                        onEditingFinished: {
-                            if (root.isLoading)
-                                return;
-                            root.localOverlayPath = text;
-                            root.applySingleProperty("_desktopClockDepthOverlayPath", text);
-                        }
-                    }
-                    MButton {
-                        text: ""
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: 40
-                        font.family: root.theme ? root.theme.typography.iconFont : ""
-                        onClicked: fileDialog.open()
                     }
                 }
             }
