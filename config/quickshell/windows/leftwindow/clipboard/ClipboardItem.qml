@@ -186,7 +186,7 @@ Item {
                     Layout.preferredWidth: 4
                     Layout.fillHeight: true
                     Layout.alignment: Qt.AlignTop
-                    radius: 2
+                    radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                     color: req.accColor
                 }
 
@@ -210,7 +210,7 @@ Item {
                     Layout.preferredHeight: 30
                     Layout.rightMargin: 10
                     Layout.alignment: Qt.AlignTop
-                    radius: 4
+                    radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                     color: deleteMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.error.alpha(0.1) : "transparent"
 
                     Label {

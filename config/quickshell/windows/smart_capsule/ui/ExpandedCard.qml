@@ -150,7 +150,7 @@ Item {
                 anchors.topMargin: 10
                 anchors.bottomMargin: 10
 
-                radius: 12
+                radius: ThemeManager.selectedTheme.dimensions.shapeMedium
                 color: "transparent"
                 border.color: CapsuleManager.fgColor.alpha(0.2)
                 border.width: 1
@@ -224,7 +224,7 @@ Item {
                         Rectangle {
                             visible: root.currentTab === "weather" && Weather.aiTrendBadge !== ""
                             color: CapsuleManager.fgColor.alpha(0.1)
-                            radius: 4
+                            radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                             Layout.preferredHeight: 18
                             Layout.preferredWidth: badgeText.implicitWidth + 10
                             Text {

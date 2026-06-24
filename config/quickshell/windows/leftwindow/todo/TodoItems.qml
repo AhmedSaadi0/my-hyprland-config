@@ -140,7 +140,7 @@ ListView {
                 anchors.bottom: parent.bottom
                 anchors.margins: 8
                 anchors.leftMargin: 6
-                radius: 2
+                radius: dims.shapeExtraSmall
                 color: {
                     if (model.completed)
                         return colors.onSurfaceVariant;
@@ -189,7 +189,7 @@ ListView {
                         indicator: Rectangle {
                             implicitWidth: 24
                             implicitHeight: 24
-                            radius: 8
+                            radius: dims.shapeSmall
                             color: completionCheck.checked ? colors.tertiary : "transparent"
                             border.width: 1.5
                             border.color: completionCheck.checked ? colors.tertiary : colors.onSurfaceVariant
@@ -250,7 +250,7 @@ ListView {
                         // Original Edit Background
                         background: Rectangle {
                             color: Qt.rgba(colors.primary.r, colors.primary.g, colors.primary.b, 0.05)
-                            radius: 4
+                            radius: dims.shapeExtraSmall
                         }
                         Keys.onReturnPressed: event => {
                             if ((event.modifiers & Qt.ShiftModifier) == 0) {
@@ -285,7 +285,7 @@ ListView {
                         visible: !isEditing && model.isUrgent && !model.completed
                         width: urgentText.implicitWidth + 10
                         height: urgentText.implicitHeight + 4
-                        radius: 4
+                        radius: dims.shapeExtraSmall
                         color: Qt.rgba(colors.error.r, colors.error.g, colors.error.b, 0.15)
                         Text {
                             id: urgentText
@@ -336,7 +336,7 @@ ListView {
                         onClicked: model.isUrgent = !model.isUrgent
 
                         background: Rectangle {
-                            radius: 15
+                            radius: dims.shapeLarge
                             color: urgentBtnItem.checked ? colors.error : "transparent"
                             border.width: urgentBtnItem.checked ? 0 : 1.5
                             border.color: urgentBtnItem.checked ? colors.error : colors.onSurfaceVariant

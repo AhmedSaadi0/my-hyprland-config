@@ -198,7 +198,7 @@ Rectangle {
 
                     Rectangle {
                         height: 18
-                        radius: 9
+                        radius: theme.dimensions.shapeSmall
                         color: Qt.rgba(riskColor().r, riskColor().g, riskColor().b, 0.2)
                         border.color: riskColor()
                         border.width: 1

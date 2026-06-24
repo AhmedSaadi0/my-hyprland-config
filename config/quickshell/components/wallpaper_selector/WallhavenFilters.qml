@@ -268,7 +268,7 @@ Flow {
 
         background: Rectangle {
             color: root.theme.colors.surfaceContainer
-            radius: 8
+            radius: root.theme.dimensions.shapeSmall
             border.color: root.theme.colors.primary.alpha(0.3)
             border.width: 1
 
@@ -303,8 +303,8 @@ Flow {
     Rectangle {
         id: sortingBtn
         width: sortingText.width + 16
-        height: 28
-        radius: 6
+        height: root.theme.dimensions.chipHeight
+        radius: root.theme.dimensions.shapeExtraSmall
         color: root.theme.colors.surfaceContainerHigh
 
         Text {
@@ -380,7 +380,7 @@ Flow {
                             required property var modelData
                             width: 52
                             height: 26
-                            radius: 4
+                            radius: root.theme.dimensions.shapeExtraSmall
                             color: root.sorting === sortOptionRect.modelData.value ? root.theme.colors.primary.alpha(0.3) : root.theme.colors.surfaceContainerHigh
                             border.color: root.sorting === sortOptionRect.modelData.value ? root.theme.colors.primary : "transparent"
                             border.width: 1
@@ -418,7 +418,7 @@ Flow {
                             required property var modelData
                             width: 80
                             height: 26
-                            radius: 4
+                            radius: root.theme.dimensions.shapeExtraSmall
                             color: root.order === orderRect.modelData.value ? root.theme.colors.primary.alpha(0.3) : root.theme.colors.surfaceContainerHigh
                             border.color: root.order === orderRect.modelData.value ? root.theme.colors.primary : "transparent"
                             border.width: 1
@@ -462,7 +462,7 @@ Flow {
                                 required property var modelData
                                 width: 78
                                 height: 24
-                                radius: 4
+                                radius: root.theme.dimensions.shapeExtraSmall
                                 color: root.topRange === rangeRect.modelData.value ? root.theme.colors.primary.alpha(0.3) : root.theme.colors.surfaceContainerHigh
                                 border.color: root.topRange === rangeRect.modelData.value ? root.theme.colors.primary : "transparent"
                                 border.width: 1
@@ -490,8 +490,8 @@ Flow {
     Rectangle {
         id: categoriesBtn
         width: catBtnText.width + 16
-        height: 28
-        radius: 6
+        height: root.theme.dimensions.chipHeight
+        radius: root.theme.dimensions.shapeExtraSmall
         color: root.theme.colors.surfaceContainerHigh
 
         Text {
@@ -534,8 +534,8 @@ Flow {
                         required property var modelData
                         property bool isOn: root.category.charAt(catPopupRect.modelData.mask) === "1"
                         width: 100
-                        height: 28
-                        radius: 4
+                        height: root.theme.dimensions.chipHeight
+                        radius: root.theme.dimensions.shapeExtraSmall
                         color: catPopupRect.isOn ? root.theme.colors.primary.alpha(0.3) : root.theme.colors.surfaceContainerHigh
                         border.color: catPopupRect.isOn ? root.theme.colors.primary : "transparent"
                         border.width: 1
@@ -585,9 +585,9 @@ Flow {
     // --- Color Filter ---
     Rectangle {
         id: colorFilterBtn
-        height: 28
+        height: root.theme.dimensions.chipHeight
         width: colorFilterRow.width + 12
-        radius: 6
+        radius: root.theme.dimensions.shapeExtraSmall
         color: root.theme.colors.surfaceContainerHigh
         border.color: root.color !== "" ? root.theme.colors.primary : "transparent"
         border.width: 1
@@ -641,7 +641,7 @@ Flow {
                         required property var modelData
                         width: 32
                         height: 24
-                        radius: 4
+                        radius: root.theme.dimensions.shapeExtraSmall
                         color: colorPresetRect.modelData.hex === "" ? root.theme.colors.surfaceContainerHigh : ("#" + colorPresetRect.modelData.hex)
                         border.color: root.color === colorPresetRect.modelData.hex ? root.theme.colors.primary : (colorPresetRect.modelData.hex === "ffffff" || colorPresetRect.modelData.hex === "cccccc" ? root.theme.colors.onSurfaceVariant : "transparent")
                         border.width: root.color === colorPresetRect.modelData.hex ? 2 : 1
@@ -677,9 +677,9 @@ Flow {
     // --- Resolution Filter ---
     Rectangle {
         id: resFilterBtn
-        height: 28
+        height: root.theme.dimensions.chipHeight
         width: resFilterText.width + 12
-        radius: 6
+        radius: root.theme.dimensions.shapeExtraSmall
         color: root.theme.colors.surfaceContainerHigh
         border.color: root.resolution !== "" ? root.theme.colors.primary : "transparent"
         border.width: 1
@@ -710,9 +710,9 @@ Flow {
                     Rectangle {
                         id: resPresetRect
                         required property var modelData
-                        width: 104
-                        height: 28
-                        radius: 6
+                        width: root.theme.dimensions.statCardHeight
+                        height: root.theme.dimensions.chipHeight
+                        radius: root.theme.dimensions.shapeExtraSmall
                         color: root.resolution === resPresetRect.modelData.value ? root.theme.colors.primary.alpha(0.2) : resPresetMouse.containsMouse ? root.theme.colors.primary.alpha(0.1) : "transparent"
                         border.color: root.resolution === resPresetRect.modelData.value ? root.theme.colors.primary : "transparent"
                         border.width: 1

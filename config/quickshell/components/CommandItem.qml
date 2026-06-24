@@ -99,7 +99,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         width: 24
         height: 24
-        radius: 4
+        radius: root.theme.dimensions.shapeExtraSmall
         color: root.theme.colors.surfaceContainerHigh
         visible: (mouseArea.containsMouse || root.isHighlighted) && commandData?.enabled !== false
         opacity: 0.8

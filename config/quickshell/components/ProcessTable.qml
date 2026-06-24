@@ -3,6 +3,7 @@
 import QtQuick
 import Quickshell.Io
 import "root:/themes"
+import "root:/windows/processdetail" as ProcessDetail
 
 SimpleTable {
     id: root
@@ -58,7 +59,8 @@ SimpleTable {
             dataModel.append({
                 textRole: qsTr("No processes available"),
                 valueRole: "0.00",
-                subRole: ""
+                subRole: "",
+                pidRole: 0
             });
             return;
         }
@@ -76,7 +78,8 @@ SimpleTable {
             dataModel.append({
                 textRole: processName || qsTr("Unknown"),
                 valueRole: (processValue !== undefined) ? Number(processValue).toFixed(2) : "0.00",
-                subRole: subValue
+                subRole: subValue,
+                pidRole: processes[i].pid || 0
             });
 
             if (processValue >= highValueAlert) {
@@ -105,7 +108,8 @@ SimpleTable {
                 dataModel.append({
                     textRole: qsTr("Parsing Error"),
                     valueRole: "N/A",
-                    subRole: ""
+                    subRole: "",
+                    pidRole: 0
                 });
             }
         }
@@ -133,9 +137,10 @@ SimpleTable {
     ListModel {
         id: dataModel
         ListElement {
-            textRole: "Loading data..." // سيتم ترجمتها عند العرض إذا استخدمت qsTr في الـ Delegate أو هنا كـ string
+            textRole: "Loading data..."
             valueRole: "0.00"
             subRole: ""
+            pidRole: 0
         }
     }
 
@@ -157,7 +162,8 @@ SimpleTable {
                     dataModel.append({
                         textRole: qsTr("Script Error"),
                         valueRole: "N/A",
-                        subRole: ""
+                        subRole: "",
+                        pidRole: 0
                     });
                 }
             }
@@ -197,13 +203,34 @@ SimpleTable {
         }
     }
 
+    property var _detailWindows: []
+
+    onRowClicked: function(rowIndex) {
+        if (!showDetailButton) return;
+        var pid = dataModel.get(rowIndex).pidRole;
+        if (!pid || pid === 0) return;
+
+        var component = Qt.createComponent("root:/windows/processdetail/ProcessDetailWindow.qml");
+        if (component.status === Component.Ready) {
+            var window = component.createObject(null, { "targetPid": pid });
+            _detailWindows.push(window);
+            window.onClosing.connect(function() {
+                var idx = _detailWindows.indexOf(window);
+                if (idx !== -1) _detailWindows.splice(idx, 1);
+            });
+        } else {
+            console.error("Failed to create ProcessDetailWindow:", component.errorString());
+        }
+    }
+
     Component.onCompleted: {
         // تحديث النص الأولي ليكون مترجماً
         dataModel.clear();
         dataModel.append({
             textRole: qsTr("Loading data..."),
             valueRole: "0.00",
-            subRole: ""
+            subRole: "",
+            pidRole: 0
         });
 
         if (root.running) {

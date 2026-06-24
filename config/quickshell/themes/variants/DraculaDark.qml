@@ -32,6 +32,17 @@ BaseTheme {
     _iconFont: "FantasqueSansM Nerd Font Propo"
     _bodyFont: "JF Flat"
 
+    _shapeNone: 0
+    _shapeExtraSmall: 1
+    _shapeSmall: 1
+    _shapeMedium: 1
+    _shapeLarge: 1
+    _shapeExtraLarge: 1
+    _shapeFull: 1
+
+    _iconButtonRadius: 1
+    _statCardRadius: 1
+
     _themeIcons: "Papirus"
 
     _hyprBorderWidth: 2

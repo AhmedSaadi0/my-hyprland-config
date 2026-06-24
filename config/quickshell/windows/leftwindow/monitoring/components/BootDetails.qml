@@ -66,7 +66,7 @@ Item {
             implicitHeight: summaryRow.implicitHeight + 20
             color: bootRoot.statusBgColor
             border.color: bootRoot.statusBorderColor
-            radius: 8
+            radius: bootRoot.theme.dimensions.shapeSmall
 
             RowLayout {
                 id: summaryRow
@@ -124,7 +124,7 @@ Item {
                     // Card background
                     Rectangle {
                         anchors.fill: parent
-                        radius: 6
+                        radius: bootRoot.theme.dimensions.shapeExtraSmall
                         color: {
                             if (isExpanded && bootRoot.themeStatusColor) {
                                 var c = bootRoot.themeStatusColor;
@@ -203,7 +203,7 @@ Item {
                             Rectangle {
                                 width: 26
                                 height: 26
-                                radius: 13
+                                radius: bootRoot.theme.dimensions.shapeMedium
                                 color: copyMouse.containsMouse ? bootRoot.theme.colors.onSurface.alpha(0.1) : "transparent"
                                 Layout.alignment: Qt.AlignTop
 
@@ -247,7 +247,7 @@ Item {
                             Layout.fillWidth: true
                             Layout.leftMargin: 20
                             implicitHeight: rawLogText.implicitHeight + 14
-                            radius: 4
+                            radius: bootRoot.theme.dimensions.shapeExtraSmall
                             visible: logDelegate.isExpanded
                             opacity: logDelegate.isExpanded ? 1 : 0
                             color: bootRoot.theme.colors.surface.alpha(bootRoot.theme.systemSettings.themeMode == "dark" ? 0.35 : 0.06)

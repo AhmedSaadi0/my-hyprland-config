@@ -39,6 +39,20 @@ BaseThemeSettings {
     property int localMenuWidth: 380
     property int localMenuWidgetsMargin: 15
 
+    property int localShapeExtraSmall: 4
+    property int localShapeSmall: 8
+    property int localShapeLarge: 16
+    property int localShapeExtraLarge: 24
+    property int localShapeFull: 28
+
+    property int localDialogIconSize: 72
+    property int localIconButtonSize: 36
+    property int localIconButtonRadius: 18
+    property int localChipHeight: 28
+    property int localScrollbarWidth: 6
+    property int localStatCardRadius: 20
+    property int localStatCardHeight: 104
+
     function syncFromTheme() {
         localIconFont = theme._iconFont;
         localBodyFont = theme._bodyFont;
@@ -62,6 +76,20 @@ BaseThemeSettings {
         localMenuHeight = theme._menuHeight;
         localMenuWidth = theme._menuWidth;
         localMenuWidgetsMargin = theme._menuWidgetsMargin;
+
+        localShapeExtraSmall = theme._shapeExtraSmall;
+        localShapeSmall = theme._shapeSmall;
+        localShapeLarge = theme._shapeLarge;
+        localShapeExtraLarge = theme._shapeExtraLarge;
+        localShapeFull = theme._shapeFull;
+
+        localDialogIconSize = theme._dialogIconSize;
+        localIconButtonSize = theme._iconButtonSize;
+        localIconButtonRadius = theme._iconButtonRadius;
+        localChipHeight = theme._chipHeight;
+        localScrollbarWidth = theme._scrollbarWidth;
+        localStatCardRadius = theme._statCardRadius;
+        localStatCardHeight = theme._statCardHeight;
     }
 
     function serializeData() {
@@ -84,7 +112,19 @@ BaseThemeSettings {
             "_barWidgetsHeight": localBarWidgetsHeight,
             "_menuHeight": localMenuHeight,
             "_menuWidth": localMenuWidth,
-            "_menuWidgetsMargin": localMenuWidgetsMargin
+            "_menuWidgetsMargin": localMenuWidgetsMargin,
+            "_shapeExtraSmall": localShapeExtraSmall,
+            "_shapeSmall": localShapeSmall,
+            "_shapeLarge": localShapeLarge,
+            "_shapeExtraLarge": localShapeExtraLarge,
+            "_shapeFull": localShapeFull,
+            "_dialogIconSize": localDialogIconSize,
+            "_iconButtonSize": localIconButtonSize,
+            "_iconButtonRadius": localIconButtonRadius,
+            "_chipHeight": localChipHeight,
+            "_scrollbarWidth": localScrollbarWidth,
+            "_statCardRadius": localStatCardRadius,
+            "_statCardHeight": localStatCardHeight
         };
     }
 
@@ -367,6 +407,160 @@ BaseThemeSettings {
                         root.localElementRadius = v;
                         root.applySingleProperty("_elementRadius", v);
                     }
+                }
+            }
+        }
+
+        SectionCard {
+            title: qsTr("M3 Shape Scale")
+            subtitle: qsTr("Corner radius scale following Material Design 3 shape tokens.")
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Extra Small")
+                from: 0
+                to: 12
+                value: root.localShapeExtraSmall
+                onEditingFinished: v => {
+                    root.localShapeExtraSmall = v;
+                    root.applySingleProperty("_shapeExtraSmall", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Small")
+                from: 0
+                to: 16
+                value: root.localShapeSmall
+                onEditingFinished: v => {
+                    root.localShapeSmall = v;
+                    root.applySingleProperty("_shapeSmall", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Large")
+                from: 8
+                to: 32
+                value: root.localShapeLarge
+                onEditingFinished: v => {
+                    root.localShapeLarge = v;
+                    root.applySingleProperty("_shapeLarge", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Extra Large")
+                from: 12
+                to: 40
+                value: root.localShapeExtraLarge
+                onEditingFinished: v => {
+                    root.localShapeExtraLarge = v;
+                    root.applySingleProperty("_shapeExtraLarge", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Full")
+                from: 12
+                to: 40
+                value: root.localShapeFull
+                onEditingFinished: v => {
+                    root.localShapeFull = v;
+                    root.applySingleProperty("_shapeFull", v);
+                }
+            }
+        }
+
+        SectionCard {
+            title: qsTr("Component Dimensions")
+            subtitle: qsTr("Sizes for icons, buttons, chips, and cards.")
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Dialog Icon Size")
+                from: 48
+                to: 120
+                value: root.localDialogIconSize
+                onEditingFinished: v => {
+                    root.localDialogIconSize = v;
+                    root.applySingleProperty("_dialogIconSize", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Icon Button Size")
+                from: 24
+                to: 56
+                value: root.localIconButtonSize
+                onEditingFinished: v => {
+                    root.localIconButtonSize = v;
+                    root.applySingleProperty("_iconButtonSize", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Icon Button Radius")
+                from: 0
+                to: 28
+                value: root.localIconButtonRadius
+                onEditingFinished: v => {
+                    root.localIconButtonRadius = v;
+                    root.applySingleProperty("_iconButtonRadius", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Chip Height")
+                from: 20
+                to: 40
+                value: root.localChipHeight
+                onEditingFinished: v => {
+                    root.localChipHeight = v;
+                    root.applySingleProperty("_chipHeight", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Scrollbar Width")
+                from: 2
+                to: 12
+                value: root.localScrollbarWidth
+                onEditingFinished: v => {
+                    root.localScrollbarWidth = v;
+                    root.applySingleProperty("_scrollbarWidth", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Stat Card Radius")
+                from: 1
+                to: 32
+                value: root.localStatCardRadius
+                onEditingFinished: v => {
+                    root.localStatCardRadius = v;
+                    root.applySingleProperty("_statCardRadius", v);
+                }
+            }
+
+            SliderWithLabel {
+                Layout.fillWidth: true
+                label: qsTr("Stat Card Height")
+                from: 64
+                to: 160
+                value: root.localStatCardHeight
+                onEditingFinished: v => {
+                    root.localStatCardHeight = v;
+                    root.applySingleProperty("_statCardHeight", v);
                 }
             }
         }

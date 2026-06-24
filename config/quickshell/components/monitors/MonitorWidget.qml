@@ -48,18 +48,6 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter // Center text horizontally
         horizontalAlignment: Text.AlignHCenter
         width: parent.width // Ensure text can use full width for centering
-
-        Component.onCompleted: {
-            if (monitorLoader.item && "value" in monitorLoader.item) {
-                function updateText() {
-                    valueLabel.text = Math.round(monitorLoader.item.value * 100) + "%";
-                }
-                if (monitorLoader.item.valueChanged) {
-                    monitorLoader.item.valueChanged.connect(updateText);
-                }
-                updateText(); // Initial update
-            }
-        }
     }
 
     Loader {
@@ -79,6 +67,16 @@ ColumnLayout {
             }
             if ("iconFontSize" in item) {
                 item.iconFontSize = monitorUnitRoot.monitorItemIconFontSize;
+            }
+
+            // Update value label now that monitorLoader.item is available
+            if ("value" in item) {
+                valueLabel.text = Math.round(item.value * 100) + "%";
+                if (item.valueChanged) {
+                    item.valueChanged.connect(function () {
+                        valueLabel.text = Math.round(item.value * 100) + "%";
+                    });
+                }
             }
         }
     }

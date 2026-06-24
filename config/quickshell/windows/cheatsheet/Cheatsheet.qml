@@ -355,7 +355,7 @@ PanelWindow {
                                             Rectangle {
                                                 width: dispatcherText.width + 8
                                                 height: dispatcherText.height + 4
-                                                radius: 4
+                                                radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                                                 color: Qt.rgba(ThemeManager.selectedTheme.colors.primary.r, ThemeManager.selectedTheme.colors.primary.g, ThemeManager.selectedTheme.colors.primary.b, 0.1)
 
                                                 Text {
@@ -383,14 +383,14 @@ PanelWindow {
                                 // شريط التمرير الداخلي للقائمة
                                 ScrollBar.vertical: ScrollBar {
                                     policy: ScrollBar.AsNeeded
-                                    width: 6
+                                    width: ThemeManager.selectedTheme.dimensions.scrollbarWidth
                                     background: Rectangle {
                                         color: "transparent"
-                                        radius: 3
+                                        radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                                     }
                                     contentItem: Rectangle {
                                         color: ThemeManager.selectedTheme.colors.onSurfaceVariant
-                                        radius: 3
+                                        radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                                     }
                                 }
                             }

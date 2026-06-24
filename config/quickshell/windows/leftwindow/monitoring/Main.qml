@@ -40,6 +40,7 @@ BaseMenuView {
                 id: cpuTable
                 Layout.fillWidth: true
                 title: "Cpu Usage"
+                showDetailButton: true
                 command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "cpu"]
                 topLeftTableRadius: parent.parent.groupRadius
                 topRightTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
@@ -50,6 +51,7 @@ BaseMenuView {
                 id: ramTable
                 Layout.fillWidth: true
                 title: "Mem Usage"
+                showDetailButton: true
                 command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "ram"]
                 topLeftTableRadius: parent.parent.groupRadius / parent.parent.innerRadiusDiv
                 topRightTableRadius: parent.parent.groupRadius

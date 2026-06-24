@@ -72,7 +72,7 @@ ColumnLayout {
             visible: !isLoading && aiConfidence > 0
             width: 64
             height: 10
-            radius: 9
+            radius: theme.dimensions.shapeSmall
             color: Qt.rgba(theme.colors.primary.r, theme.colors.primary.g, theme.colors.primary.b, 0.18)
             border.color: theme.colors.primary
             border.width: 1
@@ -80,7 +80,7 @@ ColumnLayout {
             Rectangle {
                 width: (aiConfidence / 100) * parent.width
                 height: parent.height
-                radius: 9
+                radius: theme.dimensions.shapeSmall
                 color: theme.colors.primary
             }
 
@@ -165,7 +165,7 @@ ColumnLayout {
                 Rectangle {
                     width: 18
                     height: 18
-                    radius: 9
+                    radius: theme.dimensions.shapeSmall
                     color: Qt.rgba(theme.colors.tertiary.r, theme.colors.tertiary.g, theme.colors.tertiary.b, 0.18)
                     border.color: theme.colors.tertiary
                     border.width: 1

@@ -66,6 +66,11 @@ Rectangle {
     property bool showVerticalGridLines: true
     property bool showHorizontalGridLines: true
 
+    // --- Detail Button Properties ---
+    property bool showDetailButton: false
+    property int hoveredRow: -1
+    signal rowClicked(int rowIndex)
+
     color: tableBackgroundColor
     border.color: tableBorderColor
     border.width: tableBorderWidth > 0 ? tableBorderWidth : 0
@@ -183,6 +188,57 @@ Rectangle {
                             wrapMode: columnDef.cellWrapMode !== undefined ? columnDef.cellWrapMode : tableRoot.cellWrapMode
                             horizontalAlignment: mainAlignment
                             Layout.alignment: mainAlignment
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        visible: tableRoot.showDetailButton
+                        cursorShape: Qt.PointingHandCursor
+                        onContainsMouseChanged: {
+                            if (containsMouse)
+                                tableRoot.hoveredRow = rowIndex
+                            else if (tableRoot.hoveredRow === rowIndex)
+                                tableRoot.hoveredRow = -1
+                        }
+                        onClicked: mouse => {
+                            if (tableRoot.showDetailButton)
+                                tableRoot.rowClicked(rowIndex)
+                        }
+                    }
+
+                    Rectangle {
+                        visible: tableRoot.showDetailButton && tableRoot.hoveredRow === rowIndex && colIndex === 0
+                        anchors.top: parent.top
+                        anchors.right: parent.right
+                        anchors.topMargin: 2
+                        anchors.rightMargin: 2
+                        width: 20
+                        height: 20
+                        radius: 10
+                        color: detailBtnArea.containsMouse
+                            ? ThemeManager.selectedTheme.colors.primary
+                            : ThemeManager.selectedTheme.colors.surfaceVariant
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "i"
+                            font.pixelSize: 11
+                            font.bold: true
+                            font.family: "serif"
+                            font.italic: true
+                            color: detailBtnArea.containsMouse
+                                ? ThemeManager.selectedTheme.colors.onPrimary
+                                : ThemeManager.selectedTheme.colors.onSurfaceVariant
+                        }
+
+                        MouseArea {
+                            id: detailBtnArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: tableRoot.rowClicked(rowIndex)
                         }
                     }
                 }

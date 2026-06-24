@@ -454,9 +454,9 @@ BaseThemeSettings {
             Layout.fillWidth: true
             spacing: 10
             Rectangle {
-                width: 28
-                height: 28
-                radius: 4
+                width: root.theme.dimensions.chipHeight
+                height: root.theme.dimensions.chipHeight
+                radius: root.theme.dimensions.shapeExtraSmall
                 border.color: root.theme.colors.onSurface.alpha(0.4)
                 border.width: 1
                 color: value

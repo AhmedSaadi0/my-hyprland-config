@@ -38,7 +38,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.04)
-        radius: 0
+        radius: ThemeManager.selectedTheme.dimensions.shapeNone
     }
 
     RowLayout {
@@ -58,7 +58,7 @@ Item {
                 anchors.centerIn: parent
                 width: 40
                 height: 40
-                radius: 20
+                radius: ThemeManager.selectedTheme.dimensions.statCardRadius
                 color: leadingArea.containsPress ? ThemeManager.selectedTheme.colors.onSurface.alpha(0.12) : leadingArea.containsMouse ? ThemeManager.selectedTheme.colors.onSurface.alpha(0.08) : "transparent"
                 Behavior on color {
                     ColorAnimation {
@@ -114,7 +114,7 @@ Item {
                         anchors.centerIn: parent
                         width: 40
                         height: 40
-                        radius: 20
+                        radius: ThemeManager.selectedTheme.dimensions.statCardRadius
                         color: actionArea.containsPress ? ThemeManager.selectedTheme.colors.onSurface.alpha(0.12) : actionArea.containsMouse ? ThemeManager.selectedTheme.colors.onSurface.alpha(0.08) : "transparent"
                         Behavior on color {
                             ColorAnimation {
@@ -154,7 +154,7 @@ Item {
                     anchors.centerIn: parent
                     width: 40
                     height: 40
-                    radius: 20
+                    radius: ThemeManager.selectedTheme.dimensions.statCardRadius
                     color: primaryArea.containsPress ? ThemeManager.selectedTheme.colors.primary.alpha(0.30) : primaryArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.22) : ThemeManager.selectedTheme.colors.primary.alpha(0.14)
                     Behavior on color {
                         ColorAnimation {

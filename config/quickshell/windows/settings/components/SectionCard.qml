@@ -10,23 +10,23 @@ import "root:/themes"
 
 Rectangle {
     id: card
-    
+
     property string title: ""
     property string subtitle: ""
-    
+
     // يحاول الوصول للثيم من الأب أو يستخدم الـ Singleton الافتراضي
     property var theme: (parent && parent.theme !== undefined) ? parent.theme : ThemeManager.selectedTheme
-    
+
     // دالة مساعدة للخطوط تعتمد على الثيم المتوفر
     function typ(k, d) {
-        return theme ? (theme.typography[k] || d) : d
+        return theme ? (theme.typography[k] || d) : d;
     }
-    
+
     default property alias content: sectionContent.data
 
     Layout.fillWidth: true
     color: theme.colors.surfaceContainer.alpha(0.72)
-    radius: theme.dimensions.baseRadius
+    radius: theme.dimensions.elementRadius
     border.color: theme.colors.primary.alpha(0.12)
     border.width: 1
 

@@ -19,7 +19,7 @@ Rectangle {
     implicitHeight: contentLayout.implicitHeight + ThemeManager.selectedTheme.dimensions.spacingMedium * 2
 
     color: ThemeManager.selectedTheme.colors.onSurface.alpha(0.04)
-    radius: 0
+    radius: ThemeManager.selectedTheme.dimensions.shapeNone
 
     ColumnLayout {
         id: contentLayout

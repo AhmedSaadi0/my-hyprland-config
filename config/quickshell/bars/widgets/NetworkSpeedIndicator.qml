@@ -71,7 +71,7 @@ Rectangle {
 
         layer.effect: Shadow {
             color: Qt.darker(ThemeManager.selectedTheme.colors.surface, 1.4).alpha(0.2)
-            radius: 8
+            radius: ThemeManager.selectedTheme.dimensions.shapeSmall
         }
     }
 

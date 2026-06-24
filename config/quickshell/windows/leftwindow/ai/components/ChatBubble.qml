@@ -21,7 +21,7 @@ Rectangle {
     anchors.right: isUser ? parent.right : undefined
     anchors.left: isUser ? undefined : parent.left
 
-    radius: 12
+    radius: root.theme.dimensions.shapeMedium
 
     // الألوان حسب الثيم والمرسل
     color: isUser ? root.theme.colors.primary : root.theme.colors.surfaceContainerHigh

@@ -80,7 +80,7 @@ Item {
         Rectangle {
             Layout.preferredWidth: 40
             Layout.preferredHeight: 40
-            radius: 10
+            radius: _dims.shapeMedium
 
             gradient: Gradient {
                 GradientStop {
@@ -128,7 +128,7 @@ Item {
                 Rectangle {
                     Layout.preferredHeight: 18
                     Layout.preferredWidth: statusTextItem.implicitWidth + 28
-                    radius: 9
+                    radius: _dims.shapeSmall
                     color: headerRoot.statusBgColor
 
                     RowLayout {
@@ -138,7 +138,7 @@ Item {
                         Rectangle {
                             width: 8
                             height: 8
-                            radius: 4
+                            radius: _dims.shapeExtraSmall
                             color: headerRoot.statusColor
                         }
 

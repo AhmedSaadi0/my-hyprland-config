@@ -187,7 +187,7 @@ MenuCard {
             Layout.fillWidth: true
             height: 30
             color: "transparent"
-            radius: 4
+            radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
 
             // خاصية إضافية للتحكم في الـ scale
             property real pressScale: 1.0

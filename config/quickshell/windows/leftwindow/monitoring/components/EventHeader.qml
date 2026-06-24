@@ -64,7 +64,7 @@ Item {
                 Rectangle {
                     visible: eventSeverity === "CRITICAL"
                     height: 18
-                    radius: 9
+                    radius: theme.dimensions.shapeSmall
                     color: Qt.rgba(theme.colors.error.r, theme.colors.error.g, theme.colors.error.b, 0.18)
                     border.color: Qt.rgba(theme.colors.error.r, theme.colors.error.g, theme.colors.error.b, 0.5)
                     border.width: 1

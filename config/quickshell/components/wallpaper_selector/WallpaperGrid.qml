@@ -97,7 +97,7 @@ Rectangle {
         anchors.centerIn: parent
         width: 48
         height: 48
-        radius: 24
+        radius: root.theme.dimensions.shapeExtraLarge
         color: root.theme.colors.primary.alpha(0.2)
         visible: root.loading && wallpaperGrid.count === 0
 
@@ -124,7 +124,7 @@ Rectangle {
         anchors.bottomMargin: 10
         width: 120
         height: 32
-        radius: 16
+        radius: root.theme.dimensions.shapeLarge
         color: root.theme.colors.primary.alpha(0.9)
 
         visible: root.isWallhaven && root.loading && wallpaperGrid.count > 0
@@ -141,7 +141,7 @@ Rectangle {
                     Rectangle {
                         width: 20
                         height: 20
-                        radius: 10
+                        radius: root.theme.dimensions.shapeMedium
                         color: "transparent"
                         border.width: 2
                         border.color: root.theme.colors.onPrimary

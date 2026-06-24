@@ -296,7 +296,7 @@ BaseThemeSettings {
                                 color: root.localColor
                                 border.color: root.theme.colors.onSurfaceVariant
                                 border.width: 1
-                                radius: 4
+                                radius: root.theme.dimensions.shapeExtraSmall
                             }
                             MButton {
                                 text: "󰃉"
@@ -357,7 +357,7 @@ BaseThemeSettings {
                                 color: root.localShadowColor
                                 border.color: root.theme.colors.onSurfaceVariant
                                 border.width: 1
-                                radius: 4
+                                radius: root.theme.dimensions.shapeExtraSmall
                             }
                             MButton {
                                 text: "󰃉"

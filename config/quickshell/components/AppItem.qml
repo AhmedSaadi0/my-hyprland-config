@@ -150,7 +150,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 width: 24
                 height: 24
-                radius: 6
+                radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                 color: ThemeManager.selectedTheme.colors.primary.alpha(0.12)
                 visible: root.isFavorite
 
@@ -167,7 +167,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 width: 24
                 height: 24
-                radius: 6
+                radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                 color: ThemeManager.selectedTheme.colors.primary.alpha(0.12)
                 visible: root.isPinnedToDock
 
@@ -184,7 +184,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 width: 24
                 height: 24
-                radius: 6
+                radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
                 color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
                 opacity: (mouseArea.containsMouse || root.isHighlighted || root.isSelected) ? 0.85 : 0
 

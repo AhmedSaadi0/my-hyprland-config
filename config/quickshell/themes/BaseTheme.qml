@@ -91,6 +91,29 @@ PersistentProperties {
     property int _spacingMedium: 8
     property int _spacingLarge: 12
 
+    // --- M3 Shape Scale (Corner Radii) ---
+    property int _shapeNone: 0
+    property int _shapeExtraSmall: 4
+    property int _shapeSmall: 8
+    property int _shapeMedium: root._baseRadius // 12
+    property int _shapeLarge: 16
+    property int _shapeExtraLarge: 24
+    property int _shapeFull: 28
+
+    // --- Component Dimensions ---
+    property int _dialogIconSize: 72
+    property int _iconButtonSize: 36
+    property int _iconButtonRadius: 18
+    property int _chipHeight: 28
+    property int _scrollbarWidth: 6
+    property int _statCardRadius: 20
+    property int _statCardHeight: 104
+
+    // --- Animation Durations ---
+    property int _dialogOpenScaleDuration: 400
+    property int _dialogOpenOpacityDuration: 300
+    property real _dialogInitialScale: 0.90
+
     // --------------------
     // ---- Typography ----
     // --------------------
@@ -276,6 +299,29 @@ PersistentProperties {
         property alias spacingSmall: root._spacingSmall
         property alias spacingMedium: root._spacingMedium
         property alias spacingLarge: root._spacingLarge
+
+        // --- M3 Shape Scale ---
+        property alias shapeNone: root._shapeNone
+        property alias shapeExtraSmall: root._shapeExtraSmall
+        property alias shapeSmall: root._shapeSmall
+        property alias shapeMedium: root._shapeMedium
+        property alias shapeLarge: root._shapeLarge
+        property alias shapeExtraLarge: root._shapeExtraLarge
+        property alias shapeFull: root._shapeFull
+
+        // --- Component Dimensions ---
+        property alias dialogIconSize: root._dialogIconSize
+        property alias iconButtonSize: root._iconButtonSize
+        property alias iconButtonRadius: root._iconButtonRadius
+        property alias chipHeight: root._chipHeight
+        property alias scrollbarWidth: root._scrollbarWidth
+        property alias statCardRadius: root._statCardRadius
+        property alias statCardHeight: root._statCardHeight
+
+        // --- Animation ---
+        property alias dialogOpenScaleDuration: root._dialogOpenScaleDuration
+        property alias dialogOpenOpacityDuration: root._dialogOpenOpacityDuration
+        property alias dialogInitialScale: root._dialogInitialScale
     }
 
     // --- Typography ---

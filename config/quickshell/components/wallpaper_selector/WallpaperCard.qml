@@ -106,7 +106,7 @@ Item {
                     anchors.centerIn: parent
                     width: 24
                     height: 24
-                    radius: 12
+                    radius: root.theme.dimensions.shapeMedium
                     color: root.theme.colors.primary.alpha(0.3)
                     visible: thumbnailImage.status === Image.Loading
 
@@ -135,7 +135,7 @@ Item {
                     anchors.margins: 4
                     height: 16
                     width: favCountText.width + 8
-                    radius: 4
+                    radius: root.theme.dimensions.shapeExtraSmall
                     color: root.theme.colors.surface.alpha(0.72)
                     visible: root.isWallhaven && root.modelData && (root.modelData.favorites || 0) > 0
 
@@ -236,8 +236,8 @@ Item {
         property string iconSymbol: ""
         signal actionTriggered
 
-        width: 36
-        height: 36
+        width: root.theme.dimensions.iconButtonSize
+        height: root.theme.dimensions.iconButtonSize
 
         Rectangle {
             id: btnBackground

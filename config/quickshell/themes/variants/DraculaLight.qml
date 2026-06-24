@@ -51,6 +51,20 @@ BaseTheme {
     _shadow: "#000000"
     _scrim: "#000000"
 
+    _baseRadius: 1
+    _elementRadius: 1
+
+    _shapeNone: 0
+    _shapeExtraSmall: 1
+    _shapeSmall: 1
+    _shapeMedium: 1
+    _shapeLarge: 1
+    _shapeExtraLarge: 1
+    _shapeFull: 1
+
+    _iconButtonRadius: 1
+    _statCardRadius: 1
+
     _plasmaColorScheme: "DraculaLight"
     _konsoleProfile: "DraculaLight.profile"
 

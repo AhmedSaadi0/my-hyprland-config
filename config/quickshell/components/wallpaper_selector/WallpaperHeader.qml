@@ -47,9 +47,9 @@ RowLayout {
 
     // Refresh button
     Rectangle {
-        width: 28
-        height: 28
-        radius: 6
+        width: root.theme.dimensions.chipHeight
+        height: root.theme.dimensions.chipHeight
+        radius: root.theme.dimensions.shapeExtraSmall
         color: refreshMouseArea.containsMouse ? root.theme.colors.primary.alpha(0.2) : "transparent"
 
         Text {
@@ -82,9 +82,9 @@ RowLayout {
 
     // Close button
     Rectangle {
-        width: 28
-        height: 28
-        radius: 6
+        width: root.theme.dimensions.chipHeight
+        height: root.theme.dimensions.chipHeight
+        radius: root.theme.dimensions.shapeExtraSmall
         color: closeMouseArea.containsMouse ? root.theme.colors.primary.alpha(0.2) : "transparent"
 
         Text {

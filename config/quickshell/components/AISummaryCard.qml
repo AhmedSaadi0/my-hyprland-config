@@ -184,7 +184,7 @@ Item {
                 Rectangle {
                     width: 30
                     height: 30
-                    radius: 15
+                    radius: root.dim.shapeLarge
                     color: dataMouseArea.containsMouse ? root.aiButtonHover : root.aiButtonBg
                     visible: root.showDataRefreshButton
                     scale: dataMouseArea.pressed ? 0.92 : 1.0
@@ -223,7 +223,7 @@ Item {
                 Rectangle {
                     width: 30
                     height: 30
-                    radius: 15
+                    radius: root.dim.shapeLarge
                     color: aiMouseArea.containsMouse ? root.aiButtonHover : root.aiButtonBg
                     visible: root.showAiRefreshButton
                     scale: aiMouseArea.pressed ? 0.92 : 1.0
