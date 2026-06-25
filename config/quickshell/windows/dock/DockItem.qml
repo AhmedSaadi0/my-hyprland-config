@@ -9,6 +9,7 @@ import Quickshell.Widgets
 import "root:/themes"
 import "root:/config"
 import "root:/utils"
+import "root:/services"
 
 Item {
     id: itemRoot
@@ -32,7 +33,6 @@ Item {
 
     readonly property bool hovered: mouseArea.containsMouse
 
-    // --- دالة تشغيل التطبيق أو التركيز عليه ---
     function launchOrFocus() {
         if (isRunning && windowAddress) {
             Hyprland.dispatch("focuswindow address:" + windowAddress);
@@ -44,7 +44,6 @@ Item {
         }
     }
 
-    // --- الخلفية التفاعلية عند تحويم الفأرة ---
     Rectangle {
         id: bg
         anchors.fill: parent
@@ -58,13 +57,19 @@ Item {
         }
     }
 
-    // --- أيقونة التطبيق ---
+    // --- أيقونة التطبيق (محدثة لتستدعي خدمة الأيقونات المركزية) ---
     IconImage {
         id: icon
         anchors.centerIn: parent
         width: iconSize
         height: iconSize
-        source: Quickshell.iconPath(appData ? appData.icon : "application-x-executable", "application-x-executable")
+
+        source: {
+            let trigger = IconService.iconUpdateTrigger;
+            let iconKey = appData ? appData.icon : "application-x-executable";
+            return IconService.getCached(iconKey);
+        }
+
         transformOrigin: Item.Center
 
         Behavior on scale {
@@ -75,7 +80,6 @@ Item {
         }
     }
 
-    // --- مؤشر النقطة النشطة للتطبيقات المشغلة ---
     Rectangle {
         id: activeDot
         anchors.bottom: parent.bottom
@@ -94,7 +98,6 @@ Item {
         }
     }
 
-    // --- شارة عدد النوافذ النشطة للتطبيق الواحد ---
     Rectangle {
         anchors.top: parent.top
         anchors.topMargin: 2
@@ -208,7 +211,6 @@ Item {
             }
         }
 
-        // الحالة البسيطة: اسم التطبيق فقط (عند اinuxtance واحد)
         Text {
             id: tooltipLabel
             anchors.centerIn: parent
@@ -218,7 +220,6 @@ Item {
             color: ThemeManager.selectedTheme.colors.onSurface
         }
 
-        // الحالة المركبة: قائمة الانستانسات مع رقم المساحة
         Row {
             id: instanceListRow
             visible: instanceCount > 1
@@ -237,11 +238,16 @@ Item {
                         color: instanceMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : ThemeManager.selectedTheme.colors.surfaceContainerHigh
                     }
 
+                    // أيقونة النوافذ المنبثقة المتعددة
                     IconImage {
                         anchors.centerIn: parent
                         width: 16
                         height: 16
-                        source: Quickshell.iconPath(appData ? appData.icon : "application-x-executable", "application-x-executable")
+                        source: {
+                            let trigger = IconService.iconUpdateTrigger;
+                            let iconKey = appData ? appData.icon : "application-x-executable";
+                            return IconService.getCached(iconKey);
+                        }
                     }
 
                     Rectangle {
@@ -279,7 +285,6 @@ Item {
         }
     }
 
-    // --- القائمة الجانبية التقليدية للأعلى ---
     Popup {
         id: contextMenu
         width: 200
@@ -547,7 +552,6 @@ Item {
         }
     }
 
-    // حركة ارتدادية عند التشغيل
     SequentialAnimation {
         id: bounceAnim
         running: false

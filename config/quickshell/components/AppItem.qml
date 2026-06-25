@@ -9,6 +9,7 @@ import "root:/themes"
 import "root:/config"
 import "root:/config/EventNames.js" as Events
 import "root:/utils"
+import "root:/services"
 
 Item {
     id: root
@@ -32,6 +33,12 @@ Item {
                 menuLoader.item.close();
             }
         }, root);
+
+        // Request theme icon resolution
+        let iconKey = appData ? appData.icon : null;
+        if (iconKey && !Helper.isDirectImageSource(iconKey)) {
+            IconService.requestResolve([iconKey]);
+        }
     }
 
     Rectangle {
@@ -88,7 +95,11 @@ Item {
                 anchors.centerIn: parent
                 width: 38
                 height: 38
-                source: Quickshell.iconPath(appData ? appData.icon : "application-x-executable", "application-x-executable")
+                source: {
+                    let trigger = IconService.iconUpdateTrigger;
+                    let iconKey = appData ? appData.icon : "application-x-executable";
+                    return IconService.getCached(iconKey);
+                }
                 transformOrigin: Item.Center
 
                 scale: (root.isHighlighted || mouseArea.containsMouse) ? 1.12 : 1.0

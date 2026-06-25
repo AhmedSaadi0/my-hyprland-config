@@ -1424,3 +1424,293 @@ details.manual-install-details[open] summary::after {
     padding: 20px;
   }
 }
+
+/* =========================================
+   11. Centered Alternating Timeline Layout
+   ========================================= */
+
+/* حاوية الجدول الزمني الرئيسي */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  margin: 50px 0;
+  padding: 20px 0;
+}
+
+/* خط المنتصف المشترك للتاريخ */
+.timeline-container::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent) 0%,
+    var(--accent-2) 50%,
+    var(--border-muted) 100%
+  );
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* بطاقات الأحداث الفردية */
+.timeline-item {
+  width: calc(50% - 40px);
+  position: relative;
+  margin-bottom: 50px;
+  z-index: 2;
+}
+
+/* توزيع العناصر يميناً ويساراً تلقائياً عبر خصائص الاتجاه المنطقية (Flex Alignment) */
+.timeline-item:nth-child(odd) {
+  align-self: flex-start;
+}
+
+.timeline-item:nth-child(even) {
+  align-self: flex-end;
+}
+
+/* بطاقة المحتوى الافتراضية داخل التايملاين */
+.timeline-item .roadmap-block {
+  background: color-mix(in srgb, var(--panel) 45%, transparent);
+  border: 1px solid var(--border-muted);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  transition: var(--transition);
+  border-inline-start: 1px solid var(--border-muted);
+}
+
+.timeline-item:hover .roadmap-block {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* نقطة الربط المركزية (Bullet Badges) */
+.timeline-badge {
+  position: absolute;
+  top: 36px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  z-index: 3;
+  transition: var(--transition);
+}
+
+.timeline-item:hover .timeline-badge {
+  background: var(--accent);
+  transform: scale(1.2);
+}
+
+/* تموضع النقطة بالتوافق مع اتجاه البطاقة يميناً/يساراً وعربياً/إنجليزياً */
+.timeline-item:nth-child(odd) .timeline-badge {
+  inset-inline-end: -49px; /* يوضع بدقة على خط المنتصف */
+}
+
+.timeline-item:nth-child(even) .timeline-badge {
+  inset-inline-start: -49px;
+}
+
+/* لوحة الإحصاءات العلوية */
+.roadmap-stats-dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 25px;
+  margin-bottom: 45px;
+}
+
+.roadmap-stat-card {
+  background: color-mix(in srgb, var(--panel) 45%, transparent);
+  border: 1px solid var(--border-muted);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+}
+
+.roadmap-stat-card .stat-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.roadmap-stat-card .stat-badge.success {
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  color: var(--success);
+}
+
+.roadmap-stat-card .stat-badge.warning {
+  background: color-mix(in srgb, var(--accent-3) 12%, transparent);
+  color: var(--accent-3);
+  animation: pulseAlert 2s infinite alternate;
+}
+
+.roadmap-stat-card .stat-badge.info {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+
+.roadmap-stat-card .stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.roadmap-stat-card .stat-info strong {
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.roadmap-stat-card .stat-info span {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* تنسيق القوائم والمؤشرات */
+.roadmap-list li {
+  padding: 8px 0;
+  padding-inline-start: 32px;
+  position: relative;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.roadmap-list li.done {
+  color: color-mix(in srgb, var(--muted) 65%, transparent);
+  text-decoration: line-through;
+}
+
+.roadmap-list li.done::before {
+  content: "✓";
+  border: none;
+  color: var(--success);
+  font-weight: 800;
+  position: absolute;
+  inset-inline-start: 0;
+  top: 7px;
+  width: 18px;
+  height: 18px;
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.roadmap-list li.in-progress {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.roadmap-list li.in-progress::before {
+  content: "⚡";
+  border: none;
+  color: var(--accent-3);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 7px;
+  width: 18px;
+  height: 18px;
+  background: color-mix(in srgb, var(--accent-3) 12%, transparent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  animation: pulseAlert 2.5s infinite alternate;
+}
+
+.roadmap-list li.planned {
+  color: var(--muted);
+}
+
+.roadmap-list li.planned::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 2px;
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.roadmap-header {
+  border-bottom: 1px solid var(--border-muted);
+  padding-bottom: 16px;
+  margin-bottom: 15px;
+}
+
+.roadmap-phase {
+  margin-bottom: 0px;
+  margin-inline-start: 0;
+  padding: 15px 0;
+  border-bottom: 1px dashed var(--border-muted);
+}
+
+.roadmap-phase:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* =========================================
+   12. Responsive Design for Timeline
+   ========================================= */
+@media (max-width: 992px) {
+  /* نقل خط التايملاين إلى جانب الصفحة على الأجهزة الصغيرة */
+  .timeline-container::before {
+    inset-inline-start: 16px;
+    left: auto;
+    right: auto;
+    transform: none;
+  }
+
+  .timeline-item {
+    width: 100%;
+    align-self: flex-start !important;
+    padding-inline-start: 45px;
+    padding-inline-end: 0;
+    margin-bottom: 35px;
+  }
+
+  /* إعادة محاذاة كل البادجات إلى الطرف الأيمن/الأيسر بالتوازي مع اتجاه اللغة */
+  .timeline-badge {
+    inset-inline-start: 8px !important;
+    inset-inline-end: auto !important;
+    top: 32px;
+  }
+
+  .roadmap-stats-dashboard {
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .roadmap-stats-dashboard {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .timeline-item .roadmap-block {
+    padding: 20px;
+  }
+}

@@ -10,6 +10,7 @@ import Quickshell.Widgets
 import "root:/themes"
 import "root:/config"
 import "root:/utils"
+import "root:/services"
 
 Item {
     id: root
@@ -47,50 +48,20 @@ Item {
 
     property string currentTitle: (hasWindow && activeToplevel.title) ? activeToplevel.title : "Workspace"
     property string iconName: currentClass === "Active Window" ? "application-x-executable" : currentClass.toLowerCase()
-    property string currentIconTheme: (ThemeManager.selectedTheme && ThemeManager.selectedTheme.systemSettings) ? ThemeManager.selectedTheme.systemSettings.themeIcons : ""
-    property var themedIconPaths: ({})
-    property bool pendingResolve: false
-    property string pendingIconClass: currentClass
     property string displayedIconClass: currentClass
     property string displayedIconSource: ""
 
-    function resolveActiveIconSource(windowClass, iconThemeName, resolvedPaths) {
-        void iconThemeName;
-
+    function resolveActiveIconSource(windowClass) {
         let iconKey = Helper.iconNameFromAppId(windowClass);
-        let themedSource = Helper.resolveThemedIcon(iconKey, resolvedPaths);
-        if (themedSource && themedSource !== "")
-            return themedSource;
-
+        let cached = IconService.getCached(iconKey);
+        if (cached && cached !== "")
+            return cached;
         return Helper.toImageSource(Quickshell.iconPath(iconKey, "application-x-executable"));
-    }
-
-    function collectRequestedIconNames() {
-        let unique = {};
-        let iconKey = Helper.iconNameFromAppId(currentClass);
-        if (iconKey && iconKey !== "")
-            unique[iconKey] = true;
-        let displayedIconKey = Helper.iconNameFromAppId(displayedIconClass);
-        if (displayedIconKey && displayedIconKey !== "")
-            unique[displayedIconKey] = true;
-        unique["application-x-executable"] = true;
-        return Object.keys(unique).sort();
-    }
-
-    function requestIconResolve() {
-        iconResolveDebounce.restart();
-    }
-
-    function queueDisplayedIconUpdate() {
-        pendingIconClass = currentClass;
-        iconChangeDebounce.restart();
-        requestIconResolve();
     }
 
     function applyDisplayedIcon(windowClass) {
         const nextClass = windowClass || "Active Window";
-        const nextSource = resolveActiveIconSource(nextClass, currentIconTheme, themedIconPaths);
-
+        const nextSource = resolveActiveIconSource(nextClass);
         displayedIconClass = nextClass;
         if (nextSource && nextSource !== "")
             displayedIconSource = nextSource;
@@ -104,80 +75,26 @@ Item {
     property int topLeftRadius
     property int bottomLeftRadius
 
+    onCurrentClassChanged: {
+        iconChangeDebounce.restart();
+        let iconKey = Helper.iconNameFromAppId(currentClass);
+        IconService.requestResolve([iconKey, "application-x-executable"]);
+    }
+
     Connections {
-        target: ThemeManager
-        function onSelectedThemeUpdated() {
-            requestIconResolve();
+        target: IconService
+        function onIconsResolved() {
+            applyDisplayedIcon(displayedIconClass);
         }
     }
 
-    onCurrentClassChanged: queueDisplayedIconUpdate()
-    onCurrentIconThemeChanged: {
-        themedIconPaths = ({});
-        requestIconResolve();
-    }
-    onThemedIconPathsChanged: applyDisplayedIcon(displayedIconClass)
-    Component.onCompleted: {
-        applyDisplayedIcon(currentClass);
-        requestIconResolve();
-    }
+    Component.onCompleted: applyDisplayedIcon(currentClass)
 
     Timer {
         id: iconChangeDebounce
         interval: 300
         repeat: false
-        onTriggered: applyDisplayedIcon(pendingIconClass)
-    }
-
-    Timer {
-        id: iconResolveDebounce
-        interval: 250
-        repeat: false
-        onTriggered: {
-            const icons = collectRequestedIconNames();
-            if (!currentIconTheme || currentIconTheme === "")
-                return;
-            if (!icons || icons.length === 0) {
-                themedIconPaths = ({});
-                return;
-            }
-            if (activeIconResolver.running) {
-                pendingResolve = true;
-                return;
-            }
-
-            activeIconResolver.command = [App.pythonPath, App.pythonScriptsPath + "/resolve_theme_icons.py", "--theme", currentIconTheme, "--icons-json", JSON.stringify(icons)];
-            activeIconResolver.running = true;
-        }
-    }
-
-    Process {
-        id: activeIconResolver
-        running: false
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                try {
-                    const parsed = JSON.parse(this.text.toString());
-                    root.themedIconPaths = parsed || {};
-                } catch (e) {
-                    console.warn("[ActiveWindow] Failed to parse resolved icons JSON:", e);
-                }
-            }
-        }
-
-        onExited: (exitCode, exitStatus) => {
-            void exitStatus;
-            if (exitCode !== 0)
-                console.warn("[ActiveWindow] Icon resolver exited with code:", exitCode);
-        }
-
-        onRunningChanged: {
-            if (!running && pendingResolve) {
-                pendingResolve = false;
-                iconResolveDebounce.restart();
-            }
-        }
+        onTriggered: applyDisplayedIcon(root.currentClass)
     }
 
     TextMetrics {

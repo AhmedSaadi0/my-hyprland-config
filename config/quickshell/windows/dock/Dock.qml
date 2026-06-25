@@ -1,8 +1,8 @@
 // windows/dock/Dock.qml
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Effects
 import Quickshell
+import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Hyprland
 
@@ -10,8 +10,9 @@ import "root:/themes"
 import "root:/components"
 import "root:/config"
 import "root:/config/EventNames.js" as Events
-import "root:/config/ConstValues.js" as C        // <-- 1. إضافة استيراد الثوابت
+import "root:/config/ConstValues.js" as C
 import "root:/utils"
+import "root:/services"
 
 PanelWindow {
     id: root
@@ -21,7 +22,6 @@ PanelWindow {
     focusable: root.anyMenuOpen
     exclusionMode: ExclusionMode.Ignore
 
-    // WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "NibrasShell:dock"
 
     anchors {
@@ -35,7 +35,6 @@ PanelWindow {
     }
 
     readonly property int dockHeightToShow: App.dockIconSize + 48
-    // مساحة زائدة كبيرة لضمان حجز حرية الانزلاق بدون قص الـ Window من خوادم Wayland
     implicitHeight: dockHeightToShow + 250
 
     // --- State & Display Logic ---
@@ -45,11 +44,29 @@ PanelWindow {
     property bool anyDockTooltipVisible: false
     property var currentOpenPopup: null
     property bool isBottomLauncherOpen: false
-    property bool isLeftMenuOpen: false         // <-- 2. متغير حالة لمراقبة فتح القائمة اليسرى
+    property bool isLeftMenuOpen: false
 
     readonly property bool shouldDockBeRevealed: !hasAppsOnWorkspace || root.mouseHovered || root.anyMenuOpen || root.isBottomLauncherOpen
 
     property bool effectiveHasApps: false
+
+    // Request icon resolution from IconService when dock items change
+    onDockItemsChanged: _requestDockIcons()
+
+    function _requestDockIcons() {
+        let items = root.dockItems || [];
+        let iconNames = [];
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            if (item.isLauncher || item.isSeparator || !item.appId)
+                continue;
+            let iconKey = item.appData ? item.appData.icon : item.appId;
+            if (!Helper.isDirectImageSource(iconKey))
+                iconNames.push(iconKey);
+        }
+        if (iconNames.length > 0)
+            IconService.requestResolve(iconNames);
+    }
 
     Timer {
         id: colorTransitionTimer
@@ -94,7 +111,6 @@ PanelWindow {
             root.isBottomLauncherOpen = false;
         }, root);
 
-        // <-- 3. الاستماع لأحداث القائمة لتعديل حالة المتغير
         EventBus.on(Events.LEFT_MENU_IS_OPENED, () => {
             root.isLeftMenuOpen = true;
         }, root);
@@ -107,20 +123,13 @@ PanelWindow {
         }, root);
     }
 
-    // =========================================================
-    // 1. نظام القناع المركزي المرتبط بسير النوافذ (The Unified Shape)
-    // =========================================================
     mask: (anyMenuOpen || anyDockTooltipVisible) ? null : dockMaskRegion
 
     Region {
         id: dockMaskRegion
-
-        // المنطقة الأولى: الخيط التحفيزي الموجود دائماً
         Region {
             item: bottomTriggerArea
         }
-
-        // المنطقة الثانية: الجسر الآمن ومربع الكبسولة (يفعلان فقط حين يبدأ بالصعود لمنع سقوط التفاعل)
         Region {
             item: shouldDockBeRevealed ? dockContainer : null
         }
@@ -129,12 +138,9 @@ PanelWindow {
         }
     }
 
-    // قطع الاتصال والتوصيل الوهمية للمراقبة الموحدة بدون سرقة التفاعل من الأب
     Item {
         id: trackingNodes
         anchors.fill: parent
-
-        // الخط الرقيق لتعريض تحسس النافذة
         Rectangle {
             id: bottomTriggerArea
             anchors.bottom: parent.bottom
@@ -143,30 +149,23 @@ PanelWindow {
             height: 4
             color: "transparent"
         }
-
-        // الكتلة الوهمية: تعمل كجسر ممر آمِن لاختصار فراغات الشاشة وتجنب سقوط حالة التحويم بالمرور للمنتصف
         Rectangle {
             id: connectionBridge
             x: dockContainer.x - 20
-            y: dockContainer.y - 20 // يغلف أطراف الدوك نفسها قليلاً
+            y: dockContainer.y - 20
             width: dockContainer.width + 40
-            height: root.height - y // واصل للأسفل دوماً كحصن
+            height: root.height - y
             color: "transparent"
         }
     }
 
-    // =========================================================
-    // 2. المحرك المراقِب الديكتاتوري والمحيد لكل التجاذبات الداخلية (The Omni-Observer)
-    // =========================================================
     HoverHandler {
         id: globalWindowTracker
         onHoveredChanged: {
             if (hovered) {
-                // إغلاق المؤقت فوراً وتجميد ظهوره بمجرد اللمس
                 hideDebounceTimer.stop();
                 root.mouseHovered = true;
             } else {
-                // الفأرة غادرت حرفياً كامل التجاويف الجسرية وشاشة الكبسولة والنافذة برمتها - يُبدأ العد التنازلي لإخفاء آمن
                 hideDebounceTimer.restart();
             }
         }
@@ -176,14 +175,12 @@ PanelWindow {
         id: hideDebounceTimer
         interval: 350
         onTriggered: {
-            // نأمن عدم اختفاء الـ Dock أثناء تفريز المستخدم قائمة اليمين المفتوحة (AnyMenu)
             if (!root.anyMenuOpen) {
                 root.mouseHovered = false;
             }
         }
     }
 
-    // --- دوال المطابقة وجلب العمليات قمت بتبسيط أداءها---
     function resolveAppData(appId) {
         if (!DesktopEntries || !appId)
             return null;
@@ -250,6 +247,7 @@ PanelWindow {
 
     readonly property var dockItems: {
         let dummy = root.updateTrigger;
+        let dummy2 = IconService.iconUpdateTrigger;
         let items = [];
         let favs = App.dockApps || [];
         let running = runningApps;
@@ -316,17 +314,11 @@ PanelWindow {
         }
     }
 
-    // =========================================================
-    // 3. مسرح العرض (الكبسولة والنزول الداخلي المُفصّل بانسيابية)
-    // =========================================================
-    Item { // تم التغيير إلى Item لتفادي مشكلة قص الأبناء (Clipping) عند تفعيل الـ layer
+    Item {
         id: dockContainer
         anchors.horizontalCenter: parent.horizontalCenter
-
-        // 4. تطبيق الإزاحة الأفقية المتناسبة مع حالة القائمة اليسرى ليتطابق التحرك مع سطح المكتب والنوتش
         anchors.horizontalCenterOffset: App.menuStyle !== C.FLOATING && root.isLeftMenuOpen ? ThemeManager.selectedTheme.dimensions.menuWidth + 5 : 0
 
-        // تطبيق الأنيميشن بنفس معايير منحنى التسارع ومعدل الوقت لسطح المكتب
         Behavior on anchors.horizontalCenterOffset {
             NumberAnimation {
                 duration: AnimationConfig.animDuration
@@ -335,9 +327,7 @@ PanelWindow {
             }
         }
 
-        // الانزياح الحركي المحصور للأنيميشن داخل النطاق الخاص المتروك عبر Implicit Height دون التأثير المفرط!
         y: shouldDockBeRevealed ? (root.height - height - 12) : (root.height + 20)
-
         width: dockRow.childrenRect.width + 24
         onWidthChanged: EventBus.emit(Events.DOCK_WIDTH_CHANGED, width)
         height: App.dockIconSize + 32
@@ -357,7 +347,6 @@ PanelWindow {
             }
         }
 
-        // --- مستطيل الخلفية المستقل للتحكم بالرسم والتأثيرات البصرية دون قص الأزرار والتولتيب ---
         Rectangle {
             id: dockBackground
             anchors.fill: parent
@@ -386,7 +375,6 @@ PanelWindow {
                 }
             }
 
-            // تفعيل الطبقة الرسومية والظل هنا فقط؛ لكي لا تتقيد النوافذ المنبثقة والتولتيب بحدود الحاوية
             layer.enabled: hasAppsOnWorkspace
             layer.effect: MultiEffect {
                 shadowEnabled: true

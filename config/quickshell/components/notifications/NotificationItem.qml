@@ -77,7 +77,6 @@ Rectangle {
                 }
             }
 
-            // ... (باقي العناصر كما هي بدون تغيير) ...
             Text {
                 text: notification ? notification.appName : ""
                 font.pixelSize: root.theme.typography.heading4Size
@@ -109,13 +108,13 @@ Rectangle {
                     if (rawIcon === "")
                         return defaultIcon;
 
-                    // إذا كان يحتوي على "/" أو يبدأ بـ "file://" فهو مسار ملف
+                    // إذا كان يحتوي على "/" أو يبدأ بـ "file://" فهو مسار ملف مباشر
                     if (rawIcon.indexOf("/") !== -1 || rawIcon.indexOf("file://") === 0) {
                         return rawIcon;
                     }
 
-                    // عدا ذلك، هو اسم أيقونة نظام، نستخدم بادئة الثيم
-                    return "image://theme/" + rawIcon;
+                    // التعديل: استخدام image://icon بدلاً من image://theme المتوافقة مع Quickshell
+                    return "image://icon/" + rawIcon;
                 }
 
                 Layout.preferredWidth: 24
@@ -125,11 +124,14 @@ Rectangle {
                 smooth: true
                 visible: status === Image.Ready // إخفاء الصورة حتى تجهز لتجنب الوميض
 
-                // 2. نظام حماية (Fallback) في حال فشل التحميل
+                // نظام حماية (Fallback) مع حماية ضد التكرار اللانهائي
                 onStatusChanged: {
                     if (status === Image.Error) {
                         console.warn("Notification Image Failed:", rawIcon, "- Reverting to default.");
-                        source = defaultIcon;
+                        // التحقق من أن المصدر الحالي ليس هو الافتراضي بالفعل لمنع تعليق البرنامج
+                        if (source !== defaultIcon) {
+                            source = defaultIcon;
+                        }
                     }
                 }
             }

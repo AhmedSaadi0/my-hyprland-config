@@ -39,6 +39,7 @@ Singleton {
     // =========================================================
 
     // Theme Lifecycle Signals
+    signal themeLoadStarted(string themeName)
     signal selectedThemeUpdated
     signal initialThemeReady
 
@@ -196,6 +197,7 @@ Singleton {
             return;
 
         console.info(`[ThemeManager] Phase 1: Request received for ${themeName}`);
+        root.themeLoadStarted(themeName);
 
         root._pendingThemeName = themeName;
         root._selectedThemeName = themeName;

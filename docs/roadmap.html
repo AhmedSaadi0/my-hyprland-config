@@ -68,116 +68,148 @@
     </nav>
 
     <main class="container">
-        <!-- قسم المانيفستو والشغف -->
+        <!-- قسم العنوان والمقدمة -->
         <section class="manifesto-section">
             <h1 class="huge-text" data-i18n="roadmap_title">خارطة الطريق</h1>
             <p class="muted" data-i18n="roadmap_sub">نبراس شِل هو نتاج هوايتي المستمرة. إليك ما أعمل عليه الآن وما أطمح
                 لتحقيقه في المستقبل.</p>
         </section>
 
-        <div class="roadmap-flex-layout">
-
-            <!-- 🧠 القسم الأول: العقل والجسد (AI & Capsule) -->
-            <div class="roadmap-block">
-                <div class="roadmap-header">
-                    <span class="category-icon">🧠</span>
-                    <h2 data-i18n="roadmap_ai_title">الذكاء الاصطناعي والكبسولة الذكية</h2>
+        <!-- لوحة التحكم الإحصائية للتقدم السريع -->
+        <div class="roadmap-stats-dashboard">
+            <div class="roadmap-stat-card">
+                <span class="stat-badge success">✓</span>
+                <div class="stat-info">
+                    <strong style="color: var(--success)">18</strong>
+                    <span class="muted" data-i18n="roadmap_stat_done">الميزات المكتملة</span>
                 </div>
-
-                <div class="roadmap-phase">
-                    <h4 data-i18n="rd_ai_phases">الجزء 1: خارطة العقل (الذكاء المدمج)</h4>
-                    <ul class="roadmap-list">
-                        <li class="done" data-i18n="rd_ai_li1">المرحلة 1: المراقبة والتسجيل</li>
-                        <li class="in-progress" data-i18n="rd_ai_li2">المرحلة 2: التشخيص</li>
-                        <li class="planned" data-i18n="rd_ai_li3">المرحلة 3: المحادثة السياقية</li>
-                        <li class="planned" data-i18n="rd_ai_li4">المرحلة 4: اقتراح الحلول</li>
-                        <li class="planned" data-i18n="rd_ai_li5">المرحلة 5: التنفيذ الذاتي</li>
-                    </ul>
+            </div>
+            <div class="roadmap-stat-card">
+                <span class="stat-badge warning">⚡</span>
+                <div class="stat-info">
+                    <strong style="color: var(--accent-3)">2</strong>
+                    <span class="muted" data-i18n="roadmap_stat_active">قيد التطوير حالياً</span>
                 </div>
-
-                <div class="roadmap-phase">
-                    <h4 data-i18n="rd_capsule_features">الجزء 2: ميزات الجسد (الكبسولة)</h4>
-                    <ul class="roadmap-list">
-                        <li class="done" data-i18n="rd_cap_li1">ردود فعل النظام</li>
-                        <li class="planned" data-i18n="rd_cap_li2">ألوان الكبسولة</li>
-                        <li class="planned" data-i18n="rd_cap_li3">ساعة تقريبية (Fuzzy Clock)</li>
-                        <li class="planned" data-i18n="rd_cap_li4">ملخص الحافظة الذكي</li>
-                    </ul>
+            </div>
+            <div class="roadmap-stat-card">
+                <span class="stat-badge info">○</span>
+                <div class="stat-info">
+                    <strong style="color: var(--accent)">16</strong>
+                    <span class="muted" data-i18n="roadmap_stat_planned">مخطط لها مستقبلاً</span>
                 </div>
+            </div>
+        </div>
 
-                <div class="roadmap-phase">
-                    <h4 data-i18n="rd_ai_ui_control">الجزء 3: التحكم بالواجهة</h4>
-                    <ul class="roadmap-list">
-                        <li class="done" data-i18n="rd_ai_ui_li1">التحكم بالالوان وتغييرها</li>
-                        <li class="done" data-i18n="rd_ai_ui_li3">التحكم بثيمات بلازما</li>
-                        <li class="planned" data-i18n="rd_ai_ui_li2">اضافة ثيمات جديدة مخصصة</li>
-                        <li class="planned" data-i18n="rd_ai_ui_li4">التحكم بثيمات GTK</li>
-                    </ul>
+        <!-- الخط الزمني المتناوب (Timeline) -->
+        <div class="timeline-container">
+
+            <!-- 🧠 العنصر الأول: العقل والجسد (AI & Capsule) -->
+            <div class="timeline-item">
+                <div class="timeline-badge"></div>
+                <div class="roadmap-block">
+                    <div class="roadmap-header">
+                        <span class="category-icon">🧠</span>
+                        <h2 data-i18n="roadmap_ai_title">الذكاء الاصطناعي والكبسولة الذكية</h2>
+                    </div>
+
+                    <div class="roadmap-phase">
+                        <h4 data-i18n="rd_ai_phases">الجزء 1: خارطة العقل (الذكاء المدمج)</h4>
+                        <ul class="roadmap-list">
+                            <li class="done" data-i18n="rd_ai_li1">المرحلة 1: المراقبة والتسجيل</li>
+                            <li class="done" data-i18n="rd_ai_li2">المرحلة 2: التشخيص</li>
+                            <li class="in-progress" data-i18n="rd_ai_li3">المرحلة 3: المحادثة السياقية</li>
+                            <li class="planned" data-i18n="rd_ai_li4">المرحلة 4: اقتراح الحلول</li>
+                            <li class="planned" data-i18n="rd_ai_li5">المرحلة 5: التنفيذ الذاتي</li>
+                        </ul>
+                    </div>
+
+                    <div class="roadmap-phase">
+                        <h4 data-i18n="rd_capsule_features">الجزء 2: ميزات الجسد (الكبسولة)</h4>
+                        <ul class="roadmap-list">
+                            <li class="done" data-i18n="rd_cap_li1">ردود فعل النظام</li>
+                            <li class="planned" data-i18n="rd_cap_li2">ألوان الكبسولة</li>
+                            <li class="planned" data-i18n="rd_cap_li3">ساعة تقريبية (Fuzzy Clock)</li>
+                            <li class="planned" data-i18n="rd_cap_li4">ملخص الحافظة الذكي</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <!-- 🖥️ القسم الثاني: سطح المكتب والشل -->
-            <div class="roadmap-block">
-                <div class="roadmap-header">
-                    <span class="category-icon">🖥️</span>
-                    <h2 data-i18n="roadmap_desktop_title">تخطيط سطح المكتب والشل</h2>
-                </div>
-                <div class="roadmap-phase">
-                    <h4 data-i18n="rd_desktop_bars">الأشرطة والدك (Bars & Dock)</h4>
-                    <ul class="roadmap-list">
-                        <li class="done" data-i18n="rd_desk_li5">تحسين تكامل أدوات التحكم في Hyprland</li>
-                        <li class="planned" data-i18n="rd_desk_li1">تغيير مواقع الأشرطة</li>
-                        <li class="planned" data-i18n="rd_desk_li2">الإخفاء التلقائي للأشرطة</li>
-                        <li class="done" data-i18n="rd_desk_li3">إضافة شريط تطبيقات سفلي</li>
-                        <li class="planned" data-i18n="rd_desk_li4">التكيف الذكي للـ Dock</li>
-                    </ul>
-                </div>
-                <div class="roadmap-phase">
-                    <h4 data-i18n="rd_desktop_workspaces">مساحات العمل (Workspaces)</h4>
-                    <ul class="roadmap-list">
-                        <li class="done" data-i18n="rd_ws_li1">أيقونات ديناميكية</li>
-                        <li class="done" data-i18n="rd_ws_li2">سحب وإفلات الأيقونات</li>
-                        <li class="planned" data-i18n="rd_ws_li3">واجهة مرئية (Overview)</li>
-                        <li class="planned" data-i18n="rd_ws_li4">النقر للتركيز</li>
-                    </ul>
+            <!-- 🖥️ العنصر الثاني: سطح المكتب والشل -->
+            <div class="timeline-item">
+                <div class="timeline-badge"></div>
+                <div class="roadmap-block">
+                    <div class="roadmap-header">
+                        <span class="category-icon">🖥️</span>
+                        <h2 data-i18n="roadmap_desktop_title">تخطيط سطح المكتب والشل</h2>
+                    </div>
+                    <div class="roadmap-phase">
+                        <h4 data-i18n="rd_desktop_bars">الأشرطة والدك (Bars & Dock)</h4>
+                        <ul class="roadmap-list">
+                            <li class="done" data-i18n="rd_desk_li5">تحسين تكامل أدوات التحكم في Hyprland</li>
+                            <li class="planned" data-i18n="rd_desk_li1">تغيير مواقع الأشرطة</li>
+                            <li class="planned" data-i18n="rd_desk_li2">الإخفاء التلقائي للأشرطة</li>
+                            <li class="done" data-i18n="rd_desk_li3">إضافة شريط تطبيقات سفلي</li>
+                            <li class="planned" data-i18n="rd_desk_li4">التكيف الذكي للـ Dock</li>
+                        </ul>
+                    </div>
+                    <div class="roadmap-phase">
+                        <h4 data-i18n="rd_desktop_workspaces">مساحات العمل (Workspaces)</h4>
+                        <ul class="roadmap-list">
+                            <li class="done" data-i18n="rd_ws_li1">أيقونات ديناميكية</li>
+                            <li class="done" data-i18n="rd_ws_li2">سحب وإفلات الأيقونات</li>
+                            <li class="planned" data-i18n="rd_ws_li3">واجهة مرئية (Overview)</li>
+                            <li class="planned" data-i18n="rd_ws_li4">النقر للتركيز</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <!-- 🎨 القسم الثالث: الواجهة والثيمات -->
-            <div class="roadmap-block">
-                <div class="roadmap-header">
-                    <span class="category-icon">Art</span>
-                    <h2 data-i18n="roadmap_ui_title">الواجهة والثيمات</h2>
+            <!-- 🎨 العنصر الثالث: الواجهة والثيمات -->
+            <div class="timeline-item">
+                <div class="timeline-badge"></div>
+                <div class="roadmap-block">
+                    <div class="roadmap-header">
+                        <span class="category-icon">🎨</span>
+                        <h2 data-i18n="roadmap_ui_title">الواجهة والثيمات</h2>
+                    </div>
+                    <div class="roadmap-phase">
+                        <ul class="roadmap-list" style="margin-top: 10px;">
+                            <li class="done" data-i18n="rd_ui_li1">تحسين هيكلية ThemeManager</li>
+                            <li class="done" data-i18n="rd_ui_li2">دعم خلفيات GIF و Video</li>
+                            <li class="done" data-i18n="rd_ui_li3">ضبط متغيرات Material 3</li>
+                            <li class="done" data-i18n="rd_ui_li7">تحسين حركات سطح المكتب والمزامنة مع Quickshell</li>
+                            <li class="done" data-i18n="rd_ui_li8">دعم سمات المؤشر (Plasma, GTK, Hyprland)</li>
+                            <li class="done" data-i18n="rd_ui_li9">الكشف الديناميكي لأنماط Qt عبر PyQt6</li>
+                            <li class="planned" data-i18n="rd_ui_li4">وضع الألعاب (Game Mode)</li>
+                            <li class="planned" data-i18n="rd_ui_li5">تأثير العمق التلقائي</li>
+                            <li class="planned" data-i18n="rd_ui_li6">ثيمات جديدة</li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="roadmap-list">
-                    <li class="done" data-i18n="rd_ui_li1">تحسين هيكلية ThemeManager</li>
-                    <li class="done" data-i18n="rd_ui_li2">دعم خلفيات GIF و Video</li>
-                    <li class="done" data-i18n="rd_ui_li3">ضبط متغيرات Material 3</li>
-                    <li class="done" data-i18n="rd_ui_li7">تحسين حركات سطح المكتب والمزامنة مع Quickshell</li>
-                    <li class="done" data-i18n="rd_ui_li8">دعم سمات المؤشر (Plasma, GTK, Hyprland)</li>
-                    <li class="done" data-i18n="rd_ui_li9">الكشف الديناميكي لأنماط Qt عبر PyQt6</li>
-                    <li class="planned" data-i18n="rd_ui_li4">وضع الألعاب (Game Mode)</li>
-                    <li class="planned" data-i18n="rd_ui_li5">تأثير العمق التلقائي</li>
-                    <li class="planned" data-i18n="rd_ui_li6">ثيمات جديدة</li>
-                </ul>
             </div>
 
-            <!-- 🧰 القسم الرابع: الإنتاجية والنظام -->
-            <div class="roadmap-block">
-                <div class="roadmap-header">
-                    <span class="category-icon">⚙️</span>
-                    <h2 data-i18n="roadmap_sys_title">الإنتاجية والنظام</h2>
+            <!-- 🧰 العنصر الرابع: الإنتاجية والنظام -->
+            <div class="timeline-item">
+                <div class="timeline-badge"></div>
+                <div class="roadmap-block">
+                    <div class="roadmap-header">
+                        <span class="category-icon">⚙️</span>
+                        <h2 data-i18n="roadmap_sys_title">الإنتاجية والنظام</h2>
+                    </div>
+                    <div class="roadmap-phase">
+                        <ul class="roadmap-list" style="margin-top: 10px;">
+                            <li class="done" data-i18n="rd_sys_li1">مؤشر اللغة والبطارية</li>
+                            <li class="done" data-i18n="rd_sys_li2">مدير الحافظة وقائمة المهام</li>
+                            <li class="done" data-i18n="rd_sys_li7"></li>
+                            <li class="done" data-i18n="rd_sys_li4">قائمة التطبيقات المفضلة</li>
+                            <li class="planned" data-i18n="rd_sys_li3">ودجت الملاحظات السريعة</li>
+                            <li class="planned" data-i18n="rd_sys_li5">مواقيت الصلاة والتاريخ الهجري</li>
+                            <li class="planned" data-i18n="rd_sys_li6">مدير البلوتوث وإعدادات الشاشة</li>
+                            <li class="planned" data-i18n="rd_sys_li7">تحسين الكود: EventBus</li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="roadmap-list">
-                    <li class="done" data-i18n="rd_sys_li1">مؤشر اللغة والبطارية</li>
-                    <li class="done" data-i18n="rd_sys_li2">مدير الحافظة وقائمة المهام</li>
-                    <li class="done" data-i18n="rd_sys_li7"></li>
-                    <li class="done" data-i18n="rd_sys_li4">قائمة التطبيقات المفضلة</li>
-                    <li class="planned" data-i18n="rd_sys_li3">ودجت الملاحظات السريعة</li>
-                    <li class="planned" data-i18n="rd_sys_li5">مواقيت الصلاة والتاريخ الهجري</li>
-                    <li class="planned" data-i18n="rd_sys_li6">مدير البلوتوث وإعدادات الشاشة</li>
-                    <li class="planned" data-i18n="rd_sys_li7">تحسين الكود: EventBus</li>
-                </ul>
             </div>
 
         </div>
@@ -188,7 +220,6 @@
                 <summary><strong data-i18n="roadmap_archive_title">ما تم إنجازه (أرشيف الإصدارات السابقة)</strong>
                 </summary>
                 <div class="manual-content archive-grid">
-                    <!-- الأرشيف يبقى ثابتاً لأنه تاريخي -->
                     <div class="archive-col">
                         <h4>Smart Capsule & AI</h4>
                         <ul class="roadmap-list done-only">

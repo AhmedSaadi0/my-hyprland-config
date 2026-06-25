@@ -14,10 +14,16 @@ Singleton {
     readonly property bool muted: sink?.audio?.muted ?? false
     readonly property real volume: sink?.audio?.volume ?? 0
 
-    function setVolume(volume: real): void {
+    function setVolume(newVolume: real): void {
         if (sink?.ready && sink?.audio) {
-            sink.audio.muted = false;
-            sink.audio.volume = volume;
+            // حصر القيمة بين 0.0 و 1.0 لضمان سلامة المدخلات
+            let targetVolume = Math.max(0.0, Math.min(1.0, newVolume));
+
+            // شرط الحماية لمنع حلقة التكرار (Binding Loop)
+            if (Math.abs(sink.audio.volume - targetVolume) > 0.001) {
+                sink.audio.muted = false;
+                sink.audio.volume = targetVolume;
+            }
         }
     }
 
