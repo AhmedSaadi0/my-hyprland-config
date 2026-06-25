@@ -48,7 +48,7 @@ BaseTheme {
     _inverseSurface: "#CDD6F4"
     _onInverseSurface: "#1E1E2E"
     _inversePrimary: "#89B4FA"
-    _shadow: "#000000"
+    _shadow: "#0f0f0f"
     _scrim: "#000000"
 
     _plasmaColorScheme: "NibrasCatppuccinDark"

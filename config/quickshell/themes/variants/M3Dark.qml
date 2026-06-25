@@ -73,6 +73,6 @@ BaseTheme {
     _inverseSurface: _onSurface
     _onInverseSurface: _surface
     _inversePrimary: _primary
-    _shadow: "#000000"
+    _shadow: "#121212"
     _scrim: "#000000"
 }

@@ -99,7 +99,7 @@ BaseTheme {
     _inverseSurface: "#F8F8F2"
     _onInverseSurface: "#282A36"
     _inversePrimary: "#BD93F9"
-    _shadow: "#000000"
+    _shadow: "#121212"
     _scrim: "#000000"
 
     _plasmaColorScheme: "Dracula"

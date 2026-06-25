@@ -57,7 +57,7 @@ BaseTheme {
     _inverseSurface: "#FFFFFF"
     _onInverseSurface: "#0A1D27"
     _inversePrimary: "#B38BFF"
-    _shadow: "#000000"
+    _shadow: "#121212"
     _scrim: "#000000"
 
     _plasmaColorScheme: "BlueDeer"

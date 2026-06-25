@@ -60,7 +60,7 @@ BaseTheme {
     _inverseSurface: "#EFF0F1"
     _onInverseSurface: "#3A2961"
     _inversePrimary: "#22C1EB"
-    _shadow: "#000000"
+    _shadow: "#121212"
     _scrim: "#000000"
 
     _plasmaColorScheme: "AColors"
