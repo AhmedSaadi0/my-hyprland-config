@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 import "root:/themes"
 import "root:/components"
+import "root:/components/settings"
 
 RowLayout {
     id: root

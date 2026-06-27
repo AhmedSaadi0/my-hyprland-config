@@ -6,6 +6,7 @@ import Quickshell
 
 import "root:/themes"
 import "root:/components"
+import "root:/components/app_launcher"
 import "root:/config"
 import "root:/config/EventNames.js" as Events
 

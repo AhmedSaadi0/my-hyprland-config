@@ -3,6 +3,7 @@ import Quickshell
 import Quickshell.Hyprland
 import "root:/themes"
 import "root:/components"
+import "root:/windows/leftwindow/base"
 import "root:/utils"
 import "root:/config/EventNames.js" as Events
 import "root:/config/ConstValues.js" as C

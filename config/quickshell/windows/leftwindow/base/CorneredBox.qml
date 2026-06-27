@@ -3,8 +3,7 @@ import QtQuick
 import QtQuick.Window
 // import QtQuick.Shapes
 
-// import "../../components"
-import "../themes"
+import "root:/themes"
 
 Rectangle {
     id: root

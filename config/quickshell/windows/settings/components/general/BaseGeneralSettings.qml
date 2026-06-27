@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
 import "root:/components"
+import "root:/components/settings"
 import "root:/config"
 import "root:/themes"
 

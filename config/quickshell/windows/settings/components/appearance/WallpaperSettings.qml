@@ -8,6 +8,7 @@ import org.kde.kirigami as Kirigami
 import Qt.labs.platform
 
 import "root:/components"
+import "root:/components/settings"
 import "root:/config"
 import "root:/themes"
 import "root:/windows/settings/components"

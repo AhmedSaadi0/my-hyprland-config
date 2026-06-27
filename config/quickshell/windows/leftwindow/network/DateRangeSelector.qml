@@ -4,6 +4,8 @@ import QtQuick.Layouts
 
 import "root:/themes"
 import "root:/config"
+import "root:/components"
+import "root:/components/settings"
 
 ColumnLayout {
     id: root

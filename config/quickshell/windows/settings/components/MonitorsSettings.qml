@@ -7,6 +7,7 @@ import QtQuick.Controls as Controls
 import org.kde.kirigami as Kirigami
 
 import "root:/components"
+import "root:/components/settings"
 
 M3GroupBox {
     id: root

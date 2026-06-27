@@ -9,7 +9,6 @@ import "root:/components"
 import "root:/components/unified"
 import "root:/config"
 import "root:/config/EventNames.js" as Events
-import "root:/components"
 import "root:/utils"
 
 Item {

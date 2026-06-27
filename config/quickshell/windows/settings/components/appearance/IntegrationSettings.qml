@@ -6,6 +6,7 @@ import QtQuick.Controls as Controls
 import Quickshell.Io
 
 import "root:/components"
+import "root:/components/settings"
 import "root:/config"
 import "root:/themes"
 import "root:/windows/settings/components"

@@ -4,6 +4,7 @@ import QtQuick.Controls
 
 import "root:/themes"
 import "root:/components"
+import "root:/components/settings"
 
 Item {
     id: root

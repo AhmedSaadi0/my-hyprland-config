@@ -10,6 +10,7 @@ import Quickshell.Services.Pipewire
 import "root:/windows/settings/components"
 import "root:/windows/settings/audio"
 import "root:/components"
+import "root:/components/settings"
 import "root:/themes"
 
 M3GroupBox {

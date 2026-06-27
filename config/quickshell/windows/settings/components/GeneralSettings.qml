@@ -9,6 +9,7 @@ import Qt.labs.platform
 import Quickshell.Io
 
 import "root:/components"
+import "root:/components/settings"
 import "root:/config"
 import "root:/themes"
 import "root:/config/ConstValues.js" as C

@@ -5,7 +5,8 @@ import Quickshell
 import Quickshell.Io
 
 import "root:/themes"
-import "root:/components" // لاستدعاء SettingsComboBox
+import "root:/components"
+import "root:/components/settings" // لاستدعاء SettingsComboBox
 import "./components"     // لاستدعاء ChatBubble و ChatInput
 
 ColumnLayout {

@@ -9,7 +9,7 @@ import Quickshell
 import "root:/themes"
 import "root:/config"
 import "root:/services"
-import "root:/components/wallpaper_selector"
+import "root:/components/app_launcher/wallpaper_selector"
 
 import "root:/windows/smart_capsule/logic"
 

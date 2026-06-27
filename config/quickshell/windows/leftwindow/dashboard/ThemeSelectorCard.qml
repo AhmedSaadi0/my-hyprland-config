@@ -5,6 +5,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 import "root:/themes"
+import "root:/components"
 import "root:/config/EventNames.js" as Events
 import "root:/config"
 import "root:/config/ConstValues.js" as Consts

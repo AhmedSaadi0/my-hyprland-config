@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Widgets
 
 import "root:/themes"
+import "root:/components"
 import "root:/config"
 import "root:/config/EventNames.js" as Events
 import "root:/utils"

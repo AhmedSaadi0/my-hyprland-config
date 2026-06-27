@@ -5,6 +5,7 @@ import QtQuick.Controls
 import Quickshell
 
 import "root:/components"
+import "root:/components/app_launcher"
 import "root:/themes"
 import "root:/config"
 
