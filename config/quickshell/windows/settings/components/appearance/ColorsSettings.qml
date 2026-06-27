@@ -18,7 +18,7 @@ BaseThemeSettings {
     id: root
 
     title: qsTr("Color Settings")
-    icon: ""
+    icon: ""
     showUndoRedoButtons: true
 
     // --- Local Variables (M3 Tokens) ---

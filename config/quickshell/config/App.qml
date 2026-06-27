@@ -358,7 +358,7 @@ Singleton {
     Process {
         id: fetchMusicModelsProcess
 
-        command: [root.pythonPath, root.scripts.python.listGemini, "--api_key", root.musicAiApiKey]
+        command: [root.pythonPath, root.scripts.python.listGemini, "--api_key", (root.musicAiApiKey !== "" ? root.musicAiApiKey : root.aiApiKey)]
 
         stdout: StdioCollector {
             onStreamFinished: {
@@ -373,7 +373,7 @@ Singleton {
     Process {
         id: fetchWeatherModelsProcess
 
-        command: [root.pythonPath, root.scripts.python.listGemini, "--api_key", root.weatherAiApiKey]
+        command: [root.pythonPath, root.scripts.python.listGemini, "--api_key", (root.weatherAiApiKey !== "" ? root.weatherAiApiKey : root.aiApiKey)]
 
         stdout: StdioCollector {
             onStreamFinished: {
