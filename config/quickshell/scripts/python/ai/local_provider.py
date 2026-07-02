@@ -1,53 +1,77 @@
+import sys
+from typing import Any, Dict, List, Optional, Tuple
+
 import requests
 from base_provider import LLMProvider
 
 
 class LocalProvider(LLMProvider):
-    def generate(self, message, history):
-        # 1. تجهيز قائمة الرسائل بدلاً من نص واحد
-        # هذا يسمح للسيرفر بضبط التنسيق (ChatML) تلقائياً للمودل
-        messages = []
+    def generate(
+        self, message: str, history: Optional[List[Dict[str, str]]] = None
+    ) -> Tuple[str, Dict[str, Any]]:
+        history = history or []
+        messages: List[Dict[str, str]] = []
 
-        # إضافة تعليمات النظام
         if self.system_instruction:
             messages.append(
                 {"role": "system", "content": self.system_instruction}
             )
 
-        # إضافة التاريخ
         for h in history:
-            role = h.get("role", "user")
-            content = h.get("content", "")
-            messages.append({"role": role, "content": content})
+            messages.append(
+                {
+                    "role": h.get("role", "user"),
+                    "content": h.get("content", ""),
+                }
+            )
 
-        # 2. إضافة رسالة المستخدم الحالية مع أمر منع التفكير
-        # نضع الأمر داخل النص لكي يقرأه المودل كجزء من الطلب
-        full_message = f"{message} /no_think"
-        messages.append({"role": "user", "content": full_message})
+        messages.append({"role": "user", "content": str(message)})
 
         payload = {
-            "messages": messages,  # نرسل القائمة بدلاً من "prompt"
-            "temperature": self.temperature or 0.7,
-            "top_p": 0.9,
-            "max_tokens": 512,  # تم تغيير الاسم من n_predict إلى max_tokens حسب معايير OpenAI
+            "model": getattr(self, "model", "local-model"),
+            "messages": messages,
+            "temperature": getattr(self, "temperature", 0.7),
+            # "top_p": 0.9,
+            # "max_tokens": 4096,
             "stream": False,
         }
 
+        base_url = getattr(self, "base_url", "http://127.0.0.1:8080")
+        endpoint = f"{base_url.rstrip('/')}/v1/chat/completions"
+
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {getattr(self, 'api_key', 'sk-local')}",
+        }
+
         try:
-            # 3. تغيير الرابط إلى Endpoint المخصص للمحادثة
             response = requests.post(
-                "http://127.0.0.1:8080/v1/chat/completions",
+                endpoint,
+                headers=headers,
                 json=payload,
+                timeout=1200,
             )
             response.raise_for_status()
             data = response.json()
 
-            # استخراج النص من الهيكل الجديد
             text = data["choices"][0]["message"]["content"].strip()
             return text, {}
 
-        except Exception as e:
-            print(f"Error details: {e}")
-            return f"[Local LLM Error] {e}", {}
+        except requests.exceptions.Timeout:
+            print("[Local LLM Error] Timeout.", file=sys.stderr)
+            return "[Local LLM Error] Timeout", {}
 
-    # لم نعد نحتاج دالة _build_prompt اليدوية
+        except requests.exceptions.ConnectionError:
+            print(
+                f"[Local LLM Error] Connection failed: {endpoint}",
+                file=sys.stderr,
+            )
+            return "[Local LLM Error] Connection failed", {}
+
+        except requests.exceptions.HTTPError as e:
+            print(f"[Local LLM Error] HTTP Error: {e}", file=sys.stderr)
+            return f"[Local LLM Error] HTTP Error: {e}", {}
+
+        except Exception as e:
+            print(f"[Local LLM Error] {e}", file=sys.stderr)
+            return f"[Local LLM Error] {e}", {}

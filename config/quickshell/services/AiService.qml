@@ -160,6 +160,7 @@ Singleton {
             return null;
 
         try {
+            console.info("[AiService] Raw text length:", rawText.length, "| First 200 chars:", rawText.substring(0, 200));
             var result = JSON.parse(rawText);
 
             if (!result.success || !result.response)
@@ -178,7 +179,7 @@ Singleton {
             }
             return finalData;
         } catch (e) {
-            console.error("[AiService] Parsing Error.");
+            console.error("[AiService] Parsing Error:", e.message, "| Raw text:", rawText.substring(0, 300));
             return null;
         }
     }

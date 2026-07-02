@@ -257,6 +257,7 @@ MenuCard {
                 MButton {
                     id: highPerformanceButton
                     Layout.fillWidth: true
+                    Layout.preferredHeight: 25
                     height: root.defaultButtonHeight
                     text: root.highPerformanceButtonLabel
                     iconFirst: true
@@ -280,6 +281,7 @@ MenuCard {
                 MButton {
                     id: balancedButton
                     Layout.fillWidth: true
+                    Layout.preferredHeight: 25
                     height: root.defaultButtonHeight
                     text: root.balancedButtonLabel
                     iconFirst: true
@@ -304,6 +306,7 @@ MenuCard {
                 MButton {
                     id: batterySavingButton
                     Layout.fillWidth: true
+                    Layout.preferredHeight: 25
                     height: root.defaultButtonHeight
                     text: root.lowButtonLabel
                     iconFirst: true

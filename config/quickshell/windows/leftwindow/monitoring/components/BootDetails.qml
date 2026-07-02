@@ -277,14 +277,155 @@ Item {
                     MouseArea {
                         id: logHover
                         z: -1
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        acceptedButtons: Qt.LeftButton
-                        onClicked: logDelegate.isExpanded = !logDelegate.isExpanded
-                    }
-                }
-            }
-        }
-    }
-}
+                         anchors.fill: parent
+                         hoverEnabled: true
+                         cursorShape: Qt.PointingHandCursor
+                         acceptedButtons: Qt.LeftButton
+                         onClicked: logDelegate.isExpanded = !logDelegate.isExpanded
+                     }
+                 }
+             }
+         }
+
+         // === Solutions Section ===
+         ColumnLayout {
+             Layout.fillWidth: true
+             spacing: 8
+             visible: SystemService.bootSolutionsModel.length > 0 || SystemService.bootSolutionStatus === "LOADING"
+
+             // Divider
+             Rectangle {
+                 Layout.fillWidth: true
+                 Layout.preferredHeight: 1
+                 color: Qt.rgba(bootRoot.theme.colors.onSurfaceVariant.r, bootRoot.theme.colors.onSurfaceVariant.g, bootRoot.theme.colors.onSurfaceVariant.b, 0.15)
+             }
+
+             // Section header
+             RowLayout {
+                 Layout.fillWidth: true
+                 spacing: 6
+
+                 Text {
+                     text: ""
+                     font.family: bootRoot.theme.typography.iconFont
+                     font.pixelSize: 14
+                     color: bootRoot.theme.colors.tertiary
+                 }
+
+                 Text {
+                     text: qsTr("Suggested Fixes")
+                     font.pixelSize: bootRoot.theme.typography.small
+                     font.bold: true
+                     color: bootRoot.theme.colors.tertiary
+                 }
+
+                 Item { Layout.fillWidth: true }
+
+                 // Loading indicator
+                 Text {
+                     visible: SystemService.bootSolutionStatus === "LOADING"
+                     text: qsTr("Generating solutions...")
+                     font.pixelSize: bootRoot.theme.typography.small - 2
+                     color: bootRoot.theme.colors.onSurfaceVariant
+                     opacity: 0.6
+                 }
+
+                 // Solution count
+                 Text {
+                     visible: SystemService.bootSolutionStatus === "SUCCESS"
+                     text: SystemService.bootSolutionsModel.length + " fix" + (SystemService.bootSolutionsModel.length !== 1 ? "es" : "")
+                     font.pixelSize: bootRoot.theme.typography.small - 2
+                     color: bootRoot.theme.colors.onSurfaceVariant
+                     opacity: 0.6
+                 }
+             }
+
+             // Solutions loading
+             Rectangle {
+                 visible: SystemService.bootSolutionStatus === "LOADING"
+                 Layout.fillWidth: true
+                 Layout.preferredHeight: 40
+                 radius: bootRoot.theme.dimensions.shapeExtraSmall
+                 color: Qt.rgba(bootRoot.theme.colors.primary.r, bootRoot.theme.colors.primary.g, bootRoot.theme.colors.primary.b, 0.06)
+                 border.color: Qt.rgba(bootRoot.theme.colors.primary.r, bootRoot.theme.colors.primary.g, bootRoot.theme.colors.primary.b, 0.15)
+                 border.width: 1
+
+                 RowLayout {
+                     anchors.centerIn: parent
+                     spacing: 8
+
+                     // Spinner animation
+                     Text {
+                         id: spinnerIcon
+                         text: ""
+                         font.family: bootRoot.theme.typography.iconFont
+                         font.pixelSize: 14
+                         color: bootRoot.theme.colors.primary
+
+                         NumberAnimation on rotation {
+                             from: 0
+                             to: 360
+                             duration: 1200
+                             loops: Animation.Infinite
+                             running: SystemService.bootSolutionStatus === "LOADING"
+                         }
+                     }
+
+                     Text {
+                         text: qsTr("Analyzing issues and generating fixes...")
+                         font.pixelSize: bootRoot.theme.typography.small - 1
+                         color: bootRoot.theme.colors.onSurfaceVariant
+                         opacity: 0.7
+                     }
+                 }
+             }
+
+             // Solutions list
+             Repeater {
+                 model: SystemService.bootSolutionStatus === "LOADING" ? [] : SystemService.bootSolutionsModel
+
+                 delegate: SolutionCard {
+                     Layout.fillWidth: true
+                     solutionId: modelData.id || ""
+                     relatedLog: modelData.related_log || ""
+                     solutionTitle: modelData.title || ""
+                     difficulty: modelData.difficulty || "easy"
+                     priority: modelData.priority || "optional"
+                     description: modelData.description || ""
+                     whyThisWorks: modelData.why_this_works || ""
+                     steps: modelData.steps || []
+                 }
+             }
+
+             // Error state
+             Rectangle {
+                 visible: SystemService.bootSolutionStatus === "ERROR"
+                 Layout.fillWidth: true
+                 Layout.preferredHeight: 36
+                 radius: bootRoot.theme.dimensions.shapeExtraSmall
+                 color: Qt.rgba(bootRoot.theme.colors.error.r, bootRoot.theme.colors.error.g, bootRoot.theme.colors.error.b, 0.08)
+                 border.color: Qt.rgba(bootRoot.theme.colors.error.r, bootRoot.theme.colors.error.g, bootRoot.theme.colors.error.b, 0.2)
+                 border.width: 1
+
+                 RowLayout {
+                     anchors.centerIn: parent
+                     spacing: 6
+
+                     Text {
+                         text: ""
+                         font.family: bootRoot.theme.typography.iconFont
+                         font.pixelSize: 12
+                         color: bootRoot.theme.colors.error
+                     }
+
+                     Text {
+                         text: qsTr("Failed to generate solutions")
+                         font.pixelSize: bootRoot.theme.typography.small - 1
+                         color: bootRoot.theme.colors.error
+                         opacity: 0.8
+                     }
+                 }
+             }
+         }
+     }
+ }

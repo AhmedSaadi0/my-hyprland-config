@@ -18,11 +18,52 @@ Singleton {
 
     property string bootAnalysisStatus: "IDLE"
     property string bootStatusTitle: "System Check"
-    property string bootStatusIcon: ""
+    property string bootStatusIcon: ""
     property string bootStatusColor: "green"
     property string aiBootSummary: "Waiting for analysis..."
     property string bootTimeText: "--"
     property var bootLogsModel: []
+
+    // Boot Solutions
+    property string bootSolutionStatus: "IDLE"
+    property var bootSolutionsModel: []
+
+    function requestBootSolutions(bootLogs) {
+        if (bootSolutionStatus === "LOADING")
+            return;
+
+        console.info("[SystemService] Requesting boot solutions...");
+        bootSolutionStatus = "LOADING";
+
+        const payload = {
+            logs: bootLogs || [],
+            boot_duration: root.bootTimeText,
+            title: root.bootStatusTitle,
+            summary: root.aiBootSummary,
+            status_color: root.bootStatusColor
+        };
+
+        AiService.sendRequest(
+            App.scripts.python.callBootSolutionAi,
+            ["--message", JSON.stringify(payload)],
+            function(data) {
+                if (data && data.solutions) {
+                    console.info("[SystemService] Boot solutions received: " + data.solutions.length + " solutions");
+                    root.bootSolutionsModel = data.solutions;
+                    root.bootSolutionStatus = "SUCCESS";
+                } else {
+                    console.warn("[SystemService] Boot solutions response has no solutions array");
+                    root.bootSolutionStatus = "ERROR";
+                }
+            },
+            function(errorMessage) {
+                console.error("[SystemService] Boot solutions error: " + errorMessage);
+                root.bootSolutionStatus = "ERROR";
+            },
+            "BootSolutions",
+            0
+        );
+    }
 
     function refreshBootDetails() {
         if (bootAnalysisStatus === "LOADING")
@@ -30,6 +71,8 @@ Singleton {
 
         console.info("[SystemService] Starting Boot Analysis...");
         bootAnalysisStatus = "LOADING";
+        bootSolutionStatus = "IDLE";
+        bootSolutionsModel = [];
 
         const baseCommand = App.scripts.python.callBootAnalysisAi;
         const extraArgs = ["--message", "Analyze Boot Logs"];
@@ -45,6 +88,13 @@ Singleton {
                 root.bootTimeText = data.boot_duration;
                 root.bootLogsModel = data.logs;
                 root.bootAnalysisStatus = "SUCCESS";
+
+                // Request solutions after analysis completes
+                if (data.logs && data.logs.length > 0) {
+                    Qt.callLater(function() {
+                        root.requestBootSolutions(data.logs);
+                    });
+                }
             } else {
                 console.error("[SystemService] Data received but structure is unexpected");
                 root.bootAnalysisStatus = "ERROR";

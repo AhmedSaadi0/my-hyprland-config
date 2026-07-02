@@ -10,6 +10,8 @@ import "root:/config/ConstValues.js" as Consts
 Button {
     id: root
 
+    Layout.preferredHeight: 25
+
     property int cursorShape: Qt.ArrowCursor
 
     property string iconText: ""

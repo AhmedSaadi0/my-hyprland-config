@@ -144,6 +144,7 @@ MenuCard {
                     closeMenu.start();
                 }
                 Layout.fillWidth: true
+                Layout.preferredHeight: 25
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "ColorsTheme"
                 normalBackground: {
@@ -156,11 +157,13 @@ MenuCard {
             }
             MButton {
                 text: qsTr("Deer")
+
                 onClicked: {
                     ThemeManager.requestLoadTheme("DeerTheme");
                     closeMenu.start();
                 }
                 Layout.fillWidth: true
+                Layout.preferredHeight: 25
                 iconText: ""
                 isActive: ThemeManager.selectedTheme.themeName === "DeerTheme"
                 normalBackground: {

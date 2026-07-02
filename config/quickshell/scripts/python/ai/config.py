@@ -1,4 +1,5 @@
 import datetime
+import os
 import platform
 import subprocess
 
@@ -63,6 +64,11 @@ PRESETS = {
         "json_mode": True,
         "temperature": 0.45,
     },
+    "boot_solution": {
+        "system_instruction": prompt.BOOT_SOLUTION_PROMPT,
+        "json_mode": True,
+        "temperature": 0.2,
+    },
 }
 
 
@@ -108,11 +114,41 @@ def get_raw_boot_logs():
 
 def get_system_details():
     now = datetime.datetime.now()
+
+    # Clean OS info string
+    try:
+        os_release = platform.freedesktop_os_release()
+        os_string = f"{os_release.get('NAME', platform.system())} {os_release.get('VERSION_ID', platform.release())}"
+    except Exception:
+        os_string = f"{platform.system()} {platform.release()}"
+
+    # Detect desktop environment
+    xdg_desktop = os.environ.get("XDG_CURRENT_DESKTOP", "")
+    session_type = os.environ.get("XDG_SESSION_TYPE", "")
+
+    # Kernel version
+    try:
+        kernel_version = subprocess.check_output(["uname", "-r"], text=True).strip()
+    except Exception:
+        kernel_version = platform.release()
+
+    # GPU info
+    try:
+        gpu_output = subprocess.check_output(["lspci"], text=True).strip()
+        gpu_line = [l for l in gpu_output.split("\n") if "VGA" in l or "3D" in l]
+        gpu_info = gpu_line[0].split(": ", 1)[1] if gpu_line else "Unknown"
+    except Exception:
+        gpu_info = "Unknown"
+
     return {
         "{CURRENT_DATE}": now.strftime("%Y-%m-%d"),
         "{CURRENT_TIME}": now.strftime("%H:%M"),
         "{DAY_NAME}": now.strftime("%A"),
-        "{OS_INFO}": f"{platform.system()} {platform.release()} {platform.freedesktop_os_release()}",
+        "{OS_INFO}": os_string,
+        "{DESKTOP_ENVIRONMENT}": xdg_desktop,
+        "{SESSION_TYPE}": session_type,
+        "{KERNEL_VERSION}": kernel_version,
+        "{GPU_INFO}": gpu_info,
         "{YEAR}": str(now.year),
     }
 
@@ -145,9 +181,7 @@ def get_provider(
 
     for key, value in replacements.items():
         if key in final_system_instruction:
-            final_system_instruction = final_system_instruction.replace(
-                key, str(value)
-            )
+            final_system_instruction = final_system_instruction.replace(key, str(value))
 
     common_args = {
         "api_key": args.api_key,

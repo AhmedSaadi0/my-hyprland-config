@@ -60,6 +60,7 @@ MenuCard {
 
         MButton {
             Layout.fillWidth: true
+            Layout.preferredHeight: 25
             text: "Wi-Fi"
             iconText: root.wifiEnabled ? "" : "󰖪"
             iconFirst: true
@@ -76,6 +77,7 @@ MenuCard {
 
         MButton {
             Layout.fillWidth: true
+            Layout.preferredHeight: 25
             text: "Bluetooth"
             iconText: root.bluetoothEnabled ? "󰂯" : "󰂲"
             iconFirst: true
@@ -91,6 +93,7 @@ MenuCard {
 
         MButton {
             Layout.fillWidth: true
+            Layout.preferredHeight: 25
             text: "Airplane"
             iconText: "󰀝"
             iconSize: 16

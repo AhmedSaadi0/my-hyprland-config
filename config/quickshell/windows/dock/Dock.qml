@@ -217,6 +217,8 @@ PanelWindow {
             if (!win)
                 continue;
             let appId = win.appId || (win.lastIpcObject ? win.lastIpcObject.class : "") || "unknown";
+            if (appId === "unknown")
+                continue;
             let rawAddr = String(win.address || "");
             if (!rawAddr)
                 continue;
