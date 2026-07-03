@@ -2,9 +2,9 @@
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 import QtQuick.Effects
 import "root:/themes"
+import "root:/components"
 
 Item {
     id: delegateRoot
@@ -34,6 +34,12 @@ Item {
     property var aiActions: []
 
     function getActionsArray() {
+        const type = Array.isArray(aiActions) ? "Array" : typeof aiActions;
+
+        console.info("aiActions Value: " + JSON.stringify(aiActions));
+        console.info("aiActions Type: " + type);
+        console.info("Is Array: " + Array.isArray(aiActions));
+
         try {
             if (!aiActions || aiActions === "")
                 return [];
@@ -81,13 +87,7 @@ Item {
         border.width: 2
         border.color: stateColor
         layer.enabled: isCritical
-        layer.effect: MultiEffect {
-            shadowEnabled: true
-            // shadowColor: palette.shadow
-            shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.6)
-            shadowBlur: 0.5
-            shadowOpacity: 0.6
-        }
+        layer.effect: Shadow {}
     }
 
     // --- Main Card Content ---

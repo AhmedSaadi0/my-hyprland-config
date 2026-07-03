@@ -48,30 +48,31 @@ PanelWindow {
             SystemTray {
                 id: systemTray
                 height: theme.dimensions.barWidgetsHeight
-                layer.enabled: systemTray.visible
-                layer.effect: Shadow {}
 
                 topRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
                 bottomRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
+
+                layer.enabled: true
+                layer.effect: Shadow {}
             }
 
             NetworkSpeedIndicator {
                 id: internetIndicator
                 height: theme.dimensions.barWidgetsHeight
-                layer.enabled: true
-                layer.effect: Shadow {}
 
                 radius: theme.dimensions.elementRadius / innerRadiusDiv
+                layer.enabled: true
+                layer.effect: Shadow {}
             }
 
             ActiveWindow {
                 id: activeWindow
                 height: theme.dimensions.barWidgetsHeight
-                layer.enabled: activeWindow.hasWindow
-                layer.effect: Shadow {}
 
                 bottomLeftRadius: theme.dimensions.elementRadius / innerRadiusDiv
                 topLeftRadius: theme.dimensions.elementRadius / innerRadiusDiv
+                layer.enabled: true
+                layer.effect: Shadow {}
             }
         }
 
@@ -94,6 +95,8 @@ PanelWindow {
                 Layout.preferredWidth: Math.min(monitors.implicitWidth + 10, maxWidth)
                 Layout.maximumWidth: maxWidth
                 Layout.preferredHeight: theme.dimensions.barWidgetsHeight
+                layer.enabled: true
+                layer.effect: Shadow {}
 
                 radius: theme.dimensions.elementRadius
                 color: theme.colors.surfaceContainer
@@ -101,9 +104,6 @@ PanelWindow {
 
                 topRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
                 bottomRightRadius: theme.dimensions.elementRadius / innerRadiusDiv
-
-                layer.enabled: true
-                layer.effect: Shadow {}
 
                 Behavior on Layout.preferredWidth {
                     NumberAnimation {

@@ -79,7 +79,7 @@ Item {
         interval: 1500
         running: root.active
         repeat: true
-        triggeredOnStart: false 
+        triggeredOnStart: false
         onTriggered: {
             zAnim.restart();
         }

@@ -266,7 +266,7 @@ Item {
     Timer {
         id: readinessChecker
         interval: 300
-        repeat: true
+        repeat: false
         running: false
         onTriggered: {
             const pendingBg = root.bgShowChannel1 ? bg2 : bg1;

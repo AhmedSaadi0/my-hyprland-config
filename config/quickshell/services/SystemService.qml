@@ -43,26 +43,19 @@ Singleton {
             status_color: root.bootStatusColor
         };
 
-        AiService.sendRequest(
-            App.scripts.python.callBootSolutionAi,
-            ["--message", JSON.stringify(payload)],
-            function(data) {
-                if (data && data.solutions) {
-                    console.info("[SystemService] Boot solutions received: " + data.solutions.length + " solutions");
-                    root.bootSolutionsModel = data.solutions;
-                    root.bootSolutionStatus = "SUCCESS";
-                } else {
-                    console.warn("[SystemService] Boot solutions response has no solutions array");
-                    root.bootSolutionStatus = "ERROR";
-                }
-            },
-            function(errorMessage) {
-                console.error("[SystemService] Boot solutions error: " + errorMessage);
+        AiService.sendRequest(App.scripts.python.callBootSolutionAi, ["--message", JSON.stringify(payload)], function (data) {
+            if (data && data.solutions) {
+                console.info("[SystemService] Boot solutions received: " + data.solutions.length + " solutions");
+                root.bootSolutionsModel = data.solutions;
+                root.bootSolutionStatus = "SUCCESS";
+            } else {
+                console.warn("[SystemService] Boot solutions response has no solutions array");
                 root.bootSolutionStatus = "ERROR";
-            },
-            "BootSolutions",
-            0
-        );
+            }
+        }, function (errorMessage) {
+            console.error("[SystemService] Boot solutions error: " + errorMessage);
+            root.bootSolutionStatus = "ERROR";
+        }, "BootSolutions", 0);
     }
 
     function refreshBootDetails() {
@@ -91,7 +84,7 @@ Singleton {
 
                 // Request solutions after analysis completes
                 if (data.logs && data.logs.length > 0) {
-                    Qt.callLater(function() {
+                    Qt.callLater(function () {
                         root.requestBootSolutions(data.logs);
                     });
                 }
@@ -703,7 +696,7 @@ Singleton {
     Process {
         id: tempProc
         command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "temps"]
-        running: true
+        running: false
 
         stdout: SplitParser {
             onRead: data => {

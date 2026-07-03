@@ -14,7 +14,7 @@ Singleton {
     readonly property int maxEventsCount: 50
 
     property ListModel eventsModel: ListModel {}
-    property var _actionsCache: ({})
+
     property int _eventCounter: 0
 
     property int _spikeCooldownMs: App.resourceAlertCooldownMs
@@ -219,7 +219,6 @@ Singleton {
             aiModel: App.systemAiModel || "System AI"
         });
 
-        _actionsCache[eventId] = [];
         _trimEventsModel();
         _requestSpikeAnalysis(eventId, type, currentValue, prevValue, deltaValue, thresholdValue, topListOverride, tempsOverride, tempDevicesOverride);
     }
@@ -409,11 +408,7 @@ Singleton {
             eventsModel.setProperty(idx, "aiProcessBehavior", data.process_anomaly.behavior || "Unknown behavior");
         }
 
-        if (data.actions && data.actions.length)
-            _actionsCache[eventId] = data.actions;
-        else
-            _actionsCache[eventId] = [];
-
+        eventsModel.setProperty(idx, "aiActions", data.actions || []);
         eventsModel.setProperty(idx, "isLoading", false);
 
         if (data.severity) {
@@ -428,10 +423,6 @@ Singleton {
                 return i;
         }
         return -1;
-    }
-
-    function getActionsForEvent(eventId) {
-        return _actionsCache[eventId] || [];
     }
 
     function _formatTime(dt) {

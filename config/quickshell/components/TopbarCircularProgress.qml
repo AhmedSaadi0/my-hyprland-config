@@ -28,7 +28,7 @@ CircularProgress {
     property int iconFontSize: 11
     property color iconColor: ThemeManager.selectedTheme.colors.primary
     property var command: []
-    property int updateInterval: 1000
+    property int updateInterval: 2000
 
     // إبقاء glowIcon كما هو
     property bool glowIcon: false

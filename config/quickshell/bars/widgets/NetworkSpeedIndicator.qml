@@ -30,7 +30,6 @@ Rectangle {
         height: ThemeManager.selectedTheme.dimensions.barWidgetsHeight - 4
         radius: ThemeManager.selectedTheme.dimensions.elementRadius
         color: ThemeManager.selectedTheme.colors.surface
-        layer.enabled: true
 
         topLeftRadius: netspeedToolbarWidget.topLeftRadius
         bottomLeftRadius: netspeedToolbarWidget.bottomLeftRadius
@@ -67,11 +66,6 @@ Rectangle {
                 font.bold: true
                 color: ThemeManager.selectedTheme.colors.onSurface
             }
-        }
-
-        layer.effect: Shadow {
-            color: Qt.darker(ThemeManager.selectedTheme.colors.surface, 1.4).alpha(0.2)
-            radius: ThemeManager.selectedTheme.dimensions.shapeSmall
         }
     }
 
@@ -136,9 +130,11 @@ Rectangle {
 
         interval: callInterval
         repeat: true
-        running: true
+        running: netspeedToolbarWidget.visible
         onTriggered: {
-            networkMonitoringProcess.running = true;
+            if (!networkMonitoringProcess.running) {
+                networkMonitoringProcess.running = true;
+            }
         }
     }
 

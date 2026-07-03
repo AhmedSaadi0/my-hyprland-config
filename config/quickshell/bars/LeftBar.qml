@@ -255,13 +255,7 @@ PanelWindow {
         anchors.fill: parent
 
         layer.enabled: true
-        layer.effect: MultiEffect {
-            shadowEnabled: true
-            shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.6)
-            shadowBlur: 0.6
-            shadowVerticalOffset: 2
-            shadowHorizontalOffset: 2
-        }
+        layer.effect: Shadow {}
 
         // --- Top Group (System) ---
         ButtonGroup {
