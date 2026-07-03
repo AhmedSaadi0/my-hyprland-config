@@ -11,7 +11,7 @@ MultiEffect {
 
     shadowEnabled: true
     shadowColor: color
-    shadowBlur: 0.5
+    shadowBlur: 0.6
     shadowOpacity: 0.6
 }
 

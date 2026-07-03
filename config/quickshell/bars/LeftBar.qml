@@ -255,7 +255,11 @@ PanelWindow {
         anchors.fill: parent
 
         layer.enabled: true
-        layer.effect: Shadow {}
+        layer.effect: Shadow {
+            shadowBlur: 0.6
+            shadowVerticalOffset: 2
+            shadowHorizontalOffset: 2
+        }
 
         // --- Top Group (System) ---
         ButtonGroup {
