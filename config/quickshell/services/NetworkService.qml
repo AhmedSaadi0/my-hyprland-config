@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Networking
 
 import "root:/config"
 import "root:/utils" as Utils
@@ -90,11 +91,11 @@ Singleton {
     }
 
     function shouldCollectLiveSamples() {
-        return true;
+        return root.isMenuOpen && Networking.connectivity === NetworkConnectivity.Full;
     }
 
     function shouldCollectHistory() {
-        return root.shouldRunUsageSection();
+        return true;
     }
 
     function refreshCurrentUsageTab() {
@@ -193,6 +194,13 @@ Singleton {
     }
 
     Component.onCompleted: root.syncTimers()
+
+    Connections {
+        target: Networking
+        function onConnectivityChanged() {
+            root.syncTimers();
+        }
+    }
 
     function setHistoryDateRange(hours, startDate, endDate) {
         root.historyStartDate = startDate;
@@ -479,7 +487,7 @@ Singleton {
 
     Timer {
         id: liveSamplingTimer
-        interval: 500
+        interval: 1500
         repeat: true
         running: false
         onTriggered: root.refreshLiveUsage()
@@ -489,7 +497,7 @@ Singleton {
         id: historyRefreshTimer
         interval: 30000
         repeat: true
-        running: false
+        running: true
         onTriggered: root.refreshHistoryUsage()
     }
 }

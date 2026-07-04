@@ -5,12 +5,13 @@ import QtQuick
 import "root:/components"
 import "root:/config"
 import "root:/themes"
+import "root:/services"
 
 TopbarCircularProgress {
     id: tempUsage
     icon: ""
-    command: App.scripts.bash.deviceTempretureCommand
-    updateInterval: 1000 * 4
+    activeProcess: false
+    value: SystemService.cpuMaxTemp / 100.0
 
     readonly property color fgNormal: ThemeManager.selectedTheme.colors.tertiary
     readonly property color bgNormal: ThemeManager.selectedTheme.colors.tertiary.alpha(0.4)

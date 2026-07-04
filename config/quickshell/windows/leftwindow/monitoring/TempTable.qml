@@ -8,7 +8,7 @@ ProcessTable {
     id: batteryTable
     height: 120
     interval: 1000 * 60
-    running: true
+    running: false
     command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "temps"]
     title: qsTr("Temp")
     value: ""

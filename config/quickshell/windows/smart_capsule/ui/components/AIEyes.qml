@@ -198,10 +198,26 @@ Item {
 
     // دالة: إجبار العين على أخذ شكل الحالة الحالية (لإصلاح العين بعد الرمش)
     function fixEyeState() {
-        // إعادة التعيين لإجبار التحديث
-        var current = root.state;
-        root.state = "";
-        root.state = current;
+        // Restore eye heights directly from current state definitions
+        // without the expensive state="" → state=current transition
+        var leftH = 10, rightH = 10;
+        switch (root.state) {
+        case "idle": leftH = 10; rightH = 10; break;
+        case "happy": leftH = 8; rightH = 8; break;
+        case "suspicious": leftH = 7; rightH = 10; break;
+        case "shocked": leftH = 9; rightH = 9; break;
+        case "angry": leftH = 7; rightH = 7; break;
+        case "sad": leftH = 8; rightH = 8; break;
+        case "confused": leftH = 8; rightH = 10; break;
+        case "bored": leftH = 3; rightH = 3; break;
+        case "love": leftH = 12; rightH = 12; break;
+        case "focused": leftH = 10; rightH = 10; break;
+        case "dead": leftH = 14; rightH = 14; break;
+        case "listening": leftH = 12; rightH = 12; break;
+        default: leftH = 10; rightH = 10; break;
+        }
+        leftEye.eyeH = leftH;
+        rightEye.eyeH = rightH;
     }
 
     // دالة: إعادة تعيين روابط الخصائص
@@ -983,6 +999,7 @@ Item {
         //         spacing: 6
         //     }
         // }
+
 
     ]
 }

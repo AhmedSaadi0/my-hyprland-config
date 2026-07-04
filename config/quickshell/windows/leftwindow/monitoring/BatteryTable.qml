@@ -8,7 +8,7 @@ ProcessTable {
     id: batteryTable
     height: 120
     interval: 1000 * 60
-    running: true
+    running: false
     // command: ["python", ".config/quickshell/scripts/python/battery_info.py"]
     command: App.scripts.python.batteryInfoCommand
     title: "Battery"

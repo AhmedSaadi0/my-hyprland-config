@@ -24,36 +24,43 @@ Rectangle {
     implicitHeight: collapsedRow.implicitHeight + (isExpanded ? expandedContent.implicitHeight + 12 : 0) + 12
 
     radius: theme.dimensions.shapeExtraSmall
-    color: isExpanded
-        ? Qt.rgba(difficultyColor().r, difficultyColor().g, difficultyColor().b, theme.systemSettings.themeMode == "dark" ? 0.12 : 0.06)
-        : (hoverArea.containsMouse ? theme.colors.onSurface.alpha(0.04) : "transparent")
+    color: isExpanded ? Qt.rgba(difficultyColor().r, difficultyColor().g, difficultyColor().b, theme.systemSettings.themeMode == "dark" ? 0.12 : 0.06) : (hoverArea.containsMouse ? theme.colors.onSurface.alpha(0.04) : "transparent")
     border.color: isExpanded ? Qt.rgba(difficultyColor().r, difficultyColor().g, difficultyColor().b, 0.3) : "transparent"
     border.width: isExpanded ? 1 : 0
     clip: true
 
     Behavior on implicitHeight {
-        NumberAnimation { duration: 280; easing.type: Easing.InOutQuad }
+        NumberAnimation {
+            duration: 280
+            easing.type: Easing.InOutQuad
+        }
     }
 
     function difficultyColor() {
-        if (difficulty === "hard") return theme.colors.error;
-        if (difficulty === "medium") return theme.colors.secondary;
+        if (difficulty === "hard")
+            return theme.colors.error;
+        if (difficulty === "medium")
+            return theme.colors.secondary;
         return theme.colors.tertiary;
     }
 
     function priorityColor() {
-        if (priority === "critical") return theme.colors.error;
-        if (priority === "important") return theme.colors.secondary;
+        if (priority === "critical")
+            return theme.colors.error;
+        if (priority === "important")
+            return theme.colors.secondary;
         return theme.colors.onSurfaceVariant;
     }
 
     function stepsCountText() {
-        if (!steps || steps.length === 0) return "No steps";
+        if (!steps || steps.length === 0)
+            return "No steps";
         return steps.length + " step" + (steps.length > 1 ? "s" : "");
     }
 
     function hasRebootWarning() {
-        if (!steps) return false;
+        if (!steps)
+            return false;
         for (var i = 0; i < steps.length; i++) {
             if (steps[i].warning && steps[i].warning.toLowerCase().indexOf("reboot") !== -1)
                 return true;
@@ -128,7 +135,9 @@ Rectangle {
                 }
             }
 
-            Item { Layout.fillWidth: true }
+            Item {
+                Layout.fillWidth: true
+            }
 
             // Steps count
             Text {
@@ -180,7 +189,9 @@ Rectangle {
         opacity: root.isExpanded ? 1 : 0
 
         Behavior on opacity {
-            NumberAnimation { duration: 200 }
+            NumberAnimation {
+                duration: 200
+            }
         }
 
         // Divider

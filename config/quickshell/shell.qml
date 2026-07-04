@@ -172,7 +172,7 @@ ShellRoot {
                     screen: modelData
                 }
             }
-
+            //
             // 1. Dynamic Island
             Variants {
                 model: Quickshell.screens
@@ -182,8 +182,8 @@ ShellRoot {
                     screen: modelData
                 }
             }
-
-            // 3. Bars & Corners
+            //
+            // 3. Bars
             Variants {
                 model: Quickshell.screens
                 Topbar {
@@ -214,7 +214,7 @@ ShellRoot {
             LeftWindowFull {
                 id: leftPanelFull
             }
-
+            //
             Cheatsheet {
                 id: cheatsheetPanel
             }

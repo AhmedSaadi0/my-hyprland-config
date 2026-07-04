@@ -1,6 +1,5 @@
 // windows/dock/Dock.qml
 import QtQuick
-import QtQuick.Effects
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
@@ -94,16 +93,36 @@ PanelWindow {
     }
 
     property int updateTrigger: 0
+    property bool _pendingUpdate: false
+
+    onUpdateTriggerChanged: _rebuildRunningApps()
+
+    Timer {
+        id: batchUpdateTimer
+        interval: 100
+        repeat: false
+        onTriggered: {
+            root._pendingUpdate = false;
+            root.updateTrigger++;
+        }
+    }
+
     Connections {
         target: Hyprland
         function onRawEvent(event) {
-            if (event.name === "openwindow" || event.name === "closewindow" || event.name === "movewindow" || event.name === "activewindow") {
+            if (event.name === "openwindow" || event.name === "closewindow") {
                 root.updateTrigger++;
+            } else if (event.name === "activewindow" || event.name === "movewindow") {
+                if (!root._pendingUpdate) {
+                    root._pendingUpdate = true;
+                    batchUpdateTimer.start();
+                }
             }
         }
     }
 
     Component.onCompleted: {
+        _rebuildRunningApps();
         EventBus.on(Events.BOTTOM_LAUNCHER_OPENED, () => {
             root.isBottomLauncherOpen = true;
         }, root);
@@ -206,9 +225,9 @@ PanelWindow {
         return null;
     }
 
-    readonly property var runningApps: {
-        let dummy = root.updateTrigger;
-        let dummyCount = Hyprland.toplevels.count;
+    property var _cachedRunningApps: []
+
+    function _rebuildRunningApps() {
         let apps = {};
         let toplevels = Hyprland.toplevels.values;
 
@@ -244,12 +263,13 @@ PanelWindow {
                 });
             }
         }
-        return Object.values(apps);
+        root._cachedRunningApps = Object.values(apps);
     }
+
+    readonly property var runningApps: root._cachedRunningApps
 
     readonly property var dockItems: {
         let dummy = root.updateTrigger;
-        let dummy2 = IconService.iconUpdateTrigger;
         let items = [];
         let favs = App.dockApps || [];
         let running = runningApps;
@@ -375,16 +395,6 @@ PanelWindow {
                     easing.type: Easing.OutBack
                     easing.overshoot: 1.2
                 }
-            }
-
-            layer.enabled: hasAppsOnWorkspace
-            layer.effect: MultiEffect {
-                shadowEnabled: true
-                shadowColor: ThemeManager.selectedTheme.colors.shadow.alpha(0.5)
-                shadowBlur: 0.8
-                shadowVerticalOffset: 4
-                shadowHorizontalOffset: 0
-                shadowScale: 1.0
             }
         }
 

@@ -164,7 +164,7 @@ Item {
                         aiThermalDetails: model.aiThermalDetails
                         aiProcessName: model.aiProcessName
                         aiProcessBehavior: model.aiProcessBehavior
-                        aiActions: AiAnalysisService.getActionsForEvent(model.eventId)
+                        aiActions: model.aiActions
 
                         isExpanded: root.expandedEventId === model.eventId
 
