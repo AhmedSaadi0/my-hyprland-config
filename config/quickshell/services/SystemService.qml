@@ -98,6 +98,15 @@ Singleton {
         }, "BootDetails", 0);
     }
 
+    function retryBootAnalysis() {
+        if (root.bootAnalysisStatus === "LOADING")
+            return;
+        root.bootAnalysisStatus = "IDLE";
+        root.bootSolutionStatus = "IDLE";
+        root.bootSolutionsModel = [];
+        root.refreshBootDetails();
+    }
+
     Timer {
         interval: 3000
         running: true
@@ -110,7 +119,7 @@ Singleton {
     // =========================================================
 
     function fetchSystemActionMessages() {
-        if (root.systemActionResponsesReady)
+        if (root.systemActionResponsesReady && Object.keys(root.systemActionResponses).length > 0)
             return;
 
         console.info("[SystemService] Fetching system action responses from AI...");
@@ -127,6 +136,12 @@ Singleton {
             console.error("[SystemService] Failed to load system action responses:", errorMessage);
             root.systemActionResponsesReady = true;
         }, "SystemActions", 0);
+    }
+
+    function retrySystemActionMessages() {
+        root.systemActionResponsesReady = false;
+        root.systemActionResponses = ({});
+        root.fetchSystemActionMessages();
     }
 
     Timer {
@@ -169,54 +184,28 @@ Singleton {
     readonly property real batteryPercent: _bat ? _bat.percentage : 0
     readonly property int batteryState: _bat ? _bat.state : 0
     readonly property bool isCharging: batteryState === 1 || batteryState === 4
+    readonly property var _batteryDischargeIcons: ['󰁺', '󰁻', '󰁼', '󰁽', '󰁾', '󰁿', '󰂀', '󰂁', '󰂂', '󰁹']
+    readonly property var _batteryChargeIcons: ['󰢜', '󰂆', '󰂇', '󰂈', '󰢝', '󰂉', '󰢞', '󰂊', '󰂋', '󰂅']
     readonly property string batteryIcon: {
-        const dischargeIcons = ['󰁺', '󰁻', '󰁼', '󰁽', '󰁾', '󰁿', '󰂀', '󰂁', '󰂂', '󰁹'];
-        const chargeIcons = ['󰢜', '󰂆', '󰂇', '󰂈', '󰢝', '󰂉', '󰢞', '󰂊', '󰂋', '󰂅'];
-        let index = Math.min(9, Math.floor(batteryPercent * 10));
-        if (batteryPercent > 0 && index < 0)
-            index = 0;
+        const index = Math.min(9, Math.floor(batteryPercent * 10));
         if (index < 0 || index > 9)
             return "󰂃";
-        return isCharging ? chargeIcons[index] : dischargeIcons[index];
+        return isCharging ? _batteryChargeIcons[index] : _batteryDischargeIcons[index];
     }
 
     // --- CPU & RAM ---
     property real cpuUsage: 0.0
     property real ramUsage: 0.0
-    readonly property bool isCpuHigh: cpuUsage >= (App.cpuHighLoadThreshold / 100)
-    readonly property bool isRamHigh: ramUsage >= (App.ramHighLoadThreshold / 100)
+    readonly property real cpuHighThreshold: App.cpuHighLoadThreshold / 100.0
+    readonly property real ramHighThreshold: App.ramHighLoadThreshold / 100.0
+    readonly property bool isCpuHigh: cpuUsage >= cpuHighThreshold
+    readonly property bool isRamHigh: ramUsage >= ramHighThreshold
     readonly property real tempHighThreshold: Math.max(1, App.tempHighThreshold || 85)
     readonly property real tempResetThreshold: Math.max(0, tempHighThreshold - 3)
-    property real _lastCpuUsage: -1
-    property real _lastRamUsage: -1
-    property var _cpuAlertState: ({
-            active: false,
-            lastAlertAt: 0,
-            breachedAt: 0,
-            lastAlertProcessKey: "",
-            episodeProcessKey: "",
-            hasSentCurrentEpisode: false,
-            requestPending: false
-        })
-    property var _ramAlertState: ({
-            active: false,
-            lastAlertAt: 0,
-            breachedAt: 0,
-            lastAlertProcessKey: "",
-            episodeProcessKey: "",
-            hasSentCurrentEpisode: false,
-            requestPending: false
-        })
-    property var _tempAlertState: ({
-            active: false,
-            lastAlertAt: 0,
-            breachedAt: 0,
-            hasSentCurrentEpisode: false
-        })
-    property var _resourceDiagnosticCallbacks: ({
-            cpu: [],
-            ram: []
-        })
+    property var _cpuAlertState: _createResourceAlertState()
+    property var _ramAlertState: _createResourceAlertState()
+    property var _tempAlertState: _createTempAlertState()
+    property var _resourceDiagnosticCallbacks: ({})
     property var _resourceDiagnosticQueue: []
     property string _activeResourceDiagnosticAction: ""
     property string _resourceDiagnosticStdoutText: ""
@@ -228,7 +217,6 @@ Singleton {
     property real cpuMaxTemp: 0.0
     property real gpuMaxTemp: 0.0
     property real storageMaxTemp: 0.0
-    property real _lastMaxTemp: -1
 
     // --- Keyboard Layout ---
     property string currentLayout: "EN"
@@ -246,8 +234,7 @@ Singleton {
             temp_alerts: 0
         })
 
-    function _normalizeResponseKey(key) {
-        const aliases = {
+    readonly property var _responseKeyAliases: ({
             charge: "charging",
             charging: "charging",
             discharge: "discharging",
@@ -261,9 +248,10 @@ Singleton {
             tempAlert: "temp_alerts",
             tempAlerts: "temp_alerts",
             temp_alerts: "temp_alerts"
-        };
+        })
 
-        return aliases[key] || key;
+    function _normalizeResponseKey(key) {
+        return root._responseKeyAliases[key] || key;
     }
 
     function _nextArrayResponse(key, fallbackText, fallbackEmotion) {
@@ -356,11 +344,27 @@ Singleton {
         if (!action)
             return;
 
+        if (action === "temps" && data && !data.error)
+            root._cacheTempDiagnostics(data);
+
         const callbacks = _resourceDiagnosticCallbacks[action] || [];
         _resourceDiagnosticCallbacks[action] = [];
         _flushResourceCallbacks(callbacks, data);
         _activeResourceDiagnosticAction = "";
         _pumpResourceDiagnosticsQueue();
+    }
+
+    function _cacheTempDiagnostics(data) {
+        const prevMax = Math.max(root.cpuMaxTemp, root.gpuMaxTemp, root.storageMaxTemp);
+        const newCpu = typeof data.cpu_max_temp === "number" ? data.cpu_max_temp : root.cpuMaxTemp;
+        const newGpu = typeof data.gpu_max_temp === "number" ? data.gpu_max_temp : root.gpuMaxTemp;
+        const newStorage = typeof data.storage_max_temp === "number" ? data.storage_max_temp : root.storageMaxTemp;
+        root.cpuMaxTemp = newCpu;
+        root.gpuMaxTemp = newGpu;
+        root.storageMaxTemp = newStorage;
+        const newMax = Math.max(newCpu, newGpu, newStorage);
+        if (newMax !== prevMax)
+            root.temperatureSampled(prevMax, newMax);
     }
 
     function _enqueueResourceDiagnosticRequest(action, callback) {
@@ -399,6 +403,27 @@ Singleton {
 
     function requestTempDiagnostics(callback) {
         _enqueueResourceDiagnosticRequest("temps", callback);
+    }
+
+    function _createResourceAlertState() {
+        return {
+            active: false,
+            lastAlertAt: 0,
+            breachedAt: 0,
+            lastAlertProcessKey: "",
+            episodeProcessKey: "",
+            hasSentCurrentEpisode: false,
+            requestPending: false
+        };
+    }
+
+    function _createTempAlertState() {
+        return {
+            active: false,
+            lastAlertAt: 0,
+            breachedAt: 0,
+            hasSentCurrentEpisode: false
+        };
     }
 
     function _resetResourceAlertState(kind, notifyNormal) {
@@ -518,7 +543,7 @@ Singleton {
             state.requestPending = false;
 
             const latestValue = kind === "cpu" ? root.cpuUsage : root.ramUsage;
-            const threshold = kind === "cpu" ? (App.cpuHighLoadThreshold / 100.0) : (App.ramHighLoadThreshold / 100.0);
+            const threshold = kind === "cpu" ? root.cpuHighThreshold : root.ramHighThreshold;
             if (!state.active || latestValue < threshold)
                 return;
 
@@ -528,7 +553,7 @@ Singleton {
     }
 
     function _handleResourceAlert(kind, currentValue) {
-        const threshold = kind === "cpu" ? (App.cpuHighLoadThreshold / 100.0) : (App.ramHighLoadThreshold / 100.0);
+        const threshold = kind === "cpu" ? root.cpuHighThreshold : root.ramHighThreshold;
         const alertsEnabled = kind === "cpu" ? App.enableHighCpuAlert : App.enableHighRamAlert;
         const state = kind === "cpu" ? root._cpuAlertState : root._ramAlertState;
 
@@ -565,16 +590,6 @@ Singleton {
         _evaluateResourceEpisode(kind, currentValue, state.episodeProcessKey || state.lastAlertProcessKey);
     }
 
-    onIsCpuHighChanged: {
-        if (!isCpuHigh)
-            _handleResourceAlert("cpu", cpuUsage);
-    }
-
-    onIsRamHighChanged: {
-        if (!isRamHigh)
-            _handleResourceAlert("ram", ramUsage);
-    }
-
     Process {
         id: hardwareMonitorProc
         command: App.scripts.python.systemMonitorCommand // مسار سكربت البايثون الموحد
@@ -583,7 +598,7 @@ Singleton {
         stdout: SplitParser {
             onRead: data => {
                 try {
-                    var metrics = JSON.parse(data.trim());
+                    const metrics = JSON.parse(data.trim());
 
                     if (metrics.error) {
                         console.warn("[SystemService] Monitor script error:", metrics.error);
@@ -591,19 +606,19 @@ Singleton {
                     }
 
                     // --- 1. تحديث المعالج وإرسال الإشارة ---
-                    var prevCpu = root.cpuUsage;
+                    const prevCpu = root.cpuUsage;
                     root.cpuUsage = metrics.cpu / 100.0;
                     root.cpuSampled(prevCpu, root.cpuUsage);
                     root._handleResourceAlert("cpu", root.cpuUsage);
 
                     // --- 2. تحديث الرام وإرسال الإشارة ---
-                    var prevRam = root.ramUsage;
+                    const prevRam = root.ramUsage;
                     root.ramUsage = metrics.ram / 100.0;
                     root.ramSampled(prevRam, root.ramUsage);
                     root._handleResourceAlert("ram", root.ramUsage);
 
                     // --- 3. تحديث الحرارة وإرسال الإشارة ---
-                    var prevTemp = root.cpuMaxTemp;
+                    const prevTemp = root.cpuMaxTemp;
                     root.cpuMaxTemp = metrics.temp;
                     root.temperatureSampled(prevTemp, root.cpuMaxTemp);
                     root._handleTempAlert(root.cpuMaxTemp);
@@ -650,72 +665,6 @@ Singleton {
             }
 
             root._finishResourceDiagnosticRequest(action, root._readResourceDiagnosticOutput(action, root._resourceDiagnosticStdoutText));
-        }
-    }
-
-    // Process {
-    //     id: cpuProc
-    //     command: App.scripts.bash.cpuCommand
-    //     running: true
-    //
-    //     stdout: SplitParser {
-    //         onRead: data => {
-    //             console.info("CPU USAGE -> " + root.cpuUsage);
-    //             const val = parseFloat(data.trim());
-    //             if (isNaN(val))
-    //                 return;
-    //
-    //             const prev = root._lastCpuUsage;
-    //             root.cpuUsage = val / 100.0;
-    //             root.cpuSampled(prev, root.cpuUsage);
-    //             root._lastCpuUsage = root.cpuUsage;
-    //             console.info("CPU USAGE -> " + root.cpuUsage);
-    //         }
-    //     }
-    // }
-
-    // Process {
-    //     id: ramProc
-    //     command: App.scripts.bash.ramCommand
-    //     running: true
-    //
-    //     stdout: SplitParser {
-    //         onRead: data => {
-    //             const val = parseFloat(data.trim());
-    //             if (isNaN(val))
-    //                 return;
-    //
-    //             const prev = root._lastRamUsage;
-    //             root.ramUsage = val / 100.0;
-    //             root.ramSampled(prev, root.ramUsage);
-    //             root._lastRamUsage = root.ramUsage;
-    //         }
-    //     }
-    // }
-
-    Process {
-        id: tempProc
-        command: [...App.scripts.python.systemDiagnosticsCommand, "--action", "temps"]
-        running: false
-
-        stdout: SplitParser {
-            onRead: data => {
-                try {
-                    const parsed = JSON.parse(data.trim());
-                    const prevMax = root._lastMaxTemp;
-
-                    root.cpuMaxTemp = parsed.cpu_max_temp || 0;
-                    root.gpuMaxTemp = parsed.gpu_max_temp || 0;
-                    root.storageMaxTemp = parsed.storage_max_temp || 0;
-
-                    const currentMax = Math.max(root.cpuMaxTemp, root.gpuMaxTemp, root.storageMaxTemp);
-                    root.temperatureSampled(prevMax, currentMax);
-                    root._lastMaxTemp = currentMax;
-                    root._handleTempAlert(currentMax);
-                } catch (e) {
-                    console.error("[SystemService] Temp JSON parse error:", e);
-                }
-            }
         }
     }
 
