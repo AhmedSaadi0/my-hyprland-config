@@ -31,6 +31,7 @@ HeaderCard {
         Tempreture {
             id: tempProgress
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+            enableAnimation: true
         }
     }
     Component {
@@ -41,18 +42,21 @@ HeaderCard {
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
             backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
             foregroundColor: ThemeManager.selectedTheme.colors.primary
+            enableAnimation: true
         }
     }
     Component {
         id: ramComponent
         Ram {
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+            enableAnimation: true
         }
     }
     Component {
         id: cpuComponent
         Cpu {
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+            enableAnimation: true
         }
     }
 

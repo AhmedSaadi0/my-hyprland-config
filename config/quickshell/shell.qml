@@ -172,7 +172,7 @@ ShellRoot {
                     screen: modelData
                 }
             }
-            //
+
             // 1. Dynamic Island
             Variants {
                 model: Quickshell.screens
@@ -182,7 +182,7 @@ ShellRoot {
                     screen: modelData
                 }
             }
-            //
+
             // 3. Bars
             Variants {
                 model: Quickshell.screens
