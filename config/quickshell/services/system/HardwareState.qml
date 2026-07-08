@@ -7,7 +7,7 @@ import Quickshell.Io
 
 import "root:/services"
 
-Item {
+QtObject {
     id: root
 
     // --- Audio ---
@@ -60,8 +60,7 @@ Item {
         return rawName.substring(0, 2).toUpperCase();
     }
 
-    Process {
-        id: layoutListener
+    property Process _layoutListener: Process {
         command: ["sh", "-c", "nc -U $XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | grep --line-buffered 'activelayout>>'"]
         running: true
 

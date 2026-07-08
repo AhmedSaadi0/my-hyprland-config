@@ -6,7 +6,7 @@ import Quickshell
 import "root:/config"
 import "root:/services"
 
-Item {
+QtObject {
     id: root
 
     property string bootAnalysisStatus: "IDLE"
@@ -98,7 +98,7 @@ Item {
         root.refreshBootDetails();
     }
 
-    Timer {
+    property Timer _bootTimer: Timer {
         interval: 3000
         running: true
         repeat: false

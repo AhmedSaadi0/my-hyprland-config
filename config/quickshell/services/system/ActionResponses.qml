@@ -6,7 +6,7 @@ import Quickshell
 import "root:/config"
 import "root:/services"
 
-Item {
+QtObject {
     id: root
 
     property var systemActionResponses: ({})
@@ -88,7 +88,7 @@ Item {
         root.fetchSystemActionMessages();
     }
 
-    Timer {
+    property Timer _fetchTimer: Timer {
         interval: 5000
         running: true
         repeat: false

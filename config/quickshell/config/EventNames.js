@@ -25,3 +25,5 @@ var DOCK_WIDTH_CHANGED = "dockWidthChanged";
 var DOCK_APPS_CHANGED = "dockAppsChanged";
 
 var APP_MENU_CLOSE_ALL = "appMenuCloseAll";
+
+var TOGGLE_POWER_MENU = "togglePowerMenu";

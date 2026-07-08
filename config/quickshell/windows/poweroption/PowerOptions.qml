@@ -83,13 +83,46 @@ Item {
                     property: "opacity"
                     from: 0
                     to: 1
-                    duration: 200
+                    duration: 300
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 0.92
+                    to: 1
+                    duration: 300
+                    easing.type: Easing.OutBack
+                }
+            }
+            pushExit: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 1
+                    to: 0.9
+                    duration: 250
+                    easing.type: Easing.OutCubic
+                }
+            }
+            popEnter: Transition {
+                NumberAnimation {
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 300
+                    easing.type: Easing.OutCubic
                 }
                 NumberAnimation {
                     property: "scale"
                     from: 0.95
                     to: 1
-                    duration: 200
+                    duration: 300
                     easing.type: Easing.OutCubic
                 }
             }
@@ -98,7 +131,15 @@ Item {
                     property: "opacity"
                     from: 1
                     to: 0
-                    duration: 150
+                    duration: 200
+                    easing.type: Easing.InQuad
+                }
+                NumberAnimation {
+                    property: "scale"
+                    from: 1
+                    to: 0.92
+                    duration: 200
+                    easing.type: Easing.InQuad
                 }
             }
         }

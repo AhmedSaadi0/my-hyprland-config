@@ -6,7 +6,7 @@ import Quickshell.Io
 
 import "root:/config"
 
-Item {
+QtObject {
     id: root
 
     property real cpuUsage: 0.0
@@ -36,21 +36,20 @@ Item {
     signal ramNormal
     signal tempNormal
 
-    ResourceDiagnostics {
-        id: diagnostics
+    property ResourceDiagnostics _diagnostics: ResourceDiagnostics {
         onTempDiagnosticsReady: data => root._cacheTempDiagnostics(data)
     }
 
     function requestTopCpuProcesses(callback) {
-        diagnostics.requestTopCpuProcesses(callback);
+        _diagnostics.requestTopCpuProcesses(callback);
     }
 
     function requestTopRamProcesses(callback) {
-        diagnostics.requestTopRamProcesses(callback);
+        _diagnostics.requestTopRamProcesses(callback);
     }
 
     function requestTempDiagnostics(callback) {
-        diagnostics.requestTempDiagnostics(callback);
+        _diagnostics.requestTempDiagnostics(callback);
     }
 
     function _getTopProcessKey(kind, topList) {
@@ -262,8 +261,7 @@ Item {
         _evaluateResourceEpisode(kind, currentValue, state.episodeProcessKey || state.lastAlertProcessKey);
     }
 
-    Process {
-        id: hardwareMonitorProc
+    property Process _hardwareMonitorProc: Process {
         command: App.scripts.python.systemMonitorCommand
         running: true
 

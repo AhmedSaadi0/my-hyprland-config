@@ -6,7 +6,7 @@ import Quickshell.Io
 
 import "root:/config"
 
-Item {
+QtObject {
     id: root
 
     property var _resourceDiagnosticCallbacks: ({})
@@ -88,8 +88,8 @@ Item {
         _resourceDiagnosticStderrText = "";
         _resourceDiagnosticExitCode = 0;
         _resourceDiagnosticExitStatus = 0;
-        resourceDiagnosticsProc.command = [...App.scripts.python.systemDiagnosticsCommand, "--action", _activeResourceDiagnosticAction];
-        resourceDiagnosticsProc.running = true;
+        _resourceDiagnosticsProc.command = [...App.scripts.python.systemDiagnosticsCommand, "--action", _activeResourceDiagnosticAction];
+        _resourceDiagnosticsProc.running = true;
     }
 
     function requestTopCpuProcesses(callback) {
@@ -104,9 +104,7 @@ Item {
         _enqueueResourceDiagnosticRequest("temps", callback);
     }
 
-    Process {
-        id: resourceDiagnosticsProc
-
+    property Process _resourceDiagnosticsProc: Process {
         stdout: StdioCollector {
             onStreamFinished: {
                 root._resourceDiagnosticStdoutText = this.text.toString();

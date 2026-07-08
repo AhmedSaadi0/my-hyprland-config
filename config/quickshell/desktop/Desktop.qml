@@ -53,7 +53,7 @@ PanelWindow {
     readonly property real notchTargetHeight: App.dockIconSize + 48
     property real dockActualWidth: notchTargetHeight * 15
     property bool launcherVisible: false
-    readonly property real launcherExtraHeight: App.launcherIsShown ? (App.dockIconSize + 600) : 0
+    readonly property real launcherExtraHeight: launcherVisible ? (App.dockIconSize + 630) : 0
     readonly property real notchWidth: Math.max(dockActualWidth, launcherVisible ? App.bottomLauncherWidth : 0)
 
     property real notchHeight: notchVisible ? notchTargetHeight + launcherExtraHeight : 0
@@ -199,8 +199,13 @@ PanelWindow {
             desktopRoot.dockActualWidth = w + 5;
         }, desktopRoot);
 
-        EventBus.on(Events.LAUNCHER_VISIBILITY_CHANGED, shown => {
-            desktopRoot.launcherVisible = shown;
+        EventBus.on(Events.BOTTOM_LAUNCHER_OPENED, () => {
+        // TODO: -> Add configuration to App.qml to control the way this looks
+        // desktopRoot.launcherVisible = true;
+        }, desktopRoot);
+
+        EventBus.on(Events.BOTTOM_LAUNCHER_CLOSED, () => {
+            desktopRoot.launcherVisible = false;
         }, desktopRoot);
 
         desktopRoot.updateThemeData();

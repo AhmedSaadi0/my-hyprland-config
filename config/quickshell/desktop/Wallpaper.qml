@@ -1,3 +1,5 @@
+// wallpaper/Wallpaper.qml
+
 import QtQuick
 import QtQuick.Effects
 import QtMultimedia
@@ -60,18 +62,30 @@ Item {
             }
         }
 
-        layer.enabled: root.blurEnabled && root.isMenuOpen
+        // =========================================================
+        // التعديل هنا: منطق التحريك السلس للتضبيب والألوان
+        // =========================================================
+
+        // 1. خاصية محلية متحركة تتبع حالة فتح القائمة وخيار البلر
+        property real animatedBlur: (root.blurEnabled && root.isMenuOpen) ? root.blurValue : 0
+
+        Behavior on animatedBlur {
+            NumberAnimation {
+                duration: 480
+                easing.type: Easing.OutCubic
+            }
+        }
+
+        // 2. تفعيل الطبقة طالما أن الأنيميشن مستمر (لم يصل للصفر بعد) لمنع الاختفاء المفاجئ
+        layer.enabled: root.blurEnabled && (root.isMenuOpen || animatedBlur > 0.01)
+
         layer.effect: MultiEffect {
             blurEnabled: root.blurEnabled
             blurMax: 32
-            blur: root.isMenuOpen ? root.blurValue : 0
-            saturation: 0.2
-            Behavior on blur {
-                NumberAnimation {
-                    duration: 480
-                    easing.type: Easing.OutCubic
-                }
-            }
+            blur: backgroundLayer.animatedBlur
+
+            // 3. تحريك إشباع الألوان تدريجياً ليتناسق بصرياً مع درجة البلر (من 1.0 إلى 0.2)
+            // saturation: root.blurValue > 0 ? (1.0 - (0.8 * (backgroundLayer.animatedBlur / root.blurValue))) : 1.0
         }
 
         MediaItem {
@@ -273,11 +287,7 @@ Item {
             const pendingFg = root.fgShowChannel1 ? fg2 : fg1;
             const needOverlay = root.depthEnabled && (root.overlaySource !== "");
 
-            // const bgOk = pendingBg.isReady || pendingBg.isError;
-            // const fgOk = !needOverlay || (pendingFg.status === Image.Ready || pendingFg.status === Image.Error);
-
             const bgOk = pendingBg.isReady || pendingBg.isError;
-            // تم التحديث لاستخدام خصائص MediaItem الموحدة
             const fgOk = !needOverlay || (pendingFg.isReady || pendingFg.isError);
 
             if (bgOk && fgOk) {
