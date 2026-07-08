@@ -157,22 +157,41 @@ const translations = {
       "خطوات تلقائية ويدوية مفصلة مع أمثلة للتوزيعات.",
     docs_overview_install_btn: "افتح التثبيت",
     docs_overview_dev_title: "توثيق التطوير",
-    docs_overview_dev_desc: "المعمارية، السكربتات، والخدمات الأساسية.",
-    docs_overview_dev_btn: "افتح التوثيق",
+    docs_overview_dev_desc:
+      "المعمارية، الخدمات، محركات النظام، والذكاء الاصطناعي.",
+    docs_overview_dev_btn: "افتح التوثيق ←",
+
+    docs_structure_title: "ماذا تجد في هذه الوثائق؟",
+    docs_structure_install_title: "📦 التثبيت",
+    docs_structure_install_li1: "طريقة تلقائية (موصى بها)",
+    docs_structure_install_li2: "تثبيت يدوي مع البرامج الضرورية",
+    docs_structure_install_li3: "أوامر Arch و Fedora",
+    docs_structure_install_li4: "إعداد Python venv لتأثير العمق",
+    docs_structure_dev_title: "🔧 التطوير",
+    docs_structure_dev_li1: "المعمارية العامة وأنماط التصميم",
+    docs_structure_dev_li2: "محرك الثيمات والتكامل مع النظام",
+    docs_structure_dev_li3: "نظام الذكاء الاصطناعي والتحليل",
+    docs_structure_dev_li4: "الخدمات، الأحداث، والسكربتات",
 
     // --- صفحة التثبيت (Install) ---
     install_title: "التثبيت",
-    install_auto_title: "الطريقة التلقائية (موصى بها)",
+    install_subtitle: "طريقتان لتثبيت NibrasShell على نظامك",
+    install_auto_title: "الطريقة التلقائية",
     install_auto_desc:
       "قم باستنساخ المستودع، ثم قم بتشغيل السكربت التالي الذي سيهتم بكل شيء، بما في ذلك إنشاء ملف الإعدادات",
 
+    install_manual_title: "التثبيت اليدوي",
     install_manual_toggle: "التثبيت اليدوي (اضغط للفتح)",
     install_manual_deps: "برامج ضرورية",
     install_manual_optional: "برامج اختيارية",
     install_arch_title: "تثبيت البرامج لمستخدمي Arch:",
     install_fedora_title: "مستخدمي Fedora",
+    install_void_title: "مستخدمي Void",
     install_other_distros:
-      "<strong>ملاحظة:</strong> إذا كنت تستخدم نظام تشغيل آخر غير أرش او فيدورا فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.",
+      "<strong>ملاحظة:</strong> إذا كنت تستخدم نظام تشغيل آخر غير أرش او فيدورا او فويد فسوف تحتاج إلى تثبيت جميع البرامج الضرورية. قد تختلف الخطوات بناءً على نوع توزيعتك.",
+    tag_recommended: "موصى به",
+    tag_required: "إلزامي",
+    tag_optional: "اختياري",
 
     install_depth_effect: "متطلبات تأثير العمق للساعة في سطح المكتب",
     install_depth_desc:
@@ -180,7 +199,7 @@ const translations = {
     install_script_step: "الآن يمكنك استخدام سكربت التثبيت واختيار رقم 2",
     install_script_step_2: `
 $ cd nibras_installer
-python main.py
+$ python main.py
 Choose your language / اختر لغتك / Vyberte jazyk:
 1. English
 2. العربية
@@ -200,49 +219,238 @@ Choose your language / اختر لغتك / Vyberte jazyk:
 ...`,
     install_manual_files:
       "في حال لم يعمل السكربت الآن اكمل مع التثبيت اليدوي لتهيئة الملفات:",
+    install_manual_files_note: "في حال لم يعمل السكربت، اكمل مع التثبيت اليدوي أدناه",
+    step_clone_repo: "استنساخ المستودع",
+    step_backup_configs: "Backup الملفات الحالية",
+    step_copy_configs: "نسخ ملفات الإعدادات",
+    step_permissions: "صلاحيات التنفيذ",
+    step_easyeffects: "إعداد EasyEffects",
+    step_copy_themes: "نسخ الثيمات",
+    step_copy_fonts: "نسخ الخطوط",
+    step_extract_icons: "استخراج الأيقونات",
     install_final_note:
       "بإمكانك تغيير خط الجهاز إلى 'JF Flat' وتخصيص الواجهة من خلال الإعدادات المتقدمة (win+s).",
 
     // --- صفحة المطورين (Dev Docs) ---
     dev_title: "وثائق المطورين",
-    dev_sub: "خريطة تقنية مختصرة لفهم بنية المشروع وكيفية توسعته.",
-    dev_arch: "المعمارية العامة",
+    dev_sub:
+      "دليل شامل لفهم بنية المشروع، المعمارية، وكيفية المساهمة في التطوير.",
+    dev_arch: "1. المعمارية العامة",
+    dev_arch_desc:
+      "نبراس شِل مبني على طبقات متدرجة، كل طبقة تخدم هدفاً محدداً:",
+    dev_arch_patterns: "أنماط التصميم الأساسية",
+    dev_pattern_1:
+      "<strong>Singleton-heavy:</strong> الخدمات الأساسية تستخدم <code>pragma Singleton</code> للوصول العام.",
+    dev_pattern_2:
+      "<strong>EventBus pub/sub:</strong> التواصل بين المكونات عبر أحداث مسماة في <code>EventNames.js</code>.",
+    dev_pattern_3:
+      "<strong>Theme-reactive:</strong> كل مكونات UI مرتبطة بخصائص <code>ThemeManager.selectedTheme</code> فتتحدث تلقائياً.",
+    dev_pattern_4:
+      "<strong>Per-screen vs Global:</strong> الأشرطة تُنشأ لكل شاشة (<code>Variants</code>)، النوافذ المنبثقة نسخة واحدة.",
+    dev_pattern_5:
+      "<strong>Lazy loading:</strong> القوائم تُحمّل عند الطلب عبر <code>StackView</code> لتوفير الموارد.",
     dev_arch_1: "واجهة QML عبر Quickshell.",
     dev_arch_2: "Hyprland للتعامل مع النوافذ والشاشات والأحداث.",
     dev_arch_3: "خدمات خلفية في `config/quickshell/services`.",
     dev_arch_4:
       "سكربتات Python/Bash في `config/quickshell/scripts` و `scripts`.",
-    dev_entry: "نقطة البداية",
+    dev_entry: "2. نقطة البداية",
     dev_entry_hint: "المكوّن الرئيسي في:",
-    dev_entry_desc:
-      "هذا الملف يجمع الطبقات الأساسية مثل الشريط العلوي والقائمة الجانبية والكبسولة الذكية.",
-    dev_settings: "إدارة الإعدادات",
+    dev_entry_desc: "هذا الملف يجمع الطبقات الأساسية ويدير تسلسل الإقلاع:",
+    dev_boot_1: "<strong>SplashScreen:</strong> شاشة بدء متحركة.",
+    dev_boot_2:
+      "<strong>ThemeManager.initialThemeReady:</strong> إشارة لبدء تحميل الواجهة.",
+    dev_boot_3:
+      "<strong>Loader (async):</strong> تحميل غير متزامن مع تأثير opacity.",
+    dev_boot_4:
+      "<strong>Variants:</strong> إنشاء نسخة لكل شاشة من Desktop, Topbar, LeftBar, SmartCapsule, Dock.",
+    dev_ipc_title: "التحكم الخارجي (IPC)",
+    dev_ipc_desc: "يمكن التحكم بالقائمة من سكربتات خارجية عبر:",
+    dev_settings: "3. إدارة الإعدادات",
     dev_settings_1:
-      "قراءة الإعدادات من `~/.nibrasshell.json` عبر `ConfigStore.qml`.",
-    dev_settings_2: "الواجهة تستخدم `App.qml` لتوحيد المسارات والأوامر.",
-    dev_settings_3: "الكاش في `~/.cache/nibrasshell`.",
+      "<strong>ConfigStore.qml:</strong> يقرأ/يكتب <code>~/.nibrasshell.json</code> عبر <code>FileView</code> مع مراقبة الملف.",
+    dev_settings_2:
+      "<strong>App.qml:</strong> يوحّد المسارات (assets, scripts, cache)، أوامر Python/Bash، وإعدادات AI.",
+    dev_settings_3:
+      "<strong>الكاش:</strong> <code>~/.cache/nibrasshell/</code> يحتوي theme.json و venv.",
+    dev_settings_4:
+      "<strong>EventBus.qml:</strong> نظام pub/sub مع <code>emit()</code>, <code>on()</code>, <code>off()</code>, <code>clearOwner()</code>.",
+    dev_settings_5:
+      "<strong>ConstValues.js:</strong> ثوابت القوائم (0-9)، حالات الكبسولة، أولوياتها.",
+    dev_theme_engine: "4. محرك الثيمات",
+    dev_theme_engine_desc: "نظام ثيمات متعدد الطبقات مع تكامل عميق مع النظام.",
+    dev_theme_phases: "ThemeManager - 6 مراحل تحميل",
+    dev_theme_phases_code: `1. Request        → طلب الثيم (من المستخدم أو افتراضي)
+2. Cache check    → فحص ~/.cache/nibrasshell/theme.json
+3. Loader instruct → توجيه ThemeLoader لتحميل QML
+4. Object creation → إنشاء كائن الثيم
+5. Cache hydration → ملء الخصائص من الكاش
+6. System apply   → تطبيق الثيم على النظام (SystemBridge)`,
+    dev_theme_basetheme: "BaseTheme - 100+ خاصية",
+    dev_base_colors:
+      "<strong>colors:</strong> M3 palette (primary, secondary, tertiary, surface, error, outline...)",
+    dev_base_dimensions:
+      "<strong>dimensions:</strong> radii, bar sizes, component sizes, M3 shape scale.",
+    dev_base_typography: "<strong>typography:</strong> fonts, sizes.",
+    dev_base_system:
+      "<strong>systemSettings:</strong> Qt style, Kvantum, GTK, Plasma, Konsole, icons, cursor.",
+    dev_base_hyprland:
+      "<strong>hyprlandConfiguration:</strong> borders, gaps, layout, animations, blur, shadows.",
+    dev_base_clock:
+      "<strong>desktopClock:</strong> position, format, depth effect.",
+    dev_theme_bridge: "SystemBridge - التكامل مع النظام",
+    dev_bridge_desc: "يطبق الثيم على أدوات التوزيعات المختلفة:",
+    dev_bridge_plasma:
+      "<strong>Plasma:</strong> colorscheme, icons, font, cursor.",
+    dev_bridge_gtk: "<strong>GTK3/4:</strong> theme, icons, font, cursor.",
+    dev_bridge_kvantum: "<strong>Kvantum:</strong> Qt application styling.",
+    dev_bridge_konsole: "<strong>Konsole:</strong> terminal profiles.",
+    dev_bridge_hyprland:
+      "<strong>Hyprland:</strong> borders, gaps, animations via config rewrite.",
+    dev_theme_variants:
+      "<strong>14 ثيم:</strong> Catppuccin, Colors, Deer, Dracula, Gruvbox, M3, Nord, TokyoNight (كل منها Dark + Light).",
     dev_themes: "إدارة الثيمات والخلفيات",
     dev_themes_1: "`ThemeManager.qml` مسؤول عن تحميل الثيمات وتطبيقها.",
     dev_themes_2:
       "`WallpaperController.qml` لإدارة الخلفيات الثابتة والديناميكية.",
     dev_themes_3: "`DepthEffectController.qml` لتوليد طبقات العمق.",
-    dev_services: "الخدمات الأساسية",
+    dev_services: "5. الخدمات الأساسية",
+    dev_services_desc: "الخدمات مقسمة إلى طبقات حسب الوظيفة:",
+    dev_services_hardware: "Hardware Layer",
+    dev_services_data: "Data Layer",
+    dev_services_ai: "AI Layer",
+    dev_services_analysis: "Analysis Layer",
+    dev_services_ui: "UI Support",
+    dev_services_facade: "System Facade",
+    dev_actionresponses: "ActionResponses - رسائل تفاعلية",
     dev_services_th1: "الخدمة",
     dev_services_th2: "الدور",
+    dev_svc_audio: "PipeWire volume/mute control",
+    dev_svc_brightness: "DDC/CI (external) + brightnessctl (laptop)",
+    dev_svc_hwstate: "Aggregator: volume, brightness, battery, keyboard layout",
+    dev_svc_weather:
+      "wttr.in API + AI analysis + smart polling + 8 alert signals",
+    dev_svc_music:
+      "MPRIS + AI commentary + history (20 tracks) + debounced analysis",
+    dev_svc_network:
+      "WiFi scan/connect + data usage (monthly/daily/live/history)",
+    dev_svc_clipboard:
+      "wl-paste watch + Python clipboard manager + smart model sync",
+    dev_svc_todo:
+      "Persistent JSON + AI prioritization + due tracking + notifications",
+    dev_svc_aiservice:
+      "Priority queue (0-2) + rate limiting (3s cooldown, 15s throttle) + JSON cleaning",
+    dev_svc_aitask: "Individual process execution unit (spawned per request)",
+    dev_svc_aianalysis:
+      "Orchestrator: SystemService signals → SpikeDetector → EventStore",
+    dev_svc_spike: "CPU/RAM/Temp spike detection + AI triggers (priority 2)",
+    dev_svc_cooldown:
+      "3-level cooldown (global 30s, per-process 30s, temp 5min)",
+    dev_svc_eventstore: "In-memory event log (max 50) with AI results",
+    dev_svc_diagnostics: "Normalized data collection for processes/temps",
+    dev_svc_notif: "Notification server + DND + sound dispatch + auto-cleanup",
+    dev_svc_overlay: "Fullscreen overlay (image preview mode)",
+    dev_svc_icon:
+      "Batch icon resolution + theme-aware caching + flicker prevention",
+    dev_svc_actions:
+      "Pre-generated AI messages (round-robin rotation per category)",
+    dev_svc_system:
+      "Aggregator: BootAnalyzer + HardwareState + ResourceMonitor + ActionResponses",
+    dev_svc_resource:
+      "CPU/RAM/Temp monitoring + episode-based alerting + hysteresis",
+    dev_svc_resdiag:
+      "On-demand process/temp diagnostics with request deduplication",
+    dev_svc_boot: "AI-powered boot log analysis + solution suggestions",
     dev_services_row1: "مراقبة الموارد وتحليل الإقلاع وارتفاعات الأداء",
     dev_services_row2: "جلب الطقس والتحليل الذكي والتنبيهات",
     dev_services_row3: "تكامل MPRIS والتعليق الذكي",
     dev_services_row4: "إدارة الإشعارات ووضع عدم الإزعاج",
     dev_services_row5: "مراقبة الحافظة وإدارتها",
-    dev_scripts: "السكربتات المهمة",
+    dev_ai_system: "6. نظام الذكاء الاصطناعي",
+    dev_ai_system_desc: "نظام AI متكامل مع طابور أولويات وحماية من الإغراق.",
+    dev_ai_queue: "AiService - البوابة المركزية",
+    dev_ai_pipeline: "Spike Detection Pipeline",
+    dev_actions_1:
+      "<strong>Categories:</strong> charging, discharging, cpu_alerts, ram_alerts, temp_alerts.",
+    dev_actions_2:
+      "<strong>Round-robin:</strong> كل تنبيه يعرض رسالة مختلفة من المصفوفة.",
+    dev_actions_3:
+      "<strong>Auto-fetch:</strong> يجلب الرسائل بعد 5 ثوانٍ من بدء التشغيل.",
+    dev_capsule: "7. الكبسولة الذكية",
+    dev_capsule_desc: "Widget مستوحى من Dynamic Island مع تعبيرات عين متحركة.",
+    dev_bars_windows: "8. الأشرطة والنوافذ",
+    dev_bars_title: "Bars (Layer Shell)",
+    dev_bar_topbar:
+      "<strong>Topbar:</strong> SystemTray | NetworkSpeed | ActiveWindow | Clock | Monitors",
+    dev_bar_leftbar:
+      "<strong>LeftBar:</strong> 10 icon buttons (Dashboard, Notifications, Weather, Monitoring, Network, Clipboard, Todo, AI, Apps, Power)",
+    dev_windows_title: "Windows (Popup)",
+    dev_win_left:
+      "<strong>LeftWindowFull:</strong> StackView-based menu system (3 styles: FLOATING, DOCKED_FIXED_BAR, DOCKED_MOVING_BAR)",
+    dev_win_launcher:
+      "<strong>BottomLauncher:</strong> app launcher with command mode (<code>&gt;</code> prefix)",
+    dev_win_dock: "<strong>Dock:</strong> pinned apps with auto-hide",
+    dev_win_settings:
+      "<strong>Settings:</strong> ApplicationWindow with General/Appearance/Monitors/Audio sections",
+    dev_win_power:
+      "<strong>PowerMenuWindow:</strong> shutdown/reboot/logout/suspend/lock",
+    dev_win_cheatsheet:
+      "<strong>Cheatsheet:</strong> keyboard shortcuts reference",
+    dev_win_overlay: "<strong>OverlayWindow:</strong> fullscreen overlay layer",
+    dev_event_system: "9. نظام الأحداث",
+    dev_eventbus: "EventBus (pub/sub)",
+    dev_eventbus_code: `EventBus:
+  ├── emit(eventName, data)     → بث حدث
+  ├── on(eventName, callback)   → اشتراك
+  ├── off(eventName, callback)  → إلغاء اشتراك
+  └── clearOwner(owner)         → تنظيف تلقائي عند تدمير الكائن`,
+    dev_eventnames: "EventNames.js - أمثلة",
+    dev_python_integration: "10. التكامل مع Python",
+    dev_python_venv:
+      "Python يعمل في بيئة معزولة: <code>~/.cache/nibrasshell/venv/bin/python</code>",
+    dev_py_ai: "🤖 AI Scripts",
+    dev_py_monitoring: "📊 Monitoring",
+    dev_py_network: "🌐 Network",
+    dev_py_theme: "🎨 Theme Integration",
+    dev_py_wallpaper: "🖼️ Wallpaper/Depth",
+    dev_py_utils: "🔧 Utilities",
+    dev_scripts: "11. السكربتات المهمة",
     dev_python: "Python",
     dev_bash: "Bash",
-    dev_run: "تشغيل Quickshell",
-    dev_run_desc: "هذا السكربت يضبط log rules لتقليل الضوضاء أثناء التشغيل.",
+    dev_py_mon:
+      "monitoring: <code>system_monitor.py</code>, <code>system_diagnostics.py</code>",
+    dev_py_wall:
+      "wallpapers: <code>scan_wallpapers.py</code>, <code>dynamic-m3.py</code>",
+    dev_py_depth: "depth: <code>create_depth_image_rembg.py</code>",
+    dev_py_net:
+      "network: <code>list_wifi.py</code>, <code>connect_wifi.py</code>, <code>data_usage.py</code>",
+    dev_py_ai_script: "ai: <code>main.py</code>, <code>list-gemini.py</code>",
+    dev_bash_internet: "<code>internet.sh</code> - فحص الاتصال",
+    dev_bash_temp: "<code>temp.sh</code> - قراءة الحرارة",
+    dev_bash_wall: "<code>get_wallpapers.sh</code> - جلب الخلفيات",
+    dev_run: "12. التشغيل والتصحيح",
+    dev_run_title: "تشغيل Quickshell",
+    dev_run_desc: "السكربت يضبط log rules لتقليل الضوضاء:",
+    dev_debug_title: "نصائح التصحيح",
+    dev_debug_1:
+      "<strong>اختبار AI:</strong> <code>AiAnalysisService.testHighCpu</code> / <code>testHighRam</code>",
+    dev_debug_2:
+      "<strong>فحص الأحداث:</strong> <code>EventStore.eventsModel</code> (آخر 50 حدث)",
+    dev_debug_3:
+      "<strong>كاش الثيم:</strong> <code>~/.cache/nibrasshell/theme.json</code>",
+    dev_debug_4: "<strong>الإعدادات:</strong> <code>~/.nibrasshell.json</code>",
+    dev_debug_5:
+      "<strong>ملفات التشغيل:</strong> <code>~/.cache/nibrasshell/venv/</code>",
     dev_notes: "ملاحظات تطوير",
-    dev_note_1: "الكبسولة الذكية في `config/quickshell/windows/smart_capsule`.",
-    dev_note_2: "القائمة الجانبية في `config/quickshell/windows/leftwindow`.",
-    dev_note_3: "الإعدادات في `config/quickshell/windows/settings`.",
+    dev_note_1:
+      "الكبسولة الذكية في <code>config/quickshell/windows/smart_capsule</code>.",
+    dev_note_2:
+      "القائمة الجانبية في <code>config/quickshell/windows/leftwindow</code>.",
+    dev_note_3: "الإعدادات في <code>config/quickshell/windows/settings</code>.",
+    dev_note_4:
+      "المكونات القابلة لإعادة الاستخدام في <code>components/</code>.",
+    dev_note_5:
+      "الأدوات المساعدة في <code>utils/Helper.qml</code> و <code>utils/helpers.js</code>.",
     donate_title: "دعم المشروع؟",
     donate_desc:
       "إذا كنت ترغب في دعمي مالياً، فشكراً لك! لكن الحمد لله وضعي المادي جيد. بدلاً من ذلك، أدعوك للتبرع لأهلنا في غزة، فهم في أمسّ الحاجة للدعم الآن.",
@@ -417,28 +625,46 @@ Choose your language / اختر لغتك / Vyberte jazyk:
       "Automatic and manual steps with distro examples.",
     docs_overview_install_btn: "Open Install",
     docs_overview_dev_title: "Developer Docs",
-    docs_overview_dev_desc: "Architecture, scripts, and core services.",
-    docs_overview_dev_btn: "Open Docs",
+    docs_overview_dev_desc: "Architecture, services, system engines, and AI.",
+    docs_overview_dev_btn: "Open Docs ←",
+
+    docs_structure_title: "What's in these docs?",
+    docs_structure_install_title: "📦 Installation",
+    docs_structure_install_li1: "Automatic method (recommended)",
+    docs_structure_install_li2: "Manual install with dependencies",
+    docs_structure_install_li3: "Arch & Fedora commands",
+    docs_structure_install_li4: "Python venv setup for depth effect",
+    docs_structure_dev_title: "🔧 Development",
+    docs_structure_dev_li1: "Architecture & design patterns",
+    docs_structure_dev_li2: "Theme engine & system integration",
+    docs_structure_dev_li3: "AI system & analysis pipeline",
+    docs_structure_dev_li4: "Services, events, and scripts",
 
     // --- Install ---
     install_title: "Installation",
-    install_auto_title: "Automatic Method (Recommended)",
+    install_subtitle: "Two ways to install NibrasShell on your system",
+    install_auto_title: "Automatic Method",
     install_auto_desc:
       'Clone the repo and run <span dir="ltr">python nibras_installer/main.py</span>.',
+    install_manual_title: "Manual Installation",
     install_manual_toggle: "Manual Installation (Click to expand)",
     install_manual_deps: "Essential Software",
     install_manual_optional: "Optional Software",
     install_arch_title: "Arch Users:",
     install_fedora_title: "Fedora Users:",
+    install_void_title: "Void Users:",
     install_other_distros:
-      "<strong>Note:</strong> For other distros, install dependencies manually.",
+      "<strong>Note:</strong> For other distros (not Arch, Fedora, or Void), install dependencies manually.",
+    tag_recommended: "Recommended",
+    tag_required: "Required",
+    tag_optional: "Optional",
     install_depth_effect: "Depth Effect Requirements",
     install_depth_desc: "We need 'rembg' and 'pillow' libraries.",
     install_script_step: "Now run the install script and choose option 2",
     install_script_step_2: `
 
 $ cd nibras_installer
-python main.py
+$ python main.py
 Choose your language / اختر لغتك / Vyberte jazyk:
 1. English
 2. العربية
@@ -457,45 +683,238 @@ NibrasShell Installation Script
 Choose an option: 2
 `,
     install_manual_files: "If script fails, proceed with manual file setup:",
+    install_manual_files_note: "If the script doesn't work, continue with manual installation below.",
+    step_clone_repo: "Clone Repository",
+    step_backup_configs: "Backup Existing Configs",
+    step_copy_configs: "Copy Config Files",
+    step_permissions: "Set Execute Permissions",
+    step_easyeffects: "Configure EasyEffects",
+    step_copy_themes: "Copy Themes",
+    step_copy_fonts: "Copy Fonts",
+    step_extract_icons: "Extract Icons",
     install_final_note:
       "You can change system font to 'JF Flat' and customize via (win+s).",
 
     // --- Dev Docs ---
     dev_title: "Developer Docs",
-    dev_sub: "A technical map to understand project structure.",
-    dev_arch: "Architecture",
+    dev_sub:
+      "A comprehensive guide to understand project structure, architecture, and how to contribute.",
+    dev_arch: "1. Architecture",
+    dev_arch_desc:
+      "NibrasShell is built on layered architecture, each layer serves a specific purpose:",
+    dev_arch_patterns: "Core Design Patterns",
+    dev_pattern_1:
+      "<strong>Singleton-heavy:</strong> Core services use <code>pragma Singleton</code> for global access.",
+    dev_pattern_2:
+      "<strong>EventBus pub/sub:</strong> Components communicate via named events in <code>EventNames.js</code>.",
+    dev_pattern_3:
+      "<strong>Theme-reactive:</strong> All UI components bind to <code>ThemeManager.selectedTheme</code> properties for auto-updates.",
+    dev_pattern_4:
+      "<strong>Per-screen vs Global:</strong> Bars are created per screen (<code>Variants</code>), popup windows are single-instance.",
+    dev_pattern_5:
+      "<strong>Lazy loading:</strong> Menus load on demand via <code>StackView</code> to save resources.",
     dev_arch_1: "QML UI via Quickshell.",
     dev_arch_2: "Hyprland for window/event handling.",
     dev_arch_3: "Background services in `config/quickshell/services`.",
     dev_arch_4: "Python/Bash scripts in `scripts` folders.",
-    dev_entry: "Entry Point",
+    dev_entry: "2. Entry Point",
     dev_entry_hint: "Main file:",
-    dev_entry_desc: "Assembles top bar, side menu, and capsule.",
-    dev_settings: "Settings Management",
-    dev_settings_1: "Reads `~/.nibrasshell.json` via `ConfigStore.qml`.",
-    dev_settings_2: "`App.qml` unifies paths.",
-    dev_settings_3: "Cache in `~/.cache/nibrasshell`.",
+    dev_entry_desc:
+      "This file assembles the base layers and manages the boot sequence:",
+    dev_boot_1: "<strong>SplashScreen:</strong> Animated boot splash.",
+    dev_boot_2:
+      "<strong>ThemeManager.initialThemeReady:</strong> Signal to start UI loading.",
+    dev_boot_3:
+      "<strong>Loader (async):</strong> Async loading with opacity fade effect.",
+    dev_boot_4:
+      "<strong>Variants:</strong> Creates per-screen instances of Desktop, Topbar, LeftBar, SmartCapsule, Dock.",
+    dev_ipc_title: "External Control (IPC)",
+    dev_ipc_desc: "Control menus from external scripts via:",
+    dev_settings: "3. Settings Management",
+    dev_settings_1:
+      "<strong>ConfigStore.qml:</strong> Reads/writes <code>~/.nibrasshell.json</code> via <code>FileView</code> with file watching.",
+    dev_settings_2:
+      "<strong>App.qml:</strong> Unifies paths (assets, scripts, cache), Python/Bash commands, and AI settings.",
+    dev_settings_3:
+      "<strong>Cache:</strong> <code>~/.cache/nibrasshell/</code> contains theme.json and venv.",
+    dev_settings_4:
+      "<strong>EventBus.qml:</strong> pub/sub system with <code>emit()</code>, <code>on()</code>, <code>off()</code>, <code>clearOwner()</code>.",
+    dev_settings_5:
+      "<strong>ConstValues.js:</strong> Menu constants (0-9), capsule states and priorities.",
+    dev_theme_engine: "4. Theme Engine",
+    dev_theme_engine_desc:
+      "Multi-layered theming system with deep system integration.",
+    dev_theme_phases: "ThemeManager - 6 Loading Phases",
+    dev_theme_phases_code: `1. Request        → Request theme (user or default)
+2. Cache check    → Check ~/.cache/nibrasshell/theme.json
+3. Loader instruct → Instruct ThemeLoader to load QML
+4. Object creation → Create theme object
+5. Cache hydration → Fill properties from cache
+6. System apply   → Apply theme to system (SystemBridge)`,
+    dev_theme_basetheme: "BaseTheme - 100+ Properties",
+    dev_base_colors:
+      "<strong>colors:</strong> M3 palette (primary, secondary, tertiary, surface, error, outline...)",
+    dev_base_dimensions:
+      "<strong>dimensions:</strong> radii, bar sizes, component sizes, M3 shape scale.",
+    dev_base_typography: "<strong>typography:</strong> fonts, sizes.",
+    dev_base_system:
+      "<strong>systemSettings:</strong> Qt style, Kvantum, GTK, Plasma, Konsole, icons, cursor.",
+    dev_base_hyprland:
+      "<strong>hyprlandConfiguration:</strong> borders, gaps, layout, animations, blur, shadows.",
+    dev_base_clock:
+      "<strong>desktopClock:</strong> position, format, depth effect.",
+    dev_theme_bridge: "SystemBridge - System Integration",
+    dev_bridge_desc: "Applies theme to various distro tools:",
+    dev_bridge_plasma:
+      "<strong>Plasma:</strong> colorscheme, icons, font, cursor.",
+    dev_bridge_gtk: "<strong>GTK3/4:</strong> theme, icons, font, cursor.",
+    dev_bridge_kvantum: "<strong>Kvantum:</strong> Qt application styling.",
+    dev_bridge_konsole: "<strong>Konsole:</strong> terminal profiles.",
+    dev_bridge_hyprland:
+      "<strong>Hyprland:</strong> borders, gaps, animations via config rewrite.",
+    dev_theme_variants:
+      "<strong>14 Themes:</strong> Catppuccin, Colors, Deer, Dracula, Gruvbox, M3, Nord, TokyoNight (each Dark + Light).",
     dev_themes: "Themes & Wallpapers",
     dev_themes_1: "`ThemeManager.qml` handles themes.",
     dev_themes_2: "`WallpaperController.qml` manages wallpapers.",
     dev_themes_3: "`DepthEffectController.qml` handles depth.",
-    dev_services: "Core Services",
+    dev_services: "5. Core Services",
+    dev_services_desc: "Services are organized into layers by function:",
+    dev_services_hardware: "Hardware Layer",
+    dev_services_data: "Data Layer",
+    dev_services_ai: "AI Layer",
+    dev_services_analysis: "Analysis Layer",
+    dev_services_ui: "UI Support",
+    dev_services_facade: "System Facade",
+    dev_actionresponses: "ActionResponses - Interactive Messages",
     dev_services_th1: "Service",
     dev_services_th2: "Role",
+    dev_svc_audio: "PipeWire volume/mute control",
+    dev_svc_brightness: "DDC/CI (external) + brightnessctl (laptop)",
+    dev_svc_hwstate: "Aggregator: volume, brightness, battery, keyboard layout",
+    dev_svc_weather:
+      "wttr.in API + AI analysis + smart polling + 8 alert signals",
+    dev_svc_music:
+      "MPRIS + AI commentary + history (20 tracks) + debounced analysis",
+    dev_svc_network:
+      "WiFi scan/connect + data usage (monthly/daily/live/history)",
+    dev_svc_clipboard:
+      "wl-paste watch + Python clipboard manager + smart model sync",
+    dev_svc_todo:
+      "Persistent JSON + AI prioritization + due tracking + notifications",
+    dev_svc_aiservice:
+      "Priority queue (0-2) + rate limiting (3s cooldown, 15s throttle) + JSON cleaning",
+    dev_svc_aitask: "Individual process execution unit (spawned per request)",
+    dev_svc_aianalysis:
+      "Orchestrator: SystemService signals → SpikeDetector → EventStore",
+    dev_svc_spike: "CPU/RAM/Temp spike detection + AI triggers (priority 2)",
+    dev_svc_cooldown:
+      "3-level cooldown (global 30s, per-process 30s, temp 5min)",
+    dev_svc_eventstore: "In-memory event log (max 50) with AI results",
+    dev_svc_diagnostics: "Normalized data collection for processes/temps",
+    dev_svc_notif: "Notification server + DND + sound dispatch + auto-cleanup",
+    dev_svc_overlay: "Fullscreen overlay (image preview mode)",
+    dev_svc_icon:
+      "Batch icon resolution + theme-aware caching + flicker prevention",
+    dev_svc_actions:
+      "Pre-generated AI messages (round-robin rotation per category)",
+    dev_svc_system:
+      "Aggregator: BootAnalyzer + HardwareState + ResourceMonitor + ActionResponses",
+    dev_svc_resource:
+      "CPU/RAM/Temp monitoring + episode-based alerting + hysteresis",
+    dev_svc_resdiag:
+      "On-demand process/temp diagnostics with request deduplication",
+    dev_svc_boot: "AI-powered boot log analysis + solution suggestions",
     dev_services_row1: "Resource monitoring & Boot analysis",
     dev_services_row2: "Weather & AI analysis",
     dev_services_row3: "MPRIS & AI commentary",
     dev_services_row4: "Notifications & DND",
     dev_services_row5: "Clipboard monitoring",
-    dev_scripts: "Key Scripts",
+    dev_ai_system: "6. AI System",
+    dev_ai_system_desc:
+      "Integrated AI system with priority queue and rate limiting.",
+    dev_ai_queue: "AiService - Central Gateway",
+    dev_ai_pipeline: "Spike Detection Pipeline",
+    dev_actions_1:
+      "<strong>Categories:</strong> charging, discharging, cpu_alerts, ram_alerts, temp_alerts.",
+    dev_actions_2:
+      "<strong>Round-robin:</strong> Each alert shows a different message from the array.",
+    dev_actions_3:
+      "<strong>Auto-fetch:</strong> Fetches messages 5 seconds after startup.",
+    dev_capsule: "7. Smart Capsule",
+    dev_capsule_desc:
+      "Dynamic Island-inspired widget with animated eye expressions.",
+    dev_bars_windows: "8. Bars & Windows",
+    dev_bars_title: "Bars (Layer Shell)",
+    dev_bar_topbar:
+      "<strong>Topbar:</strong> SystemTray | NetworkSpeed | ActiveWindow | Clock | Monitors",
+    dev_bar_leftbar:
+      "<strong>LeftBar:</strong> 10 icon buttons (Dashboard, Notifications, Weather, Monitoring, Network, Clipboard, Todo, AI, Apps, Power)",
+    dev_windows_title: "Windows (Popup)",
+    dev_win_left:
+      "<strong>LeftWindowFull:</strong> StackView-based menu system (3 styles: FLOATING, DOCKED_FIXED_BAR, DOCKED_MOVING_BAR)",
+    dev_win_launcher:
+      "<strong>BottomLauncher:</strong> app launcher with command mode (<code>&gt;</code> prefix)",
+    dev_win_dock: "<strong>Dock:</strong> pinned apps with auto-hide",
+    dev_win_settings:
+      "<strong>Settings:</strong> ApplicationWindow with General/Appearance/Monitors/Audio sections",
+    dev_win_power:
+      "<strong>PowerMenuWindow:</strong> shutdown/reboot/logout/suspend/lock",
+    dev_win_cheatsheet:
+      "<strong>Cheatsheet:</strong> keyboard shortcuts reference",
+    dev_win_overlay: "<strong>OverlayWindow:</strong> fullscreen overlay layer",
+    dev_event_system: "9. Event System",
+    dev_eventbus: "EventBus (pub/sub)",
+    dev_eventbus_code: `EventBus:
+  ├── emit(eventName, data)     → Broadcast event
+  ├── on(eventName, callback)   → Subscribe
+  ├── off(eventName, callback)  → Unsubscribe
+  └── clearOwner(owner)         → Auto cleanup on object destroy`,
+    dev_eventnames: "EventNames.js - Examples",
+    dev_python_integration: "10. Python Integration",
+    dev_python_venv:
+      "Python runs in an isolated environment: <code>~/.cache/nibrasshell/venv/bin/python</code>",
+    dev_py_ai: "🤖 AI Scripts",
+    dev_py_monitoring: "📊 Monitoring",
+    dev_py_network: "🌐 Network",
+    dev_py_theme: "🎨 Theme Integration",
+    dev_py_wallpaper: "🖼️ Wallpaper/Depth",
+    dev_py_utils: "🔧 Utilities",
+    dev_scripts: "11. Key Scripts",
     dev_python: "Python",
     dev_bash: "Bash",
-    dev_run: "Run Quickshell",
-    dev_run_desc: "Sets log rules to reduce noise.",
+    dev_py_mon:
+      "monitoring: <code>system_monitor.py</code>, <code>system_diagnostics.py</code>",
+    dev_py_wall:
+      "wallpapers: <code>scan_wallpapers.py</code>, <code>dynamic-m3.py</code>",
+    dev_py_depth: "depth: <code>create_depth_image_rembg.py</code>",
+    dev_py_net:
+      "network: <code>list_wifi.py</code>, <code>connect_wifi.py</code>, <code>data_usage.py</code>",
+    dev_py_ai_script: "ai: <code>main.py</code>, <code>list-gemini.py</code>",
+    dev_bash_internet: "<code>internet.sh</code> - connectivity check",
+    dev_bash_temp: "<code>temp.sh</code> - temperature reading",
+    dev_bash_wall: "<code>get_wallpapers.sh</code> - wallpaper discovery",
+    dev_run: "12. Running & Debugging",
+    dev_run_title: "Running Quickshell",
+    dev_run_desc: "The script sets log rules to reduce noise:",
+    dev_debug_title: "Debugging Tips",
+    dev_debug_1:
+      "<strong>Test AI:</strong> <code>AiAnalysisService.testHighCpu</code> / <code>testHighRam</code>",
+    dev_debug_2:
+      "<strong>Check events:</strong> <code>EventStore.eventsModel</code> (last 50 events)",
+    dev_debug_3:
+      "<strong>Theme cache:</strong> <code>~/.cache/nibrasshell/theme.json</code>",
+    dev_debug_4: "<strong>Settings:</strong> <code>~/.nibrasshell.json</code>",
+    dev_debug_5:
+      "<strong>Runtime files:</strong> <code>~/.cache/nibrasshell/venv/</code>",
     dev_notes: "Dev Notes",
-    dev_note_1: "Smart capsule: `config/quickshell/windows/smart_capsule`.",
-    dev_note_2: "Side menu: `config/quickshell/windows/leftwindow`.",
-    dev_note_3: "Settings: `config/quickshell/windows/settings`.",
+    dev_note_1:
+      "Smart capsule: <code>config/quickshell/windows/smart_capsule</code>.",
+    dev_note_2: "Side menu: <code>config/quickshell/windows/leftwindow</code>.",
+    dev_note_3: "Settings: <code>config/quickshell/windows/settings</code>.",
+    dev_note_4: "Reusable components in <code>components/</code>.",
+    dev_note_5:
+      "Helper utilities in <code>utils/Helper.qml</code> and <code>utils/helpers.js</code>.",
     donate_title: "Support the project?",
     donate_desc:
       "If you're considering a financial donation, thank you! However, my financial situation is stable. Instead, I invite you to donate to the people of Gaza, as they are in much greater need of support right now.",

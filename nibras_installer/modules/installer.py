@@ -15,9 +15,7 @@ def backup_configs():
     home_dir = os.path.expanduser("~")
     config_dir = os.path.join(home_dir, ".config")
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    backup_dir = os.path.join(
-        config_dir, "nibrasshell_backups", f"backup-{timestamp}"
-    )
+    backup_dir = os.path.join(config_dir, "nibrasshell_backups", f"backup-{timestamp}")
     os.makedirs(backup_dir, exist_ok=True)
 
     configs_to_backup = ["hypr", "quickshell", "easyeffects"]
@@ -93,9 +91,7 @@ def install_nibrasshell():
         PROJECT_ROOT,
         hypr_dest_dir,
         dirs_exist_ok=True,
-        ignore=shutil.ignore_patterns(
-            "nibras_installer", ".git", "__pycache__"
-        ),
+        ignore=shutil.ignore_patterns("nibras_installer", ".git", "__pycache__"),
     )
 
     # Setup specific configs
@@ -166,10 +162,15 @@ def update_quickshell():
     home_dir = os.path.expanduser("~")
     config_dir = os.path.join(home_dir, ".config")
 
+    if not os.path.exists(os.path.join(PROJECT_ROOT, ".git")):
+        print(f"{RED}Error: {PROJECT_ROOT} is not a git repository.{NC}")
+        print(f"{YELLOW}Please clone the repository using git first.{NC}")
+        return
+
     print(f"{YELLOW}{msg('pulling_updates')}{NC}")
     try:
         os.chdir(PROJECT_ROOT)
-        run_command("git pull")  # Removed verbose to keep clean
+        run_command("git pull")
     except Exception as e:
         print(f"{RED}Error during 'git pull': {e}{NC}")
         return

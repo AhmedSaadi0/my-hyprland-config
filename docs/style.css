@@ -1001,61 +1001,102 @@ ul.list li::before {
   font-size: 1.2em;
 }
 
-/* Manual Install Details Styling */
-details.manual-install-details {
-  background: var(--bg-2);
-  border: 1px solid var(--border-muted);
-  border-radius: 12px;
-  padding: 0;
-  margin-top: 20px;
-  transition: all 0.3s ease;
-  overflow: hidden;
+/* =========================================
+   8b. Install Page — Professional
+   ========================================= */
+
+.tag {
+  display: inline-block;
+  font-size: 0.65em;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-inline-start: 8px;
 }
 
-details.manual-install-details[open] {
-  border-color: var(--accent);
-  box-shadow:
-    0 0 0 1px var(--border-muted),
-    var(--shadow);
+.tag-rec {
+  color: var(--accent-3);
 }
 
-details.manual-install-details summary {
-  padding: 16px 20px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--panel);
-  color: var(--text);
-  transition: background 0.2s;
-  list-style: none;
+.tag-req {
+  color: var(--success);
 }
 
-details.manual-install-details summary::-webkit-details-marker {
-  display: none;
-}
-
-details.manual-install-details summary:hover {
-  background: var(--panel-strong);
-}
-
-details.manual-install-details summary::after {
-  content: "▼";
-  font-size: 12px;
-  color: var(--muted);
-  transition: transform 0.3s ease;
-}
-
-details.manual-install-details[open] summary::after {
-  transform: rotate(180deg);
+.tag-opt {
   color: var(--accent);
 }
 
-.manual-content {
-  padding: 20px;
+.tag-distro {
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  padding: 2px 10px;
+  border-radius: 4px;
+  margin-inline-start: 0;
+  margin-inline-end: 8px;
+  font-size: 0.7em;
+  letter-spacing: 0.3px;
+}
+
+.tag-distro-alt {
+  color: var(--accent-2);
+  border-color: color-mix(in srgb, var(--accent-2) 25%, transparent);
+}
+
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0 20px;
+}
+
+.note {
+  font-size: 0.9rem !important;
+  margin-top: 20px;
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  align-items: flex-start;
+}
+
+.step-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  background: var(--panel);
+  border: 1px solid var(--border-muted);
+  color: var(--accent);
+}
+
+.step-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.step-body h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--text);
+}
+
+.step-body .code {
+  margin-top: 0;
+}
+
+.final-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 32px;
+  padding-top: 20px;
   border-top: 1px solid var(--border-muted);
-  animation: slideDown 0.3s ease-out;
 }
 
 /* =========================================

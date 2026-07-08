@@ -77,113 +77,410 @@
 
         <section class="docs-content">
             <h1 data-i18n="dev_title">وثائق المطورين</h1>
-            <p class="muted" data-i18n="dev_sub">خريطة تقنية مختصرة لفهم بنية المشروع وكيفية توسعته.</p>
+            <p class="muted" data-i18n="dev_sub">دليل شامل لفهم بنية المشروع، المعمارية، وكيفية المساهمة في التطوير.</p>
 
             <section class="section">
-                <h2 data-i18n="dev_arch">المعمارية العامة</h2>
+                <h2 data-i18n="dev_arch">1. المعمارية العامة</h2>
+                <p class="muted" data-i18n="dev_arch_desc">نبراس شِل مبني على طبقات متدرجة، كل طبقة تخدم هدفاً محدداً:</p>
+                <div class="code" dir="ltr">
+┌────────────────────────────────────────────────────────┐
+│  Layer 1: shell.qml (Entry Point)                      │
+│  ├── SplashScreen → ThemeManager → Main UI             │
+│  └── Variants (per-screen) + Singletons (global)       │
+├────────────────────────────────────────────────────────┤
+│  Layer 2: Bars & Windows                               │
+│  ├── Topbar, LeftBar (Layer Shell panels)              │
+│  └── LeftWindow, Dock, Settings (Popup windows)        │
+├────────────────────────────────────────────────────────┤
+│  Layer 3: Services (Singletons)                        │
+│  ├── Hardware: Audio, Brightness, HardwareState        │
+│  ├── Data: Weather, Music, Network, Clipboard, Todo    │
+│  ├── AI: AiService → AiTask → Analysis Pipeline        │
+│  └── UI: Overlay, Icon, NotifManager                   │
+├────────────────────────────────────────────────────────┤
+│  Layer 4: Scripts (Python/Bash)                        │
+│  └── venv: ~/.cache/nibrasshell/venv                   │
+└────────────────────────────────────────────────────────┘
+                </div>
+                <h3 data-i18n="dev_arch_patterns" style="margin-top:24px;">أنماط التصميم الأساسية</h3>
                 <ul class="list">
-                    <li data-i18n="dev_arch_1">واجهة QML عبر Quickshell.</li>
-                    <li data-i18n="dev_arch_2">Hyprland للتعامل مع النوافذ والشاشات والأحداث.</li>
-                    <li data-i18n="dev_arch_3">خدمات خلفية في `config/quickshell/services`.</li>
-                    <li data-i18n="dev_arch_4">سكربتات Python/Bash في `config/quickshell/scripts` و `scripts`.</li>
+                    <li data-i18n-html="dev_pattern_1"><strong>Singleton-heavy:</strong> الخدمات الأساسية تستخدم <code>pragma Singleton</code> للوصول العام.</li>
+                    <li data-i18n-html="dev_pattern_2"><strong>EventBus pub/sub:</strong> التواصل بين المكونات عبر أحداث مسماة في <code>EventNames.js</code>.</li>
+                    <li data-i18n-html="dev_pattern_3"><strong>Theme-reactive:</strong> كل مكونات UI مرتبطة بخصائص <code>ThemeManager.selectedTheme</code> فتتحدث تلقائياً.</li>
+                    <li data-i18n-html="dev_pattern_4"><strong>Per-screen vs Global:</strong> الأشرطة تُنشأ لكل شاشة (<code>Variants</code>)، النوافذ المنبثقة نسخة واحدة.</li>
+                    <li data-i18n-html="dev_pattern_5"><strong>Lazy loading:</strong> القوائم تُحمّل عند الطلب عبر <code>StackView</code> لتوفير الموارد.</li>
                 </ul>
             </section>
 
             <section class="section">
-                <h2 data-i18n="dev_entry">نقطة البداية</h2>
+                <h2 data-i18n="dev_entry">2. نقطة البداية</h2>
                 <p data-i18n="dev_entry_hint">المكوّن الرئيسي في:</p>
                 <div class="code">config/quickshell/shell.qml</div>
-                <p data-i18n="dev_entry_desc">هذا الملف يجمع الطبقات الأساسية مثل الشريط العلوي والقائمة الجانبية
-                    والكبسولة الذكية.</p>
+                <p data-i18n="dev_entry_desc">هذا الملف يجمع الطبقات الأساسية ويدير تسلسل الإقلاع:</p>
+                <ul class="list">
+                    <li data-i18n-html="dev_boot_1"><strong>SplashScreen:</strong> شاشة بدء متحركة.</li>
+                    <li data-i18n-html="dev_boot_2"><strong>ThemeManager.initialThemeReady:</strong> إشارة لبدء تحميل الواجهة.</li>
+                    <li data-i18n-html="dev_boot_3"><strong>Loader (async):</strong> تحميل غير متزامن مع تأثير opacity.</li>
+                    <li data-i18n-html="dev_boot_4"><strong>Variants:</strong> إنشاء نسخة لكل شاشة من Desktop, Topbar, LeftBar, SmartCapsule, Dock.</li>
+                </ul>
+                <h3 data-i18n="dev_ipc_title" style="margin-top:20px;">التحكم الخارجي (IPC)</h3>
+                <p class="muted" data-i18n="dev_ipc_desc">يمكن التحكم بالقائمة من سكربتات خارجية عبر:</p>
+                <div class="code" dir="ltr">
+quickshell ipc call LeftBar toggleDashboardMenu      # Dashboard
+quickshell ipc call LeftBar toggleNotificationsMenu  # Notifications
+quickshell ipc call LeftBar toggleWeatherMenu        # Weather
+quickshell ipc call LeftBar toggleMonitoringMenu     # Monitoring
+quickshell ipc call LeftBar toggleNetworkingMenu     # Network
+quickshell ipc call LeftBar toggleClipboardMenu      # Clipboard
+quickshell ipc call LeftBar toggleTodoMenu           # Todo
+quickshell ipc call LeftBar toggleAiMenu             # AI Chat
+quickshell ipc call LeftBar toggleApplauncherMenu    # App Launcher
+quickshell ipc call LeftBar togglePowerMenu          # Power Menu
+quickshell ipc call LeftBar toggleDock               # Dock
+                </div>
             </section>
 
             <section class="section">
-                <h2 data-i18n="dev_settings">إدارة الإعدادات</h2>
+                <h2 data-i18n="dev_settings">3. إدارة الإعدادات</h2>
                 <ul class="list">
-                    <li data-i18n="dev_settings_1">قراءة الإعدادات من `~/.nibrasshell.json` عبر `ConfigStore.qml`.</li>
-                    <li data-i18n="dev_settings_2">الواجهة تستخدم `App.qml` لتوحيد المسارات والأوامر.</li>
-                    <li data-i18n="dev_settings_3">الكاش في `~/.cache/nibrasshell`.</li>
+                    <li data-i18n-html="dev_settings_1"><strong>ConfigStore.qml:</strong> يقرأ/يكتب <code>~/.nibrasshell.json</code> عبر <code>FileView</code> مع مراقبة الملف.</li>
+                    <li data-i18n-html="dev_settings_2"><strong>App.qml:</strong> يوحّد المسارات (assets, scripts, cache)، أوامر Python/Bash، وإعدادات AI.</li>
+                    <li data-i18n-html="dev_settings_3"><strong>الكاش:</strong> <code>~/.cache/nibrasshell/</code> يحتوي theme.json و venv.</li>
+                    <li data-i18n-html="dev_settings_4"><strong>EventBus.qml:</strong> نظام pub/sub مع <code>emit()</code>, <code>on()</code>, <code>off()</code>, <code>clearOwner()</code>.</li>
+                    <li data-i18n-html="dev_settings_5"><strong>ConstValues.js:</strong> ثوابت القوائم (0-9)، حالات الكبسولة، أولوياتها.</li>
                 </ul>
             </section>
 
             <section class="section">
-                <h2 data-i18n="dev_themes">إدارة الثيمات والخلفيات</h2>
+                <h2 data-i18n="dev_theme_engine">4. محرك الثيمات</h2>
+                <p class="muted" data-i18n="dev_theme_engine_desc">نظام ثيمات متعدد الطبقات مع تكامل عميق مع النظام.</p>
+                
+                <h3 data-i18n="dev_theme_phases" style="margin-top:20px;">ThemeManager - 6 مراحل تحميل</h3>
+                <div class="code" dir="ltr" data-i18n="dev_theme_phases_code">
+1. Request        → طلب الثيم (من المستخدم أو افتراضي)
+2. Cache check    → فحص ~/.cache/nibrasshell/theme.json
+3. Loader instruct → توجيه ThemeLoader لتحميل QML
+4. Object creation → إنشاء كائن الثيم
+5. Cache hydration → ملء الخصائص من الكاش
+6. System apply   → تطبيق الثيم على النظام (SystemBridge)
+                </div>
+
+                <h3 data-i18n="dev_theme_basetheme" style="margin-top:20px;">BaseTheme - 100+ خاصية</h3>
                 <ul class="list">
-                    <li data-i18n="dev_themes_1">`ThemeManager.qml` مسؤول عن تحميل الثيمات وتطبيقها.</li>
-                    <li data-i18n="dev_themes_2">`WallpaperController.qml` لإدارة الخلفيات الثابتة والديناميكية.</li>
-                    <li data-i18n="dev_themes_3">`DepthEffectController.qml` لتوليد طبقات العمق.</li>
+                    <li data-i18n-html="dev_base_colors"><strong>colors:</strong> M3 palette (primary, secondary, tertiary, surface, error, outline...)</li>
+                    <li data-i18n-html="dev_base_dimensions"><strong>dimensions:</strong> radii, bar sizes, component sizes, M3 shape scale.</li>
+                    <li data-i18n-html="dev_base_typography"><strong>typography:</strong> fonts, sizes.</li>
+                    <li data-i18n-html="dev_base_system"><strong>systemSettings:</strong> Qt style, Kvantum, GTK, Plasma, Konsole, icons, cursor.</li>
+                    <li data-i18n-html="dev_base_hyprland"><strong>hyprlandConfiguration:</strong> borders, gaps, layout, animations, blur, shadows.</li>
+                    <li data-i18n-html="dev_base_clock"><strong>desktopClock:</strong> position, format, depth effect.</li>
                 </ul>
+
+                <h3 data-i18n="dev_theme_bridge" style="margin-top:20px;">SystemBridge - التكامل مع النظام</h3>
+                <p class="muted" data-i18n-html="dev_bridge_desc">يطبق الثيم على أدوات التوزيعات المختلفة:</p>
+                <ul class="list">
+                    <li data-i18n-html="dev_bridge_plasma"><strong>Plasma:</strong> colorscheme, icons, font, cursor.</li>
+                    <li data-i18n-html="dev_bridge_gtk"><strong>GTK3/4:</strong> theme, icons, font, cursor.</li>
+                    <li data-i18n-html="dev_bridge_kvantum"><strong>Kvantum:</strong> Qt application styling.</li>
+                    <li data-i18n-html="dev_bridge_konsole"><strong>Konsole:</strong> terminal profiles.</li>
+                    <li data-i18n-html="dev_bridge_hyprland"><strong>Hyprland:</strong> borders, gaps, animations via config rewrite.</li>
+                </ul>
+
+                <p class="muted" style="margin-top:16px;" data-i18n-html="dev_theme_variants">
+                    <strong>14 ثيم:</strong> Catppuccin, Colors, Deer, Dracula, Gruvbox, M3, Nord, TokyoNight (كل منها Dark + Light).
+                </p>
             </section>
 
             <section class="section">
-                <h2 data-i18n="dev_services">الخدمات الأساسية</h2>
+                <h2 data-i18n="dev_services">5. الخدمات الأساسية</h2>
+                <p class="muted" data-i18n="dev_services_desc">الخدمات مقسمة إلى طبقات حسب الوظيفة:</p>
+
+                <h3 data-i18n="dev_services_hardware" style="margin-top:20px;">Hardware Layer</h3>
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th data-i18n="dev_services_th1">الخدمة</th>
-                            <th data-i18n="dev_services_th2">الدور</th>
-                        </tr>
+                        <tr><th data-i18n="dev_services_th1">الخدمة</th><th data-i18n="dev_services_th2">الدور</th></tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>SystemService</td>
-                            <td data-i18n="dev_services_row1">مراقبة الموارد وتحليل الإقلاع وارتفاعات الأداء</td>
-                        </tr>
-                        <tr>
-                            <td>Weather</td>
-                            <td data-i18n="dev_services_row2">جلب الطقس والتحليل الذكي والتنبيهات</td>
-                        </tr>
-                        <tr>
-                            <td>MusicService</td>
-                            <td data-i18n="dev_services_row3">تكامل MPRIS والتعليق الذكي</td>
-                        </tr>
-                        <tr>
-                            <td>NotifManager</td>
-                            <td data-i18n="dev_services_row4">إدارة الإشعارات ووضع عدم الإزعاج</td>
-                        </tr>
-                        <tr>
-                            <td>ClipboardService</td>
-                            <td data-i18n="dev_services_row5">مراقبة الحافظة وإدارتها</td>
-                        </tr>
+                        <tr><td>Audio</td><td data-i18n="dev_svc_audio">PipeWire volume/mute control</td></tr>
+                        <tr><td>Brightness</td><td data-i18n="dev_svc_brightness">DDC/CI (external) + brightnessctl (laptop)</td></tr>
+                        <tr><td>HardwareState</td><td data-i18n="dev_svc_hwstate">Aggregator: volume, brightness, battery, keyboard layout</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 data-i18n="dev_services_data" style="margin-top:20px;">Data Layer</h3>
+                <table class="table">
+                    <thead>
+                        <tr><th data-i18n="dev_services_th1">الخدمة</th><th data-i18n="dev_services_th2">الدور</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Weather</td><td data-i18n="dev_svc_weather">wttr.in API + AI analysis + smart polling + 8 alert signals</td></tr>
+                        <tr><td>MusicService</td><td data-i18n="dev_svc_music">MPRIS + AI commentary + history (20 tracks) + debounced analysis</td></tr>
+                        <tr><td>NetworkService</td><td data-i18n="dev_svc_network">WiFi scan/connect + data usage (monthly/daily/live/history)</td></tr>
+                        <tr><td>ClipboardService</td><td data-i18n="dev_svc_clipboard">wl-paste watch + Python clipboard manager + smart model sync</td></tr>
+                        <tr><td>TodoService</td><td data-i18n="dev_svc_todo">Persistent JSON + AI prioritization + due tracking + notifications</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 data-i18n="dev_services_ai" style="margin-top:20px;">AI Layer</h3>
+                <table class="table">
+                    <thead>
+                        <tr><th data-i18n="dev_services_th1">الخدمة</th><th data-i18n="dev_services_th2">الدور</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>AiService</td><td data-i18n="dev_svc_aiservice">Priority queue (0-2) + rate limiting (3s cooldown, 15s throttle) + JSON cleaning</td></tr>
+                        <tr><td>AiTask</td><td data-i18n="dev_svc_aitask">Individual process execution unit (spawned per request)</td></tr>
+                        <tr><td>AiAnalysisService</td><td data-i18n="dev_svc_aianalysis">Orchestrator: SystemService signals → SpikeDetector → EventStore</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 data-i18n="dev_services_analysis" style="margin-top:20px;">Analysis Layer</h3>
+                <table class="table">
+                    <thead>
+                        <tr><th data-i18n="dev_services_th1">الخدمة</th><th data-i18n="dev_services_th2">الدور</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>SpikeDetector</td><td data-i18n="dev_svc_spike">CPU/RAM/Temp spike detection + AI triggers (priority 2)</td></tr>
+                        <tr><td>CooldownManager</td><td data-i18n="dev_svc_cooldown">3-level cooldown (global 30s, per-process 30s, temp 5min)</td></tr>
+                        <tr><td>EventStore</td><td data-i18n="dev_svc_eventstore">In-memory event log (max 50) with AI results</td></tr>
+                        <tr><td>DiagnosticsCollector</td><td data-i18n="dev_svc_diagnostics">Normalized data collection for processes/temps</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 data-i18n="dev_services_ui" style="margin-top:20px;">UI Support</h3>
+                <table class="table">
+                    <thead>
+                        <tr><th data-i18n="dev_services_th1">الخدمة</th><th data-i18n="dev_services_th2">الدور</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>NotifManager</td><td data-i18n="dev_svc_notif">Notification server + DND + sound dispatch + auto-cleanup</td></tr>
+                        <tr><td>OverlayService</td><td data-i18n="dev_svc_overlay">Fullscreen overlay (image preview mode)</td></tr>
+                        <tr><td>IconService</td><td data-i18n="dev_svc_icon">Batch icon resolution + theme-aware caching + flicker prevention</td></tr>
+                        <tr><td>ActionResponses</td><td data-i18n="dev_svc_actions">Pre-generated AI messages (round-robin rotation per category)</td></tr>
+                    </tbody>
+                </table>
+
+                <h3 data-i18n="dev_services_facade" style="margin-top:20px;">System Facade</h3>
+                <table class="table">
+                    <thead>
+                        <tr><th data-i18n="dev_services_th1">الخدمة</th><th data-i18n="dev_services_th2">الدور</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>SystemService</td><td data-i18n="dev_svc_system">Aggregator: BootAnalyzer + HardwareState + ResourceMonitor + ActionResponses</td></tr>
+                        <tr><td>ResourceMonitor</td><td data-i18n="dev_svc_resource">CPU/RAM/Temp monitoring + episode-based alerting + hysteresis</td></tr>
+                        <tr><td>ResourceDiagnostics</td><td data-i18n="dev_svc_resdiag">On-demand process/temp diagnostics with request deduplication</td></tr>
+                        <tr><td>BootAnalyzer</td><td data-i18n="dev_svc_boot">AI-powered boot log analysis + solution suggestions</td></tr>
                     </tbody>
                 </table>
             </section>
 
             <section class="section">
-                <h2 data-i18n="dev_scripts">السكربتات المهمة</h2>
-                <div class="grid-2">
-                    <div class="card">
-                        <strong data-i18n="dev_python">Python</strong>
-                        <ul class="list">
-                            <li>monitoring: `top_cpu_usage.py`, `top_ram_usage.py`</li>
-                            <li>wallpapers: `scan_wallpapers.py`, `dynamic-m3.py`</li>
-                            <li>depth: `create_depth_image_rembg.py`</li>
-                            <li>network: `list_wifi.py`, `connect_wifi.py`</li>
+                <h2 data-i18n="dev_ai_system">6. نظام الذكاء الاصطناعي</h2>
+                <p class="muted" data-i18n="dev_ai_system_desc">نظام AI متكامل مع طابور أولويات وحماية من الإغراق.</p>
+
+                <h3 data-i18n="dev_ai_queue" style="margin-top:20px;">AiService - البوابة المركزية</h3>
+                <div class="code" dir="ltr">
+AiService:
+  ├── Priority Queue: 0=Low, 1=Normal, 2=High
+  ├── Rate Limiting: 3s cooldown + 15s per-requestId throttle
+  ├── Deduplication: same requestId within throttle → dropped
+  └── JSON Cleaning: strips markdown fences, validates fields
+                </div>
+
+                <h3 data-i18n="dev_ai_pipeline" style="margin-top:20px;">Spike Detection Pipeline</h3>
+                <div class="code" dir="ltr">
+ResourceMonitor (signals)
+    ↓
+SpikeDetector → CooldownManager (check)
+    ↓ (if allowed)
+EventStore (create event with "Analyzing...")
+    ↓
+AiService (priority 2 - High)
+    ↓
+AI Analysis → EventStore.applySpikeAnalysis
+    ↓
+UI updates with: aiTitle, aiNarrative, aiRootCause, aiConfidence, aiActions
+                </div>
+
+                <h3 style="margin-top:20px;" data-i18n="dev_actionresponses">ActionResponses - رسائل تفاعلية</h3>
+                <ul class="list">
+                    <li data-i18n-html="dev_actions_1"><strong>Categories:</strong> charging, discharging, cpu_alerts, ram_alerts, temp_alerts.</li>
+                    <li data-i18n-html="dev_actions_2"><strong>Round-robin:</strong> كل تنبيه يعرض رسالة مختلفة من المصفوفة.</li>
+                    <li data-i18n-html="dev_actions_3"><strong>Auto-fetch:</strong> يجلب الرسائل بعد 5 ثوانٍ من بدء التشغيل.</li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="dev_capsule">7. الكبسولة الذكية</h2>
+                <p class="muted" data-i18n="dev_capsule_desc">Widget مستوحى من Dynamic Island مع تعبيرات عين متحركة.</p>
+
+                <div class="code" dir="ltr">
+SmartCapsule.qml (PanelWindow):
+  ├── IdleBar: compact state (always visible)
+  └── ExpandedCard: detailed state (on hover/click)
+
+logic/:
+  ├── CapsuleCoordinator: priority-based content
+  │   └── IDLE(0) → NORMAL(1) → HIGH(2) → CRITICAL(5)
+  ├── CapsuleManager: state transitions
+  ├── EyeController: 10 animated shapes
+  │   ├── NormalEye, HappyEye, SadEye, SleepingEye
+  │   ├── ThinkingEye, FocusedEye, HeartEye, DeadEye
+  │   ├── ListeningEye, Brow
+  └── HoverResponseManager: hover interactions
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="dev_bars_windows">8. الأشرطة والنوافذ</h2>
+                
+                <h3 data-i18n="dev_bars_title" style="margin-top:16px;">Bars (Layer Shell)</h3>
+                <ul class="list">
+                    <li data-i18n-html="dev_bar_topbar"><strong>Topbar:</strong> SystemTray | NetworkSpeed | ActiveWindow | Clock | Monitors</li>
+                    <li data-i18n-html="dev_bar_leftbar"><strong>LeftBar:</strong> 10 icon buttons (Dashboard, Notifications, Weather, Monitoring, Network, Clipboard, Todo, AI, Apps, Power)</li>
+                </ul>
+
+                <h3 data-i18n="dev_windows_title" style="margin-top:20px;">Windows (Popup)</h3>
+                <ul class="list">
+                    <li data-i18n-html="dev_win_left"><strong>LeftWindowFull:</strong> StackView-based menu system (3 styles: FLOATING, DOCKED_FIXED_BAR, DOCKED_MOVING_BAR)</li>
+                    <li data-i18n-html="dev_win_launcher"><strong>BottomLauncher:</strong> app launcher with command mode (<code>&gt;</code> prefix)</li>
+                    <li data-i18n-html="dev_win_dock"><strong>Dock:</strong> pinned apps with auto-hide</li>
+                    <li data-i18n-html="dev_win_settings"><strong>Settings:</strong> ApplicationWindow with General/Appearance/Monitors/Audio sections</li>
+                    <li data-i18n-html="dev_win_power"><strong>PowerMenuWindow:</strong> shutdown/reboot/logout/suspend/lock</li>
+                    <li data-i18n-html="dev_win_cheatsheet"><strong>Cheatsheet:</strong> keyboard shortcuts reference</li>
+                    <li data-i18n-html="dev_win_overlay"><strong>OverlayWindow:</strong> fullscreen overlay layer</li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="dev_event_system">9. نظام الأحداث</h2>
+                
+                <h3 data-i18n="dev_eventbus" style="margin-top:16px;">EventBus (pub/sub)</h3>
+                <div class="code" dir="ltr" data-i18n="dev_eventbus_code">
+EventBus:
+  ├── emit(eventName, data)     → بث حدث
+  ├── on(eventName, callback)   → اشتراك
+  ├── off(eventName, callback)  → إلغاء اشتراك
+  └── clearOwner(owner)         → تنظيف تلقائي عند تدمير الكائن
+                </div>
+
+                <h3 data-i18n="dev_eventnames" style="margin-top:20px;">EventNames.js - أمثلة</h3>
+                <div class="code" dir="ltr">
+OPEN_SETTINGS, OPEN_LEFTBAR, CLOSE_LEFTBAR
+TOGGLE_BOTTOM_LAUNCHER, TOGGLE_DOCK, TOGGLE_POWER_MENU
+CPU_THRESHOLD_EXCEEDED, MEMORY_THRESHOLD_EXCEEDED
+TEMPERATURE_THRESHOLD_EXCEEDED, WEATHER_UPDATED
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="dev_python_integration">10. التكامل مع Python</h2>
+                <p class="muted" data-i18n-html="dev_python_venv">Python يعمل في بيئة معزولة: <code>~/.cache/nibrasshell/venv/bin/python</code></p>
+
+                <div class="grid-2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px;">
+                    <div class="card" style="padding:16px;">
+                        <strong data-i18n="dev_py_ai">🤖 AI Scripts</strong>
+                        <ul class="list" style="margin-top:8px;font-size:14px;">
+                            <li><code>ai/main.py</code> - main AI gateway</li>
+                            <li><code>ai/list-gemini.py</code> - model listing</li>
                         </ul>
                     </div>
-                    <div class="card">
-                        <strong data-i18n="dev_bash">Bash</strong>
-                        <ul class="list">
-                            <li>`cpu_usage.sh` و `ram_usage.sh`</li>
-                            <li>`internet.sh` و `temp.sh`</li>
-                            <li>`playerctl.sh`</li>
+                    <div class="card" style="padding:16px;">
+                        <strong data-i18n="dev_py_monitoring">📊 Monitoring</strong>
+                        <ul class="list" style="margin-top:8px;font-size:14px;">
+                            <li><code>system_monitor.py</code> - continuous CPU/RAM/Temp</li>
+                            <li><code>system_diagnostics.py</code> - on-demand</li>
+                            <li><code>battery_info.py</code></li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:16px;">
+                        <strong data-i18n="dev_py_network">🌐 Network</strong>
+                        <ul class="list" style="margin-top:8px;font-size:14px;">
+                            <li><code>network/list_wifi.py</code></li>
+                            <li><code>network/connect_wifi.py</code></li>
+                            <li><code>network/data_usage.py</code> (vnstat)</li>
+                            <li><code>network/live_usage.py</code> (nethogs)</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:16px;">
+                        <strong data-i18n="dev_py_theme">🎨 Theme Integration</strong>
+                        <ul class="list" style="margin-top:8px;font-size:14px;">
+                            <li><code>resolve_theme_icons.py</code></li>
+                            <li><code>list_qt_styles.py</code>, <code>list_icon_themes.py</code></li>
+                            <li><code>list_plasma_schemes.py</code></li>
+                            <li><code>list_kvantum_themes.py</code></li>
+                            <li><code>list_gtk_themes.py</code></li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:16px;">
+                        <strong data-i18n="dev_py_wallpaper">🖼️ Wallpaper/Depth</strong>
+                        <ul class="list" style="margin-top:8px;font-size:14px;">
+                            <li><code>m3/dynamic-m3.py</code> - Material You colors</li>
+                            <li><code>scan_wallpapers.py</code></li>
+                            <li><code>create_depth_image_rembg.py</code></li>
+                            <li><code>create_depth_image_opencv.py</code></li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:16px;">
+                        <strong data-i18n="dev_py_utils">🔧 Utilities</strong>
+                        <ul class="list" style="margin-top:8px;font-size:14px;">
+                            <li><code>get_clipboard.py</code></li>
+                            <li><code>apply_konsole_profile_open_sessions.py</code></li>
                         </ul>
                     </div>
                 </div>
             </section>
 
             <section class="section">
-                <h2 data-i18n="dev_run">تشغيل Quickshell</h2>
+                <h2 data-i18n="dev_scripts">11. السكربتات المهمة</h2>
+                <div class="grid-2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+                    <div class="card" style="padding:20px;">
+                        <strong data-i18n="dev_python">Python</strong>
+                        <ul class="list" style="margin-top:12px;">
+                            <li data-i18n-html="dev_py_mon">monitoring: <code>system_monitor.py</code>, <code>system_diagnostics.py</code></li>
+                            <li data-i18n-html="dev_py_wall">wallpapers: <code>scan_wallpapers.py</code>, <code>dynamic-m3.py</code></li>
+                            <li data-i18n-html="dev_py_depth">depth: <code>create_depth_image_rembg.py</code></li>
+                            <li data-i18n-html="dev_py_net">network: <code>list_wifi.py</code>, <code>connect_wifi.py</code>, <code>data_usage.py</code></li>
+                            <li data-i18n-html="dev_py_ai_script">ai: <code>main.py</code>, <code>list-gemini.py</code></li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:20px;">
+                        <strong data-i18n="dev_bash">Bash</strong>
+                        <ul class="list" style="margin-top:12px;">
+                            <li data-i18n-html="dev_bash_internet"><code>internet.sh</code> - فحص الاتصال</li>
+                            <li data-i18n-html="dev_bash_temp"><code>temp.sh</code> - قراءة الحرارة</li>
+                            <li data-i18n-html="dev_bash_wall"><code>get_wallpapers.sh</code> - جلب الخلفيات</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="dev_run">12. التشغيل والتصحيح</h2>
+                <h3 data-i18n="dev_run_title" style="margin-top:16px;">تشغيل Quickshell</h3>
                 <div class="code">config/quickshell/run.fish</div>
-                <p data-i18n="dev_run_desc">هذا السكربت يضبط log rules لتقليل الضوضاء أثناء التشغيل.</p>
+                <p class="muted" data-i18n="dev_run_desc">السكربت يضبط log rules لتقليل الضوضاء:</p>
+                <div class="code" dir="ltr">
+qs -p &lt;shell_dir&gt; --log-rules "..."
+# Suppresses: DBus errors, notification warnings, SNI warnings
+                </div>
+
+                <h3 data-i18n-html="dev_debug_title" style="margin-top:24px;">نصائح التصحيح</h3>
+                <ul class="list">
+                    <li data-i18n-html="dev_debug_1"><strong>اختبار AI:</strong> <code>AiAnalysisService.testHighCpu</code> / <code>testHighRam</code></li>
+                    <li data-i18n-html="dev_debug_2"><strong>فحص الأحداث:</strong> <code>EventStore.eventsModel</code> (آخر 50 حدث)</li>
+                    <li data-i18n-html="dev_debug_3"><strong>كاش الثيم:</strong> <code>~/.cache/nibrasshell/theme.json</code></li>
+                    <li data-i18n-html="dev_debug_4"><strong>الإعدادات:</strong> <code>~/.nibrasshell.json</code></li>
+                    <li data-i18n-html="dev_debug_5"><strong>ملفات التشغيل:</strong> <code>~/.cache/nibrasshell/venv/</code></li>
+                </ul>
             </section>
 
             <section class="section">
                 <h2 data-i18n="dev_notes">ملاحظات تطوير</h2>
                 <ul class="list">
-                    <li data-i18n="dev_note_1">الكبسولة الذكية في `config/quickshell/windows/smart_capsule`.</li>
-                    <li data-i18n="dev_note_2">القائمة الجانبية في `config/quickshell/windows/leftwindow`.</li>
-                    <li data-i18n="dev_note_3">الإعدادات في `config/quickshell/windows/settings`.</li>
+                    <li data-i18n-html="dev_note_1">الكبسولة الذكية في <code>config/quickshell/windows/smart_capsule</code>.</li>
+                    <li data-i18n-html="dev_note_2">القائمة الجانبية في <code>config/quickshell/windows/leftwindow</code>.</li>
+                    <li data-i18n-html="dev_note_3">الإعدادات في <code>config/quickshell/windows/settings</code>.</li>
+                    <li data-i18n-html="dev_note_4">المكونات القابلة لإعادة الاستخدام في <code>components/</code>.</li>
+                    <li data-i18n-html="dev_note_5">الأدوات المساعدة في <code>utils/Helper.qml</code> و <code>utils/helpers.js</code>.</li>
                 </ul>
             </section>
         </section>
