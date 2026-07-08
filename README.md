@@ -6,13 +6,13 @@
 
 ---
 
-[![Website](https://img.shields.io/badge/Website-Visit%20Now-blue?style=for-the-badge&logo=firefox)](https://ahmedsaadi0.github.io/NibrasShell/index.html)
-[![Docs](https://img.shields.io/badge/Docs-Read%20Documentation-green?style=for-the-badge&logo=bookstack)](https://ahmedsaadi0.github.io/NibrasShell/docs.html)
+[![Website](https://img.shields.io/badge/Website-Visit%20Now-blue?style=for-the-badge&logo=firefox)](https://nibras-shell.ahmedsaadi0.workers.dev/index.html)
+[![Docs](https://img.shields.io/badge/Docs-Read%20Documentation-green?style=for-the-badge&logo=bookstack)](https://nibras-shell.ahmedsaadi0.workers.dev/docs.html)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?style=for-the-badge&logo=discord)](https://discord.gg/EUcGgRGhrs)
 
 <br>
 
-<img src="https://ahmedsaadi0.github.io/NibrasShell/assets/material-dark.png" alt="NibrasShell Preview" width="100%">
+<img src="https://nibras-shell.ahmedsaadi0.workers.dev/assets/material-dark.png" alt="NibrasShell Preview" width="100%">
 
 ---
 
@@ -43,13 +43,13 @@ cd NibrasShell/nibras_installer
 python main.py
 ```
 
-For full manual installation steps, please visit the **[Documentation](https://ahmedsaadi0.github.io/NibrasShell/docs-install.html)**.
+For full manual installation steps, please visit the **[Documentation](https://nibras-shell.ahmedsaadi0.workers.dev/docs-install.html)**.
 
 ---
 
 ## 🔗 Stay Updated
 
-> Check out the [Development Roadmap](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html) to see what I'm building next!
+> Check out the [Development Roadmap](https://nibras-shell.ahmedsaadi0.workers.dev/roadmap.html) to see what I'm building next!
 
 ---
 

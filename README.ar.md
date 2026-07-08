@@ -6,13 +6,13 @@
 
 ---
 
-[![Website](https://img.shields.io/badge/Website-Visit%20Now-blue?style=for-the-badge&logo=firefox)](https://ahmedsaadi0.github.io/NibrasShell/index.html)
-[![Docs](https://img.shields.io/badge/Docs-Read%20Documentation-green?style=for-the-badge&logo=bookstack)](https://ahmedsaadi0.github.io/NibrasShell/docs.html)
+[![Website](https://img.shields.io/badge/Website-Visit%20Now-blue?style=for-the-badge&logo=firefox)](https://nibras-shell.ahmedsaadi0.workers.dev/index.html)
+[![Docs](https://img.shields.io/badge/Docs-Read%20Documentation-green?style=for-the-badge&logo=bookstack)](https://nibras-shell.ahmedsaadi0.workers.dev/docs.html)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289da?style=for-the-badge&logo=discord)](https://discord.gg/EUcGgRGhrs)
 
 <br>
 
-<img src="https://ahmedsaadi0.github.io/NibrasShell/assets/material-dark.png" alt="معاينة NibrasShell" width="100%">
+<img src="https://nibras-shell.ahmedsaadi0.workers.dev/assets/material-dark.png" alt="معاينة NibrasShell" width="100%">
 
 ---
 
@@ -43,13 +43,13 @@ cd NibrasShell/nibras_installer
 python main.py
 ```
 
-للخطوات الكاملة، راجع **[الوثائق](https://ahmedsaadi0.github.io/NibrasShell/docs-install.html)**.
+للخطوات الكاملة، راجع **[الوثائق](https://nibras-shell.ahmedsaadi0.workers.dev/docs-install.html)**.
 
 ---
 
 ## 🔗 تابعنا
 
-> تابع **[خارطة الطريق](https://ahmedsaadi0.github.io/NibrasShell/roadmap.html)** لتعرف ما أعمل عليه التالي!
+> تابع **[خارطة الطريق](https://nibras-shell.ahmedsaadi0.workers.dev/roadmap.html)** لتعرف ما أعمل عليه التالي!
 
 ---
 
