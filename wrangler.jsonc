@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nibras-shell-docs",
+  "compatibility_date": "2026-07-08",
+  "assets": {
+    "directory": "docs"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
