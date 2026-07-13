@@ -111,8 +111,8 @@ PanelWindow {
 
         radius: ThemeManager.selectedTheme.dimensions.elementRadius * 1.5
         color: ThemeManager.selectedTheme.colors.surface
-        // border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
-        // border.width: 1
+        border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.5)
+        border.width: 2
 
         layer.enabled: root.visible && opacity < 1
         layer.smooth: true

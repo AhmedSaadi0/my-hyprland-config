@@ -20,6 +20,8 @@ Item {
     property var inActiveIcons: App.inActiveWorkspacesIcons
 
     function resolveWorkspaceIcon(appId) {
+        let trigger = IconService.iconUpdateTrigger;
+        void trigger;
         let iconName = Helper.iconNameFromAppId(appId);
         return IconService.getCached(iconName);
     }

@@ -17,3 +17,17 @@ function set(iconKey, themeName, resolvedPath) {
 function clear() {
     resolvedIcons = {};
 }
+
+// إرجاع أسماء الأيقونات المخزنة لثيم معيّن فقط
+// (تُستخدم لإعادة حلّها تلقائياً في الثيم الجديد)
+function getAllForTheme(themeName) {
+    if (!themeName)
+        return [];
+    const prefix = themeName + "::";
+    const result = [];
+    for (const key in resolvedIcons) {
+        if (key.startsWith(prefix))
+            result.push(key.substring(prefix.length));
+    }
+    return result;
+}
