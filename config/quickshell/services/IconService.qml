@@ -22,8 +22,7 @@ Singleton {
     property int iconUpdateTrigger: 0
 
     // أيقونة افتراضية bundle (لا تعتمد على KIconEngine / Quickshell.iconPath)
-    readonly property string fallbackIconSource:
-        Helper.toImageSource(App.assets.fallbackAppIcon)
+    readonly property string fallbackIconSource: Helper.toImageSource(App.assets.fallbackAppIcon)
 
     // Emitted when a batch resolve completes with the full icon map
     signal iconsResolved(var iconMap)
@@ -104,7 +103,7 @@ Singleton {
             }
         }
         if (root.pendingIcons.length > 0) {
-            root.batchIconResolveTimer.restart();
+            batchIconResolveTimer.restart();
         }
     }
 

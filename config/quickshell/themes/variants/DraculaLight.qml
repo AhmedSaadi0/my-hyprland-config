@@ -68,7 +68,7 @@ BaseTheme {
     _plasmaColorScheme: "DraculaLight"
     _konsoleProfile: "DraculaLight.profile"
 
-    _themeIcons: "Zafiro-Dracula"
+    _themeIcons: "Colloid-Purple-Dracula-Dark"
     _kvantumTheme: "Tellgo"
     _gtkTheme: "Tokyonight-Dark-BL"
 }
