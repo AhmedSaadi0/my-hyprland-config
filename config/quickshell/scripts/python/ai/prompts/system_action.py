@@ -306,10 +306,33 @@ def _build_legacy_system_action_prompt() -> str:
         "- Vary tone: witty, dramatic, calm, humorous, concerned, sarcastic, playful.",
         f"- {MAX_WORDS_RULE}",
         "",
-        f"### OUTPUT SCHEMA (RAW JSON ONLY)\n{NO_PREAMBLE}",
+        "### OUTPUT SCHEMA (RAW JSON ONLY)",
+        NO_PREAMBLE,
         f"Each emotion must be one of: {EMOTION_LIST}",
         "",
-        "Legacy aggregated schema follows (kept identical to original).",
+        "Return a SINGLE JSON object with these EXACT flat top-level keys.",
+        "Do NOT nest them under `power_profiles`, `battery`, or `charging_state`.",
+        "",
+        "{",
+        '  "shutdown": {"text": "string (max 12 words)", "emotion": "string"},',
+        '  "reboot": {"text": "string (max 12 words)", "emotion": "string"},',
+        '  "suspend": {"text": "string (max 12 words)", "emotion": "string"},',
+        '  "logout": {"text": "string (max 12 words)", "emotion": "string"},',
+        '  "power_performance": {"text": "string (max 12 words)", "emotion": "string"},',
+        '  "power_balanced": {"text": "string (max 12 words)", "emotion": "string"},',
+        '  "power_powersaver": {"text": "string (max 12 words)", "emotion": "string"},',
+    ]
+    for level in _BATTERY_THRESHOLDS.keys():
+        sections.append(
+            f'  "battery_{level}": {{"text": "string", "emotion": "string"}},'
+        )
+    sections += [
+        '  "charging": [array of exactly 7 unique {text, emotion} objects],',
+        '  "discharging": [array of exactly 7 unique {text, emotion} objects],',
+        '  "cpu_alerts": [array of exactly 7 unique {text, emotion} objects],',
+        '  "ram_alerts": [array of exactly 7 unique {text, emotion} objects],',
+        '  "temp_alerts": [array of exactly 7 unique {text, emotion} objects]',
+        "}",
     ]
     return "\n".join(sections)
 
