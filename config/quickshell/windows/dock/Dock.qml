@@ -374,8 +374,8 @@ PanelWindow {
             anchors.fill: parent
             radius: effectiveHasApps ? ThemeManager.selectedTheme.dimensions.elementRadius * 1.5 : 24
             color: effectiveHasApps ? ThemeManager.selectedTheme.colors.surface : "transparent"
-            border.color: effectiveHasApps ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-            border.width: effectiveHasApps ? 1 : 0
+            border.color: effectiveHasApps ? ThemeManager.selectedTheme.colors.primary.alpha(0.5) : "transparent"
+            border.width: effectiveHasApps ? 2 : 0
 
             Behavior on color {
                 ColorAnimation {

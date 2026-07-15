@@ -13,3 +13,4 @@ config/ags/node_modules
 config/quickshell/.qmlls.ini
 
 config/quickshell/graphify-out
+config/quickshell/scripts/python/ai/graphify-out

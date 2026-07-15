@@ -56,7 +56,7 @@ Item {
         let cached = IconService.getCached(iconKey);
         if (cached && cached !== "")
             return cached;
-        return Helper.toImageSource(Quickshell.iconPath(iconKey, "application-x-executable"));
+        return IconService.fallbackIconSource;
     }
 
     function applyDisplayedIcon(windowClass) {
@@ -83,6 +83,9 @@ Item {
 
     Connections {
         target: IconService
+        function onIconUpdateTriggerChanged() {
+            applyDisplayedIcon(displayedIconClass);
+        }
         function onIconsResolved() {
             applyDisplayedIcon(displayedIconClass);
         }

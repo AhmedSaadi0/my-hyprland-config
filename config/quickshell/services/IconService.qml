@@ -21,6 +21,9 @@ Singleton {
     // Incremented after each resolve batch completes; components bind to this for reactivity
     property int iconUpdateTrigger: 0
 
+    // أيقونة افتراضية bundle (لا تعتمد على KIconEngine / Quickshell.iconPath)
+    readonly property string fallbackIconSource: Helper.toImageSource(App.assets.fallbackAppIcon)
+
     // Emitted when a batch resolve completes with the full icon map
     signal iconsResolved(var iconMap)
 
@@ -28,7 +31,7 @@ Singleton {
 
     function getCached(iconName) {
         if (!iconName || iconName === "")
-            return "";
+            return root.fallbackIconSource;
         if (Helper.isDirectImageSource(iconName))
             return Helper.toImageSource(iconName);
 
@@ -46,13 +49,13 @@ Singleton {
                 return cached;
         }
 
-        // 3. Fall back to system default
-        return Helper.toImageSource(Quickshell.iconPath(iconName, "application-x-executable"));
+        // 3. Fall back to bundled icon (تجنّب KIconEngine لتفادي SEGV)
+        return root.fallbackIconSource;
     }
 
     function getCachedForTheme(iconName, themeName) {
         if (!iconName || iconName === "")
-            return "";
+            return root.fallbackIconSource;
         if (Helper.isDirectImageSource(iconName))
             return Helper.toImageSource(iconName);
         if (themeName) {
@@ -60,7 +63,12 @@ Singleton {
             if (cached)
                 return cached;
         }
-        return Helper.toImageSource(Quickshell.iconPath(iconName, "application-x-executable"));
+        return root.fallbackIconSource;
+    }
+
+    // إرجاع أسماء كل الأيقونات المخزنة لثيم معيّن
+    function getAllForTheme(themeName) {
+        return IconCache.getAllForTheme(themeName);
     }
 
     // Queue icons for batch resolution; they will be resolved after debounce
@@ -82,9 +90,27 @@ Singleton {
         batchIconResolveTimer.restart();
     }
 
+    // إعادة دفع كل أيقونات الثيم السابق إلى طابور الحل في الثيم الحالي
+    // (تُستدعى من applyGuardTimer في ThemeManager بعد 500ms من تطبيق الثيم)
+    function refreshForNewTheme() {
+        let oldTheme = root.previousTheme;
+        if (!oldTheme || oldTheme === root.currentTheme)
+            return;
+        let allIcons = IconCache.getAllForTheme(oldTheme);
+        for (let i = 0; i < allIcons.length; i++) {
+            if (root.pendingIcons.indexOf(allIcons[i]) === -1) {
+                root.pendingIcons.push(allIcons[i]);
+            }
+        }
+        if (root.pendingIcons.length > 0) {
+            batchIconResolveTimer.restart();
+        }
+    }
+
     // --- Internal State ---
 
     property var pendingIcons: []
+    property bool _applyingTheme: false
 
     // Debounce timer for requestResolve() calls
     Timer {
@@ -115,6 +141,18 @@ Singleton {
         }
     }
 
+    // تأجيل iconUpdateTrigger خارج QProcess::finished callback لتفادي SEGV
+    // (KIconEngine يتفلتر إذا طُلب QIcon فوراً داخل QProcess::finished)
+    Timer {
+        id: deferTriggerTimer
+        interval: 50
+        repeat: false
+        onTriggered: {
+            if (!root._applyingTheme)
+                root.iconUpdateTrigger++;
+        }
+    }
+
     Process {
         id: batchIconResolver
         running: false
@@ -134,7 +172,8 @@ Singleton {
                 } finally {
                     // Update previousTheme after batch completes (ready for next transition)
                     root.previousTheme = root.currentTheme;
-                    root.iconUpdateTrigger++;
+                    // تأجيل تحديث الـ trigger خارج callback QProcess::finished
+                    deferTriggerTimer.restart();
                 }
             }
         }
@@ -147,10 +186,18 @@ Singleton {
             void themeName;
             root.previousTheme = root.currentTheme;
         }
-        // Start batch resolve after theme is fully applied
+        // إعادة حلّ الأيقونات تتولاها applyGuardTimer في ThemeManager
+        // (تطلق بعد 500ms من تطبيق الثيم للسماح لـ KIconEngine بالاستقرار أولاً)
         function onSelectedThemeUpdated() {
-            root.refreshAll();
         }
+        // Sync _applyingTheme مع حارس ThemeManager
+        function onIsApplyingThemeChanged() {
+            root._applyingTheme = ThemeManager.isApplyingTheme;
+        }
+    }
+
+    function clearCache() {
+        IconCache.clear();
     }
 
     function _flushPendingIcons() {

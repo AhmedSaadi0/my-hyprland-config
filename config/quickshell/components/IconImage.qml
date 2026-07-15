@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import "root:/themes"
 import "root:/utils"
+import "root:/services"
 
 Image {
     id: root
@@ -33,8 +34,9 @@ Image {
     // Handle errors gracefully
     onStatusChanged: {
         if (status === Image.Error) {
-            console.warn("IconImage: Failed to load icon:", source)
-            // Optionally set a fallback icon here
+            console.warn("IconImage: Failed to load icon:", source);
+            if (source !== IconService.fallbackIconSource)
+                source = IconService.fallbackIconSource;
         }
     }
 }

@@ -60,6 +60,7 @@ MouseArea {
 
     Connections {
         target: IconService
+        function onIconUpdateTriggerChanged() { _resolveIcon(); }
         function onIconsResolved() {
             const iconValue = String(modelData.icon || "");
             if (!iconValue || Helper.isDirectImageSource(iconValue))

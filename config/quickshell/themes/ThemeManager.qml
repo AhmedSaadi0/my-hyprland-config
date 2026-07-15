@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 import "root:/config"
+import "root:/services"
 import "root:/themes/modules"
 import "root:/themes"
 
@@ -19,6 +20,7 @@ Singleton {
     // Read-only Aliases (Exposing internal state safely)
     readonly property alias selectedTheme: themeLoader.activeThemeInstance
     readonly property alias isInitialThemeReady: root._initialReady
+    readonly property alias isApplyingTheme: root._isApplyingTheme
     readonly property alias aiThemeAssistant: aiThemeAssistant
     readonly property alias bridgeSystem: bridgeSystem
 
@@ -33,6 +35,7 @@ Singleton {
     property var _pendingCacheData: null
     property string _pendingThemeName: ""
     property string _selectedThemeName: ""
+    property bool _isApplyingTheme: false
 
     // =========================================================
     // 2. Signals
@@ -293,9 +296,11 @@ Singleton {
 
     function _applyToSystem(theme) {
         console.info("[ThemeManager] Applying Final Configuration...");
+        root._isApplyingTheme = true;
         bridgeHyprland.applyConfig(theme.hyprlandConfiguration);
         bridgeSystem.applySystemTheme(theme.systemSettings, theme.colors, theme.typography);
         wallpaperController.configure(theme.systemSettings);
+        applyGuardTimer.restart();
     }
 
     function addLeftMenuSpacing() {
@@ -341,6 +346,17 @@ Singleton {
         onTriggered: {
             console.warn("[ThemeManager] Cache lookup timed out (File likely missing). Proceeding with defaults.");
             _onCacheFileReady("");
+        }
+    }
+
+    // رفع الحارس بعد 500ms — يكفي لـ KIconEngine كي يستقر
+    Timer {
+        id: applyGuardTimer
+        interval: 500
+        repeat: false
+        onTriggered: {
+            root._isApplyingTheme = false;
+            IconService.refreshForNewTheme();
         }
     }
 

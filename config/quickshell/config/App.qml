@@ -207,6 +207,7 @@ Singleton {
             readonly property string highVoltage: root.assetsPath + "/icons/electrical-danger-sign.png"
             readonly property string highTempWarning: root.assetsPath + "/icons/electrical-danger-sign.png"
         }
+        readonly property string fallbackAppIcon: root.assetsPath + "/icons/fallback-app.svg"
         readonly property QtObject audio: QtObject {
             readonly property string powerConnect: root.assetsPath + "/audio/power_in.mp3"
             readonly property string batteryLow: root.assetsPath + "/audio/low-battery.mp3"
