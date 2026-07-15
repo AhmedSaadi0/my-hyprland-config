@@ -69,6 +69,15 @@ Select ONE codepoint from the library below that best matches the weather + time
         "reason": "string"
     }}
 }}
+
+### 6. CONVERSATION MEMORY
+- Prior turns in this conversation are YOUR OWN previous analyses, in chronological order (oldest first).
+- Treat them as your short-term memory. Use them to:
+    - Maintain continuity in `emotion` and tone — do not flip-flop between turns without justification.
+    - Detect trends for `trend_badge` (compare to the immediately previous turn: rising / falling / steady / shifting).
+    - Avoid contradicting a previous `summary_text` unless the underlying data has materially changed.
+- If the new data is essentially the same as the last turn, keep the `summary_text` short and stable rather than rewriting it.
+- If there is no prior context (first turn), produce a complete fresh analysis.
 {WEATHER_EXAMPLE}
 {NO_PREAMBLE}
 """

@@ -153,6 +153,10 @@ Singleton {
     property var aiTags: []
     property bool aiIsUrgent: false
 
+    // ذاكرة المحادثة مع الـ AI — تُعاد للوراء فقط (في الذاكرة)
+    // تُفقد عند إعادة تشغيل القشرة، ويُعاد بناؤها من أول تحليل
+    property var _aiHistory: []
+
     // ========================================================================
     // 2. Signals
     // ========================================================================
@@ -268,7 +272,14 @@ Singleton {
                     // في حال الفشل، نعود للتحديث الافتراضي (مثلاً كل 15 دقيقة)
                     refreshTimer.interval = 15 * 60 * 1000;
                     refreshTimer.restart();
-                }, "WeatherService", 1);
+                }, "WeatherService", 1, {
+                    // ذاكرة المحادثة: نُرسل التحليلات السابقة لتفادي فقدان السياق
+                    history: JSON.stringify(root._aiHistory),
+                    historyCap: App.weatherAiHistoryTurns,
+                    onHistoryUpdated: function (newHistory) {
+                        root._aiHistory = newHistory;
+                    }
+                });
             } else {
                 console.error("Missing required weather fields for AI analysis.");
             }

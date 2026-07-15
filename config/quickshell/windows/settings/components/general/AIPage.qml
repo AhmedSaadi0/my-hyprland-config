@@ -48,6 +48,9 @@ BaseGeneralSettings {
     property string localSystemPersona: ""
     property string localTodoPersona: ""
 
+    // Memory & Context
+    property int localWeatherHistoryTurns: 10
+
     // Toggle Visibility
     property bool showKeys: false
 
@@ -72,6 +75,8 @@ BaseGeneralSettings {
         localSystemPersona = App.systemPersona || defaultSystemPersona;
         localTodoPersona = App.todoPersona || defaultTodoPersona;
 
+        localWeatherHistoryTurns = App.weatherAiHistoryTurns !== undefined ? App.weatherAiHistoryTurns : 10;
+
         // إذا لم تكن هناك موديلات محملة، نحاول التحديث
         if (App.availableGeminiWeatherModels.length === 0)
             App.modelsManager.refreshAll();
@@ -94,7 +99,8 @@ BaseGeneralSettings {
             "weatherPersona": localWeatherPersona,
             "musicPersona": localMusicPersona,
             "systemPersona": localSystemPersona,
-            "todoPersona": localTodoPersona
+            "todoPersona": localTodoPersona,
+            "weatherAiHistoryTurns": localWeatherHistoryTurns
         };
     }
 
@@ -337,6 +343,44 @@ BaseGeneralSettings {
                                 selectedTheme: page.theme
                                 onEditingFinished: page.localSystemModel = text
                             }
+                        }
+                    }
+                }
+            }
+
+            SectionCard {
+                title: qsTr("Memory & Context")
+                subtitle: qsTr("How many past turns the Weather AI keeps in mind. 0 disables memory; higher values give it more continuity but cost more tokens.")
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 8
+
+                    SliderWithLabel {
+                        id: memorySlider
+                        Layout.fillWidth: true
+                        label: qsTr("Weather AI conversation turns")
+                        from: 0
+                        to: 30
+                        stepSize: 1
+                        decimals: 0
+                        value: page.localWeatherHistoryTurns
+                        onEditingFinished: finalValue => {
+                            page.localWeatherHistoryTurns = Math.round(finalValue);
+                        }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Item {
+                            Layout.fillWidth: true
+                        }
+                        MButton {
+                            text: qsTr("Reset Default (10)")
+                            Layout.preferredHeight: 24
+                            Layout.preferredWidth: 140
+                            flat: true
+                            onClicked: page.localWeatherHistoryTurns = 10
                         }
                     }
                 }

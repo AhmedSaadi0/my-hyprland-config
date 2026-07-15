@@ -39,7 +39,7 @@ Current Time: {{CURRENT_TIME}} | Date: {{CURRENT_DATE}} | OS: {{OS_INFO}}
 - {NO_PREAMBLE}
 - Each `emotion` MUST be one of: {EMOTION_LIST}
 - {MAX_WORDS_RULE}
-- Vary tone: witty, dramatic, calm, humorous, concerned, sarcastic, playful.
+- Vary tone: witty, calm, humorous, sarcastic, playful. Avoid `dramatic` and `concerned` for non-critical alerts (cpu_alerts, ram_alerts, temp_alerts).
 """
 
 
@@ -217,8 +217,20 @@ Keep each text under 12 words.
     "cpu_alerts": _HEADER
     + """\
 ### TASK
-Generate exactly 7 unique CPU alert responses (high CPU usage threshold hit).
-Each must be different. Vary tone. Keep each text under 12 words.
+Generate exactly 7 unique, short CPU alert responses (high CPU usage threshold hit).
+
+Tone: light, casual, witty, or playfully curious — like a friend noticing the fans spin up. Treat it as a fun observation, not a warning.
+
+DO NOT use alarming, catastrophic, or fear-inducing language. Avoid words/phrases like "melting", "burning", "on fire", "about to die", "doom", "critical", "panic", "emergency".
+
+Preferred style — frame the spike as a question or a gentle tease. Examples (adapt to the user's language):
+- "Trying to crack NASA?"
+- "What are you cooking in there?"
+- "Easy there, hero."
+- "CPU clocked in for double shift."
+- "Did a fork-bomb escape?"
+
+Each of the 7 must be different. Keep each text under 12 words. Keep emotion playful (wink / thinking / suspicious / confused are good fits — avoid "shocked", "angry", "dead").
 
 ### OUTPUT
 {"cpu_alerts": [
@@ -234,8 +246,22 @@ Each must be different. Vary tone. Keep each text under 12 words.
     "ram_alerts": _HEADER
     + """\
 ### TASK
-Generate exactly 7 unique RAM alert responses (high memory usage threshold hit).
-Each must be different. Vary tone. Keep each text under 12 words.
+Generate exactly 7 unique, short RAM alert responses (high memory usage threshold hit).
+
+Tone: light, casual, witty, or playfully curious — like a friend noticing the swap churn. The system is fine. Treat the spike as a casual observation, NOT an emergency.
+
+HARD BANS — the `text` field MUST NOT contain any of the following, in any language: "melting", "burning", "on fire", "about to die", "dying", "doom", "panic", "emergency", "suffocating", "drowning", "exploding", "explode", "screaming", "begging for mercy", "critical", "shutting down", "panic mode", "melt", "burn", "fry". No death metaphors, no body-part imagery, no survival language, no doom/panic framing.
+
+PREFERRED STYLE — frame the spike as a fun question or playful remark. Examples (adapt to the user's language while keeping the same light spirit):
+- "Did Chrome open a new tab farm?"
+- "Memory needs a coffee break."
+- "Who opened 400 tabs again?"
+- "RAM is reading a long novel."
+- "Easy there, tab hoarder."
+
+Each of the 7 must be different. Each text under 12 words. Each text must be helpful (hint at the likely cause) AND/OR funny.
+
+Emotion guidance: prefer wink, thinking, suspicious, confused, listening, happy. Avoid when possible: shocked, angry, sad, dead.
 
 ### OUTPUT
 {"ram_alerts": [
@@ -251,8 +277,22 @@ Each must be different. Vary tone. Keep each text under 12 words.
     "temp_alerts": _HEADER
     + """\
 ### TASK
-Generate exactly 7 unique temperature alert responses (high temperature threshold hit).
-Each must be different. Vary tone. Keep each text under 12 words.
+Generate exactly 7 unique, short temperature alert responses (high temperature threshold hit).
+
+Tone: light, casual, witty, or playfully curious — like a friend noticing the fans spin up. The system is fine. Treat the spike as a casual observation, NOT an emergency.
+
+HARD BANS — the `text` field MUST NOT contain any of the following, in any language: "melting", "burning", "on fire", "about to die", "dying", "doom", "panic", "emergency", "suffocating", "drowning", "exploding", "explode", "screaming", "begging for mercy", "critical", "shutting down", "panic mode", "melt", "burn", "fry", "boiling". No death metaphors, no body-part imagery, no survival language, no doom/panic framing.
+
+PREFERRED STYLE — frame the spike as a fun question or playful remark. Examples (adapt to the user's language while keeping the same light spirit):
+- "It's getting cozy in there."
+- "Did you forget to open a window?"
+- "Laptop is sunbathing."
+- "Fans are working overtime today."
+- "Easy there, hot stuff."
+
+Each of the 7 must be different. Each text under 12 words. Each text must be helpful (hint at the likely cause, e.g. dust, sun, heavy load) AND/OR funny.
+
+Emotion guidance: prefer wink, thinking, suspicious, confused, listening, happy. Avoid when possible: shocked, angry, sad, dead.
 
 ### OUTPUT
 {"temp_alerts": [
@@ -299,12 +339,53 @@ def _build_legacy_system_action_prompt() -> str:
         sections.append(f"- **{level}%**: {guidance}")
     sections += [
         "",
-        "### ARRAY RESPONSE RULES",
-        "For charging, discharging, cpu_alerts, ram_alerts, and temp_alerts:",
-        "- Generate exactly 7 unique responses.",
+        "### ARRAY RESPONSE RULES (global — applies to charging and discharging)",
+        "For charging and discharging (7 unique responses each):",
+        "- Generate exactly 7 unique responses per category.",
         "- Each response must be different from the others.",
-        "- Vary tone: witty, dramatic, calm, humorous, concerned, sarcastic, playful.",
+        "- Vary tone: witty, calm, humorous, sarcastic, playful.",
         f"- {MAX_WORDS_RULE}",
+        "",
+        "### ALERT TONE OVERRIDE (cpu_alerts, ram_alerts, temp_alerts ONLY)",
+        "These three categories are INFORMATIONAL, NOT an emergency. The system is fine. "
+        "Treat each threshold hit as a casual observation or a gentle tease — like a friend "
+        "noticing the fans spin up. The text should usually be funny and helpful, never scary.",
+        "",
+        "HARD BANS — the `text` field MUST NOT contain any of the following, in any language:",
+        "- Words/phrases: 'melting', 'burning', 'on fire', 'about to die', 'dying', 'doom', "
+        "'panic', 'emergency', 'suffocating', 'drowning', 'exploding', 'explode', 'screaming', "
+        "'begging for mercy', 'critical', 'shutting down', 'panic mode', 'melt', 'burn', 'fry'.",
+        "- Death metaphors, body-part imagery, survival language, doom/panic framing.",
+        "- Any phrasing that implies hardware damage, fire risk, or system failure.",
+        "- Imperative commands that sound like warnings or threats (e.g. 'save your work NOW').",
+        "",
+        "PREFERRED STYLE — frame the spike as a question or playful remark. Examples "
+        "(adapt to the user's language while keeping the same light spirit):",
+        "- 'Trying to crack NASA?' (CPU)",
+        "- 'What are you cooking in there?' (CPU/Temp)",
+        "- 'Did a fork-bomb escape?' (CPU)",
+        "- 'Easy there, hero.' (CPU)",
+        "- 'CPU clocked in for double shift.' (CPU)",
+        "- 'Anyone home? CPU is busy.' (CPU)",
+        "- 'Did Chrome open a new tab farm?' (RAM)",
+        "- 'Memory needs a coffee break.' (RAM)",
+        "- 'Who opened 400 tabs again?' (RAM)",
+        "- 'RAM is reading a long novel.' (RAM)",
+        "- 'It's getting cozy in there.' (Temp)",
+        "- 'Did you forget to open a window?' (Temp)",
+        "- 'Laptop is sunbathing.' (Temp)",
+        "- 'Fans are working overtime today.' (Temp)",
+        "",
+        "EMOTION GUIDANCE for cpu_alerts, ram_alerts, temp_alerts:",
+        "Preferred: wink, thinking, suspicious, confused, listening, happy, focused.",
+        "Avoid when possible: shocked, angry, sad, dead.",
+        "Emotion must still be a valid value from the emotion list, but choose the playful ones.",
+        "",
+        "RULES for cpu_alerts, ram_alerts, temp_alerts:",
+        "- Generate exactly 7 unique responses per category.",
+        "- Each response must be different from the others.",
+        "- Each text under 12 words.",
+        "- Each text must be helpful (give a hint about what might be causing the spike) AND/OR funny.",
         "",
         "### OUTPUT SCHEMA (RAW JSON ONLY)",
         NO_PREAMBLE,

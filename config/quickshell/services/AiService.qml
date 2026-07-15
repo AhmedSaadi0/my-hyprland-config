@@ -45,7 +45,7 @@ Singleton {
     // 1 = Normal (Weather, Todo, Boot Analysis)
     // 2 = High (Music changes, System Spikes, Direct User Actions)
 
-    function sendRequest(command, args, callback, errorCallback, requestId = "default", priority = 1) {
+    function sendRequest(command, args, callback, errorCallback, requestId = "default", priority = 1, options = {}) {
         const now = Date.now();
 
         // منع التكرار (كما هو)
@@ -68,7 +68,8 @@ Singleton {
             cb: callback,
             errCb: errorCallback,
             id: requestId,
-            prio: priority
+            prio: priority,
+            opts: options || {}
         };
 
         // إدراج الطلب في المكان الصحيح بناءً على الأولوية
@@ -109,15 +110,21 @@ Singleton {
             root._lastRunTimes[next.id] = Date.now();
         }
 
-        _runTask(next.cmd, next.args, next.cb, next.errCb, next.id);
+        _runTask(next.cmd, next.args, next.cb, next.errCb, next.id, next.opts || {});
     }
 
-    function _runTask(command, args, callback, errorCallback, requestId) {
+    function _runTask(command, args, callback, errorCallback, requestId, options) {
         const component = Qt.createComponent("AiTask.qml");
 
         var fullCmd = [...command];
         if (args)
             fullCmd = fullCmd.concat(args);
+
+        // إذا قدّم المتصل تاريخاً للمحادثة، نحقنه في الأمر كـ --history <json>
+        // الباك إند (scripts/python/ai/main.py) يستقبله ويحدّث updated_history
+        if (options && options.history && options.history.length > 2) {
+            fullCmd = fullCmd.concat(["--history", options.history]);
+        }
 
         _logOutgoingRequest(requestId, args, fullCmd);
 
@@ -125,11 +132,27 @@ Singleton {
             "command": fullCmd
         });
 
-        task.success.connect(data => {
+        task.success.connect(envelope => {
+            // تحويل الـ envelope إلى نتيجة نهائية: تنظيف الـ response + استخراج التاريخ المحدّث
+            var result = root._envelopeToResult(envelope, options);
+            if (!result) {
+                if (errorCallback)
+                    errorCallback("Failed to parse AI response or invalid JSON.");
+                task.destroy();
+                cooldownTimer.start();
+                return;
+            }
+
+            // التوافق العكسي: callback يستلم الـ response فقط (نفس الشكل القديم)
             if (callback)
-                callback(data);
+                callback(result.response);
+
+            // إشعار المتصل بالتاريخ المحدّث (إن كان مهتماً)
+            if (options && options.onHistoryUpdated)
+                options.onHistoryUpdated(result.updatedHistory);
+
             task.destroy();
-            cooldownTimer.start(); // تشغيل العداد قبل معالجة الطلب التالي
+            cooldownTimer.start();
         });
 
         task.failed.connect(err => {
@@ -140,6 +163,50 @@ Singleton {
         });
 
         task.start();
+    }
+
+    // =========================================================
+    // تحويل الـ envelope القادم من الباك إند إلى نتيجة نظيفة
+    // + قصّ التاريخ (cap) قبل تسليمه للمتصل
+    // =========================================================
+    function _envelopeToResult(envelope, options) {
+        if (!envelope || envelope.success !== true)
+            return null;
+
+        var raw = envelope.response;
+        if (raw === null || raw === undefined)
+            return null;
+
+        // تنظيف الـ response: قد يكون كائناً جاهزاً أو نصاً يحتاج تنظيف JSON
+        var cleaned = null;
+        if (typeof raw === "string") {
+            try {
+                var stripped = raw.replace(/```json/g, "").replace(/```/g, "").trim();
+                var firstBrace = stripped.indexOf("{");
+                var lastBrace = stripped.lastIndexOf("}");
+                if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+                    stripped = stripped.substring(firstBrace, lastBrace + 1);
+                }
+                cleaned = JSON.parse(stripped);
+            } catch (e) {
+                console.error("[AiService] Envelope response parse error:", e.message);
+                return null;
+            }
+        } else {
+            cleaned = raw;
+        }
+
+        // قصّ التاريخ (cap) — يأتي من App.* عبر الخيارات أو الافتراضي 10 أدوار
+        // 0 قيمة صالحة وتعني "تعطيل الذاكرة" فلا نُسقطها بالـ fallback الافتراضي
+        var history = Array.isArray(envelope.updated_history) ? envelope.updated_history : [];
+        var cap = (options && options.historyCap !== undefined && options.historyCap !== null)
+            ? options.historyCap : 10;
+        // كل "دور" = رسالتان (user + assistant)، فنحفظ cap*2 رسالة كأقصى حد
+        var maxMessages = Math.max(0, cap * 2);
+        if (history.length > maxMessages)
+            history = history.slice(history.length - maxMessages);
+
+        return { response: cleaned, updatedHistory: history };
     }
 
     // مؤقت التبريد (يسمح للـ API بالتنفس)
