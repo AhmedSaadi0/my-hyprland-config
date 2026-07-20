@@ -68,6 +68,11 @@ const translations = {
     shots_title: "لقطات من الواجهة",
     shots_desc: "صور قليلة تبيّن الجو العام للواجهة والثيمات.",
 
+    // --- Lightbox ---
+    lightbox_close: "إغلاق",
+    lightbox_prev: "السابق",
+    lightbox_next: "التالي",
+
     quick_value_title: "ما الذي يميز الواجهة بسرعة؟",
     quick_value_desc: "نظرة مختصرة على أهم نقاط القوة العملية للمستخدم اليومي.",
     quick_value_1_title: "أداء متوازن",
@@ -664,6 +669,11 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     // --- Shots & Value ---
     shots_title: "UI Highlights",
     shots_desc: "A few shots that capture the look and feel of the themes.",
+
+    // --- Lightbox ---
+    lightbox_close: "Close",
+    lightbox_prev: "Previous",
+    lightbox_next: "Next",
 
     quick_value_title: "Why this interface works",
     quick_value_desc:
@@ -1328,4 +1338,136 @@ document.addEventListener("DOMContentLoaded", () => {
       navRoot.classList.toggle("open");
     });
   }
+
+  // --- Lightbox: open UI shots on click ---
+  initLightbox();
 });
+
+// =====================================================
+// Lightbox controller — opens gallery images fullscreen
+// =====================================================
+function initLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const lightboxCaption = document.getElementById("lightboxCaption");
+  const lightboxCounter = document.getElementById("lightboxCounter");
+  const lightboxClose = document.getElementById("lightboxClose");
+  const lightboxPrev = document.getElementById("lightboxPrev");
+  const lightboxNext = document.getElementById("lightboxNext");
+
+  if (!lightbox || !lightboxImg) return;
+
+  // collect all gallery items in document order
+  const triggers = Array.from(
+    document.querySelectorAll("[data-lightbox-trigger] img")
+  ).filter((img) => img && img.src);
+
+  if (triggers.length === 0) return;
+
+  const items = triggers.map((img) => ({
+    src: img.getAttribute("src"),
+    alt: img.getAttribute("alt") || "",
+  }));
+
+  let currentIndex = 0;
+  let lastFocus = null;
+
+  function render() {
+    const item = items[currentIndex];
+    lightboxImg.src = item.src;
+    lightboxImg.alt = item.alt;
+    lightboxCaption.textContent = item.alt;
+    if (items.length > 1) {
+      lightboxCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+    } else {
+      lightboxCounter.textContent = "";
+    }
+  }
+
+  function open(index) {
+    currentIndex = index;
+    lastFocus = document.activeElement;
+    render();
+    lightbox.hidden = false;
+    lightbox.setAttribute("aria-hidden", "false");
+    lightbox.setAttribute("data-single", items.length === 1 ? "true" : "false");
+    document.body.classList.add("lightbox-open");
+    // focus the close button for keyboard users
+    setTimeout(() => lightboxClose && lightboxClose.focus(), 30);
+  }
+
+  function close() {
+    lightbox.hidden = true;
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lightbox-open");
+    if (lastFocus && typeof lastFocus.focus === "function") {
+      lastFocus.focus();
+    }
+  }
+
+  function next() {
+    if (items.length < 2) return;
+    currentIndex = (currentIndex + 1) % items.length;
+    render();
+  }
+
+  function prev() {
+    if (items.length < 2) return;
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    render();
+  }
+
+  // attach click to each card
+  triggers.forEach((img, idx) => {
+    const card = img.closest("[data-lightbox-trigger]");
+    if (!card) return;
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute(
+      "aria-label",
+      img.getAttribute("alt") || "Open image"
+    );
+    card.addEventListener("click", (e) => {
+      e.preventDefault();
+      open(idx);
+    });
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open(idx);
+      }
+    });
+  });
+
+  // close handlers
+  if (lightboxClose) lightboxClose.addEventListener("click", close);
+  lightbox.querySelectorAll("[data-lightbox-close]").forEach((el) => {
+    el.addEventListener("click", close);
+  });
+
+  // nav handlers
+  if (lightboxPrev) lightboxPrev.addEventListener("click", (e) => {
+    e.stopPropagation();
+    prev();
+  });
+  if (lightboxNext) lightboxNext.addEventListener("click", (e) => {
+    e.stopPropagation();
+    next();
+  });
+
+  // keyboard nav while open
+  document.addEventListener("keydown", (e) => {
+    if (lightbox.hidden) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      close();
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      // in RTL, arrow keys should feel natural — right arrow goes "next" in content order
+      next();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      prev();
+    }
+  });
+}

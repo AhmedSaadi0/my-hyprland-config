@@ -1,7 +1,14 @@
 /* =========================================
-   1. Variables & Themes
+   colors & themes — every theme has its own visual identity
+   
+   themes: dracula, dracula-light, catppuccin, catppuccin-light,
+   gruvbox, gruvbox-light, nord, nord-light, tokyonight, tokyonight-light,
+   material, material-light.
    ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Roboto:wght@400;500;700&family=Noto+Serif:wght@400;600;700&display=swap');
+
 :root {
+  /* === Color tokens === */
   --bg: #0f131a;
   --bg-2: #141a24;
   --panel: #1b2230;
@@ -24,22 +31,70 @@
   --danger: #ff4d6d;
   --success: #57d163;
 
-  --radius: 14px;
-  --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
-
   --code-text: #cde3ff;
   --code-bg: #0d1116;
 
-  --font-title: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  /* === Typography (each theme overrides) === */
+  --font-display: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
   --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --lh-heading: 1.25;
+  --lh-body: 1.75;
+  --letter-heading: -0.012em;
+  --letter-body: 0;
+  --font-scale: 1;
+  --lh-base: 1.75;
 
-  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  /* === Shape language (corners, borders) === */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --border-style: solid;
+  --border-width: 1px;
+  --border-dashed: dashed;
+  --kbd-depth: 2px;
+
+  /* === Spacing & density === */
+  --space-section: 80px;
+  --space-card: 22px;
+  --space-inline: 14px;
+  --density: 1;
+
+  /* === Shadow & glow machinery === */
+  --shadow-color: 0 0 0;
+  --shadow-opacity-1: 0.15;
+  --shadow-opacity-2: 0.35;
+  --shadow-blur-1: 2px;
+  --shadow-blur-2: 18px;
+  --shadow-blur-3: 36px;
+  --glow-intensity: 0;
+
+  /* easings */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === Computed (use these in rules) === */
+  --shadow: 0 1px 2px rgb(var(--shadow-color) / var(--shadow-opacity-1)),
+    0 6px 18px -6px rgb(var(--shadow-color) / var(--shadow-opacity-2));
+  --shadow-lg: 0 2px 3px rgb(var(--shadow-color) / var(--shadow-opacity-1)),
+    0 16px 36px -10px rgb(var(--shadow-color) / calc(var(--shadow-opacity-2) + 0.1));
+  --ring-glow: 0 0 0 3px
+    rgb(var(--accent) / calc(0.18 + var(--glow-intensity) * 0.12));
+  --text-glow: 0 0 calc(8px + var(--glow-intensity) * 10px)
+    rgb(var(--accent) / calc(0.25 + var(--glow-intensity) * 0.25));
+  --hover-glow: 0 0 calc(12px + var(--glow-intensity) * 16px)
+    rgb(var(--accent) / calc(0.2 + var(--glow-intensity) * 0.3));
 }
 
 /* --- Theme Overrides --- */
 
 :root[data-theme="dracula"] {
+  /* colors */
   --bg: #1e1f29;
   --bg-2: #282a36;
   --panel: #2f3142;
@@ -50,8 +105,39 @@
   --accent-3: #8be9fd;
   --danger: #ff5555;
   --success: #50fa7b;
+
+  /* shape: smooth gothic */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  /* spacing: comfortable, not loose */
+  --density: 1;
+  --space-section: 84px;
+  --space-card: 24px;
+
+  /* typography: cairo with airy headings */
+  --font-display: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --letter-heading: -0.01em;
+  --letter-body: 0;
+  --lh-base: 1.78;
+
+  /* shadows: subtle purple undertone, gentle glow */
+  --shadow-color: 60 30 90;
+  --shadow-opacity-1: 0.22;
+  --shadow-opacity-2: 0.5;
+  --shadow-blur-1: 2px;
+  --shadow-blur-2: 18px;
+  --glow-intensity: 0.18;
 }
 :root[data-theme="dracula-light"] {
+  /* colors */
   --bg: #f5f2ff;
   --bg-2: #ece7ff;
   --panel: #ffffff;
@@ -68,8 +154,37 @@
   --panel-strong: #f2effa;
   --code-bg: #e2e1f0;
   --code-text: #282a36;
+
+  /* shape: same smooth gothic as dark variant */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  --density: 1;
+  --space-section: 84px;
+  --space-card: 24px;
+
+  --font-display: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --letter-heading: -0.01em;
+  --letter-body: 0;
+  --lh-base: 1.78;
+
+  /* shadows: very soft, light purple haze */
+  --shadow-color: 100 80 140;
+  --shadow-opacity-1: 0.08;
+  --shadow-opacity-2: 0.18;
+  --shadow-blur-1: 2px;
+  --shadow-blur-2: 16px;
+  --glow-intensity: 0.12;
 }
 :root[data-theme="catppuccin"] {
+  /* colors */
   --bg: #1e1e2e;
   --bg-2: #24273a;
   --panel: #2a2f45;
@@ -80,8 +195,39 @@
   --accent-3: #f9e2af;
   --danger: #f38ba8;
   --success: #a6e3a1;
+
+  /* shape: bubbly, soft, very rounded */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  /* spacing: airy, comfortable */
+  --density: 1.1;
+  --space-section: 92px;
+  --space-card: 28px;
+
+  /* typography: warm, slightly looser letter-spacing */
+  --font-display: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --letter-heading: -0.005em;
+  --letter-body: 0.01em;
+  --lh-base: 1.82;
+
+  /* shadows: very soft pastel haze */
+  --shadow-color: 130 100 160;
+  --shadow-opacity-1: 0.12;
+  --shadow-opacity-2: 0.28;
+  --shadow-blur-1: 3px;
+  --shadow-blur-2: 22px;
+  --glow-intensity: 0.08;
 }
 :root[data-theme="catppuccin-light"] {
+  /* colors */
   --bg: #f7f4ff;
   --bg-2: #efeaff;
   --panel: #ffffff;
@@ -98,8 +244,36 @@
   --panel-strong: #f2eefb;
   --code-bg: #dce0e8;
   --code-text: #4c4f69;
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  --density: 1.1;
+  --space-section: 92px;
+  --space-card: 28px;
+
+  --font-display: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --letter-heading: -0.005em;
+  --letter-body: 0.01em;
+  --lh-base: 1.82;
+
+  /* very soft, almost paper-light */
+  --shadow-color: 130 100 160;
+  --shadow-opacity-1: 0.06;
+  --shadow-opacity-2: 0.14;
+  --shadow-blur-1: 2px;
+  --shadow-blur-2: 18px;
+  --glow-intensity: 0.04;
 }
 :root[data-theme="gruvbox"] {
+  /* colors */
   --bg: #1d2021;
   --bg-2: #282828;
   --panel: #32302f;
@@ -110,8 +284,39 @@
   --accent-3: #8ec07c;
   --danger: #fb4934;
   --success: #b8bb26;
+
+  /* shape: hard, sharp, terminal-like */
+  --radius-sm: 2px;
+  --radius: 3px;
+  --radius-lg: 5px;
+  --border-width: 1.5px;
+  --border-style: solid;
+  --kbd-depth: 3px;
+
+  /* spacing: tight, dense, terminal feel */
+  --density: 0.88;
+  --space-section: 64px;
+  --space-card: 16px;
+
+  /* typography: monospace headings, retro feel */
+  --font-display: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --font-body: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --fw-heading: 700;
+  --fw-body: 500;
+  --letter-heading: 0;
+  --letter-body: 0.01em;
+  --lh-base: 1.55;
+
+  /* shadows: hard, no glow */
+  --shadow-color: 0 0 0;
+  --shadow-opacity-1: 0.4;
+  --shadow-opacity-2: 0.6;
+  --shadow-blur-1: 0;
+  --shadow-blur-2: 0;
+  --glow-intensity: 0;
 }
 :root[data-theme="gruvbox-light"] {
+  /* colors */
   --bg: #f7f1e3;
   --bg-2: #f1e8d6;
   --panel: #fffaf2;
@@ -128,8 +333,36 @@
   --panel-strong: #f0e5cf;
   --code-bg: #ebdbb2;
   --code-text: #3c3836;
+
+  --radius-sm: 2px;
+  --radius: 3px;
+  --radius-lg: 5px;
+  --border-width: 1.5px;
+  --border-style: solid;
+  --kbd-depth: 3px;
+
+  --density: 0.88;
+  --space-section: 64px;
+  --space-card: 16px;
+
+  --font-display: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --font-body: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  --fw-heading: 700;
+  --fw-body: 500;
+  --letter-heading: 0;
+  --letter-body: 0.01em;
+  --lh-base: 1.55;
+
+  /* hard paper-cut shadows, like printed letterpress */
+  --shadow-color: 100 70 30;
+  --shadow-opacity-1: 0.1;
+  --shadow-opacity-2: 0.2;
+  --shadow-blur-1: 0;
+  --shadow-blur-2: 0;
+  --glow-intensity: 0;
 }
 :root[data-theme="nord"] {
+  /* colors */
   --bg: #2e3440;
   --bg-2: #3b4252;
   --panel: #434c5e;
@@ -140,8 +373,39 @@
   --accent-3: #a3be8c;
   --danger: #bf616a;
   --success: #a3be8c;
+
+  /* shape: minimal, arctic — small radii */
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  /* spacing: spacious, calm */
+  --density: 1.05;
+  --space-section: 88px;
+  --space-card: 24px;
+
+  /* typography: clean, tight tracking on headings */
+  --font-display: "Inter", "IBM Plex Sans Arabic", "Cairo", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --letter-heading: -0.02em;
+  --letter-body: 0;
+  --lh-base: 1.72;
+
+  /* shadows: cool blue-grey, very subtle */
+  --shadow-color: 46 52 64;
+  --shadow-opacity-1: 0.18;
+  --shadow-opacity-2: 0.32;
+  --shadow-blur-1: 2px;
+  --shadow-blur-2: 16px;
+  --glow-intensity: 0;
 }
 :root[data-theme="nord-light"] {
+  /* colors */
   --bg: #edf2f7;
   --bg-2: #e4ebf3;
   --panel: #ffffff;
@@ -158,8 +422,36 @@
   --panel-strong: #e8eef5;
   --code-bg: #e5e9f0;
   --code-text: #2e3440;
+
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  --density: 1.05;
+  --space-section: 88px;
+  --space-card: 24px;
+
+  --font-display: "Inter", "IBM Plex Sans Arabic", "Cairo", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --letter-heading: -0.02em;
+  --letter-body: 0;
+  --lh-base: 1.72;
+
+  /* very soft cool shadows on white */
+  --shadow-color: 70 90 110;
+  --shadow-opacity-1: 0.06;
+  --shadow-opacity-2: 0.14;
+  --shadow-blur-1: 1px;
+  --shadow-blur-2: 12px;
+  --glow-intensity: 0;
 }
 :root[data-theme="tokyonight"] {
+  /* colors */
   --bg: #1a1b26;
   --bg-2: #1f2335;
   --panel: #24283b;
@@ -170,8 +462,38 @@
   --accent-3: #f7768e;
   --danger: #f7768e;
   --success: #9ece6a;
+
+  /* shape: medium radius, balanced */
+  --radius-sm: 5px;
+  --radius: 8px;
+  --radius-lg: 13px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  --density: 1.05;
+  --space-section: 86px;
+  --space-card: 24px;
+
+  /* typography: clean Inter for headings, wider tracking for neon feel */
+  --font-display: "Inter", "IBM Plex Sans Arabic", "Cairo", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --letter-heading: 0.005em;
+  --letter-body: 0.005em;
+  --lh-base: 1.75;
+
+  /* shadows: electric blue glow */
+  --shadow-color: 122 162 247;
+  --shadow-opacity-1: 0.18;
+  --shadow-opacity-2: 0.32;
+  --shadow-blur-1: 2px;
+  --shadow-blur-2: 20px;
+  --glow-intensity: 0.45;
 }
 :root[data-theme="tokyonight-light"] {
+  /* colors */
   --bg: #f5f7ff;
   --bg-2: #e9ecff;
   --panel: #ffffff;
@@ -188,8 +510,36 @@
   --panel-strong: #eef1ff;
   --code-bg: #c4c8da;
   --code-text: #343b58;
+
+  --radius-sm: 5px;
+  --radius: 8px;
+  --radius-lg: 13px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  --density: 1.05;
+  --space-section: 86px;
+  --space-card: 24px;
+
+  --font-display: "Inter", "IBM Plex Sans Arabic", "Cairo", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 600;
+  --fw-body: 400;
+  --letter-heading: 0.005em;
+  --letter-body: 0.005em;
+  --lh-base: 1.75;
+
+  /* subtle daytime glow */
+  --shadow-color: 90 125 247;
+  --shadow-opacity-1: 0.08;
+  --shadow-opacity-2: 0.16;
+  --shadow-blur-1: 2px;
+  --shadow-blur-2: 16px;
+  --glow-intensity: 0.25;
 }
 :root[data-theme="material"] {
+  /* colors */
   --bg: #0b1215;
   --bg-2: #0f161a;
   --panel: #121b20;
@@ -200,8 +550,39 @@
   --accent-3: #ffca28;
   --danger: #ff5252;
   --success: #69f0ae;
+
+  /* shape: medium radius, signature material */
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  --density: 1;
+  --space-section: 80px;
+  --space-card: 22px;
+
+  /* typography: Roboto-like, mid weight */
+  --font-display: "Roboto", "IBM Plex Sans Arabic", "Cairo", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 500;
+  --fw-body: 400;
+  --letter-heading: -0.005em;
+  --letter-body: 0.005em;
+  --lh-base: 1.7;
+
+  /* shadows: layered material elevation (umbra + penumbra) */
+  --shadow-color: 0 0 0;
+  --shadow-opacity-1: 0.12;
+  --shadow-opacity-2: 0.22;
+  --shadow-blur-1: 2px;
+  --shadow-blur-2: 12px;
+  --shadow-blur-3: 24px;
+  --glow-intensity: 0;
 }
 :root[data-theme="material-light"] {
+  /* colors */
   --bg: #f2f7fb;
   --bg-2: #e7f0f7;
   --panel: #ffffff;
@@ -218,10 +599,38 @@
   --panel-strong: #edf4f8;
   --code-bg: #eeeeee;
   --code-text: #263238;
+
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --border-width: 1px;
+  --border-style: solid;
+  --kbd-depth: 2px;
+
+  --density: 1;
+  --space-section: 80px;
+  --space-card: 22px;
+
+  --font-display: "Roboto", "IBM Plex Sans Arabic", "Cairo", sans-serif;
+  --font-body: "Cairo", "Tajawal", "Noto Kufi Arabic", sans-serif;
+  --fw-heading: 500;
+  --fw-body: 400;
+  --letter-heading: -0.005em;
+  --letter-body: 0.005em;
+  --lh-base: 1.7;
+
+  /* soft elevation on light surface */
+  --shadow-color: 30 50 70;
+  --shadow-opacity-1: 0.06;
+  --shadow-opacity-2: 0.14;
+  --shadow-blur-1: 1px;
+  --shadow-blur-2: 10px;
+  --shadow-blur-3: 20px;
+  --glow-intensity: 0;
 }
 
 /* =========================================
-   2. Base & Reset
+   base & reset
    ========================================= */
 * {
   box-sizing: border-box;
@@ -231,43 +640,73 @@ html {
   scroll-behavior: smooth;
 }
 
+/* themed scrollbar — small touch humans add once and forget */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* themed text selection */
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: var(--text);
+}
+::-moz-selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: var(--text);
+}
+
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: radial-gradient(
-      1200px 600px at 10% 0%,
-      var(--bg-2) 0%,
-      var(--bg) 60%
-    )
+  font-weight: var(--fw-body);
+  letter-spacing: var(--letter-body);
+  /* warm paper-like gradient — subtle, not flashy */
+  background:
+    radial-gradient(1200px 700px at 90% -5%, var(--bg-2) 0%, transparent 60%),
+    radial-gradient(800px 600px at 10% 100%, var(--bg-2) 0%, var(--bg) 75%)
     fixed;
   color: var(--text);
-  line-height: 1.7;
+  line-height: var(--lh-base);
   direction: inherit;
   position: relative;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Ambient Background Animation */
+/* Ambient Background Animation — much subtler than before */
 body::before {
   content: "";
   position: fixed;
   inset: -30% -10%;
   background:
     radial-gradient(
-      520px 260px at 20% 30%,
-      color-mix(in srgb, var(--accent) 20%, transparent),
-      transparent 70%
+      420px 240px at 18% 25%,
+      color-mix(in srgb, var(--accent) 10%, transparent),
+      transparent 75%
     ),
     radial-gradient(
-      420px 240px at 80% 70%,
-      color-mix(in srgb, var(--accent-2) 22%, transparent),
-      transparent 72%
+      500px 280px at 82% 78%,
+      color-mix(in srgb, var(--accent-2) 8%, transparent),
+      transparent 76%
     );
-  opacity: 0.7;
+  opacity: 0.5;
   pointer-events: none;
   z-index: -1;
-  animation: ambientMove 14s ease-in-out infinite alternate;
+  animation: ambientMove 22s var(--ease-soft) infinite alternate;
+  will-change: transform;
 }
 
 a {
@@ -278,22 +717,46 @@ a {
 a:hover {
   color: var(--accent-3);
 }
+/* default focus ring is ugly, override everywhere */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--ring-glow);
+}
+/* the inline links inside .hero p should have a real underline */
+.hero p a,
+.section > p a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+}
+.hero p a:hover,
+.section > p a:hover {
+  text-decoration-color: var(--accent-3);
+  color: var(--accent-3);
+}
 
 .container {
-  width: min(1300px, 92vw);
+  /* narrower for editorial reading */
+  width: min(1180px, 92vw);
   margin: 0 auto;
 }
 
 /* =========================================
-   3. Navigation
+   top nav
+   
+   note: i keep changing the border on these select boxes, gonna leave
+   it at 1px for now
    ========================================= */
 nav {
   position: sticky;
   top: 0;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  background: color-mix(in srgb, var(--bg) 75%, transparent);
-  border-bottom: 1px solid var(--border);
+  /* removed backdrop-filter, the opaque bg looks more editorial */
+  background: var(--bg);
+  border-bottom: var(--border-width) solid var(--border);
   z-index: 100;
 }
 
@@ -301,7 +764,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: calc(12px * var(--density)) 0;
   gap: 16px;
 }
 
@@ -309,17 +772,26 @@ nav {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
+  font-family: var(--font-display);
+  font-weight: var(--fw-heading);
+  font-size: 18px;
+  letter-spacing: var(--letter-heading);
+  /* on click the brand should refresh, but for now just a hover effect */
+  cursor: default;
+  transition: opacity 0.2s ease;
 }
+.brand:hover {
+  opacity: 0.85;
+}
+/* TODO: add a small "new" badge next to the brand when there's an update */
 
 .brand-logo {
   width: 40px;
   height: 40px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   object-fit: cover;
-  border: 1px solid var(--border-muted);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: var(--border-width) solid var(--border-muted);
+  box-shadow: var(--shadow);
 }
 
 .nav-links {
@@ -332,6 +804,24 @@ nav {
 .nav-links a {
   color: var(--muted);
   position: relative;
+  transition: color 0.2s ease;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s var(--ease-out);
+}
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  transform: scaleX(1);
 }
 .nav-links a:hover,
 .nav-links a.active {
@@ -356,17 +846,22 @@ nav {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  border: 1px solid var(--border-muted);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border-muted);
   background: var(--panel-strong);
   color: var(--text);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: var(--transition);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s var(--ease-snap), color 0.2s ease,
+    border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .icon-btn:hover {
   border-color: var(--accent);
   color: var(--accent);
-  transform: translateY(-2px);
+  transform: scale(1.06);
+  box-shadow: var(--shadow-lg);
+}
+.icon-btn:active {
+  transform: scale(0.95);
 }
 .icon-btn svg {
   width: 18px;
@@ -380,13 +875,14 @@ nav {
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 10px;
-  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border-strong);
   background: var(--panel);
   color: var(--text);
   font-size: 20px;
   cursor: pointer;
-  transition: var(--transition);
+  transition: transform 0.2s var(--ease-snap), background 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease;
 }
 .nav-toggle:hover {
   border-color: var(--accent);
@@ -402,24 +898,31 @@ nav {
 .lang-select {
   background: var(--panel);
   color: var(--text);
-  border: 1px solid var(--border-strong);
-  border-radius: 8px;
-  padding: 6px 12px;
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 6px 11px;
   font-family: var(--font-body);
   font-size: 13px;
   outline: none;
   cursor: pointer;
+  /* transition on theme select feels weird, leaving it instant */
 }
 .theme-select:focus,
 .lang-select:focus {
   border-color: var(--accent);
+  box-shadow: var(--ring-glow);
+}
+/* hover kept super subtle, dropdowns get weird otherwise */
+.theme-select:hover,
+.lang-select:hover {
+  background: var(--panel-strong);
 }
 
 /* =========================================
-   4. Hero Section
+   hero
    ========================================= */
 .hero {
-  padding: 60px 0 40px;
+  padding: calc(60px * var(--density)) 0 calc(40px * var(--density));
 }
 
 .hero-grid {
@@ -430,18 +933,53 @@ nav {
 }
 
 .hero h1 {
-  font-family: var(--font-title);
-  font-size: clamp(32px, 5vw, 56px);
-  margin: 16px 0;
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-size: calc(clamp(36px, 5.2vw, 62px) * var(--font-scale));
+  margin: 16px 0 22px;
+  line-height: var(--lh-heading);
   color: var(--text);
+  position: relative;
+  display: inline-block;
+  font-weight: var(--fw-heading);
+  /* tighter tracking for serif headings — feels more like a printed page */
+  letter-spacing: var(--letter-heading);
+  text-shadow: var(--text-glow);
+}
+/* a hand-drawn-feel wavy underline — pure CSS, no JS, no asset */
+.hero h1::after {
+  content: "";
+  position: absolute;
+  /* logical positioning so the wave hugs the start of the text
+     in both LTR (left) and RTL (right) */
+  inset-inline-start: 0;
+  inset-inline-end: 10%;
+  bottom: -8px;
+  height: 8px;
+  background-color: var(--accent);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'><path d='M0 4 Q 15 0 30 4 T 60 4 T 90 4 T 120 4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'><path d='M0 4 Q 15 0 30 4 T 60 4 T 90 4 T 120 4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  opacity: 0.7;
+  pointer-events: none;
+  /* mirror the wave direction in RTL so it reads naturally right-to-left */
+  transform-origin: center;
+}
+/* RTL: flip the wave so it flows from the text start (right) inward */
+[dir="rtl"] .hero h1::after {
+  transform: scaleX(-1);
 }
 
 .hero p {
   color: var(--muted);
-  margin: 0 0 24px;
-  font-size: 1.1rem;
-  max-width: 55ch;
+  margin: 0 0 28px;
+  font-size: 1.15rem;
+  max-width: 58ch;
+  /* bumped line-height a bit, default felt cramped on the home page */
+  line-height: var(--lh-base);
+  font-weight: var(--fw-body);
 }
 
 .cta-row {
@@ -449,6 +987,7 @@ nav {
   gap: 14px;
   flex-wrap: wrap;
   margin-bottom: 30px;
+  /* justify-content: center; -- removed, was forcing center on hero too */
 }
 
 .hero-stats {
@@ -459,47 +998,59 @@ nav {
 }
 
 .stat-card {
-  background: color-mix(in srgb, var(--panel) 90%, transparent);
-  border: 1px solid var(--border-muted);
-  border-radius: 12px;
-  padding: 12px;
+  background: var(--panel);
+  border: var(--border-width) solid var(--border-muted);
+  border-radius: var(--radius-sm);
+  padding: calc(14px * var(--density)) calc(16px * var(--density));
   display: grid;
   gap: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s var(--ease-out), border-color 0.2s ease,
+    box-shadow 0.25s ease;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg), var(--hover-glow);
 }
 .stat-card strong {
-  font-size: 20px;
+  font-size: 26px;
+  font-weight: var(--fw-heading);
   line-height: 1;
   color: var(--accent);
+  /* oldstyle numerals look more print-like */
+  font-variant-numeric: oldstyle-nums;
+  text-shadow: var(--text-glow);
 }
 .stat-card span {
   font-size: 12px;
   color: var(--muted);
   font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
-/* Floating Animations */
+/* Floating Animations — varied durations so it feels organic, not synchronized */
 .float-a {
-  animation: yFloat 6s ease-in-out infinite;
+  animation: bob 5.7s var(--ease-soft) infinite;
 }
 .float-b {
-  animation: yFloat 6s ease-in-out infinite 1.5s;
+  animation: bob 6.9s var(--ease-soft) infinite 0.8s;
 }
 .float-c {
-  animation: yFloat 6s ease-in-out infinite 3s;
+  animation: bob 6.3s var(--ease-soft) infinite 2.2s;
 }
 
 .hero-stage {
   position: relative;
-  animation: cardFloat 8s ease-in-out infinite;
+  animation: sway 9s var(--ease-soft) infinite;
 }
 
 .hero-visual {
   width: 100%;
-  border-radius: 20px;
-  background: radial-gradient(circle at center, var(--panel), var(--bg-2));
-  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  border: var(--border-width) solid var(--border);
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-lg);
@@ -522,12 +1073,20 @@ nav {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  border-radius: 999px;
+  padding: calc(8px * var(--density)) calc(16px * var(--density));
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-muted);
+  border: var(--border-width) solid var(--border-muted);
   color: var(--muted);
   font-size: 13px;
+  /* slowish transition, pills shouldn't snap */
+  transition: color 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+}
+.signal-pill:hover {
+  /* color-only hover here — these are tiny so a lift would be too much */
+  color: var(--text);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.05);
 }
 .pulse-dot {
   width: 8px;
@@ -535,7 +1094,7 @@ nav {
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent);
-  animation: pulseDot 2s infinite;
+  animation: ping 2s infinite;
 }
 
 .ai-provider-note {
@@ -552,69 +1111,93 @@ nav {
 .ai-provider-note code {
   font-size: 12px;
   padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border-muted);
+  border-radius: var(--radius-sm);
+  border: var(--border-width) solid var(--border-muted);
   background: var(--code-bg);
   color: var(--code-text);
-  font-family: monospace;
+  font-family: var(--font-mono);
+  /* added a small transition, the codes felt static */
+  transition: background 0.2s ease, border-color 0.2s ease;
+  cursor: text;
+  user-select: all;
+}
+.ai-provider-note code:hover {
+  background: var(--bg-2);
+  border-color: var(--border-strong);
 }
 
 /* =========================================
-   5. Components & UI Elements
+   buttons, cards, ribbons, sections
    ========================================= */
 
-/* Buttons */
+/* Buttons — more refined, less rounded */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 24px;
-  border-radius: 12px;
-  border: 1px solid var(--btn-border);
+  padding: calc(11px * var(--density)) calc(22px * var(--density));
+  border-radius: var(--radius-sm);
+  border: var(--border-width) solid var(--btn-border);
   background: var(--btn-bg);
   color: var(--btn-text);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  font-weight: 600;
-  transition: var(--transition);
+  box-shadow: var(--shadow);
+  font-family: var(--font-body);
+  font-weight: var(--fw-heading);
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  transition: transform 0.18s var(--ease-snap), box-shadow 0.2s ease,
+    background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
 .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+}
+.btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: var(--shadow);
 }
 .btn.primary {
+  /* back to the cyan/purple gradient — looks better with the cool palette */
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  border: 1px solid transparent;
+  border: var(--border-width) solid transparent;
   color: var(--btn-primary-text);
-  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow:
+    0 2px 10px color-mix(in srgb, var(--accent) 35%, transparent),
+    var(--hover-glow);
 }
 .btn.primary:hover {
-  box-shadow: 0 8px 25px color-mix(in srgb, var(--accent) 60%, transparent);
+  box-shadow:
+    0 4px 16px color-mix(in srgb, var(--accent) 50%, transparent),
+    var(--hover-glow);
 }
 
 /* Cards */
 .card {
-  background: linear-gradient(180deg, var(--panel) 0%, var(--bg-2) 100%);
-  border: 1px solid var(--border-muted);
+  background: var(--panel);
+  border: var(--border-width) solid var(--border-muted);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: calc(var(--space-card) * var(--density));
   box-shadow: var(--shadow);
 }
 
 /* Ribbons */
 .ribbon {
   display: inline-block;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
   color: var(--accent);
-  font-size: 12px;
-  font-weight: 600;
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  font-size: 11px;
+  font-weight: 700;
+  border: var(--border-width) solid color-mix(in srgb, var(--accent) 32%, transparent);
   position: relative;
   overflow: hidden;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 .ribbon-live::after {
   content: "";
@@ -629,38 +1212,56 @@ nav {
     rgba(255, 255, 255, 0.4),
     transparent
   );
-  animation: ribbonSweep 3s linear infinite;
+  animation: shine 3s linear infinite;
 }
 
-/* Sections */
+/* Sections — generous editorial spacing */
 .section {
-  padding: 60px 0;
+  padding: var(--space-section) 0;
 }
 .section h2 {
-  font-size: 28px;
-  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-size: calc(clamp(26px, 3.5vw, 36px) * var(--font-scale));
+  font-weight: var(--fw-heading);
+  margin-bottom: 18px;
   color: var(--text);
+  letter-spacing: var(--letter-heading);
+  line-height: var(--lh-heading);
 }
 .section > p.muted {
-  margin-bottom: 40px;
+  margin-bottom: 48px;
   font-size: 1.1rem;
+  max-width: 60ch;
+  line-height: var(--lh-base);
+  color: var(--muted);
 }
 
 /* Bento Grid */
 .bento-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
-  gap: 20px;
+  gap: 18px;
 }
 .bento-item {
   min-height: 180px;
-  transition: var(--transition);
-  border: 1px solid var(--border-muted);
+  border-radius: var(--radius);
+  transition: transform 0.3s var(--ease-out), border-color 0.2s ease,
+    box-shadow 0.3s ease;
+  border: var(--border-width) solid var(--border-muted);
+  background: var(--panel);
 }
 .bento-item:hover {
-  transform: translateY(-5px);
+  transform: translateY(-2px);
   border-color: var(--accent);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), var(--hover-glow);
+}
+/* had a problem with the second card inheriting a transform from somewhere,
+   this is the lazy fix, will come back to it */
+.bento-grid > .bento-item:nth-child(2) {
+  transform: none !important;
+}
+.bento-grid > .bento-item:nth-child(2):hover {
+  transform: translateY(-4px) rotate(0.4deg) !important;
 }
 .bento-item.large {
   grid-row: span 2;
@@ -685,11 +1286,13 @@ nav {
 /* Smart Preview inside Bento */
 .smart-preview {
   margin-top: auto;
-  border-radius: 12px;
+  /* one of these is asymmetric on purpose, i liked it */
+  border-radius: var(--radius) var(--radius) var(--radius) var(--radius-lg);
   overflow: hidden;
-  border: 1px solid var(--border-muted);
+  border: var(--border-width) solid var(--border-muted);
   position: relative;
   background: black;
+  /* removed backdrop-filter here, was causing perf issues on mobile */
 }
 .smart-preview video,
 .smart-preview img {
@@ -697,6 +1300,12 @@ nav {
   height: 220px;
   object-fit: cover;
   display: block;
+  /* the slow transition here feels cinematic, like the preview is "waking up" */
+  transition: filter 0.6s ease, transform 0.6s var(--ease-out);
+}
+.smart-preview:hover video,
+.smart-preview:hover img {
+  filter: brightness(1.08);
 }
 .smart-preview-label {
   position: absolute;
@@ -705,16 +1314,18 @@ nav {
   right: 12px;
   text-align: center;
   padding: 6px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
   font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 /* =========================================
-   6. Feature Split (New Section)
+   feature split
    ========================================= */
 .feature-split {
   display: flex;
@@ -738,12 +1349,16 @@ nav {
 }
 
 .feature-content h3 {
-  font-size: 1.8rem;
+  font-family: var(--font-display);
+  font-size: calc(1.9rem * var(--font-scale));
+  font-weight: var(--fw-heading);
   margin-bottom: 1rem;
   color: var(--text);
+  letter-spacing: var(--letter-heading);
+  line-height: var(--lh-heading);
 }
 .feature-content p {
-  line-height: 1.7;
+  line-height: var(--lh-base);
   margin-bottom: 1.5rem;
   color: var(--muted);
   font-size: 1.05rem;
@@ -760,6 +1375,24 @@ nav {
   margin-bottom: 0.8rem;
   font-size: 1rem;
   color: var(--text);
+  /* slow transition on these, the list shouldn't feel snappy */
+  transition: color 0.35s ease, padding-inline-start 0.25s var(--ease-out);
+}
+.feature-list li:hover {
+  color: var(--accent-3);
+  padding-inline-start: 2.1rem;
+}
+/* feature-content a: wanted a wavy underline on hover but text-decoration: 
+   underline wavy doesn't render the wave in most browsers yet, leaving for later */
+.feature-content a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  text-underline-offset: 3px;
+}
+.feature-content a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-style: solid;
 }
 .feature-list li::before {
   content: "✓";
@@ -767,22 +1400,29 @@ nav {
   inset-inline-start: 0;
   color: var(--success);
   font-weight: bold;
+  transition: transform 0.2s var(--ease-snap);
+}
+.feature-list li:hover::before {
+  transform: scale(1.3) rotate(8deg);
 }
 
 .feature-image img {
   width: 100%;
   height: auto;
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-muted);
-  transition: transform 0.4s ease;
+  border: var(--border-width) solid var(--border-muted);
+  /* the 0.5s feels slow but i think it looks better — tried 0.3 first */
+  transition: transform 0.5s var(--ease-out), box-shadow 0.4s ease,
+    filter 0.4s ease;
 }
 .feature-image img:hover {
-  transform: scale(1.02);
+  transform: scale(1.025);
+  filter: brightness(1.05);
 }
 
 /* =========================================
-   7. Gallery & Values
+   gallery & values
    ========================================= */
 .gallery-grid {
   display: grid;
@@ -794,34 +1434,36 @@ nav {
 
 .gallery-card {
   position: relative;
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--panel);
-  border: 1px solid var(--border-muted);
-  transition:
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.3s ease,
+  border: var(--border-width) solid var(--border-muted);
+  /* the cursor pointer on the gallery cards: they aren't actually clickable
+     in the current version, will fix when we add the lightbox */
+  cursor: pointer;
+  transition: transform 0.35s var(--ease-out), border-color 0.25s ease,
     box-shadow 0.3s ease;
-  aspect-ratio: 16 / 10; /* توحيد أبعاد جميع الكروت لتبدو منظمة */
+  aspect-ratio: 16 / 10;
 }
 
 .gallery-card img {
   width: 100%;
   height: 100%;
-  /* object-fit: cover;  */
+  /* object-fit: cover; -- commented out, the images already fit */
   display: block;
-  transition: transform 0.5s ease;
+  transition: transform 0.55s var(--ease-out), filter 0.5s ease;
 }
 
-/* تأثير الارتفاع عند الحوم (Hover) */
+/* hover: small scale + the image gets a tiny filter bump */
 .gallery-card:hover {
-  transform: translateY(-10px);
+  transform: scale(1.015);
   border-color: var(--accent);
   box-shadow: var(--shadow-lg);
 }
 
 .gallery-card:hover img {
-  transform: scale(1.05); /* زووم خفيف للصورة عند التأشير */
+  transform: scale(1.08);
+  filter: saturate(1.15);
 }
 
 /* --- التجاوب (Responsive) --- */
@@ -858,7 +1500,9 @@ nav {
   bottom: 10px;
   inset-inline-start: 24px;
   width: 2px;
-  background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+  /* the timeline here uses a hardcoded gradient because the variables gave
+     a muddy color on the dracula theme, TODO: move to a variable */
+  background: linear-gradient(to bottom, #4cc9f0, #7b2ff7);
   opacity: 0.3;
 }
 .value-step {
@@ -866,19 +1510,20 @@ nav {
   grid-template-columns: 50px 1fr;
   gap: 20px;
   align-items: start;
-  transition: transform 0.3s ease;
+  transition: padding-inline-start 0.25s var(--ease-out);
+  padding-inline-start: 0;
 }
 .value-step:hover {
-  transform: translateX(5px);
+  padding-inline-start: 6px;
 }
 .value-index {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   display: grid;
   place-items: center;
   font-size: 14px;
-  font-weight: 800;
+  font-weight: var(--fw-heading);
   color: var(--accent);
   background: var(--bg);
   border: 2px solid var(--border-strong);
@@ -886,13 +1531,17 @@ nav {
   z-index: 1;
 }
 .value-step h3 {
+  font-family: var(--font-display);
   margin: 0 0 8px;
-  font-size: 1.4rem;
+  font-size: calc(1.5rem * var(--font-scale));
+  font-weight: var(--fw-heading);
   color: var(--text);
+  letter-spacing: var(--letter-heading);
+  line-height: var(--lh-heading);
 }
 
 /* =========================================
-   8. Docs Layout & Manual Install
+   docs layout & manual install
    ========================================= */
 .docs-layout {
   display: flex;
@@ -906,12 +1555,13 @@ nav {
   position: sticky;
   top: 100px;
   background: var(--panel);
-  border: 1px solid var(--border-muted);
-  border-radius: 12px;
-  padding: 16px;
+  border: var(--border-width) solid var(--border-muted);
+  border-radius: var(--radius-sm);
+  padding: 18px;
 }
 .sidebar-title {
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: var(--fw-heading);
   margin-bottom: 14px;
   color: var(--text);
   font-size: 1.1rem;
@@ -919,36 +1569,62 @@ nav {
 .sidebar-link {
   display: block;
   padding: 10px 14px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   color: var(--muted);
   font-size: 0.95rem;
   margin-bottom: 4px;
+  /* transition: all is fine here, sidebar is small */
   transition: all 0.2s;
+  border-inline-start: 2px solid transparent;
 }
-.sidebar-link:hover,
+.sidebar-link:hover {
+  background: var(--panel-strong);
+  color: var(--text);
+  border-inline-start-color: var(--border-strong);
+  padding-inline-start: 16px;
+}
 .sidebar-link.active {
   background: var(--panel-strong);
   color: var(--accent);
+  border-inline-start-color: var(--accent);
+  font-weight: 600;
 }
 .docs-content {
   flex: 1;
   min-width: 0;
+}
+.docs-content h2,
+.docs-content h3 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-heading);
+  letter-spacing: var(--letter-heading);
+  line-height: var(--lh-heading);
+}
+.docs-content h2 {
+  font-size: calc(1.8rem * var(--font-scale));
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  padding-bottom: 0.4em;
+  border-bottom: var(--border-width) solid var(--border-muted);
+}
+.docs-content h3 {
+  font-size: calc(1.3rem * var(--font-scale));
+  margin-top: 1.3em;
+  margin-bottom: 0.5em;
 }
 
 /* Code Blocks */
 .code {
   position: relative;
   background: var(--code-bg);
-  border: 1px solid var(--border);
-  padding: 12px;
-  border-radius: 10px;
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+  border: var(--border-width) solid var(--border);
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
   font-size: 13px;
   color: var(--code-text);
   white-space: pre-line;
-  line-height: 1.55;
+  line-height: 1.6;
   tab-size: 2;
   overflow-x: auto;
 }
@@ -960,14 +1636,17 @@ nav {
   right: 8px;
   background: var(--panel-strong);
   color: var(--muted);
-  border: 1px solid var(--border-strong);
-  padding: 4px 10px;
-  border-radius: 6px;
+  border: var(--border-width) solid var(--border-strong);
+  padding: 4px 0.7em;
+  border-radius: var(--radius-sm);
   font-size: 11px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  /* keeping this transition: all on purpose, it's a small button, who cares */
+  transition: all 0.15s ease;
   font-family: var(--font-body);
   z-index: 5;
+  /* the slight letter-spacing makes the uppercase-style feel more "clickable" */
+  letter-spacing: 0.3px;
 }
 
 .copy-btn:hover {
@@ -989,7 +1668,7 @@ ul.list {
 }
 ul.list li {
   padding: 8px 0;
-  border-bottom: 1px dashed var(--border-muted);
+  border-bottom: var(--border-width) var(--border-dashed) var(--border-muted);
 }
 ul.list li:last-child {
   border-bottom: none;
@@ -1002,7 +1681,7 @@ ul.list li::before {
 }
 
 /* =========================================
-   8b. Install Page — Professional
+   install page
    ========================================= */
 
 .tag {
@@ -1027,13 +1706,16 @@ ul.list li::before {
 
 .tag-distro {
   color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  border: var(--border-width) solid color-mix(in srgb, var(--accent) 25%, transparent);
   padding: 2px 10px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   margin-inline-start: 0;
   margin-inline-end: 8px;
   font-size: 0.7em;
   letter-spacing: 0.3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  /* didn't use a transition here, tags are tiny and instant feels right */
 }
 
 .tag-distro-alt {
@@ -1063,15 +1745,22 @@ ul.list li::before {
   flex-shrink: 0;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 800;
   background: var(--panel);
-  border: 1px solid var(--border-muted);
+  border: var(--border-width) solid var(--border-muted);
   color: var(--accent);
+  transition: transform 0.25s var(--ease-snap), color 0.2s ease,
+    border-color 0.2s ease;
+}
+.step:hover .step-num {
+  transform: rotate(8deg);
+  color: var(--accent-3);
+  border-color: var(--accent-3);
 }
 
 .step-body {
@@ -1080,8 +1769,9 @@ ul.list li::before {
 }
 
 .step-body h4 {
+  font-family: var(--font-display);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: var(--fw-heading);
   margin: 0 0 10px;
   color: var(--text);
 }
@@ -1096,19 +1786,31 @@ ul.list li::before {
   text-align: center;
   margin-top: 32px;
   padding-top: 20px;
-  border-top: 1px solid var(--border-muted);
+  border-top: var(--border-width) solid var(--border-muted);
 }
 
 /* =========================================
-   9. Footer & Animations
+   footer & keyframes
    ========================================= */
 .footer {
-  padding: 40px 0;
+  padding: calc(40px * var(--density)) 0;
   color: var(--muted);
   font-size: 14px;
   text-align: center;
-  border-top: 1px solid var(--border-muted);
+  border-top: var(--border-width) solid var(--border-muted);
   margin-top: 40px;
+  /* the small caps on the footer year looks classier, in my opinion */
+  font-variant-numeric: oldstyle-nums;
+}
+.footer a {
+  /* for some reason the footer links were inheriting .hero p a styling,
+     the !important is ugly but it works, will refactor */
+  text-decoration: none !important;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+.footer a:hover {
+  color: var(--text);
 }
 
 @keyframes slideDown {
@@ -1122,7 +1824,7 @@ ul.list li::before {
   }
 }
 
-@keyframes yFloat {
+@keyframes bob {
   0%,
   100% {
     transform: translateY(0);
@@ -1132,7 +1834,7 @@ ul.list li::before {
   }
 }
 
-@keyframes cardFloat {
+@keyframes sway {
   0%,
   100% {
     transform: translateY(0);
@@ -1142,7 +1844,18 @@ ul.list li::before {
   }
 }
 
-@keyframes ribbonSweep {
+/* small new one: a slow sideways drift for occasional personality */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(4px, -3px, 0);
+  }
+}
+
+@keyframes shine {
   0% {
     inset-inline-start: -50%;
   }
@@ -1151,7 +1864,7 @@ ul.list li::before {
   }
 }
 
-@keyframes pulseDot {
+@keyframes ping {
   0% {
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
   }
@@ -1172,8 +1885,19 @@ ul.list li::before {
   }
 }
 
+@keyframes pulseAlert {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
 /* =========================================
-   10. Media Queries (Responsive)
+   responsive — tablet
    ========================================= */
 @media (max-width: 992px) {
   .hero-grid {
@@ -1301,8 +2025,13 @@ ul.list li::before {
   height: 44px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
-  border: 1px solid var(--border-muted);
+  border-radius: var(--radius);
+  border: var(--border-width) solid var(--border-muted);
+  /* tried box-shadow inset here but it made the icon look 3d, didn't like it */
+  transition: transform 0.25s var(--ease-snap);
+}
+.category-icon:hover {
+  transform: scale(1.08) rotate(-5deg);
 }
 
 .roadmap-phase {
@@ -1310,9 +2039,11 @@ ul.list li::before {
   margin-inline-start: 20px;
 }
 .roadmap-phase h4 {
+  font-family: var(--font-display);
   font-size: 15px;
   color: var(--accent);
   margin-bottom: 12px;
+  font-weight: var(--fw-heading);
 }
 
 .roadmap-list {
@@ -1336,7 +2067,7 @@ ul.list li::before {
   width: 10px;
   height: 10px;
   border: 2px solid var(--border-strong);
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
 }
 
 /* حالة: قيد التنفيذ (In Progress) */
@@ -1373,11 +2104,13 @@ ul.list li::before {
   gap: 30px;
 }
 .archive-col h4 {
+  font-family: var(--font-display);
   font-size: 14px;
   margin-bottom: 15px;
   color: var(--text);
-  border-bottom: 1px solid var(--border-muted);
+  border-bottom: var(--border-width) solid var(--border-muted);
   padding-bottom: 5px;
+  font-weight: var(--fw-heading);
 }
 .done-only li::before {
   content: "✓";
@@ -1395,12 +2128,14 @@ ul.list li::before {
 }
 /* تصميم قسم التبرعات المتعددة */
 .donation-main-card {
-  border: 2px solid var(--accent-3); /* لون ذهبي/برتقالي لجذب الانتباه */
+  border: var(--border-width) solid var(--accent-3);
   background: var(--panel-strong);
-  padding: 40px;
+  padding: 44px;
   max-width: 900px;
   margin: 0 auto;
   text-align: center;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
 }
 
 .donation-intro {
@@ -1425,20 +2160,34 @@ ul.list li::before {
   gap: 15px;
   padding: 15px;
   background: var(--bg);
-  border: 1px solid var(--border-muted);
-  border-radius: 12px;
+  border: var(--border-width) solid var(--border-muted);
+  border-radius: var(--radius);
   text-align: right;
-  transition: var(--transition);
+  transition: transform 0.25s var(--ease-out), border-color 0.2s ease,
+    background 0.2s ease;
+  /* TODO: this card doesn't have a focus state, will add when i figure out
+     what the keyboard nav should do here */
 }
 
 .mini-donate-card:hover {
   border-color: var(--accent);
   transform: translateY(-3px);
   background: var(--panel);
+  box-shadow: var(--shadow-lg);
+}
+/* on hover, give the emoji a tiny wobble. probably overkill but i like it */
+.mini-donate-card:hover .org-emoji {
+  animation: drift 0.6s var(--ease-out);
 }
 
 .org-emoji {
   font-size: 24px;
+  /* giving the emoji a slight transparency so it doesn't fight with the text */
+  filter: saturate(0.9);
+  transition: filter 0.3s ease;
+}
+.mini-donate-card:hover .org-emoji {
+  filter: saturate(1.2);
 }
 
 .org-info {
@@ -1467,7 +2216,7 @@ ul.list li::before {
 }
 
 /* =========================================
-   11. Centered Alternating Timeline Layout
+   timeline (centered, alternating)
    ========================================= */
 
 /* حاوية الجدول الزمني الرئيسي */
@@ -1518,18 +2267,19 @@ ul.list li::before {
 /* بطاقة المحتوى الافتراضية داخل التايملاين */
 .timeline-item .roadmap-block {
   background: color-mix(in srgb, var(--panel) 45%, transparent);
-  border: 1px solid var(--border-muted);
+  border: var(--border-width) solid var(--border-muted);
   border-radius: var(--radius);
   padding: 28px;
   box-shadow: var(--shadow);
-  backdrop-filter: blur(12px);
-  transition: var(--transition);
-  border-inline-start: 1px solid var(--border-muted);
+  /* removed blur here too, two blurs on the same screen was too much */
+  transition: transform 0.3s var(--ease-out), border-color 0.2s ease,
+    box-shadow 0.3s ease;
+  border-inline-start: var(--border-width) solid var(--border-muted);
 }
 
 .timeline-item:hover .roadmap-block {
   border-color: var(--accent);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), var(--hover-glow);
   transform: translateY(-2px);
 }
 
@@ -1539,12 +2289,12 @@ ul.list li::before {
   top: 36px;
   width: 18px;
   height: 18px;
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   background: var(--bg);
   border: 3px solid var(--accent);
-  box-shadow: 0 0 10px var(--accent);
+  box-shadow: var(--hover-glow);
   z-index: 3;
-  transition: var(--transition);
+  transition: transform 0.25s var(--ease-snap), background 0.2s ease;
 }
 
 .timeline-item:hover .timeline-badge {
@@ -1572,20 +2322,26 @@ ul.list li::before {
 
 .roadmap-stat-card {
   background: color-mix(in srgb, var(--panel) 45%, transparent);
-  border: 1px solid var(--border-muted);
-  border-radius: var(--radius);
-  padding: 16px 20px;
+  border: var(--border-width) solid var(--border-muted);
+  border-radius: var(--radius-lg);
+  padding: 16px 1.25em;
   display: flex;
   align-items: center;
   gap: 16px;
-  backdrop-filter: blur(10px);
+  /* removed backdrop-filter, was causing scroll jank on safari */
   box-shadow: var(--shadow);
+  transition: transform 0.2s var(--ease-out), border-color 0.2s ease;
+}
+.roadmap-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
 }
 
 .roadmap-stat-card .stat-badge {
   width: 42px;
   height: 42px;
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   display: grid;
   place-items: center;
   font-weight: bold;
@@ -1714,7 +2470,7 @@ ul.list li::before {
 }
 
 /* =========================================
-   12. Responsive Design for Timeline
+   timeline — responsive
    ========================================= */
 @media (max-width: 992px) {
   /* نقل خط التايملاين إلى جانب الصفحة على الأجهزة الصغيرة */
@@ -1757,7 +2513,7 @@ ul.list li::before {
 }
 
 /* =========================================
-   13. Keybinding Tables
+   keybinding tables
    ========================================= */
 .table {
   width: 100%;
@@ -1765,31 +2521,42 @@ ul.list li::before {
   border-spacing: 0;
   margin-top: 14px;
   background: var(--panel);
-  border: 1px solid var(--border-muted);
-  border-radius: 12px;
+  border: var(--border-width) solid var(--border-muted);
+  border-radius: var(--radius-sm);
   overflow: hidden;
   font-size: 14px;
 }
 .table thead th {
   text-align: start;
-  font-weight: 700;
-  font-size: 13px;
+  font-weight: var(--fw-heading);
+  font-size: 12px;
   color: var(--accent);
   background: var(--panel-strong);
   padding: 12px 16px;
-  border-bottom: 1px solid var(--border-muted);
+  border-bottom: var(--border-width) solid var(--border-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
 }
 .table tbody td {
   padding: 12px 16px;
-  border-bottom: 1px dashed var(--border-muted);
+  border-bottom: var(--border-width) var(--border-dashed) var(--border-muted);
   color: var(--text);
   vertical-align: middle;
 }
 .table tbody tr:last-child td {
   border-bottom: none;
 }
+.table tbody tr {
+  /* added a transition, was jarring without one */
+  transition: background 0.2s ease, color 0.15s ease;
+}
 .table tbody tr:hover {
   background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+.table tbody tr:hover td:first-child {
+  /* the first cell gets a left border on hover, like a selection marker */
+  border-inline-start: 2px solid var(--accent);
+  padding-inline-start: 14px;
 }
 
 .kbd {
@@ -1797,16 +2564,23 @@ ul.list li::before {
   min-width: 22px;
   padding: 3px 8px;
   background: var(--bg-2);
-  border: 1px solid var(--border-strong);
-  border-bottom-width: 2px;
-  border-radius: 6px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border: var(--border-width) solid var(--border-strong);
+  border-bottom-width: var(--kbd-depth);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
   color: var(--text);
   line-height: 1.2;
   text-align: center;
   white-space: nowrap;
+  transition: transform 0.1s ease, background 0.15s ease;
+}
+.kbd:hover {
+  /* tiny press feel */
+  transform: translateY(1px);
+  border-bottom-width: 1px;
+  background: var(--panel);
 }
 .kbd.kbd-mod {
   color: var(--accent);
@@ -1829,14 +2603,17 @@ ul.list li::before {
   font-size: 13px;
   color: var(--muted);
   background: var(--panel);
-  border: 1px solid var(--border-muted);
+  border: var(--border-width) solid var(--border-muted);
   border-inline-start: 3px solid var(--accent-3);
-  border-radius: 8px;
+  border-radius: var(--radius);
   padding: 10px 14px;
   margin: 16px 0;
+  /* the italic for "modifier" makes the note feel handwritten */
+  font-style: italic;
 }
 .keys-note strong {
   color: var(--accent-3);
+  font-style: normal;
 }
 
 @media (max-width: 600px) {
@@ -1849,4 +2626,368 @@ ul.list li::before {
     font-size: 11px;
     padding: 2px 6px;
   }
+}
+
+/* a small late breakpoint — humans add these after the fact */
+@media (max-width: 480px) {
+  .hero {
+    padding: 40px 0 30px;
+  }
+  .hero h1 {
+    font-size: 30px;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+  .section {
+    padding: 40px 0;
+  }
+  .section h2 {
+    font-size: 24px;
+  }
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+  .donation-main-card {
+    padding: 24px 16px;
+  }
+}
+
+/* =========================================
+   lightbox — full-screen image preview
+   ========================================= */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: calc(48px * var(--density));
+  animation: lightboxFade 0.2s var(--ease-out);
+  direction: ltr; /* controls stay LTR; image inside still respects document */
+}
+.lightbox[hidden] {
+  display: none;
+}
+
+@keyframes lightboxFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.86);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: zoom-out;
+  animation: lightboxBackdrop 0.25s var(--ease-out);
+}
+
+@keyframes lightboxBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-content {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: min(1400px, 92vw);
+  max-height: 88vh;
+  animation: lightboxZoom 0.3s var(--ease-out);
+}
+
+@keyframes lightboxZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(88vh - 60px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: var(--border-width) solid var(--border-strong);
+  box-shadow:
+    0 24px 60px -12px rgb(0 0 0 / 0.6),
+    0 8px 24px -8px rgb(0 0 0 / 0.4);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.lightbox-caption {
+  color: #f1f5fb;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.6);
+  max-width: 80ch;
+  padding: 0 16px;
+  line-height: 1.5;
+}
+
+.lightbox-counter {
+  position: absolute;
+  top: 16px;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: rgb(0 0 0 / 0.5);
+  border: var(--border-width) solid rgb(255 255 255 / 0.12);
+  color: #f1f5fb;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  background: rgb(0 0 0 / 0.5);
+  color: #f1f5fb;
+  border: var(--border-width) solid rgb(255 255 255 / 0.14);
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform 0.2s var(--ease-snap), background 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: rgb(0 0 0 / 0.75);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lightbox-close:active,
+.lightbox-prev:active,
+.lightbox-next:active {
+  transform: scale(0.92);
+}
+
+.lightbox-close {
+  top: 20px;
+  inset-inline-end: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+}
+
+.lightbox-prev,
+.lightbox-next {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-pill);
+  color: #f1f5fb;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
+.lightbox-prev:active,
+.lightbox-next:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.lightbox-prev {
+  inset-inline-start: 20px;
+}
+
+.lightbox-next {
+  inset-inline-end: 20px;
+}
+
+/* hide nav buttons when only one image */
+.lightbox[data-single="true"] .lightbox-prev,
+.lightbox[data-single="true"] .lightbox-next {
+  display: none;
+}
+
+/* lock scroll while open */
+body.lightbox-open {
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .lightbox {
+    padding: 16px;
+  }
+  .lightbox-close {
+    top: 12px;
+    inset-inline-end: 12px;
+    width: 40px;
+    height: 40px;
+  }
+  .lightbox-prev {
+    inset-inline-start: 8px;
+    width: 42px;
+    height: 42px;
+  }
+  .lightbox-next {
+    inset-inline-end: 8px;
+    width: 42px;
+    height: 42px;
+  }
+  .lightbox-counter {
+    top: 12px;
+  }
+}
+
+/* =========================================
+   per-theme special touches
+   (override the global rules where a theme
+   needs its own signature flourish)
+   ========================================= */
+
+/* --- tokyonight: electric pulse on interactive parts --- */
+:root[data-theme="tokyonight"] .timeline-badge,
+:root[data-theme="tokyonight-light"] .timeline-badge {
+  box-shadow: 0 0 calc(8px + var(--glow-intensity) * 14px)
+    rgb(var(--accent) / calc(0.4 + var(--glow-intensity) * 0.4));
+}
+:root[data-theme="tokyonight"] .stat-card strong {
+  text-shadow: 0 0 14px rgb(var(--accent) / 0.45);
+}
+:root[data-theme="tokyonight"] .pulse-dot {
+  box-shadow: 0 0 0 0 rgb(var(--accent) / 0.6);
+}
+
+/* --- gruvbox: hard terminal feel --- */
+:root[data-theme="gruvbox"] .stat-card,
+:root[data-theme="gruvbox-light"] .stat-card {
+  box-shadow: 0 0 0 1px var(--border);
+}
+:root[data-theme="gruvbox"] .stat-card:hover,
+:root[data-theme="gruvbox-light"] .stat-card:hover {
+  box-shadow: 0 0 0 1px var(--accent);
+}
+:root[data-theme="gruvbox"] .bento-item,
+:root[data-theme="gruvbox-light"] .bento-item {
+  box-shadow: 0 0 0 1px var(--border);
+}
+:root[data-theme="gruvbox"] .bento-item:hover,
+:root[data-theme="gruvbox-light"] .bento-item:hover {
+  box-shadow: 0 0 0 1px var(--accent);
+}
+:root[data-theme="gruvbox"] .card,
+:root[data-theme="gruvbox-light"] .card {
+  box-shadow: 0 0 0 1px var(--border);
+}
+:root[data-theme="gruvbox"] .btn,
+:root[data-theme="gruvbox-light"] .btn {
+  box-shadow: 0 0 0 1px var(--border);
+}
+:root[data-theme="gruvbox"] .icon-btn,
+:root[data-theme="gruvbox-light"] .icon-btn {
+  box-shadow: 0 0 0 1px var(--border);
+}
+:root[data-theme="gruvbox"] .kbd,
+:root[data-theme="gruvbox-light"] .kbd {
+  border-color: var(--border-strong);
+  background: var(--bg);
+}
+:root[data-theme="gruvbox"] .signal-pill,
+:root[data-theme="gruvbox-light"] .signal-pill {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+/* --- material: layered elevation on hover (dp1 → dp4) --- */
+:root[data-theme="material"] .card:hover,
+:root[data-theme="material-light"] .card:hover {
+  box-shadow:
+    0 2px 4px rgb(var(--shadow-color) / calc(var(--shadow-opacity-1) + 0.06)),
+    0 4px 8px rgb(var(--shadow-color) / calc(var(--shadow-opacity-2) + 0.06)),
+    0 12px 28px rgb(var(--shadow-color) / 0.2);
+}
+:root[data-theme="material"] .btn:hover,
+:root[data-theme="material-light"] .btn:hover {
+  box-shadow:
+    0 1px 2px rgb(var(--shadow-color) / var(--shadow-opacity-1)),
+    0 4px 12px rgb(var(--shadow-color) / var(--shadow-opacity-2));
+}
+
+/* --- catppuccin: pill cards everywhere --- */
+:root[data-theme="catppuccin"] .signal-pill,
+:root[data-theme="catppuccin-light"] .signal-pill {
+  border-radius: var(--radius-pill);
+  padding: calc(8px * var(--density)) calc(20px * var(--density));
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+/* --- dracula: gentle purple glow on stat numbers --- */
+:root[data-theme="dracula"] .stat-card strong,
+:root[data-theme="dracula-light"] .stat-card strong {
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.3);
+}
+
+/* --- nord: very crisp, near-flat surfaces --- */
+:root[data-theme="nord"] .card,
+:root[data-theme="nord-light"] .card {
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+}
+:root[data-theme="nord"] .bento-item:hover,
+:root[data-theme="nord-light"] .bento-item:hover {
+  transform: translateY(-1px);
+}
+
+/* --- value-track line: themed with current accent --- */
+.value-track::before {
+  background: linear-gradient(
+    to bottom,
+    var(--accent) 0%,
+    var(--accent-2) 50%,
+    var(--border-muted) 100%
+  );
+  opacity: 0.35;
+}
+
+/* --- timeline centerline: themed --- */
+.timeline-container::before {
+  background: linear-gradient(
+    to bottom,
+    var(--accent) 0%,
+    var(--accent-2) 50%,
+    var(--border-muted) 100%
+  );
 }

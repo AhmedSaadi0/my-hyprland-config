@@ -240,17 +240,17 @@
             <h2 data-i18n="shots_title">لقطات من الواجهة</h2>
             <p class="muted" data-i18n="shots_desc">صور قليلة تبيّن الجو العام للواجهة والثيمات.</p>
             <div class="gallery-grid">
-                <div class="gallery-card "><img src="assets/material-dark.png" alt="Dark Material Theme" />
+                <div class="gallery-card" data-lightbox-trigger><img src="assets/material-dark.png" alt="Dark Material Theme" />
                 </div>
-                <div class="gallery-card lift"><img src="assets/deer.jpg" alt="Deer Theme" />
+                <div class="gallery-card lift" data-lightbox-trigger><img src="assets/deer.jpg" alt="Deer Theme" />
                 </div>
-                <div class="gallery-card lift"><img src="assets/colors.jpg" alt="Custom theme" />
+                <div class="gallery-card lift" data-lightbox-trigger><img src="assets/colors.jpg" alt="Custom theme" />
                 </div>
-                <div class="gallery-card lift"><img src="assets/gruvbox-light.png" alt="Gruvbox Light" />
+                <div class="gallery-card lift" data-lightbox-trigger><img src="assets/gruvbox-light.png" alt="Gruvbox Light" />
                 </div>
-                <div class="gallery-card lift"><img src="assets/nord-light.png" alt="Nord Light" />
+                <div class="gallery-card lift" data-lightbox-trigger><img src="assets/nord-light.png" alt="Nord Light" />
                 </div>
-                <div class="gallery-card lift"><img src="assets/material-light.png" alt="Material Light" />
+                <div class="gallery-card lift" data-lightbox-trigger><img src="assets/material-light.png" alt="Material Light" />
                 </div>
             </div>
         </section>
@@ -340,6 +340,31 @@
         </section>
 
     </main>
+
+    <!-- Lightbox for the UI shots gallery -->
+    <div class="lightbox" id="lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="lightbox-backdrop" data-lightbox-close></div>
+        <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close" data-i18n-aria="lightbox_close">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <button class="lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous" data-i18n-aria="lightbox_prev">
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <button class="lightbox-next" id="lightboxNext" type="button" aria-label="Next" data-i18n-aria="lightbox_next">
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <figure class="lightbox-content">
+            <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+            <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+        </figure>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
 
     <script src="script.js"></script>
 </body>
