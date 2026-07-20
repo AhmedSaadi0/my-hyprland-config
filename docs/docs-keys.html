@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>اختصارات لوحة المفاتيح – NibrasShell</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav id="navRoot">
+        <div class="container nav-inner">
+            <div class="brand">
+                <img class="brand-logo" src="assets/logo.jpeg" alt="NibrasShell logo" />
+                <div>
+                    <div data-i18n="brand_name">نِبراس شِل</div>
+                    <div style="font-size:12px;color:var(--muted)" data-i18n="brand_tagline">واجهة مدمجة بالذكاء
+                        الاصطناعي</div>
+                </div>
+            </div>
+            <button id="navToggle" class="nav-toggle" data-i18n-aria="nav_menu">☰</button>
+            <div class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html#donate" data-i18n="donate_btn" style="color:var(--success)">تبرع لغزة 🇵🇸</a>
+                    <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+                    <a href="docs.html" data-i18n="nav_docs">الوثائق</a>
+                    <a href="roadmap.html" data-i18n="nav_roadmap">خارطة الطريق</a>
+                </div>
+                <div class="nav-actions">
+                    <div class="nav-icons">
+                        <a class="icon-btn" href="https://github.com/AhmedSaadi0/NibrasShell" target="_blank"
+                            rel="noopener" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 2C6.48 2 2 6.58 2 12.25c0 4.5 2.86 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.36-3.37-1.36-.46-1.2-1.12-1.52-1.12-1.52-.92-.65.07-.64.07-.64 1.02.07 1.56 1.08 1.56 1.08.9 1.58 2.36 1.12 2.94.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.74 0 0 .84-.27 2.75 1.05.8-.23 1.66-.35 2.52-.35.86 0 1.72.12 2.52.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.43.2 2.48.1 2.74.64.72 1.03 1.64 1.03 2.76 0 3.93-2.34 4.8-4.57 5.05.36.32.69.95.69 1.92 0 1.38-.01 2.5-.01 2.84 0 .27.18.6.69.49 3.98-1.35 6.84-5.17 6.84-9.67C22 6.58 17.52 2 12 2z" />
+                            </svg>
+                        </a>
+                        <a class="icon-btn" href="https://discord.gg/EUcGgRGhrs" target="_blank" rel="noopener"
+                            aria-label="Discord">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M20.3 4.3A19.6 19.6 0 0 0 16 3a14.6 14.6 0 0 0-.7 1.5 18.2 18.2 0 0 0-4.6 0A14.6 14.6 0 0 0 10 3a19.6 19.6 0 0 0-4.3 1.3C3.4 7.7 2.8 11 3 14.3a19.9 19.9 0 0 0 5.1 2.7 15.3 15.3 0 0 0 1.1-1.7 12.6 12.6 0 0 1-1.7-.8l.4-.3c3.3 1.5 6.8 1.5 10.1 0l.4.3c-.5.3-1.1.6-1.7.8a15.3 15.3 0 0 0 1.1 1.7 19.9 19.9 0 0 0 5.1-2.7c.4-4-.7-7.3-2.8-10zM9.2 13.2c-.8 0-1.4-.7-1.4-1.6 0-.9.6-1.6 1.4-1.6.8 0 1.4.7 1.4 1.6 0 .9-.6 1.6-1.4 1.6zm5.6 0c-.8 0-1.4-.7-1.4-1.6 0-.9.6-1.6 1.4-1.6.8 0 1.4.7 1.4 1.6 0 .9-.6 1.6-1.4 1.6z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <select id="themeSelect" class="theme-select" aria-label="Theme">
+                        <option value="material">Material You (Dark)</option>
+                        <option value="material-light">Material You (Light)</option>
+                        <option value="tokyonight">Tokyo Night (Dark)</option>
+                        <option value="tokyonight-light">Tokyo Night (Light)</option>
+                        <option value="dracula">Dracula (Dark)</option>
+                        <option value="dracula-light">Dracula (Light)</option>
+                        <option value="catppuccin">Catppuccin (Dark)</option>
+                        <option value="catppuccin-light">Catppuccin (Light)</option>
+                        <option value="gruvbox">Gruvbox (Dark)</option>
+                        <option value="gruvbox-light">Gruvbox (Light)</option>
+                        <option value="nord">Nord (Dark)</option>
+                        <option value="nord-light">Nord (Light)</option>
+                    </select>
+                    <select id="langSelect" class="lang-select" aria-label="Language">
+                        <option value="ar">AR</option>
+                        <option value="en">EN</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container docs-layout">
+        <aside class="docs-sidebar">
+            <div class="sidebar-title" data-i18n="docs_sidebar_title">دليل الوثائق</div>
+            <a class="sidebar-link" href="docs.html" data-i18n="docs_sidebar_overview">نظرة عامة</a>
+            <a class="sidebar-link" href="docs-install.html" data-i18n="docs_sidebar_install">التثبيت الكامل</a>
+            <a class="sidebar-link" href="docs-dev.html" data-i18n="docs_sidebar_dev">توثيق التطوير</a>
+            <a class="sidebar-link active" href="docs-keys.html" data-i18n="docs_sidebar_keys">اختصارات لوحة
+                المفاتيح</a>
+        </aside>
+
+        <section class="docs-content">
+            <h1 data-i18n="keys_title">اختصارات لوحة المفاتيح</h1>
+            <p class="muted" data-i18n-html="keys_subtitle">جميع اختصارات Hyprland و Quickshell المعرَّفة في
+                <code>~/.config/hypr/binding.conf</code>. المفتاح الرئيسي (Modifier) هو <code>SUPER</code> (يُعرف أيضاً
+                بـ Windows key).
+            </p>
+
+
+            <section class="section">
+                <h2 data-i18n="keys_window_control">1. التحكم بالنوافذ</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>Q</kbd></span></td>
+                            <td data-i18n="key_act_kill">إغلاق التطبيق المُركَّز</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>m</kbd></span></td>
+                            <td data-i18n="key_act_fullscreen">تبديل وضع ملء الشاشة</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>F</kbd></span></td>
+                            <td data-i18n="key_act_floating">تبديل النافذة العائمة</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>J</kbd></span></td>
+                            <td data-i18n="key_act_split">تبديل التقسيم (dwindle)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>A</kbd></span></td>
+                            <td data-i18n="key_act_pin">تثبيت النافذة (دائماً فوق)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_audio">2. الصوت</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86AudioMute</kbd></span></td>
+                            <td data-i18n="key_act_mute">كتم / إلغاء كتم الصوت</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86AudioMicMute</kbd></span></td>
+                            <td data-i18n="key_act_micmute">كتم / إلغاء كتم الميكروفون</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86AudioRaiseVolume</kbd></span></td>
+                            <td data-i18n="key_act_volup">رفع الصوت (+5%)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86AudioLowerVolume</kbd></span></td>
+                            <td data-i18n="key_act_voldown">خفض الصوت (-5%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_media">3. الوسائط</h2>
+                <p class="muted" data-i18n="keys_media_desc">مفاتيح التحكم بالوسائط تستدعي إجراءات Quickshell لإدارة
+                    المشغل (MPRIS).</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86AudioPlay</kbd></span></td>
+                            <td data-i18n="key_act_playpause">تشغيل / إيقاف مؤقت</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86AudioNext</kbd></span></td>
+                            <td data-i18n="key_act_next">المسار التالي</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86AudioPrev</kbd></span></td>
+                            <td data-i18n="key_act_prev">المسار السابق</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86AudioStop</kbd></span></td>
+                            <td data-i18n="key_act_stop">إيقاف التشغيل</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_brightness">4. السطوع</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86MonBrightnessUp</kbd></span></td>
+                            <td data-i18n="key_act_brightup">رفع السطوع</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>XF86MonBrightnessDown</kbd></span></td>
+                            <td data-i18n="key_act_brightdown">خفض السطوع</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_apps">5. التطبيقات</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>Return</kbd></span></td>
+                            <td data-i18n="key_app_konsole">فتح Konsole (الطرفية)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>T</kbd></span></td>
+                            <td data-i18n="key_app_konsole_t">فتح Konsole (اختصار بديل)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>A</kbd></span></td>
+                            <td data-i18n="key_app_android">فتح Android Studio</td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>C</kbd></span></td>
+                            <td data-i18n="key_app_vscode">فتح VS Code</td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>D</kbd></span></td>
+                            <td data-i18n="key_app_discord">فتح Discord</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>E</kbd></span></td>
+                            <td data-i18n="key_app_dolphin">فتح Dolphin (مدير الملفات)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>F</kbd></span></td>
+                            <td data-i18n="key_app_firefox">فتح Firefox</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>K</kbd></span></td>
+                            <td data-i18n="key_app_sysmon">فتح System Monitor (مراقب النظام)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>M</kbd></span></td>
+                            <td data-i18n="key_app_mission">فتح Mission Center</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>S</kbd></span></td>
+                            <td data-i18n="key_app_settings">فتح إعدادات النظام</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>T</kbd></span></td>
+                            <td data-i18n="key_app_telegram">فتح Telegram</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>P</kbd></span></td>
+                            <td data-i18n="key_app_pcsx2">فتح PCSX2 (محاكي PlayStation 2)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>C</kbd></span></td>
+                            <td data-i18n="key_app_strawberry">فتح Strawberry (مشغل الموسيقى)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>V</kbd></span></td>
+                            <td data-i18n="key_app_easyeffects">فتح EasyEffects (معادل الصوت)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>X</kbd></span></td>
+                            <td data-i18n="key_app_hyprpicker">فتح Hyprpicker (ملتقط الألوان)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_screenshot">6. لقطات الشاشة</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>Print</kbd></span></td>
+                            <td data-i18n="key_act_shot_region">التقاط منطقة محددة من الشاشة</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_menus">7. قوائم Quickshell (الشريط الجانبي)</h2>
+                <p class="muted" data-i18n="keys_menus_desc">تتحكم بقوائم الواجهة الجانبية (LeftBar) عبر استدعاءات IPC
+                    من Hyprland إلى Quickshell.</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>F1</kbd></span></td>
+                            <td data-i18n="key_menu_dashboard">تبديل قائمة لوحة المعلومات (Dashboard)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>F2</kbd></span></td>
+                            <td data-i18n="key_menu_notif">تبديل قائمة الإشعارات</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>F3</kbd></span></td>
+                            <td data-i18n="key_menu_weather">تبديل قائمة الطقس</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>F4</kbd></span></td>
+                            <td data-i18n="key_menu_monitors">تبديل قائمة مراقبة النظام</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>F5</kbd></span></td>
+                            <td data-i18n="key_menu_network">تبديل قائمة الشبكة</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>F6</kbd></span></td>
+                            <td data-i18n="key_menu_clipboard">تبديل قائمة الحافظة</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>F7</kbd></span></td>
+                            <td data-i18n="key_menu_todo">تبديل قائمة المهام (Todo)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>I</kbd></span></td>
+                            <td data-i18n="key_menu_ai">تبديل قائمة روبوتات الذكاء الاصطناعي</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>L</kbd></span></td>
+                            <td data-i18n="key_menu_power">خيارات الطاقة (إيقاف، إعادة تشغيل، تعليق...)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>R</kbd></span></td>
+                            <td data-i18n="key_menu_launcher">إظهار مشغّل التطبيقات</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>S</kbd></span></td>
+                            <td data-i18n="key_menu_nsettings">فتح إعدادات NibrasShell</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>/</kbd></span></td>
+                            <td data-i18n="key_menu_cheatsheet">فتح ورقة الاختصارات (Cheatsheet)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>P</kbd></span></td>
+                            <td data-i18n="key_menu_media">إظهار كبسولة مشغل الوسائط</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>W</kbd></span></td>
+                            <td data-i18n="key_menu_weather_island">إظهار كبسولة الطقس</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>R</kbd></span></td>
+                            <td data-i18n="key_menu_clipboard2">تبديل قائمة الحافظة (اختصار بديل)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_focus">8. التركيز بين النوافذ</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>←</kbd></span></td>
+                            <td data-i18n="key_focus_l">نقل التركيز يساراً</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>→</kbd></span></td>
+                            <td data-i18n="key_focus_r">نقل التركيز يميناً</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>↑</kbd></span></td>
+                            <td data-i18n="key_focus_u">نقل التركيز للأعلى</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>↓</kbd></span></td>
+                            <td data-i18n="key_focus_d">نقل التركيز للأسفل</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_monitors">9. الشاشات</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>ALT</kbd><span
+                                        class="kbd-sep">+</span><kbd>1</kbd></span></td>
+                            <td data-i18n="key_mon_focus1">التركيز على الشاشة 1</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>ALT</kbd><span
+                                        class="kbd-sep">+</span><kbd>2</kbd></span></td>
+                            <td data-i18n="key_mon_focus2">التركيز على الشاشة 2</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>CTRL</kbd><span
+                                        class="kbd-sep">+</span><kbd>1</kbd></span></td>
+                            <td data-i18n="key_mon_move1">نقل مساحة العمل الحالية إلى الشاشة 1</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>CTRL</kbd><span
+                                        class="kbd-sep">+</span><kbd>2</kbd></span></td>
+                            <td data-i18n="key_mon_move2">نقل مساحة العمل الحالية إلى الشاشة 2</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>ALT</kbd><span
+                                        class="kbd-sep">+</span><kbd>R</kbd></span></td>
+                            <td data-i18n="key_mon_reload">إعادة تحميل المُحرِّك الرسومي (forcerendererreload)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_window_move">10. تحريك النوافذ</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>←</kbd></span></td>
+                            <td data-i18n="key_wmove_l">نقل النافذة يساراً</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>→</kbd></span></td>
+                            <td data-i18n="key_wmove_r">نقل النافذة يميناً</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>↑</kbd></span></td>
+                            <td data-i18n="key_wmove_u">نقل النافذة للأعلى</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>↓</kbd></span></td>
+                            <td data-i18n="key_wmove_d">نقل النافذة للأسفل</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_split_ratio">11. نسبة التقسيم</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>ALT</kbd><span
+                                        class="kbd-sep">+</span><kbd>←</kbd></span></td>
+                            <td data-i18n="key_split_dec">تقليل نسبة التقسيم (-0.1)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>ALT</kbd><span
+                                        class="kbd-sep">+</span><kbd>→</kbd></span></td>
+                            <td data-i18n="key_split_inc">زيادة نسبة التقسيم (+0.1)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_workspaces">12. مساحات العمل</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>Escape</kbd></span></td>
+                            <td data-i18n="key_ws_prev">الذهاب إلى مساحة العمل السابقة</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>H</kbd></span></td>
+                            <td data-i18n="key_ws_special">تبديل مساحة العمل الخاصة (Special)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>1</kbd></span></td>
+                            <td data-i18n="key_ws_go1">الانتقال لمساحة العمل 1</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>2</kbd></span></td>
+                            <td data-i18n="key_ws_go2">الانتقال لمساحة العمل 2</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>3</kbd></span></td>
+                            <td data-i18n="key_ws_go3">الانتقال لمساحة العمل 3</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>4</kbd></span></td>
+                            <td data-i18n="key_ws_go4">الانتقال لمساحة العمل 4</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>5</kbd></span></td>
+                            <td data-i18n="key_ws_go5">الانتقال لمساحة العمل 5</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>6</kbd></span></td>
+                            <td data-i18n="key_ws_go6">الانتقال لمساحة العمل 6</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>7</kbd></span></td>
+                            <td data-i18n="key_ws_go7">الانتقال لمساحة العمل 7</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>8</kbd></span></td>
+                            <td data-i18n="key_ws_go8">الانتقال لمساحة العمل 8</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>9</kbd></span></td>
+                            <td data-i18n="key_ws_go9">الانتقال لمساحة العمل 9</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>0</kbd></span></td>
+                            <td data-i18n="key_ws_go10">الانتقال لمساحة العمل 10</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3 data-i18n="keys_ws_move_title" style="margin-top:24px;">نقل النافذة إلى مساحة عمل</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>1</kbd></span></td>
+                            <td data-i18n="key_wsmove_1">نقل النافذة إلى مساحة العمل 1</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>2</kbd></span></td>
+                            <td data-i18n="key_wsmove_2">نقل النافذة إلى مساحة العمل 2</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>3</kbd></span></td>
+                            <td data-i18n="key_wsmove_3">نقل النافذة إلى مساحة العمل 3</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>4</kbd></span></td>
+                            <td data-i18n="key_wsmove_4">نقل النافذة إلى مساحة العمل 4</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>5</kbd></span></td>
+                            <td data-i18n="key_wsmove_5">نقل النافذة إلى مساحة العمل 5</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>6</kbd></span></td>
+                            <td data-i18n="key_wsmove_6">نقل النافذة إلى مساحة العمل 6</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>7</kbd></span></td>
+                            <td data-i18n="key_wsmove_7">نقل النافذة إلى مساحة العمل 7</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>8</kbd></span></td>
+                            <td data-i18n="key_wsmove_8">نقل النافذة إلى مساحة العمل 8</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>9</kbd></span></td>
+                            <td data-i18n="key_wsmove_9">نقل النافذة إلى مساحة العمل 9</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>SHIFT</kbd><span
+                                        class="kbd-sep">+</span><kbd>0</kbd></span></td>
+                            <td data-i18n="key_wsmove_10">نقل النافذة إلى مساحة العمل 10</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_minimize">13. التصغير</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>N</kbd></span></td>
+                            <td data-i18n="key_act_minimize">تصغير النافذة الحالية</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>CTRL</kbd><span
+                                        class="kbd-sep">+</span><kbd>N</kbd></span></td>
+                            <td data-i18n="key_act_min_restored">استرجاع النوافذ المُصغَّرة</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 data-i18n="keys_mouse">14. الفأرة، الطبقات، وتعليق النظام</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:55%;" data-i18n="keys_col_combo">الاختصار</th>
+                            <th data-i18n="keys_col_action">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>عجلة ↓</kbd></span></td>
+                            <td data-i18n="key_scroll_next">مساحة العمل التالية</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>عجلة ↑</kbd></span></td>
+                            <td data-i18n="key_scroll_prev">مساحة العمل السابقة</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>كليك يسار + سحب</kbd></span></td>
+                            <td data-i18n="key_mouse_move">نقل النافذة بالسحب</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>كليك يمين + سحب</kbd></span></td>
+                            <td data-i18n="key_mouse_resize">تغيير حجم النافذة بالسحب</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>B</kbd></span></td>
+                            <td data-i18n="key_layer_bottom">إرسال النافذة المُركَّزة إلى الطبقة السفلية</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd class="kbd-mod">SUPER</kbd><span
+                                        class="kbd-sep">+</span><kbd>ALT</kbd><span
+                                        class="kbd-sep">+</span><kbd>S</kbd></span></td>
+                            <td data-i18n="key_act_suspend">تعليق النظام (systemctl suspend)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="kbd-group"><kbd>switch:on:[switch name]</kbd></span></td>
+                            <td data-i18n="key_act_kvm">تفعيل تهيئة شاشة HDMI-1-0 (مفتاح KVM مادي)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="keys-note" data-i18n-html="keys_kvm_note">
+                    <strong>مفتاح KVM:</strong> <code>bindl=,switch:on:[switch name],exec,hyprctl keyword monitor
+                        "HDMI-1-0,1920x1080@144,1600x0,1"</code> — ينفّذ عند تفعيل المفتاح الفعلي المُسمَّى <code>switch
+                        name</code> على لوحة المفاتيح.
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

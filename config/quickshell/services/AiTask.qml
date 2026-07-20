@@ -25,13 +25,20 @@ QtObject {
             onStreamFinished: {
                 console.info(`[AiTask] Ai Process Result :-> \n${this.text}`);
 
-                // التغيير هنا: استدعاء الدالة من AiService مباشرة
-                var parsed = AiService.cleanAndParseJson(this.text);
+                // نُمرّر الـ envelope كاملاً (success/response/updated_history/error)
+                // إلى AiService ليقوم بالتنظيف وإدارة التاريخ
+                var envelope = null;
+                try {
+                    envelope = JSON.parse(this.text);
+                } catch (e) {
+                    task.failed("Invalid JSON envelope: " + e.message);
+                    return;
+                }
 
-                if (parsed) {
-                    task.success(parsed);
+                if (envelope && envelope.success) {
+                    task.success(envelope);
                 } else {
-                    task.failed("Failed to parse AI response or invalid JSON.");
+                    task.failed(envelope && envelope.error ? envelope.error : "Empty AI response");
                 }
             }
         }
