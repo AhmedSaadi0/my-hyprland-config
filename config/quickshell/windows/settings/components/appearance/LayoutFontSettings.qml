@@ -3,7 +3,6 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as Controls
-import Qt.labs.platform
 
 import "root:/components"
 import "root:/components/settings"
@@ -129,15 +128,15 @@ BaseThemeSettings {
         };
     }
 
-    FontDialog {
+    FontPickerDialog {
         id: fontDialog
         property var activeCallback: null
-        onAccepted: {
+        onFontSelected: family => {
             if (activeCallback)
-                activeCallback(font.family);
+                activeCallback(family);
             activeCallback = null;
         }
-        onRejected: activeCallback = null
+        onCanceled: activeCallback = null
     }
 
     component PreviewBox: Rectangle {
@@ -193,7 +192,8 @@ BaseThemeSettings {
                 text: qsTr("Choose")
                 Layout.preferredWidth: 88
                 onClicked: {
-                    fontDialog.currentFont.family = value;
+                    fontDialog.previewText = previewText;
+                    fontDialog.currentFont = value;
                     fontDialog.activeCallback = fontFamily => userChanged(fontFamily);
                     fontDialog.open();
                 }

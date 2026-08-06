@@ -21,6 +21,7 @@ Item {
     signal favoriteToggled
     signal pinToggled
     signal hovered
+    signal openWithDefaultLocale
 
     width: ListView.view ? ListView.view.width : (parent ? parent.width : 0)
     height: entryData && entryData.isHeader ? 34 : 72
@@ -92,5 +93,9 @@ Item {
         onFavoriteToggled: root.favoriteToggled()
         onPinToggled: root.pinToggled()
         onHovered: root.hovered()
+        onOpenWithDefaultLocale: {
+            console.info("[Locale][AppDelegate] forwarding openWithDefaultLocale, entryData isHeader=" + (entryData ? entryData.isHeader : "?"));
+            root.openWithDefaultLocale();
+        }
     }
 }

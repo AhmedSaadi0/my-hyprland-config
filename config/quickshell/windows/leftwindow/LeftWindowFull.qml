@@ -39,7 +39,7 @@ PanelWindow {
                 return ThemeManager.selectedTheme.dimensions.leftBarWidth;
             }
         }
-        top: ThemeManager.selectedTheme.dimensions.barHeight + 10
+        top: ThemeManager.selectedTheme.dimensions.barHeight + 13
         bottom: root.menuStyle === C.FLOATING ? 15 : 0
     }
 

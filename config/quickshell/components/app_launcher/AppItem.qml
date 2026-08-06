@@ -1,4 +1,4 @@
-// components/AppItem.qml
+// components/app_launcher/AppItem.qml
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -8,6 +8,7 @@ import Quickshell.Widgets
 import "root:/themes"
 import "root:/components"
 import "root:/config"
+import "root:/config/ConstValues.js" as Consts
 import "root:/config/EventNames.js" as Events
 import "root:/utils"
 import "root:/services"
@@ -19,6 +20,7 @@ Item {
     signal hovered
     signal favoriteToggled
     signal pinToggled
+    signal openWithDefaultLocale
 
     property var appData
     property bool isSelected: false
@@ -26,7 +28,14 @@ Item {
     property bool isFavorite: false
     property bool isPinnedToDock: false
 
-    height: 64
+    readonly property var colors: ThemeManager.selectedTheme.colors
+    readonly property var dims: ThemeManager.selectedTheme.dimensions
+    readonly property var typo: ThemeManager.selectedTheme.typography
+
+    property real pendingMenuX: 0
+    property real pendingMenuY: 0
+
+    height: Consts.APP_ITEM_HEIGHT
 
     Component.onCompleted: {
         EventBus.on(Events.APP_MENU_CLOSE_ALL, function (data) {
@@ -35,32 +44,57 @@ Item {
             }
         }, root);
 
-        // Request theme icon resolution
-        let iconKey = appData ? appData.icon : null;
+        _requestIconResolve();
+    }
+
+    Connections {
+        target: root
+        function onAppDataChanged() {
+            _requestIconResolve();
+        }
+    }
+
+    function _requestIconResolve() {
+        var iconKey = root.appData ? root.appData.icon : null;
         if (iconKey && !Helper.isDirectImageSource(iconKey)) {
             IconService.requestResolve([iconKey]);
+        }
+    }
+
+    Connections {
+        target: menuLoader
+        function onItemChanged() {
+            if (menuLoader.item) {
+                menuLoader.item.x = root.pendingMenuX;
+                menuLoader.item.y = root.pendingMenuY;
+
+                EventBus.emit(Events.APP_MENU_CLOSE_ALL, {
+                    except: menuLoader.item
+                });
+                menuLoader.item.open();
+            }
         }
     }
 
     Rectangle {
         id: hoverBg
         anchors.fill: parent
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius
+        radius: root.dims.elementRadius
 
         color: {
             if (root.isHighlighted) {
-                return ThemeManager.selectedTheme.colors.primary.alpha(0.25);
+                return root.colors.primary.alpha(0.25);
             }
             if (root.isSelected) {
-                return ThemeManager.selectedTheme.colors.primary.alpha(0.15);
+                return root.colors.primary.alpha(0.15);
             }
             if (mouseArea.containsMouse) {
-                return ThemeManager.selectedTheme.colors.primary.alpha(0.1);
+                return root.colors.primary.alpha(0.1);
             }
             return "transparent";
         }
 
-        border.color: root.isHighlighted ? ThemeManager.selectedTheme.colors.primary : "transparent"
+        border.color: root.isHighlighted ? root.colors.primary : "transparent"
         border.width: root.isHighlighted ? 1 : 0
 
         Behavior on color {
@@ -85,20 +119,20 @@ Item {
         spacing: 12
 
         Rectangle {
-            Layout.preferredWidth: 44
-            Layout.preferredHeight: 44
+            Layout.preferredWidth: Consts.APP_ICON_CONTAINER_SIZE
+            Layout.preferredHeight: Consts.APP_ICON_CONTAINER_SIZE
             Layout.alignment: Qt.AlignVCenter
-            radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.8
-            color: ThemeManager.selectedTheme.colors.surfaceContainer
+            radius: root.dims.elementRadius * 0.8
+            color: root.colors.surfaceContainer
 
             IconImage {
                 id: appIcon
                 anchors.centerIn: parent
-                width: 38
-                height: 38
+                width: Consts.APP_ICON_SIZE
+                height: Consts.APP_ICON_SIZE
                 source: {
-                    let trigger = IconService.iconUpdateTrigger;
-                    let iconKey = appData ? appData.icon : "application-x-executable";
+                    var trigger = IconService.iconUpdateTrigger;
+                    var iconKey = root.appData ? root.appData.icon : "application-x-executable";
                     return IconService.getCached(iconKey);
                 }
                 transformOrigin: Item.Center
@@ -131,10 +165,10 @@ Item {
 
             Text {
                 Layout.fillWidth: true
-                text: appData ? appData.name : "Unknown"
+                text: root.appData ? root.appData.name : "Unknown"
                 font.pixelSize: 16
                 font.weight: Font.Medium
-                color: root.isHighlighted ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurface
+                color: root.isHighlighted ? root.colors.primary : root.colors.onSurface
                 elide: Text.ElideRight
 
                 Behavior on color {
@@ -146,9 +180,9 @@ Item {
 
             Text {
                 Layout.fillWidth: true
-                text: appData ? (appData.genericName || appData.comment || "") : ""
+                text: root.appData ? (root.appData.genericName || root.appData.comment || "") : ""
                 font.pixelSize: 14
-                color: ThemeManager.selectedTheme.colors.onSurfaceVariant
+                color: root.colors.onSurfaceVariant
                 elide: Text.ElideRight
                 visible: text !== ""
             }
@@ -162,16 +196,16 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 width: 24
                 height: 24
-                radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
-                color: ThemeManager.selectedTheme.colors.primary.alpha(0.12)
+                radius: root.dims.shapeExtraSmall
+                color: root.colors.primary.alpha(0.12)
                 visible: root.isFavorite
 
                 Text {
                     anchors.centerIn: parent
                     text: "󰓎"
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
+                    font.family: root.typo.iconFont
                     font.pixelSize: 13
-                    color: ThemeManager.selectedTheme.colors.primary
+                    color: root.colors.primary
                 }
             }
 
@@ -179,16 +213,16 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 width: 24
                 height: 24
-                radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
-                color: ThemeManager.selectedTheme.colors.primary.alpha(0.12)
+                radius: root.dims.shapeExtraSmall
+                color: root.colors.primary.alpha(0.12)
                 visible: root.isPinnedToDock
 
                 Text {
                     anchors.centerIn: parent
                     text: "󰋜"
-                    font.family: ThemeManager.selectedTheme.typography.iconFont
+                    font.family: root.typo.iconFont
                     font.pixelSize: 13
-                    color: ThemeManager.selectedTheme.colors.primary
+                    color: root.colors.primary
                 }
             }
 
@@ -196,15 +230,15 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 width: 24
                 height: 24
-                radius: ThemeManager.selectedTheme.dimensions.shapeExtraSmall
-                color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
+                radius: root.dims.shapeExtraSmall
+                color: root.colors.surfaceContainerHigh
                 opacity: (mouseArea.containsMouse || root.isHighlighted || root.isSelected) ? 0.85 : 0
 
                 Text {
                     anchors.centerIn: parent
                     text: "↵"
                     font.pixelSize: 12
-                    color: ThemeManager.selectedTheme.colors.onSurfaceVariant
+                    color: root.colors.onSurfaceVariant
                 }
             }
         }
@@ -217,48 +251,49 @@ Item {
         cursorShape: Qt.PointingHandCursor
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-        onPressed: mouse => {
+        onPressed: function(mouse) {
             if (mouse.button === Qt.LeftButton) {
                 bounceAnim.restart();
                 root.clicked();
             } else if (mouse.button === Qt.RightButton) {
-                // تفعيل قائمة السياق (بناء الـ Popup في الذاكرة فقط عند الحاجة)
+                root.pendingMenuX = mouse.x;
+                root.pendingMenuY = mouse.y;
                 menuLoader.active = true;
-                menuLoader.item.x = mouse.x;
-                menuLoader.item.y = mouse.y;
 
-                if (menuLoader.item.opened) {
-                    menuLoader.item.close();
-                } else {
-                    EventBus.emit(Events.APP_MENU_CLOSE_ALL, {
-                        except: menuLoader.item
-                    });
-                    menuLoader.item.open();
+                if (menuLoader.item) {
+                    if (menuLoader.item.opened) {
+                        menuLoader.item.close();
+                    } else {
+                        menuLoader.item.x = mouse.x;
+                        menuLoader.item.y = mouse.y;
+                        EventBus.emit(Events.APP_MENU_CLOSE_ALL, {
+                            except: menuLoader.item
+                        });
+                        menuLoader.item.open();
+                    }
                 }
             }
         }
         onEntered: root.hovered()
     }
 
-    // هنا السر: استخدام Loader لمنع بناء عشرات القوائم في الذاكرة عند التشغيل
     Loader {
         id: menuLoader
         active: false
         sourceComponent: Component {
             Popup {
-                width: 200
+                width: Consts.CONTEXT_MENU_WIDTH
                 padding: 6
                 closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
                 focus: true
                 transformOrigin: Item.TopLeft
 
-                // تدمير العنصر من الذاكرة عند إغلاقه لتوفير الموارد
                 onClosed: menuLoader.active = false
 
                 background: Rectangle {
-                    radius: ThemeManager.selectedTheme.dimensions.elementRadius
-                    color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
-                    border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
+                    radius: root.dims.elementRadius
+                    color: root.colors.surfaceContainerHigh
+                    border.color: root.colors.primary.alpha(0.3)
                     border.width: 1
                 }
 
@@ -303,103 +338,46 @@ Item {
                 contentItem: ColumnLayout {
                     spacing: 4
 
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                        color: openMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-
-                        Text {
-                            anchors.centerIn: parent
-                            text: qsTr("Open")
-                            font.pixelSize: 14
-                            color: ThemeManager.selectedTheme.colors.onSurface
-                        }
-
-                        MouseArea {
-                            id: openMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                menuLoader.item.close();
-                                bounceAnim.restart();
-                                root.clicked();
-                            }
+                    ContextMenuItem {
+                        iconText: "󰐊"
+                        label: qsTr("Open")
+                        onClicked: {
+                            menuLoader.item.close();
+                            bounceAnim.restart();
+                            root.clicked();
                         }
                     }
 
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 1
-                        color: ThemeManager.selectedTheme.colors.primary.alpha(0.1)
-                    }
-
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                        color: favMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-
-                        RowLayout {
-                            anchors.centerIn: parent
-                            spacing: 8
-                            Text {
-                                text: "󰦢"
-                                font.family: ThemeManager.selectedTheme.typography.iconFont
-                                font.pixelSize: 14
-                                color: root.isFavorite ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurfaceVariant
-                            }
-                            Text {
-                                text: root.isFavorite ? qsTr("Remove from favorites") : qsTr("Add to favorites")
-                                font.pixelSize: 14
-                                color: ThemeManager.selectedTheme.colors.onSurface
-                            }
-                        }
-
-                        MouseArea {
-                            id: favMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                menuLoader.item.close();
-                                root.favoriteToggled();
-                            }
+                    ContextMenuItem {
+                        iconText: "󰗊"
+                        label: qsTr("Open with C locale")
+                        onClicked: {
+                            menuLoader.item.close();
+                            bounceAnim.restart();
+                            console.info("[Locale][AppItem] openWithDefaultLocale clicked, name=" + (root.appData ? root.appData.name : "null"));
+                            root.openWithDefaultLocale();
                         }
                     }
 
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                        color: pinMouseArea.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
+                    ContextMenuItem { showDivider: true }
 
-                        RowLayout {
-                            anchors.centerIn: parent
-                            spacing: 8
-                            Text {
-                                text: "󰋜"
-                                font.family: ThemeManager.selectedTheme.typography.iconFont
-                                font.pixelSize: 14
-                                color: root.isPinnedToDock ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurfaceVariant
-                            }
-                            Text {
-                                text: root.isPinnedToDock ? qsTr("Unpin from Dock") : qsTr("Pin to Dock")
-                                font.pixelSize: 14
-                                color: ThemeManager.selectedTheme.colors.onSurface
-                            }
+                    ContextMenuItem {
+                        iconText: "󰦢"
+                        label: root.isFavorite ? qsTr("Remove from favorites") : qsTr("Add to favorites")
+                        isHighlighted: root.isFavorite
+                        onClicked: {
+                            menuLoader.item.close();
+                            root.favoriteToggled();
                         }
+                    }
 
-                        MouseArea {
-                            id: pinMouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                menuLoader.item.close();
-                                root.pinToggled();
-                            }
+                    ContextMenuItem {
+                        iconText: "󰋜"
+                        label: root.isPinnedToDock ? qsTr("Unpin from Dock") : qsTr("Pin to Dock")
+                        isHighlighted: root.isPinnedToDock
+                        onClicked: {
+                            menuLoader.item.close();
+                            root.pinToggled();
                         }
                     }
                 }

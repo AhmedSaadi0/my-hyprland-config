@@ -14,6 +14,7 @@ import "root:/windows/settings/components"
 import "root:/windows/settings/components/general"
 import "root:/windows/settings/components/appearance"
 import "./audio"
+import "./monitors"
 
 Controls.ApplicationWindow {
     id: root
@@ -148,7 +149,9 @@ Controls.ApplicationWindow {
             }
             Component {
                 id: monitorsSettingsComp
-                MonitorsSettings {}
+                MonitorsSettings {
+                    onClose: root.visible = false
+                }
             }
 
             // =========================================================
@@ -199,6 +202,9 @@ Controls.ApplicationWindow {
                     audioDevicesComp.createObject(contentStack, {
                         visible: false
                     })       // Index 10
+                    , monitorsSettingsComp.createObject(contentStack, {
+                        visible: false
+                    })       // Index 11
                 ];
 
                 // عرض الصفحة الأولى افتراضياً

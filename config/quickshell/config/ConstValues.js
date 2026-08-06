@@ -35,3 +35,10 @@ const DOCKED_FIXED_BAR = "docked_fixed_bar";
 const DOCKED_MOVING_BAR = "docked_moving_bar";
 
 const M3_BUTTON_RADIUS_DIVISOR = 1.3;
+
+// --- App Launcher Dimensions (أبعاد مشغل التطبيقات) ---
+const APP_ITEM_HEIGHT = 64;
+const APP_ICON_CONTAINER_SIZE = 44;
+const APP_ICON_SIZE = 38;
+const CONTEXT_MENU_WIDTH = 200;
+const CONTEXT_MENU_ITEM_HEIGHT = 36;

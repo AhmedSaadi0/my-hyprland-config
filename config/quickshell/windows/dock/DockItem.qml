@@ -1,4 +1,4 @@
-// components/DockItem.qml
+// windows/dock/DockItem.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -8,8 +8,10 @@ import Quickshell.Widgets
 
 import "root:/themes"
 import "root:/config"
+import "root:/config/ConstValues.js" as Consts
 import "root:/utils"
 import "root:/services"
+import "root:/components/app_launcher"
 
 Item {
     id: itemRoot
@@ -27,11 +29,23 @@ Item {
     required property var panelWindow
 
     readonly property bool isFavorite: App.favoriteApps.indexOf(appId) !== -1
+    readonly property var colors: ThemeManager.selectedTheme.colors
+    readonly property var dims: ThemeManager.selectedTheme.dimensions
+    readonly property var typo: ThemeManager.selectedTheme.typography
 
     width: iconSize + 16
     height: iconSize + 16
 
     readonly property bool hovered: mouseArea.containsMouse
+
+    function closeContextMenu() {
+        if (panelWindow) {
+            panelWindow.anyMenuOpen = false;
+            if (panelWindow.currentOpenPopup === contextMenu) {
+                panelWindow.currentOpenPopup = null;
+            }
+        }
+    }
 
     function launchOrFocus() {
         if (isRunning && windowAddress) {
@@ -44,11 +58,50 @@ Item {
         }
     }
 
+    // تشغيل التطبيق مع تجاهل اللوكال الحالي للنظام
+    function launchWithDefaultLocale() {
+        // نمرر اللوكال عبر sh -c prefix (مضمون على كل إصدارات Quickshell)
+        // نمرر كقائمة ["sh", "-c", finalCommand] لتجنب أي غموض في تفسير execDetached
+        const envPrefix = "LANG=C.UTF-8 LC_ALL=C.UTF-8 ";
+        console.info("[Locale][Dock.launchWithDefaultLocale] ==== appId=" + appId);
+        if (appData) {
+            console.info("[Locale][Dock] appData keys:", Object.keys(appData).join(", "));
+            console.info("[Locale][Dock] execString:", JSON.stringify(appData.execString));
+            console.info("[Locale][Dock] command:", JSON.stringify(appData.command));
+            console.info("[Locale][Dock] workingDirectory:", JSON.stringify(appData.workingDirectory));
+            console.info("[Locale][Dock] has execute fn:", typeof appData.execute === "function");
+        }
+        if (appData && appData.execString) {
+            const finalCmd = envPrefix + appData.execString;
+            console.info("[Locale][Dock] path=execString, final command:", JSON.stringify(finalCmd));
+            Quickshell.execDetached({
+                command: ["sh", "-c", finalCmd],
+                workingDirectory: appData.workingDirectory
+            });
+        } else if (appData && appData.command) {
+            const finalCmd = envPrefix + appData.command;
+            console.info("[Locale][Dock] path=command, final command:", JSON.stringify(finalCmd));
+            Quickshell.execDetached({
+                command: ["sh", "-c", finalCmd],
+                workingDirectory: appData.workingDirectory
+            });
+        } else if (appId) {
+            let cleanCmd = appId.endsWith(".desktop") ? appId.slice(0, -8) : appId;
+            const finalCmd = envPrefix + "bin/" + cleanCmd;
+            console.info("[Locale][Dock] path=appId, final command:", JSON.stringify(finalCmd));
+            Quickshell.execDetached({
+                command: ["sh", "-c", finalCmd]
+            });
+        } else {
+            console.warn("[Locale][Dock] لا يوجد appData ولا appId - لا يمكن التشغيل");
+        }
+    }
+
     Rectangle {
         id: bg
         anchors.fill: parent
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.8
-        color: hovered ? ThemeManager.selectedTheme.colors.primary.alpha(0.12) : "transparent"
+        radius: itemRoot.dims.elementRadius * 0.8
+        color: hovered ? itemRoot.colors.primary.alpha(0.12) : "transparent"
 
         Behavior on color {
             ColorAnimation {
@@ -88,7 +141,7 @@ Item {
         width: isRunning ? (hovered ? 12 : 5) : 0
         height: 5
         radius: 2.5
-        color: ThemeManager.selectedTheme.colors.primary
+        color: itemRoot.colors.primary
 
         Behavior on width {
             NumberAnimation {
@@ -106,7 +159,7 @@ Item {
         width: 16
         height: 16
         radius: 8
-        color: ThemeManager.selectedTheme.colors.error
+        color: itemRoot.colors.error
         visible: isRunning && instanceCount > 1
 
         Text {
@@ -114,7 +167,7 @@ Item {
             text: instanceCount
             font.pixelSize: 10
             font.bold: true
-            color: ThemeManager.selectedTheme.colors.onError
+            color: itemRoot.colors.onError
         }
     }
 
@@ -188,9 +241,9 @@ Item {
         y: -height - 10
         width: instanceCount > 1 ? instanceListRow.width + 16 : tooltipLabel.implicitWidth + 16
         height: instanceCount > 1 ? instanceListRow.height + 12 : tooltipLabel.implicitHeight + 10
-        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-        color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
-        border.color: ThemeManager.selectedTheme.colors.outlineVariant
+        radius: itemRoot.dims.elementRadius * 0.6
+        color: itemRoot.colors.surfaceContainerHigh
+        border.color: itemRoot.colors.outlineVariant
         border.width: 1
         opacity: 0
         visible: opacity > 0
@@ -217,7 +270,7 @@ Item {
             visible: instanceCount <= 1
             text: appData ? appData.name : appId
             font.pixelSize: 11
-            color: ThemeManager.selectedTheme.colors.onSurface
+            color: itemRoot.colors.onSurface
         }
 
         Row {
@@ -234,8 +287,8 @@ Item {
 
                     Rectangle {
                         anchors.fill: parent
-                        radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.5
-                        color: instanceMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : ThemeManager.selectedTheme.colors.surfaceContainerHigh
+                        radius: itemRoot.dims.elementRadius * 0.5
+                        color: instanceMouse.containsMouse ? itemRoot.colors.primary.alpha(0.2) : itemRoot.colors.surfaceContainerHigh
                     }
 
                     // أيقونة النوافذ المنبثقة المتعددة
@@ -257,14 +310,14 @@ Item {
                         width: 14
                         height: 11
                         radius: 3
-                        color: ThemeManager.selectedTheme.colors.primary
+                        color: itemRoot.colors.primary
 
                         Text {
                             anchors.centerIn: parent
                             text: (modelData && modelData.workspaceId >= 0) ? modelData.workspaceId : "?"
                             font.pixelSize: 8
                             font.bold: true
-                            color: ThemeManager.selectedTheme.colors.onPrimary
+                            color: itemRoot.colors.onPrimary
                         }
                     }
 
@@ -315,9 +368,9 @@ Item {
         }
 
         background: Rectangle {
-            radius: ThemeManager.selectedTheme.dimensions.elementRadius
-            color: ThemeManager.selectedTheme.colors.surfaceContainerHigh
-            border.color: ThemeManager.selectedTheme.colors.primary.alpha(0.3)
+            radius: itemRoot.dims.elementRadius
+            color: itemRoot.colors.surfaceContainerHigh
+            border.color: itemRoot.colors.primary.alpha(0.3)
             border.width: 1
         }
 
@@ -326,227 +379,92 @@ Item {
             focus: true
             Keys.onEscapePressed: contextMenu.close()
 
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 36
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                color: openMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 8
-                    Text {
-                        text: isRunning ? "󰇄" : "󰐊"
-                        font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.onSurfaceVariant
-                    }
-                    Text {
-                        text: isRunning ? qsTr("Focus") : qsTr("Open")
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.onSurface
-                    }
+            ContextMenuItem {
+                iconText: itemRoot.isRunning ? "󰇄" : "󰐊"
+                label: itemRoot.isRunning ? qsTr("Focus") : qsTr("Open")
+                onClicked: {
+                    contextMenu.close();
+                    itemRoot.closeContextMenu();
+                    itemRoot.launchOrFocus();
                 }
+            }
 
-                MouseArea {
-                    id: openMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: {
-                        contextMenu.close();
-                        if (panelWindow) {
-                            panelWindow.anyMenuOpen = false;
-                            if (panelWindow.currentOpenPopup === contextMenu) {
-                                panelWindow.currentOpenPopup = null;
-                            }
-                        }
-                        itemRoot.launchOrFocus();
+            ContextMenuItem {
+                iconText: "󰗊"
+                label: qsTr("Open with C locale")
+                onClicked: {
+                    contextMenu.close();
+                    itemRoot.closeContextMenu();
+                    itemRoot.launchWithDefaultLocale();
+                }
+            }
+
+            ContextMenuItem {
+                iconText: "󰐕"
+                label: qsTr("New Window")
+                visible: itemRoot.isRunning
+                onClicked: {
+                    contextMenu.close();
+                    itemRoot.closeContextMenu();
+                    bounceAnim.restart();
+                    if (itemRoot.appData && typeof itemRoot.appData.execute === "function") {
+                        itemRoot.appData.execute();
                     }
                 }
             }
 
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 36
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                color: openNewMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-                visible: isRunning
-
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 8
-                    Text {
-                        text: "󰐕"
-                        font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.onSurfaceVariant
-                    }
-                    Text {
-                        text: qsTr("New Window")
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.onSurface
-                    }
-                }
-
-                MouseArea {
-                    id: openNewMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: {
-                        contextMenu.close();
-                        if (panelWindow) {
-                            panelWindow.anyMenuOpen = false;
-                            if (panelWindow.currentOpenPopup === contextMenu) {
-                                panelWindow.currentOpenPopup = null;
-                            }
-                        }
-                        bounceAnim.restart();
-                        if (appData && typeof appData.execute === "function") {
-                            appData.execute();
-                        }
+            ContextMenuItem {
+                iconText: "󰅙"
+                label: qsTr("Close")
+                visible: itemRoot.isRunning
+                hoverColor: itemRoot.colors.error.alpha(0.15)
+                iconColor: itemRoot.colors.error
+                onClicked: {
+                    contextMenu.close();
+                    itemRoot.closeContextMenu();
+                    if (itemRoot.windowAddress) {
+                        Hyprland.dispatch("closewindow address:" + itemRoot.windowAddress);
                     }
                 }
             }
 
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 36
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                color: closeMouse.containsMouse ? ThemeManager.selectedTheme.colors.error.alpha(0.15) : "transparent"
-                visible: isRunning
+            ContextMenuItem { showDivider: true }
 
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 8
-                    Text {
-                        text: "󰅙"
-                        font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.error
+            ContextMenuItem {
+                iconText: "󰓎"
+                label: itemRoot.isFavorite ? qsTr("Remove from favorites") : qsTr("Add to favorites")
+                isHighlighted: itemRoot.isFavorite
+                onClicked: {
+                    contextMenu.close();
+                    itemRoot.closeContextMenu();
+                    var favs = [...App.favoriteApps];
+                    var idx = favs.indexOf(itemRoot.appId);
+                    if (idx >= 0) {
+                        favs.splice(idx, 1);
+                    } else {
+                        favs.push(itemRoot.appId);
                     }
-                    Text {
-                        text: qsTr("Close")
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.error
-                    }
-                }
-
-                MouseArea {
-                    id: closeMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: {
-                        contextMenu.close();
-                        if (panelWindow) {
-                            panelWindow.anyMenuOpen = false;
-                            if (panelWindow.currentOpenPopup === contextMenu) {
-                                panelWindow.currentOpenPopup = null;
-                            }
-                        }
-                        if (windowAddress) {
-                            Hyprland.dispatch("closewindow address:" + windowAddress);
-                        }
-                    }
+                    App.favoriteApps = favs;
+                    App.updateConfig("favoriteApps", App.favoriteApps);
                 }
             }
 
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 1
-                color: ThemeManager.selectedTheme.colors.primary.alpha(0.1)
-            }
-
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 36
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                color: favMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 8
-                    Text {
-                        text: "󰓎"
-                        font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 14
-                        color: isFavorite ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurfaceVariant
+            ContextMenuItem {
+                iconText: "󰋜"
+                label: itemRoot.isPinnedToDock ? qsTr("Unpin from Dock") : qsTr("Pin to Dock")
+                isHighlighted: itemRoot.isPinnedToDock
+                onClicked: {
+                    contextMenu.close();
+                    itemRoot.closeContextMenu();
+                    var dockApps = [...App.dockApps];
+                    var idx = dockApps.indexOf(itemRoot.appId);
+                    if (idx >= 0) {
+                        dockApps.splice(idx, 1);
+                    } else {
+                        dockApps.push(itemRoot.appId);
                     }
-                    Text {
-                        text: isFavorite ? qsTr("Remove from favorites") : qsTr("Add to favorites")
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.onSurface
-                    }
-                }
-
-                MouseArea {
-                    id: favMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: {
-                        contextMenu.close();
-                        if (panelWindow) {
-                            panelWindow.anyMenuOpen = false;
-                            if (panelWindow.currentOpenPopup === contextMenu) {
-                                panelWindow.currentOpenPopup = null;
-                            }
-                        }
-                        let favs = [...App.favoriteApps];
-                        let idx = favs.indexOf(appId);
-                        if (idx >= 0) {
-                            favs.splice(idx, 1);
-                        } else {
-                            favs.push(appId);
-                        }
-                        App.favoriteApps = favs;
-                        App.updateConfig("favoriteApps", App.favoriteApps);
-                    }
-                }
-            }
-
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 36
-                radius: ThemeManager.selectedTheme.dimensions.elementRadius * 0.6
-                color: pinMouse.containsMouse ? ThemeManager.selectedTheme.colors.primary.alpha(0.2) : "transparent"
-
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 8
-                    Text {
-                        text: "󰋜"
-                        font.family: ThemeManager.selectedTheme.typography.iconFont
-                        font.pixelSize: 14
-                        color: isPinnedToDock ? ThemeManager.selectedTheme.colors.primary : ThemeManager.selectedTheme.colors.onSurfaceVariant
-                    }
-                    Text {
-                        text: isPinnedToDock ? qsTr("Unpin from Dock") : qsTr("Pin to Dock")
-                        font.pixelSize: 14
-                        color: ThemeManager.selectedTheme.colors.onSurface
-                    }
-                }
-
-                MouseArea {
-                    id: pinMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: {
-                        contextMenu.close();
-                        if (panelWindow) {
-                            panelWindow.anyMenuOpen = false;
-                            if (panelWindow.currentOpenPopup === contextMenu) {
-                                panelWindow.currentOpenPopup = null;
-                            }
-                        }
-                        let dockApps = [...App.dockApps];
-                        let idx = dockApps.indexOf(appId);
-                        if (idx >= 0) {
-                            dockApps.splice(idx, 1);
-                        } else {
-                            dockApps.push(appId);
-                        }
-                        App.dockApps = dockApps;
-                        App.updateConfig("dockApps", App.dockApps);
-                    }
+                    App.dockApps = dockApps;
+                    App.updateConfig("dockApps", App.dockApps);
                 }
             }
         }

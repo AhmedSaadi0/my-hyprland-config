@@ -41,6 +41,15 @@ BaseThemeSettings {
     property int erodeSize: 10
     property bool isCreatingOverlayImage: false
 
+    // نص الساعة الفعلي (نفس التنسيق واللغة المختارين) لعرضه في معاينة منتقي الخطوط
+    property string clockPreviewText: {
+        try {
+            return new Date().toLocaleString(Qt.locale(root.localLocale), root.localFormat);
+        } catch (e) {
+            return "12:00";
+        }
+    }
+
     signal createOverlayImageButtonClicked(var data)
 
     function clearUnusedCache() {
@@ -99,13 +108,44 @@ BaseThemeSettings {
     }
 
     // --- Dialogs ---
-    FontDialog {
-        id: fontDialog
-        onAccepted: {
-            root.localFont = font.family;
+    FontPickerDialog {
+        id: fontPicker
+        property string snapshotFont: ""
+        previewText: root.clockPreviewText
+
+        // أثناء فتح المنتقي: معاينة فورية لخط الساعة (دون مؤقت/أنيميشن)
+        onOpened: {
+            console.info("[Settings] picker opened -> previewing ON");
+            ThemeManager.setClockFontPreviewing(true);
         }
-        onCurrentFontChanged: {
-            root.applySingleProperty("_desktopClockFont", currentFont.family);
+        onClosed: {
+            console.info("[Settings] picker closed -> previewing OFF");
+            ThemeManager.setClockFontPreviewing(false);
+        }
+
+        // معاينة حية: ربط مباشر بخط الساعة + تحديث الذاكرة فقط — لا نظام، لا M3، لا وولبيبر، لا حفظ
+        onFontPreviewed: family => {
+            console.info("[Settings] onFontPreviewed ->", family);
+            if (root.isLoading)
+                return;
+            root.localFont = family;
+            ThemeManager.setClockPreviewFont(family);
+            ThemeManager.updateThemePropertyOnly({"_desktopClockFont": family}, false);
+        }
+
+        // الحفظ النهائي يحدث فقط عند الضغط على Apply
+        onFontSelected: family => {
+            if (root.isLoading)
+                return;
+            root.localFont = family;
+            ThemeManager.updateThemePropertyOnly({"_desktopClockFont": family}, true);
+        }
+
+        // الإلغاء: إرجاع الخط السابق في الذاكرة (دون حفظ)
+        onCanceled: {
+            if (root.isLoading)
+                return;
+            ThemeManager.updateThemePropertyOnly({"_desktopClockFont": fontPicker.snapshotFont}, false);
         }
     }
 
@@ -338,7 +378,7 @@ BaseThemeSettings {
                         if (root.isLoading)
                             return;
                         root.localFont = text;
-                        root.applySingleProperty("_desktopClockFont", text);
+                        ThemeManager.updateThemePropertyOnly({"_desktopClockFont": text}, true);
                     }
                 }
                 MButton {
@@ -347,8 +387,9 @@ BaseThemeSettings {
                     Layout.preferredWidth: 40
                     font.family: root.theme ? root.theme.typography.iconFont : ""
                     onClicked: {
-                        fontDialog.currentFont.family = root.localFont;
-                        fontDialog.open();
+                        fontPicker.snapshotFont = root.localFont;
+                        fontPicker.currentFont = root.localFont;
+                        fontPicker.open();
                     }
                 }
             }

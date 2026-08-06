@@ -21,6 +21,8 @@ Singleton {
     readonly property alias selectedTheme: themeLoader.activeThemeInstance
     readonly property alias isInitialThemeReady: root._initialReady
     readonly property alias isApplyingTheme: root._isApplyingTheme
+    readonly property alias isClockFontPreviewing: root._clockFontPreviewing
+    readonly property alias clockPreviewFont: root._clockPreviewFont
     readonly property alias aiThemeAssistant: aiThemeAssistant
     readonly property alias bridgeSystem: bridgeSystem
 
@@ -36,6 +38,9 @@ Singleton {
     property string _pendingThemeName: ""
     property string _selectedThemeName: ""
     property bool _isApplyingTheme: false
+    property bool _clockFontPreviewing: false
+    // خط المعاينة الحية — يقرأه DesktopClock مباشرة (دون سلاسل ربط وسيطة)
+    property string _clockPreviewFont: ""
 
     // =========================================================
     // 2. Signals
@@ -92,6 +97,18 @@ Singleton {
 
     function requestCreateOverlayImage(options) {
         depthEffectController.createOverlayImage(options);
+    }
+
+    // تفعيل/إيقاف المعاينة الفورية لخط الساعة (أثناء فتح منتقي الخطوط)
+    function setClockFontPreviewing(active) {
+        root._clockFontPreviewing = active;
+        if (!active)
+            root._clockPreviewFont = "";
+    }
+
+    // ضبط خط المعاينة الحية — يطبقه DesktopClock فوراً عبر ربط مباشر
+    function setClockPreviewFont(family) {
+        root._clockPreviewFont = family;
     }
 
     // =========================================================
@@ -273,6 +290,21 @@ Singleton {
         _applyToSystem(selectedTheme);
 
         // Apply to disk
+        if (saveToDisk) {
+            themeSerializer.saveToCache(selectedTheme, themeLoader.currentThemeName, true);
+        }
+
+        root.selectedThemeUpdated();
+    }
+
+    function updateThemePropertyOnly(data, saveToDisk) {
+        if (!selectedTheme)
+            return;
+
+        // تحديث ذاكرة فقط — دون إعادة تطبيق النظام (Hyprland/GTK/M3/وولبيبر)
+        // تُستخدم للمعاينة الحية والتغييرات الخفيفة كخط ساعة سطح المكتب
+        themeSerializer.applyData(selectedTheme, data);
+
         if (saveToDisk) {
             themeSerializer.saveToCache(selectedTheme, themeLoader.currentThemeName, true);
         }

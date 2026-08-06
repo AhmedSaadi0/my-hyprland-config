@@ -143,6 +143,12 @@ Rectangle {
                 icon: "",
                 type: "item",
                 pageIndex: 10
+            },
+            {
+                name: qsTr("Monitors & Display"),
+                icon: "󰍹",
+                type: "item",
+                pageIndex: 11
             }
         ]
 

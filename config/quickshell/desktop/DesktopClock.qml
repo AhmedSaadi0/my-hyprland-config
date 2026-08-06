@@ -95,8 +95,25 @@ Item {
 
     onClockColorChanged: if (root._isReady)
         styleDelayTimer.restart()
-    onClockFontChanged: if (root._isReady)
-        styleDelayTimer.restart()
+    onClockFontChanged: {
+        console.info("[Clock] clockFont:", root.clockFont, "| previewing:", ThemeManager.isClockFontPreviewing, "| previewFont:", ThemeManager.clockPreviewFont);
+        if (!root._isReady)
+            return;
+        // أثناء المعاينة من منتقي الخطوط: تطبيق فوري دون مؤقت أو أنيميشن
+        if (ThemeManager.isClockFontPreviewing) {
+            root._displayedFont = root.clockFont;
+        } else {
+            styleDelayTimer.restart();
+        }
+    }
+
+    // مؤقت تشخيص مؤقت — يعرض حالة الخط الفعلية أثناء المعاينة
+    Timer {
+        interval: 300
+        repeat: true
+        running: ThemeManager.isClockFontPreviewing
+        onTriggered: console.info("[ClockDebug] preview:", ThemeManager.clockPreviewFont, "| displayed:", root._displayedFont, "| actualTextFont:", timeText.font.family)
+    }
     onClockFormatChanged: if (root._isReady)
         styleDelayTimer.restart()
 
@@ -205,7 +222,11 @@ Item {
             anchors.centerIn: parent
 
             text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root._displayedFormat)
-            font.family: root._displayedFont
+            // أثناء المعاينة: ربط مباشر بخط المعاينة (فوري وموثوق)
+            // خارج المعاينة: الخط الحالي عبر _displayedFont مع أنيميشن النبض
+            font.family: ThemeManager.isClockFontPreviewing && ThemeManager.clockPreviewFont !== ""
+                        ? ThemeManager.clockPreviewFont
+                        : root._displayedFont
 
             // ================= السر البصري لتغير اللون =================
             // ColorAnimation يقوم بمزج الألوان كيميائياً بدلاً من التبديل الفوري

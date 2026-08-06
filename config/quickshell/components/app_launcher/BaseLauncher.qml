@@ -30,6 +30,12 @@ Item {
     property int selectedAppIndex: -1
     property int selectedCommandIndex: -1
 
+    // اللوكال الافتراضي المستخدم عند "تشغيل بلوكال افتراضي" (يتجاوز LANG/LC_ALL فقط)
+    readonly property var defaultLocaleEnv: ({
+        LANG: "C.UTF-8",
+        LC_ALL: "C.UTF-8"
+    })
+
     // --- Computed property for view index ---
     property int currentViewIndex: {
         if (activeCommandView === "wallpaper")
@@ -116,18 +122,40 @@ Item {
         }
     }
 
-    function launchApp(command, workingDirectory) {
+    function launchApp(command, workingDirectory, environment) {
         if (command) {
             clearSearchText.stop();
+            // Quickshell.execDetached يمرر command إلى sh -c داخلياً.
+            // لا تدعم كل الإصدارات environment property، لذا نمرر اللوكال
+            // عبر prefix يُفسَّره sh مباشرة (مضمون على كل الإصدارات).
+            // نمرر كقائمة ["sh", "-c", finalCommand] لتجنب أي غموض في تفسير execDetached.
+            let finalCommand = command;
+            if (environment) {
+                const envPrefix = Object.keys(environment)
+                    .map(k => k + "=" + environment[k])
+                    .join(" ");
+                finalCommand = envPrefix + " " + command;
+            }
+            console.info("[Locale][BaseLauncher.launchApp] finalCommand:", JSON.stringify(finalCommand));
+            console.info("[Locale][BaseLauncher.launchApp] workingDirectory:", JSON.stringify(workingDirectory));
+            console.info("[Locale][BaseLauncher.launchApp] env applied:", !!environment);
             Quickshell.execDetached({
-                command: command,
+                command: ["sh", "-c", finalCommand],
                 workingDirectory: workingDirectory
             });
             clearSearchText.start();
             if (onAppLaunchedCallback) {
                 onAppLaunchedCallback();
             }
+        } else {
+            console.warn("[Locale][BaseLauncher.launchApp] command فارغ - لا يمكن التشغيل");
         }
+    }
+
+    // تشغيل البرنامج مع تجاهل اللوكال الحالي للنظام
+    function launchAppWithDefaultLocale(command, workingDirectory) {
+        console.info("[Locale] launchAppWithDefaultLocale called, cmd:", JSON.stringify(command), "wd:", JSON.stringify(workingDirectory));
+        launchApp(command, workingDirectory, defaultLocaleEnv);
     }
 
     // --- Selection Helpers ---

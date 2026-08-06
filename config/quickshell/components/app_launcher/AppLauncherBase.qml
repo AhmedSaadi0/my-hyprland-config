@@ -234,6 +234,33 @@ Item {
                                 }
                             }
                         }
+                        onOpenWithDefaultLocale: {
+                            if (modelData && modelData.appData) {
+                                const ad = modelData.appData;
+                                console.info("[Locale][LauncherBase] ==== Open with C locale ====");
+                                console.info("[Locale][LauncherBase] name:", ad.name);
+                                console.info("[Locale][LauncherBase] id:", ad.id);
+                                console.info("[Locale][LauncherBase] appData keys:", Object.keys(ad).join(", "));
+                                console.info("[Locale][LauncherBase] execString:", JSON.stringify(ad.execString));
+                                console.info("[Locale][LauncherBase] command:", JSON.stringify(ad.command));
+                                console.info("[Locale][LauncherBase] workingDirectory:", JSON.stringify(ad.workingDirectory));
+                                console.info("[Locale][LauncherBase] has execute fn:", typeof ad.execute === "function");
+
+                                // execString متاح دائماً لأجهزة DesktopEntry و command للأنواع الأخرى
+                                const cmd = ad.execString || ad.command;
+                                if (cmd) {
+                                    console.info("[Locale][LauncherBase] selected cmd source:", ad.execString ? "execString" : "command");
+                                    baseLauncher.launchAppWithDefaultLocale(cmd, ad.workingDirectory);
+                                } else {
+                                    console.warn("[Locale][LauncherBase] لا يوجد execString ولا command - لا يمكن التشغيل");
+                                }
+                                if (root.onAppLaunchedCallback) {
+                                    root.onAppLaunchedCallback();
+                                }
+                            } else {
+                                console.warn("[Locale][LauncherBase] modelData.appData غير موجود");
+                            }
+                        }
                         onFavoriteToggled: {
                             if (modelData && modelData.appData) {
                                 baseLauncher.toggleFavorite(modelData.appData);

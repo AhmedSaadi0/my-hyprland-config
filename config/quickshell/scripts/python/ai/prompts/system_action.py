@@ -20,7 +20,6 @@ from ._base import (
     PERSONA,
 )
 
-
 # ---------------------------------------------------------------------------
 # Shared header for every per-event sub-prompt. Kept short so each
 # sub-prompt is independently small.
@@ -47,88 +46,67 @@ Current Time: {{CURRENT_TIME}} | Date: {{CURRENT_DATE}} | OS: {{OS_INFO}}
 # Single-shot action prompts (each generates exactly 1 response)
 # ---------------------------------------------------------------------------
 
-_SHUTDOWN_PROMPT = (
-    _HEADER
-    + """\
+_SHUTDOWN_PROMPT = _HEADER + """\
 ### TASK
 Generate a witty, context-aware response for system shutdown (powering off completely).
 
 ### OUTPUT
 {"shutdown": {"text": "string (max 12 words)", "emotion": "string"}}
 """
-)
 
 
-_REBOOT_PROMPT = (
-    _HEADER
-    + """\
+_REBOOT_PROMPT = _HEADER + """\
 ### TASK
 Generate a witty, context-aware response for system restart.
 
 ### OUTPUT
 {"reboot": {"text": "string (max 12 words)", "emotion": "string"}}
 """
-)
 
 
-_SUSPEND_PROMPT = (
-    _HEADER
-    + """\
+_SUSPEND_PROMPT = _HEADER + """\
 ### TASK
 Generate a witty, context-aware response for suspend (low power sleep).
 
 ### OUTPUT
 {"suspend": {"text": "string (max 12 words)", "emotion": "string"}}
 """
-)
 
 
-_LOGOUT_PROMPT = (
-    _HEADER
-    + """\
+_LOGOUT_PROMPT = _HEADER + """\
 ### TASK
 Generate a witty, context-aware response for user logout (signing out of the session).
 
 ### OUTPUT
 {"logout": {"text": "string (max 12 words)", "emotion": "string"}}
 """
-)
 
 
-_POWER_PERFORMANCE_PROMPT = (
-    _HEADER
-    + """\
+_POWER_PERFORMANCE_PROMPT = _HEADER + """\
 ### TASK
 Generate a witty, context-aware response for switching to Performance mode (high power).
 
 ### OUTPUT
 {"power_performance": {"text": "string (max 12 words)", "emotion": "string"}}
 """
-)
 
 
-_POWER_BALANCED_PROMPT = (
-    _HEADER
-    + """\
+_POWER_BALANCED_PROMPT = _HEADER + """\
 ### TASK
 Generate a witty, context-aware response for switching to Balanced mode (default).
 
 ### OUTPUT
 {"power_balanced": {"text": "string (max 12 words)", "emotion": "string"}}
 """
-)
 
 
-_POWER_POWERSAVER_PROMPT = (
-    _HEADER
-    + """\
+_POWER_POWERSAVER_PROMPT = _HEADER + """\
 ### TASK
 Generate a witty, context-aware response for switching to Power Saver mode (low power).
 
 ### OUTPUT
 {"power_powersaver": {"text": "string (max 12 words)", "emotion": "string"}}
 """
-)
 
 
 # ---------------------------------------------------------------------------
@@ -138,7 +116,7 @@ Generate a witty, context-aware response for switching to Power Saver mode (low 
 _BATTERY_THRESHOLDS: dict[int, str] = {
     40: "Mild concern, casual reminder about charging soon.",
     30: "Noticeable warning, suggest finding a charger.",
-    23: "Unusual threshold — quirky or dramatic remark about the battery's survival.",
+    23: "quirky or dramatic remark about the battery's survival.",
     22: "Escalating urgency, playful or dramatic tone.",
     21: "Escalating urgency, playful or dramatic tone.",
     20: "Standard low battery warning.",
@@ -154,9 +132,7 @@ _BATTERY_THRESHOLDS: dict[int, str] = {
 
 
 def _battery_prompt(threshold: int, guidance: str) -> str:
-    return (
-        _HEADER
-        + f"""\
+    return _HEADER + f"""\
 ### TASK
 Generate a battery response for the {threshold}% threshold.
 **Tone guideline**: {guidance}
@@ -164,7 +140,6 @@ Generate a battery response for the {threshold}% threshold.
 ### OUTPUT
 {{"battery_{threshold}": {{"text": "string", "emotion": "string"}}}}
 """
-    )
 
 
 BATTERY_PROMPTS: dict[int, str] = {
