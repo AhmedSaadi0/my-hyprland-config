@@ -13,7 +13,7 @@ TopbarCircularProgress {
 
     value: SystemService.vramUsage
 
-    icon: "󰍛"
+    icon: "󰑹"
     iconFontSize: 10
 
     readonly property color fgNormal: ThemeManager.selectedTheme.colors.outline

@@ -110,16 +110,30 @@ RowLayout {
     }
 
     // --- 5. GPU ---
+    // Row {
+    //     spacing: 5
+    //     Layout.alignment: Qt.AlignVCenter
+    //     Gpu {
+    //         id: gpuMonitor
+    //         iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+    //     }
+    //     ValueLabel {
+    //         text: Math.round(gpuMonitor.value * 100) + "%"
+    //         color: gpuMonitor.fgNormal
+    //     }
+    // }
+
+    // --- 5. VRAM ---
     Row {
         spacing: 5
         Layout.alignment: Qt.AlignVCenter
-        Gpu {
-            id: gpuMonitor
+        Vram {
+            id: vramMonitor
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
         }
         ValueLabel {
-            text: Math.round(gpuMonitor.value * 100) + "%"
-            color: gpuMonitor.fgNormal
+            text: Math.round(vramMonitor.value * 100) + "%"
+            color: vramMonitor.fgNormal
         }
     }
 }
