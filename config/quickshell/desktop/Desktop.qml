@@ -212,6 +212,9 @@ PanelWindow {
         wallpaper.wallpaperSource = Theme.ThemeManager.currentWallpaper;
     }
 
+    // تنظيف صريح عند تدمير النافذة (فصل الشاشة) لمنع المستمعات القديمة من إطلاق أخطاء
+    Component.onDestruction: EventBus.clearOwner(desktopRoot)
+
     Timer {
         id: changeIsMenuOpen
         interval: 0

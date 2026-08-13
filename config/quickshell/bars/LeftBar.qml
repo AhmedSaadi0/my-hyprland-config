@@ -170,6 +170,9 @@ PanelWindow {
         }, root);
     }
 
+    // تنظيف صريح عند تدمير النافذة (فصل الشاشة) لمنع المستمعات القديمة من إطلاق أخطاء
+    Component.onDestruction: EventBus.clearOwner(root)
+
     // استقبال التغيير من الخارج وتوزيعه على المجموعة الصحيحة
     Connections {
         target: LeftMenuStatus

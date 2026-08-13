@@ -1,0 +1,4980 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "system_diagnostics.py",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L1",
+      "id": "system_diagnostics_py",
+      "community": 4,
+      "norm_label": "system_diagnostics.py"
+    },
+    {
+      "label": "get_top_cpu()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L25",
+      "id": "python_system_diagnostics_get_top_cpu",
+      "community": 4,
+      "norm_label": "get_top_cpu()"
+    },
+    {
+      "label": "get_top_ram()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L105",
+      "id": "python_system_diagnostics_get_top_ram",
+      "community": 4,
+      "norm_label": "get_top_ram()"
+    },
+    {
+      "label": "get_process_detail()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L131",
+      "id": "python_system_diagnostics_get_process_detail",
+      "community": 4,
+      "norm_label": "get_process_detail()"
+    },
+    {
+      "label": "init_temp_data()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L213",
+      "id": "python_system_diagnostics_init_temp_data",
+      "community": 4,
+      "norm_label": "init_temp_data()"
+    },
+    {
+      "label": "add_temp_reading()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L226",
+      "id": "python_system_diagnostics_add_temp_reading",
+      "community": 4,
+      "norm_label": "add_temp_reading()"
+    },
+    {
+      "label": "get_cpu_temps_psutil()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L257",
+      "id": "python_system_diagnostics_get_cpu_temps_psutil",
+      "community": 4,
+      "norm_label": "get_cpu_temps_psutil()"
+    },
+    {
+      "label": "get_gpu_temps()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L281",
+      "id": "python_system_diagnostics_get_gpu_temps",
+      "community": 4,
+      "norm_label": "get_gpu_temps()"
+    },
+    {
+      "label": "get_storage_temps()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L340",
+      "id": "python_system_diagnostics_get_storage_temps",
+      "community": 4,
+      "norm_label": "get_storage_temps()"
+    },
+    {
+      "label": "get_detailed_temps()",
+      "file_type": "code",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L421",
+      "id": "python_system_diagnostics_get_detailed_temps",
+      "community": 4,
+      "norm_label": "get_detailed_temps()"
+    },
+    {
+      "label": "get_clipboard.py",
+      "file_type": "code",
+      "source_file": "get_clipboard.py",
+      "source_location": "L1",
+      "id": "get_clipboard_py",
+      "community": 12,
+      "norm_label": "get_clipboard.py"
+    },
+    {
+      "label": "get_cliphist_items()",
+      "file_type": "code",
+      "source_file": "get_clipboard.py",
+      "source_location": "L8",
+      "id": "python_get_clipboard_get_cliphist_items",
+      "community": 12,
+      "norm_label": "get_cliphist_items()"
+    },
+    {
+      "label": "activate_item()",
+      "file_type": "code",
+      "source_file": "get_clipboard.py",
+      "source_location": "L89",
+      "id": "python_get_clipboard_activate_item",
+      "community": 12,
+      "norm_label": "activate_item()"
+    },
+    {
+      "label": "delete_item()",
+      "file_type": "code",
+      "source_file": "get_clipboard.py",
+      "source_location": "L94",
+      "id": "python_get_clipboard_delete_item",
+      "community": 12,
+      "norm_label": "delete_item()"
+    },
+    {
+      "label": "wipe_all()",
+      "file_type": "code",
+      "source_file": "get_clipboard.py",
+      "source_location": "L121",
+      "id": "python_get_clipboard_wipe_all",
+      "community": 12,
+      "norm_label": "wipe_all()"
+    },
+    {
+      "label": "list_konsole_profiles.py",
+      "file_type": "code",
+      "source_file": "list_konsole_profiles.py",
+      "source_location": "L1",
+      "id": "list_konsole_profiles_py",
+      "community": 21,
+      "norm_label": "list_konsole_profiles.py"
+    },
+    {
+      "label": "get_konsole_profiles()",
+      "file_type": "code",
+      "source_file": "list_konsole_profiles.py",
+      "source_location": "L5",
+      "id": "python_list_konsole_profiles_get_konsole_profiles",
+      "community": 21,
+      "norm_label": "get_konsole_profiles()"
+    },
+    {
+      "label": "create_depth_image_rembg.py",
+      "file_type": "code",
+      "source_file": "create_depth_image_rembg.py",
+      "source_location": "L1",
+      "id": "create_depth_image_rembg_py",
+      "community": 15,
+      "norm_label": "create_depth_image_rembg.py"
+    },
+    {
+      "label": "process_image_rembg()",
+      "file_type": "code",
+      "source_file": "create_depth_image_rembg.py",
+      "source_location": "L10",
+      "id": "python_create_depth_image_rembg_process_image_rembg",
+      "community": 15,
+      "norm_label": "process_image_rembg()"
+    },
+    {
+      "label": "\u064a\u0639\u0627\u0644\u062c \u0635\u0648\u0631\u0629 \u0644\u0625\u0632\u0627\u0644\u0629 \u0627\u0644\u062e\u0644\u0641\u064a\u0629 \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 rembg \u0645\u0639 \u062e\u064a\u0627\u0631\u0627\u062a \u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u062a\u062e\u0635\u064a\u0635.",
+      "file_type": "rationale",
+      "source_file": "create_depth_image_rembg.py",
+      "source_location": "L19",
+      "id": "python_create_depth_image_rembg_rationale_19",
+      "community": 15,
+      "norm_label": "\u064a\u0639\u0627\u0644\u062c \u0635\u0648\u0631\u0629 \u0644\u0627\u0632\u0627\u0644\u0629 \u0627\u0644\u062e\u0644\u0641\u064a\u0629 \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 rembg \u0645\u0639 \u062e\u064a\u0627\u0631\u0627\u062a \u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u062a\u062e\u0635\u064a\u0635."
+    },
+    {
+      "label": "battery_info.py",
+      "file_type": "code",
+      "source_file": "battery_info.py",
+      "source_location": "L1",
+      "id": "battery_info_py",
+      "community": 6,
+      "norm_label": "battery_info.py"
+    },
+    {
+      "label": "get_linux_battery_details()",
+      "file_type": "code",
+      "source_file": "battery_info.py",
+      "source_location": "L20",
+      "id": "python_battery_info_get_linux_battery_details",
+      "community": 6,
+      "norm_label": "get_linux_battery_details()"
+    },
+    {
+      "label": "get_windows_battery_details()",
+      "file_type": "code",
+      "source_file": "battery_info.py",
+      "source_location": "L103",
+      "id": "python_battery_info_get_windows_battery_details",
+      "community": 6,
+      "norm_label": "get_windows_battery_details()"
+    },
+    {
+      "label": "get_macos_battery_details()",
+      "file_type": "code",
+      "source_file": "battery_info.py",
+      "source_location": "L159",
+      "id": "python_battery_info_get_macos_battery_details",
+      "community": 6,
+      "norm_label": "get_macos_battery_details()"
+    },
+    {
+      "label": "get_battery_info()",
+      "file_type": "code",
+      "source_file": "battery_info.py",
+      "source_location": "L243",
+      "id": "python_battery_info_get_battery_info",
+      "community": 6,
+      "norm_label": "get_battery_info()"
+    },
+    {
+      "label": "\u064a\u0633\u062a\u0631\u062c\u0639 \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u062e\u0627\u0635\u0629 \u0628\u0646\u0638\u0627\u0645 Linux \u0645\u0646 Sysfs.     \u064a\u062a\u0648\u0642\u0639 \u0648\u062c\u0648\u062f \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u0623\u0648",
+      "file_type": "rationale",
+      "source_file": "battery_info.py",
+      "source_location": "L21",
+      "id": "python_battery_info_rationale_21",
+      "community": 6,
+      "norm_label": "\u064a\u0633\u062a\u0631\u062c\u0639 \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u062e\u0627\u0635\u0629 \u0628\u0646\u0638\u0627\u0645 linux \u0645\u0646 sysfs.     \u064a\u062a\u0648\u0642\u0639 \u0648\u062c\u0648\u062f \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u0627\u0648"
+    },
+    {
+      "label": "\u064a\u0633\u062a\u0631\u062c\u0639 \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u062e\u0627\u0635\u0629 \u0628\u0646\u0638\u0627\u0645 Windows \u0639\u0628\u0631 WMI.",
+      "file_type": "rationale",
+      "source_file": "battery_info.py",
+      "source_location": "L104",
+      "id": "python_battery_info_rationale_104",
+      "community": 6,
+      "norm_label": "\u064a\u0633\u062a\u0631\u062c\u0639 \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u062e\u0627\u0635\u0629 \u0628\u0646\u0638\u0627\u0645 windows \u0639\u0628\u0631 wmi."
+    },
+    {
+      "label": "\u064a\u0633\u062a\u0631\u062c\u0639 \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u062e\u0627\u0635\u0629 \u0628\u0646\u0638\u0627\u0645 macOS \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 ioreg.",
+      "file_type": "rationale",
+      "source_file": "battery_info.py",
+      "source_location": "L160",
+      "id": "python_battery_info_rationale_160",
+      "community": 6,
+      "norm_label": "\u064a\u0633\u062a\u0631\u062c\u0639 \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u062e\u0627\u0635\u0629 \u0628\u0646\u0638\u0627\u0645 macos \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 ioreg."
+    },
+    {
+      "label": "\u064a\u062c\u0645\u0639 \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 psutil \u0648\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0645\u062a\u0642\u062f\u0645\u0629 \u062e\u0627\u0635\u0629 \u0628\u0646\u0638\u0627\u0645 \u0627\u0644\u062a\u0634\u063a\u064a\u0644.",
+      "file_type": "rationale",
+      "source_file": "battery_info.py",
+      "source_location": "L244",
+      "id": "python_battery_info_rationale_244",
+      "community": 6,
+      "norm_label": "\u064a\u062c\u0645\u0639 \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u0628\u0637\u0627\u0631\u064a\u0629 \u0627\u0644\u0627\u0633\u0627\u0633\u064a\u0629 \u0645\u0646 psutil \u0648\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0645\u062a\u0642\u062f\u0645\u0629 \u062e\u0627\u0635\u0629 \u0628\u0646\u0638\u0627\u0645 \u0627\u0644\u062a\u0634\u063a\u064a\u0644."
+    },
+    {
+      "label": "list_kvantum_themes.py",
+      "file_type": "code",
+      "source_file": "list_kvantum_themes.py",
+      "source_location": "L1",
+      "id": "list_kvantum_themes_py",
+      "community": 22,
+      "norm_label": "list_kvantum_themes.py"
+    },
+    {
+      "label": "get_kvantum_themes()",
+      "file_type": "code",
+      "source_file": "list_kvantum_themes.py",
+      "source_location": "L5",
+      "id": "python_list_kvantum_themes_get_kvantum_themes",
+      "community": 22,
+      "norm_label": "get_kvantum_themes()"
+    },
+    {
+      "label": "system_monitor.py",
+      "file_type": "code",
+      "source_file": "system_monitor.py",
+      "source_location": "L1",
+      "id": "system_monitor_py",
+      "community": 14,
+      "norm_label": "system_monitor.py"
+    },
+    {
+      "label": "get_max_temp()",
+      "file_type": "code",
+      "source_file": "system_monitor.py",
+      "source_location": "L16",
+      "id": "python_system_monitor_get_max_temp",
+      "community": 14,
+      "norm_label": "get_max_temp()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "system_monitor.py",
+      "source_location": "L37",
+      "id": "python_system_monitor_main",
+      "community": 14,
+      "norm_label": "main()"
+    },
+    {
+      "label": "\u0627\u0644\u062d\u0635\u0648\u0644 \u0639\u0644\u0649 \u0623\u0639\u0644\u0649 \u062f\u0631\u062c\u0629 \u062d\u0631\u0627\u0631\u0629 \u0645\u0646 \u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u0645\u062e\u0632\u0646\u0629 \u0645\u0633\u0628\u0642\u0627\u064b",
+      "file_type": "rationale",
+      "source_file": "system_monitor.py",
+      "source_location": "L17",
+      "id": "python_system_monitor_rationale_17",
+      "community": 14,
+      "norm_label": "\u0627\u0644\u062d\u0635\u0648\u0644 \u0639\u0644\u0649 \u0627\u0639\u0644\u0649 \u062f\u0631\u062c\u0629 \u062d\u0631\u0627\u0631\u0629 \u0645\u0646 \u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u0645\u062e\u0632\u0646\u0629 \u0645\u0633\u0628\u0642\u0627"
+    },
+    {
+      "label": "overlay_cache_images_cleaner.py",
+      "file_type": "code",
+      "source_file": "overlay_cache_images_cleaner.py",
+      "source_location": "L1",
+      "id": "overlay_cache_images_cleaner_py",
+      "community": 16,
+      "norm_label": "overlay_cache_images_cleaner.py"
+    },
+    {
+      "label": "clean_up_images()",
+      "file_type": "code",
+      "source_file": "overlay_cache_images_cleaner.py",
+      "source_location": "L8",
+      "id": "python_overlay_cache_images_cleaner_clean_up_images",
+      "community": 16,
+      "norm_label": "clean_up_images()"
+    },
+    {
+      "label": "\u062a\u0642\u0648\u0645 \u0647\u0630\u0647 \u0627\u0644\u062f\u0627\u0644\u0629 \u0628\u062d\u0630\u0641 \u0635\u0648\u0631 PNG \u063a\u064a\u0631 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629 \u0645\u0646 \u0645\u062c\u0644\u062f \u0645\u0639\u064a\u0646\u060c     \u0628\u0646\u0627\u0621\u064b \u0639\u0644\u0649 \u0642\u0627\u0626\u0645\u0629 \u0628\u0627\u0644",
+      "file_type": "rationale",
+      "source_file": "overlay_cache_images_cleaner.py",
+      "source_location": "L9",
+      "id": "python_overlay_cache_images_cleaner_rationale_9",
+      "community": 16,
+      "norm_label": "\u062a\u0642\u0648\u0645 \u0647\u0630\u0647 \u0627\u0644\u062f\u0627\u0644\u0629 \u0628\u062d\u0630\u0641 \u0635\u0648\u0631 png \u063a\u064a\u0631 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629 \u0645\u0646 \u0645\u062c\u0644\u062f \u0645\u0639\u064a\u0646\u060c     \u0628\u0646\u0627\u0621 \u0639\u0644\u0649 \u0642\u0627\u064a\u0645\u0629 \u0628\u0627\u0644"
+    },
+    {
+      "label": "create_depth_image_opencv.py",
+      "file_type": "code",
+      "source_file": "create_depth_image_opencv.py",
+      "source_location": "L1",
+      "id": "create_depth_image_opencv_py",
+      "community": 23,
+      "norm_label": "create_depth_image_opencv.py"
+    },
+    {
+      "label": "process_image_grabcut()",
+      "file_type": "code",
+      "source_file": "create_depth_image_opencv.py",
+      "source_location": "L10",
+      "id": "python_create_depth_image_opencv_process_image_grabcut",
+      "community": 23,
+      "norm_label": "process_image_grabcut()"
+    },
+    {
+      "label": "list_icon_themes.py",
+      "file_type": "code",
+      "source_file": "list_icon_themes.py",
+      "source_location": "L1",
+      "id": "list_icon_themes_py",
+      "community": 17,
+      "norm_label": "list_icon_themes.py"
+    },
+    {
+      "label": "is_valid_icon_theme()",
+      "file_type": "code",
+      "source_file": "list_icon_themes.py",
+      "source_location": "L6",
+      "id": "python_list_icon_themes_is_valid_icon_theme",
+      "community": 17,
+      "norm_label": "is_valid_icon_theme()"
+    },
+    {
+      "label": "get_icon_themes()",
+      "file_type": "code",
+      "source_file": "list_icon_themes.py",
+      "source_location": "L25",
+      "id": "python_list_icon_themes_get_icon_themes",
+      "community": 17,
+      "norm_label": "get_icon_themes()"
+    },
+    {
+      "label": "list_gtk_themes.py",
+      "file_type": "code",
+      "source_file": "list_gtk_themes.py",
+      "source_location": "L1",
+      "id": "list_gtk_themes_py",
+      "community": 18,
+      "norm_label": "list_gtk_themes.py"
+    },
+    {
+      "label": "is_valid_gtk_theme()",
+      "file_type": "code",
+      "source_file": "list_gtk_themes.py",
+      "source_location": "L5",
+      "id": "python_list_gtk_themes_is_valid_gtk_theme",
+      "community": 18,
+      "norm_label": "is_valid_gtk_theme()"
+    },
+    {
+      "label": "get_gtk_themes()",
+      "file_type": "code",
+      "source_file": "list_gtk_themes.py",
+      "source_location": "L8",
+      "id": "python_list_gtk_themes_get_gtk_themes",
+      "community": 18,
+      "norm_label": "get_gtk_themes()"
+    },
+    {
+      "label": "scan_wallpapers.py",
+      "file_type": "code",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L1",
+      "id": "scan_wallpapers_py",
+      "community": 5,
+      "norm_label": "scan_wallpapers.py"
+    },
+    {
+      "label": "debug()",
+      "file_type": "code",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L12",
+      "id": "python_scan_wallpapers_debug",
+      "community": 5,
+      "norm_label": "debug()"
+    },
+    {
+      "label": "get_mtime()",
+      "file_type": "code",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L17",
+      "id": "python_scan_wallpapers_get_mtime",
+      "community": 5,
+      "norm_label": "get_mtime()"
+    },
+    {
+      "label": "resolve_path()",
+      "file_type": "code",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L25",
+      "id": "python_scan_wallpapers_resolve_path",
+      "community": 5,
+      "norm_label": "resolve_path()"
+    },
+    {
+      "label": "get_images_from_dir()",
+      "file_type": "code",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L46",
+      "id": "python_scan_wallpapers_get_images_from_dir",
+      "community": 5,
+      "norm_label": "get_images_from_dir()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L65",
+      "id": "python_scan_wallpapers_main",
+      "community": 5,
+      "norm_label": "main()"
+    },
+    {
+      "label": "\u0637\u0628\u0627\u0639\u0629 \u0631\u0633\u0627\u0626\u0644 \u062a\u062a\u0628\u0639 \u0641\u064a stderr",
+      "file_type": "rationale",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L13",
+      "id": "python_scan_wallpapers_rationale_13",
+      "community": 5,
+      "norm_label": "\u0637\u0628\u0627\u0639\u0629 \u0631\u0633\u0627\u064a\u0644 \u062a\u062a\u0628\u0639 \u0641\u064a stderr"
+    },
+    {
+      "label": "\u062c\u0644\u0628 \u062a\u0627\u0631\u064a\u062e \u062a\u0639\u062f\u064a\u0644 \u0627\u0644\u0645\u0644\u0641 \u0644\u063a\u0631\u0636 \u0627\u0644\u062a\u0631\u062a\u064a\u0628",
+      "file_type": "rationale",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L18",
+      "id": "python_scan_wallpapers_rationale_18",
+      "community": 5,
+      "norm_label": "\u062c\u0644\u0628 \u062a\u0627\u0631\u064a\u062e \u062a\u0639\u062f\u064a\u0644 \u0627\u0644\u0645\u0644\u0641 \u0644\u063a\u0631\u0636 \u0627\u0644\u062a\u0631\u062a\u064a\u0628"
+    },
+    {
+      "label": "\u062a\u062d\u0648\u064a\u0644 \u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062a \u0625\u0644\u0649 \u0645\u0633\u0627\u0631\u0627\u062a \u0645\u0637\u0644\u0642\u0629 \u0648\u0635\u062d\u064a\u062d\u0629",
+      "file_type": "rationale",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L26",
+      "id": "python_scan_wallpapers_rationale_26",
+      "community": 5,
+      "norm_label": "\u062a\u062d\u0648\u064a\u0644 \u0627\u0644\u0645\u0633\u0627\u0631\u0627\u062a \u0627\u0644\u0649 \u0645\u0633\u0627\u0631\u0627\u062a \u0645\u0637\u0644\u0642\u0629 \u0648\u0635\u062d\u064a\u062d\u0629"
+    },
+    {
+      "label": "\u062c\u0644\u0628 \u0627\u0644\u0635\u0648\u0631 \u0645\u0646 \u0645\u062c\u0644\u062f \u0645\u0639\u064a\u0646",
+      "file_type": "rationale",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L47",
+      "id": "python_scan_wallpapers_rationale_47",
+      "community": 5,
+      "norm_label": "\u062c\u0644\u0628 \u0627\u0644\u0635\u0648\u0631 \u0645\u0646 \u0645\u062c\u0644\u062f \u0645\u0639\u064a\u0646"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "__init__.py",
+      "source_location": "L1",
+      "id": "init_py",
+      "community": 27,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "apply_konsole_profile_open_sessions.py",
+      "file_type": "code",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L1",
+      "id": "apply_konsole_profile_open_sessions_py",
+      "community": 8,
+      "norm_label": "apply_konsole_profile_open_sessions.py"
+    },
+    {
+      "label": "qdbus_candidates()",
+      "file_type": "code",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L10",
+      "id": "python_apply_konsole_profile_open_sessions_qdbus_candidates",
+      "community": 8,
+      "norm_label": "qdbus_candidates()"
+    },
+    {
+      "label": "pick_qdbus_bin()",
+      "file_type": "code",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L26",
+      "id": "python_apply_konsole_profile_open_sessions_pick_qdbus_bin",
+      "community": 8,
+      "norm_label": "pick_qdbus_bin()"
+    },
+    {
+      "label": "run_qdbus()",
+      "file_type": "code",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L49",
+      "id": "python_apply_konsole_profile_open_sessions_run_qdbus",
+      "community": 8,
+      "norm_label": "run_qdbus()"
+    },
+    {
+      "label": "list_konsole_services()",
+      "file_type": "code",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L64",
+      "id": "python_apply_konsole_profile_open_sessions_list_konsole_services",
+      "community": 8,
+      "norm_label": "list_konsole_services()"
+    },
+    {
+      "label": "list_session_paths()",
+      "file_type": "code",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L77",
+      "id": "python_apply_konsole_profile_open_sessions_list_session_paths",
+      "community": 8,
+      "norm_label": "list_session_paths()"
+    },
+    {
+      "label": "apply_profile_to_session()",
+      "file_type": "code",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L90",
+      "id": "python_apply_konsole_profile_open_sessions_apply_profile_to_session",
+      "community": 8,
+      "norm_label": "apply_profile_to_session()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L112",
+      "id": "python_apply_konsole_profile_open_sessions_main",
+      "community": 8,
+      "norm_label": "main()"
+    },
+    {
+      "label": "list_qt_styles.py",
+      "file_type": "code",
+      "source_file": "list_qt_styles.py",
+      "source_location": "L1",
+      "id": "list_qt_styles_py",
+      "community": 24,
+      "norm_label": "list_qt_styles.py"
+    },
+    {
+      "label": "get_qt_styles()",
+      "file_type": "code",
+      "source_file": "list_qt_styles.py",
+      "source_location": "L5",
+      "id": "python_list_qt_styles_get_qt_styles",
+      "community": 24,
+      "norm_label": "get_qt_styles()"
+    },
+    {
+      "label": "resolve_theme_icons.py",
+      "file_type": "code",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L1",
+      "id": "resolve_theme_icons_py",
+      "community": 9,
+      "norm_label": "resolve_theme_icons.py"
+    },
+    {
+      "label": "existing_theme_dir()",
+      "file_type": "code",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L20",
+      "id": "python_resolve_theme_icons_existing_theme_dir",
+      "community": 9,
+      "norm_label": "existing_theme_dir()"
+    },
+    {
+      "label": "read_theme_meta()",
+      "file_type": "code",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L30",
+      "id": "python_resolve_theme_icons_read_theme_meta",
+      "community": 9,
+      "norm_label": "read_theme_meta()"
+    },
+    {
+      "label": "score_dir()",
+      "file_type": "code",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L56",
+      "id": "python_resolve_theme_icons_score_dir",
+      "community": 9,
+      "norm_label": "score_dir()"
+    },
+    {
+      "label": "expand_dirs()",
+      "file_type": "code",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L76",
+      "id": "python_resolve_theme_icons_expand_dirs",
+      "community": 9,
+      "norm_label": "expand_dirs()"
+    },
+    {
+      "label": "build_theme_chain()",
+      "file_type": "code",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L93",
+      "id": "python_resolve_theme_icons_build_theme_chain",
+      "community": 9,
+      "norm_label": "build_theme_chain()"
+    },
+    {
+      "label": "resolve_icon()",
+      "file_type": "code",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L121",
+      "id": "python_resolve_theme_icons_resolve_icon",
+      "community": 9,
+      "norm_label": "resolve_icon()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L159",
+      "id": "python_resolve_theme_icons_main",
+      "community": 9,
+      "norm_label": "main()"
+    },
+    {
+      "label": "list_plasma_schemes.py",
+      "file_type": "code",
+      "source_file": "list_plasma_schemes.py",
+      "source_location": "L1",
+      "id": "list_plasma_schemes_py",
+      "community": 25,
+      "norm_label": "list_plasma_schemes.py"
+    },
+    {
+      "label": "get_plasma_schemes()",
+      "file_type": "code",
+      "source_file": "list_plasma_schemes.py",
+      "source_location": "L5",
+      "id": "python_list_plasma_schemes_get_plasma_schemes",
+      "community": 25,
+      "norm_label": "get_plasma_schemes()"
+    },
+    {
+      "label": "list_cursor_themes.py",
+      "file_type": "code",
+      "source_file": "list_cursor_themes.py",
+      "source_location": "L1",
+      "id": "list_cursor_themes_py",
+      "community": 19,
+      "norm_label": "list_cursor_themes.py"
+    },
+    {
+      "label": "is_valid_cursor_theme()",
+      "file_type": "code",
+      "source_file": "list_cursor_themes.py",
+      "source_location": "L5",
+      "id": "python_list_cursor_themes_is_valid_cursor_theme",
+      "community": 19,
+      "norm_label": "is_valid_cursor_theme()"
+    },
+    {
+      "label": "get_cursor_themes()",
+      "file_type": "code",
+      "source_file": "list_cursor_themes.py",
+      "source_location": "L16",
+      "id": "python_list_cursor_themes_get_cursor_themes",
+      "community": 19,
+      "norm_label": "get_cursor_themes()"
+    },
+    {
+      "label": "plasma_color.py",
+      "file_type": "code",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L1",
+      "id": "m3_plasma_color_py",
+      "community": 1,
+      "norm_label": "plasma_color.py"
+    },
+    {
+      "label": "ColorExporter",
+      "file_type": "code",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L18",
+      "id": "m3_plasma_color_colorexporter",
+      "community": 1,
+      "norm_label": "colorexporter"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L25",
+      "id": "m3_plasma_color_colorexporter_init",
+      "community": 1,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".export_css_theme()",
+      "file_type": "code",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L73",
+      "id": "m3_plasma_color_colorexporter_export_css_theme",
+      "community": 1,
+      "norm_label": ".export_css_theme()"
+    },
+    {
+      "label": ".export_plasma_color()",
+      "file_type": "code",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L78",
+      "id": "m3_plasma_color_colorexporter_export_plasma_color",
+      "community": 1,
+      "norm_label": ".export_plasma_color()"
+    },
+    {
+      "label": ".export_kitty_config()",
+      "file_type": "code",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L83",
+      "id": "m3_plasma_color_colorexporter_export_kitty_config",
+      "community": 1,
+      "norm_label": ".export_kitty_config()"
+    },
+    {
+      "label": ".export_konsole_theme()",
+      "file_type": "code",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L88",
+      "id": "m3_plasma_color_colorexporter_export_konsole_theme",
+      "community": 1,
+      "norm_label": ".export_konsole_theme()"
+    },
+    {
+      "label": ".export_and_apply_pywal_theme()",
+      "file_type": "code",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L100",
+      "id": "m3_plasma_color_colorexporter_export_and_apply_pywal_theme",
+      "community": 1,
+      "norm_label": ".export_and_apply_pywal_theme()"
+    },
+    {
+      "label": "Exports and applies the color scheme for pywal.",
+      "file_type": "rationale",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L101",
+      "id": "m3_plasma_color_rationale_101",
+      "community": 1,
+      "norm_label": "exports and applies the color scheme for pywal."
+    },
+    {
+      "label": "dynamic-m3.py",
+      "file_type": "code",
+      "source_file": "m3/dynamic-m3.py",
+      "source_location": "L1",
+      "id": "m3_dynamic_m3_py",
+      "community": 1,
+      "norm_label": "dynamic-m3.py"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "m3/dynamic-m3.py",
+      "source_location": "L9",
+      "id": "m3_dynamic_m3_main",
+      "community": 1,
+      "norm_label": "main()"
+    },
+    {
+      "label": "kitty_theme.py",
+      "file_type": "code",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L1",
+      "id": "m3_kitty_theme_py",
+      "community": 1,
+      "norm_label": "kitty_theme.py"
+    },
+    {
+      "label": "KittyThemeExporter",
+      "file_type": "code",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L3",
+      "id": "m3_kitty_theme_kittythemeexporter",
+      "community": 1,
+      "norm_label": "kittythemeexporter"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L61",
+      "id": "m3_kitty_theme_kittythemeexporter_init",
+      "community": 1,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".generate_kitty_theme()",
+      "file_type": "code",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L64",
+      "id": "m3_kitty_theme_kittythemeexporter_generate_kitty_theme",
+      "community": 1,
+      "norm_label": ".generate_kitty_theme()"
+    },
+    {
+      "label": ".write_new_kitty_theme()",
+      "file_type": "code",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L68",
+      "id": "m3_kitty_theme_kittythemeexporter_write_new_kitty_theme",
+      "community": 1,
+      "norm_label": ".write_new_kitty_theme()"
+    },
+    {
+      "label": "Handles the generation and export of CSS files based on a color schema.",
+      "file_type": "rationale",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L4",
+      "id": "m3_kitty_theme_rationale_4",
+      "community": 1,
+      "norm_label": "handles the generation and export of css files based on a color schema."
+    },
+    {
+      "label": "Generates the needed CSS classes.",
+      "file_type": "rationale",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L65",
+      "id": "m3_kitty_theme_rationale_65",
+      "community": 1,
+      "norm_label": "generates the needed css classes."
+    },
+    {
+      "label": "Writes the generated classes into the Kitty file.",
+      "file_type": "rationale",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L69",
+      "id": "m3_kitty_theme_rationale_69",
+      "community": 1,
+      "norm_label": "writes the generated classes into the kitty file."
+    },
+    {
+      "label": "css_theme.py",
+      "file_type": "code",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L1",
+      "id": "m3_css_theme_py",
+      "community": 1,
+      "norm_label": "css_theme.py"
+    },
+    {
+      "label": "CssThemeExporter",
+      "file_type": "code",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L4",
+      "id": "m3_css_theme_cssthemeexporter",
+      "community": 1,
+      "norm_label": "cssthemeexporter"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L46",
+      "id": "m3_css_theme_cssthemeexporter_init",
+      "community": 1,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".generate_css_classes()",
+      "file_type": "code",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L49",
+      "id": "m3_css_theme_cssthemeexporter_generate_css_classes",
+      "community": 1,
+      "norm_label": ".generate_css_classes()"
+    },
+    {
+      "label": ".write_new_css()",
+      "file_type": "code",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L53",
+      "id": "m3_css_theme_cssthemeexporter_write_new_css",
+      "community": 1,
+      "norm_label": ".write_new_css()"
+    },
+    {
+      "label": "Handles the generation and export of CSS files based on a color schema.",
+      "file_type": "rationale",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L5",
+      "id": "m3_css_theme_rationale_5",
+      "community": 1,
+      "norm_label": "handles the generation and export of css files based on a color schema."
+    },
+    {
+      "label": "Generates the needed CSS classes.",
+      "file_type": "rationale",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L50",
+      "id": "m3_css_theme_rationale_50",
+      "community": 1,
+      "norm_label": "generates the needed css classes."
+    },
+    {
+      "label": "Writes the generated classes into the CSS file.",
+      "file_type": "rationale",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L54",
+      "id": "m3_css_theme_rationale_54",
+      "community": 1,
+      "norm_label": "writes the generated classes into the css file."
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "m3/__init__.py",
+      "source_location": "L1",
+      "id": "m3_init_py",
+      "community": 28,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "main.py",
+      "file_type": "code",
+      "source_file": "ai/main.py",
+      "source_location": "L1",
+      "id": "ai_main_py",
+      "community": 13,
+      "norm_label": "main.py"
+    },
+    {
+      "label": "extract_and_clean_json()",
+      "file_type": "code",
+      "source_file": "ai/main.py",
+      "source_location": "L19",
+      "id": "ai_main_extract_and_clean_json",
+      "community": 13,
+      "norm_label": "extract_and_clean_json()"
+    },
+    {
+      "label": "get_fallback_response()",
+      "file_type": "code",
+      "source_file": "ai/main.py",
+      "source_location": "L80",
+      "id": "ai_main_get_fallback_response",
+      "community": 13,
+      "norm_label": "get_fallback_response()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "ai/main.py",
+      "source_location": "L89",
+      "id": "ai_main_main",
+      "community": 13,
+      "norm_label": "main()"
+    },
+    {
+      "label": "\u0631\u062f \u0627\u062d\u062a\u064a\u0627\u0637\u064a \u0641\u064a \u062d\u0627\u0644 \u0641\u0634\u0644 \u0643\u0644 \u0634\u064a\u0621 \u0644\u0636\u0645\u0627\u0646 \u0639\u062f\u0645 \u0627\u0646\u0647\u064a\u0627\u0631 \u0627\u0644\u062a\u0637\u0628\u064a\u0642",
+      "file_type": "rationale",
+      "source_file": "ai/main.py",
+      "source_location": "L81",
+      "id": "ai_main_rationale_81",
+      "community": 13,
+      "norm_label": "\u0631\u062f \u0627\u062d\u062a\u064a\u0627\u0637\u064a \u0641\u064a \u062d\u0627\u0644 \u0641\u0634\u0644 \u0643\u0644 \u0634\u064a\u0621 \u0644\u0636\u0645\u0627\u0646 \u0639\u062f\u0645 \u0627\u0646\u0647\u064a\u0627\u0631 \u0627\u0644\u062a\u0637\u0628\u064a\u0642"
+    },
+    {
+      "label": "gemini_provider.py",
+      "file_type": "code",
+      "source_file": "ai/gemini_provider.py",
+      "source_location": "L1",
+      "id": "ai_gemini_provider_py",
+      "community": 0,
+      "norm_label": "gemini_provider.py"
+    },
+    {
+      "label": "GeminiProvider",
+      "file_type": "code",
+      "source_file": "ai/gemini_provider.py",
+      "source_location": "L8",
+      "id": "ai_gemini_provider_geminiprovider",
+      "community": 0,
+      "norm_label": "geminiprovider"
+    },
+    {
+      "label": "LLMProvider",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "llmprovider",
+      "community": 0,
+      "norm_label": "llmprovider"
+    },
+    {
+      "label": ".generate()",
+      "file_type": "code",
+      "source_file": "ai/gemini_provider.py",
+      "source_location": "L9",
+      "id": "ai_gemini_provider_geminiprovider_generate",
+      "community": 0,
+      "norm_label": ".generate()"
+    },
+    {
+      "label": "local_provider.py",
+      "file_type": "code",
+      "source_file": "ai/local_provider.py",
+      "source_location": "L1",
+      "id": "ai_local_provider_py",
+      "community": 0,
+      "norm_label": "local_provider.py"
+    },
+    {
+      "label": "LocalProvider",
+      "file_type": "code",
+      "source_file": "ai/local_provider.py",
+      "source_location": "L8",
+      "id": "ai_local_provider_localprovider",
+      "community": 0,
+      "norm_label": "localprovider"
+    },
+    {
+      "label": ".generate()",
+      "file_type": "code",
+      "source_file": "ai/local_provider.py",
+      "source_location": "L9",
+      "id": "ai_local_provider_localprovider_generate",
+      "community": 0,
+      "norm_label": ".generate()"
+    },
+    {
+      "label": "base_provider.py",
+      "file_type": "code",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L1",
+      "id": "ai_base_provider_py",
+      "community": 0,
+      "norm_label": "base_provider.py"
+    },
+    {
+      "label": "LLMProvider",
+      "file_type": "code",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L7",
+      "id": "ai_base_provider_llmprovider",
+      "community": 0,
+      "norm_label": "llmprovider"
+    },
+    {
+      "label": "ABC",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "abc",
+      "community": 0,
+      "norm_label": "abc"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L8",
+      "id": "ai_base_provider_llmprovider_init",
+      "community": 0,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": "generate()",
+      "file_type": "code",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L23",
+      "id": "ai_base_provider_generate",
+      "community": 0,
+      "norm_label": "generate()"
+    },
+    {
+      "label": "list-gemini.py",
+      "file_type": "code",
+      "source_file": "ai/list-gemini.py",
+      "source_location": "L1",
+      "id": "ai_list_gemini_py",
+      "community": 26,
+      "norm_label": "list-gemini.py"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "ai/list-gemini.py",
+      "source_location": "L7",
+      "id": "ai_list_gemini_main",
+      "community": 26,
+      "norm_label": "main()"
+    },
+    {
+      "label": "config.py",
+      "file_type": "code",
+      "source_file": "ai/config.py",
+      "source_location": "L1",
+      "id": "ai_config_py",
+      "community": 0,
+      "norm_label": "config.py"
+    },
+    {
+      "label": "get_raw_boot_logs()",
+      "file_type": "code",
+      "source_file": "ai/config.py",
+      "source_location": "L75",
+      "id": "ai_config_get_raw_boot_logs",
+      "community": 0,
+      "norm_label": "get_raw_boot_logs()"
+    },
+    {
+      "label": "get_system_details()",
+      "file_type": "code",
+      "source_file": "ai/config.py",
+      "source_location": "L115",
+      "id": "ai_config_get_system_details",
+      "community": 0,
+      "norm_label": "get_system_details()"
+    },
+    {
+      "label": "get_provider()",
+      "file_type": "code",
+      "source_file": "ai/config.py",
+      "source_location": "L159",
+      "id": "ai_config_get_provider",
+      "community": 0,
+      "norm_label": "get_provider()"
+    },
+    {
+      "label": "\u062a\u062c\u0645\u064a\u0639 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0625\u0642\u0644\u0627\u0639 \u0648\u0627\u0644\u0644\u0648\u062c\u0627\u062a \u0641\u064a \u0646\u0635 \u0648\u0627\u062d\u062f",
+      "file_type": "rationale",
+      "source_file": "ai/config.py",
+      "source_location": "L76",
+      "id": "ai_config_rationale_76",
+      "community": 0,
+      "norm_label": "\u062a\u062c\u0645\u064a\u0639 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0627\u0642\u0644\u0627\u0639 \u0648\u0627\u0644\u0644\u0648\u062c\u0627\u062a \u0641\u064a \u0646\u0635 \u0648\u0627\u062d\u062f"
+    },
+    {
+      "label": "# TODO: -> test logic",
+      "file_type": "rationale",
+      "source_file": "ai/config.py",
+      "source_location": "L207",
+      "id": "ai_config_rationale_207",
+      "community": 0,
+      "norm_label": "# todo: -> test logic"
+    },
+    {
+      "label": "# TODO: -> test logic",
+      "file_type": "rationale",
+      "source_file": "ai/config.py",
+      "source_location": "L212",
+      "id": "ai_config_rationale_212",
+      "community": 0,
+      "norm_label": "# todo: -> test logic"
+    },
+    {
+      "label": "ollama_provider.py",
+      "file_type": "code",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L1",
+      "id": "ai_ollama_provider_py",
+      "community": 0,
+      "norm_label": "ollama_provider.py"
+    },
+    {
+      "label": "OllamaProvider",
+      "file_type": "code",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L5",
+      "id": "ai_ollama_provider_ollamaprovider",
+      "community": 0,
+      "norm_label": "ollamaprovider"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L6",
+      "id": "ai_ollama_provider_ollamaprovider_init",
+      "community": 0,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".generate()",
+      "file_type": "code",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L32",
+      "id": "ai_ollama_provider_ollamaprovider_generate",
+      "community": 0,
+      "norm_label": ".generate()"
+    },
+    {
+      "label": "# TODO: \u0641\u064a \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0627\u062f\u0639\u0645 \u0627\u0644\u0631\u062f \u0627\u0644\u0645\u0628\u0627\u0634\u0631",
+      "file_type": "rationale",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L59",
+      "id": "ai_ollama_provider_rationale_59",
+      "community": 0,
+      "norm_label": "# todo: \u0641\u064a \u0627\u0644\u0645\u0633\u062a\u0642\u0628\u0644 \u0627\u062f\u0639\u0645 \u0627\u0644\u0631\u062f \u0627\u0644\u0645\u0628\u0627\u0634\u0631"
+    },
+    {
+      "label": "openrouter_provider.py",
+      "file_type": "code",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L1",
+      "id": "ai_openrouter_provider_py",
+      "community": 0,
+      "norm_label": "openrouter_provider.py"
+    },
+    {
+      "label": "OpenRouterProvider",
+      "file_type": "code",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L8",
+      "id": "ai_openrouter_provider_openrouterprovider",
+      "community": 0,
+      "norm_label": "openrouterprovider"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L9",
+      "id": "ai_openrouter_provider_openrouterprovider_init",
+      "community": 0,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".generate()",
+      "file_type": "code",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L23",
+      "id": "ai_openrouter_provider_openrouterprovider_generate",
+      "community": 0,
+      "norm_label": ".generate()"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "ai/__init__.py",
+      "source_location": "L1",
+      "id": "ai_init_py",
+      "community": 29,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "openai_provider.py",
+      "file_type": "code",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L1",
+      "id": "ai_openai_provider_py",
+      "community": 0,
+      "norm_label": "openai_provider.py"
+    },
+    {
+      "label": "OpenAIProvider",
+      "file_type": "code",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L8",
+      "id": "ai_openai_provider_openaiprovider",
+      "community": 0,
+      "norm_label": "openaiprovider"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L9",
+      "id": "ai_openai_provider_openaiprovider_init",
+      "community": 0,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".generate()",
+      "file_type": "code",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L23",
+      "id": "ai_openai_provider_openaiprovider_generate",
+      "community": 0,
+      "norm_label": ".generate()"
+    },
+    {
+      "label": "prompt.py",
+      "file_type": "code",
+      "source_file": "ai/prompt.py",
+      "source_location": "L1",
+      "id": "ai_prompt_py",
+      "community": 7,
+      "norm_label": "prompt.py"
+    },
+    {
+      "label": "build_message()",
+      "file_type": "code",
+      "source_file": "ai/prompt.py",
+      "source_location": "L34",
+      "id": "ai_prompt_build_message",
+      "community": 7,
+      "norm_label": "build_message()"
+    },
+    {
+      "label": "Backward-compatible re-export of all Nibras prompts.  The actual definitions liv",
+      "file_type": "rationale",
+      "source_file": "ai/prompt.py",
+      "source_location": "L1",
+      "id": "ai_prompt_rationale_1",
+      "community": 7,
+      "norm_label": "backward-compatible re-export of all nibras prompts.  the actual definitions liv"
+    },
+    {
+      "label": "DEPRECATED: use prompts.idle_capsule.build_idle_user_message() instead.      Kep",
+      "file_type": "rationale",
+      "source_file": "ai/prompt.py",
+      "source_location": "L35",
+      "id": "ai_prompt_rationale_35",
+      "community": 7,
+      "norm_label": "deprecated: use prompts.idle_capsule.build_idle_user_message() instead.      kep"
+    },
+    {
+      "label": "spike_analyst.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/spike_analyst.py",
+      "source_location": "L1",
+      "id": "ai_prompts_spike_analyst_py",
+      "community": 3,
+      "norm_label": "spike_analyst.py"
+    },
+    {
+      "label": "Spike analyst prompt: deep forensic analysis of CPU/RAM/Temp spikes.",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/spike_analyst.py",
+      "source_location": "L1",
+      "id": "prompts_spike_analyst_rationale_1",
+      "community": 3,
+      "norm_label": "spike analyst prompt: deep forensic analysis of cpu/ram/temp spikes."
+    },
+    {
+      "label": "music.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/music.py",
+      "source_location": "L1",
+      "id": "ai_prompts_music_py",
+      "community": 3,
+      "norm_label": "music.py"
+    },
+    {
+      "label": "Music master prompt: mood-aware music expert with safe recommendation logic.",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/music.py",
+      "source_location": "L1",
+      "id": "prompts_music_rationale_1",
+      "community": 3,
+      "norm_label": "music master prompt: mood-aware music expert with safe recommendation logic."
+    },
+    {
+      "label": "boot_solution.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/boot_solution.py",
+      "source_location": "L1",
+      "id": "ai_prompts_boot_solution_py",
+      "community": 3,
+      "norm_label": "boot_solution.py"
+    },
+    {
+      "label": "Boot solution prompt: actionable Linux remediation steps for boot analysis issue",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/boot_solution.py",
+      "source_location": "L1",
+      "id": "prompts_boot_solution_rationale_1",
+      "community": 3,
+      "norm_label": "boot solution prompt: actionable linux remediation steps for boot analysis issue"
+    },
+    {
+      "label": "simple.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/simple.py",
+      "source_location": "L1",
+      "id": "ai_prompts_simple_py",
+      "community": 3,
+      "norm_label": "simple.py"
+    },
+    {
+      "label": "Simple persona prompts: PROGRAMMER (coder preset) and ASSISTANT (chat preset).",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/simple.py",
+      "source_location": "L1",
+      "id": "prompts_simple_rationale_1",
+      "community": 3,
+      "norm_label": "simple persona prompts: programmer (coder preset) and assistant (chat preset)."
+    },
+    {
+      "label": "_base.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/_base.py",
+      "source_location": "L1",
+      "id": "ai_prompts_base_py",
+      "community": 3,
+      "norm_label": "_base.py"
+    },
+    {
+      "label": "Shared constants and building blocks for all Nibras prompts.  Centralizes person",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/_base.py",
+      "source_location": "L1",
+      "id": "prompts_base_rationale_1",
+      "community": 3,
+      "norm_label": "shared constants and building blocks for all nibras prompts.  centralizes person"
+    },
+    {
+      "label": "system_analyst.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/system_analyst.py",
+      "source_location": "L1",
+      "id": "ai_prompts_system_analyst_py",
+      "community": 3,
+      "norm_label": "system_analyst.py"
+    },
+    {
+      "label": "System analyst prompt: boot performance + kernel log diagnostic.  NOTE: The lite",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/system_analyst.py",
+      "source_location": "L1",
+      "id": "prompts_system_analyst_rationale_1",
+      "community": 3,
+      "norm_label": "system analyst prompt: boot performance + kernel log diagnostic.  note: the lite"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L1",
+      "id": "ai_prompts_init_py",
+      "community": 3,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "Nibras prompt package.  All prompts are organized by task. The legacy `prompt.py",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L1",
+      "id": "prompts_init_rationale_1",
+      "community": 3,
+      "norm_label": "nibras prompt package.  all prompts are organized by task. the legacy `prompt.py"
+    },
+    {
+      "label": "idle_capsule.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/idle_capsule.py",
+      "source_location": "L1",
+      "id": "ai_prompts_idle_capsule_py",
+      "community": 3,
+      "norm_label": "idle_capsule.py"
+    },
+    {
+      "label": "build_idle_user_message()",
+      "file_type": "code",
+      "source_file": "ai/prompts/idle_capsule.py",
+      "source_location": "L87",
+      "id": "prompts_idle_capsule_build_idle_user_message",
+      "community": 7,
+      "norm_label": "build_idle_user_message()"
+    },
+    {
+      "label": "Idle capsule prompts: short hover replies for an idle UI widget.  IDLE_CAPSULE_P",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/idle_capsule.py",
+      "source_location": "L1",
+      "id": "prompts_idle_capsule_rationale_1",
+      "community": 3,
+      "norm_label": "idle capsule prompts: short hover replies for an idle ui widget.  idle_capsule_p"
+    },
+    {
+      "label": "Build a user message for the idle capsule prompt.      key: one of 'idle_capsule",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/idle_capsule.py",
+      "source_location": "L88",
+      "id": "prompts_idle_capsule_rationale_88",
+      "community": 7,
+      "norm_label": "build a user message for the idle capsule prompt.      key: one of 'idle_capsule"
+    },
+    {
+      "label": "system_action.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L1",
+      "id": "ai_prompts_system_action_py",
+      "community": 10,
+      "norm_label": "system_action.py"
+    },
+    {
+      "label": "_battery_prompt()",
+      "file_type": "code",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L156",
+      "id": "prompts_system_action_battery_prompt",
+      "community": 10,
+      "norm_label": "_battery_prompt()"
+    },
+    {
+      "label": "_build_legacy_system_action_prompt()",
+      "file_type": "code",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L292",
+      "id": "prompts_system_action_build_legacy_system_action_prompt",
+      "community": 10,
+      "norm_label": "_build_legacy_system_action_prompt()"
+    },
+    {
+      "label": "build_full()",
+      "file_type": "code",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L375",
+      "id": "prompts_system_action_build_full",
+      "community": 10,
+      "norm_label": "build_full()"
+    },
+    {
+      "label": "list_battery_levels()",
+      "file_type": "code",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L396",
+      "id": "prompts_system_action_list_battery_levels",
+      "community": 10,
+      "norm_label": "list_battery_levels()"
+    },
+    {
+      "label": "System action prompt: short, engaging responses for system actions (shutdown, re",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L1",
+      "id": "prompts_system_action_rationale_1",
+      "community": 10,
+      "norm_label": "system action prompt: short, engaging responses for system actions (shutdown, re"
+    },
+    {
+      "label": "Return a dict of every category -> its sub-prompt.      Call this ONCE at system",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L376",
+      "id": "prompts_system_action_rationale_376",
+      "community": 10,
+      "norm_label": "return a dict of every category -> its sub-prompt.      call this once at system"
+    },
+    {
+      "label": "Return all battery thresholds (sorted ascending).",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L397",
+      "id": "prompts_system_action_rationale_397",
+      "community": 10,
+      "norm_label": "return all battery thresholds (sorted ascending)."
+    },
+    {
+      "label": "_few_shots.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/_few_shots.py",
+      "source_location": "L1",
+      "id": "ai_prompts_few_shots_py",
+      "community": 3,
+      "norm_label": "_few_shots.py"
+    },
+    {
+      "label": "Concise few-shot examples for complex JSON schemas.  Each constant is a minimal",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/_few_shots.py",
+      "source_location": "L1",
+      "id": "prompts_few_shots_rationale_1",
+      "community": 3,
+      "norm_label": "concise few-shot examples for complex json schemas.  each constant is a minimal"
+    },
+    {
+      "label": "weather.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/weather.py",
+      "source_location": "L1",
+      "id": "ai_prompts_weather_py",
+      "community": 3,
+      "norm_label": "weather.py"
+    },
+    {
+      "label": "Weather master prompt: Nibras as a sophisticated Weather Intelligence Engine.",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/weather.py",
+      "source_location": "L1",
+      "id": "prompts_weather_rationale_1",
+      "community": 3,
+      "norm_label": "weather master prompt: nibras as a sophisticated weather intelligence engine."
+    },
+    {
+      "label": "todo.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/todo.py",
+      "source_location": "L1",
+      "id": "ai_prompts_todo_py",
+      "community": 3,
+      "norm_label": "todo.py"
+    },
+    {
+      "label": "TODO master prompt: focused productivity analyst for the user's task list.",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/todo.py",
+      "source_location": "L1",
+      "id": "prompts_todo_rationale_1",
+      "community": 3,
+      "norm_label": "todo master prompt: focused productivity analyst for the user's task list."
+    },
+    {
+      "label": "color_palette.py",
+      "file_type": "code",
+      "source_file": "ai/prompts/color_palette.py",
+      "source_location": "L1",
+      "id": "ai_prompts_color_palette_py",
+      "community": 3,
+      "norm_label": "color_palette.py"
+    },
+    {
+      "label": "Color palette prompt: precise UI color designer for a Quickshell theme editor.",
+      "file_type": "rationale",
+      "source_file": "ai/prompts/color_palette.py",
+      "source_location": "L1",
+      "id": "prompts_color_palette_rationale_1",
+      "community": 3,
+      "norm_label": "color palette prompt: precise ui color designer for a quickshell theme editor."
+    },
+    {
+      "label": "boot_analyzer.py",
+      "file_type": "code",
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L1",
+      "id": "ai_tools_boot_analyzer_py",
+      "community": 7,
+      "norm_label": "boot_analyzer.py"
+    },
+    {
+      "label": "get_system_data()",
+      "file_type": "code",
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L27",
+      "id": "tools_boot_analyzer_get_system_data",
+      "community": 7,
+      "norm_label": "get_system_data()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L66",
+      "id": "tools_boot_analyzer_main",
+      "community": 7,
+      "norm_label": "main()"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "ai/tools/__init__.py",
+      "source_location": "L1",
+      "id": "ai_tools_init_py",
+      "community": 30,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "devices/__init__.py",
+      "source_location": "L1",
+      "id": "devices_init_py",
+      "community": 31,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "list_wifi.py",
+      "file_type": "code",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L1",
+      "id": "network_list_wifi_py",
+      "community": 11,
+      "norm_label": "list_wifi.py"
+    },
+    {
+      "label": "parse_nmcli_line()",
+      "file_type": "code",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L7",
+      "id": "network_list_wifi_parse_nmcli_line",
+      "community": 11,
+      "norm_label": "parse_nmcli_line()"
+    },
+    {
+      "label": "is_ssid_saved()",
+      "file_type": "code",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L28",
+      "id": "network_list_wifi_is_ssid_saved",
+      "community": 11,
+      "norm_label": "is_ssid_saved()"
+    },
+    {
+      "label": "list_available_networks()",
+      "file_type": "code",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L50",
+      "id": "network_list_wifi_list_available_networks",
+      "community": 11,
+      "norm_label": "list_available_networks()"
+    },
+    {
+      "label": "\u0645\u062d\u0644\u0644 \u0645\u062e\u0635\u0635 \u0644\u0623\u0633\u0637\u0631 nmcli \u0627\u0644\u0630\u064a \u064a\u062a\u0639\u0627\u0645\u0644 \u0645\u0639 \u0627\u0644\u062d\u0631\u0648\u0641 \u0627\u0644\u0645\u0647\u0645\u0644\u0629 (escaped characters).",
+      "file_type": "rationale",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L8",
+      "id": "network_list_wifi_rationale_8",
+      "community": 11,
+      "norm_label": "\u0645\u062d\u0644\u0644 \u0645\u062e\u0635\u0635 \u0644\u0627\u0633\u0637\u0631 nmcli \u0627\u0644\u0630\u064a \u064a\u062a\u0639\u0627\u0645\u0644 \u0645\u0639 \u0627\u0644\u062d\u0631\u0648\u0641 \u0627\u0644\u0645\u0647\u0645\u0644\u0629 (escaped characters)."
+    },
+    {
+      "label": "\u064a\u062a\u062d\u0642\u0642 \u0645\u0645\u0627 \u0625\u0630\u0627 \u0643\u0627\u0646 \u0645\u0644\u0641 \u062a\u0639\u0631\u064a\u0641 \u0627\u062a\u0635\u0627\u0644 \u0644\u0640 SSID \u0645\u0639\u064a\u0646 \u0645\u0648\u062c\u0648\u062f\u064b\u0627.",
+      "file_type": "rationale",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L29",
+      "id": "network_list_wifi_rationale_29",
+      "community": 11,
+      "norm_label": "\u064a\u062a\u062d\u0642\u0642 \u0645\u0645\u0627 \u0627\u0630\u0627 \u0643\u0627\u0646 \u0645\u0644\u0641 \u062a\u0639\u0631\u064a\u0641 \u0627\u062a\u0635\u0627\u0644 \u0644\u0640 ssid \u0645\u0639\u064a\u0646 \u0645\u0648\u062c\u0648\u062f\u0627."
+    },
+    {
+      "label": "\u062a\u0639\u0631\u0636 \u0634\u0628\u0643\u0627\u062a \u0627\u0644\u0648\u0627\u064a \u0641\u0627\u064a \u0627\u0644\u0645\u062a\u0627\u062d\u0629\u060c \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 \u0637\u0631\u064a\u0642\u0629 \u062a\u062d\u0642\u0642 \u0641\u0631\u062f\u064a\u0629.",
+      "file_type": "rationale",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L51",
+      "id": "network_list_wifi_rationale_51",
+      "community": 11,
+      "norm_label": "\u062a\u0639\u0631\u0636 \u0634\u0628\u0643\u0627\u062a \u0627\u0644\u0648\u0627\u064a \u0641\u0627\u064a \u0627\u0644\u0645\u062a\u0627\u062d\u0629\u060c \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 \u0637\u0631\u064a\u0642\u0629 \u062a\u062d\u0642\u0642 \u0641\u0631\u062f\u064a\u0629."
+    },
+    {
+      "label": "connect_wifi.py",
+      "file_type": "code",
+      "source_file": "network/connect_wifi.py",
+      "source_location": "L1",
+      "id": "network_connect_wifi_py",
+      "community": 20,
+      "norm_label": "connect_wifi.py"
+    },
+    {
+      "label": "manage_connection()",
+      "file_type": "code",
+      "source_file": "network/connect_wifi.py",
+      "source_location": "L7",
+      "id": "network_connect_wifi_manage_connection",
+      "community": 20,
+      "norm_label": "manage_connection()"
+    },
+    {
+      "label": "\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0627\u062a\u0635\u0627\u0644\u0627\u062a:     - connect: \u064a\u062a\u0635\u0644 \u0628\u0634\u0628\u0643\u0629 \u062c\u062f\u064a\u062f\u0629 (\u064a\u0646\u0634\u0626 \u0645\u0644\u0641 \u062a\u0639\u0631\u064a\u0641 \u0625\u0630\u0627 \u0644\u0632\u0645 \u0627\u0644\u0623\u0645\u0631).",
+      "file_type": "rationale",
+      "source_file": "network/connect_wifi.py",
+      "source_location": "L8",
+      "id": "network_connect_wifi_rationale_8",
+      "community": 20,
+      "norm_label": "\u0627\u062f\u0627\u0631\u0629 \u0627\u0644\u0627\u062a\u0635\u0627\u0644\u0627\u062a:     - connect: \u064a\u062a\u0635\u0644 \u0628\u0634\u0628\u0643\u0629 \u062c\u062f\u064a\u062f\u0629 (\u064a\u0646\u0634\u064a \u0645\u0644\u0641 \u062a\u0639\u0631\u064a\u0641 \u0627\u0630\u0627 \u0644\u0632\u0645 \u0627\u0644\u0627\u0645\u0631)."
+    },
+    {
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "network/__init__.py",
+      "source_location": "L1",
+      "id": "network_init_py",
+      "community": 32,
+      "norm_label": "__init__.py"
+    },
+    {
+      "label": "data_usage.py",
+      "file_type": "code",
+      "source_file": "network/data_usage.py",
+      "source_location": "L1",
+      "id": "network_data_usage_py",
+      "community": 2,
+      "norm_label": "data_usage.py"
+    },
+    {
+      "label": "get_data_usage()",
+      "file_type": "code",
+      "source_file": "network/data_usage.py",
+      "source_location": "L10",
+      "id": "network_data_usage_get_data_usage",
+      "community": 2,
+      "norm_label": "get_data_usage()"
+    },
+    {
+      "label": "get_app_breakdown()",
+      "file_type": "code",
+      "source_file": "network/data_usage.py",
+      "source_location": "L91",
+      "id": "network_data_usage_get_app_breakdown",
+      "community": 2,
+      "norm_label": "get_app_breakdown()"
+    },
+    {
+      "label": "\u064a\u0639\u0631\u0636 \u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0644\u0641\u062a\u0631\u0629 \u0645\u062d\u062f\u062f\u0629 \u0628\u0635\u064a\u063a\u0629 JSON.     \u0645\u0628\u0646\u064a \u0639\u0644\u0649 \u0627\u0644\u0647\u064a\u0643\u0644 \u0627\u0644\u0641\u0639\u0644\u064a \u0644\u0645\u062e\u0631\u062c\u0627\u062a",
+      "file_type": "rationale",
+      "source_file": "network/data_usage.py",
+      "source_location": "L11",
+      "id": "network_data_usage_rationale_11",
+      "community": 2,
+      "norm_label": "\u064a\u0639\u0631\u0636 \u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0644\u0641\u062a\u0631\u0629 \u0645\u062d\u062f\u062f\u0629 \u0628\u0635\u064a\u063a\u0629 json.     \u0645\u0628\u0646\u064a \u0639\u0644\u0649 \u0627\u0644\u0647\u064a\u0643\u0644 \u0627\u0644\u0641\u0639\u0644\u064a \u0644\u0645\u062e\u0631\u062c\u0627\u062a"
+    },
+    {
+      "label": "per-app breakdown \u0644\u0644\u0634\u0647\u0631 \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 vnstat + nethogs ratios.",
+      "file_type": "rationale",
+      "source_file": "network/data_usage.py",
+      "source_location": "L92",
+      "id": "network_data_usage_rationale_92",
+      "community": 2,
+      "norm_label": "per-app breakdown \u0644\u0644\u0634\u0647\u0631 \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 vnstat + nethogs ratios."
+    },
+    {
+      "label": "live_usage.py",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L1",
+      "id": "network_live_usage_py",
+      "community": 2,
+      "norm_label": "live_usage.py"
+    },
+    {
+      "label": "get_vnstat_daily()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L16",
+      "id": "network_live_usage_get_vnstat_daily",
+      "community": 2,
+      "norm_label": "get_vnstat_daily()"
+    },
+    {
+      "label": "get_vnstat_hourly()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L63",
+      "id": "network_live_usage_get_vnstat_hourly",
+      "community": 2,
+      "norm_label": "get_vnstat_hourly()"
+    },
+    {
+      "label": "calculate_app_ratios_from_db()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L101",
+      "id": "network_live_usage_calculate_app_ratios_from_db",
+      "community": 2,
+      "norm_label": "calculate_app_ratios_from_db()"
+    },
+    {
+      "label": "estimate_per_app_from_vnstat()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L149",
+      "id": "network_live_usage_estimate_per_app_from_vnstat",
+      "community": 2,
+      "norm_label": "estimate_per_app_from_vnstat()"
+    },
+    {
+      "label": "summarize_usage_with_vnstat()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L178",
+      "id": "network_live_usage_summarize_usage_with_vnstat",
+      "community": 2,
+      "norm_label": "summarize_usage_with_vnstat()"
+    },
+    {
+      "label": "parse_nethogs_process()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L257",
+      "id": "network_live_usage_parse_nethogs_process",
+      "community": 2,
+      "norm_label": "parse_nethogs_process()"
+    },
+    {
+      "label": "parse_nethogs_output()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L272",
+      "id": "network_live_usage_parse_nethogs_output",
+      "community": 2,
+      "norm_label": "parse_nethogs_output()"
+    },
+    {
+      "label": "run_nethogs()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L426",
+      "id": "network_live_usage_run_nethogs",
+      "community": 2,
+      "norm_label": "run_nethogs()"
+    },
+    {
+      "label": "fallback_psutil()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L455",
+      "id": "network_live_usage_fallback_psutil",
+      "community": 2,
+      "norm_label": "fallback_psutil()"
+    },
+    {
+      "label": "ensure_db()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L489",
+      "id": "network_live_usage_ensure_db",
+      "community": 2,
+      "norm_label": "ensure_db()"
+    },
+    {
+      "label": "persist_rows()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L520",
+      "id": "network_live_usage_persist_rows",
+      "community": 2,
+      "norm_label": "persist_rows()"
+    },
+    {
+      "label": "get_live_usage()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L568",
+      "id": "network_live_usage_get_live_usage",
+      "community": 2,
+      "norm_label": "get_live_usage()"
+    },
+    {
+      "label": "summarize_usage()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L607",
+      "id": "network_live_usage_summarize_usage",
+      "community": 2,
+      "norm_label": "summarize_usage()"
+    },
+    {
+      "label": "parse_args()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L687",
+      "id": "network_live_usage_parse_args",
+      "community": 2,
+      "norm_label": "parse_args()"
+    },
+    {
+      "label": "default_db_path()",
+      "file_type": "code",
+      "source_file": "network/live_usage.py",
+      "source_location": "L703",
+      "id": "network_live_usage_default_db_path",
+      "community": 2,
+      "norm_label": "default_db_path()"
+    },
+    {
+      "label": "\u062c\u0644\u0628 vnstat totals \u0627\u0644\u064a\u0648\u0645\u064a\u0629 (\u062f\u0642\u064a\u0642).     \u064a\u0631\u062c\u0639: {rx_bytes, tx_bytes, total_bytes}",
+      "file_type": "rationale",
+      "source_file": "network/live_usage.py",
+      "source_location": "L17",
+      "id": "network_live_usage_rationale_17",
+      "community": 2,
+      "norm_label": "\u062c\u0644\u0628 vnstat totals \u0627\u0644\u064a\u0648\u0645\u064a\u0629 (\u062f\u0642\u064a\u0642).     \u064a\u0631\u062c\u0639: {rx_bytes, tx_bytes, total_bytes}"
+    },
+    {
+      "label": "\u062c\u0644\u0628 vnstat \u0628\u064a\u0627\u0646\u0627\u062a \u0643\u0644 \u0633\u0627\u0639\u0629 (\u0644\u0623\u062f\u0642 \u0645\u0646 24 \u0633\u0627\u0639\u0629).     \u064a\u0631\u062c\u0639: [{hour_ts, rx_bytes, tx_b",
+      "file_type": "rationale",
+      "source_file": "network/live_usage.py",
+      "source_location": "L64",
+      "id": "network_live_usage_rationale_64",
+      "community": 2,
+      "norm_label": "\u062c\u0644\u0628 vnstat \u0628\u064a\u0627\u0646\u0627\u062a \u0643\u0644 \u0633\u0627\u0639\u0629 (\u0644\u0627\u062f\u0642 \u0645\u0646 24 \u0633\u0627\u0639\u0629).     \u064a\u0631\u062c\u0639: [{hour_ts, rx_bytes, tx_b"
+    },
+    {
+      "label": "\u062d\u0633\u0627\u0628 \u0646\u0633\u0628 \u0643\u0644 \u062a\u0637\u0628\u064a\u0642 \u0645\u0646 nethogs database.     \u064a\u0631\u062c\u0639: [{app_name, ratio_rx, ratio_tx,",
+      "file_type": "rationale",
+      "source_file": "network/live_usage.py",
+      "source_location": "L102",
+      "id": "network_live_usage_rationale_102",
+      "community": 2,
+      "norm_label": "\u062d\u0633\u0627\u0628 \u0646\u0633\u0628 \u0643\u0644 \u062a\u0637\u0628\u064a\u0642 \u0645\u0646 nethogs database.     \u064a\u0631\u062c\u0639: [{app_name, ratio_rx, ratio_tx,"
+    },
+    {
+      "label": "\u062d\u0633\u0627\u0628 \u0627\u0644\u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0644\u0643\u0644 \u062a\u0637\u0628\u064a\u0642 \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 vnstat totals \u00d7 nethogs ratios.     \u064a\u0631\u062c\u0639: [{na",
+      "file_type": "rationale",
+      "source_file": "network/live_usage.py",
+      "source_location": "L150",
+      "id": "network_live_usage_rationale_150",
+      "community": 2,
+      "norm_label": "\u062d\u0633\u0627\u0628 \u0627\u0644\u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0644\u0643\u0644 \u062a\u0637\u0628\u064a\u0642 \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 vnstat totals \u00d7 nethogs ratios.     \u064a\u0631\u062c\u0639: [{na"
+    },
+    {
+      "label": "\u0645\u0644\u062e\u0635 \u0627\u0644\u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 vnstat (\u062f\u0642\u064a\u0642) + nethogs ratios (\u062a\u0642\u0631\u064a\u0628\u064a).",
+      "file_type": "rationale",
+      "source_file": "network/live_usage.py",
+      "source_location": "L179",
+      "id": "network_live_usage_rationale_179",
+      "community": 2,
+      "norm_label": "\u0645\u0644\u062e\u0635 \u0627\u0644\u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0628\u0627\u0633\u062a\u062e\u062f\u0627\u0645 vnstat (\u062f\u0642\u064a\u0642) + nethogs ratios (\u062a\u0642\u0631\u064a\u0628\u064a)."
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_get_top_cpu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_get_top_ram",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_get_process_detail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L213",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_init_temp_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L226",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_add_temp_reading",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L257",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_get_cpu_temps_psutil",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L281",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_get_gpu_temps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L340",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_get_storage_temps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L421",
+      "weight": 1.0,
+      "source": "system_diagnostics_py",
+      "target": "python_system_diagnostics_get_detailed_temps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L422",
+      "weight": 1.0,
+      "source": "python_system_diagnostics_get_detailed_temps",
+      "target": "python_system_diagnostics_init_temp_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L269",
+      "weight": 1.0,
+      "source": "python_system_diagnostics_get_cpu_temps_psutil",
+      "target": "python_system_diagnostics_add_temp_reading",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L300",
+      "weight": 1.0,
+      "source": "python_system_diagnostics_get_gpu_temps",
+      "target": "python_system_diagnostics_add_temp_reading",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L350",
+      "weight": 1.0,
+      "source": "python_system_diagnostics_get_storage_temps",
+      "target": "python_system_diagnostics_add_temp_reading",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L423",
+      "weight": 1.0,
+      "source": "python_system_diagnostics_get_detailed_temps",
+      "target": "python_system_diagnostics_get_cpu_temps_psutil",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L424",
+      "weight": 1.0,
+      "source": "python_system_diagnostics_get_detailed_temps",
+      "target": "python_system_diagnostics_get_gpu_temps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "system_diagnostics.py",
+      "source_location": "L425",
+      "weight": 1.0,
+      "source": "python_system_diagnostics_get_detailed_temps",
+      "target": "python_system_diagnostics_get_storage_temps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "get_clipboard.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "get_clipboard_py",
+      "target": "python_get_clipboard_get_cliphist_items",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "get_clipboard.py",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "get_clipboard_py",
+      "target": "python_get_clipboard_activate_item",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "get_clipboard.py",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "get_clipboard_py",
+      "target": "python_get_clipboard_delete_item",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "get_clipboard.py",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "get_clipboard_py",
+      "target": "python_get_clipboard_wipe_all",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_konsole_profiles.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "list_konsole_profiles_py",
+      "target": "python_list_konsole_profiles_get_konsole_profiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "create_depth_image_rembg.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "create_depth_image_rembg_py",
+      "target": "python_create_depth_image_rembg_process_image_rembg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "create_depth_image_rembg.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "python_create_depth_image_rembg_rationale_19",
+      "target": "python_create_depth_image_rembg_process_image_rembg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "battery_info_py",
+      "target": "python_battery_info_get_linux_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "battery_info_py",
+      "target": "python_battery_info_get_windows_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "battery_info_py",
+      "target": "python_battery_info_get_macos_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L243",
+      "weight": 1.0,
+      "source": "battery_info_py",
+      "target": "python_battery_info_get_battery_info",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L318",
+      "weight": 1.0,
+      "source": "python_battery_info_get_battery_info",
+      "target": "python_battery_info_get_linux_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "python_battery_info_rationale_21",
+      "target": "python_battery_info_get_linux_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L320",
+      "weight": 1.0,
+      "source": "python_battery_info_get_battery_info",
+      "target": "python_battery_info_get_windows_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "python_battery_info_rationale_104",
+      "target": "python_battery_info_get_windows_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L322",
+      "weight": 1.0,
+      "source": "python_battery_info_get_battery_info",
+      "target": "python_battery_info_get_macos_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L160",
+      "weight": 1.0,
+      "source": "python_battery_info_rationale_160",
+      "target": "python_battery_info_get_macos_battery_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "battery_info.py",
+      "source_location": "L244",
+      "weight": 1.0,
+      "source": "python_battery_info_rationale_244",
+      "target": "python_battery_info_get_battery_info",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_kvantum_themes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "list_kvantum_themes_py",
+      "target": "python_list_kvantum_themes_get_kvantum_themes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_monitor.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "system_monitor_py",
+      "target": "python_system_monitor_get_max_temp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "system_monitor.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "system_monitor_py",
+      "target": "python_system_monitor_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "system_monitor.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "python_system_monitor_main",
+      "target": "python_system_monitor_get_max_temp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "system_monitor.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "python_system_monitor_rationale_17",
+      "target": "python_system_monitor_get_max_temp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "overlay_cache_images_cleaner.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "overlay_cache_images_cleaner_py",
+      "target": "python_overlay_cache_images_cleaner_clean_up_images",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "overlay_cache_images_cleaner.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "python_overlay_cache_images_cleaner_rationale_9",
+      "target": "python_overlay_cache_images_cleaner_clean_up_images",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "create_depth_image_opencv.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "create_depth_image_opencv_py",
+      "target": "python_create_depth_image_opencv_process_image_grabcut",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_icon_themes.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "list_icon_themes_py",
+      "target": "python_list_icon_themes_is_valid_icon_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_icon_themes.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "list_icon_themes_py",
+      "target": "python_list_icon_themes_get_icon_themes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "list_icon_themes.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "python_list_icon_themes_get_icon_themes",
+      "target": "python_list_icon_themes_is_valid_icon_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_gtk_themes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "list_gtk_themes_py",
+      "target": "python_list_gtk_themes_is_valid_gtk_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_gtk_themes.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "list_gtk_themes_py",
+      "target": "python_list_gtk_themes_get_gtk_themes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "list_gtk_themes.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "python_list_gtk_themes_get_gtk_themes",
+      "target": "python_list_gtk_themes_is_valid_gtk_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "scan_wallpapers_py",
+      "target": "python_scan_wallpapers_debug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "scan_wallpapers_py",
+      "target": "python_scan_wallpapers_get_mtime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "scan_wallpapers_py",
+      "target": "python_scan_wallpapers_resolve_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "scan_wallpapers_py",
+      "target": "python_scan_wallpapers_get_images_from_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "scan_wallpapers_py",
+      "target": "python_scan_wallpapers_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "python_scan_wallpapers_get_images_from_dir",
+      "target": "python_scan_wallpapers_debug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L85",
+      "weight": 1.0,
+      "source": "python_scan_wallpapers_main",
+      "target": "python_scan_wallpapers_debug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "python_scan_wallpapers_rationale_13",
+      "target": "python_scan_wallpapers_debug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "python_scan_wallpapers_rationale_18",
+      "target": "python_scan_wallpapers_get_mtime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "python_scan_wallpapers_main",
+      "target": "python_scan_wallpapers_resolve_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "python_scan_wallpapers_rationale_26",
+      "target": "python_scan_wallpapers_resolve_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L127",
+      "weight": 1.0,
+      "source": "python_scan_wallpapers_main",
+      "target": "python_scan_wallpapers_get_images_from_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scan_wallpapers.py",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "python_scan_wallpapers_rationale_47",
+      "target": "python_scan_wallpapers_get_images_from_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apply_konsole_profile_open_sessions_py",
+      "target": "python_apply_konsole_profile_open_sessions_qdbus_candidates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "apply_konsole_profile_open_sessions_py",
+      "target": "python_apply_konsole_profile_open_sessions_pick_qdbus_bin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "apply_konsole_profile_open_sessions_py",
+      "target": "python_apply_konsole_profile_open_sessions_run_qdbus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "apply_konsole_profile_open_sessions_py",
+      "target": "python_apply_konsole_profile_open_sessions_list_konsole_services",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "apply_konsole_profile_open_sessions_py",
+      "target": "python_apply_konsole_profile_open_sessions_list_session_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "apply_konsole_profile_open_sessions_py",
+      "target": "python_apply_konsole_profile_open_sessions_apply_profile_to_session",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "apply_konsole_profile_open_sessions_py",
+      "target": "python_apply_konsole_profile_open_sessions_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "python_apply_konsole_profile_open_sessions_pick_qdbus_bin",
+      "target": "python_apply_konsole_profile_open_sessions_qdbus_candidates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "python_apply_konsole_profile_open_sessions_list_konsole_services",
+      "target": "python_apply_konsole_profile_open_sessions_run_qdbus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "python_apply_konsole_profile_open_sessions_list_session_paths",
+      "target": "python_apply_konsole_profile_open_sessions_run_qdbus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "python_apply_konsole_profile_open_sessions_apply_profile_to_session",
+      "target": "python_apply_konsole_profile_open_sessions_run_qdbus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L117",
+      "weight": 1.0,
+      "source": "python_apply_konsole_profile_open_sessions_main",
+      "target": "python_apply_konsole_profile_open_sessions_list_konsole_services",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L130",
+      "weight": 1.0,
+      "source": "python_apply_konsole_profile_open_sessions_main",
+      "target": "python_apply_konsole_profile_open_sessions_list_session_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apply_konsole_profile_open_sessions.py",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "python_apply_konsole_profile_open_sessions_main",
+      "target": "python_apply_konsole_profile_open_sessions_apply_profile_to_session",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_qt_styles.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "list_qt_styles_py",
+      "target": "python_list_qt_styles_get_qt_styles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "resolve_theme_icons_py",
+      "target": "python_resolve_theme_icons_existing_theme_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "resolve_theme_icons_py",
+      "target": "python_resolve_theme_icons_read_theme_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "resolve_theme_icons_py",
+      "target": "python_resolve_theme_icons_score_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "resolve_theme_icons_py",
+      "target": "python_resolve_theme_icons_expand_dirs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "resolve_theme_icons_py",
+      "target": "python_resolve_theme_icons_build_theme_chain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "resolve_theme_icons_py",
+      "target": "python_resolve_theme_icons_resolve_icon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "resolve_theme_icons_py",
+      "target": "python_resolve_theme_icons_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "python_resolve_theme_icons_build_theme_chain",
+      "target": "python_resolve_theme_icons_existing_theme_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L130",
+      "weight": 1.0,
+      "source": "python_resolve_theme_icons_resolve_icon",
+      "target": "python_resolve_theme_icons_existing_theme_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "python_resolve_theme_icons_build_theme_chain",
+      "target": "python_resolve_theme_icons_read_theme_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L134",
+      "weight": 1.0,
+      "source": "python_resolve_theme_icons_resolve_icon",
+      "target": "python_resolve_theme_icons_read_theme_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L135",
+      "weight": 1.0,
+      "source": "python_resolve_theme_icons_resolve_icon",
+      "target": "python_resolve_theme_icons_expand_dirs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L173",
+      "weight": 1.0,
+      "source": "python_resolve_theme_icons_main",
+      "target": "python_resolve_theme_icons_build_theme_chain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resolve_theme_icons.py",
+      "source_location": "L180",
+      "weight": 1.0,
+      "source": "python_resolve_theme_icons_main",
+      "target": "python_resolve_theme_icons_resolve_icon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_plasma_schemes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "list_plasma_schemes_py",
+      "target": "python_list_plasma_schemes_get_plasma_schemes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_cursor_themes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "list_cursor_themes_py",
+      "target": "python_list_cursor_themes_is_valid_cursor_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "list_cursor_themes.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "list_cursor_themes_py",
+      "target": "python_list_cursor_themes_get_cursor_themes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "list_cursor_themes.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "python_list_cursor_themes_get_cursor_themes",
+      "target": "python_list_cursor_themes_is_valid_cursor_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "m3_plasma_color_py",
+      "target": "m3_plasma_color_colorexporter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter",
+      "target": "m3_plasma_color_colorexporter_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter",
+      "target": "m3_plasma_color_colorexporter_export_css_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter",
+      "target": "m3_plasma_color_colorexporter_export_plasma_color",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter",
+      "target": "m3_plasma_color_colorexporter_export_kitty_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter",
+      "target": "m3_plasma_color_colorexporter_export_konsole_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter",
+      "target": "m3_plasma_color_colorexporter_export_and_apply_pywal_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L3",
+      "weight": 0.8,
+      "source": "m3_plasma_color_colorexporter",
+      "target": "m3_css_theme_cssthemeexporter",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L15",
+      "weight": 0.8,
+      "source": "m3_plasma_color_colorexporter",
+      "target": "m3_kitty_theme_kittythemeexporter",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "m3/dynamic-m3.py",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "m3_dynamic_m3_main",
+      "target": "m3_plasma_color_colorexporter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter_init",
+      "target": "m3_plasma_color_colorexporter_export_plasma_color",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter_init",
+      "target": "m3_plasma_color_colorexporter_export_konsole_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter_export_css_theme",
+      "target": "m3_css_theme_cssthemeexporter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L85",
+      "weight": 1.0,
+      "source": "m3_plasma_color_colorexporter_export_kitty_config",
+      "target": "m3_kitty_theme_kittythemeexporter"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/plasma_color.py",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "m3_plasma_color_rationale_101",
+      "target": "m3_plasma_color_colorexporter_export_and_apply_pywal_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/dynamic-m3.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "m3_dynamic_m3_py",
+      "target": "m3_dynamic_m3_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "m3_kitty_theme_py",
+      "target": "m3_kitty_theme_kittythemeexporter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "m3_kitty_theme_kittythemeexporter",
+      "target": "m3_kitty_theme_kittythemeexporter_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "m3_kitty_theme_kittythemeexporter",
+      "target": "m3_kitty_theme_kittythemeexporter_generate_kitty_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "m3_kitty_theme_kittythemeexporter",
+      "target": "m3_kitty_theme_kittythemeexporter_write_new_kitty_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "m3_kitty_theme_rationale_4",
+      "target": "m3_kitty_theme_kittythemeexporter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "m3_kitty_theme_kittythemeexporter_write_new_kitty_theme",
+      "target": "m3_kitty_theme_kittythemeexporter_generate_kitty_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "m3_kitty_theme_rationale_65",
+      "target": "m3_kitty_theme_kittythemeexporter_generate_kitty_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/kitty_theme.py",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "m3_kitty_theme_rationale_69",
+      "target": "m3_kitty_theme_kittythemeexporter_write_new_kitty_theme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "m3_css_theme_py",
+      "target": "m3_css_theme_cssthemeexporter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "m3_css_theme_cssthemeexporter",
+      "target": "m3_css_theme_cssthemeexporter_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "m3_css_theme_cssthemeexporter",
+      "target": "m3_css_theme_cssthemeexporter_generate_css_classes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "m3_css_theme_cssthemeexporter",
+      "target": "m3_css_theme_cssthemeexporter_write_new_css",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "m3_css_theme_rationale_5",
+      "target": "m3_css_theme_cssthemeexporter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "m3_css_theme_cssthemeexporter_write_new_css",
+      "target": "m3_css_theme_cssthemeexporter_generate_css_classes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "m3_css_theme_rationale_50",
+      "target": "m3_css_theme_cssthemeexporter_generate_css_classes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "m3/css_theme.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "m3_css_theme_rationale_54",
+      "target": "m3_css_theme_cssthemeexporter_write_new_css",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/main.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "ai_main_py",
+      "target": "ai_main_extract_and_clean_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/main.py",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "ai_main_py",
+      "target": "ai_main_get_fallback_response",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/main.py",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "ai_main_py",
+      "target": "ai_main_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/main.py",
+      "source_location": "L180",
+      "weight": 1.0,
+      "source": "ai_main_main",
+      "target": "ai_main_extract_and_clean_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/main.py",
+      "source_location": "L188",
+      "weight": 1.0,
+      "source": "ai_main_main",
+      "target": "ai_main_get_fallback_response",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/main.py",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "ai_main_rationale_81",
+      "target": "ai_main_get_fallback_response",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "ai/main.py",
+      "source_location": "L173",
+      "weight": 1.0,
+      "source": "ai_main_main",
+      "target": "ai_config_get_provider"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/gemini_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_gemini_provider_py",
+      "target": "ai_gemini_provider_geminiprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/gemini_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_gemini_provider_geminiprovider",
+      "target": "llmprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/gemini_provider.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "ai_gemini_provider_geminiprovider",
+      "target": "ai_gemini_provider_geminiprovider_generate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "ai/gemini_provider.py",
+      "source_location": "L2",
+      "weight": 0.8,
+      "source": "ai_gemini_provider_geminiprovider",
+      "target": "ai_base_provider_llmprovider",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "ai/config.py",
+      "source_location": "L202",
+      "weight": 1.0,
+      "source": "ai_config_get_provider",
+      "target": "ai_gemini_provider_geminiprovider"
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/local_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_local_provider_localprovider",
+      "target": "llmprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_ollama_provider_ollamaprovider",
+      "target": "llmprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_openrouter_provider_openrouterprovider",
+      "target": "llmprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_openai_provider_openaiprovider",
+      "target": "llmprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/local_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_local_provider_py",
+      "target": "ai_local_provider_localprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/local_provider.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "ai_local_provider_localprovider",
+      "target": "ai_local_provider_localprovider_generate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "ai/local_provider.py",
+      "source_location": "L5",
+      "weight": 0.8,
+      "source": "ai_local_provider_localprovider",
+      "target": "ai_base_provider_llmprovider",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "ai/config.py",
+      "source_location": "L195",
+      "weight": 1.0,
+      "source": "ai_config_get_provider",
+      "target": "ai_local_provider_localprovider"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "ai_base_provider_py",
+      "target": "abc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "ai_base_provider_py",
+      "target": "ai_base_provider_llmprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "ai_base_provider_py",
+      "target": "ai_base_provider_generate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "ai_base_provider_llmprovider",
+      "target": "abc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/base_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_base_provider_llmprovider",
+      "target": "ai_base_provider_llmprovider_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L1",
+      "weight": 0.8,
+      "source": "ai_ollama_provider_ollamaprovider",
+      "target": "ai_base_provider_llmprovider",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L1",
+      "weight": 0.8,
+      "source": "ai_openrouter_provider_openrouterprovider",
+      "target": "ai_base_provider_llmprovider",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L1",
+      "weight": 0.8,
+      "source": "ai_openai_provider_openaiprovider",
+      "target": "ai_base_provider_llmprovider",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/list-gemini.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "ai_list_gemini_py",
+      "target": "ai_list_gemini_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/config.py",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "ai_config_py",
+      "target": "ai_config_get_raw_boot_logs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/config.py",
+      "source_location": "L115",
+      "weight": 1.0,
+      "source": "ai_config_py",
+      "target": "ai_config_get_system_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/config.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "ai_config_py",
+      "target": "ai_config_get_provider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/config.py",
+      "source_location": "L207",
+      "weight": 1.0,
+      "source": "ai_config_rationale_207",
+      "target": "ai_config_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/config.py",
+      "source_location": "L212",
+      "weight": 1.0,
+      "source": "ai_config_rationale_212",
+      "target": "ai_config_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "ai_tools_boot_analyzer_py",
+      "target": "ai_config_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/config.py",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "ai_config_get_provider",
+      "target": "ai_config_get_raw_boot_logs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/config.py",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "ai_config_rationale_76",
+      "target": "ai_config_get_raw_boot_logs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/config.py",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "ai_config_get_provider",
+      "target": "ai_config_get_system_details",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "ai/config.py",
+      "source_location": "L199",
+      "weight": 1.0,
+      "source": "ai_config_get_provider",
+      "target": "ai_ollama_provider_ollamaprovider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "ai/config.py",
+      "source_location": "L205",
+      "weight": 1.0,
+      "source": "ai_config_get_provider",
+      "target": "ai_openrouter_provider_openrouterprovider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "ai/config.py",
+      "source_location": "L213",
+      "weight": 1.0,
+      "source": "ai_config_get_provider",
+      "target": "ai_openai_provider_openaiprovider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "tools_boot_analyzer_main",
+      "target": "ai_config_get_provider"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_ollama_provider_py",
+      "target": "ai_ollama_provider_ollamaprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "ai_ollama_provider_rationale_59",
+      "target": "ai_ollama_provider_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "ai_ollama_provider_ollamaprovider",
+      "target": "ai_ollama_provider_ollamaprovider_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/ollama_provider.py",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "ai_ollama_provider_ollamaprovider",
+      "target": "ai_ollama_provider_ollamaprovider_generate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_openrouter_provider_py",
+      "target": "ai_openrouter_provider_openrouterprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "ai_openrouter_provider_openrouterprovider",
+      "target": "ai_openrouter_provider_openrouterprovider_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/openrouter_provider.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "ai_openrouter_provider_openrouterprovider",
+      "target": "ai_openrouter_provider_openrouterprovider_generate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_openai_provider_py",
+      "target": "ai_openai_provider_openaiprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "ai_openai_provider_openaiprovider",
+      "target": "ai_openai_provider_openaiprovider_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/openai_provider.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "ai_openai_provider_openaiprovider",
+      "target": "ai_openai_provider_openaiprovider_generate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompt.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "ai_prompt_py",
+      "target": "ai_prompt_build_message",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompt.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "ai_prompt_rationale_1",
+      "target": "ai_prompt_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "ai_tools_boot_analyzer_py",
+      "target": "ai_prompt_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompt.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "ai_prompt_rationale_35",
+      "target": "ai_prompt_build_message",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "ai/prompt.py",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "ai_prompt_build_message",
+      "target": "prompts_idle_capsule_build_idle_user_message"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/spike_analyst.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_prompts_spike_analyst_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/spike_analyst.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "ai_prompts_spike_analyst_py",
+      "target": "ai_prompts_few_shots_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/spike_analyst.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_spike_analyst_rationale_1",
+      "target": "ai_prompts_spike_analyst_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_spike_analyst_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/music.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_prompts_music_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/music.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_music_rationale_1",
+      "target": "ai_prompts_music_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_music_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/boot_solution.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_prompts_boot_solution_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/boot_solution.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "ai_prompts_boot_solution_py",
+      "target": "ai_prompts_few_shots_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/boot_solution.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_boot_solution_rationale_1",
+      "target": "ai_prompts_boot_solution_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_boot_solution_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/simple.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "ai_prompts_simple_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/simple.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_simple_rationale_1",
+      "target": "ai_prompts_simple_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_simple_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/_base.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_base_rationale_1",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_analyst.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "ai_prompts_system_analyst_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/idle_capsule.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "ai_prompts_idle_capsule_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "ai_prompts_system_action_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/weather.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_prompts_weather_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/todo.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_prompts_todo_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/color_palette.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_prompts_color_palette_py",
+      "target": "ai_prompts_base_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_analyst.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "ai_prompts_system_analyst_py",
+      "target": "ai_prompts_few_shots_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_analyst.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_system_analyst_rationale_1",
+      "target": "ai_prompts_system_analyst_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_system_analyst_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_init_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_color_palette_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_idle_capsule_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_system_action_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_todo_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "ai_prompts_init_py",
+      "target": "ai_prompts_weather_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_init_rationale_1",
+      "target": "ai_prompts_init_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/idle_capsule.py",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "ai_prompts_idle_capsule_py",
+      "target": "prompts_idle_capsule_build_idle_user_message",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/idle_capsule.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_idle_capsule_rationale_1",
+      "target": "ai_prompts_idle_capsule_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/idle_capsule.py",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "prompts_idle_capsule_rationale_88",
+      "target": "prompts_idle_capsule_build_idle_user_message",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L156",
+      "weight": 1.0,
+      "source": "ai_prompts_system_action_py",
+      "target": "prompts_system_action_battery_prompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L292",
+      "weight": 1.0,
+      "source": "ai_prompts_system_action_py",
+      "target": "prompts_system_action_build_legacy_system_action_prompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L375",
+      "weight": 1.0,
+      "source": "ai_prompts_system_action_py",
+      "target": "prompts_system_action_build_full",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L396",
+      "weight": 1.0,
+      "source": "ai_prompts_system_action_py",
+      "target": "prompts_system_action_list_battery_levels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_system_action_rationale_1",
+      "target": "ai_prompts_system_action_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L376",
+      "weight": 1.0,
+      "source": "prompts_system_action_rationale_376",
+      "target": "prompts_system_action_build_full",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/system_action.py",
+      "source_location": "L397",
+      "weight": 1.0,
+      "source": "prompts_system_action_rationale_397",
+      "target": "prompts_system_action_list_battery_levels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/_few_shots.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_few_shots_rationale_1",
+      "target": "ai_prompts_few_shots_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/weather.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "ai_prompts_weather_py",
+      "target": "ai_prompts_few_shots_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/color_palette.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "ai_prompts_color_palette_py",
+      "target": "ai_prompts_few_shots_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/weather.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_weather_rationale_1",
+      "target": "ai_prompts_weather_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/todo.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_todo_rationale_1",
+      "target": "ai_prompts_todo_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/prompts/color_palette.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_color_palette_rationale_1",
+      "target": "ai_prompts_color_palette_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "ai_tools_boot_analyzer_py",
+      "target": "tools_boot_analyzer_get_system_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "ai_tools_boot_analyzer_py",
+      "target": "tools_boot_analyzer_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "ai/tools/boot_analyzer.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "tools_boot_analyzer_main",
+      "target": "tools_boot_analyzer_get_system_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "network_list_wifi_py",
+      "target": "network_list_wifi_parse_nmcli_line",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "network_list_wifi_py",
+      "target": "network_list_wifi_is_ssid_saved",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "network_list_wifi_py",
+      "target": "network_list_wifi_list_available_networks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "network_list_wifi_list_available_networks",
+      "target": "network_list_wifi_parse_nmcli_line",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "network_list_wifi_rationale_8",
+      "target": "network_list_wifi_parse_nmcli_line",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "network_list_wifi_list_available_networks",
+      "target": "network_list_wifi_is_ssid_saved",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "network_list_wifi_rationale_29",
+      "target": "network_list_wifi_is_ssid_saved",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/list_wifi.py",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "network_list_wifi_rationale_51",
+      "target": "network_list_wifi_list_available_networks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/connect_wifi.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "network_connect_wifi_py",
+      "target": "network_connect_wifi_manage_connection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/connect_wifi.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "network_connect_wifi_rationale_8",
+      "target": "network_connect_wifi_manage_connection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/data_usage.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "network_data_usage_py",
+      "target": "network_data_usage_get_data_usage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/data_usage.py",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "network_data_usage_py",
+      "target": "network_data_usage_get_app_breakdown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/data_usage.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "network_data_usage_rationale_11",
+      "target": "network_data_usage_get_data_usage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/data_usage.py",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "network_data_usage_rationale_92",
+      "target": "network_data_usage_get_app_breakdown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "network/data_usage.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "network_data_usage_get_app_breakdown",
+      "target": "network_live_usage_get_vnstat_daily"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "network/data_usage.py",
+      "source_location": "L120",
+      "weight": 1.0,
+      "source": "network_data_usage_get_app_breakdown",
+      "target": "network_live_usage_calculate_app_ratios_from_db"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "network/data_usage.py",
+      "source_location": "L124",
+      "weight": 1.0,
+      "source": "network_data_usage_get_app_breakdown",
+      "target": "network_live_usage_estimate_per_app_from_vnstat"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_get_vnstat_daily",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_get_vnstat_hourly",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_calculate_app_ratios_from_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L149",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_estimate_per_app_from_vnstat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L178",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_summarize_usage_with_vnstat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L257",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_parse_nethogs_process",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L272",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_parse_nethogs_output",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L426",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_run_nethogs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L455",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_fallback_psutil",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L489",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_ensure_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L520",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_persist_rows",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L568",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_get_live_usage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L607",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_summarize_usage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L687",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_parse_args",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L703",
+      "weight": 1.0,
+      "source": "network_live_usage_py",
+      "target": "network_live_usage_default_db_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L207",
+      "weight": 1.0,
+      "source": "network_live_usage_summarize_usage_with_vnstat",
+      "target": "network_live_usage_get_vnstat_daily",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "network_live_usage_rationale_17",
+      "target": "network_live_usage_get_vnstat_daily",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L210",
+      "weight": 1.0,
+      "source": "network_live_usage_summarize_usage_with_vnstat",
+      "target": "network_live_usage_get_vnstat_hourly",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "network_live_usage_rationale_64",
+      "target": "network_live_usage_get_vnstat_hourly",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L222",
+      "weight": 1.0,
+      "source": "network_live_usage_summarize_usage_with_vnstat",
+      "target": "network_live_usage_calculate_app_ratios_from_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "network_live_usage_rationale_102",
+      "target": "network_live_usage_calculate_app_ratios_from_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L224",
+      "weight": 1.0,
+      "source": "network_live_usage_summarize_usage_with_vnstat",
+      "target": "network_live_usage_estimate_per_app_from_vnstat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "network_live_usage_rationale_150",
+      "target": "network_live_usage_estimate_per_app_from_vnstat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L609",
+      "weight": 1.0,
+      "source": "network_live_usage_summarize_usage",
+      "target": "network_live_usage_summarize_usage_with_vnstat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L179",
+      "weight": 1.0,
+      "source": "network_live_usage_rationale_179",
+      "target": "network_live_usage_summarize_usage_with_vnstat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L346",
+      "weight": 1.0,
+      "source": "network_live_usage_parse_nethogs_output",
+      "target": "network_live_usage_parse_nethogs_process",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L445",
+      "weight": 1.0,
+      "source": "network_live_usage_run_nethogs",
+      "target": "network_live_usage_parse_nethogs_output",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L573",
+      "weight": 1.0,
+      "source": "network_live_usage_get_live_usage",
+      "target": "network_live_usage_run_nethogs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L576",
+      "weight": 1.0,
+      "source": "network_live_usage_get_live_usage",
+      "target": "network_live_usage_fallback_psutil",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L524",
+      "weight": 1.0,
+      "source": "network_live_usage_persist_rows",
+      "target": "network_live_usage_ensure_db",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "network/live_usage.py",
+      "source_location": "L583",
+      "weight": 1.0,
+      "source": "network_live_usage_get_live_usage",
+      "target": "network_live_usage_persist_rows",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}

@@ -27,7 +27,13 @@ QtObject {
             }
 
             if (typeof callback === "function") {
-                callback(data);
+                try {
+                    callback(data);
+                } catch (error) {
+                    // مستمع قديم يشير إلى نافذة مُدمَّرة (فصل/إعادة تركيب شاشة مثلاً) — نزيله ليتوقف التحذير المتكرر
+                    console.warn(`EventBus: removing stale listener for "${eventName}": ${error}`);
+                    list.splice(i, 1);
+                }
             } else {
                 list.splice(i, 1);
             }

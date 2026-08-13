@@ -11,6 +11,10 @@ QtObject {
 
     property real cpuUsage: 0.0
     property real ramUsage: 0.0
+    property real gpuUsage: 0.0
+    property real vramUsage: 0.0
+    property real vramUsedMb: 0.0
+    property real vramTotalMb: 0.0
     readonly property real cpuHighThreshold: App.cpuHighLoadThreshold / 100.0
     readonly property real ramHighThreshold: App.ramHighLoadThreshold / 100.0
     readonly property bool isCpuHigh: cpuUsage >= cpuHighThreshold
@@ -289,6 +293,17 @@ QtObject {
                     root.cpuMaxTemp = metrics.temp;
                     root.temperatureSampled(prevTemp, root.cpuMaxTemp);
                     root._handleTempAlert(root.cpuMaxTemp);
+
+                    // GPU: القيمة -1 تعني عدم توفر مصدر قراءة، فيبقى 0
+                    if (typeof metrics.gpu === "number" && metrics.gpu >= 0)
+                        root.gpuUsage = metrics.gpu / 100.0;
+
+                    // VRAM: القيمة -1 تعني عدم توفر ذاكرة GPU
+                    if (typeof metrics.vram === "number" && metrics.vram >= 0) {
+                        root.vramUsage = metrics.vram / 100.0;
+                        root.vramUsedMb = metrics.vram_used || 0;
+                        root.vramTotalMb = metrics.vram_total || 0;
+                    }
                 } catch (e) {
                     console.error("[ResourceMonitor] Error parsing JSON:", e, "Data:", data);
                 }

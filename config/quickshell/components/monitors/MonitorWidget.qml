@@ -24,30 +24,30 @@ ColumnLayout {
     // Alias to access the loaded monitor item if needed (e.g., to read its progress value)
     property alias actualMonitor: monitorLoader.item
 
-    spacing: ThemeManager.selectedTheme.dimensions.smallSpacing || 4 // Spacing between title, value, and monitor
+    spacing: ThemeManager.selectedTheme.dimensions.spacingSmall / 3
 
     Layout.alignment: Qt.AlignHCenter
 
-    Text {
-        id: titleLabel
-        text: monitorUnitRoot.title
-        font.bold: true
-        font.pixelSize: ThemeManager.selectedTheme.typography.heading3Size
-        color: ThemeManager.selectedTheme.colors.onSurface
-        Layout.alignment: Qt.AlignHCenter // Center text horizontally
-        elide: Text.ElideRight
-        horizontalAlignment: Text.AlignHCenter
-        width: parent.width // Ensure text can use full width for centering
-    }
+    Row {
+        spacing: ThemeManager.selectedTheme.dimensions.spacingSmall
+        Layout.alignment: Qt.AlignHCenter
 
-    Text {
-        id: valueLabel
-        text: monitorUnitRoot.valueText
-        font.pixelSize: ThemeManager.selectedTheme.typography.medium
-        color: ThemeManager.selectedTheme.colors.onSurface
-        Layout.alignment: Qt.AlignHCenter // Center text horizontally
-        horizontalAlignment: Text.AlignHCenter
-        width: parent.width // Ensure text can use full width for centering
+        Text {
+            id: titleLabel
+            text: monitorUnitRoot.title
+            font.bold: true
+            font.pixelSize: ThemeManager.selectedTheme.typography.heading4Size   // 18 — كما هو
+            color: ThemeManager.selectedTheme.colors.onSurface
+            Layout.alignment: Qt.AlignVCenter
+        }
+
+        Text {
+            id: valueLabel
+            text: monitorUnitRoot.valueText
+            font.pixelSize: ThemeManager.selectedTheme.typography.medium         // 14 — أصغر قليلاً
+            color: ThemeManager.selectedTheme.colors.onSurfaceVariant            // مطفأ للمفارقة
+            Layout.alignment: Qt.AlignVCenter
+        }
     }
 
     Loader {

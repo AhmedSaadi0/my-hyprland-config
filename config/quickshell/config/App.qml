@@ -249,6 +249,7 @@ Singleton {
             readonly property string batteryInfo: root.pythonScriptsPath + "/battery_info.py"
             readonly property string systemDiagnostics: root.pythonScriptsPath + "/system_diagnostics.py"
             readonly property string systemMonitor: root.pythonScriptsPath + "/system_monitor.py"
+            readonly property string diskUsage: root.pythonScriptsPath + "/disk_usage.py"
 
             // Wallpaper & coloring
             // To get the wallpapers in a single folder
@@ -286,6 +287,7 @@ Singleton {
             readonly property var batteryInfoCommand: [pythonPath, batteryInfo]
             readonly property var systemDiagnosticsCommand: [pythonPath, systemDiagnostics]
             readonly property var systemMonitorCommand: [pythonPath, systemMonitor]
+            readonly property var diskUsageCommand: [pythonPath, diskUsage]
 
             readonly property var dynamicM3Command: [pythonPath, dynamicM3]
             readonly property var scanWallpapersCommand: [pythonPath, scanWallpapers, "--themes_cache_dir", root.themeCacheFolderPath, "--shell_dir", root.mainPath]

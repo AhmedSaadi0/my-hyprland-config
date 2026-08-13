@@ -9,6 +9,7 @@ import "root:/config/EventNames.js" as Events
 import "root:/config/ConstValues.js" as C
 import "root:/config"
 import "../base"
+import "./components"
 
 BaseMenuView {
     id: monitoringMenu
@@ -31,6 +32,13 @@ BaseMenuView {
 
         property int groupRadius: ThemeManager.selectedTheme.dimensions.elementRadius / C.M3_BUTTON_RADIUS_DIVISOR
         property int innerRadiusDiv: 3
+
+        // ─── كرت الأقراص: فوق الجداول وتحت الـ Progresses ──────────
+        DiskCard {
+            id: diskCard
+            Layout.fillWidth: true
+            running: false
+        }
 
         RowLayout {
             Layout.fillWidth: true
@@ -104,6 +112,7 @@ BaseMenuView {
             ramTable.running = true;
             tempTable.running = true;
             batteryTable.running = true;
+            diskCard.running = true;
             console.info("Start menu monitoring tables");
         }
     }
@@ -114,6 +123,7 @@ BaseMenuView {
             ramTable.running = false;
             tempTable.running = false;
             batteryTable.running = false;
+            diskCard.running = false;
             console.info("Stop menu monitoring tables");
         }
     }

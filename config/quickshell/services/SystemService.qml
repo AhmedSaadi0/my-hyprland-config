@@ -82,6 +82,10 @@ Singleton {
 
     property alias cpuUsage: resourceMonitor.cpuUsage
     property alias ramUsage: resourceMonitor.ramUsage
+    property alias gpuUsage: resourceMonitor.gpuUsage
+    property alias vramUsage: resourceMonitor.vramUsage
+    property alias vramUsedMb: resourceMonitor.vramUsedMb
+    property alias vramTotalMb: resourceMonitor.vramTotalMb
     property alias cpuHighThreshold: resourceMonitor.cpuHighThreshold
     property alias ramHighThreshold: resourceMonitor.ramHighThreshold
     property alias isCpuHigh: resourceMonitor.isCpuHigh

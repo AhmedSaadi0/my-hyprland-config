@@ -58,13 +58,14 @@ RowLayout {
         Battery {
             id: batteryMonitor
             glowIcon: false
-            iconColor: ThemeManager.selectedTheme.colors.primary
+            iconColor: ThemeManager.selectedTheme.colors.onSurfaceVariant
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
-            backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
-            foregroundColor: ThemeManager.selectedTheme.colors.primary
+            backgroundColor: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.2)
+            foregroundColor: ThemeManager.selectedTheme.colors.onSurfaceVariant
         }
         ValueLabel {
             text: Math.round(batteryMonitor.value * 100) + "%"
+            color: ThemeManager.selectedTheme.colors.onSurfaceVariant
         }
     }
     VerticalDivider {
@@ -101,6 +102,38 @@ RowLayout {
         ValueLabel {
             text: Math.round(cpuMonitor.value * 100) + "%"
             color: cpuMonitor.fgNormal
+        }
+    }
+
+    VerticalDivider {
+        Layout.alignment: Qt.AlignVCenter
+    }
+
+    // --- 5. GPU ---
+    // Row {
+    //     spacing: 5
+    //     Layout.alignment: Qt.AlignVCenter
+    //     Gpu {
+    //         id: gpuMonitor
+    //         iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+    //     }
+    //     ValueLabel {
+    //         text: Math.round(gpuMonitor.value * 100) + "%"
+    //         color: gpuMonitor.fgNormal
+    //     }
+    // }
+
+    // --- 5. VRAM ---
+    Row {
+        spacing: 5
+        Layout.alignment: Qt.AlignVCenter
+        Vram {
+            id: vramMonitor
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+        }
+        ValueLabel {
+            text: Math.round(vramMonitor.value * 100) + "%"
+            color: vramMonitor.fgNormal
         }
     }
 }

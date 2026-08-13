@@ -142,6 +142,9 @@ PanelWindow {
         }, root);
     }
 
+    // تنظيف صريح عند تدمير النافذة (فصل الشاشة) لمنع المستمعات القديمة من إطلاق أخطاء
+    Component.onDestruction: EventBus.clearOwner(root)
+
     mask: (anyMenuOpen || anyDockTooltipVisible) ? null : dockMaskRegion
 
     Region {
