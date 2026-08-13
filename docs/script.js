@@ -121,6 +121,7 @@ const translations = {
     rd_desk_li3: "إضافة شريط تطبيقات سفلي مستقل (Dock)",
     rd_desk_li4: "التكيف الذكي للـ Dock عند تغيير موقع الشريط",
     rd_desk_li5: "تحسين تكامل أدوات التحكم في Hyprland",
+    rd_desk_li6: "عرض مساحة التخزين في القائمة الجانبية اليسرى (Left Menu)",
 
     rd_desktop_workspaces: "مساحات العمل (Workspaces)",
     rd_ws_li1: "أيقونات ديناميكية بدلاً من الأرقام",
@@ -148,6 +149,8 @@ const translations = {
     rd_sys_li7: "تحسين الكود: الانتقال إلى نظام EventBus",
     rd_sys_li8:
       "مراقبة تفصيلية للشبكة، تتضمن رصد حركة التطبيقات لحظياً وتوثيق استهلاكها للبيانات",
+    rd_sys_li9: "التحكم بالشاشات (Monitors) في تطبيق الإعدادات",
+    rd_sys_li10: "مراقبة استخدام GPU و VRAM",
 
     // --- صفحة الوثائق (Docs) ---
     docs_sidebar_title: "دليل الوثائق",
@@ -724,6 +727,7 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     rd_desk_li3: "Standalone Dock: Add a bottom application dock",
     rd_desk_li4: "Smart Adaptation: Dock auto-adjusts layout",
     rd_desk_li5: "Enhanced Hyprland controls integration",
+    rd_desk_li6: "Show storage usage in the left menu",
 
     rd_desktop_workspaces: "Workspaces",
     rd_ws_li1: "Dynamic Icons: Show app icons instead of numbers",
@@ -751,6 +755,8 @@ Choose your language / اختر لغتك / Vyberte jazyk:
     rd_sys_li7: "Code Refactoring: Migration to EventBus",
     rd_sys_li8:
       "Detailed network monitoring, including real-time application traffic tracking and data usage logging",
+    rd_sys_li9: "Monitor control (Displays) inside the Settings app",
+    rd_sys_li10: "GPU usage & VRAM monitoring",
 
     // --- Docs ---
     docs_sidebar_title: "Docs Guide",
