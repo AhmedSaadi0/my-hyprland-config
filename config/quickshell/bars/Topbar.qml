@@ -90,9 +90,12 @@ PanelWindow {
 
             Rectangle {
                 id: monitorsWrapper
-                property int maxWidth: 300
+                property int maxWidth: 400
+                property int minWidth: 330 // يمكنك تغيير القيمة الدنيا الافتراضية هنا حسب حاجتك
 
-                Layout.preferredWidth: Math.min(monitors.implicitWidth + 10, maxWidth)
+                // يضمن أن العرض لا يقل عن minWidth ولا يزيد عن maxWidth
+                Layout.preferredWidth: Math.max(minWidth, Math.min(monitors.implicitWidth + 10, maxWidth))
+                Layout.minimumWidth: minWidth
                 Layout.maximumWidth: maxWidth
                 Layout.preferredHeight: theme.dimensions.barWidgetsHeight
                 layer.enabled: true

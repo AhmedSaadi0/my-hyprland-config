@@ -14,16 +14,15 @@ import "root:/windows/leftwindow/base"
 
 HeaderCard {
     id: root
-    implicitHeight: 170
     width: ThemeManager.selectedTheme.dimensions.menuWidth - (ThemeManager.selectedTheme.dimensions.menuWidgetsMargin * 2) - (App.menuStyle === C.FLOATING ? 10 : 0)
 
-    property int monitorWidth: 65
-    property int monitorHeight: 65
+    property int monitorWidth: 70
+    property int monitorHeight: 70
     property int monitorItemThickness: root.thickness
     property int monitorItemIconFontSize: root.iconFontSize
 
     property int thickness: 7
-    property int iconFontSize: 24
+    property int iconFontSize: 30
 
     // Define the components to be loaded by MonitorWidget
     Component {
@@ -38,10 +37,10 @@ HeaderCard {
         id: batComponent
         Battery {
             glowIcon: false
-            iconColor: ThemeManager.selectedTheme.colors.primary
+            iconColor: ThemeManager.selectedTheme.colors.onSurfaceVariant
             iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
-            backgroundColor: ThemeManager.selectedTheme.colors.primary.alpha(0.2)
-            foregroundColor: ThemeManager.selectedTheme.colors.primary
+            backgroundColor: ThemeManager.selectedTheme.colors.onSurfaceVariant.alpha(0.2)
+            foregroundColor: ThemeManager.selectedTheme.colors.onSurfaceVariant
             enableAnimation: true
         }
     }
@@ -59,54 +58,133 @@ HeaderCard {
             enableAnimation: true
         }
     }
+    Component {
+        id: gpuComponent
+        Gpu {
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+            enableAnimation: true
+        }
+    }
+    Component {
+        id: vramComponent
+        Vram {
+            iconFontFamily: ThemeManager.selectedTheme.typography.iconFont
+            enableAnimation: true
+        }
+    }
 
-    RowLayout {
+    ColumnLayout {
         id: mainLayout
         Layout.preferredWidth: parent.width
-        Layout.margins: ThemeManager.selectedTheme.dimensions.smallPadding || 5 // Padding inside the root rectangle
+        Layout.margins: ThemeManager.selectedTheme.dimensions.spacingSmall // Padding inside the root rectangle
 
-        spacing: ThemeManager.selectedTheme.dimensions.smallSpacing || 5         // Spacing between each MonitorWidget
+        spacing: ThemeManager.selectedTheme.dimensions.spacingLarge + 8 // = 20: مسافة ثابتة بين الصفّين مشتقة من الثيم
 
-        MonitorWidget {
-            id: tempWidget
-            Layout.fillWidth: true // Make each MonitorWidget take equal share of width
-            title: qsTr("Temp") // Shorter title if space is tight
-            // valueText: "100%" // Default is "100%", can be overridden or updated dynamically
-            monitorComponent: tempComponent
-            monitorItemWidth: root.monitorWidth
-            monitorItemHeight: root.monitorHeight
-            monitorItemThickness: root.monitorItemThickness
-            monitorItemIconFontSize: root.monitorItemIconFontSize
+        // --- الصف الأول: Temp / Battery / RAM ---
+        // فواصل مرنة (Items) توزّع الدوائر بالتساوي عبر كامل عرض الكرت
+        // الفراغ يُحسب تلقائياً = (عرض الصف - 3 * monitorWidth) / 4
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 0
+
+            Item {
+                Layout.minimumWidth: ThemeManager.selectedTheme.dimensions.spacingLarge + 8
+            }
+
+            MonitorWidget {
+                id: tempWidget
+                Layout.preferredWidth: root.monitorWidth
+                title: qsTr("Temp")
+                monitorComponent: tempComponent
+                monitorItemWidth: root.monitorWidth
+                monitorItemHeight: root.monitorHeight
+                monitorItemThickness: root.monitorItemThickness
+                monitorItemIconFontSize: root.monitorItemIconFontSize
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            MonitorWidget {
+                Layout.preferredWidth: root.monitorWidth
+                title: qsTr("Battery")
+                monitorComponent: batComponent
+                monitorItemWidth: root.monitorWidth
+                monitorItemHeight: root.monitorHeight
+                monitorItemThickness: root.monitorItemThickness
+                monitorItemIconFontSize: root.monitorItemIconFontSize
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            MonitorWidget {
+                Layout.preferredWidth: root.monitorWidth
+                title: qsTr("RAM")
+                monitorComponent: ramComponent
+                monitorItemWidth: root.monitorWidth
+                monitorItemHeight: root.monitorHeight
+                monitorItemThickness: root.monitorItemThickness
+                monitorItemIconFontSize: root.monitorItemIconFontSize
+            }
+
+            Item {
+                Layout.minimumWidth: ThemeManager.selectedTheme.dimensions.spacingLarge + 8
+            }
         }
 
-        MonitorWidget {
+        // --- الصف الثاني: CPU / GPU / VRAM ---
+        RowLayout {
             Layout.fillWidth: true
-            title: qsTr("Battery")
-            monitorComponent: batComponent
-            monitorItemWidth: root.monitorWidth
-            monitorItemHeight: root.monitorHeight
-            monitorItemThickness: root.monitorItemThickness
-            monitorItemIconFontSize: root.monitorItemIconFontSize
-        }
+            spacing: 0
 
-        MonitorWidget {
-            Layout.fillWidth: true
-            title: qsTr("RAM")
-            monitorComponent: ramComponent
-            monitorItemWidth: root.monitorWidth
-            monitorItemHeight: root.monitorHeight
-            monitorItemThickness: root.monitorItemThickness
-            monitorItemIconFontSize: root.monitorItemIconFontSize
-        }
+            Item {
+                Layout.minimumWidth: ThemeManager.selectedTheme.dimensions.spacingLarge + 8
+            }
 
-        MonitorWidget {
-            Layout.fillWidth: true
-            title: qsTr("CPU")
-            monitorComponent: cpuComponent
-            monitorItemWidth: root.monitorWidth
-            monitorItemHeight: root.monitorHeight
-            monitorItemThickness: root.monitorItemThickness
-            monitorItemIconFontSize: root.monitorItemIconFontSize
+            MonitorWidget {
+                Layout.preferredWidth: root.monitorWidth
+                title: qsTr("CPU")
+                monitorComponent: cpuComponent
+                monitorItemWidth: root.monitorWidth
+                monitorItemHeight: root.monitorHeight
+                monitorItemThickness: root.monitorItemThickness
+                monitorItemIconFontSize: root.monitorItemIconFontSize
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            MonitorWidget {
+                Layout.preferredWidth: root.monitorWidth
+                title: qsTr("GPU")
+                monitorComponent: gpuComponent
+                monitorItemWidth: root.monitorWidth
+                monitorItemHeight: root.monitorHeight
+                monitorItemThickness: root.monitorItemThickness
+                monitorItemIconFontSize: root.monitorItemIconFontSize
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            MonitorWidget {
+                Layout.preferredWidth: root.monitorWidth
+                title: qsTr("VRAM")
+                monitorComponent: vramComponent
+                monitorItemWidth: root.monitorWidth
+                monitorItemHeight: root.monitorHeight
+                monitorItemThickness: root.monitorItemThickness
+                monitorItemIconFontSize: root.monitorItemIconFontSize
+            }
+
+            Item {
+                Layout.minimumWidth: ThemeManager.selectedTheme.dimensions.spacingLarge + 8
+            }
         }
     }
 
@@ -126,6 +204,8 @@ HeaderCard {
             batComponent.constructor.running = true;
             ramComponent.constructor.running = true;
             cpuComponent.constructor.running = true;
+            gpuComponent.constructor.running = true;
+            vramComponent.constructor.running = true;
             console.info("Start Menu progresses");
         }
     }
@@ -136,6 +216,8 @@ HeaderCard {
             batComponent.constructor.running = false;
             ramComponent.constructor.running = false;
             cpuComponent.constructor.running = false;
+            gpuComponent.constructor.running = false;
+            vramComponent.constructor.running = false;
             console.info("Stop Menu progresses");
         }
     }
