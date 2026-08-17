@@ -16,6 +16,10 @@ Rectangle {
 
     readonly property var theme: ThemeManager.selectedTheme
 
+    // ألوان عناوين مقروءة: تُعمَّق في الوضع الفاتح
+    readonly property color accentSecondary: theme.systemSettings.themeMode == "dark" ? theme.colors.secondary : theme.colors.secondary.darker(1.6)
+    readonly property color accentTertiary: theme.systemSettings.themeMode == "dark" ? theme.colors.tertiary : theme.colors.tertiary.darker(1.6)
+
     radius: theme.dimensions.elementRadius
     color: Qt.rgba(theme.colors.surfaceContainerHigh.r, theme.colors.surfaceContainerHigh.g, theme.colors.surfaceContainerHigh.b, 0.75)
     border.color: Qt.rgba(theme.colors.onSurfaceVariant.r, theme.colors.onSurfaceVariant.g, theme.colors.onSurfaceVariant.b, 0.22)
@@ -30,6 +34,12 @@ Rectangle {
         if (thermalRisk === "medium")
             return theme.colors.secondary;
         return theme.colors.tertiary;
+    }
+
+    // لون المخاطر الحراري مقروء في الوضع الفاتح
+    function readableRisk() {
+        var c = riskColor();
+        return theme.systemSettings.themeMode == "dark" ? c : c.darker(1.6);
     }
 
     ColumnLayout {
@@ -61,7 +71,7 @@ Rectangle {
                         text: ""
                         font.family: theme.typography.iconFont
                         font.pixelSize: 14
-                        color: theme.colors.secondary
+                        color: root.accentSecondary
                     }
                     Text {
                         Layout.fillWidth: true
@@ -69,7 +79,7 @@ Rectangle {
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.small + 1
                         font.bold: true
-                        color: theme.colors.secondary
+                        color: root.accentSecondary
                     }
                 }
 
@@ -115,7 +125,7 @@ Rectangle {
                         text: ""
                         font.family: theme.typography.iconFont
                         font.pixelSize: 14
-                        color: theme.colors.tertiary
+                        color: root.accentTertiary
                     }
                     Text {
                         Layout.fillWidth: true
@@ -123,7 +133,7 @@ Rectangle {
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.small + 1
                         font.bold: true
-                        color: theme.colors.secondary
+                        color: root.accentSecondary
                     }
                 }
 
@@ -185,7 +195,7 @@ Rectangle {
                         text: ""
                         font.family: theme.typography.iconFont
                         font.pixelSize: 14
-                        color: riskColor()
+                        color: root.readableRisk()
                     }
                     Text {
                         Layout.fillWidth: true
@@ -193,14 +203,14 @@ Rectangle {
                         font.family: theme.typography.bodyFont
                         font.pixelSize: theme.typography.small + 1
                         font.bold: true
-                        color: theme.colors.secondary
+                        color: root.accentSecondary
                     }
 
                     Rectangle {
                         height: 18
                         radius: theme.dimensions.shapeSmall
-                        color: Qt.rgba(riskColor().r, riskColor().g, riskColor().b, 0.2)
-                        border.color: riskColor()
+                        color: Qt.rgba(root.readableRisk().r, root.readableRisk().g, root.readableRisk().b, 0.2)
+                        border.color: root.readableRisk()
                         border.width: 1
                         Layout.preferredWidth: thermalRisk.length > 6 ? 76 : 60
                         Text {
@@ -208,7 +218,7 @@ Rectangle {
                             text: thermalRisk.toUpperCase()
                             font.pixelSize: 9
                             font.bold: true
-                            color: riskColor()
+                            color: root.readableRisk()
                         }
                     }
                 }

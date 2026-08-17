@@ -13,6 +13,10 @@ Rectangle {
 
     readonly property var theme: ThemeManager.selectedTheme
 
+    // ألوان مميزة مقروءة: تُعمَّق في الوضع الفاتح
+    readonly property color accentColor: theme.systemSettings.themeMode == "dark" ? theme.colors.tertiary : theme.colors.tertiary.darker(1.6)
+    readonly property color warningColor: theme.systemSettings.themeMode == "dark" ? theme.colors.secondary : theme.colors.secondary.darker(1.6)
+
     Layout.fillWidth: true
     implicitHeight: mainLayout.implicitHeight + 14
 
@@ -37,13 +41,13 @@ Rectangle {
                 id: commandText
                 Layout.fillWidth: true
                 text: root.command
-                color: theme.colors.tertiary
+                color: root.accentColor
                 font.family: "Monospace"
                 font.pixelSize: theme.typography.small - 1
                 wrapMode: TextEdit.Wrap
                 selectByMouse: true
                 readOnly: true
-                selectionColor: theme.colors.tertiary
+                selectionColor: root.accentColor
                 selectedTextColor: theme.colors.onPrimary
             }
 
@@ -51,7 +55,7 @@ Rectangle {
                 width: 24
                 height: 24
                 radius: theme.dimensions.shapeExtraSmall
-                color: copyMouse.containsMouse ? Qt.rgba(theme.colors.tertiary.r, theme.colors.tertiary.g, theme.colors.tertiary.b, 0.2) : "transparent"
+                color: copyMouse.containsMouse ? Qt.rgba(root.accentColor.r, root.accentColor.g, root.accentColor.b, 0.2) : "transparent"
 
                 Text {
                     id: copyIcon
@@ -59,7 +63,7 @@ Rectangle {
                     text: ""
                     font.family: theme.typography.iconFont
                     font.pixelSize: 13
-                    color: theme.colors.tertiary
+                    color: root.accentColor
                 }
 
                 MouseArea {
@@ -86,10 +90,10 @@ Rectangle {
             visible: root.warning !== "" && root.warning !== "null"
             Layout.fillWidth: true
             text: root.warning
-            color: theme.colors.secondary
+            color: root.warningColor
             font.pixelSize: theme.typography.small - 2
             wrapMode: Text.WordWrap
-            opacity: 0.85
+            opacity: 0.9
         }
     }
 }

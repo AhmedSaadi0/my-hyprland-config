@@ -22,6 +22,12 @@ ColumnLayout {
 
     readonly property var theme: ThemeManager.selectedTheme
 
+    // ألوان مقروءة: تُعمَّق في الوضع الفاتح
+    readonly property color accentTertiary: theme.systemSettings.themeMode == "dark" ? theme.colors.tertiary : theme.colors.tertiary.darker(1.6)
+    readonly property color accentSecondary: theme.systemSettings.themeMode == "dark" ? theme.colors.secondary : theme.colors.secondary.darker(1.6)
+    readonly property color narrativeColor: theme.systemSettings.themeMode == "dark" ? Qt.lighter(theme.colors.onSurfaceVariant, 1.4) : theme.colors.onSurfaceVariant.darker(1.2)
+    readonly property color actionTextColor: theme.systemSettings.themeMode == "dark" ? Qt.lighter(theme.colors.onSurfaceVariant, 1.3) : theme.colors.onSurfaceVariant.darker(1.1)
+
     Layout.fillWidth: true
     visible: opacity > 0
     opacity: isExpanded ? 1 : 0
@@ -55,7 +61,7 @@ ColumnLayout {
         Text {
             text: ""
             font.family: theme.typography.iconFont
-            color: theme.colors.tertiary
+            color: root.accentTertiary
             font.pixelSize: 16
         }
 
@@ -63,7 +69,7 @@ ColumnLayout {
             text: isLoading ? qsTr("Analyzing...") : aiTitle
             font.pixelSize: theme.typography.small + 2
             font.bold: true
-            color: theme.colors.secondary
+            color: root.accentSecondary
             elide: Text.ElideRight
             Layout.fillWidth: true
         }
@@ -118,7 +124,7 @@ ColumnLayout {
             wrapMode: Text.WordWrap
             font.family: theme.typography.bodyFont
             font.pixelSize: theme.typography.small + 1
-            color: Qt.lighter(theme.colors.onSurfaceVariant, 1.4)
+            color: root.narrativeColor
             lineHeight: 1.3
             textFormat: Text.PlainText
         }
@@ -152,7 +158,7 @@ ColumnLayout {
             text: qsTr("Recommended Actions")
             font.pixelSize: theme.typography.small - 1
             font.bold: true
-            color: theme.colors.tertiary
+            color: root.accentTertiary
         }
 
         Repeater {
@@ -166,14 +172,14 @@ ColumnLayout {
                     width: 18
                     height: 18
                     radius: theme.dimensions.shapeSmall
-                    color: Qt.rgba(theme.colors.tertiary.r, theme.colors.tertiary.g, theme.colors.tertiary.b, 0.18)
-                    border.color: theme.colors.tertiary
+                    color: Qt.rgba(root.accentTertiary.r, root.accentTertiary.g, root.accentTertiary.b, 0.18)
+                    border.color: root.accentTertiary
                     border.width: 1
                     Text {
                         anchors.centerIn: parent
                         text: "›"
                         font.pixelSize: 11
-                        color: theme.colors.tertiary
+                        color: root.accentTertiary
                         font.bold: true
                     }
                 }
@@ -183,7 +189,7 @@ ColumnLayout {
                     text: modelData
                     wrapMode: Text.WordWrap
                     font.pixelSize: theme.typography.small + 1
-                    color: Qt.lighter(theme.colors.onSurfaceVariant, 1.3)
+                    color: root.actionTextColor
                     textFormat: Text.PlainText
                 }
             }

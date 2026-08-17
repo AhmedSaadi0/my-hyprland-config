@@ -3,6 +3,7 @@ import argparse
 import configparser
 import json
 import os
+import re
 from pathlib import Path
 
 EXTS = (".svg", ".png", ".xpm", ".webp")
@@ -16,6 +17,8 @@ BASE_ICON_DIRS = [
     "/run/host/usr/share/icons",
 ]
 
+_meta_cache = {}
+
 
 def existing_theme_dir(theme_name: str):
     if not theme_name:
@@ -28,54 +31,151 @@ def existing_theme_dir(theme_name: str):
 
 
 def read_theme_meta(theme_dir: Path):
-    index_file = theme_dir / "index.theme"
-    if not index_file.is_file():
-        return [], []
+    """Returns (inherits, directories, sections).
 
-    cfg = configparser.ConfigParser(interpolation=None)
-    try:
-        cfg.read(index_file, encoding="utf-8")
-    except Exception:
-        return [], []
+    sections maps a directory name to (size, scale, type) parsed from its
+    index.theme section; effective size = size * scale (for @2x/@3x dirs).
+    """
+    key = str(theme_dir)
+    if key in _meta_cache:
+        return _meta_cache[key]
 
     inherits = []
     directories = []
+    sections = {}
 
-    if cfg.has_section("Icon Theme"):
-        raw_inherits = cfg.get("Icon Theme", "Inherits", fallback="")
-        if raw_inherits:
-            inherits = [x.strip() for x in raw_inherits.split(",") if x.strip()]
+    index_file = theme_dir / "index.theme"
+    if index_file.is_file():
+        cfg = configparser.ConfigParser(interpolation=None)
+        try:
+            cfg.read(index_file, encoding="utf-8")
+        except Exception:
+            pass
 
-        raw_dirs = cfg.get("Icon Theme", "Directories", fallback="")
-        if raw_dirs:
-            directories = [x.strip() for x in raw_dirs.split(",") if x.strip()]
+        if cfg.has_section("Icon Theme"):
+            raw_inherits = cfg.get("Icon Theme", "Inherits", fallback="")
+            if raw_inherits:
+                inherits = [x.strip() for x in raw_inherits.split(",") if x.strip()]
 
-    return inherits, directories
+            raw_dirs = cfg.get("Icon Theme", "Directories", fallback="")
+            raw_scaled = cfg.get("Icon Theme", "ScaledDirectories", fallback="")
+            directories = [
+                x.strip() for x in (raw_dirs + "," + raw_scaled).split(",") if x.strip()
+            ]
+
+        for section in cfg.sections():
+            if section == "Icon Theme":
+                continue
+            size = cfg.getint(section, "Size", fallback=0)
+            scale = cfg.getint(section, "Scale", fallback=1)
+            dir_type = cfg.get(section, "Type", fallback="Fixed")
+            sections[section] = (size, scale, dir_type)
+
+    # بعض الثيمات تخفي مجلدات حجم في القرص لا تدرجها في index.theme
+    # (مثل Vivid: apps/64 موجود فعلياً لكنه غير مذكور) — نكتشفها يدوياً
+    for extra_dir, extra_type in scan_extra_dirs(theme_dir):
+        if extra_dir not in directories:
+            directories.append(extra_dir)
+        # مجلد مكتشف على القرص بدون قسم في index.theme: نحدد نوعه من محتواه
+        if extra_dir not in sections:
+            sections[extra_dir] = (0, 1, extra_type)
+
+    _meta_cache[key] = (inherits, directories, sections)
+    return inherits, directories, sections
 
 
-def score_dir(directory: str):
+def scan_extra_dirs(theme_dir: Path):
+    """يكتشف مجلدات الحجم الموجودة على القرص وغير المدرجة في index.theme.
+
+    Returns: list of (dir_name, type) — type مستنتج من محتوى المجلد
+    ("Scalable" إذا احتوى SVG، وإلا "Fixed").
+    """
+    extra = []
+    try:
+        entries = [
+            e for e in theme_dir.iterdir() if e.is_dir() and not e.name.startswith(".")
+        ]
+    except OSError:
+        return extra
+
+    for entry in entries:
+        name = entry.name
+        is_size_parent = bool(re.fullmatch(r"\d+(?:x\d+)?(?:@\d+x)?", name.lower()))
+        try:
+            children = [
+                c for c in entry.iterdir() if c.is_dir() and not c.name.startswith(".")
+            ]
+        except OSError:
+            continue
+        for sub in children:
+            sub_name = sub.name
+            is_size_child = bool(
+                re.fullmatch(r"\d+(?:x\d+)?(?:@\d+x)?", sub_name.lower())
+            )
+            if (is_size_parent and not re.search(r"symbolic", sub_name.lower())) or (
+                is_size_child and not re.search(r"symbolic", name.lower())
+            ):
+                extra.append((f"{name}/{sub_name}", _dir_type(sub)))
+    return extra
+
+
+def _dir_type(subdir: Path) -> str:
+    """يستنتج نوع المجلد من محتواه: SVG => Scalable (جودة ثابتة)، غير ذلك Fixed."""
+    try:
+        for f in subdir.iterdir():
+            if f.is_file() and f.suffix.lower() == ".svg":
+                return "Scalable"
+    except OSError:
+        pass
+    return "Fixed"
+
+
+def extract_size(directory: str) -> int:
+    """يستخرج الحجم الفعلي من اسم المجلد دون الاعتماد على index.theme:
+    '48x48/apps' -> 48, 'apps/48' -> 48, 'apps/16@2x' -> 32, 'symbolic' -> 0.
+    """
+    m = re.search(r"(\d+)x(\d+)(?:@(\d+)x)?", directory)
+    if m:
+        scale = int(m.group(3)) if m.group(3) else 1
+        return int(m.group(1)) * scale
+
+    m = re.search(r"(\d+)(?:@(\d+)x)?", directory)
+    if m:
+        scale = int(m.group(2)) if m.group(2) else 1
+        return int(m.group(1)) * scale
+    return 0
+
+
+def score_dir(directory: str, sections=None):
     d = directory.lower()
     score = 0
 
-    if "/apps" in d or d.endswith("apps"):
+    # سياق التطبيقات: يظهر بأسلوبين — "48x48/apps" و "apps/48"
+    if "apps" in d.split("/"):
         score += 100
-    if "scalable" in d:
-        score += 30
     if "symbolic" in d:
         score -= 10
 
-    size_bonus = 0
-    for size in (64, 48, 32, 24, 22, 16, 128, 256):
-        if f"{size}x{size}" in d:
-            size_bonus = max(size_bonus, 20 - abs(48 - size))
-    score += size_bonus
+    size, scale, dir_type = 0, 1, ""
+    if sections and directory in sections:
+        size, scale, dir_type = sections[directory]
+
+    # SVG قابل للتمدد: جودة ثابتة في أي حجم
+    if "scalable" in d or dir_type.lower() == "scalable":
+        score += 40
+
+    # الحجم الأكبر أفضل دائماً: التصغير حاد، والتكبير هو مصدر الضبابية
+    if size > 0:
+        score += size * scale
+    else:
+        score += extract_size(directory)
 
     return score
 
 
-def expand_dirs(directories):
+def expand_dirs(directories, sections=None):
     if directories:
-        return sorted(directories, key=score_dir, reverse=True)
+        return sorted(directories, key=lambda d: score_dir(d, sections), reverse=True)
 
     return [
         "scalable/apps",
@@ -106,7 +206,7 @@ def build_theme_chain(theme_name: str):
         if theme_dir is None:
             continue
 
-        inherits, _ = read_theme_meta(theme_dir)
+        inherits, _, _ = read_theme_meta(theme_dir)
         for parent in inherits:
             if parent not in seen:
                 queue.append(parent)
@@ -131,8 +231,8 @@ def resolve_icon(icon_name: str, chain):
         if theme_dir is None:
             continue
 
-        _, directories = read_theme_meta(theme_dir)
-        for subdir in expand_dirs(directories):
+        _, directories, sections = read_theme_meta(theme_dir)
+        for subdir in expand_dirs(directories, sections):
             d = theme_dir / subdir
             if not d.is_dir():
                 continue

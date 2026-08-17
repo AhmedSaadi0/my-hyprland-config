@@ -44,6 +44,9 @@ Item {
     readonly property color statusTextColor: bootRoot.theme.colors.onSurface
     readonly property color statusMutedColor: Qt.rgba(statusTitleColor.r, statusTitleColor.g, statusTitleColor.b, 0.85)
 
+    // لون عناوين الأقسام (مثل Suggested Fixes): يُعمَّق في الوضع الفاتح ليُقرأ بوضوح
+    readonly property color sectionHeaderColor: bootRoot.theme.systemSettings.themeMode == "dark" ? bootRoot.theme.colors.tertiary : bootRoot.theme.colors.tertiary.darker(1.6)
+
     Rectangle {
         anchors.fill: parent
         color: bootRoot.theme.systemSettings.themeMode == "dark" ? bootRoot.theme.colors.surfaceContainerHigh.lighter(1.3) : bootRoot.theme.colors.surfaceContainerHigh.darker(1.1)
@@ -311,14 +314,14 @@ Item {
                     text: ""
                     font.family: bootRoot.theme.typography.iconFont
                     font.pixelSize: 14
-                    color: bootRoot.theme.colors.tertiary
+                    color: bootRoot.sectionHeaderColor
                 }
 
                 Text {
                     text: qsTr("Suggested Fixes")
                     font.pixelSize: bootRoot.theme.typography.small
                     font.bold: true
-                    color: bootRoot.theme.colors.tertiary
+                    color: bootRoot.sectionHeaderColor
                 }
 
                 Item {

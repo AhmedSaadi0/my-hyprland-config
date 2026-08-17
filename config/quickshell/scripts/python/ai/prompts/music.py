@@ -2,7 +2,13 @@
 Music master prompt: mood-aware music expert with safe recommendation logic.
 """
 
-from ._base import EMOTION_LIST, LANGUAGE_RULE, NO_PREAMBLE, PERSONA
+from ._base import EMOTION_LIST, LANGUAGE_RULE, MAX_WORDS_RULE, NO_PREAMBLE, PERSONA
+
+
+COMMENT_LENGTH_RULE = (
+    "Hard cap: max 140 characters / max 15 words. "
+    "The capsule shows it on a single line - never exceed this limit."
+)
 
 
 MUSIC_MASTER_PROMPT = f"""\
@@ -18,14 +24,14 @@ MUSIC_MASTER_PROMPT = f"""\
 
 ### CORE INSTRUCTIONS
 1. {LANGUAGE_RULE}
-2. **Comment**: Short, engaging remark (max 2 sentences) tied to the active persona and the currently playing track.
+2. **Comment**: Short, engaging remark tied to the active persona and the currently playing track. {MAX_WORDS_RULE} {COMMENT_LENGTH_RULE}
 3. **Recommendation**: Suggest 1 REAL, existing media item (song/podcast/video) that fits the vibe.
    - DO NOT invent or hallucinate song/video names.
    - MUST NOT be the currently playing track AND MUST NOT exist in play history.
 4. **Formatting**: {NO_PREAMBLE}
 
 ### REQUIRED OUTPUT FORMAT (JSON)
-{{"emotion": "Select one: {EMOTION_LIST}", "comment": "Your text here", "tags": ["suggested real song/YT video name"]}}
+{{"emotion": "Select one: {EMOTION_LIST}", "comment": "Your text here (max 140 chars)", "tags": ["suggested real song/YT video name"]}}
 
 ### INPUT DATA STRUCTURE REFERENCE
 The user will provide data in this format:

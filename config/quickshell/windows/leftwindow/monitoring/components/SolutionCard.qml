@@ -44,6 +44,11 @@ Rectangle {
         return theme.colors.tertiary;
     }
 
+    // لون مميز قابل للقراءة: يُعمَّق في الوضع الفاتح ويبقى ساطعاً في الداكن
+    function readableAccent(c) {
+        return theme.systemSettings.themeMode == "dark" ? c : c.darker(1.6);
+    }
+
     function priorityColor() {
         if (priority === "critical")
             return theme.colors.error;
@@ -104,7 +109,7 @@ Rectangle {
                     height: 16
                     radius: 8
                     color: Qt.rgba(difficultyColor().r, difficultyColor().g, difficultyColor().b, 0.18)
-                    border.color: Qt.rgba(difficultyColor().r, difficultyColor().g, difficultyColor().b, 0.4)
+                    border.color: Qt.rgba(readableAccent(difficultyColor()).r, readableAccent(difficultyColor()).g, readableAccent(difficultyColor()).b, 0.4)
                     border.width: 1
                     Text {
                         id: diffText
@@ -112,7 +117,7 @@ Rectangle {
                         text: root.difficulty.toUpperCase()
                         font.pixelSize: 8
                         font.bold: true
-                        color: difficultyColor()
+                        color: readableAccent(difficultyColor())
                     }
                 }
 
@@ -122,7 +127,7 @@ Rectangle {
                     height: 16
                     radius: 8
                     color: Qt.rgba(priorityColor().r, priorityColor().g, priorityColor().b, 0.18)
-                    border.color: Qt.rgba(priorityColor().r, priorityColor().g, priorityColor().b, 0.4)
+                    border.color: Qt.rgba(readableAccent(priorityColor()).r, readableAccent(priorityColor()).g, readableAccent(priorityColor()).b, 0.4)
                     border.width: 1
                     Text {
                         id: priText
@@ -130,7 +135,7 @@ Rectangle {
                         text: root.priority.toUpperCase()
                         font.pixelSize: 8
                         font.bold: true
-                        color: priorityColor()
+                        color: readableAccent(priorityColor())
                     }
                 }
             }
@@ -172,7 +177,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             maximumLineCount: 2
             elide: Text.ElideRight
-            opacity: 0.8
+            opacity: 0.95
         }
     }
 
@@ -206,7 +211,7 @@ Rectangle {
             Layout.fillWidth: true
             text: root.description
             font.pixelSize: theme.typography.small
-            color: theme.colors.onSurfaceVariant
+            color: theme.colors.onSurface
             wrapMode: Text.WordWrap
             lineHeight: 1.3
         }
@@ -220,18 +225,16 @@ Rectangle {
                 text: qsTr("Why this works")
                 font.pixelSize: theme.typography.small - 1
                 font.bold: true
-                color: theme.colors.tertiary
-                opacity: 0.85
+                color: readableAccent(theme.colors.tertiary)
             }
 
             Text {
                 Layout.fillWidth: true
                 text: root.whyThisWorks
                 font.pixelSize: theme.typography.small - 1
-                color: theme.colors.onSurfaceVariant
+                color: theme.colors.onSurface
                 wrapMode: Text.WordWrap
                 lineHeight: 1.3
-                opacity: 0.75
             }
         }
 
@@ -240,8 +243,7 @@ Rectangle {
             text: qsTr("Steps")
             font.pixelSize: theme.typography.small - 1
             font.bold: true
-            color: theme.colors.tertiary
-            opacity: 0.85
+            color: readableAccent(theme.colors.tertiary)
         }
 
         // Steps repeater
