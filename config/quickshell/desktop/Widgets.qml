@@ -73,8 +73,9 @@ Item {
 
             enableAnimation: widgetsRoot.clockSettings?.enableAnimation || false
 
-            shadowEnabled: widgetsRoot.clockSettings?.shadowEnabled || false
-            shadowColor: widgetsRoot.clockSettings?.shadowColor || Theme.ThemeManager.selectedTheme.colors.surface.alpha(0.55)
+            glowEnabled: widgetsRoot.clockSettings?.glowEnabled ?? widgetsRoot.clockSettings?.shadowEnabled ?? false
+            glowColor: widgetsRoot.clockSettings?.glowColor ?? widgetsRoot.clockSettings?.shadowColor ?? "#FFFFFF"
+            glowIntensity: widgetsRoot.clockSettings?.glowIntensity ?? 0.65
 
             // منطق التحديث (عندما يقوم المستخدم بتحريك الساعة)
             onRequestNewGeometry: (newPosition, newSize) => {
