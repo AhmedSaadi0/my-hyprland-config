@@ -42,10 +42,19 @@ def extract_archives(source_dir, dest_dir):
         return
 
     for item in os.listdir(source_dir):
+        archive_path = os.path.join(source_dir, item)
         if item.endswith((".tar.gz", ".tar.xz", ".tar.bz2")):
-            archive_path = os.path.join(source_dir, item)
             print(f"  -> Extracting {item} to {dest_dir}")
             run_command(f"tar -xvf '{archive_path}' -C '{dest_dir}'")
+        elif item.endswith(".zip"):
+            print(f"  -> Extracting {item} to {dest_dir}")
+            # unzip مطلوب لفك ضغط ثيمات GTK مثل Catppuccin/Gruvbox/Tokyonight
+            if shutil.which("unzip") is None:
+                print(
+                    f"{RED}Warning: unzip not found, skipping {item}. Install unzip.{NC}"
+                )
+                continue
+            run_command(f"unzip -o '{archive_path}' -d '{dest_dir}'")
 
 
 def set_plasma_font():
@@ -185,6 +194,16 @@ def update_quickshell():
 
     try:
         shutil.copytree(source_quickshell, dest_quickshell, dirs_exist_ok=True)
+        # مزامنة ألوان بلازما وكونسول للثيمات الجديدة (Solarized/RosePine/Oxocarbon)
+        for sub in ["plasma-colors", "konsole"]:
+            src = os.path.join(PROJECT_ROOT, "config", sub)
+            if sub == "plasma-colors":
+                dst = os.path.join(home_dir, ".local", "share", "color-schemes")
+            else:
+                dst = os.path.join(home_dir, ".local", "share", sub)
+            if os.path.exists(src):
+                print(f"  -> Syncing {sub}...")
+                shutil.copytree(src, dst, dirs_exist_ok=True)
         print(f"{GREEN}{msg('update_complete')}{NC}")
     except Exception as e:
         print(f"{RED}Error copying files: {e}{NC}")

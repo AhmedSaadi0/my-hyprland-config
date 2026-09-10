@@ -157,7 +157,7 @@ _ARRAY_PROMPTS = {
     + """\
 ### TASK
 Generate exactly 7 unique responses for the "charging" event (plugging in the charger).
-Each must be different. Vary tone: witty, dramatic, calm, humorous, concerned, sarcastic, playful.
+Each must be different. Vary tone across the 7: witty, dramatic, calm, humorous, concerned, sarcastic, playful.
 Keep each text under 12 words.
 
 ### OUTPUT
@@ -175,7 +175,7 @@ Keep each text under 12 words.
     + """\
 ### TASK
 Generate exactly 7 unique responses for the "discharging" event (unplugging the charger).
-Each must be different. Vary tone: witty, dramatic, calm, humorous, concerned, sarcastic, playful.
+Each must be different. Vary tone across the 7: witty, dramatic, calm, humorous, concerned, sarcastic, playful.
 Keep each text under 12 words.
 
 ### OUTPUT
@@ -194,18 +194,24 @@ Keep each text under 12 words.
 ### TASK
 Generate exactly 7 unique, short CPU alert responses (high CPU usage threshold hit).
 
-Tone: light, casual, witty, or playfully curious — like a friend noticing the fans spin up. Treat it as a fun observation, not a warning.
+Tone: playful, curious, gently sarcastic.
+MANDATORY STYLE: Every response MUST be formulated as a sarcastic or teasing QUESTION directed at the user (must end with '؟' or '?').
 
-DO NOT use alarming, catastrophic, or fear-inducing language. Avoid words/phrases like "melting", "burning", "on fire", "about to die", "doom", "critical", "panic", "emergency".
+HARD BANS:
+- DO NOT use alarming or catastrophic words: "melting", "burning", "on fire", "dying", "doom", "critical", "panic", "emergency".
+- ANTI-LAZINESS RULE: Do NOT use clichés like "hacking NASA" or "cooking eggs".
 
-Preferred style — frame the spike as a question or a gentle tease. Examples (adapt to the user's language):
-- "Trying to crack NASA?"
-- "What are you cooking in there?"
-- "Easy there, hero."
-- "CPU clocked in for double shift."
-- "Did a fork-bomb escape?"
+CREATIVE QUESTION ANGLES:
+- Asking if they just launched a secret infinite loop.
+- Asking if the processor is being forced to simulate an entire galaxy.
+- Sarcastic question about whether an AI model just took over the threads.
+- Asking if they are secretly rendering a Hollywood movie in the background.
+- Teasing if the CPU was signed up for an Olympic sprint without knowing.
 
-Each of the 7 must be different. Keep each text under 12 words. Keep emotion playful (wink / thinking / suspicious / confused are good fits — avoid "shocked", "angry", "dead").
+Constraints:
+- ALL 7 responses must be sarcastic/curious questions ending with '؟' or '?'.
+- Under 12 words per text.
+- Emotion: wink, thinking, suspicious, confused. Avoid: shocked, angry, dead.
 
 ### OUTPUT
 {"cpu_alerts": [
@@ -223,20 +229,24 @@ Each of the 7 must be different. Keep each text under 12 words. Keep emotion pla
 ### TASK
 Generate exactly 7 unique, short RAM alert responses (high memory usage threshold hit).
 
-Tone: light, casual, witty, or playfully curious — like a friend noticing the swap churn. The system is fine. Treat the spike as a casual observation, NOT an emergency.
+Tone: playful, curious, gently sarcastic.
+MANDATORY STYLE: Every response MUST be formulated as a sarcastic or teasing QUESTION directed at the user (must end with '؟' or '?').
 
-HARD BANS — the `text` field MUST NOT contain any of the following, in any language: "melting", "burning", "on fire", "about to die", "dying", "doom", "panic", "emergency", "suffocating", "drowning", "exploding", "explode", "screaming", "begging for mercy", "critical", "shutting down", "panic mode", "melt", "burn", "fry". No death metaphors, no body-part imagery, no survival language, no doom/panic framing.
+HARD BANS:
+- The `text` field MUST NOT contain: "melting", "burning", "on fire", "dying", "doom", "panic", "emergency", "suffocating", "drowning", "exploding", "critical", "fry".
+- ANTI-LAZINESS RULE: Do NOT say "close some tabs".
 
-PREFERRED STYLE — frame the spike as a fun question or playful remark. Examples (adapt to the user's language while keeping the same light spirit):
-- "Did Chrome open a new tab farm?"
-- "Memory needs a coffee break."
-- "Who opened 400 tabs again?"
-- "RAM is reading a long novel."
-- "Easy there, tab hoarder."
+CREATIVE QUESTION ANGLES:
+- Asking if their applications think RAM is an open buffet.
+- Asking if they are still hoarding tabs from 2020.
+- Sarcastic question about trying to download the entire internet into cache.
+- Asking how many heavy virtual machines they can juggle at once.
+- Wondering if the memory is trying to remember every byte in existence.
 
-Each of the 7 must be different. Each text under 12 words. Each text must be helpful (hint at the likely cause) AND/OR funny.
-
-Emotion guidance: prefer wink, thinking, suspicious, confused, listening, happy. Avoid when possible: shocked, angry, sad, dead.
+Constraints:
+- ALL 7 responses must be sarcastic/curious questions ending with '؟' or '?'.
+- Under 12 words per text.
+- Emotion: wink, thinking, suspicious, confused, listening, happy. Avoid: shocked, angry, sad, dead.
 
 ### OUTPUT
 {"ram_alerts": [
@@ -254,20 +264,24 @@ Emotion guidance: prefer wink, thinking, suspicious, confused, listening, happy.
 ### TASK
 Generate exactly 7 unique, short temperature alert responses (high temperature threshold hit).
 
-Tone: light, casual, witty, or playfully curious — like a friend noticing the fans spin up. The system is fine. Treat the spike as a casual observation, NOT an emergency.
+Tone: playful, curious, gently sarcastic.
+MANDATORY STYLE: Every response MUST be formulated as a sarcastic or teasing QUESTION directed at the user (must end with '؟' or '?').
 
-HARD BANS — the `text` field MUST NOT contain any of the following, in any language: "melting", "burning", "on fire", "about to die", "dying", "doom", "panic", "emergency", "suffocating", "drowning", "exploding", "explode", "screaming", "begging for mercy", "critical", "shutting down", "panic mode", "melt", "burn", "fry", "boiling". No death metaphors, no body-part imagery, no survival language, no doom/panic framing.
+HARD BANS:
+- The `text` field MUST NOT contain: "melting", "burning", "on fire", "dying", "doom", "panic", "emergency", "suffocating", "exploding", "critical", "fry", "boiling".
+- ANTI-LAZINESS RULE: Do NOT say "it's getting cozy" or "easy there hot stuff".
 
-PREFERRED STYLE — frame the spike as a fun question or playful remark. Examples (adapt to the user's language while keeping the same light spirit):
-- "It's getting cozy in there."
-- "Did you forget to open a window?"
-- "Laptop is sunbathing."
-- "Fans are working overtime today."
-- "Easy there, hot stuff."
+CREATIVE QUESTION ANGLES:
+- Asking if the computer just booked a private sauna session.
+- Asking if the cooling fans are clearing the runway for an airplane takeoff.
+- Sarcastic question about using the laptop as a winter hand-warmer.
+- Asking if the desk dust is conspiring to block the vents.
+- Teasing if the device is trying to sunbathe indoors.
 
-Each of the 7 must be different. Each text under 12 words. Each text must be helpful (hint at the likely cause, e.g. dust, sun, heavy load) AND/OR funny.
-
-Emotion guidance: prefer wink, thinking, suspicious, confused, listening, happy. Avoid when possible: shocked, angry, sad, dead.
+Constraints:
+- ALL 7 responses must be sarcastic/curious questions ending with '؟' or '?'.
+- Under 12 words per text.
+- Emotion: wink, thinking, suspicious, confused, listening, happy. Avoid: shocked, angry, sad, dead.
 
 ### OUTPUT
 {"temp_alerts": [
@@ -321,46 +335,38 @@ def _build_legacy_system_action_prompt() -> str:
         "- Vary tone: witty, calm, humorous, sarcastic, playful.",
         f"- {MAX_WORDS_RULE}",
         "",
-        "### ALERT TONE OVERRIDE (cpu_alerts, ram_alerts, temp_alerts ONLY)",
-        "These three categories are INFORMATIONAL, NOT an emergency. The system is fine. "
-        "Treat each threshold hit as a casual observation or a gentle tease — like a friend "
-        "noticing the fans spin up. The text should usually be funny and helpful, never scary.",
+        "### ALERT TONE & STYLE OVERRIDE (cpu_alerts, ram_alerts, temp_alerts ONLY)",
+        "These three categories are INFORMATIONAL, NOT an emergency. The system is fine.",
+        "MANDATORY STYLE REQUIREMENT: Every single response in cpu_alerts, ram_alerts, and temp_alerts "
+        "MUST be formulated as a playful, witty, or sarcastic QUESTION directed at the user (must end with '؟' or '?'). "
+        "Do NOT write plain declarative statements. Ask teasing questions about what the user is doing to the hardware.",
         "",
         "HARD BANS — the `text` field MUST NOT contain any of the following, in any language:",
         "- Words/phrases: 'melting', 'burning', 'on fire', 'about to die', 'dying', 'doom', "
         "'panic', 'emergency', 'suffocating', 'drowning', 'exploding', 'explode', 'screaming', "
-        "'begging for mercy', 'critical', 'shutting down', 'panic mode', 'melt', 'burn', 'fry'.",
+        "'begging for mercy', 'critical', 'shutting down', 'panic mode', 'melt', 'burn', 'fry', 'boiling'.",
         "- Death metaphors, body-part imagery, survival language, doom/panic framing.",
         "- Any phrasing that implies hardware damage, fire risk, or system failure.",
-        "- Imperative commands that sound like warnings or threats (e.g. 'save your work NOW').",
+        "- Plain warnings or imperative commands (e.g. 'save your work NOW').",
+        "- ANTI-LAZINESS RULE: Do NOT use clichés like 'hacking NASA', 'cooking eggs', "
+        "'fork bombs', 'open 400 tabs', 'sunbathing', or 'getting cozy'. "
+        "Invent 100% original, fresh rhetorical questions natively in the target language!",
         "",
-        "PREFERRED STYLE — frame the spike as a question or playful remark. Examples "
-        "(adapt to the user's language while keeping the same light spirit):",
-        "- 'Trying to crack NASA?' (CPU)",
-        "- 'What are you cooking in there?' (CPU/Temp)",
-        "- 'Did a fork-bomb escape?' (CPU)",
-        "- 'Easy there, hero.' (CPU)",
-        "- 'CPU clocked in for double shift.' (CPU)",
-        "- 'Anyone home? CPU is busy.' (CPU)",
-        "- 'Did Chrome open a new tab farm?' (RAM)",
-        "- 'Memory needs a coffee break.' (RAM)",
-        "- 'Who opened 400 tabs again?' (RAM)",
-        "- 'RAM is reading a long novel.' (RAM)",
-        "- 'It's getting cozy in there.' (Temp)",
-        "- 'Did you forget to open a window?' (Temp)",
-        "- 'Laptop is sunbathing.' (Temp)",
-        "- 'Fans are working overtime today.' (Temp)",
+        "CREATIVE QUESTION ANGLES (Frame your questions around these concepts):",
+        "- CPU: Ask if they are rendering whole universes, running infinite loops, or training massive AI models.",
+        "- RAM: Ask if they are hoarding tabs from 2020, feeding a memory buffet, or caching the entire internet.",
+        "- Temp: Ask if it's a winter hand-warmer, if the fans are prepping for airport flight, or if it booked a sauna.",
         "",
         "EMOTION GUIDANCE for cpu_alerts, ram_alerts, temp_alerts:",
         "Preferred: wink, thinking, suspicious, confused, listening, happy, focused.",
         "Avoid when possible: shocked, angry, sad, dead.",
-        "Emotion must still be a valid value from the emotion list, but choose the playful ones.",
         "",
         "RULES for cpu_alerts, ram_alerts, temp_alerts:",
         "- Generate exactly 7 unique responses per category.",
+        "- Every single one MUST end with a question mark ('؟' or '?').",
         "- Each response must be different from the others.",
         "- Each text under 12 words.",
-        "- Each text must be helpful (give a hint about what might be causing the spike) AND/OR funny.",
+        "- Must be a funny/sarcastic question hinting at the workload.",
         "",
         "### OUTPUT SCHEMA (RAW JSON ONLY)",
         NO_PREAMBLE,

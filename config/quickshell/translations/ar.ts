@@ -211,6 +211,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../windows/settings/components/appearance/DesktopClockSettings.qml" line="514"/>
+        <source>Enable glow</source>
+        <translation type="unfinished">تفعيل التوهج</translation>
+    </message>
+    <message>
+        <location filename="../windows/settings/components/appearance/DesktopClockSettings.qml" line="530"/>
+        <source>Glow Color</source>
+        <translation type="unfinished">لون التوهج</translation>
+    </message>
+    <message>
+        <location filename="../windows/settings/components/appearance/DesktopClockSettings.qml" line="565"/>
+        <source>Glow Intensity</source>
+        <translation type="unfinished">شدة التوهج</translation>
+    </message>
+    <message>
+        <location filename="../windows/settings/components/appearance/DesktopClockSettings.qml" line="570"/>
+        <source>Intensity</source>
+        <translation type="unfinished">الشدة</translation>
+    </message>
+    <message>
         <location filename="../windows/settings/DesktopClockSettings.qml" line="423"/>
         <source>Depth Effect</source>
         <translation type="unfinished"></translation>
