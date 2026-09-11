@@ -201,13 +201,6 @@ HARD BANS:
 - DO NOT use alarming or catastrophic words: "melting", "burning", "on fire", "dying", "doom", "critical", "panic", "emergency".
 - ANTI-LAZINESS RULE: Do NOT use clichés like "hacking NASA" or "cooking eggs".
 
-CREATIVE QUESTION ANGLES:
-- Asking if they just launched a secret infinite loop.
-- Asking if the processor is being forced to simulate an entire galaxy.
-- Sarcastic question about whether an AI model just took over the threads.
-- Asking if they are secretly rendering a Hollywood movie in the background.
-- Teasing if the CPU was signed up for an Olympic sprint without knowing.
-
 Constraints:
 - ALL 7 responses must be sarcastic/curious questions ending with '؟' or '?'.
 - Under 12 words per text.
@@ -236,13 +229,6 @@ HARD BANS:
 - The `text` field MUST NOT contain: "melting", "burning", "on fire", "dying", "doom", "panic", "emergency", "suffocating", "drowning", "exploding", "critical", "fry".
 - ANTI-LAZINESS RULE: Do NOT say "close some tabs".
 
-CREATIVE QUESTION ANGLES:
-- Asking if their applications think RAM is an open buffet.
-- Asking if they are still hoarding tabs from 2020.
-- Sarcastic question about trying to download the entire internet into cache.
-- Asking how many heavy virtual machines they can juggle at once.
-- Wondering if the memory is trying to remember every byte in existence.
-
 Constraints:
 - ALL 7 responses must be sarcastic/curious questions ending with '؟' or '?'.
 - Under 12 words per text.
@@ -270,13 +256,6 @@ MANDATORY STYLE: Every response MUST be formulated as a sarcastic or teasing QUE
 HARD BANS:
 - The `text` field MUST NOT contain: "melting", "burning", "on fire", "dying", "doom", "panic", "emergency", "suffocating", "exploding", "critical", "fry", "boiling".
 - ANTI-LAZINESS RULE: Do NOT say "it's getting cozy" or "easy there hot stuff".
-
-CREATIVE QUESTION ANGLES:
-- Asking if the computer just booked a private sauna session.
-- Asking if the cooling fans are clearing the runway for an airplane takeoff.
-- Sarcastic question about using the laptop as a winter hand-warmer.
-- Asking if the desk dust is conspiring to block the vents.
-- Teasing if the device is trying to sunbathe indoors.
 
 Constraints:
 - ALL 7 responses must be sarcastic/curious questions ending with '؟' or '?'.
