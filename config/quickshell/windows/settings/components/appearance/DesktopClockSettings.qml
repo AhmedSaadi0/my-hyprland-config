@@ -28,8 +28,12 @@ BaseThemeSettings {
 
     property bool localUseThemeColor: true
     property color localColor: ThemeManager.selectedTheme.colors.primary
-    property bool localShadowEnabled: false
-    property color localShadowColor: ThemeManager.selectedTheme.colors.surface.alpha(0.55)
+    property bool localGlowEnabled: false
+    property color localGlowColor: "#FFFFFF"
+    property real localGlowIntensity: 0.65
+    // توافقية — إبقاء الأسماء القديمة كـ alias للكاش القديم
+    property alias localShadowEnabled: root.localGlowEnabled
+    property alias localShadowColor: root.localGlowColor
 
     property bool localDepthEnabled: false
     property string localDepthModel: "u2net"
@@ -66,8 +70,11 @@ BaseThemeSettings {
         // Appearance
         localUseThemeColor = theme._desktopClockUseThemeColor;
         localColor = theme._desktopClockColor !== undefined ? theme._desktopClockColor : theme.colors.primary;
-        localShadowEnabled = theme._desktopClockShadowEnabled;
-        localShadowColor = theme._desktopClockShadowColor !== undefined ? theme._desktopClockShadowColor : theme.colors.surface.alpha(0.55);
+        // توهج — مع fallback للظل القديم
+        localGlowEnabled = theme._desktopClockGlowEnabled ?? theme._desktopClockShadowEnabled ?? false;
+        localGlowColor = theme._desktopClockGlowColor ?? theme._desktopClockShadowColor ?? "#FFFFFF";
+        if (localGlowColor !== undefined && typeof localGlowColor === 'string') localGlowColor = localGlowColor;
+        localGlowIntensity = theme._desktopClockGlowIntensity ?? 0.65;
 
         // Depth
         localDepthEnabled = theme._desktopClockDepthEffectEnabled;
@@ -83,8 +90,9 @@ BaseThemeSettings {
             "_desktopClockLocal": localLocale,
             "_desktopClockUseThemeColor": localUseThemeColor,
             "_desktopClockColor": localColor.toString(),
-            "_desktopClockShadowEnabled": localShadowEnabled,
-            "_desktopClockShadowColor": localShadowColor.toString(),
+            "_desktopClockGlowEnabled": localGlowEnabled,
+            "_desktopClockGlowColor": localGlowColor.toString(),
+            "_desktopClockGlowIntensity": localGlowIntensity,
             "_desktopClockDepthEffectEnabled": localDepthEnabled,
             "_desktopClockDepthModel": localDepthModel,
             "_desktopClockDepthOverlayPath": localOverlayPath
@@ -156,9 +164,9 @@ BaseThemeSettings {
             if (target === "main") {
                 root.localColor = color;
                 root.applySingleProperty("_desktopClockColor", color.toString());
-            } else if (target === "shadow") {
-                root.localShadowColor = color;
-                root.applySingleProperty("_desktopClockShadowColor", color.toString());
+            } else if (target === "glow") {
+                root.localGlowColor = color;
+                root.applySingleProperty("_desktopClockGlowColor", color.toString());
             }
         }
     }
@@ -506,28 +514,29 @@ BaseThemeSettings {
                     }
                 }
 
-                // Shadow Settings
+                // Glow Settings
                 ColumnLayout {
                     Layout.fillWidth: true
 
                     SettingSwitch {
-                        label: qsTr("Enable shadow")
-                        isChecked: root.localShadowEnabled
+                        label: qsTr("Enable glow")
+                        isChecked: root.localGlowEnabled
                         font.bold: true
                         onIsCheckedChanged: {
                             if (root.isLoading)
                                 return;
-                            root.localShadowEnabled = isChecked;
-                            root.applySingleProperty("_desktopClockShadowEnabled", isChecked);
+                            root.localGlowEnabled = isChecked;
+                            root.applySingleProperty("_desktopClockGlowEnabled", isChecked);
                         }
                     }
 
                     ColumnLayout {
-                        enabled: root.localShadowEnabled
+                        enabled: root.localGlowEnabled
                         Layout.fillWidth: true
+                        spacing: 10
 
                         Controls.Label {
-                            text: qsTr("Shadow Color")
+                            text: qsTr("Glow Color")
                             font.bold: true
                         }
                         RowLayout {
@@ -536,19 +545,19 @@ BaseThemeSettings {
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 30
                                 Layout.minimumWidth: 50
-                                text: root.localShadowColor.toString()
+                                text: root.localGlowColor.toString()
                                 selectedTheme: root.theme
                                 onEditingFinished: {
                                     if (root.isLoading)
                                         return;
-                                    root.localShadowColor = text;
-                                    root.applySingleProperty("_desktopClockShadowColor", text);
+                                    root.localGlowColor = text;
+                                    root.applySingleProperty("_desktopClockGlowColor", text);
                                 }
                             }
                             Rectangle {
                                 Layout.preferredWidth: 35
                                 Layout.preferredHeight: 30
-                                color: root.localShadowColor
+                                color: root.localGlowColor
                                 border.color: root.theme.colors.onSurfaceVariant
                                 border.width: 1
                                 radius: root.theme.dimensions.shapeExtraSmall
@@ -558,10 +567,28 @@ BaseThemeSettings {
                                 Layout.preferredWidth: 35
                                 Layout.preferredHeight: 30
                                 onClicked: {
-                                    colorDialog.target = "shadow";
-                                    colorDialog.currentColor = root.localShadowColor;
+                                    colorDialog.target = "glow";
+                                    colorDialog.currentColor = root.localGlowColor;
                                     colorDialog.open();
                                 }
+                            }
+                        }
+
+                        Controls.Label {
+                            text: qsTr("Glow Intensity")
+                            font.bold: true
+                            Layout.topMargin: 8
+                        }
+                        SliderWithLabel {
+                            label: qsTr("Intensity")
+                            from: 0.0
+                            to: 1.0
+                            stepSize: 0.05
+                            decimals: 2
+                            value: root.localGlowIntensity
+                            onEditingFinished: val => {
+                                root.localGlowIntensity = parseFloat(val);
+                                root.applySingleProperty("_desktopClockGlowIntensity", parseFloat(val));
                             }
                         }
                     }

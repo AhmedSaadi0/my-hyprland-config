@@ -32,6 +32,11 @@ ColumnLayout {
             hours: 8760
         },
         {
+            label: qsTr("Today"),
+            hours: 0,
+            isToday: true
+        },
+        {
             label: qsTr("Custom"),
             hours: 0
         }
@@ -59,7 +64,7 @@ ColumnLayout {
     RowLayout {
         Layout.fillWidth: true
         spacing: 6
-        visible: root.selectedPreset === 4
+        visible: root.selectedPreset === 5
 
         Rectangle {
             Layout.fillWidth: true
@@ -187,9 +192,16 @@ ColumnLayout {
     }
 
     function emitRange() {
-        if (selectedPreset === 4) {
+        if (selectedPreset === 5) {
             if (customStartDate && customEndDate)
                 rangeChanged(0, customStartDate, customEndDate);
+        } else if (presets[selectedPreset].isToday) {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = (now.getMonth() + 1).toString().padStart(2, "0");
+            const d = now.getDate().toString().padStart(2, "0");
+            const todayIso = `${y}-${m}-${d}`;
+            rangeChanged(0, todayIso, todayIso);
         } else {
             rangeChanged(presets[selectedPreset].hours, "", "");
         }
@@ -197,11 +209,11 @@ ColumnLayout {
 
     function setPresetHours(hours) {
         for (var i = 0; i < presets.length; i++) {
-            if (presets[i].hours === hours && i !== 4) {
+            if (presets[i].hours === hours && i !== 5) {
                 selectedPreset = i;
                 return;
             }
         }
-        selectedPreset = 4;
+        selectedPreset = 5;
     }
 }

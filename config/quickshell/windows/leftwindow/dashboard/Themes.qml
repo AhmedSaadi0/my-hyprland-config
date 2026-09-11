@@ -24,15 +24,7 @@ MenuCard {
     property bool settingsExpanded: false
     property int innerRadiusDiv: 4
 
-    readonly property int fixedHeight: (grid.implicitHeight + settingsHeader.height + fullThemesRow.implicitHeight + fullThemesRow2.implicitHeight - 35) * 2
-    height: settingsExpanded ? settingsLayout.implicitHeight + padding + fixedHeight : fixedHeight
 
-    Behavior on height {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.InOutQuad
-        }
-    }
 
     ColumnLayout {
         id: mainLayout
@@ -90,10 +82,7 @@ MenuCard {
                 darkThemeName: "NordDark"
 
                 isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
-
-                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
-                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
-                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+                radius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
             }
 
             ThemeSelectorCard {
@@ -111,6 +100,41 @@ MenuCard {
                 lightThemeName: "TokyoNightLight"
                 darkThemeName: "TokyoNightDark"
 
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+                radius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+            }
+        }
+
+        RowLayout {
+            id: fullThemesRow3
+            Layout.fillWidth: true
+            spacing: 7
+
+            ThemeSelectorCard {
+                Layout.fillWidth: true
+                themeTitle: qsTr("Solarized")
+                lightThemeName: "SolarizedLight"
+                darkThemeName: "SolarizedDark"
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+                topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+                topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+                bottomRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+            }
+
+            ThemeSelectorCard {
+                Layout.fillWidth: true
+                themeTitle: qsTr("Rosé Pine")
+                lightThemeName: "RosePineLight"
+                darkThemeName: "RosePineDark"
+                isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
+                radius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
+            }
+
+            ThemeSelectorCard {
+                Layout.fillWidth: true
+                themeTitle: qsTr("Oxocarbon")
+                lightThemeName: "OxocarbonLight"
+                darkThemeName: "OxocarbonDark"
                 isSelected: ThemeManager.selectedTheme.themeName === lightThemeName || ThemeManager.selectedTheme.themeName === darkThemeName
                 topRightRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)
                 topLeftRadius: ThemeManager.selectedTheme.dimensions.elementRadius / (isSelected ? 1 : innerRadiusDiv)

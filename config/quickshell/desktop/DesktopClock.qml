@@ -14,8 +14,12 @@ Item {
     property bool pressed: false
 
     property bool enableAnimation: false
-    property bool shadowEnabled: false
-    property color shadowColor: ThemeManager.selectedTheme.colors.shadowColor
+    property bool glowEnabled: false
+    property color glowColor: "#FFFFFF"
+    property real glowIntensity: 0.65
+    // توافقية — الأسماء القديمة للظل
+    property alias shadowEnabled: root.glowEnabled
+    property alias shadowColor: root.glowColor
     property color clockColor: ThemeManager.selectedTheme.colors.primary
     property string clockFont: "sans-serif"
     property string clockFormat: "hh:mm"
@@ -26,7 +30,8 @@ Item {
     property string _displayedFont: root.clockFont
     property string _displayedFormat: root.clockFormat
     property bool _isReady: false
-    property var shadowEffectItem: null
+    property var glowEffectItem: null
+    property alias shadowEffectItem: root.glowEffectItem
 
     QtObject {
         id: shadowAnimationFallback
@@ -167,7 +172,7 @@ Item {
             NumberAnimation {
                 target: root.shadowEffectItem || shadowAnimationFallback
                 property: "blur"
-                to: 0.0
+                to: 1.0
                 duration: 500
             }
         }
@@ -217,19 +222,51 @@ Item {
         anchors.fill: parent
         transformOrigin: Item.Center
 
+        // طبقة التوهج الخلفية — نفس شكل النص 100% (مطابقة تامة) لكن مموهة كإشعاع نيون
+        Text {
+            id: glowText
+            anchors.centerIn: parent
+            visible: root.glowEnabled && !root.pressed
+            text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root._displayedFormat)
+            font.family: ThemeManager.isClockFontPreviewing && ThemeManager.clockPreviewFont !== "" ? ThemeManager.clockPreviewFont : root._displayedFont
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            property int fixedSize: 1000
+            font.pixelSize: fixedSize
+            fontSizeMode: Text.FixedSize
+            property real widthRatio: (root.width / implicitWidth)
+            property real heightRatio: (root.height / implicitHeight)
+            scale: Math.min(widthRatio, heightRatio) * 0.95
+            antialiasing: true
+            smooth: true
+            renderType: Text.QtRendering
+            font.hintingPreference: Font.PreferFullHinting
+            // [تجريبي ثابت] توهج أبيض — حسب طلب المستخدم
+            color: root.glowColor
+            opacity: 0.95
+            layer.enabled: true
+            layer.smooth: true
+            layer.effect: MultiEffect {
+                id: glowEffect
+                Component.onCompleted: root.glowEffectItem = glowEffect
+                autoPaddingEnabled: true
+                blurEnabled: true
+                blurMax: 64
+                blur: root.glowIntensity
+                shadowEnabled: false
+                // blur ثابت = هالة مطابقة لشكل الحرف تماماً (1.0 نيون متوسط، 2.5 نبض)
+            }
+        }
+
         Text {
             id: timeText
             anchors.centerIn: parent
 
             text: systemClock.date.toLocaleString(Qt.locale(root.clockLocale), root._displayedFormat)
-            // أثناء المعاينة: ربط مباشر بخط المعاينة (فوري وموثوق)
-            // خارج المعاينة: الخط الحالي عبر _displayedFont مع أنيميشن النبض
-            font.family: ThemeManager.isClockFontPreviewing && ThemeManager.clockPreviewFont !== ""
-                        ? ThemeManager.clockPreviewFont
-                        : root._displayedFont
+            font.family: ThemeManager.isClockFontPreviewing && ThemeManager.clockPreviewFont !== "" ? ThemeManager.clockPreviewFont : root._displayedFont
 
-            // ================= السر البصري لتغير اللون =================
-            // ColorAnimation يقوم بمزج الألوان كيميائياً بدلاً من التبديل الفوري
+            // [تجريبي ثابت] لون الخط #f17c58 — حسب طلب المستخدم
+            // عند إيقاف التوهج يعود للون الأصلي للثيم
             color: root._displayedColor
             Behavior on color {
                 ColorAnimation {
@@ -245,35 +282,13 @@ Item {
             font.pixelSize: fixedSize
             fontSizeMode: Text.FixedSize
 
-            property real widthRatio: (root.width / implicitWidth)
-            property real heightRatio: (root.height / implicitHeight)
-
-            scale: Math.min(widthRatio, heightRatio) * 0.95
+            // مطابق تماماً لطبقة التوهج — توهج 1:1 بدون أي تمدد
+            scale: glowText.scale
 
             antialiasing: true
             smooth: true
             renderType: Text.QtRendering
             font.hintingPreference: Font.PreferFullHinting
-
-            layer.enabled: root.shadowEnabled || root.editMode || root.pressed
-            layer.smooth: true
-            layer.effect: MultiEffect {
-                id: shadowEffect
-
-                Component.onCompleted: root.shadowEffectItem = shadowEffect
-
-                blurEnabled: true
-                blurMax: 8 // تمكين التمويه للأنميشن
-                blur: 0
-
-                shadowEnabled: root.shadowEnabled && !root.pressed
-                shadowColor: root.shadowColor
-                shadowBlur: 1.0
-                shadowOpacity: 0.6
-                shadowVerticalOffset: 0
-                shadowHorizontalOffset: 0
-                shadowScale: 1.0
-            }
         }
     }
 

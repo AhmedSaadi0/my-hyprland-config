@@ -206,9 +206,13 @@ PersistentProperties {
     // --- Desktop Clock Widget ---
     // ----------------------------
     property bool _desktopClockEnabled: true
-    property bool _desktopClockShadowEnabled: false
-    property color _desktopClockShadowColor: "#40000000"
+    property bool _desktopClockGlowEnabled: false
+    property color _desktopClockGlowColor: "#FFFFFF"
+    property real _desktopClockGlowIntensity: 0.65
     property color _desktopClockColor: _primary
+    // توافقية: الأسماء القديمة (ظل) تشير لنفس قيم التوهج — للحفاظ على كاشات قديمة
+    property alias _desktopClockShadowEnabled: root._desktopClockGlowEnabled
+    property alias _desktopClockShadowColor: root._desktopClockGlowColor
     property bool _desktopClockUseThemeColor: true
     property bool _desktopClockUseAnimation: false
     property string _desktopClockLocal: "en_US"
@@ -415,8 +419,12 @@ PersistentProperties {
     // --- Desktop Clock Widget Configuration ---
     readonly property var desktopClock: QtObject {
         property alias enabled: root._desktopClockEnabled
-        property alias shadowEnabled: root._desktopClockShadowEnabled
-        property alias shadowColor: root._desktopClockShadowColor
+        property alias glowEnabled: root._desktopClockGlowEnabled
+        property alias glowColor: root._desktopClockGlowColor
+        property alias glowIntensity: root._desktopClockGlowIntensity
+        // أسماء قديمة للتوافق
+        property alias shadowEnabled: root._desktopClockGlowEnabled
+        property alias shadowColor: root._desktopClockGlowColor
         property alias color: root._desktopClockColor
         property alias useThemeColor: root._desktopClockUseThemeColor
         property alias enableAnimation: root._desktopClockUseAnimation
